@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/src/disastertrace/automated/calibration.py", line 624, in <module>
+    main()
+  File "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/src/disastertrace/automated/calibration.py", line 610, in main
+    prepare(
+  File "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/src/disastertrace/automated/calibration.py", line 485, in prepare
+    manifest = verify_build(build_path)
+  File "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/src/disastertrace/automated/workflow.py", line 273, in verify_build
+    manifest = _read(path / "manifest.json")
+  File "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/src/disastertrace/automated/workflow.py", line 32, in _read
+    return strict_json(path.read_text(encoding="utf-8-sig"))
+  File "/usr/lib/python3.10/pathlib.py", line 1134, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+  File "/usr/lib/python3.10/pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/work/build-calibration-v1/manifest.json'

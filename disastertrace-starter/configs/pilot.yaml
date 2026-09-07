@@ -1,0 +1,21 @@
+schema_version: pilot_config_v1
+data_root: examples/data
+output_root: outputs
+models:
+  - name: mock
+    adapter: scripted
+policies:
+  - B0_snapshot
+  - B1_full_legal_history
+  - B2_asof_version
+  - B3_structured_state
+interventions:
+  - natural
+  - release_delay
+  - stale_version
+  - null_update
+run:
+  temperature: 0
+  repeats_for_causal_subset: 3
+  parallelism: 4
+  resume: true

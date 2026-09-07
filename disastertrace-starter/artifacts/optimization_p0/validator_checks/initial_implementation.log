@@ -1,0 +1,54 @@
+......F...................................................F              [100%]
+=================================== FAILURES ===================================
+_ test_restricted_current_body_forms_and_wrapped_lines[The estimated minimum central pressure based on data from the NOAA\nHurricane Hunter aircraft is 990 mb (29.24 inches).-minimum_pressure_mb-990-9] _
+
+body = 'The estimated minimum central pressure based on data from the NOAA\nHurricane Hunter aircraft is 990 mb (29.24 inches).'
+field = 'minimum_pressure_mb', value = 990, line = 9
+
+    @pytest.mark.parametrize(
+        "body,field,value,line",
+        [
+            ("Maximum sustained winds are near 75 mph with higher gusts.", "maximum_wind_mph", 75, 8),
+            ("Maximum sustained winds have increased to near 75 mph (120 km/h) with higher gusts.", "maximum_wind_mph", 75, 8),
+            ("Satellite imagery indicates that maximum sustained winds have\nincreased to near 75 mph (120 km/h) with higher gusts.", "maximum_wind_mph", 75, 9),
+            ("Maximum sustained winds are near\n75 mph (120 km/h) with higher gusts.", "maximum_wind_mph", 75, 8),
+            ("The estimated minimum central pressure is 990 mb (29.24 inches).", "minimum_pressure_mb", 990, 8),
+            ("The latest minimum central pressure estimated from Air Force\nReserve reconnaissance aircraft data is 990 mb (29.24 inches).", "minimum_pressure_mb", 990, 9),
+            ("The estimated minimum central pressure based on data from the NOAA\nHurricane Hunter aircraft is 990 mb (29.24 inches).", "minimum_pressure_mb", 990, 9),
+            ("At 200 PM AST (1800 UTC), the center of Tropical Storm Teststorm was\nlocated near latitude 12.3 North, longitude 45.6 West.", "latitude_deg", 12.3, 9),
+            ("At 200 PM AST (1800 UTC), the eye of Hurricane Teststorm was located\nnear latitude 12.3 North, longitude 45.6 West.", "longitude_deg", -45.6, 9),
+            ("At 200 PM AST (1800 UTC), the center of Tropical Storm Teststorm was\nlocated by satellite and Martinique radar near latitude 12.3 North,\nlongitude 45.6 West.", "longitude_deg", -45.6, 10),
+        ],
+    )
+    def test_restricted_current_body_forms_and_wrapped_lines(body, field, value, line):
+        result = check(body, field, value, line)
+>       assert result["valid"], result
+E       AssertionError: {'valid': False, 'reason': 'evaluator_unverifiable', 'support_spans': []}
+E       assert False
+
+tests/test_automated_evidence_support.py:85: AssertionError
+____ test_actual_development_summary_and_body_excerpts_across_three_storms _____
+
+    def test_actual_development_summary_and_body_excerpts_across_three_storms():
+        path = Path(__file__).parents[1] / "work/build-deepseek-v1/episodes/dynamic_episodes.jsonl"
+        episodes = [json.loads(line) for line in path.read_text().splitlines()]
+        episodes = [e for e in episodes if e["split"] == "development" and e["episode_id"].endswith(":base")]
+        assert len(episodes) == 3
+        records_tested = 0
+        for episode in episodes:
+            for checkpoint, record in zip(("c1", "c2", "c4"), episode["records"]):
+                for field in ("maximum_wind_mph", "latitude_deg", "longitude_deg", "minimum_pressure_mb"):
+                    summary = record["field_evidence"][field]["line_start"]
+                    result = validate_citation(episode, checkpoint, field, record["fields"][field], {"record_id": record["record_id"], "line": summary})
+                    assert result["valid"], (record["record_id"], field, result)
+                    index = build_evidence_index([episode])
+                    spans = index["episodes"][episode["episode_id"]]["records"][record["record_id"]]["support_spans"]
+                    bodies = [s for s in spans if s["field"] == field and s["kind"] == "body_observation"]
+>                   assert bodies, (record["record_id"], field)
+E                   AssertionError: ('nhc-al092021-public-011', 'minimum_pressure_mb')
+E                   assert []
+
+tests/test_automated_evidence_support.py:230: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_automated_evidence_support.py::test_restricted_current_body_forms_and_wrapped_lines[The estimated minimum central pressure based on data from the NOAA\nHurricane Hunter aircraft is 990 mb (29.24 inches).-minimum_pressure_mb-990-9]
+FAILED tests/test_automated_evidence_support.py::test_actual_development_summary_and_body_excerpts_across_three_storms

@@ -1,0 +1,1917 @@
+{
+  "schema_version": "dataset_audit_v1",
+  "build_id": "583b32be35362a46409321e76babc0cbdb71999ebe19c2598c4bd1212a23a00b",
+  "method": {
+    "version": "dataset_audit_v1",
+    "exact_hash": "sha256(raw_text.encode('utf-8'))",
+    "normalized_hash": "sha256(' '.join(raw_text.casefold().split()).encode('utf-8'))",
+    "tokenization": "re.findall(r'[a-z0-9]+', raw_text.casefold())",
+    "shingle_words": 5,
+    "similarity": "set_jaccard_intersection_size_divided_by_union_size",
+    "empty_shingle_similarity": null,
+    "candidate_threshold": 0.9,
+    "candidate_threshold_tuned_on_model_results": false,
+    "common_shingle_context": "occurs_in_at_least_3_distinct_parsed_storm_events",
+    "common_shingles_removed_from_similarity": false,
+    "normalization_changes_source_content": false,
+    "near_candidates_change_admission": false,
+    "human_review_required": false
+  },
+  "checks": {
+    "build_manifest_verified": true,
+    "source_inventory_matches_catalogue": true,
+    "inventory_identity_matches_declared_split": true,
+    "parsed_admission_matches_records": true,
+    "parsed_source_provenance_matches_inventory": true,
+    "episode_records_match_parsed_inventory": true,
+    "episodes_match_declared_event_splits": true,
+    "declared_episode_ids_match_actual": true,
+    "admitted_events_have_exactly_two_paired_nonempty_branches": true,
+    "no_exact_cross_split_duplicates": true,
+    "no_normalized_cross_split_duplicates": true,
+    "private_reference_ids_match_checkpoints": true,
+    "private_reference_values_match_frozen_episode_contract": true
+  },
+  "all_required_checks_pass": true,
+  "coverage": {
+    "scope": "purposeful_atlantic_tropical_cyclone_pilot",
+    "unit_of_independence": "storm_event",
+    "planned_events": 12,
+    "admitted_events": 10,
+    "quarantined_events": 2,
+    "planned_source_records": 36,
+    "inventory_source_records": 36,
+    "parsed_source_records": 32,
+    "dynamic_used_records": 30,
+    "orphan_parsed_source_ids": [
+      "nhc-al092017-public-009",
+      "nhc-al092017-public-010"
+    ],
+    "source_rejections": [
+      {
+        "source_id": "nhc-al092017-public-011",
+        "admitted": false,
+        "rejection_reasons": [
+          {
+            "code": "IDENTITY_UNSUPPORTED",
+            "detail": "Unsupported advisory identity format"
+          }
+        ]
+      },
+      {
+        "source_id": "nhc-al142016-public-009",
+        "admitted": false,
+        "rejection_reasons": [
+          {
+            "code": "MISSING_FIELD",
+            "detail": "Expected exactly one NHC publisher header; found 0"
+          }
+        ]
+      },
+      {
+        "source_id": "nhc-al142016-public-010",
+        "admitted": false,
+        "rejection_reasons": [
+          {
+            "code": "MISSING_FIELD",
+            "detail": "Expected exactly one NHC publisher header; found 0"
+          }
+        ]
+      },
+      {
+        "source_id": "nhc-al142016-public-011",
+        "admitted": false,
+        "rejection_reasons": [
+          {
+            "code": "MISSING_FIELD",
+            "detail": "Expected exactly one NHC publisher header; found 0"
+          }
+        ]
+      }
+    ],
+    "quarantined_event_details": [
+      {
+        "storm_id": "AL092017",
+        "storm_name": "HARVEY",
+        "split": "development",
+        "status": "quarantined",
+        "source_ids": [
+          "nhc-al092017-public-009",
+          "nhc-al092017-public-010",
+          "nhc-al092017-public-011"
+        ],
+        "provided_source_ids": [
+          "nhc-al092017-public-009",
+          "nhc-al092017-public-010"
+        ],
+        "episode_ids": [],
+        "rejection_reasons": [
+          {
+            "code": "PLANNED_SOURCE_MISSING",
+            "detail": "Planned advisory was not supplied as an admitted parsed record",
+            "source_id": "nhc-al092017-public-011"
+          }
+        ]
+      },
+      {
+        "storm_id": "AL142016",
+        "storm_name": "MATTHEW",
+        "split": "heldout",
+        "status": "quarantined",
+        "source_ids": [
+          "nhc-al142016-public-009",
+          "nhc-al142016-public-010",
+          "nhc-al142016-public-011"
+        ],
+        "provided_source_ids": [],
+        "episode_ids": [],
+        "rejection_reasons": [
+          {
+            "code": "PLANNED_SOURCE_MISSING",
+            "detail": "Planned advisory was not supplied as an admitted parsed record",
+            "source_id": "nhc-al142016-public-009"
+          },
+          {
+            "code": "PLANNED_SOURCE_MISSING",
+            "detail": "Planned advisory was not supplied as an admitted parsed record",
+            "source_id": "nhc-al142016-public-010"
+          },
+          {
+            "code": "PLANNED_SOURCE_MISSING",
+            "detail": "Planned advisory was not supplied as an admitted parsed record",
+            "source_id": "nhc-al142016-public-011"
+          }
+        ]
+      }
+    ],
+    "by_split": {
+      "development": {
+        "planned_events": 4,
+        "admitted_events": 3,
+        "quarantined_events": 1,
+        "planned_year_counts": {
+          "2017": 1,
+          "2018": 1,
+          "2019": 1,
+          "2021": 1
+        },
+        "admitted_year_counts": {
+          "2018": 1,
+          "2019": 1,
+          "2021": 1
+        },
+        "admitted_storm_names": [
+          "DORIAN",
+          "FLORENCE",
+          "IDA"
+        ],
+        "parsed_records": 11,
+        "dynamic_used_records": 9,
+        "episodes": 6,
+        "checkpoints": 30
+      },
+      "heldout": {
+        "planned_events": 8,
+        "admitted_events": 7,
+        "quarantined_events": 1,
+        "planned_year_counts": {
+          "2016": 1,
+          "2017": 2,
+          "2018": 1,
+          "2020": 1,
+          "2022": 1,
+          "2023": 1,
+          "2024": 1
+        },
+        "admitted_year_counts": {
+          "2017": 2,
+          "2018": 1,
+          "2020": 1,
+          "2022": 1,
+          "2023": 1,
+          "2024": 1
+        },
+        "admitted_storm_names": [
+          "BERYL",
+          "IAN",
+          "IDALIA",
+          "IRMA",
+          "LAURA",
+          "MARIA",
+          "MICHAEL"
+        ],
+        "parsed_records": 21,
+        "dynamic_used_records": 21,
+        "episodes": 14,
+        "checkpoints": 70
+      }
+    }
+  },
+  "split_assignments": [
+    {
+      "storm_id": "AL092021",
+      "storm_name": "IDA",
+      "split": "development",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al092021-public-009",
+        "nhc-al092021-public-010",
+        "nhc-al092021-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al092021-public-009",
+        "nhc-al092021-public-010",
+        "nhc-al092021-public-011"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay"
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "storm_id": "AL092017",
+      "storm_name": "HARVEY",
+      "split": "development",
+      "status": "quarantined",
+      "source_ids": [
+        "nhc-al092017-public-009",
+        "nhc-al092017-public-010",
+        "nhc-al092017-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al092017-public-009",
+        "nhc-al092017-public-010"
+      ],
+      "episode_ids": [],
+      "rejection_reasons": [
+        {
+          "code": "PLANNED_SOURCE_MISSING",
+          "detail": "Planned advisory was not supplied as an admitted parsed record",
+          "source_id": "nhc-al092017-public-011"
+        }
+      ]
+    },
+    {
+      "storm_id": "AL062018",
+      "storm_name": "FLORENCE",
+      "split": "development",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al062018-public-009",
+        "nhc-al062018-public-010",
+        "nhc-al062018-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al062018-public-009",
+        "nhc-al062018-public-010",
+        "nhc-al062018-public-011"
+      ],
+      "episode_ids": [
+        "al062018:controlled:base",
+        "al062018:controlled:delay"
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "storm_id": "AL052019",
+      "storm_name": "DORIAN",
+      "split": "development",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al052019-public-009",
+        "nhc-al052019-public-010",
+        "nhc-al052019-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al052019-public-009",
+        "nhc-al052019-public-010",
+        "nhc-al052019-public-011"
+      ],
+      "episode_ids": [
+        "al052019:controlled:base",
+        "al052019:controlled:delay"
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "storm_id": "AL142016",
+      "storm_name": "MATTHEW",
+      "split": "heldout",
+      "status": "quarantined",
+      "source_ids": [
+        "nhc-al142016-public-009",
+        "nhc-al142016-public-010",
+        "nhc-al142016-public-011"
+      ],
+      "provided_source_ids": [],
+      "episode_ids": [],
+      "rejection_reasons": [
+        {
+          "code": "PLANNED_SOURCE_MISSING",
+          "detail": "Planned advisory was not supplied as an admitted parsed record",
+          "source_id": "nhc-al142016-public-009"
+        },
+        {
+          "code": "PLANNED_SOURCE_MISSING",
+          "detail": "Planned advisory was not supplied as an admitted parsed record",
+          "source_id": "nhc-al142016-public-010"
+        },
+        {
+          "code": "PLANNED_SOURCE_MISSING",
+          "detail": "Planned advisory was not supplied as an admitted parsed record",
+          "source_id": "nhc-al142016-public-011"
+        }
+      ]
+    },
+    {
+      "storm_id": "AL112017",
+      "storm_name": "IRMA",
+      "split": "heldout",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al112017-public-009",
+        "nhc-al112017-public-010",
+        "nhc-al112017-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al112017-public-009",
+        "nhc-al112017-public-010",
+        "nhc-al112017-public-011"
+      ],
+      "episode_ids": [
+        "al112017:controlled:base",
+        "al112017:controlled:delay"
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "storm_id": "AL152017",
+      "storm_name": "MARIA",
+      "split": "heldout",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al152017-public-009",
+        "nhc-al152017-public-010",
+        "nhc-al152017-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al152017-public-009",
+        "nhc-al152017-public-010",
+        "nhc-al152017-public-011"
+      ],
+      "episode_ids": [
+        "al152017:controlled:base",
+        "al152017:controlled:delay"
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "storm_id": "AL142018",
+      "storm_name": "MICHAEL",
+      "split": "heldout",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al142018-public-009",
+        "nhc-al142018-public-010",
+        "nhc-al142018-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al142018-public-009",
+        "nhc-al142018-public-010",
+        "nhc-al142018-public-011"
+      ],
+      "episode_ids": [
+        "al142018:controlled:base",
+        "al142018:controlled:delay"
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "storm_id": "AL132020",
+      "storm_name": "LAURA",
+      "split": "heldout",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al132020-public-009",
+        "nhc-al132020-public-010",
+        "nhc-al132020-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al132020-public-009",
+        "nhc-al132020-public-010",
+        "nhc-al132020-public-011"
+      ],
+      "episode_ids": [
+        "al132020:controlled:base",
+        "al132020:controlled:delay"
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "storm_id": "AL092022",
+      "storm_name": "IAN",
+      "split": "heldout",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al092022-public-009",
+        "nhc-al092022-public-010",
+        "nhc-al092022-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al092022-public-009",
+        "nhc-al092022-public-010",
+        "nhc-al092022-public-011"
+      ],
+      "episode_ids": [
+        "al092022:controlled:base",
+        "al092022:controlled:delay"
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "storm_id": "AL102023",
+      "storm_name": "IDALIA",
+      "split": "heldout",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al102023-public-009",
+        "nhc-al102023-public-010",
+        "nhc-al102023-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al102023-public-009",
+        "nhc-al102023-public-010",
+        "nhc-al102023-public-011"
+      ],
+      "episode_ids": [
+        "al102023:controlled:base",
+        "al102023:controlled:delay"
+      ],
+      "rejection_reasons": []
+    },
+    {
+      "storm_id": "AL022024",
+      "storm_name": "BERYL",
+      "split": "heldout",
+      "status": "admitted",
+      "source_ids": [
+        "nhc-al022024-public-009",
+        "nhc-al022024-public-010",
+        "nhc-al022024-public-011"
+      ],
+      "provided_source_ids": [
+        "nhc-al022024-public-009",
+        "nhc-al022024-public-010",
+        "nhc-al022024-public-011"
+      ],
+      "episode_ids": [
+        "al022024:controlled:base",
+        "al022024:controlled:delay"
+      ],
+      "rejection_reasons": []
+    }
+  ],
+  "source_similarity": {
+    "scope": "all_parsed_records_including_orphans_from_quarantined_events",
+    "record_count": 32,
+    "pair_count": 496,
+    "cross_split_pair_count": 231,
+    "pairs_without_any_five_word_shingles": 0,
+    "maximum_cross_split_jaccard": 0.16658823529411765,
+    "raw_duplicate_groups": [],
+    "normalized_duplicate_groups": [],
+    "near_duplicate_candidates": [],
+    "common_shingle_count": 845,
+    "records": [
+      {
+        "source_id": "nhc-al022024-public-009",
+        "storm_id": "AL022024",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "6d5b69dfd412521a1395a0a3ef43b72b3214dd27e448597425c1904a5add1b3c",
+        "normalized_sha256": "d7575c9456390e80c2f88b14c22ef6acd89a5b1dae9cfb837b151aef6fd55077",
+        "raw_text_chars": 5737
+      },
+      {
+        "source_id": "nhc-al022024-public-010",
+        "storm_id": "AL022024",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "de6fe98a211f27ef6ff28fe06b9472665a93ec7c0ed20c6cea00f3a6d6208bd1",
+        "normalized_sha256": "f75f164e43730f7df6c465b28e3ffd3a6856138d8ded145f3192744dd8338dab",
+        "raw_text_chars": 5484
+      },
+      {
+        "source_id": "nhc-al022024-public-011",
+        "storm_id": "AL022024",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "462ef87040928a1545d2a4724d8537dfe7823dc9f56e6ac481d72574e02f871b",
+        "normalized_sha256": "d9c9e7e96473ab5acdd7783aa7b776c5f4c1ddd0f8e0ba3f9608900db143280a",
+        "raw_text_chars": 5652
+      },
+      {
+        "source_id": "nhc-al052019-public-009",
+        "storm_id": "AL052019",
+        "split": "development",
+        "used_in_dynamic": true,
+        "raw_sha256": "bc31aea4989a99e7dddc68fef9a76455d93d5a8942bfdeaafb2699eab29991f7",
+        "normalized_sha256": "2948d5e244d27fef91ddb4aedf841ff98fa0d1df07f54476633d4f1cd0d7c7a2",
+        "raw_text_chars": 4149
+      },
+      {
+        "source_id": "nhc-al052019-public-010",
+        "storm_id": "AL052019",
+        "split": "development",
+        "used_in_dynamic": true,
+        "raw_sha256": "6f2bd0baaa3274e7d9849af6a00c641be6c88aa1bbb38be611441edb9bdb4384",
+        "normalized_sha256": "8d8f5527f43a17c23266685fa1f2605692db2af53a158a21a41f1d84a78b80a9",
+        "raw_text_chars": 4511
+      },
+      {
+        "source_id": "nhc-al052019-public-011",
+        "storm_id": "AL052019",
+        "split": "development",
+        "used_in_dynamic": true,
+        "raw_sha256": "44d18304d319e70b44917c98ae66578fe8c39c6c089f83ed6890578efdc22eab",
+        "normalized_sha256": "7fdd3418f02d79f3e02902628e467e567dbf4ccedf44772cc82d82bd93061b48",
+        "raw_text_chars": 4146
+      },
+      {
+        "source_id": "nhc-al062018-public-009",
+        "storm_id": "AL062018",
+        "split": "development",
+        "used_in_dynamic": true,
+        "raw_sha256": "3497d01113d1e554e29527e1b57e9ede6025f26f1c7c4959051b82a6a4eef77f",
+        "normalized_sha256": "c052dd2915ac024d1a681effec68ebcbed63b25f8b51f38b196d8cada583b36e",
+        "raw_text_chars": 1540
+      },
+      {
+        "source_id": "nhc-al062018-public-010",
+        "storm_id": "AL062018",
+        "split": "development",
+        "used_in_dynamic": true,
+        "raw_sha256": "7522fd99d94ce54324109ce476e5d5d381f229c734a010e854cceea80f635eed",
+        "normalized_sha256": "c9e97329575bcfe515659a331156eeb56808f4226546a1dc45578ae7e2253b29",
+        "raw_text_chars": 1406
+      },
+      {
+        "source_id": "nhc-al062018-public-011",
+        "storm_id": "AL062018",
+        "split": "development",
+        "used_in_dynamic": true,
+        "raw_sha256": "c425483da6a77f83ab82eeba31dfa12741056e0b50945d6dbecaa6fe31fce488",
+        "normalized_sha256": "b753ffe24a6bce7f61df8176d29eeb625b51d5c0df65eb6e9807d1b1178f4581",
+        "raw_text_chars": 1508
+      },
+      {
+        "source_id": "nhc-al092017-public-009",
+        "storm_id": "AL092017",
+        "split": "development",
+        "used_in_dynamic": false,
+        "raw_sha256": "3c05a31c46cf389d34188901d83712d73f40731c269cecfa266669d9d7736ebf",
+        "normalized_sha256": "03200e88c28969aae895ab4bf8a3d52bbaca3534f533de2368bd9d4a67114ac7",
+        "raw_text_chars": 2177
+      },
+      {
+        "source_id": "nhc-al092017-public-010",
+        "storm_id": "AL092017",
+        "split": "development",
+        "used_in_dynamic": false,
+        "raw_sha256": "eaa5ba8e80d0e9084b4190343c28772bd91561817d7341c0a7517cb5cad5776b",
+        "normalized_sha256": "64d6df20226ac357d313da1cc18c26724d6350ead7897bc3fbcefd974fce91f3",
+        "raw_text_chars": 1856
+      },
+      {
+        "source_id": "nhc-al092021-public-009",
+        "storm_id": "AL092021",
+        "split": "development",
+        "used_in_dynamic": true,
+        "raw_sha256": "8ababd3c9257ae0b3c90e3de482ff181ee308eb55cf96c243d8b28f218d2f481",
+        "normalized_sha256": "47e065f79eb6756a34928b169e8fb41df369885d8a9b8694159ff087322a6825",
+        "raw_text_chars": 8447
+      },
+      {
+        "source_id": "nhc-al092021-public-010",
+        "storm_id": "AL092021",
+        "split": "development",
+        "used_in_dynamic": true,
+        "raw_sha256": "79a96bd6bf9997a7a9b9ee2f5e90aa0085d776197f469012e2abfb23fe2d6ff2",
+        "normalized_sha256": "46e85b25cdda43d2e973c271027b3969f21121c432cfeb2181a6b6c90da4495a",
+        "raw_text_chars": 8073
+      },
+      {
+        "source_id": "nhc-al092021-public-011",
+        "storm_id": "AL092021",
+        "split": "development",
+        "used_in_dynamic": true,
+        "raw_sha256": "99b689fb8b948800015cc2e19e02beff69669de83eaf195bc1474164cf8178ef",
+        "normalized_sha256": "bad70283bfc8022bb68446d0bcc939e9bf0edaa14ca4657136bf775f6b237c48",
+        "raw_text_chars": 7401
+      },
+      {
+        "source_id": "nhc-al092022-public-009",
+        "storm_id": "AL092022",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "709f89716aaa02b9beb08579a20569a05ba05e8a38ed8f234383f1d315e66930",
+        "normalized_sha256": "c00017378d3169cb00527d3768fa061f512173a91167f11c0802b5d5c86e662d",
+        "raw_text_chars": 5815
+      },
+      {
+        "source_id": "nhc-al092022-public-010",
+        "storm_id": "AL092022",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "db20a8be811598d4c92308669be1dd974aa2ef523df78c73b3a23f76267ea623",
+        "normalized_sha256": "3dc99ecaf68fd9f925d86826bbf18417bcf77fcba2db12f21c30b62fec730fc4",
+        "raw_text_chars": 5899
+      },
+      {
+        "source_id": "nhc-al092022-public-011",
+        "storm_id": "AL092022",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "32d0ed3c07d07296165dd5e2721bf5e49252da633ec8ad69e69954ba43c8bfdf",
+        "normalized_sha256": "29f8251c37c48500b3540f2b049a4d691e77106244a3a8608995da055e552929",
+        "raw_text_chars": 6728
+      },
+      {
+        "source_id": "nhc-al102023-public-009",
+        "storm_id": "AL102023",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "27830bc5610a7b73e1caaf580e4c08d73bc4135b831fece2040cbfb4bc373d8e",
+        "normalized_sha256": "e6e5ac399ab20f3626c55568e0433266a85139d72fda2a2e30c34aac09cfc7d2",
+        "raw_text_chars": 9467
+      },
+      {
+        "source_id": "nhc-al102023-public-010",
+        "storm_id": "AL102023",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "aa6393ed6b1ccb6642bdea0e4e2767e0b1630f42c4117676c923f0ebf8d9b74e",
+        "normalized_sha256": "5343774d56b667c6408cdc762283b6d3ea108f9be454a4ed834a4ad91b7c0cfe",
+        "raw_text_chars": 9125
+      },
+      {
+        "source_id": "nhc-al102023-public-011",
+        "storm_id": "AL102023",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "b3d439c511d73c709200c38185f779a43824438b0df00e4be045a06601a56b1b",
+        "normalized_sha256": "3a67cd87444762a38af020d8e96da2bc25e2b703c76b8a6d129d616c8a512b8f",
+        "raw_text_chars": 8713
+      },
+      {
+        "source_id": "nhc-al112017-public-009",
+        "storm_id": "AL112017",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "edd5911d92401e5c9c2ad00d4763d139828523ba57df5f75b6a21429230bae85",
+        "normalized_sha256": "f8786fdd4aee3bf83362062efaa561e9d80ac86e5af97778ad78147db921740f",
+        "raw_text_chars": 1578
+      },
+      {
+        "source_id": "nhc-al112017-public-010",
+        "storm_id": "AL112017",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "aff795f654272860f6014c8810e930e8df6d6c440c1a5e90ac93aa03d0011289",
+        "normalized_sha256": "5b1c4626b867fa3bfcac8e09507a98a38bf5dc6e3af962f41748d810fcd6aea6",
+        "raw_text_chars": 1663
+      },
+      {
+        "source_id": "nhc-al112017-public-011",
+        "storm_id": "AL112017",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "752940f4a1587a087d09e63eaa9d9a86024af47727d9d8ac3a2a359ee56faa45",
+        "normalized_sha256": "7778325ff653c4b326db4b1b59d641b14bd9143dd1c4eb22fbea99343c5b6c04",
+        "raw_text_chars": 1693
+      },
+      {
+        "source_id": "nhc-al132020-public-009",
+        "storm_id": "AL132020",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "e59bb6ccc3bb9c8a96eee6ae68da0e0bae1a0d022932eb9f262937e1276b9f57",
+        "normalized_sha256": "23bdad7e095595c5f8d5a61d4e7c5890e370a0914ba43c3417596f47a880ae09",
+        "raw_text_chars": 4493
+      },
+      {
+        "source_id": "nhc-al132020-public-010",
+        "storm_id": "AL132020",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "9f6ea21a801debc2b1778744667a1939fe9c0e723792e4f335aaab7e2e60baf7",
+        "normalized_sha256": "0297f519ead28e129ab6531d6606a88041df19c49ecf340a2f4d2fd86dfde3a4",
+        "raw_text_chars": 4419
+      },
+      {
+        "source_id": "nhc-al132020-public-011",
+        "storm_id": "AL132020",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "5f05f07d82bed34594eb048629b2053e7a2aa33cefef3014bbc50ab2849db21f",
+        "normalized_sha256": "f026997571582461ce527cfab80b6e51935a95f1b2e0e3aa6c83ddec7a22325f",
+        "raw_text_chars": 4943
+      },
+      {
+        "source_id": "nhc-al142018-public-009",
+        "storm_id": "AL142018",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "22d7414bdb4c272848d6c501785d25da782e5f207c3dcf204c07d737ae714211",
+        "normalized_sha256": "6b6a6d81d1178543de19aab3c76ddc874294237af29ee11b3ff7e6db74910b93",
+        "raw_text_chars": 8598
+      },
+      {
+        "source_id": "nhc-al142018-public-010",
+        "storm_id": "AL142018",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "01846ad4bb440a4d8d6a5fe8cbb8593153946e85f740597ecf7fa9dd53b095bc",
+        "normalized_sha256": "87e4579093f0945ac9b4e2eb4538ba620db5ccdfac05dcdfe215e7ac7f4fa89b",
+        "raw_text_chars": 7896
+      },
+      {
+        "source_id": "nhc-al142018-public-011",
+        "storm_id": "AL142018",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "c479ed2dde54626e93868fb86087f031a1d6937896d6c30f0f0c425855d52cb5",
+        "normalized_sha256": "1b4290f47c9544a67851446afb8fe9b8b77ce04971a4c6ee854f37749c32ba8f",
+        "raw_text_chars": 8108
+      },
+      {
+        "source_id": "nhc-al152017-public-009",
+        "storm_id": "AL152017",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "122be663d69038e47fdd8cbc268b0dccac873cab042922623fa2d50f2041f63a",
+        "normalized_sha256": "5fb74cef583aa4b248816579676df0c62d4d75b71625b54407135eb262181fe1",
+        "raw_text_chars": 6735
+      },
+      {
+        "source_id": "nhc-al152017-public-010",
+        "storm_id": "AL152017",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "7aba32304e709e121be1e39b5e2c870f62a7bb1dd22cb2a69ed578385b2268e3",
+        "normalized_sha256": "6b1700bdfcc211cd1bf427142e249dbff156f04880ed6d1f7449b6c3d9be2d0a",
+        "raw_text_chars": 6946
+      },
+      {
+        "source_id": "nhc-al152017-public-011",
+        "storm_id": "AL152017",
+        "split": "heldout",
+        "used_in_dynamic": true,
+        "raw_sha256": "9be2898cb11fbe2600a2d30d64562793fe9287e93fdc7758e60733b4fabf498a",
+        "normalized_sha256": "a11ee6a7ce82abcd348672bab55c3303b1fb902a92ee353398b894b43c8fcaba",
+        "raw_text_chars": 6728
+      }
+    ],
+    "method": {
+      "version": "dataset_audit_v1",
+      "exact_hash": "sha256(raw_text.encode('utf-8'))",
+      "normalized_hash": "sha256(' '.join(raw_text.casefold().split()).encode('utf-8'))",
+      "tokenization": "re.findall(r'[a-z0-9]+', raw_text.casefold())",
+      "shingle_words": 5,
+      "similarity": "set_jaccard_intersection_size_divided_by_union_size",
+      "empty_shingle_similarity": null,
+      "candidate_threshold": 0.9,
+      "candidate_threshold_tuned_on_model_results": false,
+      "common_shingle_context": "occurs_in_at_least_3_distinct_parsed_storm_events",
+      "common_shingles_removed_from_similarity": false,
+      "normalization_changes_source_content": false,
+      "near_candidates_change_admission": false,
+      "human_review_required": false
+    }
+  },
+  "inventory_exact_duplicates": {
+    "scope": "acquisition_inventory_text_hashes_including_rejected_sources",
+    "records_with_text_hash": 36,
+    "duplicate_groups": [],
+    "raw_rejected_text_reopened": false
+  },
+  "shared_public_template": {
+    "template_hashes": [
+      "01c91e90d3c0d92f2243da3fb10143697664b38ccc041d66e0aed24466f98d02"
+    ],
+    "unique_templates": 1,
+    "scope": "protocol_instruction_required_fields_and_policy_only",
+    "interpretation": "Shared task wording is expected; it does not make reports identical or splits unseen-template tests."
+  },
+  "input_sizes": {
+    "units": "unicode_characters_and_utf8_bytes_not_model_tokens",
+    "carrier": "null; actual model-authored carrier and provider envelope add size",
+    "repeated_deliveries_counted": true,
+    "token_estimate": null,
+    "overall": {
+      "checkpoints": 100,
+      "max_evidence_text_chars": 41012,
+      "max_public_request_json_chars_without_carrier": 43277,
+      "max_public_request_json_utf8_bytes_without_carrier": 43277,
+      "max_record_deliveries": 4
+    },
+    "by_split": {
+      "development": {
+        "checkpoints": 30,
+        "max_evidence_text_chars": 35768,
+        "max_public_request_json_chars_without_carrier": 37865,
+        "max_public_request_json_utf8_bytes_without_carrier": 37865,
+        "max_record_deliveries": 4
+      },
+      "heldout": {
+        "checkpoints": 70,
+        "max_evidence_text_chars": 41012,
+        "max_public_request_json_chars_without_carrier": 43277,
+        "max_public_request_json_utf8_bytes_without_carrier": 43277,
+        "max_record_deliveries": 4
+      }
+    },
+    "per_checkpoint": [
+      {
+        "episode_id": "al022024:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al022024:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 6419,
+        "public_request_json_chars_without_carrier": 7583,
+        "public_request_json_utf8_bytes_without_carrier": 7583
+      },
+      {
+        "episode_id": "al022024:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 12555,
+        "public_request_json_chars_without_carrier": 13979,
+        "public_request_json_utf8_bytes_without_carrier": 13979
+      },
+      {
+        "episode_id": "al022024:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 18974,
+        "public_request_json_chars_without_carrier": 20664,
+        "public_request_json_utf8_bytes_without_carrier": 20664
+      },
+      {
+        "episode_id": "al022024:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 25293,
+        "public_request_json_chars_without_carrier": 27246,
+        "public_request_json_utf8_bytes_without_carrier": 27246
+      },
+      {
+        "episode_id": "al022024:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al022024:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 6419,
+        "public_request_json_chars_without_carrier": 7583,
+        "public_request_json_utf8_bytes_without_carrier": 7583
+      },
+      {
+        "episode_id": "al022024:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 6419,
+        "public_request_json_chars_without_carrier": 7583,
+        "public_request_json_utf8_bytes_without_carrier": 7583
+      },
+      {
+        "episode_id": "al022024:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 18974,
+        "public_request_json_chars_without_carrier": 20664,
+        "public_request_json_utf8_bytes_without_carrier": 20664
+      },
+      {
+        "episode_id": "al022024:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 25293,
+        "public_request_json_chars_without_carrier": 27246,
+        "public_request_json_utf8_bytes_without_carrier": 27246
+      },
+      {
+        "episode_id": "al052019:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al052019:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 4650,
+        "public_request_json_chars_without_carrier": 5778,
+        "public_request_json_utf8_bytes_without_carrier": 5778
+      },
+      {
+        "episode_id": "al052019:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 9677,
+        "public_request_json_chars_without_carrier": 11038,
+        "public_request_json_utf8_bytes_without_carrier": 11038
+      },
+      {
+        "episode_id": "al052019:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 14327,
+        "public_request_json_chars_without_carrier": 15918,
+        "public_request_json_utf8_bytes_without_carrier": 15918
+      },
+      {
+        "episode_id": "al052019:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 18950,
+        "public_request_json_chars_without_carrier": 20766,
+        "public_request_json_utf8_bytes_without_carrier": 20766
+      },
+      {
+        "episode_id": "al052019:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al052019:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 4650,
+        "public_request_json_chars_without_carrier": 5778,
+        "public_request_json_utf8_bytes_without_carrier": 5778
+      },
+      {
+        "episode_id": "al052019:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 4650,
+        "public_request_json_chars_without_carrier": 5778,
+        "public_request_json_utf8_bytes_without_carrier": 5778
+      },
+      {
+        "episode_id": "al052019:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 14327,
+        "public_request_json_chars_without_carrier": 15918,
+        "public_request_json_utf8_bytes_without_carrier": 15918
+      },
+      {
+        "episode_id": "al052019:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 18950,
+        "public_request_json_chars_without_carrier": 20766,
+        "public_request_json_utf8_bytes_without_carrier": 20766
+      },
+      {
+        "episode_id": "al062018:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al062018:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 1771,
+        "public_request_json_chars_without_carrier": 2837,
+        "public_request_json_utf8_bytes_without_carrier": 2837
+      },
+      {
+        "episode_id": "al062018:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 3388,
+        "public_request_json_chars_without_carrier": 4617,
+        "public_request_json_utf8_bytes_without_carrier": 4617
+      },
+      {
+        "episode_id": "al062018:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 5159,
+        "public_request_json_chars_without_carrier": 6556,
+        "public_request_json_utf8_bytes_without_carrier": 6556
+      },
+      {
+        "episode_id": "al062018:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 6885,
+        "public_request_json_chars_without_carrier": 8447,
+        "public_request_json_utf8_bytes_without_carrier": 8447
+      },
+      {
+        "episode_id": "al062018:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al062018:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 1771,
+        "public_request_json_chars_without_carrier": 2837,
+        "public_request_json_utf8_bytes_without_carrier": 2837
+      },
+      {
+        "episode_id": "al062018:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 1771,
+        "public_request_json_chars_without_carrier": 2837,
+        "public_request_json_utf8_bytes_without_carrier": 2837
+      },
+      {
+        "episode_id": "al062018:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 5159,
+        "public_request_json_chars_without_carrier": 6556,
+        "public_request_json_utf8_bytes_without_carrier": 6556
+      },
+      {
+        "episode_id": "al062018:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 6885,
+        "public_request_json_chars_without_carrier": 8447,
+        "public_request_json_utf8_bytes_without_carrier": 8447
+      },
+      {
+        "episode_id": "al092021:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al092021:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 9333,
+        "public_request_json_chars_without_carrier": 10538,
+        "public_request_json_utf8_bytes_without_carrier": 10538
+      },
+      {
+        "episode_id": "al092021:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 18247,
+        "public_request_json_chars_without_carrier": 19750,
+        "public_request_json_utf8_bytes_without_carrier": 19750
+      },
+      {
+        "episode_id": "al092021:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 27580,
+        "public_request_json_chars_without_carrier": 29390,
+        "public_request_json_utf8_bytes_without_carrier": 29390
+      },
+      {
+        "episode_id": "al092021:controlled:base",
+        "split": "development",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 35768,
+        "public_request_json_chars_without_carrier": 37865,
+        "public_request_json_utf8_bytes_without_carrier": 37865
+      },
+      {
+        "episode_id": "al092021:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al092021:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 9333,
+        "public_request_json_chars_without_carrier": 10538,
+        "public_request_json_utf8_bytes_without_carrier": 10538
+      },
+      {
+        "episode_id": "al092021:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 9333,
+        "public_request_json_chars_without_carrier": 10538,
+        "public_request_json_utf8_bytes_without_carrier": 10538
+      },
+      {
+        "episode_id": "al092021:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 27580,
+        "public_request_json_chars_without_carrier": 29390,
+        "public_request_json_utf8_bytes_without_carrier": 29390
+      },
+      {
+        "episode_id": "al092021:controlled:delay",
+        "split": "development",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 35768,
+        "public_request_json_chars_without_carrier": 37865,
+        "public_request_json_utf8_bytes_without_carrier": 37865
+      },
+      {
+        "episode_id": "al092022:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al092022:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 6477,
+        "public_request_json_chars_without_carrier": 7637,
+        "public_request_json_utf8_bytes_without_carrier": 7637
+      },
+      {
+        "episode_id": "al092022:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 13022,
+        "public_request_json_chars_without_carrier": 14441,
+        "public_request_json_utf8_bytes_without_carrier": 14441
+      },
+      {
+        "episode_id": "al092022:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 19499,
+        "public_request_json_chars_without_carrier": 21180,
+        "public_request_json_utf8_bytes_without_carrier": 21180
+      },
+      {
+        "episode_id": "al092022:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 26983,
+        "public_request_json_chars_without_carrier": 28945,
+        "public_request_json_utf8_bytes_without_carrier": 28945
+      },
+      {
+        "episode_id": "al092022:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al092022:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 6477,
+        "public_request_json_chars_without_carrier": 7637,
+        "public_request_json_utf8_bytes_without_carrier": 7637
+      },
+      {
+        "episode_id": "al092022:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 6477,
+        "public_request_json_chars_without_carrier": 7637,
+        "public_request_json_utf8_bytes_without_carrier": 7637
+      },
+      {
+        "episode_id": "al092022:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 19499,
+        "public_request_json_chars_without_carrier": 21180,
+        "public_request_json_utf8_bytes_without_carrier": 21180
+      },
+      {
+        "episode_id": "al092022:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 26983,
+        "public_request_json_chars_without_carrier": 28945,
+        "public_request_json_utf8_bytes_without_carrier": 28945
+      },
+      {
+        "episode_id": "al102023:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al102023:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 10558,
+        "public_request_json_chars_without_carrier": 11804,
+        "public_request_json_utf8_bytes_without_carrier": 11804
+      },
+      {
+        "episode_id": "al102023:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 20730,
+        "public_request_json_chars_without_carrier": 22315,
+        "public_request_json_utf8_bytes_without_carrier": 22315
+      },
+      {
+        "episode_id": "al102023:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 31288,
+        "public_request_json_chars_without_carrier": 33221,
+        "public_request_json_utf8_bytes_without_carrier": 33221
+      },
+      {
+        "episode_id": "al102023:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 41012,
+        "public_request_json_chars_without_carrier": 43277,
+        "public_request_json_utf8_bytes_without_carrier": 43277
+      },
+      {
+        "episode_id": "al102023:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al102023:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 10558,
+        "public_request_json_chars_without_carrier": 11804,
+        "public_request_json_utf8_bytes_without_carrier": 11804
+      },
+      {
+        "episode_id": "al102023:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 10558,
+        "public_request_json_chars_without_carrier": 11804,
+        "public_request_json_utf8_bytes_without_carrier": 11804
+      },
+      {
+        "episode_id": "al102023:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 31288,
+        "public_request_json_chars_without_carrier": 33221,
+        "public_request_json_utf8_bytes_without_carrier": 33221
+      },
+      {
+        "episode_id": "al102023:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 41012,
+        "public_request_json_chars_without_carrier": 43277,
+        "public_request_json_utf8_bytes_without_carrier": 43277
+      },
+      {
+        "episode_id": "al112017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al112017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 1805,
+        "public_request_json_chars_without_carrier": 2870,
+        "public_request_json_utf8_bytes_without_carrier": 2870
+      },
+      {
+        "episode_id": "al112017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 3706,
+        "public_request_json_chars_without_carrier": 4941,
+        "public_request_json_utf8_bytes_without_carrier": 4941
+      },
+      {
+        "episode_id": "al112017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 5511,
+        "public_request_json_chars_without_carrier": 6913,
+        "public_request_json_utf8_bytes_without_carrier": 6913
+      },
+      {
+        "episode_id": "al112017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 7442,
+        "public_request_json_chars_without_carrier": 9014,
+        "public_request_json_utf8_bytes_without_carrier": 9014
+      },
+      {
+        "episode_id": "al112017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al112017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 1805,
+        "public_request_json_chars_without_carrier": 2870,
+        "public_request_json_utf8_bytes_without_carrier": 2870
+      },
+      {
+        "episode_id": "al112017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 1805,
+        "public_request_json_chars_without_carrier": 2870,
+        "public_request_json_utf8_bytes_without_carrier": 2870
+      },
+      {
+        "episode_id": "al112017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 5511,
+        "public_request_json_chars_without_carrier": 6913,
+        "public_request_json_utf8_bytes_without_carrier": 6913
+      },
+      {
+        "episode_id": "al112017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 7442,
+        "public_request_json_chars_without_carrier": 9014,
+        "public_request_json_utf8_bytes_without_carrier": 9014
+      },
+      {
+        "episode_id": "al132020:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al132020:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 5020,
+        "public_request_json_chars_without_carrier": 6153,
+        "public_request_json_utf8_bytes_without_carrier": 6153
+      },
+      {
+        "episode_id": "al132020:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 9960,
+        "public_request_json_chars_without_carrier": 11327,
+        "public_request_json_utf8_bytes_without_carrier": 11327
+      },
+      {
+        "episode_id": "al132020:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 14980,
+        "public_request_json_chars_without_carrier": 16582,
+        "public_request_json_utf8_bytes_without_carrier": 16582
+      },
+      {
+        "episode_id": "al132020:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 20495,
+        "public_request_json_chars_without_carrier": 22341,
+        "public_request_json_utf8_bytes_without_carrier": 22341
+      },
+      {
+        "episode_id": "al132020:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al132020:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 5020,
+        "public_request_json_chars_without_carrier": 6153,
+        "public_request_json_utf8_bytes_without_carrier": 6153
+      },
+      {
+        "episode_id": "al132020:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 5020,
+        "public_request_json_chars_without_carrier": 6153,
+        "public_request_json_utf8_bytes_without_carrier": 6153
+      },
+      {
+        "episode_id": "al132020:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 14980,
+        "public_request_json_chars_without_carrier": 16582,
+        "public_request_json_utf8_bytes_without_carrier": 16582
+      },
+      {
+        "episode_id": "al132020:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 20495,
+        "public_request_json_chars_without_carrier": 22341,
+        "public_request_json_utf8_bytes_without_carrier": 22341
+      },
+      {
+        "episode_id": "al142018:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al142018:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 9550,
+        "public_request_json_chars_without_carrier": 10768,
+        "public_request_json_utf8_bytes_without_carrier": 10768
+      },
+      {
+        "episode_id": "al142018:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 18312,
+        "public_request_json_chars_without_carrier": 19833,
+        "public_request_json_utf8_bytes_without_carrier": 19833
+      },
+      {
+        "episode_id": "al142018:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 27862,
+        "public_request_json_chars_without_carrier": 29703,
+        "public_request_json_utf8_bytes_without_carrier": 29703
+      },
+      {
+        "episode_id": "al142018:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 36866,
+        "public_request_json_chars_without_carrier": 39016,
+        "public_request_json_utf8_bytes_without_carrier": 39016
+      },
+      {
+        "episode_id": "al142018:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al142018:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 9550,
+        "public_request_json_chars_without_carrier": 10768,
+        "public_request_json_utf8_bytes_without_carrier": 10768
+      },
+      {
+        "episode_id": "al142018:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 9550,
+        "public_request_json_chars_without_carrier": 10768,
+        "public_request_json_utf8_bytes_without_carrier": 10768
+      },
+      {
+        "episode_id": "al142018:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 27862,
+        "public_request_json_chars_without_carrier": 29703,
+        "public_request_json_utf8_bytes_without_carrier": 29703
+      },
+      {
+        "episode_id": "al142018:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 36866,
+        "public_request_json_chars_without_carrier": 39016,
+        "public_request_json_utf8_bytes_without_carrier": 39016
+      },
+      {
+        "episode_id": "al152017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al152017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 7521,
+        "public_request_json_chars_without_carrier": 8706,
+        "public_request_json_utf8_bytes_without_carrier": 8706
+      },
+      {
+        "episode_id": "al152017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 2,
+        "unique_source_records": 2,
+        "evidence_text_chars": 15313,
+        "public_request_json_chars_without_carrier": 16797,
+        "public_request_json_utf8_bytes_without_carrier": 16797
+      },
+      {
+        "episode_id": "al152017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 22834,
+        "public_request_json_chars_without_carrier": 24605,
+        "public_request_json_utf8_bytes_without_carrier": 24605
+      },
+      {
+        "episode_id": "al152017:controlled:base",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 30384,
+        "public_request_json_chars_without_carrier": 32449,
+        "public_request_json_utf8_bytes_without_carrier": 32449
+      },
+      {
+        "episode_id": "al152017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c0",
+        "record_deliveries": 0,
+        "unique_source_records": 0,
+        "evidence_text_chars": 0,
+        "public_request_json_chars_without_carrier": 899,
+        "public_request_json_utf8_bytes_without_carrier": 899
+      },
+      {
+        "episode_id": "al152017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c1",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 7521,
+        "public_request_json_chars_without_carrier": 8706,
+        "public_request_json_utf8_bytes_without_carrier": 8706
+      },
+      {
+        "episode_id": "al152017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c2",
+        "record_deliveries": 1,
+        "unique_source_records": 1,
+        "evidence_text_chars": 7521,
+        "public_request_json_chars_without_carrier": 8706,
+        "public_request_json_utf8_bytes_without_carrier": 8706
+      },
+      {
+        "episode_id": "al152017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c3",
+        "record_deliveries": 3,
+        "unique_source_records": 2,
+        "evidence_text_chars": 22834,
+        "public_request_json_chars_without_carrier": 24605,
+        "public_request_json_utf8_bytes_without_carrier": 24605
+      },
+      {
+        "episode_id": "al152017:controlled:delay",
+        "split": "heldout",
+        "checkpoint_id": "c4",
+        "record_deliveries": 4,
+        "unique_source_records": 3,
+        "evidence_text_chars": 30384,
+        "public_request_json_chars_without_carrier": 32449,
+        "public_request_json_utf8_bytes_without_carrier": 32449
+      }
+    ]
+  },
+  "policy_action_distribution": {
+    "origin": "frozen_private_reference_auditor_only_never_added_to_public_requests",
+    "policy_kind": "research_rule_not_operational_advice",
+    "by_split": {
+      "development": {
+        "checkpoints": 30,
+        "action_counts": {
+          "monitor": 19,
+          "prepare": 5,
+          "request_evidence": 6
+        },
+        "majority_action_fraction": 0.6333333333333333,
+        "by_checkpoint": {
+          "c0": {
+            "request_evidence": 6
+          },
+          "c1": {
+            "monitor": 6
+          },
+          "c2": {
+            "monitor": 5,
+            "prepare": 1
+          },
+          "c3": {
+            "monitor": 4,
+            "prepare": 2
+          },
+          "c4": {
+            "monitor": 4,
+            "prepare": 2
+          }
+        }
+      },
+      "heldout": {
+        "checkpoints": 70,
+        "action_counts": {
+          "monitor": 32,
+          "prepare": 24,
+          "request_evidence": 14
+        },
+        "majority_action_fraction": 0.45714285714285713,
+        "by_checkpoint": {
+          "c0": {
+            "request_evidence": 14
+          },
+          "c1": {
+            "monitor": 8,
+            "prepare": 6
+          },
+          "c2": {
+            "monitor": 8,
+            "prepare": 6
+          },
+          "c3": {
+            "monitor": 8,
+            "prepare": 6
+          },
+          "c4": {
+            "monitor": 8,
+            "prepare": 6
+          }
+        }
+      }
+    },
+    "interpretation": "Action imbalance can conceal incorrect source/state updates; retain grounded-state metrics."
+  },
+  "limitations": [
+    "Near-duplicate candidates are lexical similarity observations, not proof of leakage or harmless boilerplate.",
+    "Normalization and near-duplicate comparison cover parsed records; rejected raw text is represented by acquisition hashes only.",
+    "Common shingles are context only; no automatic exclusion, relabelling, threshold tuning, or new human annotation is performed.",
+    "Pretraining contamination is not measured or ruled out; the archives and heldout content are public.",
+    "This small purposeful Atlantic cyclone cohort does not establish representative or cross-hazard extreme-weather coverage.",
+    "Base and delay branches share one storm and are dependent; release schedules are controlled, not proven historical availability.",
+    "Digest checks establish artifact consistency, not scientific truth, source-server authenticity, or historical availability.",
+    "Null-carrier request sizes are not full conversation maxima, model token counts, or context-window compatibility guarantees."
+  ],
+  "model_calls": 0,
+  "new_human_reviews": 0,
+  "audit_sha256": "7ceb731018d46dcf8e0af8855991d1649765bc98056114be7dfaca5d4c3dfe46"
+}

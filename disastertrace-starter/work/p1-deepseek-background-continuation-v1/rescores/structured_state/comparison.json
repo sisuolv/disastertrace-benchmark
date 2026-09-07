@@ -1,0 +1,5656 @@
+{
+  "schema_version": "offline_scoring_comparison_v1",
+  "new_provider_requests": 0,
+  "interpretation": "Different evidence validation of identical saved answers; not a change in model behavior.",
+  "invariants": {
+    "schema_success": {
+      "numerator": 30,
+      "denominator": 30,
+      "value": 1.0
+    },
+    "state_accuracy": {
+      "numerator": 150,
+      "denominator": 150,
+      "value": 1.0
+    },
+    "action_accuracy": {
+      "numerator": 30,
+      "denominator": 30,
+      "value": 1.0
+    },
+    "unknown_accuracy": {
+      "numerator": 54,
+      "denominator": 54,
+      "value": 1.0
+    },
+    "known_answer_coverage": {
+      "numerator": 96,
+      "denominator": 96,
+      "value": 1.0
+    }
+  },
+  "checkpoint_count": 30,
+  "field_count": 150,
+  "metric_differences": {
+    "grounded_state": {
+      "v1": {
+        "numerator": 139,
+        "denominator": 150,
+        "value": 0.9266666666666666
+      },
+      "v2": {
+        "numerator": 150,
+        "denominator": 150,
+        "value": 1.0
+      }
+    }
+  },
+  "per_field": [
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-009",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "maximum_wind_mph",
+              "value": 85.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...85 MPH...140 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "latitude_deg",
+              "value": 24.8,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...24.8N 86.1W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "longitude_deg",
+              "value": -86.1,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...24.8N 86.1W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-009",
+            "line": 23
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 984.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...984 MB...29.06 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 21,
+            "record_id": "nhc-al092021-public-010"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "maximum_wind_mph",
+              "value": 105.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...105 MPH...165 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 18,
+            "record_id": "nhc-al092021-public-010"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "latitude_deg",
+              "value": 26.2,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...26.2N 87.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 18,
+            "record_id": "nhc-al092021-public-010"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "longitude_deg",
+              "value": -87.0,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...26.2N 87.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 23,
+            "record_id": "nhc-al092021-public-010"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 976.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...976 MB...28.82 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-010",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "maximum_wind_mph",
+              "value": 105.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...105 MPH...165 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-010",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "latitude_deg",
+              "value": 26.2,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...26.2N 87.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-010",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "longitude_deg",
+              "value": -87.0,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...26.2N 87.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-010",
+            "line": 23
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 976.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...976 MB...28.82 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-011",
+            "line": 88
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-011",
+              "field": "maximum_wind_mph",
+              "value": 105.0,
+              "unit": "mph",
+              "line_start": 88,
+              "line_end": 89,
+              "citation_lines": [
+                88
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 105 mph (165 km/h) with higher\ngusts.  Rapid strengthening is forecast during the next 12 to 18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-011",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-011",
+              "field": "latitude_deg",
+              "value": 27.2,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...27.2N 88.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-011",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-011",
+              "field": "longitude_deg",
+              "value": -88.0,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...27.2N 88.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-011",
+            "line": 23
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-011",
+              "field": "minimum_pressure_mb",
+              "value": 964.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...964 MB...28.47 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-009",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "maximum_wind_mph",
+              "value": 85.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...85 MPH...140 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "latitude_deg",
+              "value": 24.8,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...24.8N 86.1W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "longitude_deg",
+              "value": -86.1,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...24.8N 86.1W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-009",
+            "line": 23
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 984.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...984 MB...29.06 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 21,
+            "record_id": "nhc-al092021-public-009"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "maximum_wind_mph",
+              "value": 85.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...85 MPH...140 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 18,
+            "record_id": "nhc-al092021-public-009"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "latitude_deg",
+              "value": 24.8,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...24.8N 86.1W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 18,
+            "record_id": "nhc-al092021-public-009"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "longitude_deg",
+              "value": -86.1,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...24.8N 86.1W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 23,
+            "record_id": "nhc-al092021-public-009"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 984.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...984 MB...29.06 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-010",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "maximum_wind_mph",
+              "value": 105.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...105 MPH...165 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-010",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "latitude_deg",
+              "value": 26.2,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...26.2N 87.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-010",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "longitude_deg",
+              "value": -87.0,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...26.2N 87.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-010",
+            "line": 23
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 976.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...976 MB...28.82 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-011",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-011",
+              "field": "maximum_wind_mph",
+              "value": 105.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...105 MPH...165 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-011",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-011",
+              "field": "latitude_deg",
+              "value": 27.2,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...27.2N 88.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-011",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-011",
+              "field": "longitude_deg",
+              "value": -88.0,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...27.2N 88.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-011",
+            "line": 23
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-011",
+              "field": "minimum_pressure_mb",
+              "value": 964.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...964 MB...28.47 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...45 MPH...75 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 38
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 38,
+              "line_end": 39,
+              "citation_lines": [
+                38
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds have increased to near 45 mph (75 km/h) with\nhigher gusts. Some strengthening is forecast during the next 48"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "latitude_deg",
+              "value": 14.8,
+              "unit": "degrees_north_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...14.8N 27.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "longitude_deg",
+              "value": -27.8,
+              "unit": "degrees_east_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...14.8N 27.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 1003.0,
+              "unit": "mb",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1003 MB...29.62 INCHES"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 45
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 1003.0,
+              "unit": "mb",
+              "line_start": 45,
+              "line_end": 45,
+              "citation_lines": [
+                45
+              ],
+              "kind": "body_observation",
+              "text": "The estimated minimum central pressure is 1003 mb (29.62 inches)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...45 MPH...75 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 34
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 34,
+              "line_end": 34,
+              "citation_lines": [
+                34
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 45 mph (75 km/h) with higher gusts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "latitude_deg",
+              "value": 15.6,
+              "unit": "degrees_north_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...15.6N 29.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "longitude_deg",
+              "value": -29.0,
+              "unit": "degrees_east_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...15.6N 29.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 40
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 40,
+              "line_end": 40,
+              "citation_lines": [
+                40
+              ],
+              "kind": "body_observation",
+              "text": "The estimated minimum central pressure is 1002 mb (29.59 inches)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...45 MPH...75 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 34
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 34,
+              "line_end": 34,
+              "citation_lines": [
+                34
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 45 mph (75 km/h) with higher gusts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "latitude_deg",
+              "value": 15.6,
+              "unit": "degrees_north_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...15.6N 29.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "longitude_deg",
+              "value": -29.0,
+              "unit": "degrees_east_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...15.6N 29.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 40
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 40,
+              "line_end": 40,
+              "citation_lines": [
+                40
+              ],
+              "kind": "body_observation",
+              "text": "The estimated minimum central pressure is 1002 mb (29.59 inches)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "maximum_wind_mph",
+              "value": 50.0,
+              "unit": "mph",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...50 MPH...85 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 35
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "maximum_wind_mph",
+              "value": 50.0,
+              "unit": "mph",
+              "line_start": 35,
+              "line_end": 36,
+              "citation_lines": [
+                35
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds have increased to near 50 mph (85 km/h) with\nhigher gusts.  Additional slow strengthening is expected tonight and"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 16
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "latitude_deg",
+              "value": 16.0,
+              "unit": "degrees_north_signed",
+              "line_start": 16,
+              "line_end": 16,
+              "citation_lines": [
+                16
+              ],
+              "kind": "summary",
+              "text": "LOCATION...16.0N 30.2W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 16
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "longitude_deg",
+              "value": -30.2,
+              "unit": "degrees_east_signed",
+              "line_start": 16,
+              "line_end": 16,
+              "citation_lines": [
+                16
+              ],
+              "kind": "summary",
+              "text": "LOCATION...16.0N 30.2W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 20
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "minimum_pressure_mb",
+              "value": 1000.0,
+              "unit": "mb",
+              "line_start": 20,
+              "line_end": 20,
+              "citation_lines": [
+                20
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1000 MB...29.53 INCHES"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 42
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "minimum_pressure_mb",
+              "value": 1000.0,
+              "unit": "mb",
+              "line_start": 42,
+              "line_end": 42,
+              "citation_lines": [
+                42
+              ],
+              "kind": "body_observation",
+              "text": "The estimated minimum central pressure is 1000 mb (29.53 inches)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...45 MPH...75 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "latitude_deg",
+              "value": 14.8,
+              "unit": "degrees_north_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...14.8N 27.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "longitude_deg",
+              "value": -27.8,
+              "unit": "degrees_east_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...14.8N 27.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 1003.0,
+              "unit": "mb",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1003 MB...29.62 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...45 MPH...75 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "latitude_deg",
+              "value": 14.8,
+              "unit": "degrees_north_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...14.8N 27.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 15
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "longitude_deg",
+              "value": -27.8,
+              "unit": "degrees_east_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...14.8N 27.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 1003.0,
+              "unit": "mb",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1003 MB...29.62 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 17,
+            "record_id": "nhc-al062018-public-010"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...45 MPH...75 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 15,
+            "record_id": "nhc-al062018-public-010"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "latitude_deg",
+              "value": 15.6,
+              "unit": "degrees_north_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...15.6N 29.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 15,
+            "record_id": "nhc-al062018-public-010"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "longitude_deg",
+              "value": -29.0,
+              "unit": "degrees_east_signed",
+              "line_start": 15,
+              "line_end": 15,
+              "citation_lines": [
+                15
+              ],
+              "kind": "summary",
+              "text": "LOCATION...15.6N 29.0W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "line": 19,
+            "record_id": "nhc-al062018-public-010"
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "maximum_wind_mph",
+              "value": 50.0,
+              "unit": "mph",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...50 MPH...85 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 16
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "latitude_deg",
+              "value": 16.0,
+              "unit": "degrees_north_signed",
+              "line_start": 16,
+              "line_end": 16,
+              "citation_lines": [
+                16
+              ],
+              "kind": "summary",
+              "text": "LOCATION...16.0N 30.2W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 16
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "longitude_deg",
+              "value": -30.2,
+              "unit": "degrees_east_signed",
+              "line_start": 16,
+              "line_end": 16,
+              "citation_lines": [
+                16
+              ],
+              "kind": "summary",
+              "text": "LOCATION...16.0N 30.2W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 20
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "minimum_pressure_mb",
+              "value": 1000.0,
+              "unit": "mb",
+              "line_start": 20,
+              "line_end": 20,
+              "citation_lines": [
+                20
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1000 MB...29.53 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c0",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...60 MPH...95 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "latitude_deg",
+              "value": 12.3,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.3N 57.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "longitude_deg",
+              "value": -57.7,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.3N 57.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 23
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 20
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 20,
+              "line_end": 20,
+              "citation_lines": [
+                20
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...60 MPH...95 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "latitude_deg",
+              "value": 12.7,
+              "unit": "degrees_north_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.7N 58.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "longitude_deg",
+              "value": -58.8,
+              "unit": "degrees_east_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.7N 58.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 22
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 22,
+              "line_end": 22,
+              "citation_lines": [
+                22
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 20
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 20,
+              "line_end": 20,
+              "citation_lines": [
+                20
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...60 MPH...95 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "latitude_deg",
+              "value": 12.7,
+              "unit": "degrees_north_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.7N 58.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "longitude_deg",
+              "value": -58.8,
+              "unit": "degrees_east_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.7N 58.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 22
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 22,
+              "line_end": 22,
+              "citation_lines": [
+                22
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-011",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-011",
+              "field": "maximum_wind_mph",
+              "value": 50.0,
+              "unit": "mph",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...50 MPH...85 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-011",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-011",
+              "field": "latitude_deg",
+              "value": 13.2,
+              "unit": "degrees_north_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...13.2N 59.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-011",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-011",
+              "field": "longitude_deg",
+              "value": -59.7,
+              "unit": "degrees_east_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...13.2N 59.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-011",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-011",
+              "field": "minimum_pressure_mb",
+              "value": 1003.0,
+              "unit": "mb",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1003 MB...29.62 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c0",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...60 MPH...95 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 81
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 81,
+              "line_end": 81,
+              "citation_lines": [
+                81
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 60 mph (95 km/h) with higher gusts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "latitude_deg",
+              "value": 12.3,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.3N 57.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "longitude_deg",
+              "value": -57.7,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.3N 57.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 23
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...60 MPH...95 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 81
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 81,
+              "line_end": 81,
+              "citation_lines": [
+                81
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 60 mph (95 km/h) with higher gusts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "latitude_deg",
+              "value": 12.3,
+              "unit": "degrees_north_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.3N 57.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "longitude_deg",
+              "value": -57.7,
+              "unit": "degrees_east_signed",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.3N 57.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 23
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 23,
+              "line_end": 23,
+              "citation_lines": [
+                23
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 20
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 20,
+              "line_end": 20,
+              "citation_lines": [
+                20
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...60 MPH...95 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "latitude_deg",
+              "value": 12.7,
+              "unit": "degrees_north_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.7N 58.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "longitude_deg",
+              "value": -58.8,
+              "unit": "degrees_east_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...12.7N 58.8W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-010",
+            "line": 22
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 22,
+              "line_end": 22,
+              "citation_lines": [
+                22
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c3",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-011",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-011",
+              "field": "maximum_wind_mph",
+              "value": 50.0,
+              "unit": "mph",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...50 MPH...85 KM/H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "latitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-011",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-011",
+              "field": "latitude_deg",
+              "value": 13.2,
+              "unit": "degrees_north_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...13.2N 59.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "longitude_deg",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-011",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-011",
+              "field": "longitude_deg",
+              "value": -59.7,
+              "unit": "degrees_east_signed",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "LOCATION...13.2N 59.7W"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-011",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-011",
+              "field": "minimum_pressure_mb",
+              "value": 1003.0,
+              "unit": "mb",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1003 MB...29.62 INCHES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c4",
+      "field": "port_reopening_time",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": false,
+      "reason": "correct_unknown",
+      "citation_checks": []
+    }
+  ],
+  "changed_fields": [
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al092021-public-011",
+            "line": 88
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al092021-public-011",
+              "field": "maximum_wind_mph",
+              "value": 105.0,
+              "unit": "mph",
+              "line_start": 88,
+              "line_end": 89,
+              "citation_lines": [
+                88
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 105 mph (165 km/h) with higher\ngusts.  Rapid strengthening is forecast during the next 12 to 18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...45 MPH...75 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 38
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 38,
+              "line_end": 39,
+              "citation_lines": [
+                38
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds have increased to near 45 mph (75 km/h) with\nhigher gusts. Some strengthening is forecast during the next 48"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c1",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 1003.0,
+              "unit": "mb",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1003 MB...29.62 INCHES"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-009",
+            "line": 45
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-009",
+              "field": "minimum_pressure_mb",
+              "value": 1003.0,
+              "unit": "mb",
+              "line_start": 45,
+              "line_end": 45,
+              "citation_lines": [
+                45
+              ],
+              "kind": "body_observation",
+              "text": "The estimated minimum central pressure is 1003 mb (29.62 inches)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...45 MPH...75 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 34
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 34,
+              "line_end": 34,
+              "citation_lines": [
+                34
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 45 mph (75 km/h) with higher gusts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c2",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 40
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 40,
+              "line_end": 40,
+              "citation_lines": [
+                40
+              ],
+              "kind": "body_observation",
+              "text": "The estimated minimum central pressure is 1002 mb (29.59 inches)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 17
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 17,
+              "line_end": 17,
+              "citation_lines": [
+                17
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...45 MPH...75 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 34
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "maximum_wind_mph",
+              "value": 45.0,
+              "unit": "mph",
+              "line_start": 34,
+              "line_end": 34,
+              "citation_lines": [
+                34
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 45 mph (75 km/h) with higher gusts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c3",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 19
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 19,
+              "line_end": 19,
+              "citation_lines": [
+                19
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1002 MB...29.59 INCHES"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-010",
+            "line": 40
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-010",
+              "field": "minimum_pressure_mb",
+              "value": 1002.0,
+              "unit": "mb",
+              "line_start": 40,
+              "line_end": 40,
+              "citation_lines": [
+                40
+              ],
+              "kind": "body_observation",
+              "text": "The estimated minimum central pressure is 1002 mb (29.59 inches)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 18
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "maximum_wind_mph",
+              "value": 50.0,
+              "unit": "mph",
+              "line_start": 18,
+              "line_end": 18,
+              "citation_lines": [
+                18
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...50 MPH...85 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 35
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "maximum_wind_mph",
+              "value": 50.0,
+              "unit": "mph",
+              "line_start": 35,
+              "line_end": 36,
+              "citation_lines": [
+                35
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds have increased to near 50 mph (85 km/h) with\nhigher gusts.  Additional slow strengthening is expected tonight and"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c4",
+      "field": "minimum_pressure_mb",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 20
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "minimum_pressure_mb",
+              "value": 1000.0,
+              "unit": "mb",
+              "line_start": 20,
+              "line_end": 20,
+              "citation_lines": [
+                20
+              ],
+              "kind": "summary",
+              "text": "MINIMUM CENTRAL PRESSURE...1000 MB...29.53 INCHES"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al062018-public-011",
+            "line": 42
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al062018-public-011",
+              "field": "minimum_pressure_mb",
+              "value": 1000.0,
+              "unit": "mb",
+              "line_start": 42,
+              "line_end": 42,
+              "citation_lines": [
+                42
+              ],
+              "kind": "body_observation",
+              "text": "The estimated minimum central pressure is 1000 mb (29.53 inches)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c1",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...60 MPH...95 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 81
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 81,
+              "line_end": 81,
+              "citation_lines": [
+                81
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 60 mph (95 km/h) with higher gusts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c2",
+      "field": "maximum_wind_mph",
+      "v1": {
+        "value_correct": true,
+        "grounded_correct": false
+      },
+      "v2": {
+        "value_correct": true,
+        "grounded_correct": true
+      },
+      "grounding_changed": true,
+      "reason": "supported",
+      "citation_checks": [
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 21
+          },
+          "valid": true,
+          "reason": "supported_summary",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 21,
+              "line_end": 21,
+              "citation_lines": [
+                21
+              ],
+              "kind": "summary",
+              "text": "MAXIMUM SUSTAINED WINDS...60 MPH...95 KM/H"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "record_id": "nhc-al052019-public-009",
+            "line": 81
+          },
+          "valid": true,
+          "reason": "supported_body_observation",
+          "support_spans": [
+            {
+              "record_id": "nhc-al052019-public-009",
+              "field": "maximum_wind_mph",
+              "value": 60.0,
+              "unit": "mph",
+              "line_start": 81,
+              "line_end": 81,
+              "citation_lines": [
+                81
+              ],
+              "kind": "body_observation",
+              "text": "Maximum sustained winds are near 60 mph (95 km/h) with higher gusts."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

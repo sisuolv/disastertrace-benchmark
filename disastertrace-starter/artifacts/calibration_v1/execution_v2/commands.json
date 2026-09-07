@@ -1,0 +1,57 @@
+{
+  "commands": [
+    {
+      "command": [
+        ".venv/bin/disastertrace-auto",
+        "build",
+        "--references",
+        "../references",
+        "--nhc-snapshot",
+        "../references/nhc_cohort_v1",
+        "--output",
+        "work/build-calibration-v1"
+      ],
+      "started_at": "2026-09-06T17:32:01.202442+00:00",
+      "finished_at": "2026-09-06T17:32:02.279369+00:00",
+      "exit_code": 0,
+      "log": "artifacts/calibration_v1/execution_v2/command_0.log",
+      "log_sha256": "89d6353d87d3c86483753087004646ea423142e8a09d4cb4febc1ba70861e201"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "disastertrace.automated.calibration",
+        "prepare",
+        "--build",
+        "work/build-calibration-v1",
+        "--provider-config",
+        "artifacts/p1_deepseek_development/provider.json",
+        "--output",
+        "work/calibration-v1-preparation"
+      ],
+      "started_at": "2026-09-06T17:32:02.290652+00:00",
+      "finished_at": "2026-09-06T17:32:11.029052+00:00",
+      "exit_code": 0,
+      "log": "artifacts/calibration_v1/execution_v2/command_1.log",
+      "log_sha256": "64455aa45e1bd726c3c8a20d0533e9ce0ebfe46c2c69bdf6168d9fa5e83bf4b4"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "disastertrace.automated.calibration",
+        "verify",
+        "--output",
+        "work/calibration-v1-preparation"
+      ],
+      "started_at": "2026-09-06T17:32:11.042363+00:00",
+      "finished_at": "2026-09-06T17:32:18.659921+00:00",
+      "exit_code": 0,
+      "log": "artifacts/calibration_v1/execution_v2/command_2.log",
+      "log_sha256": "a40732faa6fc87aa5a714fb779524b2f54b8ba06e7f2230c3fa9a32365531c32"
+    }
+  ],
+  "model_calls": 0,
+  "prior_attempt_note": "The existing automated.cli module lacks a __main__ call, so python -m did not build. Use the installed disastertrace-auto entry point. Initial command records preserved."
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": "deepseek_price_snapshot_v1",
+  "currency": "USD",
+  "model": "deepseek-v4-flash",
+  "label": "Official DeepSeek Sunday off-peak rates, retrieved 2026-09-06 UTC",
+  "window": {
+    "kind": "off_peak",
+    "timezone": "UTC",
+    "applicable_date": "2026-09-06",
+    "peak_rule": "Monday-Friday 01:00-04:00 and 06:00-10:00 UTC; all other times are off-peak",
+    "start_utc": "2026-09-06T00:00:00+00:00",
+    "end_utc": "2026-09-07T00:00:00+00:00"
+  },
+  "per_million_tokens": {
+    "input_cache_hit": 0.007,
+    "input_cache_miss": 0.22,
+    "output": 0.66
+  },
+  "source": {
+    "path": "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/artifacts/p1_deepseek_development/docs/pricing.html",
+    "sha256": "cf2c6fb2dd8a32a538f12a8176175b8809a3516326a5cb30dfe52d63c490a968",
+    "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "retrieved_at": "2026-09-06T15:31:12.905921+00:00"
+  },
+  "peak_per_million_tokens": {
+    "input_cache_hit": 0.014,
+    "input_cache_miss": 0.44,
+    "output": 1.32
+  },
+  "documented_model_version": "DeepSeek-V4-Flash-0731",
+  "context": {
+    "documented_context_length": "1M",
+    "reservation_prompt_tokens": 1048576,
+    "documented_maximum_output": "384K",
+    "configured_output_tokens": 4096
+  },
+  "guard": {
+    "accounting_basis": "peak cache-miss input rates and peak output rates",
+    "budget_usd": 1.0,
+    "maximum_pending_request_reservation_usd": 0.46678016,
+    "maximum_http_attempts": 90,
+    "provider_bill_guaranteed": false
+  },
+  "interpretation": "Usage-based cost estimate, not an invoice; reasoning tokens are included in completion_tokens. Full-context reservation is conditional on published context/prices and provider enforcement of max_tokens. Apply the recorded time window to actual request timestamps; report another window separately if crossed."
+}

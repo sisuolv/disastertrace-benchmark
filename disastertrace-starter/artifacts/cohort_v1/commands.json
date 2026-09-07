@@ -1,0 +1,304 @@
+[
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "build",
+      "--references",
+      "../references",
+      "--nhc-snapshot",
+      "../references/nhc_cohort_v1",
+      "--output",
+      "work/build-cohort-v1"
+    ],
+    "started_at": "2026-09-06T07:24:56.221087+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-00.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "run",
+      "--build",
+      "work/build-cohort-v1",
+      "--track",
+      "dynamic",
+      "--backend",
+      "rule",
+      "--split",
+      "development",
+      "--max-queries",
+      "30",
+      "--output",
+      "work/runs/cohort-v1-development-rule"
+    ],
+    "started_at": "2026-09-06T07:24:57.381088+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-01.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "score",
+      "--build",
+      "work/build-cohort-v1",
+      "--run",
+      "work/runs/cohort-v1-development-rule",
+      "--output",
+      "work/scores/cohort-v1-development-rule.json"
+    ],
+    "started_at": "2026-09-06T07:24:57.870112+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-02.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "run",
+      "--build",
+      "work/build-cohort-v1",
+      "--track",
+      "dynamic",
+      "--backend",
+      "last-arrival",
+      "--split",
+      "development",
+      "--max-queries",
+      "30",
+      "--output",
+      "work/runs/cohort-v1-development-last-arrival"
+    ],
+    "started_at": "2026-09-06T07:24:58.314636+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-03.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "score",
+      "--build",
+      "work/build-cohort-v1",
+      "--run",
+      "work/runs/cohort-v1-development-last-arrival",
+      "--output",
+      "work/scores/cohort-v1-development-last-arrival.json"
+    ],
+    "started_at": "2026-09-06T07:24:58.783608+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-04.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "run",
+      "--build",
+      "work/build-cohort-v1",
+      "--track",
+      "dynamic",
+      "--backend",
+      "no-update",
+      "--split",
+      "development",
+      "--max-queries",
+      "30",
+      "--output",
+      "work/runs/cohort-v1-development-no-update"
+    ],
+    "started_at": "2026-09-06T07:24:59.276944+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-05.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "score",
+      "--build",
+      "work/build-cohort-v1",
+      "--run",
+      "work/runs/cohort-v1-development-no-update",
+      "--output",
+      "work/scores/cohort-v1-development-no-update.json"
+    ],
+    "started_at": "2026-09-06T07:24:59.703387+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-06.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "run",
+      "--build",
+      "work/build-cohort-v1",
+      "--track",
+      "dynamic",
+      "--backend",
+      "rule",
+      "--split",
+      "heldout",
+      "--max-queries",
+      "70",
+      "--output",
+      "work/runs/cohort-v1-heldout-rule"
+    ],
+    "started_at": "2026-09-06T07:25:00.141168+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-07.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "score",
+      "--build",
+      "work/build-cohort-v1",
+      "--run",
+      "work/runs/cohort-v1-heldout-rule",
+      "--output",
+      "work/scores/cohort-v1-heldout-rule.json"
+    ],
+    "started_at": "2026-09-06T07:25:00.635328+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-08.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "run",
+      "--build",
+      "work/build-cohort-v1",
+      "--track",
+      "dynamic",
+      "--backend",
+      "last-arrival",
+      "--split",
+      "heldout",
+      "--max-queries",
+      "70",
+      "--output",
+      "work/runs/cohort-v1-heldout-last-arrival"
+    ],
+    "started_at": "2026-09-06T07:25:01.117465+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-09.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "score",
+      "--build",
+      "work/build-cohort-v1",
+      "--run",
+      "work/runs/cohort-v1-heldout-last-arrival",
+      "--output",
+      "work/scores/cohort-v1-heldout-last-arrival.json"
+    ],
+    "started_at": "2026-09-06T07:25:01.616248+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-10.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "run",
+      "--build",
+      "work/build-cohort-v1",
+      "--track",
+      "dynamic",
+      "--backend",
+      "no-update",
+      "--split",
+      "heldout",
+      "--max-queries",
+      "70",
+      "--output",
+      "work/runs/cohort-v1-heldout-no-update"
+    ],
+    "started_at": "2026-09-06T07:25:02.148548+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-11.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "score",
+      "--build",
+      "work/build-cohort-v1",
+      "--run",
+      "work/runs/cohort-v1-heldout-no-update",
+      "--output",
+      "work/scores/cohort-v1-heldout-no-update.json"
+    ],
+    "started_at": "2026-09-06T07:25:02.682460+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-12.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "report",
+      "--build",
+      "work/build-cohort-v1",
+      "--scores",
+      "work/scores/cohort-v1-development-rule.json",
+      "work/scores/cohort-v1-development-last-arrival.json",
+      "work/scores/cohort-v1-development-no-update.json",
+      "work/scores/cohort-v1-heldout-rule.json",
+      "work/scores/cohort-v1-heldout-last-arrival.json",
+      "work/scores/cohort-v1-heldout-no-update.json",
+      "--output",
+      "work/REPORT-cohort-v1.md"
+    ],
+    "started_at": "2026-09-06T07:25:03.249397+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-13.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "prepare-model",
+      "--build",
+      "work/build-cohort-v1",
+      "--config",
+      "configs/provider.example.json",
+      "--split",
+      "development",
+      "--max-queries",
+      "10",
+      "--output",
+      "work/model-preparation-cohort-v1.json"
+    ],
+    "started_at": "2026-09-06T07:25:03.644958+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-14.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/disastertrace-auto",
+      "build",
+      "--references",
+      "../references",
+      "--nhc-snapshot",
+      "../references/nhc_cohort_v1",
+      "--output",
+      "work/repro-build-cohort-v1"
+    ],
+    "started_at": "2026-09-06T07:25:04.526537+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-15.log"
+  },
+  {
+    "argv": [
+      ".venv/bin/python",
+      "-m",
+      "automated",
+      "score",
+      "--build",
+      "work/build-v2",
+      "--run",
+      "work/runs/rule-v2",
+      "--output",
+      "work/scores/rule-historical-restored-v2.json"
+    ],
+    "started_at": "2026-09-06T07:25:05.679151+00:00",
+    "exit_code": 0,
+    "log": "artifacts/cohort_v1/command-16.log"
+  }
+]

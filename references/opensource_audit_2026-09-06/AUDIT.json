@@ -1,0 +1,486 @@
+{
+  "audit_date": "2026-09-06",
+  "created_at_utc": "2026-09-06T04:14:09.431109+00:00",
+  "purpose": "Read-only open-source reference audit for benchmark planning; not implementation or runtime certification.",
+  "methods": [
+    "GitHub repository/commit/tag/tree/contents APIs",
+    "Selected raw files, bounded individual size",
+    "Downloaded source bytes checked against Git blob hashes; SHA256 recorded"
+  ],
+  "not_performed": [
+    "No third-party code executed",
+    "No package installation",
+    "No paid model calls",
+    "No large datasets or model weights downloaded",
+    "No results reproduced"
+  ],
+  "network_limits": [
+    "Some raw-file requests stalled and were terminated; successful files were checked against Git blobs.",
+    "Final unauthenticated GitHub API requests for Inspect README and EWB events.yaml returned 403 rate limit exceeded. Missing files are not counted as reviewed."
+  ],
+  "candidate_inspect_release": {
+    "tag": "0.3.263",
+    "commit": "7aa7343e4a14fa7be07e5a09c7431df5e88c17ee",
+    "tag_api_snapshot": "api/inspect_ai.git_ref_tags_0.3.263.json",
+    "status": "tag_and_commit_exist_runtime_compatibility_unverified"
+  },
+  "repositories": [
+    {
+      "repository": "ChenchenMobility/MLLM-Bench-CyPortQA",
+      "url": "https://github.com/ChenchenMobility/MLLM-Bench-CyPortQA",
+      "resolved_commit": "1c38abf339d1471d710f6cb719a5e3874b547077",
+      "commit_date_utc": "2025-11-12T17:07:50Z",
+      "audit_status": "github_metadata_tree_and_selected_files_verified_read_only",
+      "license": "MIT",
+      "recommended_role": "candidate_data_adapter",
+      "verified_findings": "README describes 117k+ QA pairs from 2015-2023. Source tree confirms dataset/CyPortQA.json (98,747,532 bytes), Encoded_senario.json and MultiModalInput assets. run_gpt4o.py shuffles items and calls a hard-coded model. Reuse media mapping and candidate evidence; independently audit time provenance and gold.",
+      "unverified_or_limits": "Dataset not downloaded or counted; no timestamp completeness, label correctness, or full media resolution verified.",
+      "api_tree_snapshot": "api/MLLM-Bench-CyPortQA.tree.json",
+      "api_tree_url": "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/git/trees/HEAD?recursive=1",
+      "source_files": [
+        {
+          "path": "snapshots/MLLM-Bench-CyPortQA/LICENSE",
+          "upstream_path": "LICENSE",
+          "url": "https://github.com/ChenchenMobility/MLLM-Bench-CyPortQA/blob/1c38abf339d1471d710f6cb719a5e3874b547077/LICENSE",
+          "raw_url": "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/LICENSE",
+          "size_bytes": 1065,
+          "sha256": "6ca250cd579bd7ac34a6bf16a9f2d4764d67788a0e88aca43499efbb1d334966",
+          "git_blob_sha1": "5843c8554667ee641bc4e5c4ad49ed2341cc4449",
+          "upstream_blob_sha1": "5843c8554667ee641bc4e5c4ad49ed2341cc4449",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/MLLM-Bench-CyPortQA/README.md",
+          "upstream_path": "README.md",
+          "url": "https://github.com/ChenchenMobility/MLLM-Bench-CyPortQA/blob/1c38abf339d1471d710f6cb719a5e3874b547077/README.md",
+          "raw_url": "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/README.md",
+          "size_bytes": 4084,
+          "sha256": "5980acaea0f9d47e18c02c6d7d7cccd2dbf64362de99c5d730bef62acc645bfe",
+          "git_blob_sha1": "dcd566cf6d5c97957b43cca19b52ce9b525bf553",
+          "upstream_blob_sha1": "dcd566cf6d5c97957b43cca19b52ce9b525bf553",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/MLLM-Bench-CyPortQA/models/run_gpt4o.py",
+          "upstream_path": "models/run_gpt4o.py",
+          "url": "https://github.com/ChenchenMobility/MLLM-Bench-CyPortQA/blob/1c38abf339d1471d710f6cb719a5e3874b547077/models/run_gpt4o.py",
+          "raw_url": "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/models/run_gpt4o.py",
+          "size_bytes": 2677,
+          "sha256": "2329a509a6f0c1399c0f7097fa279a12fee0072671d7e6db77b54916220c77c3",
+          "git_blob_sha1": "d5c81935fbb9e3d8ce43e696a899bcf8d2070f52",
+          "upstream_blob_sha1": "d5c81935fbb9e3d8ce43e696a899bcf8d2070f52",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/MLLM-Bench-CyPortQA/source_data/CyPortQA_template.json",
+          "upstream_path": "source_data/CyPortQA_template.json",
+          "url": "https://github.com/ChenchenMobility/MLLM-Bench-CyPortQA/blob/1c38abf339d1471d710f6cb719a5e3874b547077/source_data/CyPortQA_template.json",
+          "raw_url": "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/source_data/CyPortQA_template.json",
+          "size_bytes": 40313,
+          "sha256": "4b0947bf55a60931e49d7a3eb93a10b555bc94c6dc58c585d7a3b25af8e68f11",
+          "git_blob_sha1": "816bf6aa672389eaca31758e6d5a2b7eafacf511",
+          "upstream_blob_sha1": "816bf6aa672389eaca31758e6d5a2b7eafacf511",
+          "upstream_blob_matches": true
+        }
+      ]
+    },
+    {
+      "repository": "ChenchenMobility/Maritime-Data-CyPort",
+      "url": "https://github.com/ChenchenMobility/Maritime-Data-CyPort",
+      "resolved_commit": "5cb1d8778d3968c5e50d0b8cb8213f2414d692d3",
+      "commit_date_utc": "2026-05-14T21:58:07Z",
+      "audit_status": "github_metadata_tree_and_selected_files_verified_read_only",
+      "license": "CC-BY-4.0 declared in README; no standalone LICENSE found; GitHub API license=null",
+      "recommended_role": "defer_outcome_data",
+      "verified_findings": "README declares CC BY 4.0 and describes post-event port activity/disruption data. Repository does not supply a standalone license file.",
+      "unverified_or_limits": "Per-source terms and availability of individual records not audited; avoid future outcomes in model-visible historical evidence.",
+      "api_tree_snapshot": "api/Maritime-Data-CyPort.tree.json",
+      "api_tree_url": "https://api.github.com/repos/ChenchenMobility/Maritime-Data-CyPort/git/trees/HEAD?recursive=1",
+      "source_files": [
+        {
+          "path": "snapshots/Maritime-Data-CyPort/README.md",
+          "upstream_path": "README.md",
+          "url": "https://github.com/ChenchenMobility/Maritime-Data-CyPort/blob/5cb1d8778d3968c5e50d0b8cb8213f2414d692d3/README.md",
+          "raw_url": "https://raw.githubusercontent.com/ChenchenMobility/Maritime-Data-CyPort/5cb1d8778d3968c5e50d0b8cb8213f2414d692d3/README.md",
+          "size_bytes": 5893,
+          "sha256": "10b32b1407fca1e30cd872e46e477147aad74e789450b5aa6e3b6ad93b3b6823",
+          "git_blob_sha1": "b4053b0c3675bc3e3d3f40f35af4295ec85ac55f",
+          "upstream_blob_sha1": "b4053b0c3675bc3e3d3f40f35af4295ec85ac55f",
+          "upstream_blob_matches": true
+        }
+      ]
+    },
+    {
+      "repository": "UKGovernmentBEIS/inspect_ai",
+      "url": "https://github.com/UKGovernmentBEIS/inspect_ai",
+      "resolved_commit": "856f41f19debe008756ec4c5831f0600c861c51a",
+      "commit_date_utc": "2026-09-05T22:05:13Z",
+      "audit_status": "github_metadata_tree_and_selected_files_verified_read_only",
+      "license": "MIT",
+      "recommended_role": "recommended_single_evaluation_adapter",
+      "verified_findings": "Current source defines ResponseSchema and GenerateConfig.response_schema. GitHub tag 0.3.263 resolves to 7aa7343e4a14fa7be07e5a09c7431df5e88c17ee; use as candidate pin subject to compatibility smoke.",
+      "unverified_or_limits": "No installation, import, provider compatibility, multimodal runtime, strict-output, or end-to-end execution test performed. Source snippets saved at current main, not at the candidate release.",
+      "api_tree_snapshot": "api/inspect_ai.tree.json",
+      "api_tree_url": "https://api.github.com/repos/UKGovernmentBEIS/inspect_ai/git/trees/HEAD?recursive=1",
+      "source_files": [
+        {
+          "path": "snapshots/inspect_ai/LICENSE",
+          "upstream_path": "LICENSE",
+          "url": "https://github.com/UKGovernmentBEIS/inspect_ai/blob/856f41f19debe008756ec4c5831f0600c861c51a/LICENSE",
+          "raw_url": "https://raw.githubusercontent.com/UKGovernmentBEIS/inspect_ai/856f41f19debe008756ec4c5831f0600c861c51a/LICENSE",
+          "size_bytes": 1081,
+          "sha256": "c593c2afc81388521eaeb03f0d1a4b01bc3e5147ed9cb16c1f129e5be353b6af",
+          "git_blob_sha1": "72fc87742ef8a944fab4f28fe6231696c62f2fa4",
+          "upstream_blob_sha1": "72fc87742ef8a944fab4f28fe6231696c62f2fa4",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/inspect_ai/pyproject.toml",
+          "upstream_path": "pyproject.toml",
+          "url": "https://github.com/UKGovernmentBEIS/inspect_ai/blob/856f41f19debe008756ec4c5831f0600c861c51a/pyproject.toml",
+          "raw_url": "https://raw.githubusercontent.com/UKGovernmentBEIS/inspect_ai/856f41f19debe008756ec4c5831f0600c861c51a/pyproject.toml",
+          "size_bytes": 5660,
+          "sha256": "ce5713f4a354c3d2fd3b01f08e247a06b240a21eda481581b3cd270c867c1d2b",
+          "git_blob_sha1": "ee90d00ac8edbeda0caf7ab56798e1b901dd47d5",
+          "upstream_blob_sha1": "ee90d00ac8edbeda0caf7ab56798e1b901dd47d5",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/inspect_ai/src/inspect_ai/model/_generate_config.py",
+          "upstream_path": "src/inspect_ai/model/_generate_config.py",
+          "url": "https://github.com/UKGovernmentBEIS/inspect_ai/blob/856f41f19debe008756ec4c5831f0600c861c51a/src/inspect_ai/model/_generate_config.py",
+          "raw_url": "https://raw.githubusercontent.com/UKGovernmentBEIS/inspect_ai/856f41f19debe008756ec4c5831f0600c861c51a/src/inspect_ai/model/_generate_config.py",
+          "size_bytes": 23194,
+          "sha256": "124d9600e13420538173311539bfe374660287ac54e3986b7ff118f33dcc4f1c",
+          "git_blob_sha1": "b541fb14040ce55d357e619988dad06521007e5c",
+          "upstream_blob_sha1": "b541fb14040ce55d357e619988dad06521007e5c",
+          "upstream_blob_matches": true
+        }
+      ]
+    },
+    {
+      "repository": "CuiZHIQ/Earth-Verse",
+      "url": "https://github.com/CuiZHIQ/Earth-Verse",
+      "resolved_commit": "6ee72d4094c23306660f503789e8f82b4431ecc6",
+      "commit_date_utc": "2026-08-26T07:26:09Z",
+      "audit_status": "github_metadata_tree_and_selected_files_verified_read_only",
+      "license": "Original scripts/configs Apache-2.0; original annotations/schemas/docs CC-BY-NC-4.0; third-party evidence retains provider terms",
+      "recommended_role": "design_reference",
+      "verified_findings": "Source confirms submission validator, evidence-path checks, and runner logs; README describes 405 tasks/199 events/19 hazard families. Reuse validation and provenance design.",
+      "unverified_or_limits": "Benchmark sizes are README claims, not independently counted; no event packages downloaded. Validator checks submission structure rather than scientific truth; Python monkeypatches are not a security sandbox.",
+      "api_tree_snapshot": "api/Earth-Verse.tree.json",
+      "api_tree_url": "https://api.github.com/repos/CuiZHIQ/Earth-Verse/git/trees/HEAD?recursive=1",
+      "source_files": [
+        {
+          "path": "snapshots/Earth-Verse/LICENSE.md",
+          "upstream_path": "LICENSE.md",
+          "url": "https://github.com/CuiZHIQ/Earth-Verse/blob/6ee72d4094c23306660f503789e8f82b4431ecc6/LICENSE.md",
+          "raw_url": "https://raw.githubusercontent.com/CuiZHIQ/Earth-Verse/6ee72d4094c23306660f503789e8f82b4431ecc6/LICENSE.md",
+          "size_bytes": 1780,
+          "sha256": "726724c95b7652cf8060d5880ce535b0ab97527d08c2d8e9ed03e3ae061c9da5",
+          "git_blob_sha1": "80f7441215f3cc41a0f947fcdad0b9b9d07f0f45",
+          "upstream_blob_sha1": "80f7441215f3cc41a0f947fcdad0b9b9d07f0f45",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/Earth-Verse/README.md",
+          "upstream_path": "README.md",
+          "url": "https://github.com/CuiZHIQ/Earth-Verse/blob/6ee72d4094c23306660f503789e8f82b4431ecc6/README.md",
+          "raw_url": "https://raw.githubusercontent.com/CuiZHIQ/Earth-Verse/6ee72d4094c23306660f503789e8f82b4431ecc6/README.md",
+          "size_bytes": 7673,
+          "sha256": "b3ac827c9e599f9168dae2a17a28c0e91afe8d9e9d15e244d84dcd7efd160519",
+          "git_blob_sha1": "ad6ad8f2f238c5aa63489aa1fbef88b53170edce",
+          "upstream_blob_sha1": "ad6ad8f2f238c5aa63489aa1fbef88b53170edce",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/Earth-Verse/scripts/run_agent.py",
+          "upstream_path": "scripts/run_agent.py",
+          "url": "https://github.com/CuiZHIQ/Earth-Verse/blob/6ee72d4094c23306660f503789e8f82b4431ecc6/scripts/run_agent.py",
+          "raw_url": "https://raw.githubusercontent.com/CuiZHIQ/Earth-Verse/6ee72d4094c23306660f503789e8f82b4431ecc6/scripts/run_agent.py",
+          "size_bytes": 67689,
+          "sha256": "b4e8a7b518a1813c9af5aa13eb83624a66e34b9014f03a2c9b415fc5ae1c6934",
+          "git_blob_sha1": "d79a219449e7d96fd0fac93a3134d29096fea6b7",
+          "upstream_blob_sha1": "d79a219449e7d96fd0fac93a3134d29096fea6b7",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/Earth-Verse/scripts/validate_submission.py",
+          "upstream_path": "scripts/validate_submission.py",
+          "url": "https://github.com/CuiZHIQ/Earth-Verse/blob/6ee72d4094c23306660f503789e8f82b4431ecc6/scripts/validate_submission.py",
+          "raw_url": "https://raw.githubusercontent.com/CuiZHIQ/Earth-Verse/6ee72d4094c23306660f503789e8f82b4431ecc6/scripts/validate_submission.py",
+          "size_bytes": 4715,
+          "sha256": "74fdd8f4d9a3a0ca8be882797625e9f4d2529ca76c3eeca06983e97074924372",
+          "git_blob_sha1": "bcc254730e86311e7412b7e6bac1c45e39869fc8",
+          "upstream_blob_sha1": "bcc254730e86311e7412b7e6bac1c45e39869fc8",
+          "upstream_blob_matches": true
+        }
+      ]
+    },
+    {
+      "repository": "EvolvingLMMs-Lab/lmms-eval",
+      "url": "https://github.com/EvolvingLMMs-Lab/lmms-eval",
+      "resolved_commit": "4eb7d01b9d16ba42b5c67b724c49f347a0c6bee5",
+      "commit_date_utc": "2026-09-05T07:19:49Z",
+      "audit_status": "github_metadata_tree_and_selected_files_verified_read_only",
+      "license": "Core pipeline MIT; lmms_eval/tasks and lmms_eval/models code Apache-2.0",
+      "recommended_role": "defer_second_framework",
+      "verified_findings": "License explicitly separates pipeline and task/model code. README and 0.7 release notes document multimodal and multi-turn features. Keep as later backend/export integration to avoid two core runners.",
+      "unverified_or_limits": "Release notes and source tree read only; adapters, multi-turn protocol, and simulator availability not executed or exhaustively verified; underlying dataset licenses remain separate.",
+      "api_tree_snapshot": "api/lmms-eval.tree.json",
+      "api_tree_url": "https://api.github.com/repos/EvolvingLMMs-Lab/lmms-eval/git/trees/HEAD?recursive=1",
+      "source_files": [
+        {
+          "path": "snapshots/lmms-eval/LICENSE",
+          "upstream_path": "LICENSE",
+          "url": "https://github.com/EvolvingLMMs-Lab/lmms-eval/blob/4eb7d01b9d16ba42b5c67b724c49f347a0c6bee5/LICENSE",
+          "raw_url": "https://raw.githubusercontent.com/EvolvingLMMs-Lab/lmms-eval/4eb7d01b9d16ba42b5c67b724c49f347a0c6bee5/LICENSE",
+          "size_bytes": 2732,
+          "sha256": "17358b5caadacb8108f14a6a319779cc8a20feed699f79c59e396e7e9dd5c33b",
+          "git_blob_sha1": "5b1927d25c54a0d5419cdfd8ca1fff1aaab61a97",
+          "upstream_blob_sha1": "5b1927d25c54a0d5419cdfd8ca1fff1aaab61a97",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/lmms-eval/README.md",
+          "upstream_path": "README.md",
+          "url": "https://github.com/EvolvingLMMs-Lab/lmms-eval/blob/4eb7d01b9d16ba42b5c67b724c49f347a0c6bee5/README.md",
+          "raw_url": "https://raw.githubusercontent.com/EvolvingLMMs-Lab/lmms-eval/4eb7d01b9d16ba42b5c67b724c49f347a0c6bee5/README.md",
+          "size_bytes": 23066,
+          "sha256": "849f22e74c056ca53416cf0094574229cdcd411f54d74491a0d53221e954f5a1",
+          "git_blob_sha1": "231a333e036889de59c2797ee9606e4db09199f4",
+          "upstream_blob_sha1": "231a333e036889de59c2797ee9606e4db09199f4",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/lmms-eval/docs/releases/lmms-eval-0.7.md",
+          "upstream_path": "docs/releases/lmms-eval-0.7.md",
+          "url": "https://github.com/EvolvingLMMs-Lab/lmms-eval/blob/4eb7d01b9d16ba42b5c67b724c49f347a0c6bee5/docs/releases/lmms-eval-0.7.md",
+          "raw_url": "https://raw.githubusercontent.com/EvolvingLMMs-Lab/lmms-eval/4eb7d01b9d16ba42b5c67b724c49f347a0c6bee5/docs/releases/lmms-eval-0.7.md",
+          "size_bytes": 42188,
+          "sha256": "d845a185c71d456f6fbc22470ff943a2f8c5412e70254f82c70edc08c4eded22",
+          "git_blob_sha1": "2f1d8e3860e9a52973e144856ce578238f38fc3a",
+          "upstream_blob_sha1": "2f1d8e3860e9a52973e144856ce578238f38fc3a",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/lmms-eval/lmms_eval/tasks/tau2_bench/README.md",
+          "upstream_path": "lmms_eval/tasks/tau2_bench/README.md",
+          "url": "https://github.com/EvolvingLMMs-Lab/lmms-eval/blob/4eb7d01b9d16ba42b5c67b724c49f347a0c6bee5/lmms_eval/tasks/tau2_bench/README.md",
+          "raw_url": "https://raw.githubusercontent.com/EvolvingLMMs-Lab/lmms-eval/4eb7d01b9d16ba42b5c67b724c49f347a0c6bee5/lmms_eval/tasks/tau2_bench/README.md",
+          "size_bytes": 665,
+          "sha256": "0ce045e797beb19456d30e2028093455c1d5a83f6c23d334e6dc8c69f1a60533",
+          "git_blob_sha1": "dc37780f94c1a2d375746a9e43ceb43b21790e33",
+          "upstream_blob_sha1": "dc37780f94c1a2d375746a9e43ceb43b21790e33",
+          "upstream_blob_matches": true
+        }
+      ]
+    },
+    {
+      "repository": "microsoft/STATE-Bench",
+      "url": "https://github.com/microsoft/STATE-Bench",
+      "resolved_commit": "5644b1838d96bc4483da29642d058ecaa6f80f7f",
+      "commit_date_utc": "2026-08-04T23:13:15Z",
+      "audit_status": "github_metadata_tree_and_selected_files_verified_read_only",
+      "license": "MIT",
+      "recommended_role": "design_reference",
+      "verified_findings": "schemas.py contains StateDiff.compute and separate task definitions; scoring.py evaluates structured state requirements. README explicitly describes synthetic enterprise tasks in travel/customer support/shopping.",
+      "unverified_or_limits": "Not weather data, not StateMemBench, and not a direct validation of temporal disaster understanding; no upstream results reproduced.",
+      "api_tree_snapshot": "api/STATE-Bench.tree.json",
+      "api_tree_url": "https://api.github.com/repos/microsoft/STATE-Bench/git/trees/HEAD?recursive=1",
+      "source_files": [
+        {
+          "path": "snapshots/STATE-Bench/LICENSE",
+          "upstream_path": "LICENSE",
+          "url": "https://github.com/microsoft/STATE-Bench/blob/5644b1838d96bc4483da29642d058ecaa6f80f7f/LICENSE",
+          "raw_url": "https://raw.githubusercontent.com/microsoft/STATE-Bench/5644b1838d96bc4483da29642d058ecaa6f80f7f/LICENSE",
+          "size_bytes": 1081,
+          "sha256": "2e969379b1a7eaeeefe741c576aa64e29099b9629b645e0e938bf2c88e7b5f0b",
+          "git_blob_sha1": "75c58b5c7f47bd4b0f9f64fec44379de9ad4a2bf",
+          "upstream_blob_sha1": "75c58b5c7f47bd4b0f9f64fec44379de9ad4a2bf",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/STATE-Bench/README.md",
+          "upstream_path": "README.md",
+          "url": "https://github.com/microsoft/STATE-Bench/blob/5644b1838d96bc4483da29642d058ecaa6f80f7f/README.md",
+          "raw_url": "https://raw.githubusercontent.com/microsoft/STATE-Bench/5644b1838d96bc4483da29642d058ecaa6f80f7f/README.md",
+          "size_bytes": 4216,
+          "sha256": "e8ef76390b8d1a2f81b7cbba15ee7780a07fd4c00d26f661c2987209be2f622f",
+          "git_blob_sha1": "680f9418437f50175cf4bc246a44dd804435978b",
+          "upstream_blob_sha1": "680f9418437f50175cf4bc246a44dd804435978b",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/STATE-Bench/state_bench/schemas.py",
+          "upstream_path": "state_bench/schemas.py",
+          "url": "https://github.com/microsoft/STATE-Bench/blob/5644b1838d96bc4483da29642d058ecaa6f80f7f/state_bench/schemas.py",
+          "raw_url": "https://raw.githubusercontent.com/microsoft/STATE-Bench/5644b1838d96bc4483da29642d058ecaa6f80f7f/state_bench/schemas.py",
+          "size_bytes": 16909,
+          "sha256": "5fbadcfeba076542920aa6cb2e5e1295b20f75d905a196a1f62b61789c894f29",
+          "git_blob_sha1": "add69637ffa67b8d000124fc403dd08f02295dcf",
+          "upstream_blob_sha1": "add69637ffa67b8d000124fc403dd08f02295dcf",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/STATE-Bench/state_bench/scoring.py",
+          "upstream_path": "state_bench/scoring.py",
+          "url": "https://github.com/microsoft/STATE-Bench/blob/5644b1838d96bc4483da29642d058ecaa6f80f7f/state_bench/scoring.py",
+          "raw_url": "https://raw.githubusercontent.com/microsoft/STATE-Bench/5644b1838d96bc4483da29642d058ecaa6f80f7f/state_bench/scoring.py",
+          "size_bytes": 37926,
+          "sha256": "99c9c8fea5d0dc8dfba10d82c6c0dab89e496e41b326b0e35f758e65cec55a6f",
+          "git_blob_sha1": "692330722fcb0e46bbbafc6d42a461585fa41c75",
+          "upstream_blob_sha1": "692330722fcb0e46bbbafc6d42a461585fa41c75",
+          "upstream_blob_matches": true
+        }
+      ]
+    },
+    {
+      "repository": "brightbandtech/ExtremeWeatherBench",
+      "url": "https://github.com/brightbandtech/ExtremeWeatherBench",
+      "resolved_commit": "2f37abd464eb339d3775e2e1537e2f823d87efad",
+      "commit_date_utc": "2026-04-30T16:24:50Z",
+      "audit_status": "github_metadata_tree_and_selected_files_verified_read_only",
+      "license": "MIT",
+      "recommended_role": "defer_event_registry_and_forecast_track",
+      "verified_findings": "README and cases.py target forecast-versus-observation evaluation; tree confirms events.yaml and hazard-specific modules. Suitable event taxonomy/registry reference for later hazard expansion.",
+      "unverified_or_limits": "Not an LLM reasoning benchmark. README count of 329 cases is not independently validated; events.yaml contents not downloaded because final GitHub API request hit rate limit. No weather data downloaded.",
+      "api_tree_snapshot": "api/ExtremeWeatherBench.tree.json",
+      "api_tree_url": "https://api.github.com/repos/brightbandtech/ExtremeWeatherBench/git/trees/HEAD?recursive=1",
+      "source_files": [
+        {
+          "path": "snapshots/ExtremeWeatherBench/LICENSE",
+          "upstream_path": "LICENSE",
+          "url": "https://github.com/brightbandtech/ExtremeWeatherBench/blob/2f37abd464eb339d3775e2e1537e2f823d87efad/LICENSE",
+          "raw_url": "https://raw.githubusercontent.com/brightbandtech/ExtremeWeatherBench/2f37abd464eb339d3775e2e1537e2f823d87efad/LICENSE",
+          "size_bytes": 1067,
+          "sha256": "2320dbfc474fa1fb3b6da4f8c62d6f22ff67e0316465cbe8ea66f4bbc90b3afa",
+          "git_blob_sha1": "677d0fdbc42f434551491d88a581eaaa4460eecd",
+          "upstream_blob_sha1": "677d0fdbc42f434551491d88a581eaaa4460eecd",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/ExtremeWeatherBench/README.md",
+          "upstream_path": "README.md",
+          "url": "https://github.com/brightbandtech/ExtremeWeatherBench/blob/2f37abd464eb339d3775e2e1537e2f823d87efad/README.md",
+          "raw_url": "https://raw.githubusercontent.com/brightbandtech/ExtremeWeatherBench/2f37abd464eb339d3775e2e1537e2f823d87efad/README.md",
+          "size_bytes": 4845,
+          "sha256": "877cc046a36e8567ea05388ae6bfdb802d3c97765c4348dfcf59715ac0575ef8",
+          "git_blob_sha1": "d1aeb80257bfc8a08c1a7fae5760a1f4d21544e4",
+          "upstream_blob_sha1": "d1aeb80257bfc8a08c1a7fae5760a1f4d21544e4",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/ExtremeWeatherBench/src/extremeweatherbench/cases.py",
+          "upstream_path": "src/extremeweatherbench/cases.py",
+          "url": "https://github.com/brightbandtech/ExtremeWeatherBench/blob/2f37abd464eb339d3775e2e1537e2f823d87efad/src/extremeweatherbench/cases.py",
+          "raw_url": "https://raw.githubusercontent.com/brightbandtech/ExtremeWeatherBench/2f37abd464eb339d3775e2e1537e2f823d87efad/src/extremeweatherbench/cases.py",
+          "size_bytes": 6083,
+          "sha256": "07f836dc99038313aa1f8a6b6398ce1e20ba604bd12593c92db80def35c7a683",
+          "git_blob_sha1": "236104c9057c648b9a9237f5bbd0ed4194ea9b0a",
+          "upstream_blob_sha1": "236104c9057c648b9a9237f5bbd0ed4194ea9b0a",
+          "upstream_blob_matches": true
+        }
+      ]
+    },
+    {
+      "repository": "icedreamc/STALE",
+      "url": "https://github.com/icedreamc/STALE",
+      "resolved_commit": "ea7d391103a151927cd29d2f01d87597a782bdcb",
+      "commit_date_utc": "2026-05-19T02:36:04Z",
+      "audit_status": "github_metadata_tree_and_selected_files_verified_read_only",
+      "license": "MIT",
+      "recommended_role": "later_memory_baseline",
+      "verified_findings": "README distinguishes STALE benchmark and CUP-Mem. Source files for temporal guards, invalidation/transitions and premise verification are present. Use as later explicitly identified baseline, not a hidden harness improvement.",
+      "unverified_or_limits": "No model results reproduced; compatibility of whole pipeline with weather episodes unverified.",
+      "api_tree_snapshot": "api/STALE.tree.json",
+      "api_tree_url": "https://api.github.com/repos/icedreamc/STALE/git/trees/HEAD?recursive=1",
+      "source_files": [
+        {
+          "path": "snapshots/STALE/LICENSE",
+          "upstream_path": "LICENSE",
+          "url": "https://github.com/icedreamc/STALE/blob/ea7d391103a151927cd29d2f01d87597a782bdcb/LICENSE",
+          "raw_url": "https://raw.githubusercontent.com/icedreamc/STALE/ea7d391103a151927cd29d2f01d87597a782bdcb/LICENSE",
+          "size_bytes": 1069,
+          "sha256": "0adcc27078a1b9a5f9905b7bba7b9b1a280d56828c2c00b6db17c872ee549bb6",
+          "git_blob_sha1": "c9c09b3babce77f093dad1b61aa6467861fa1155",
+          "upstream_blob_sha1": "c9c09b3babce77f093dad1b61aa6467861fa1155",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/STALE/README.md",
+          "upstream_path": "README.md",
+          "url": "https://github.com/icedreamc/STALE/blob/ea7d391103a151927cd29d2f01d87597a782bdcb/README.md",
+          "raw_url": "https://raw.githubusercontent.com/icedreamc/STALE/ea7d391103a151927cd29d2f01d87597a782bdcb/README.md",
+          "size_bytes": 3131,
+          "sha256": "b8d519251030dca410b262eb9ba969ad92a2a029a1984df2470fa2bd984bbcce",
+          "git_blob_sha1": "72c0cb44a06b2083971e7159bee906b204016867",
+          "upstream_blob_sha1": "72c0cb44a06b2083971e7159bee906b204016867",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/STALE/cup_mem/core/temporal.py",
+          "upstream_path": "cup_mem/core/temporal.py",
+          "url": "https://github.com/icedreamc/STALE/blob/ea7d391103a151927cd29d2f01d87597a782bdcb/cup_mem/core/temporal.py",
+          "raw_url": "https://raw.githubusercontent.com/icedreamc/STALE/ea7d391103a151927cd29d2f01d87597a782bdcb/cup_mem/core/temporal.py",
+          "size_bytes": 2861,
+          "sha256": "3ff731f21a1c2dadf52c2d9076bcd6452233b346e89a3928c14577a85e7606a3",
+          "git_blob_sha1": "1b475e7b663e293aaec1bb600be905fc607ccd4a",
+          "upstream_blob_sha1": "1b475e7b663e293aaec1bb600be905fc607ccd4a",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/STALE/cup_mem/query/premise_verifier.py",
+          "upstream_path": "cup_mem/query/premise_verifier.py",
+          "url": "https://github.com/icedreamc/STALE/blob/ea7d391103a151927cd29d2f01d87597a782bdcb/cup_mem/query/premise_verifier.py",
+          "raw_url": "https://raw.githubusercontent.com/icedreamc/STALE/ea7d391103a151927cd29d2f01d87597a782bdcb/cup_mem/query/premise_verifier.py",
+          "size_bytes": 25825,
+          "sha256": "7f58332f9dd52f051fe51056089e2c42b90fa4688d66d81f4e87d4e25607d22f",
+          "git_blob_sha1": "41f9e967381c758a6e2b3b94b5f60997f138a671",
+          "upstream_blob_sha1": "41f9e967381c758a6e2b3b94b5f60997f138a671",
+          "upstream_blob_matches": true
+        },
+        {
+          "path": "snapshots/STALE/cup_mem/store_layer/transitions.py",
+          "upstream_path": "cup_mem/store_layer/transitions.py",
+          "url": "https://github.com/icedreamc/STALE/blob/ea7d391103a151927cd29d2f01d87597a782bdcb/cup_mem/store_layer/transitions.py",
+          "raw_url": "https://raw.githubusercontent.com/icedreamc/STALE/ea7d391103a151927cd29d2f01d87597a782bdcb/cup_mem/store_layer/transitions.py",
+          "size_bytes": 15515,
+          "sha256": "3c1810b9aa52528bf7ebfa76c2bb11fc86738d1143e7eb7d6b15c284efb9ba62",
+          "git_blob_sha1": "0497873322ff4e1fc2ef36f093ba55b1a0e6641f",
+          "upstream_blob_sha1": "0497873322ff4e1fc2ef36f093ba55b1a0e6641f",
+          "upstream_blob_matches": true
+        }
+      ]
+    }
+  ],
+  "additional_metadata_only": [
+    {
+      "repository": "tropycal/tropycal",
+      "resolved_commit": "8911e6f3bab5861766cb5e14d05ef0edf6628e1c",
+      "commit_date_utc": "2026-08-13T17:09:43Z",
+      "github_api_license": "MIT",
+      "url": "https://github.com/tropycal/tropycal",
+      "audit_status": "repository_and_commit_metadata_only_no_license_text_or_code_review",
+      "recommended_role": "optional_later_reference"
+    },
+    {
+      "repository": "TamuChen18/DisasterBench_Open",
+      "resolved_commit": "408672bf0da489d94e6245900a87ec913b3d69f9",
+      "commit_date_utc": "2026-05-27T05:01:24Z",
+      "github_api_license": "MIT",
+      "url": "https://github.com/TamuChen18/DisasterBench_Open",
+      "audit_status": "repository_and_commit_metadata_only_no_license_text_or_code_review",
+      "recommended_role": "optional_later_reference"
+    },
+    {
+      "repository": "YYQ898/Obshazard-bench",
+      "resolved_commit": "e921b66e2ffa3569ac3fc0b49818d34929269c4e",
+      "commit_date_utc": "2026-06-24T06:51:08Z",
+      "github_api_license": null,
+      "url": "https://github.com/YYQ898/Obshazard-bench",
+      "audit_status": "repository_and_commit_metadata_only_no_license_text_or_code_review",
+      "recommended_role": "optional_later_reference"
+    }
+  ]
+}

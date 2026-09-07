@@ -1,0 +1,59 @@
+[
+  {
+    "name": "fresh_build",
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/github_review/disastertrace-benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "build",
+      "--references",
+      "../references",
+      "--nhc-snapshot",
+      "../references/nhc_cohort_v1",
+      "--output",
+      "work/review-build-001"
+    ],
+    "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/github_review/disastertrace-benchmark/disastertrace-starter",
+    "exit_code": 0,
+    "elapsed_seconds": 1.143,
+    "log": "handoff_validation/fresh_build.log",
+    "model_api_calls": 0,
+    "credential_environment_removed": true
+  },
+  {
+    "name": "calibration_prepare",
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/github_review/disastertrace-benchmark/disastertrace-starter/.venv/bin/python",
+      "-m",
+      "disastertrace.automated.calibration",
+      "prepare",
+      "--build",
+      "work/review-build-001",
+      "--provider-config",
+      "artifacts/p1_deepseek_development/provider.json",
+      "--output",
+      "work/review-calibration-001"
+    ],
+    "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/github_review/disastertrace-benchmark/disastertrace-starter",
+    "exit_code": 0,
+    "elapsed_seconds": 8.626,
+    "log": "handoff_validation/calibration_prepare.log",
+    "model_api_calls": 0,
+    "credential_environment_removed": true
+  },
+  {
+    "name": "calibration_verify",
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/github_review/disastertrace-benchmark/disastertrace-starter/.venv/bin/python",
+      "-m",
+      "disastertrace.automated.calibration",
+      "verify",
+      "--output",
+      "work/review-calibration-001"
+    ],
+    "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/github_review/disastertrace-benchmark/disastertrace-starter",
+    "exit_code": 0,
+    "elapsed_seconds": 7.794,
+    "log": "handoff_validation/calibration_verify.log",
+    "model_api_calls": 0,
+    "credential_environment_removed": true
+  }
+]

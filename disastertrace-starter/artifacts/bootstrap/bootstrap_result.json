@@ -1,0 +1,40 @@
+{
+  "environment": ".venv",
+  "full_editable_dev_install_exit_code": 0,
+  "install_log": "artifacts/bootstrap/install_offline.log",
+  "install_report": "artifacts/bootstrap/install_report.json",
+  "verified_environment_report": "artifacts/bootstrap/environment_verification.json",
+  "original_tests": "6 passed; no skips",
+  "full_test_summary": "165 passed in 3.74s",
+  "full_test_log": "artifacts/bootstrap/full_pytest.log",
+  "requirements_file": "requirements-verified.txt",
+  "requirements_sha256": "1512e98dd9cfbbedbe4084c3d8dab39e8b10c057d8b0a3eecd83de889b1aeb7b",
+  "recovery_attempts": [
+    {
+      "stage": "initial ordinary pip install",
+      "exit_code": 2,
+      "detail": "mypy ReadTimeoutError; parent session32460"
+    },
+    {
+      "stage": "find-links retry",
+      "exit_code": 143,
+      "detail": "own PID41991 terminated because pip selected remote wheels"
+    },
+    {
+      "stage": "explicit large wheels retry",
+      "exit_code": 2,
+      "detail": "pydantic_core ReadTimeoutError"
+    },
+    {
+      "stage": "first offline build",
+      "exit_code": 1,
+      "detail": "missing tomlkit in wheelhouse; recovered verified cached wheel"
+    },
+    {
+      "stage": "offline editable dev installation",
+      "exit_code": 0,
+      "detail": "all37 dependency/build wheels locally available"
+    }
+  ],
+  "global_python_modified": false
+}

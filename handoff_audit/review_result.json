@@ -1,0 +1,98 @@
+{
+  "schema_version": "github_handoff_independent_review_v1",
+  "recorded_at": "2026-09-07T05:16:47.881147+00:00",
+  "status": "passed_no_blocking_findings",
+  "findings": [],
+  "automated_scan": {
+    "path": "handoff_audit/tree_reviewed.json",
+    "sha256": "04f0980a08ba7504183ed35ace389b620fe43cfa5b4b49d7bfbcc36588340dca",
+    "checks_passed": 189,
+    "checks_total": 189,
+    "payload_files": 1669,
+    "payload_bytes": 247730439,
+    "max_file_bytes": 5802320
+  },
+  "export_manifest": {
+    "entries_checked": 1528,
+    "mismatches": [],
+    "sha256": "f563592893f6512abf5d6e40e3c26a0fd5dbd35c243a34cc68d0b9098e37755a"
+  },
+  "entry_document_links": [
+    {
+      "path": "README.md",
+      "broken_local_links": [],
+      "sha256": "8239835e70b0bafc529538e6fee6fba4e440439ac415cfa52dcc5df5cd7a0b0a"
+    },
+    {
+      "path": "REVIEW_PACKAGE.md",
+      "broken_local_links": [],
+      "sha256": "beb71332483e268d4d7651fc9e57996fdc2f6bd740411ef9a0583ce6e82c6eff"
+    },
+    {
+      "path": "REFERENCE_BUNDLE.md",
+      "broken_local_links": [],
+      "sha256": "f8768a7260f17c3acd50949262c77ac116746ab351cfb18035e7fb2d2d863d1d"
+    },
+    {
+      "path": "disastertrace-starter/REVIEW_FOR_CHATGPT_PRO.md",
+      "broken_local_links": [],
+      "sha256": "014dd60cf7b5dcf9618b0f27f225aeb33fa2bb0f3fb6f74692093c3e1f77137d"
+    }
+  ],
+  "manual_documentation_checks": [
+    {
+      "check": "Historical P1 contains 90 received answers over 91 attempts, with original unknown attempt 79 retained; calibration remains 270 planned, unrun requests.",
+      "passed": true
+    },
+    {
+      "check": "Archives with old absolute paths are preserved as historical evidence; fresh build and calibration output directories support portable reproduction.",
+      "passed": true
+    },
+    {
+      "check": "The README preserves the starter and sibling references layout, and scopes the main pytest command explicitly to tests/.",
+      "passed": true
+    },
+    {
+      "check": "The historical 684-test result is distinct from 6,979 audit checks, and diagnostics are not presented as live LLM results.",
+      "passed": true
+    },
+    {
+      "check": "Materialized internal aliases are documented; historical artifacts remain distinct, and offline commands require no API secret or GitHub authentication configuration.",
+      "passed": true
+    },
+    {
+      "check": "All four review entry documents have resolving local file links.",
+      "passed": true
+    }
+  ],
+  "credential_review": {
+    "candidate_count": 2,
+    "unresolved_candidates": 0,
+    "resolution": "Two matches were angle-bracket API-key placeholders in captured official DeepSeek documentation; values were never printed.",
+    "actual_secret_values_accessed_from_credential_stores": false
+  },
+  "minimal_test_dependencies": [
+    "disastertrace-starter/src and tests, pyproject.toml, configs",
+    "disastertrace-starter/work/build-cohort-v1 full manifest-bound tree",
+    "disastertrace-starter/work/build-deepseek-v1/episodes/dynamic_episodes.jsonl",
+    "disastertrace-starter/artifacts/p1_deepseek_development/provider.json",
+    "disastertrace-starter/artifacts/p1_deepseek_development/docs/rates.json",
+    "disastertrace-starter/docs/CALIBRATION_PROTOCOL_V1.md",
+    "Sibling references with selected exact-byte manifests and source files"
+  ],
+  "actions": {
+    "network_calls": 0,
+    "model_api_calls": 0,
+    "git_mutations": 0,
+    "original_project_mutations": 0,
+    "full_test_suite_runs": 0,
+    "writes_limited_to": "handoff_audit/"
+  },
+  "boundaries": [
+    "This review does not grant upload authorization; the root agent handles user-approved publication.",
+    "Fresh-environment installation, full tests and rebuild verification are separate root-agent actions, not claimed here.",
+    "Pattern scanning cannot prove absence of every arbitrary unrecognized secret.",
+    "Git internals, ignored .venv environments and this audit output directory were excluded from payload-content scanning."
+  ],
+  "audit_script_sha256": "13ccf5b4d628e7daa988541478a12288077f8cbcc230caf4e0d67414d9dc4a00"
+}

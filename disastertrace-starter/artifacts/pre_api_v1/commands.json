@@ -1,0 +1,212 @@
+[
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "build",
+      "--references",
+      "../references",
+      "--nhc-snapshot",
+      "../references/nhc_cohort_v1",
+      "--output",
+      "work/build-pre-api-v1"
+    ],
+    "started_at": "2026-09-06T13:40:53.452747+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/00-build.log",
+    "log_sha256": "260939b2178aafe35017b08e1e8aa2ca21e1bd505ea09ab9e3cf7a5dd362ba10"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "preflight",
+      "--build",
+      "work/build-pre-api-v1",
+      "--specification",
+      "configs/pre_api_pilot_v1.json",
+      "--verification-record",
+      "artifacts/pre_api_v1/final_checks/test_result.json",
+      "--output",
+      "work/pre-api-v1"
+    ],
+    "started_at": "2026-09-06T13:40:54.457681+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/01-preflight.log",
+    "log_sha256": "8034f5ab2b25de5040634502b08fd0e4f66abdf1bda8ef7a70c4b7e1cdb7ca91"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "verify-preflight",
+      "--build",
+      "work/build-pre-api-v1",
+      "--package",
+      "work/pre-api-v1"
+    ],
+    "started_at": "2026-09-06T13:41:04.967805+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/02-verify-preflight.log",
+    "log_sha256": "58ab51e252ffb3a1218b8506ef8cd9357b1c8f5f0e20f8d4d15801eeef474215"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "build",
+      "--references",
+      "../references",
+      "--nhc-snapshot",
+      "../references/nhc_cohort_v1",
+      "--output",
+      "work/repro-build-pre-api-v1"
+    ],
+    "started_at": "2026-09-06T13:41:05.973637+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/03-build.log",
+    "log_sha256": "260939b2178aafe35017b08e1e8aa2ca21e1bd505ea09ab9e3cf7a5dd362ba10"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "audit-dataset",
+      "--build",
+      "work/build-pre-api-v1",
+      "--output",
+      "artifacts/pre_api_v1/dataset_audit.json"
+    ],
+    "started_at": "2026-09-06T13:41:06.980646+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/04-audit-dataset.log",
+    "log_sha256": "132a9fd367921f37c15658fb1afc85e196ae90d85e95f860b4bc0223a7632d87"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "prepare-model",
+      "--build",
+      "work/build-pre-api-v1",
+      "--config",
+      "configs/provider.example.json",
+      "--method",
+      "structured_state",
+      "--split",
+      "development",
+      "--event-group",
+      "AL092021",
+      "--max-queries",
+      "10",
+      "--output",
+      "work/pre-api-provider-structured_state.json"
+    ],
+    "started_at": "2026-09-06T13:41:07.642873+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/05-prepare-model.log",
+    "log_sha256": "f8c7ae19b88c26bd95b92a4ba187056b5ac68bed7203a278fd44ffdadad605a6"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "audit-collection",
+      "--build",
+      "work/build-pre-api-v1",
+      "--collection",
+      "work/pre-api-v1/rehearsal/structured_state/resumed",
+      "--split",
+      "development",
+      "--event-group",
+      "AL092021",
+      "--output",
+      "artifacts/pre_api_v1/collection-audit-structured_state.json"
+    ],
+    "started_at": "2026-09-06T13:41:08.058030+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/06-audit-collection.log",
+    "log_sha256": "dd24b15306fd3edd2381b9bb80490a968b34a0795efba42426bf92ad69e5a426"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "prepare-model",
+      "--build",
+      "work/build-pre-api-v1",
+      "--config",
+      "configs/provider.example.json",
+      "--method",
+      "snapshot",
+      "--split",
+      "development",
+      "--event-group",
+      "AL092021",
+      "--max-queries",
+      "10",
+      "--output",
+      "work/pre-api-provider-snapshot.json"
+    ],
+    "started_at": "2026-09-06T13:41:08.588611+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/07-prepare-model.log",
+    "log_sha256": "08abcc778c0333746e91e2d0101b673b42f62842dc0013359563b3d7e704c2ac"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "audit-collection",
+      "--build",
+      "work/build-pre-api-v1",
+      "--collection",
+      "work/pre-api-v1/rehearsal/snapshot/resumed",
+      "--split",
+      "development",
+      "--event-group",
+      "AL092021",
+      "--output",
+      "artifacts/pre_api_v1/collection-audit-snapshot.json"
+    ],
+    "started_at": "2026-09-06T13:41:09.027787+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/08-audit-collection.log",
+    "log_sha256": "dc01dc4a09e65a0a4b5fddf7f4b8cab35f5990d454cb4f590e1a055ccca07b65"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "prepare-model",
+      "--build",
+      "work/build-pre-api-v1",
+      "--config",
+      "configs/provider.example.json",
+      "--method",
+      "answer_history",
+      "--split",
+      "development",
+      "--event-group",
+      "AL092021",
+      "--max-queries",
+      "10",
+      "--output",
+      "work/pre-api-provider-answer_history.json"
+    ],
+    "started_at": "2026-09-06T13:41:09.492902+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/09-prepare-model.log",
+    "log_sha256": "198bc410e94675296663b18b10de9b839b1dfd4ffbe6c4a90ae567fa3e8d6563"
+  },
+  {
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace-auto",
+      "audit-collection",
+      "--build",
+      "work/build-pre-api-v1",
+      "--collection",
+      "work/pre-api-v1/rehearsal/answer_history/resumed",
+      "--split",
+      "development",
+      "--event-group",
+      "AL092021",
+      "--output",
+      "artifacts/pre_api_v1/collection-audit-answer_history.json"
+    ],
+    "started_at": "2026-09-06T13:41:09.961451+00:00",
+    "exit_code": 0,
+    "log": "artifacts/pre_api_v1/cli/10-audit-collection.log",
+    "log_sha256": "13f1d146e1325025efc8e608f8f2131b88a0f1f63f71e4e7ec9d6ad68cd08820"
+  }
+]

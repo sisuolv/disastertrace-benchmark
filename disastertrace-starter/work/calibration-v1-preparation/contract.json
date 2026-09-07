@@ -1,0 +1,133 @@
+{
+  "schema_version": "calibration_output_contract_v1",
+  "contract": "explicit_v1",
+  "protocol": "disastertrace_text_v1",
+  "marker": "DISASTERTRACE_OUTPUT_CONTRACT explicit_v1",
+  "json_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "state",
+      "action"
+    ],
+    "properties": {
+      "state": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "maximum_wind_mph",
+          "latitude_deg",
+          "longitude_deg",
+          "minimum_pressure_mb",
+          "port_reopening_time"
+        ],
+        "properties": {
+          "maximum_wind_mph": {
+            "$ref": "#/$defs/slot"
+          },
+          "latitude_deg": {
+            "$ref": "#/$defs/slot"
+          },
+          "longitude_deg": {
+            "$ref": "#/$defs/slot"
+          },
+          "minimum_pressure_mb": {
+            "$ref": "#/$defs/slot"
+          },
+          "port_reopening_time": {
+            "$ref": "#/$defs/slot"
+          }
+        }
+      },
+      "action": {
+        "type": "string",
+        "enum": [
+          "monitor",
+          "prepare",
+          "request_evidence"
+        ]
+      }
+    },
+    "$defs": {
+      "citation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "record_id",
+          "line"
+        ],
+        "properties": {
+          "record_id": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "slot": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "status",
+              "value",
+              "evidence"
+            ],
+            "properties": {
+              "status": {
+                "const": "known"
+              },
+              "value": {
+                "type": "number"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/citation"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "status",
+              "value",
+              "evidence"
+            ],
+            "properties": {
+              "status": {
+                "const": "unknown"
+              },
+              "value": {
+                "type": "null"
+              },
+              "evidence": {
+                "type": "array",
+                "maxItems": 0
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "schema_sha256": "76476b7b69f9552c7dd53b4adf56f12a0289fa24b9b387d51a1e48b715284896",
+  "lexical_requirements": [
+    "Return one complete JSON object with no Markdown fences, prose, or trailing data.",
+    "Use double-quoted object keys and strings; duplicate object keys are forbidden.",
+    "Known values must parse as finite JSON numbers, excluding booleans, NaN, infinity, and numeric overflow.",
+    "Each citation line must use a positive integer JSON token, without a fractional part or exponent; booleans are not line numbers."
+  ],
+  "grounding_requirement": "For a known value to receive grounded credit, provide at least one supported reference to numbered lines of a currently provided record. The schema and frozen parser permit empty evidence for known values structurally; empty evidence does not establish grounding. A well-formed reference alone does not establish factual correctness or evidence support.",
+  "instruction_suffix": "The action must be a string: monitor, prepare, or request_evidence. The state must be an object containing exactly the five required field names. Each field must contain exactly status, value, and evidence. For unknown status use a null value and an empty evidence array. For known status use a finite numeric value and an evidence array. Each reference contains exactly a record_id string and a positive integer line. Do not put the action inside an object or exchange the state and action shapes. Return no keys outside the JSON Schema.",
+  "parser_authority": "disastertrace.automated.dynamic.parse_decision",
+  "scope": "offline_prompt_calibration_only",
+  "provider_json_mode": false,
+  "contract_id": "b41f98abec418859a5950c062abe39dd2146fce5327450ce8a36b387d82fe140"
+}

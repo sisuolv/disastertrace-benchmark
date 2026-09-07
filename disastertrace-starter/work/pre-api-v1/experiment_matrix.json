@@ -1,0 +1,495 @@
+{
+  "schema_version": "frozen_experiment_matrix_v1",
+  "specification": {
+    "schema_version": "pre_api_pilot_v1",
+    "model_slots": [
+      "model_a",
+      "model_b"
+    ],
+    "methods": [
+      "structured_state",
+      "snapshot",
+      "answer_history"
+    ],
+    "repeats": 1,
+    "smoke_event_ids": [
+      "AL092021"
+    ]
+  },
+  "method_contracts": [
+    {
+      "schema_version": "declared_method_v1",
+      "method": "structured_state",
+      "evidence_view": "all_delivered_records_with_arrival_duplicates",
+      "carrier": "latest_schema_valid_model_decision_or_null",
+      "history_includes_invalid_responses": false,
+      "carrier_fact_checked_or_corrected": false,
+      "fresh_messages_per_checkpoint": true,
+      "causal_carrier_dependence_established": false
+    },
+    {
+      "schema_version": "declared_method_v1",
+      "method": "snapshot",
+      "evidence_view": "all_delivered_records_with_arrival_duplicates",
+      "carrier": "none",
+      "history_includes_invalid_responses": false,
+      "carrier_fact_checked_or_corrected": false,
+      "fresh_messages_per_checkpoint": true,
+      "causal_carrier_dependence_established": false
+    },
+    {
+      "schema_version": "declared_method_v1",
+      "method": "answer_history",
+      "evidence_view": "all_delivered_records_with_arrival_duplicates",
+      "carrier": "chronological_schema_valid_model_decisions",
+      "history_includes_invalid_responses": false,
+      "carrier_fact_checked_or_corrected": false,
+      "fresh_messages_per_checkpoint": true,
+      "causal_carrier_dependence_established": false
+    }
+  ],
+  "cells": [
+    {
+      "phase": "smoke",
+      "split": "development",
+      "model_slot": "model_a",
+      "method": "structured_state",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay"
+      ],
+      "max_queries": 10
+    },
+    {
+      "phase": "smoke",
+      "split": "development",
+      "model_slot": "model_a",
+      "method": "snapshot",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay"
+      ],
+      "max_queries": 10
+    },
+    {
+      "phase": "smoke",
+      "split": "development",
+      "model_slot": "model_a",
+      "method": "answer_history",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay"
+      ],
+      "max_queries": 10
+    },
+    {
+      "phase": "smoke",
+      "split": "development",
+      "model_slot": "model_b",
+      "method": "structured_state",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay"
+      ],
+      "max_queries": 10
+    },
+    {
+      "phase": "smoke",
+      "split": "development",
+      "model_slot": "model_b",
+      "method": "snapshot",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay"
+      ],
+      "max_queries": 10
+    },
+    {
+      "phase": "smoke",
+      "split": "development",
+      "model_slot": "model_b",
+      "method": "answer_history",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay"
+      ],
+      "max_queries": 10
+    },
+    {
+      "phase": "development",
+      "split": "development",
+      "model_slot": "model_a",
+      "method": "structured_state",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021",
+        "AL062018",
+        "AL052019"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay",
+        "al062018:controlled:base",
+        "al062018:controlled:delay",
+        "al052019:controlled:base",
+        "al052019:controlled:delay"
+      ],
+      "max_queries": 30
+    },
+    {
+      "phase": "development",
+      "split": "development",
+      "model_slot": "model_a",
+      "method": "snapshot",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021",
+        "AL062018",
+        "AL052019"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay",
+        "al062018:controlled:base",
+        "al062018:controlled:delay",
+        "al052019:controlled:base",
+        "al052019:controlled:delay"
+      ],
+      "max_queries": 30
+    },
+    {
+      "phase": "development",
+      "split": "development",
+      "model_slot": "model_a",
+      "method": "answer_history",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021",
+        "AL062018",
+        "AL052019"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay",
+        "al062018:controlled:base",
+        "al062018:controlled:delay",
+        "al052019:controlled:base",
+        "al052019:controlled:delay"
+      ],
+      "max_queries": 30
+    },
+    {
+      "phase": "development",
+      "split": "development",
+      "model_slot": "model_b",
+      "method": "structured_state",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021",
+        "AL062018",
+        "AL052019"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay",
+        "al062018:controlled:base",
+        "al062018:controlled:delay",
+        "al052019:controlled:base",
+        "al052019:controlled:delay"
+      ],
+      "max_queries": 30
+    },
+    {
+      "phase": "development",
+      "split": "development",
+      "model_slot": "model_b",
+      "method": "snapshot",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021",
+        "AL062018",
+        "AL052019"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay",
+        "al062018:controlled:base",
+        "al062018:controlled:delay",
+        "al052019:controlled:base",
+        "al052019:controlled:delay"
+      ],
+      "max_queries": 30
+    },
+    {
+      "phase": "development",
+      "split": "development",
+      "model_slot": "model_b",
+      "method": "answer_history",
+      "repeat": 1,
+      "group_ids": [
+        "AL092021",
+        "AL062018",
+        "AL052019"
+      ],
+      "episode_ids": [
+        "al092021:controlled:base",
+        "al092021:controlled:delay",
+        "al062018:controlled:base",
+        "al062018:controlled:delay",
+        "al052019:controlled:base",
+        "al052019:controlled:delay"
+      ],
+      "max_queries": 30
+    },
+    {
+      "phase": "heldout",
+      "split": "heldout",
+      "model_slot": "model_a",
+      "method": "structured_state",
+      "repeat": 1,
+      "group_ids": [
+        "AL112017",
+        "AL152017",
+        "AL142018",
+        "AL132020",
+        "AL092022",
+        "AL102023",
+        "AL022024"
+      ],
+      "episode_ids": [
+        "al112017:controlled:base",
+        "al112017:controlled:delay",
+        "al152017:controlled:base",
+        "al152017:controlled:delay",
+        "al142018:controlled:base",
+        "al142018:controlled:delay",
+        "al132020:controlled:base",
+        "al132020:controlled:delay",
+        "al092022:controlled:base",
+        "al092022:controlled:delay",
+        "al102023:controlled:base",
+        "al102023:controlled:delay",
+        "al022024:controlled:base",
+        "al022024:controlled:delay"
+      ],
+      "max_queries": 70
+    },
+    {
+      "phase": "heldout",
+      "split": "heldout",
+      "model_slot": "model_a",
+      "method": "snapshot",
+      "repeat": 1,
+      "group_ids": [
+        "AL112017",
+        "AL152017",
+        "AL142018",
+        "AL132020",
+        "AL092022",
+        "AL102023",
+        "AL022024"
+      ],
+      "episode_ids": [
+        "al112017:controlled:base",
+        "al112017:controlled:delay",
+        "al152017:controlled:base",
+        "al152017:controlled:delay",
+        "al142018:controlled:base",
+        "al142018:controlled:delay",
+        "al132020:controlled:base",
+        "al132020:controlled:delay",
+        "al092022:controlled:base",
+        "al092022:controlled:delay",
+        "al102023:controlled:base",
+        "al102023:controlled:delay",
+        "al022024:controlled:base",
+        "al022024:controlled:delay"
+      ],
+      "max_queries": 70
+    },
+    {
+      "phase": "heldout",
+      "split": "heldout",
+      "model_slot": "model_a",
+      "method": "answer_history",
+      "repeat": 1,
+      "group_ids": [
+        "AL112017",
+        "AL152017",
+        "AL142018",
+        "AL132020",
+        "AL092022",
+        "AL102023",
+        "AL022024"
+      ],
+      "episode_ids": [
+        "al112017:controlled:base",
+        "al112017:controlled:delay",
+        "al152017:controlled:base",
+        "al152017:controlled:delay",
+        "al142018:controlled:base",
+        "al142018:controlled:delay",
+        "al132020:controlled:base",
+        "al132020:controlled:delay",
+        "al092022:controlled:base",
+        "al092022:controlled:delay",
+        "al102023:controlled:base",
+        "al102023:controlled:delay",
+        "al022024:controlled:base",
+        "al022024:controlled:delay"
+      ],
+      "max_queries": 70
+    },
+    {
+      "phase": "heldout",
+      "split": "heldout",
+      "model_slot": "model_b",
+      "method": "structured_state",
+      "repeat": 1,
+      "group_ids": [
+        "AL112017",
+        "AL152017",
+        "AL142018",
+        "AL132020",
+        "AL092022",
+        "AL102023",
+        "AL022024"
+      ],
+      "episode_ids": [
+        "al112017:controlled:base",
+        "al112017:controlled:delay",
+        "al152017:controlled:base",
+        "al152017:controlled:delay",
+        "al142018:controlled:base",
+        "al142018:controlled:delay",
+        "al132020:controlled:base",
+        "al132020:controlled:delay",
+        "al092022:controlled:base",
+        "al092022:controlled:delay",
+        "al102023:controlled:base",
+        "al102023:controlled:delay",
+        "al022024:controlled:base",
+        "al022024:controlled:delay"
+      ],
+      "max_queries": 70
+    },
+    {
+      "phase": "heldout",
+      "split": "heldout",
+      "model_slot": "model_b",
+      "method": "snapshot",
+      "repeat": 1,
+      "group_ids": [
+        "AL112017",
+        "AL152017",
+        "AL142018",
+        "AL132020",
+        "AL092022",
+        "AL102023",
+        "AL022024"
+      ],
+      "episode_ids": [
+        "al112017:controlled:base",
+        "al112017:controlled:delay",
+        "al152017:controlled:base",
+        "al152017:controlled:delay",
+        "al142018:controlled:base",
+        "al142018:controlled:delay",
+        "al132020:controlled:base",
+        "al132020:controlled:delay",
+        "al092022:controlled:base",
+        "al092022:controlled:delay",
+        "al102023:controlled:base",
+        "al102023:controlled:delay",
+        "al022024:controlled:base",
+        "al022024:controlled:delay"
+      ],
+      "max_queries": 70
+    },
+    {
+      "phase": "heldout",
+      "split": "heldout",
+      "model_slot": "model_b",
+      "method": "answer_history",
+      "repeat": 1,
+      "group_ids": [
+        "AL112017",
+        "AL152017",
+        "AL142018",
+        "AL132020",
+        "AL092022",
+        "AL102023",
+        "AL022024"
+      ],
+      "episode_ids": [
+        "al112017:controlled:base",
+        "al112017:controlled:delay",
+        "al152017:controlled:base",
+        "al152017:controlled:delay",
+        "al142018:controlled:base",
+        "al142018:controlled:delay",
+        "al132020:controlled:base",
+        "al132020:controlled:delay",
+        "al092022:controlled:base",
+        "al092022:controlled:delay",
+        "al102023:controlled:base",
+        "al102023:controlled:delay",
+        "al022024:controlled:base",
+        "al022024:controlled:delay"
+      ],
+      "max_queries": 70
+    }
+  ],
+  "requests_by_phase": {
+    "smoke": 60,
+    "development": 180,
+    "heldout": 420
+  },
+  "phase_execution": "smoke_then_development_then_heldout; separate collections",
+  "smoke_overlap": "smoke is a development subset; do not pool duplicate runs or reuse answers as independent samples",
+  "model_selection": "two distinct model families recommended; actual identities unresolved",
+  "pending_live_configuration": [
+    "served_model_ids_and_versions",
+    "provider_endpoints_and_parameter_support",
+    "credential_environment_variables",
+    "context_and_output_token_limits",
+    "provider_pricing_and_trial_money_budget"
+  ],
+  "primary_reporting": [
+    "grounded_state",
+    "schema_success",
+    "known_answer_coverage",
+    "necessary_change_and_preservation_with_opportunity_counts",
+    "action_accuracy_as_secondary_metric",
+    "per_event_and_event_macro_and_pooled"
+  ],
+  "no_new_human_item_review": true,
+  "prompt_or_parser_tuning_on_heldout": false,
+  "independent_sampling_repeats": 1,
+  "confidence_intervals": "not claimed for this small purposeful cohort",
+  "eligible_for_llm_leaderboard": false
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "p1_offline_finalizer_independent_review_v1",
+  "recorded_at": "2026-09-06T16:16:59.929556+00:00",
+  "reviewed_files": {
+    "artifacts/p1_deepseek_development/interruption_recovery/finalize_interrupted.py": "ec9b21f040838ff6739ffb88e4a4d608980a0a370f659a0843f35225cf38eb9d",
+    "artifacts/p1_deepseek_development/interruption_recovery/test_finalize_interrupted.py": "41e9a1f29e7bd13c06bf71fc612776d4afe2a5d277ff20b7e71632ba785949e7",
+    "artifacts/p1_deepseek_development/interruption_recovery/supervise_finalization.py": "f2daa73526a17e4857925c001472981a9ee79d3916c69a0111cf7b76d6de60d5",
+    "artifacts/p1_deepseek_development/interruption_recovery/checks/result.json": "9cb8ec25de367115bea60a194a336d4f071bab0f9ef6943b6934d5e9d751d6ed"
+  },
+  "new_model_api_calls": 0,
+  "review_mode": "read_only_source_and_existing_test_evidence",
+  "test_evidence": {
+    "passed": 10,
+    "skipped": 0,
+    "rerun_by_this_reviewer": false,
+    "log": "artifacts/p1_deepseek_development/interruption_recovery/checks/0.log"
+  },
+  "blocking_findings": [],
+  "observations": [
+    "Derived provider_error is an explicitly local administrative disposition under an existing schema. The provenance states provider_returned_error=false and preserves unknown receipt/completion/billing; it must not be described as an observed provider error.",
+    "The pending request is never reissued, no response is fabricated, old ledger is unchanged and the old pending reservation is retained.",
+    "Derived requests, plan and responses are byte-identical; original outcomes remain an exact prefix followed by one administrative row. Original source hashes and ledger hashes are checked again.",
+    "The existing collection audit accepts the derived stopped state but marks it unsafe to resume; all 30 offline scoring slots remain.",
+    "Finalizer CLI installs a network-denial audit hook. The supervisor additionally removes the DeepSeek credential variable and records subprocess status; it does not authorize or implement an API restart."
+  ],
+  "interpretation_requirements": [
+    "Label the 12 answer-history absent responses as one uncertain admitted attempt plus eleven unattempted slots.",
+    "Show observed-response cost subtotal separately from unknown full-run cost and retained reservation.",
+    "Do not treat interrupted full-denominator answer-history score as a completed three-method model ranking."
+  ]
+}

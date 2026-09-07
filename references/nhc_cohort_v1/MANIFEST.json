@@ -1,0 +1,1882 @@
+{
+  "schema_version": "nhc_cohort_snapshot_v1",
+  "acquisition_version": "nhc_predeclared_acquisition_v1",
+  "status": "complete",
+  "started_at": "2026-09-06T07:15:36.323623+00:00",
+  "catalogue_path": "catalogue.json",
+  "catalogue_sha256": "feef1008e7b3920bd2f42d5cd1424a9100d791bb46e5f151ec49d5d59146c1d9",
+  "catalogue": {
+    "schema_version": "nhc_cohort_catalogue_v1",
+    "cohort_id": "nhc-atlantic-pilot-v1",
+    "selection_basis": "purposeful_predeclared_pilot_before_acquisition_and_model_results",
+    "planned_event_count": 12,
+    "advisories_per_event": 3,
+    "events": [
+      {
+        "storm_id": "AL092021",
+        "storm_name": "IDA",
+        "split": "development",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al092021-public-009",
+          "nhc-al092021-public-010",
+          "nhc-al092021-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL092017",
+        "storm_name": "HARVEY",
+        "split": "development",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al092017-public-009",
+          "nhc-al092017-public-010",
+          "nhc-al092017-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL062018",
+        "storm_name": "FLORENCE",
+        "split": "development",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al062018-public-009",
+          "nhc-al062018-public-010",
+          "nhc-al062018-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL052019",
+        "storm_name": "DORIAN",
+        "split": "development",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al052019-public-009",
+          "nhc-al052019-public-010",
+          "nhc-al052019-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL142016",
+        "storm_name": "MATTHEW",
+        "split": "heldout",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al142016-public-009",
+          "nhc-al142016-public-010",
+          "nhc-al142016-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL112017",
+        "storm_name": "IRMA",
+        "split": "heldout",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al112017-public-009",
+          "nhc-al112017-public-010",
+          "nhc-al112017-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL152017",
+        "storm_name": "MARIA",
+        "split": "heldout",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al152017-public-009",
+          "nhc-al152017-public-010",
+          "nhc-al152017-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL142018",
+        "storm_name": "MICHAEL",
+        "split": "heldout",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al142018-public-009",
+          "nhc-al142018-public-010",
+          "nhc-al142018-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL132020",
+        "storm_name": "LAURA",
+        "split": "heldout",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al132020-public-009",
+          "nhc-al132020-public-010",
+          "nhc-al132020-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL092022",
+        "storm_name": "IAN",
+        "split": "heldout",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al092022-public-009",
+          "nhc-al092022-public-010",
+          "nhc-al092022-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL102023",
+        "storm_name": "IDALIA",
+        "split": "heldout",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al102023-public-009",
+          "nhc-al102023-public-010",
+          "nhc-al102023-public-011"
+        ]
+      },
+      {
+        "storm_id": "AL022024",
+        "storm_name": "BERYL",
+        "split": "heldout",
+        "advisory_numbers": [
+          "9",
+          "10",
+          "11"
+        ],
+        "source_ids": [
+          "nhc-al022024-public-009",
+          "nhc-al022024-public-010",
+          "nhc-al022024-public-011"
+        ]
+      }
+    ],
+    "limitations": [
+      "Purposeful Atlantic tropical-cyclone pilot, not a representative extreme-weather population.",
+      "Storm identities, advisory numbers and event splits are fixed before this acquisition.",
+      "Advisory number does not imply equal storm intensity, landfall phase or severity across events.",
+      "Failed downloads and parser rejections remain in the planned denominator without replacement.",
+      "Development and heldout mean event-group assignments; no claim of training-data decontamination.",
+      "Historical public availability is not established by issue or current retrieval times."
+    ]
+  },
+  "extraction": "Python html.parser.HTMLParser(convert_charrefs=True), concatenate data inside the sole pre element; UTF-8 encode without whitespace normalization. Original HTML retained. Retrieval time does not establish historical publication time.",
+  "limits": {
+    "workers": 4,
+    "timeout_seconds": 20,
+    "max_attempts_per_source": 2,
+    "max_response_bytes": 2097152
+  },
+  "records": [
+    {
+      "source_id": "nhc-al092021-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.009.shtml",
+      "storm_id": "AL092021",
+      "storm_name": "IDA",
+      "split": "development",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al092021-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al092021-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.010.shtml",
+      "storm_id": "AL092021",
+      "storm_name": "IDA",
+      "split": "development",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al092021-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al092021-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.011.shtml",
+      "storm_id": "AL092021",
+      "storm_name": "IDA",
+      "split": "development",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al092021-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al092017-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.009.shtml",
+      "storm_id": "AL092017",
+      "storm_name": "HARVEY",
+      "split": "development",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al092017-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al092017-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.010.shtml",
+      "storm_id": "AL092017",
+      "storm_name": "HARVEY",
+      "split": "development",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al092017-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al092017-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.011.shtml",
+      "storm_id": "AL092017",
+      "storm_name": "HARVEY",
+      "split": "development",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al092017-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al062018-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.009.shtml",
+      "storm_id": "AL062018",
+      "storm_name": "FLORENCE",
+      "split": "development",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al062018-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al062018-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.010.shtml",
+      "storm_id": "AL062018",
+      "storm_name": "FLORENCE",
+      "split": "development",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al062018-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al062018-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.011.shtml",
+      "storm_id": "AL062018",
+      "storm_name": "FLORENCE",
+      "split": "development",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al062018-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al052019-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.009.shtml",
+      "storm_id": "AL052019",
+      "storm_name": "DORIAN",
+      "split": "development",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al052019-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al052019-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.010.shtml",
+      "storm_id": "AL052019",
+      "storm_name": "DORIAN",
+      "split": "development",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al052019-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al052019-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.011.shtml",
+      "storm_id": "AL052019",
+      "storm_name": "DORIAN",
+      "split": "development",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al052019-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al142016-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.009.shtml",
+      "storm_id": "AL142016",
+      "storm_name": "MATTHEW",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al142016-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al142016-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.010.shtml",
+      "storm_id": "AL142016",
+      "storm_name": "MATTHEW",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al142016-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al142016-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.011.shtml",
+      "storm_id": "AL142016",
+      "storm_name": "MATTHEW",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al142016-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al112017-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.009.shtml",
+      "storm_id": "AL112017",
+      "storm_name": "IRMA",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al112017-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al112017-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.010.shtml",
+      "storm_id": "AL112017",
+      "storm_name": "IRMA",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al112017-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al112017-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.011.shtml",
+      "storm_id": "AL112017",
+      "storm_name": "IRMA",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al112017-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al152017-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.009.shtml",
+      "storm_id": "AL152017",
+      "storm_name": "MARIA",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al152017-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al152017-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.010.shtml",
+      "storm_id": "AL152017",
+      "storm_name": "MARIA",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al152017-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al152017-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.011.shtml",
+      "storm_id": "AL152017",
+      "storm_name": "MARIA",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al152017-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al142018-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.009.shtml",
+      "storm_id": "AL142018",
+      "storm_name": "MICHAEL",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al142018-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al142018-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.010.shtml",
+      "storm_id": "AL142018",
+      "storm_name": "MICHAEL",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al142018-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al142018-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.011.shtml",
+      "storm_id": "AL142018",
+      "storm_name": "MICHAEL",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al142018-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al132020-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.009.shtml",
+      "storm_id": "AL132020",
+      "storm_name": "LAURA",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al132020-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al132020-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.010.shtml",
+      "storm_id": "AL132020",
+      "storm_name": "LAURA",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al132020-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al132020-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.011.shtml",
+      "storm_id": "AL132020",
+      "storm_name": "LAURA",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al132020-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al092022-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.009.shtml",
+      "storm_id": "AL092022",
+      "storm_name": "IAN",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al092022-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al092022-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.010.shtml",
+      "storm_id": "AL092022",
+      "storm_name": "IAN",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al092022-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al092022-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.011.shtml",
+      "storm_id": "AL092022",
+      "storm_name": "IAN",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al092022-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al102023-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.009.shtml",
+      "storm_id": "AL102023",
+      "storm_name": "IDALIA",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al102023-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al102023-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.010.shtml",
+      "storm_id": "AL102023",
+      "storm_name": "IDALIA",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al102023-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al102023-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.011.shtml",
+      "storm_id": "AL102023",
+      "storm_name": "IDALIA",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al102023-public-011/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al022024-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.009.shtml",
+      "storm_id": "AL022024",
+      "storm_name": "BERYL",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al022024-public-009/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al022024-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.010.shtml",
+      "storm_id": "AL022024",
+      "storm_name": "BERYL",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al022024-public-010/01.json"
+      ]
+    },
+    {
+      "source_id": "nhc-al022024-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.011.shtml",
+      "storm_id": "AL022024",
+      "storm_name": "BERYL",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "attempts": [
+        "attempts/nhc-al022024-public-011/01.json"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "source_id": "nhc-al092021-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.009.shtml",
+      "storm_id": "AL092021",
+      "storm_name": "IDA",
+      "split": "development",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:37.231564+00:00",
+      "html_path": "raw/nhc-al092021-public-009.attempt-01.html",
+      "html_sha256": "ead3556a0ab1ef634813fab70d95773bb881f8ecc81dd1977ca632aa9a9bc4b8",
+      "text_path": "text/nhc-al092021-public-009.txt",
+      "text_sha256": "8ababd3c9257ae0b3c90e3de482ff181ee308eb55cf96c243d8b28f218d2f481",
+      "size_bytes": 8447,
+      "html_size_bytes": 30930,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al092021-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.010.shtml",
+      "storm_id": "AL092021",
+      "storm_name": "IDA",
+      "split": "development",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:37.301930+00:00",
+      "html_path": "raw/nhc-al092021-public-010.attempt-01.html",
+      "html_sha256": "9d397fb9b5478cc3907608060c166d4c2463e1c07c3e69c70889f45ac70de892",
+      "text_path": "text/nhc-al092021-public-010.txt",
+      "text_sha256": "79a96bd6bf9997a7a9b9ee2f5e90aa0085d776197f469012e2abfb23fe2d6ff2",
+      "size_bytes": 8073,
+      "html_size_bytes": 30556,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al092021-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.011.shtml",
+      "storm_id": "AL092021",
+      "storm_name": "IDA",
+      "split": "development",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:37.327783+00:00",
+      "html_path": "raw/nhc-al092021-public-011.attempt-01.html",
+      "html_sha256": "43d6d1587e7947703b421896a420009366765c26bc36287e24e821345d91b752",
+      "text_path": "text/nhc-al092021-public-011.txt",
+      "text_sha256": "99b689fb8b948800015cc2e19e02beff69669de83eaf195bc1474164cf8178ef",
+      "size_bytes": 7401,
+      "html_size_bytes": 29884,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al092017-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.009.shtml",
+      "storm_id": "AL092017",
+      "storm_name": "HARVEY",
+      "split": "development",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:37.222702+00:00",
+      "html_path": "raw/nhc-al092017-public-009.attempt-01.html",
+      "html_sha256": "8c8b0d222efeeff45e0f1a5b00a8c8b84b2be8476e9672f86d0542bc98df5c1a",
+      "text_path": "text/nhc-al092017-public-009.txt",
+      "text_sha256": "3c05a31c46cf389d34188901d83712d73f40731c269cecfa266669d9d7736ebf",
+      "size_bytes": 2177,
+      "html_size_bytes": 24668,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al092017-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.010.shtml",
+      "storm_id": "AL092017",
+      "storm_name": "HARVEY",
+      "split": "development",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:37.881556+00:00",
+      "html_path": "raw/nhc-al092017-public-010.attempt-01.html",
+      "html_sha256": "f331594330893b636fe825e841fe276e84b0b246d288e3265daf7d2e4de3c6ce",
+      "text_path": "text/nhc-al092017-public-010.txt",
+      "text_sha256": "eaa5ba8e80d0e9084b4190343c28772bd91561817d7341c0a7517cb5cad5776b",
+      "size_bytes": 1856,
+      "html_size_bytes": 24352,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al092017-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.011.shtml",
+      "storm_id": "AL092017",
+      "storm_name": "HARVEY",
+      "split": "development",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:37.974445+00:00",
+      "html_path": "raw/nhc-al092017-public-011.attempt-01.html",
+      "html_sha256": "f6175e15372f318c462c44e1aebed38812b95396376436326406dcfb6325484b",
+      "text_path": "text/nhc-al092017-public-011.txt",
+      "text_sha256": "789aca2a64398098a2320a7eef55baca961d4f99dac6f0c8212564dfc4c8c84c",
+      "size_bytes": 2053,
+      "html_size_bytes": 24541,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al062018-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.009.shtml",
+      "storm_id": "AL062018",
+      "storm_name": "FLORENCE",
+      "split": "development",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:38.208677+00:00",
+      "html_path": "raw/nhc-al062018-public-009.attempt-01.html",
+      "html_sha256": "8efb9cd0685fb4f2916ea3b08aa15303fdc2ac98da2061e85cc781ab87830a10",
+      "text_path": "text/nhc-al062018-public-009.txt",
+      "text_sha256": "3497d01113d1e554e29527e1b57e9ede6025f26f1c7c4959051b82a6a4eef77f",
+      "size_bytes": 1540,
+      "html_size_bytes": 24033,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al062018-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.010.shtml",
+      "storm_id": "AL062018",
+      "storm_name": "FLORENCE",
+      "split": "development",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:38.218305+00:00",
+      "html_path": "raw/nhc-al062018-public-010.attempt-01.html",
+      "html_sha256": "da55800bb27136cf8f0923dff1e6c1c2f319c0a11122b898eb754df16e5a602e",
+      "text_path": "text/nhc-al062018-public-010.txt",
+      "text_sha256": "7522fd99d94ce54324109ce476e5d5d381f229c734a010e854cceea80f635eed",
+      "size_bytes": 1406,
+      "html_size_bytes": 23899,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al062018-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.011.shtml",
+      "storm_id": "AL062018",
+      "storm_name": "FLORENCE",
+      "split": "development",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:38.741527+00:00",
+      "html_path": "raw/nhc-al062018-public-011.attempt-01.html",
+      "html_sha256": "fcad7af4dc299434ec2ceb4fc29115e9c5fbb20565e2d647847be41de2ddd7cc",
+      "text_path": "text/nhc-al062018-public-011.txt",
+      "text_sha256": "c425483da6a77f83ab82eeba31dfa12741056e0b50945d6dbecaa6fe31fce488",
+      "size_bytes": 1508,
+      "html_size_bytes": 24001,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al052019-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.009.shtml",
+      "storm_id": "AL052019",
+      "storm_name": "DORIAN",
+      "split": "development",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:38.848505+00:00",
+      "html_path": "raw/nhc-al052019-public-009.attempt-01.html",
+      "html_sha256": "930166bf424bf4ae7e89c39159310c4b98c4d7015378d4548b3b44edbfbc2ab9",
+      "text_path": "text/nhc-al052019-public-009.txt",
+      "text_sha256": "bc31aea4989a99e7dddc68fef9a76455d93d5a8942bfdeaafb2699eab29991f7",
+      "size_bytes": 4149,
+      "html_size_bytes": 26640,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al052019-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.010.shtml",
+      "storm_id": "AL052019",
+      "storm_name": "DORIAN",
+      "split": "development",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:38.887497+00:00",
+      "html_path": "raw/nhc-al052019-public-010.attempt-01.html",
+      "html_sha256": "221684b2676fdea3f468d378311e7dcf43fa629b4348e3d251dc64381c3d14f2",
+      "text_path": "text/nhc-al052019-public-010.txt",
+      "text_sha256": "6f2bd0baaa3274e7d9849af6a00c641be6c88aa1bbb38be611441edb9bdb4384",
+      "size_bytes": 4511,
+      "html_size_bytes": 27002,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al052019-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.011.shtml",
+      "storm_id": "AL052019",
+      "storm_name": "DORIAN",
+      "split": "development",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:39.181447+00:00",
+      "html_path": "raw/nhc-al052019-public-011.attempt-01.html",
+      "html_sha256": "3ba425862b7d7de15cd7ef87dcbd8beee06ba5e580dbbc375255c7dc8a93c4d0",
+      "text_path": "text/nhc-al052019-public-011.txt",
+      "text_sha256": "44d18304d319e70b44917c98ae66578fe8c39c6c089f83ed6890578efdc22eab",
+      "size_bytes": 4146,
+      "html_size_bytes": 26637,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al142016-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.009.shtml",
+      "storm_id": "AL142016",
+      "storm_name": "MATTHEW",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:39.419103+00:00",
+      "html_path": "raw/nhc-al142016-public-009.attempt-01.html",
+      "html_sha256": "c0ee46496d4f6fef2c74c442b83e2c612ff97c05a6b731827b0c69ab89ae5aed",
+      "text_path": "text/nhc-al142016-public-009.txt",
+      "text_sha256": "08648fd6b8b963bf8d750bfd21b7fd7807b545fea5d950956531ebd7e74ba671",
+      "size_bytes": 3268,
+      "html_size_bytes": 25755,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al142016-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.010.shtml",
+      "storm_id": "AL142016",
+      "storm_name": "MATTHEW",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:39.530866+00:00",
+      "html_path": "raw/nhc-al142016-public-010.attempt-01.html",
+      "html_sha256": "de65be8fd314b4ddd7aa0ca7288302f2e419f77587b34db07d2c473d0c8a3d07",
+      "text_path": "text/nhc-al142016-public-010.txt",
+      "text_sha256": "fc99bd25027627ff64ad10a830d1d5816622a8bca6d612a8abb9b306bb3346e5",
+      "size_bytes": 3842,
+      "html_size_bytes": 26329,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al142016-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.011.shtml",
+      "storm_id": "AL142016",
+      "storm_name": "MATTHEW",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:39.765009+00:00",
+      "html_path": "raw/nhc-al142016-public-011.attempt-01.html",
+      "html_sha256": "9458d68d6dd680e9ecc13a3bf43cbfa4bb881488cbf4fcfdf284417cc1473f95",
+      "text_path": "text/nhc-al142016-public-011.txt",
+      "text_sha256": "61732dbe37db07a09cf8b0f8a5566754ad70a0855984da66aa8195d0bbd6f1ab",
+      "size_bytes": 4836,
+      "html_size_bytes": 27323,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al112017-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.009.shtml",
+      "storm_id": "AL112017",
+      "storm_name": "IRMA",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:39.843082+00:00",
+      "html_path": "raw/nhc-al112017-public-009.attempt-01.html",
+      "html_sha256": "9d6e0b9a7fb8721ee20051526faa0a048a035ceb65c486bfdfb1d73e60522afd",
+      "text_path": "text/nhc-al112017-public-009.txt",
+      "text_sha256": "edd5911d92401e5c9c2ad00d4763d139828523ba57df5f75b6a21429230bae85",
+      "size_bytes": 1578,
+      "html_size_bytes": 24062,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al112017-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.010.shtml",
+      "storm_id": "AL112017",
+      "storm_name": "IRMA",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:40.091496+00:00",
+      "html_path": "raw/nhc-al112017-public-010.attempt-01.html",
+      "html_sha256": "dcfc119000b968fb225ba9428623a0456095c6a809fa12a7dcb7b576e677f0c6",
+      "text_path": "text/nhc-al112017-public-010.txt",
+      "text_sha256": "aff795f654272860f6014c8810e930e8df6d6c440c1a5e90ac93aa03d0011289",
+      "size_bytes": 1663,
+      "html_size_bytes": 24147,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al112017-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.011.shtml",
+      "storm_id": "AL112017",
+      "storm_name": "IRMA",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:40.197978+00:00",
+      "html_path": "raw/nhc-al112017-public-011.attempt-01.html",
+      "html_sha256": "002d445f16092f23bd1e54bbac375d3539034877637150f0db75e86b54fdefb8",
+      "text_path": "text/nhc-al112017-public-011.txt",
+      "text_sha256": "752940f4a1587a087d09e63eaa9d9a86024af47727d9d8ac3a2a359ee56faa45",
+      "size_bytes": 1693,
+      "html_size_bytes": 24177,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al152017-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.009.shtml",
+      "storm_id": "AL152017",
+      "storm_name": "MARIA",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:40.536191+00:00",
+      "html_path": "raw/nhc-al152017-public-009.attempt-01.html",
+      "html_sha256": "4e04d87ce261e44f1a639fc569f7aee40b3e653a99cf9fbf3a403fd422d681a6",
+      "text_path": "text/nhc-al152017-public-009.txt",
+      "text_sha256": "122be663d69038e47fdd8cbc268b0dccac873cab042922623fa2d50f2041f63a",
+      "size_bytes": 6735,
+      "html_size_bytes": 29220,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al152017-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.010.shtml",
+      "storm_id": "AL152017",
+      "storm_name": "MARIA",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:40.561239+00:00",
+      "html_path": "raw/nhc-al152017-public-010.attempt-01.html",
+      "html_sha256": "69809b5cddb0cdcfedfffe1615dfd0dc6898512e171645c2a4a2ac02660a44c3",
+      "text_path": "text/nhc-al152017-public-010.txt",
+      "text_sha256": "7aba32304e709e121be1e39b5e2c870f62a7bb1dd22cb2a69ed578385b2268e3",
+      "size_bytes": 6946,
+      "html_size_bytes": 29431,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al152017-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.011.shtml",
+      "storm_id": "AL152017",
+      "storm_name": "MARIA",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:40.783846+00:00",
+      "html_path": "raw/nhc-al152017-public-011.attempt-01.html",
+      "html_sha256": "83fffd93ecf1d85cc773b1c5ac8aa80bec585582ea1521f8a0f7a65f55c7381a",
+      "text_path": "text/nhc-al152017-public-011.txt",
+      "text_sha256": "9be2898cb11fbe2600a2d30d64562793fe9287e93fdc7758e60733b4fabf498a",
+      "size_bytes": 6728,
+      "html_size_bytes": 29213,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al142018-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.009.shtml",
+      "storm_id": "AL142018",
+      "storm_name": "MICHAEL",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:40.906967+00:00",
+      "html_path": "raw/nhc-al142018-public-009.attempt-01.html",
+      "html_sha256": "94d39b727b939632bc28765bffd2e3004e8081cef9a4a864c2a63d58b6e16b5c",
+      "text_path": "text/nhc-al142018-public-009.txt",
+      "text_sha256": "22d7414bdb4c272848d6c501785d25da782e5f207c3dcf204c07d737ae714211",
+      "size_bytes": 8598,
+      "html_size_bytes": 31085,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al142018-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.010.shtml",
+      "storm_id": "AL142018",
+      "storm_name": "MICHAEL",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:41.238356+00:00",
+      "html_path": "raw/nhc-al142018-public-010.attempt-01.html",
+      "html_sha256": "bfc40eabf0162db03082ea14488ce0a786f3a155cd70eef01591cbb3d160ed71",
+      "text_path": "text/nhc-al142018-public-010.txt",
+      "text_sha256": "01846ad4bb440a4d8d6a5fe8cbb8593153946e85f740597ecf7fa9dd53b095bc",
+      "size_bytes": 7896,
+      "html_size_bytes": 30383,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al142018-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.011.shtml",
+      "storm_id": "AL142018",
+      "storm_name": "MICHAEL",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:41.333084+00:00",
+      "html_path": "raw/nhc-al142018-public-011.attempt-01.html",
+      "html_sha256": "efae5edb0c91264c35eab94d48734d15215a4cdc0bb35d61a61b8ba0ac6b972e",
+      "text_path": "text/nhc-al142018-public-011.txt",
+      "text_sha256": "c479ed2dde54626e93868fb86087f031a1d6937896d6c30f0f0c425855d52cb5",
+      "size_bytes": 8108,
+      "html_size_bytes": 30595,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al132020-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.009.shtml",
+      "storm_id": "AL132020",
+      "storm_name": "LAURA",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:41.545289+00:00",
+      "html_path": "raw/nhc-al132020-public-009.attempt-01.html",
+      "html_sha256": "484664cb67f7a4dea13eb0acbc8ae76757fc592ad217f761559bac9db06592a3",
+      "text_path": "text/nhc-al132020-public-009.txt",
+      "text_sha256": "e59bb6ccc3bb9c8a96eee6ae68da0e0bae1a0d022932eb9f262937e1276b9f57",
+      "size_bytes": 4493,
+      "html_size_bytes": 26983,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al132020-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.010.shtml",
+      "storm_id": "AL132020",
+      "storm_name": "LAURA",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:41.770771+00:00",
+      "html_path": "raw/nhc-al132020-public-010.attempt-01.html",
+      "html_sha256": "71844efe5363e1be599bacf2a93ba2e64d1e40c7a025f082639de79ede7dddfe",
+      "text_path": "text/nhc-al132020-public-010.txt",
+      "text_sha256": "9f6ea21a801debc2b1778744667a1939fe9c0e723792e4f335aaab7e2e60baf7",
+      "size_bytes": 4419,
+      "html_size_bytes": 26909,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al132020-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.011.shtml",
+      "storm_id": "AL132020",
+      "storm_name": "LAURA",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:41.909783+00:00",
+      "html_path": "raw/nhc-al132020-public-011.attempt-01.html",
+      "html_sha256": "e982e1b7bb9832ba17efd28798892547f3174b5b080ea0225849e97575066f8c",
+      "text_path": "text/nhc-al132020-public-011.txt",
+      "text_sha256": "5f05f07d82bed34594eb048629b2053e7a2aa33cefef3014bbc50ab2849db21f",
+      "size_bytes": 4943,
+      "html_size_bytes": 27433,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al092022-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.009.shtml",
+      "storm_id": "AL092022",
+      "storm_name": "IAN",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:42.110811+00:00",
+      "html_path": "raw/nhc-al092022-public-009.attempt-01.html",
+      "html_sha256": "db21c56b0b3904ebdda89f81c8329da63869c0e537a08584a2ec84f759042445",
+      "text_path": "text/nhc-al092022-public-009.txt",
+      "text_sha256": "709f89716aaa02b9beb08579a20569a05ba05e8a38ed8f234383f1d315e66930",
+      "size_bytes": 5815,
+      "html_size_bytes": 28303,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al092022-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.010.shtml",
+      "storm_id": "AL092022",
+      "storm_name": "IAN",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:42.196304+00:00",
+      "html_path": "raw/nhc-al092022-public-010.attempt-01.html",
+      "html_sha256": "4304455e8ef42286edd1b4121c4bbbdbb2a5bf45b57ea1dd3169994bc88ac74c",
+      "text_path": "text/nhc-al092022-public-010.txt",
+      "text_sha256": "db20a8be811598d4c92308669be1dd974aa2ef523df78c73b3a23f76267ea623",
+      "size_bytes": 5899,
+      "html_size_bytes": 28387,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al092022-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.011.shtml",
+      "storm_id": "AL092022",
+      "storm_name": "IAN",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:42.468468+00:00",
+      "html_path": "raw/nhc-al092022-public-011.attempt-01.html",
+      "html_sha256": "54c1d015c87d41777fc7fab0f06917bdea765eb7ab80c5184af920a6411fb006",
+      "text_path": "text/nhc-al092022-public-011.txt",
+      "text_sha256": "32d0ed3c07d07296165dd5e2721bf5e49252da633ec8ad69e69954ba43c8bfdf",
+      "size_bytes": 6728,
+      "html_size_bytes": 29216,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al102023-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.009.shtml",
+      "storm_id": "AL102023",
+      "storm_name": "IDALIA",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:42.680463+00:00",
+      "html_path": "raw/nhc-al102023-public-009.attempt-01.html",
+      "html_sha256": "8ec659521e748449a344d10aa8ed08d9e923c16f87185770213e2cd2d8b4e785",
+      "text_path": "text/nhc-al102023-public-009.txt",
+      "text_sha256": "27830bc5610a7b73e1caaf580e4c08d73bc4135b831fece2040cbfb4bc373d8e",
+      "size_bytes": 9467,
+      "html_size_bytes": 31958,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al102023-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.010.shtml",
+      "storm_id": "AL102023",
+      "storm_name": "IDALIA",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:42.810389+00:00",
+      "html_path": "raw/nhc-al102023-public-010.attempt-01.html",
+      "html_sha256": "3f817fde8f66b031ff6a5ad029edc140a183fd3ca9e04490e460cd0acac9d2f8",
+      "text_path": "text/nhc-al102023-public-010.txt",
+      "text_sha256": "aa6393ed6b1ccb6642bdea0e4e2767e0b1630f42c4117676c923f0ebf8d9b74e",
+      "size_bytes": 9125,
+      "html_size_bytes": 31616,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al102023-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.011.shtml",
+      "storm_id": "AL102023",
+      "storm_name": "IDALIA",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:42.998163+00:00",
+      "html_path": "raw/nhc-al102023-public-011.attempt-01.html",
+      "html_sha256": "019e08e9bc1cd91812f1e3e42927974e966086e0dd618b7233440d3b0f0ed5e6",
+      "text_path": "text/nhc-al102023-public-011.txt",
+      "text_sha256": "b3d439c511d73c709200c38185f779a43824438b0df00e4be045a06601a56b1b",
+      "size_bytes": 8713,
+      "html_size_bytes": 31199,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al022024-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.009.shtml",
+      "storm_id": "AL022024",
+      "storm_name": "BERYL",
+      "split": "heldout",
+      "advisory_number": "9",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.009.shtml",
+      "retrieved_at": "2026-09-06T07:15:43.277491+00:00",
+      "html_path": "raw/nhc-al022024-public-009.attempt-01.html",
+      "html_sha256": "50f461ef4c333c27e138d8b255966ed4ee9f04a94f031f06104e71b972f0e8d9",
+      "text_path": "text/nhc-al022024-public-009.txt",
+      "text_sha256": "6d5b69dfd412521a1395a0a3ef43b72b3214dd27e448597425c1904a5add1b3c",
+      "size_bytes": 5737,
+      "html_size_bytes": 28222,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al022024-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.010.shtml",
+      "storm_id": "AL022024",
+      "storm_name": "BERYL",
+      "split": "heldout",
+      "advisory_number": "10",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.010.shtml",
+      "retrieved_at": "2026-09-06T07:15:43.455376+00:00",
+      "html_path": "raw/nhc-al022024-public-010.attempt-01.html",
+      "html_sha256": "ac9ccbd75417ce0df22aae09589a13725fb6bfed2a6c43192e9d279cb6e1df18",
+      "text_path": "text/nhc-al022024-public-010.txt",
+      "text_sha256": "de6fe98a211f27ef6ff28fe06b9472665a93ec7c0ed20c6cea00f3a6d6208bd1",
+      "size_bytes": 5484,
+      "html_size_bytes": 27969,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    },
+    {
+      "source_id": "nhc-al022024-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.011.shtml",
+      "storm_id": "AL022024",
+      "storm_name": "BERYL",
+      "split": "heldout",
+      "advisory_number": "11",
+      "status": "succeeded",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.011.shtml",
+      "retrieved_at": "2026-09-06T07:15:43.604305+00:00",
+      "html_path": "raw/nhc-al022024-public-011.attempt-01.html",
+      "html_sha256": "20c1cea0ca6f8a747fea007da8cfcc0b33b23a9530ae84573dd5831cbf980ad8",
+      "text_path": "text/nhc-al022024-public-011.txt",
+      "text_sha256": "462ef87040928a1545d2a4724d8537dfe7823dc9f56e6ac481d72574e02f871b",
+      "size_bytes": 5652,
+      "html_size_bytes": 28137,
+      "source_origin": "official_record",
+      "historical_availability_proven": false
+    }
+  ],
+  "attempts": [
+    {
+      "source_id": "nhc-al092021-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:36.335536+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al092021-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al092021-public-009.attempt-01.html",
+      "html_sha256": "ead3556a0ab1ef634813fab70d95773bb881f8ecc81dd1977ca632aa9a9bc4b8",
+      "text_path": "text/nhc-al092021-public-009.txt",
+      "text_sha256": "8ababd3c9257ae0b3c90e3de482ff181ee308eb55cf96c243d8b28f218d2f481",
+      "finished_at": "2026-09-06T07:15:37.231564+00:00"
+    },
+    {
+      "source_id": "nhc-al092021-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:36.335820+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al092021-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al092021-public-010.attempt-01.html",
+      "html_sha256": "9d397fb9b5478cc3907608060c166d4c2463e1c07c3e69c70889f45ac70de892",
+      "text_path": "text/nhc-al092021-public-010.txt",
+      "text_sha256": "79a96bd6bf9997a7a9b9ee2f5e90aa0085d776197f469012e2abfb23fe2d6ff2",
+      "finished_at": "2026-09-06T07:15:37.301930+00:00"
+    },
+    {
+      "source_id": "nhc-al092021-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:36.336169+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al092021-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2021/al09/al092021.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al092021-public-011.attempt-01.html",
+      "html_sha256": "43d6d1587e7947703b421896a420009366765c26bc36287e24e821345d91b752",
+      "text_path": "text/nhc-al092021-public-011.txt",
+      "text_sha256": "99b689fb8b948800015cc2e19e02beff69669de83eaf195bc1474164cf8178ef",
+      "finished_at": "2026-09-06T07:15:37.327783+00:00"
+    },
+    {
+      "source_id": "nhc-al092017-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:36.336496+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al092017-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al092017-public-009.attempt-01.html",
+      "html_sha256": "8c8b0d222efeeff45e0f1a5b00a8c8b84b2be8476e9672f86d0542bc98df5c1a",
+      "text_path": "text/nhc-al092017-public-009.txt",
+      "text_sha256": "3c05a31c46cf389d34188901d83712d73f40731c269cecfa266669d9d7736ebf",
+      "finished_at": "2026-09-06T07:15:37.222702+00:00"
+    },
+    {
+      "source_id": "nhc-al092017-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:37.238518+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al092017-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al092017-public-010.attempt-01.html",
+      "html_sha256": "f331594330893b636fe825e841fe276e84b0b246d288e3265daf7d2e4de3c6ce",
+      "text_path": "text/nhc-al092017-public-010.txt",
+      "text_sha256": "eaa5ba8e80d0e9084b4190343c28772bd91561817d7341c0a7517cb5cad5776b",
+      "finished_at": "2026-09-06T07:15:37.881556+00:00"
+    },
+    {
+      "source_id": "nhc-al092017-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:37.244763+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al092017-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al09/al092017.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al092017-public-011.attempt-01.html",
+      "html_sha256": "f6175e15372f318c462c44e1aebed38812b95396376436326406dcfb6325484b",
+      "text_path": "text/nhc-al092017-public-011.txt",
+      "text_sha256": "789aca2a64398098a2320a7eef55baca961d4f99dac6f0c8212564dfc4c8c84c",
+      "finished_at": "2026-09-06T07:15:37.974445+00:00"
+    },
+    {
+      "source_id": "nhc-al062018-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:37.312474+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al062018-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al062018-public-009.attempt-01.html",
+      "html_sha256": "8efb9cd0685fb4f2916ea3b08aa15303fdc2ac98da2061e85cc781ab87830a10",
+      "text_path": "text/nhc-al062018-public-009.txt",
+      "text_sha256": "3497d01113d1e554e29527e1b57e9ede6025f26f1c7c4959051b82a6a4eef77f",
+      "finished_at": "2026-09-06T07:15:38.208677+00:00"
+    },
+    {
+      "source_id": "nhc-al062018-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:37.340706+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al062018-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al062018-public-010.attempt-01.html",
+      "html_sha256": "da55800bb27136cf8f0923dff1e6c1c2f319c0a11122b898eb754df16e5a602e",
+      "text_path": "text/nhc-al062018-public-010.txt",
+      "text_sha256": "7522fd99d94ce54324109ce476e5d5d381f229c734a010e854cceea80f635eed",
+      "finished_at": "2026-09-06T07:15:38.218305+00:00"
+    },
+    {
+      "source_id": "nhc-al062018-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:37.894479+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al062018-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al06/al062018.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al062018-public-011.attempt-01.html",
+      "html_sha256": "fcad7af4dc299434ec2ceb4fc29115e9c5fbb20565e2d647847be41de2ddd7cc",
+      "text_path": "text/nhc-al062018-public-011.txt",
+      "text_sha256": "c425483da6a77f83ab82eeba31dfa12741056e0b50945d6dbecaa6fe31fce488",
+      "finished_at": "2026-09-06T07:15:38.741527+00:00"
+    },
+    {
+      "source_id": "nhc-al052019-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:37.985746+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al052019-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al052019-public-009.attempt-01.html",
+      "html_sha256": "930166bf424bf4ae7e89c39159310c4b98c4d7015378d4548b3b44edbfbc2ab9",
+      "text_path": "text/nhc-al052019-public-009.txt",
+      "text_sha256": "bc31aea4989a99e7dddc68fef9a76455d93d5a8942bfdeaafb2699eab29991f7",
+      "finished_at": "2026-09-06T07:15:38.848505+00:00"
+    },
+    {
+      "source_id": "nhc-al052019-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:38.224590+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al052019-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al052019-public-010.attempt-01.html",
+      "html_sha256": "221684b2676fdea3f468d378311e7dcf43fa629b4348e3d251dc64381c3d14f2",
+      "text_path": "text/nhc-al052019-public-010.txt",
+      "text_sha256": "6f2bd0baaa3274e7d9849af6a00c641be6c88aa1bbb38be611441edb9bdb4384",
+      "finished_at": "2026-09-06T07:15:38.887497+00:00"
+    },
+    {
+      "source_id": "nhc-al052019-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:38.231647+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al052019-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al052019-public-011.attempt-01.html",
+      "html_sha256": "3ba425862b7d7de15cd7ef87dcbd8beee06ba5e580dbbc375255c7dc8a93c4d0",
+      "text_path": "text/nhc-al052019-public-011.txt",
+      "text_sha256": "44d18304d319e70b44917c98ae66578fe8c39c6c089f83ed6890578efdc22eab",
+      "finished_at": "2026-09-06T07:15:39.181447+00:00"
+    },
+    {
+      "source_id": "nhc-al142016-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:38.756661+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al142016-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al142016-public-009.attempt-01.html",
+      "html_sha256": "c0ee46496d4f6fef2c74c442b83e2c612ff97c05a6b731827b0c69ab89ae5aed",
+      "text_path": "text/nhc-al142016-public-009.txt",
+      "text_sha256": "08648fd6b8b963bf8d750bfd21b7fd7807b545fea5d950956531ebd7e74ba671",
+      "finished_at": "2026-09-06T07:15:39.419103+00:00"
+    },
+    {
+      "source_id": "nhc-al142016-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:38.859929+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al142016-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al142016-public-010.attempt-01.html",
+      "html_sha256": "de65be8fd314b4ddd7aa0ca7288302f2e419f77587b34db07d2c473d0c8a3d07",
+      "text_path": "text/nhc-al142016-public-010.txt",
+      "text_sha256": "fc99bd25027627ff64ad10a830d1d5816622a8bca6d612a8abb9b306bb3346e5",
+      "finished_at": "2026-09-06T07:15:39.530866+00:00"
+    },
+    {
+      "source_id": "nhc-al142016-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:38.898818+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al142016-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2016/al14/al142016.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al142016-public-011.attempt-01.html",
+      "html_sha256": "9458d68d6dd680e9ecc13a3bf43cbfa4bb881488cbf4fcfdf284417cc1473f95",
+      "text_path": "text/nhc-al142016-public-011.txt",
+      "text_sha256": "61732dbe37db07a09cf8b0f8a5566754ad70a0855984da66aa8195d0bbd6f1ab",
+      "finished_at": "2026-09-06T07:15:39.765009+00:00"
+    },
+    {
+      "source_id": "nhc-al112017-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:39.193204+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al112017-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al112017-public-009.attempt-01.html",
+      "html_sha256": "9d6e0b9a7fb8721ee20051526faa0a048a035ceb65c486bfdfb1d73e60522afd",
+      "text_path": "text/nhc-al112017-public-009.txt",
+      "text_sha256": "edd5911d92401e5c9c2ad00d4763d139828523ba57df5f75b6a21429230bae85",
+      "finished_at": "2026-09-06T07:15:39.843082+00:00"
+    },
+    {
+      "source_id": "nhc-al112017-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:39.431372+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al112017-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al112017-public-010.attempt-01.html",
+      "html_sha256": "dcfc119000b968fb225ba9428623a0456095c6a809fa12a7dcb7b576e677f0c6",
+      "text_path": "text/nhc-al112017-public-010.txt",
+      "text_sha256": "aff795f654272860f6014c8810e930e8df6d6c440c1a5e90ac93aa03d0011289",
+      "finished_at": "2026-09-06T07:15:40.091496+00:00"
+    },
+    {
+      "source_id": "nhc-al112017-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:39.542233+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al112017-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al11/al112017.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al112017-public-011.attempt-01.html",
+      "html_sha256": "002d445f16092f23bd1e54bbac375d3539034877637150f0db75e86b54fdefb8",
+      "text_path": "text/nhc-al112017-public-011.txt",
+      "text_sha256": "752940f4a1587a087d09e63eaa9d9a86024af47727d9d8ac3a2a359ee56faa45",
+      "finished_at": "2026-09-06T07:15:40.197978+00:00"
+    },
+    {
+      "source_id": "nhc-al152017-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:39.778702+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al152017-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al152017-public-009.attempt-01.html",
+      "html_sha256": "4e04d87ce261e44f1a639fc569f7aee40b3e653a99cf9fbf3a403fd422d681a6",
+      "text_path": "text/nhc-al152017-public-009.txt",
+      "text_sha256": "122be663d69038e47fdd8cbc268b0dccac873cab042922623fa2d50f2041f63a",
+      "finished_at": "2026-09-06T07:15:40.536191+00:00"
+    },
+    {
+      "source_id": "nhc-al152017-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:39.854938+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al152017-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al152017-public-010.attempt-01.html",
+      "html_sha256": "69809b5cddb0cdcfedfffe1615dfd0dc6898512e171645c2a4a2ac02660a44c3",
+      "text_path": "text/nhc-al152017-public-010.txt",
+      "text_sha256": "7aba32304e709e121be1e39b5e2c870f62a7bb1dd22cb2a69ed578385b2268e3",
+      "finished_at": "2026-09-06T07:15:40.561239+00:00"
+    },
+    {
+      "source_id": "nhc-al152017-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:40.103724+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al152017-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2017/al15/al152017.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al152017-public-011.attempt-01.html",
+      "html_sha256": "83fffd93ecf1d85cc773b1c5ac8aa80bec585582ea1521f8a0f7a65f55c7381a",
+      "text_path": "text/nhc-al152017-public-011.txt",
+      "text_sha256": "9be2898cb11fbe2600a2d30d64562793fe9287e93fdc7758e60733b4fabf498a",
+      "finished_at": "2026-09-06T07:15:40.783846+00:00"
+    },
+    {
+      "source_id": "nhc-al142018-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:40.209906+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al142018-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al142018-public-009.attempt-01.html",
+      "html_sha256": "94d39b727b939632bc28765bffd2e3004e8081cef9a4a864c2a63d58b6e16b5c",
+      "text_path": "text/nhc-al142018-public-009.txt",
+      "text_sha256": "22d7414bdb4c272848d6c501785d25da782e5f207c3dcf204c07d737ae714211",
+      "finished_at": "2026-09-06T07:15:40.906967+00:00"
+    },
+    {
+      "source_id": "nhc-al142018-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:40.551139+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al142018-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al142018-public-010.attempt-01.html",
+      "html_sha256": "bfc40eabf0162db03082ea14488ce0a786f3a155cd70eef01591cbb3d160ed71",
+      "text_path": "text/nhc-al142018-public-010.txt",
+      "text_sha256": "01846ad4bb440a4d8d6a5fe8cbb8593153946e85f740597ecf7fa9dd53b095bc",
+      "finished_at": "2026-09-06T07:15:41.238356+00:00"
+    },
+    {
+      "source_id": "nhc-al142018-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:40.574980+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al142018-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2018/al14/al142018.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al142018-public-011.attempt-01.html",
+      "html_sha256": "efae5edb0c91264c35eab94d48734d15215a4cdc0bb35d61a61b8ba0ac6b972e",
+      "text_path": "text/nhc-al142018-public-011.txt",
+      "text_sha256": "c479ed2dde54626e93868fb86087f031a1d6937896d6c30f0f0c425855d52cb5",
+      "finished_at": "2026-09-06T07:15:41.333084+00:00"
+    },
+    {
+      "source_id": "nhc-al132020-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:40.796494+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al132020-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al132020-public-009.attempt-01.html",
+      "html_sha256": "484664cb67f7a4dea13eb0acbc8ae76757fc592ad217f761559bac9db06592a3",
+      "text_path": "text/nhc-al132020-public-009.txt",
+      "text_sha256": "e59bb6ccc3bb9c8a96eee6ae68da0e0bae1a0d022932eb9f262937e1276b9f57",
+      "finished_at": "2026-09-06T07:15:41.545289+00:00"
+    },
+    {
+      "source_id": "nhc-al132020-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:40.918760+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al132020-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al132020-public-010.attempt-01.html",
+      "html_sha256": "71844efe5363e1be599bacf2a93ba2e64d1e40c7a025f082639de79ede7dddfe",
+      "text_path": "text/nhc-al132020-public-010.txt",
+      "text_sha256": "9f6ea21a801debc2b1778744667a1939fe9c0e723792e4f335aaab7e2e60baf7",
+      "finished_at": "2026-09-06T07:15:41.770771+00:00"
+    },
+    {
+      "source_id": "nhc-al132020-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:41.250816+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al132020-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2020/al13/al132020.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al132020-public-011.attempt-01.html",
+      "html_sha256": "e982e1b7bb9832ba17efd28798892547f3174b5b080ea0225849e97575066f8c",
+      "text_path": "text/nhc-al132020-public-011.txt",
+      "text_sha256": "5f05f07d82bed34594eb048629b2053e7a2aa33cefef3014bbc50ab2849db21f",
+      "finished_at": "2026-09-06T07:15:41.909783+00:00"
+    },
+    {
+      "source_id": "nhc-al092022-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:41.346279+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al092022-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al092022-public-009.attempt-01.html",
+      "html_sha256": "db21c56b0b3904ebdda89f81c8329da63869c0e537a08584a2ec84f759042445",
+      "text_path": "text/nhc-al092022-public-009.txt",
+      "text_sha256": "709f89716aaa02b9beb08579a20569a05ba05e8a38ed8f234383f1d315e66930",
+      "finished_at": "2026-09-06T07:15:42.110811+00:00"
+    },
+    {
+      "source_id": "nhc-al092022-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:41.557602+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al092022-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al092022-public-010.attempt-01.html",
+      "html_sha256": "4304455e8ef42286edd1b4121c4bbbdbb2a5bf45b57ea1dd3169994bc88ac74c",
+      "text_path": "text/nhc-al092022-public-010.txt",
+      "text_sha256": "db20a8be811598d4c92308669be1dd974aa2ef523df78c73b3a23f76267ea623",
+      "finished_at": "2026-09-06T07:15:42.196304+00:00"
+    },
+    {
+      "source_id": "nhc-al092022-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:41.783283+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al092022-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2022/al09/al092022.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al092022-public-011.attempt-01.html",
+      "html_sha256": "54c1d015c87d41777fc7fab0f06917bdea765eb7ab80c5184af920a6411fb006",
+      "text_path": "text/nhc-al092022-public-011.txt",
+      "text_sha256": "32d0ed3c07d07296165dd5e2721bf5e49252da633ec8ad69e69954ba43c8bfdf",
+      "finished_at": "2026-09-06T07:15:42.468468+00:00"
+    },
+    {
+      "source_id": "nhc-al102023-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:41.921421+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al102023-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al102023-public-009.attempt-01.html",
+      "html_sha256": "8ec659521e748449a344d10aa8ed08d9e923c16f87185770213e2cd2d8b4e785",
+      "text_path": "text/nhc-al102023-public-009.txt",
+      "text_sha256": "27830bc5610a7b73e1caaf580e4c08d73bc4135b831fece2040cbfb4bc373d8e",
+      "finished_at": "2026-09-06T07:15:42.680463+00:00"
+    },
+    {
+      "source_id": "nhc-al102023-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:42.122436+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al102023-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al102023-public-010.attempt-01.html",
+      "html_sha256": "3f817fde8f66b031ff6a5ad029edc140a183fd3ca9e04490e460cd0acac9d2f8",
+      "text_path": "text/nhc-al102023-public-010.txt",
+      "text_sha256": "aa6393ed6b1ccb6642bdea0e4e2767e0b1630f42c4117676c923f0ebf8d9b74e",
+      "finished_at": "2026-09-06T07:15:42.810389+00:00"
+    },
+    {
+      "source_id": "nhc-al102023-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:42.207051+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al102023-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2023/al10/al102023.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al102023-public-011.attempt-01.html",
+      "html_sha256": "019e08e9bc1cd91812f1e3e42927974e966086e0dd618b7233440d3b0f0ed5e6",
+      "text_path": "text/nhc-al102023-public-011.txt",
+      "text_sha256": "b3d439c511d73c709200c38185f779a43824438b0df00e4be045a06601a56b1b",
+      "finished_at": "2026-09-06T07:15:42.998163+00:00"
+    },
+    {
+      "source_id": "nhc-al022024-public-009",
+      "source_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.009.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:42.480357+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al022024-public-009/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.009.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al022024-public-009.attempt-01.html",
+      "html_sha256": "50f461ef4c333c27e138d8b255966ed4ee9f04a94f031f06104e71b972f0e8d9",
+      "text_path": "text/nhc-al022024-public-009.txt",
+      "text_sha256": "6d5b69dfd412521a1395a0a3ef43b72b3214dd27e448597425c1904a5add1b3c",
+      "finished_at": "2026-09-06T07:15:43.277491+00:00"
+    },
+    {
+      "source_id": "nhc-al022024-public-010",
+      "source_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.010.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:42.693205+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al022024-public-010/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.010.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al022024-public-010.attempt-01.html",
+      "html_sha256": "ac9ccbd75417ce0df22aae09589a13725fb6bfed2a6c43192e9d279cb6e1df18",
+      "text_path": "text/nhc-al022024-public-010.txt",
+      "text_sha256": "de6fe98a211f27ef6ff28fe06b9472665a93ec7c0ed20c6cea00f3a6d6208bd1",
+      "finished_at": "2026-09-06T07:15:43.455376+00:00"
+    },
+    {
+      "source_id": "nhc-al022024-public-011",
+      "source_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.011.shtml",
+      "attempt": 1,
+      "started_at": "2026-09-06T07:15:42.822803+00:00",
+      "status": "succeeded",
+      "attempt_path": "attempts/nhc-al022024-public-011/01.json",
+      "resolved_url": "https://www.nhc.noaa.gov/archive/2024/al02/al022024.public.011.shtml",
+      "http_status": 200,
+      "html_path": "raw/nhc-al022024-public-011.attempt-01.html",
+      "html_sha256": "20c1cea0ca6f8a747fea007da8cfcc0b33b23a9530ae84573dd5831cbf980ad8",
+      "text_path": "text/nhc-al022024-public-011.txt",
+      "text_sha256": "462ef87040928a1545d2a4724d8537dfe7823dc9f56e6ac481d72574e02f871b",
+      "finished_at": "2026-09-06T07:15:43.604305+00:00"
+    }
+  ],
+  "counts": {
+    "planned_events": 12,
+    "planned_records": 36,
+    "successful_records": 36,
+    "failed_records": 0,
+    "pending_records": 0
+  },
+  "finished_at": "2026-09-06T07:15:43.617627+00:00"
+}

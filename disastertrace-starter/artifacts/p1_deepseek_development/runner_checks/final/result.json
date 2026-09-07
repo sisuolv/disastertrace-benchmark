@@ -1,0 +1,57 @@
+{
+  "schema_version": "p1_runner_offline_checks_v1",
+  "commands": [
+    {
+      "name": "pytest",
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "artifacts/p1_deepseek_development/test_run_experiment.py",
+        "-ra"
+      ],
+      "started_at": "2026-09-06T15:45:46.965241+00:00",
+      "elapsed_seconds": 15.785154567100108,
+      "exit_code": 0,
+      "log_path": "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/artifacts/p1_deepseek_development/runner_checks/final/pytest.log"
+    },
+    {
+      "name": "ruff_check",
+      "argv": [
+        ".venv/bin/ruff",
+        "check",
+        "--select",
+        "E4,E7,E9,F,I",
+        "artifacts/p1_deepseek_development/run_experiment.py",
+        "artifacts/p1_deepseek_development/test_run_experiment.py"
+      ],
+      "started_at": "2026-09-06T15:46:02.750502+00:00",
+      "elapsed_seconds": 0.16494500543922186,
+      "exit_code": 0,
+      "log_path": "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/artifacts/p1_deepseek_development/runner_checks/final/ruff_check.log"
+    },
+    {
+      "name": "ruff_format",
+      "argv": [
+        ".venv/bin/ruff",
+        "format",
+        "--check",
+        "artifacts/p1_deepseek_development/run_experiment.py",
+        "artifacts/p1_deepseek_development/test_run_experiment.py"
+      ],
+      "started_at": "2026-09-06T15:46:02.915539+00:00",
+      "elapsed_seconds": 0.09171787369996309,
+      "exit_code": 0,
+      "log_path": "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/artifacts/p1_deepseek_development/runner_checks/final/ruff_format.log"
+    }
+  ],
+  "source_sha256": {
+    "run_experiment.py": "2e2959b8b4d837a281e5684ee71dde29cf4f20e539fe911d2042f40da089b7ff",
+    "test_run_experiment.py": "15abf730779f4948f96b166b37272192725acd9df50982b4bed40745a22f4b51"
+  },
+  "implementation_id": "58acc19bf32eb83709344c7f8c001b2d86d8b665339ef251a5cd7b774784e716",
+  "actual_model_api_calls": 0,
+  "passed": true
+}

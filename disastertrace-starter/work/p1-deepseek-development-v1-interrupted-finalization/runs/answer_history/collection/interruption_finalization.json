@@ -1,0 +1,90 @@
+{
+  "schema_version": "p1_offline_interruption_disposition_v1",
+  "created_at": "2026-09-06T16:16:34.570438+00:00",
+  "original_collection_path": "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/work/p1-deepseek-development-v1/runs/answer_history/collection",
+  "original_collection_files": {
+    "outcomes.jsonl": "1bffe3e579e1e31ce1001a6dd1a9dd1c7ea6a1301f6d8a58b9bf32bc9e0d4d0e",
+    "plan.json": "a3d4ed3485968896fa38d6035041a36c0ca3cfabf43802de80103c0724d52167",
+    "requests.jsonl": "8eb301d142e9e6916c8c86b03f26a9a4193399c205c1fd4d3f8b36c270ce0522",
+    "responses.jsonl": "80aa5c206b8c18cf9abbca59af180ad9807b4e0ce8638e50baab5ea0d611d567",
+    "summary.json": "68a21d292ac99d8738781191d9fda005f3745c3ce70ce8159d660ee504d7130c"
+  },
+  "original_incomplete_audit_sha256": "2e80cb95ee892a8bf0d3d18969d3b881c80a1118b730598fcf52eb14c902f511",
+  "original_budget_ledger_path": "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/work/p1-deepseek-development-v1/budget_ledger.json",
+  "original_budget_ledger_sha256": "59ef9aab81f40a3f1256fc991b7a08ec0e8f9ec9ee19f0d1c0047e35ba18bf93",
+  "original_budget_ledger_changed": false,
+  "pending_reservation_usd": 0.46678016,
+  "source_global_attempt_number": 79,
+  "new_provider_calls": 0,
+  "new_provider_responses": 0,
+  "automatic_retry": false,
+  "administrative_outcome": {
+    "episode_id": "al062018:controlled:delay",
+    "checkpoint_id": "c3",
+    "request_sha256": "ed91e5bf5f71e92c991aba5e368d180cad258e801ddc0ff2a2643d7ec3dfc02c",
+    "status": "provider_error",
+    "error": {
+      "code": "offline_finalized_interrupted_attempt",
+      "status": null,
+      "request_may_have_reached_provider": true,
+      "automatic_retry": false
+    },
+    "state_after": {
+      "action": "monitor",
+      "state": {
+        "latitude_deg": {
+          "evidence": [
+            {
+              "line": 15,
+              "record_id": "nhc-al062018-public-009"
+            }
+          ],
+          "status": "known",
+          "value": 14.8
+        },
+        "longitude_deg": {
+          "evidence": [
+            {
+              "line": 15,
+              "record_id": "nhc-al062018-public-009"
+            }
+          ],
+          "status": "known",
+          "value": -27.8
+        },
+        "maximum_wind_mph": {
+          "evidence": [
+            {
+              "line": 17,
+              "record_id": "nhc-al062018-public-009"
+            }
+          ],
+          "status": "known",
+          "value": 45
+        },
+        "minimum_pressure_mb": {
+          "evidence": [
+            {
+              "line": 19,
+              "record_id": "nhc-al062018-public-009"
+            }
+          ],
+          "status": "known",
+          "value": 1003
+        },
+        "port_reopening_time": {
+          "evidence": [],
+          "status": "unknown",
+          "value": null
+        }
+      }
+    }
+  },
+  "provider_returned_error": false,
+  "preserved_verbatim": [
+    "plan.json",
+    "requests.jsonl",
+    "responses.jsonl"
+  ],
+  "interpretation": "The original process no longer exists, while its last provider attempt has no saved completion. The appended provider_error is the existing collector schema's local administrative disposition, not a received HTTP error or model answer. Provider receipt, completion and billing remain uncertain. The request is never retried, its reservation is not released, all original requests and responses remain verbatim, and all planned scoring slots remain."
+}

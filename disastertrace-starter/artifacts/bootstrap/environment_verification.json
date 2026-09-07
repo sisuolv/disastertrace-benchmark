@@ -1,0 +1,102 @@
+{
+  "checked_at": "2026-09-06T06:24:44.156276+00:00",
+  "executable": "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+  "python_version": "3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0]",
+  "isolated": true,
+  "versions": {
+    "disastertrace": "0.1.0",
+    "pydantic": "2.13.5",
+    "typer": "0.27.2",
+    "PyYAML": "6.0.3",
+    "orjson": "3.12.0",
+    "python-dateutil": "2.9.0.post0",
+    "ijson": "3.5.1",
+    "pytest": "9.1.1",
+    "pytest-asyncio": "1.4.0",
+    "hypothesis": "6.167.1",
+    "ruff": "0.16.6",
+    "mypy": "2.3.1",
+    "pip": "24.0"
+  },
+  "checks": [
+    {
+      "name": "pip_check",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "original_tests",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "-rA",
+        "tests/test_scoring.py",
+        "tests/test_runner.py",
+        "tests/test_interventions.py",
+        "tests/test_evidence_gate.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "editable_import",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+        "-c",
+        "import disastertrace; print(disastertrace.__file__)"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime_imports",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+        "-c",
+        "import pydantic, typer, yaml, orjson, dateutil, ijson, hypothesis; print('All runtime dependencies and hypothesis import successfully.')"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ruff_version",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/ruff",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "mypy_version",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/mypy",
+        "--version"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "native_cli_help",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/disastertrace",
+        "--help"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "automated_cli_help",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.automated",
+        "--help"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

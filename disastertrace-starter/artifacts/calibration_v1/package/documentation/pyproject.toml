@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "disastertrace"
+version = "0.1.0"
+description = "Starter scaffold for as-of-time disaster-agent replay and causal auditing"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "pydantic>=2.8",
+  "typer>=0.12",
+  "PyYAML>=6.0",
+  "orjson>=3.10",
+  "python-dateutil>=2.9",
+  "ijson>=3.3",
+]
+
+[project.optional-dependencies]
+api = ["openai>=1.40", "Pillow>=10.0"]
+geo = ["geopandas>=1.0", "shapely>=2.0", "pyproj>=3.6"]
+text = ["rapidfuzz>=3.9", "rank-bm25>=0.2"]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23", "hypothesis>=6.100", "ruff>=0.6", "mypy>=1.10"]
+
+[project.scripts]
+disastertrace = "disastertrace.cli:app"
+disastertrace-auto = "disastertrace.automated.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/disastertrace"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100

@@ -1,0 +1,104 @@
+{
+  "schema_version": "offline_verification_v1",
+  "implementation_id": "2bdbefad9eee64ebae973f18ac388291ab5afe9b9227a6802bbff7e7b52e24b3",
+  "checks": [
+    {
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q"
+      ],
+      "exit_code": 0,
+      "log": "full_pytest.log",
+      "log_sha256": "c43ddcf841bed551565be9cd35d11d7d912199892e021446d7bc5b4d1320d6bc"
+    },
+    {
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/ruff",
+        "check",
+        "--select",
+        "E4,E7,E9,F,I",
+        "src/disastertrace/automated",
+        "tests/test_automated_acquisition.py",
+        "tests/test_automated_cohort.py",
+        "tests/test_automated_cohort_workflow.py",
+        "tests/test_automated_collection.py",
+        "tests/test_automated_collection_audit.py",
+        "tests/test_automated_dataset_audit.py",
+        "tests/test_automated_disasterbench.py",
+        "tests/test_automated_dynamic.py",
+        "tests/test_automated_methods.py",
+        "tests/test_automated_model_collection_integration.py",
+        "tests/test_automated_preflight.py",
+        "tests/test_automated_provider.py",
+        "tests/test_automated_sources.py",
+        "tests/test_automated_workflow.py"
+      ],
+      "exit_code": 0,
+      "log": "ruff_check.log",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/ruff",
+        "format",
+        "--check",
+        "src/disastertrace/automated",
+        "tests/test_automated_acquisition.py",
+        "tests/test_automated_cohort.py",
+        "tests/test_automated_cohort_workflow.py",
+        "tests/test_automated_collection.py",
+        "tests/test_automated_collection_audit.py",
+        "tests/test_automated_dataset_audit.py",
+        "tests/test_automated_disasterbench.py",
+        "tests/test_automated_dynamic.py",
+        "tests/test_automated_methods.py",
+        "tests/test_automated_model_collection_integration.py",
+        "tests/test_automated_preflight.py",
+        "tests/test_automated_provider.py",
+        "tests/test_automated_sources.py",
+        "tests/test_automated_workflow.py"
+      ],
+      "exit_code": 0,
+      "log": "ruff_format.log",
+      "log_sha256": "f43412978e399f2781a01a83559b71c04990cf88196462c9a282d94a69f415cb"
+    },
+    {
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "exit_code": 0,
+      "log": "pip_check.log",
+      "log_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    }
+  ],
+  "pytest_passed": 443,
+  "pytest_skipped": 0,
+  "test_files": {
+    "tests/test_automated_acquisition.py": "036a0471f9df5471e19af11de8260a344f589a5a2c0084cebf115962740b72e1",
+    "tests/test_automated_cohort.py": "3b70ed70db6e7dc5de7e9db548a4e1608f8e141a82f8e203f80b5f9443476327",
+    "tests/test_automated_cohort_workflow.py": "c6408cf507a12482a7a44a11e2046ed5adf2cd17d49982f063a320fd380de76b",
+    "tests/test_automated_collection.py": "d879374f1329eaeaf628661ba6696680867d5dcdcb2c48c23309cba49ba1a554",
+    "tests/test_automated_collection_audit.py": "eec6cbc0868e734da4de6e075d9c9641788f3dc47357c7f0cc202ea8fc3db87a",
+    "tests/test_automated_dataset_audit.py": "18962206e3212a6f30848c1fe14d69ede8de2afcc2a73d764fcd251ffbaf078b",
+    "tests/test_automated_disasterbench.py": "a81ccb89bbc3b99d97b901e0bf5774bab1c7d60220fd940781d62b3567da18e2",
+    "tests/test_automated_dynamic.py": "7a19a2e9d0574f581731d182962994d97f94dadbff159da473ff07b3d8c4746f",
+    "tests/test_automated_methods.py": "50bd15e9d6fc7e35039abe7307fb38412f2d42061e616211eaec7c0a31821208",
+    "tests/test_automated_model_collection_integration.py": "df5e372519e236610c68d2d97250a4ee64f3fef5de306868ab03fb8af021b5af",
+    "tests/test_automated_preflight.py": "670a719d279527d26031684b86f04bc038d561b88bcb4c311cd2ede286b9f312",
+    "tests/test_automated_provider.py": "001f4acb842606fc88a5353bbd7430bfc060588b1ed3104549224b7c00766a06",
+    "tests/test_automated_sources.py": "7818e8bbdb2577ab6e57683acb22b0c4bd37def37ec141df40bde4f95e8cade8",
+    "tests/test_automated_workflow.py": "87fbb0a93f621135f342f452ae0ca5a162c8f1979b0e466a8caeb0f3edf55478",
+    "tests/test_evidence_gate.py": "9e50462ec0a249bab6be69da38e5d97919ad89d98f9ad379d99a0f93c2275a45",
+    "tests/test_interventions.py": "be7de315c556b4cf6ed41125fbadf0a5db82a712bddcd011a719aea3f34fa3a3",
+    "tests/test_runner.py": "4f64a489e755de4b38ffdcbfca268f473de7fe168ddd570739f37c5a3aa7531c",
+    "tests/test_scoring.py": "9a6f2b8f55372a160eca7104e8ed66f9b6b6b980e7d7bca69a80faf71a187733"
+  },
+  "executed_at": "2026-09-06T13:39:39.597725+00:00"
+}

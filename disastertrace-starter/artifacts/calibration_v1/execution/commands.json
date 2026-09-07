@@ -1,0 +1,43 @@
+{
+  "commands": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "disastertrace.automated.cli",
+        "build",
+        "--references",
+        "../references",
+        "--nhc-snapshot",
+        "../references/nhc_cohort_v1",
+        "--output",
+        "work/build-calibration-v1"
+      ],
+      "started_at": "2026-09-06T17:31:30.487096+00:00",
+      "finished_at": "2026-09-06T17:31:30.786598+00:00",
+      "exit_code": 0,
+      "log": "artifacts/calibration_v1/execution/command_0.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "disastertrace.automated.calibration",
+        "prepare",
+        "--build",
+        "work/build-calibration-v1",
+        "--provider-config",
+        "artifacts/p1_deepseek_development/provider.json",
+        "--output",
+        "work/calibration-v1-preparation"
+      ],
+      "started_at": "2026-09-06T17:31:30.795843+00:00",
+      "finished_at": "2026-09-06T17:31:31.127897+00:00",
+      "exit_code": 1,
+      "log": "artifacts/calibration_v1/execution/command_1.log",
+      "log_sha256": "f3b4584bd6ba2678d716c51d40ad1e5630f1a571487696726f026dcd7032f76e"
+    }
+  ],
+  "model_calls": 0
+}

@@ -1,0 +1,180 @@
+.................................FFFF................................... [ 91%]
+.......                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_unsafe_or_unsupported_body_constructions_fail_closed[Maximum sustained winds are near 75 mph. The observation is from 0600 UTC.] _
+
+body = 'Maximum sustained winds are near 75 mph. The observation is from 0600 UTC.'
+
+    @pytest.mark.parametrize(
+        "body",
+        [
+            "Wind gusts are near 75 mph.",
+            "Present movement is near 75 mph.",
+            "Maximum sustained winds will be near 75 mph tomorrow.",
+            "Maximum sustained winds were near 75 mph yesterday.",
+            "Maximum sustained winds are not near 75 mph.",
+            "It is false that maximum sustained winds are near 75 mph.",
+            "Maximum sustained winds are near 75 mph tomorrow.",
+            "Maximum sustained winds are near 75 mph if strengthening occurs.",
+            "Maximum sustained winds are near 75 mph at the previous observation.",
+            "Maximum sustained winds are near 75 knots.",
+            "Maximum sustained winds are near 120 km/h.",
+            "Maximum sustained winds are between 70 and 80 mph.",
+            "Maximum sustained winds are near 75 mph with a 50 percent probability.",
+            "Maximum sustained winds of Hurricane Other are near 75 mph.",
+            "For Hurricane Other, maximum sustained winds are near 75 mph.",
+            "Yesterday's report follows. Maximum sustained winds are near 75 mph.",
+            "Example: Maximum sustained winds are near 75 mph.",
+            '"Maximum sustained winds are near 75 mph."',
+            "Maximum sustained winds are near 75 mph. These are forecast values.",
+            "Maximum sustained winds are near 75 mph. This estimate is for Hurricane Other.",
+            "Maximum sustained winds are near 75 mph. The estimate is for hurricane other.",
+            "Maximum sustained winds are near 75 mph. This statement is false.",
+            "Maximum sustained winds are near 75 mph. Maximum sustained winds are near 70 mph.",
+            "Maximum sustained winds are near 75 mph. The observation is from 0600 UTC.",
+            "Maximum sustained winds are near 75 mph. Conditions refer to Hurricane Other at 0600 UTC.",
+            "Maximum sustained winds are near 75 mph. According to the forecast, that value will occur tomorrow.",
+            "Maximum sustained winds are near 75 mph. The estimate describes a future observation.",
+        ],
+    )
+    def test_unsafe_or_unsupported_body_constructions_fail_closed(body):
+        result = check(body)
+>       assert not result["valid"], result
+E       AssertionError: {'valid': True, 'reason': 'supported_body_observation', 'support_spans': [{'record_id': 'synthetic:3', 'field': 'maximum_wind_mph', 'value': 75.0, 'unit': 'mph', ...}]}
+E       assert not True
+
+tests/test_automated_evidence_support.py:124: AssertionError
+_ test_unsafe_or_unsupported_body_constructions_fail_closed[Maximum sustained winds are near 75 mph. Conditions refer to Hurricane Other at 0600 UTC.] _
+
+body = 'Maximum sustained winds are near 75 mph. Conditions refer to Hurricane Other at 0600 UTC.'
+
+    @pytest.mark.parametrize(
+        "body",
+        [
+            "Wind gusts are near 75 mph.",
+            "Present movement is near 75 mph.",
+            "Maximum sustained winds will be near 75 mph tomorrow.",
+            "Maximum sustained winds were near 75 mph yesterday.",
+            "Maximum sustained winds are not near 75 mph.",
+            "It is false that maximum sustained winds are near 75 mph.",
+            "Maximum sustained winds are near 75 mph tomorrow.",
+            "Maximum sustained winds are near 75 mph if strengthening occurs.",
+            "Maximum sustained winds are near 75 mph at the previous observation.",
+            "Maximum sustained winds are near 75 knots.",
+            "Maximum sustained winds are near 120 km/h.",
+            "Maximum sustained winds are between 70 and 80 mph.",
+            "Maximum sustained winds are near 75 mph with a 50 percent probability.",
+            "Maximum sustained winds of Hurricane Other are near 75 mph.",
+            "For Hurricane Other, maximum sustained winds are near 75 mph.",
+            "Yesterday's report follows. Maximum sustained winds are near 75 mph.",
+            "Example: Maximum sustained winds are near 75 mph.",
+            '"Maximum sustained winds are near 75 mph."',
+            "Maximum sustained winds are near 75 mph. These are forecast values.",
+            "Maximum sustained winds are near 75 mph. This estimate is for Hurricane Other.",
+            "Maximum sustained winds are near 75 mph. The estimate is for hurricane other.",
+            "Maximum sustained winds are near 75 mph. This statement is false.",
+            "Maximum sustained winds are near 75 mph. Maximum sustained winds are near 70 mph.",
+            "Maximum sustained winds are near 75 mph. The observation is from 0600 UTC.",
+            "Maximum sustained winds are near 75 mph. Conditions refer to Hurricane Other at 0600 UTC.",
+            "Maximum sustained winds are near 75 mph. According to the forecast, that value will occur tomorrow.",
+            "Maximum sustained winds are near 75 mph. The estimate describes a future observation.",
+        ],
+    )
+    def test_unsafe_or_unsupported_body_constructions_fail_closed(body):
+        result = check(body)
+>       assert not result["valid"], result
+E       AssertionError: {'valid': True, 'reason': 'supported_body_observation', 'support_spans': [{'record_id': 'synthetic:3', 'field': 'maximum_wind_mph', 'value': 75.0, 'unit': 'mph', ...}]}
+E       assert not True
+
+tests/test_automated_evidence_support.py:124: AssertionError
+_ test_unsafe_or_unsupported_body_constructions_fail_closed[Maximum sustained winds are near 75 mph. According to the forecast, that value will occur tomorrow.] _
+
+body = 'Maximum sustained winds are near 75 mph. According to the forecast, that value will occur tomorrow.'
+
+    @pytest.mark.parametrize(
+        "body",
+        [
+            "Wind gusts are near 75 mph.",
+            "Present movement is near 75 mph.",
+            "Maximum sustained winds will be near 75 mph tomorrow.",
+            "Maximum sustained winds were near 75 mph yesterday.",
+            "Maximum sustained winds are not near 75 mph.",
+            "It is false that maximum sustained winds are near 75 mph.",
+            "Maximum sustained winds are near 75 mph tomorrow.",
+            "Maximum sustained winds are near 75 mph if strengthening occurs.",
+            "Maximum sustained winds are near 75 mph at the previous observation.",
+            "Maximum sustained winds are near 75 knots.",
+            "Maximum sustained winds are near 120 km/h.",
+            "Maximum sustained winds are between 70 and 80 mph.",
+            "Maximum sustained winds are near 75 mph with a 50 percent probability.",
+            "Maximum sustained winds of Hurricane Other are near 75 mph.",
+            "For Hurricane Other, maximum sustained winds are near 75 mph.",
+            "Yesterday's report follows. Maximum sustained winds are near 75 mph.",
+            "Example: Maximum sustained winds are near 75 mph.",
+            '"Maximum sustained winds are near 75 mph."',
+            "Maximum sustained winds are near 75 mph. These are forecast values.",
+            "Maximum sustained winds are near 75 mph. This estimate is for Hurricane Other.",
+            "Maximum sustained winds are near 75 mph. The estimate is for hurricane other.",
+            "Maximum sustained winds are near 75 mph. This statement is false.",
+            "Maximum sustained winds are near 75 mph. Maximum sustained winds are near 70 mph.",
+            "Maximum sustained winds are near 75 mph. The observation is from 0600 UTC.",
+            "Maximum sustained winds are near 75 mph. Conditions refer to Hurricane Other at 0600 UTC.",
+            "Maximum sustained winds are near 75 mph. According to the forecast, that value will occur tomorrow.",
+            "Maximum sustained winds are near 75 mph. The estimate describes a future observation.",
+        ],
+    )
+    def test_unsafe_or_unsupported_body_constructions_fail_closed(body):
+        result = check(body)
+>       assert not result["valid"], result
+E       AssertionError: {'valid': True, 'reason': 'supported_body_observation', 'support_spans': [{'record_id': 'synthetic:3', 'field': 'maximum_wind_mph', 'value': 75.0, 'unit': 'mph', ...}]}
+E       assert not True
+
+tests/test_automated_evidence_support.py:124: AssertionError
+_ test_unsafe_or_unsupported_body_constructions_fail_closed[Maximum sustained winds are near 75 mph. The estimate describes a future observation.] _
+
+body = 'Maximum sustained winds are near 75 mph. The estimate describes a future observation.'
+
+    @pytest.mark.parametrize(
+        "body",
+        [
+            "Wind gusts are near 75 mph.",
+            "Present movement is near 75 mph.",
+            "Maximum sustained winds will be near 75 mph tomorrow.",
+            "Maximum sustained winds were near 75 mph yesterday.",
+            "Maximum sustained winds are not near 75 mph.",
+            "It is false that maximum sustained winds are near 75 mph.",
+            "Maximum sustained winds are near 75 mph tomorrow.",
+            "Maximum sustained winds are near 75 mph if strengthening occurs.",
+            "Maximum sustained winds are near 75 mph at the previous observation.",
+            "Maximum sustained winds are near 75 knots.",
+            "Maximum sustained winds are near 120 km/h.",
+            "Maximum sustained winds are between 70 and 80 mph.",
+            "Maximum sustained winds are near 75 mph with a 50 percent probability.",
+            "Maximum sustained winds of Hurricane Other are near 75 mph.",
+            "For Hurricane Other, maximum sustained winds are near 75 mph.",
+            "Yesterday's report follows. Maximum sustained winds are near 75 mph.",
+            "Example: Maximum sustained winds are near 75 mph.",
+            '"Maximum sustained winds are near 75 mph."',
+            "Maximum sustained winds are near 75 mph. These are forecast values.",
+            "Maximum sustained winds are near 75 mph. This estimate is for Hurricane Other.",
+            "Maximum sustained winds are near 75 mph. The estimate is for hurricane other.",
+            "Maximum sustained winds are near 75 mph. This statement is false.",
+            "Maximum sustained winds are near 75 mph. Maximum sustained winds are near 70 mph.",
+            "Maximum sustained winds are near 75 mph. The observation is from 0600 UTC.",
+            "Maximum sustained winds are near 75 mph. Conditions refer to Hurricane Other at 0600 UTC.",
+            "Maximum sustained winds are near 75 mph. According to the forecast, that value will occur tomorrow.",
+            "Maximum sustained winds are near 75 mph. The estimate describes a future observation.",
+        ],
+    )
+    def test_unsafe_or_unsupported_body_constructions_fail_closed(body):
+        result = check(body)
+>       assert not result["valid"], result
+E       AssertionError: {'valid': True, 'reason': 'supported_body_observation', 'support_spans': [{'record_id': 'synthetic:3', 'field': 'maximum_wind_mph', 'value': 75.0, 'unit': 'mph', ...}]}
+E       assert not True
+
+tests/test_automated_evidence_support.py:124: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_automated_evidence_support.py::test_unsafe_or_unsupported_body_constructions_fail_closed[Maximum sustained winds are near 75 mph. The observation is from 0600 UTC.]
+FAILED tests/test_automated_evidence_support.py::test_unsafe_or_unsupported_body_constructions_fail_closed[Maximum sustained winds are near 75 mph. Conditions refer to Hurricane Other at 0600 UTC.]
+FAILED tests/test_automated_evidence_support.py::test_unsafe_or_unsupported_body_constructions_fail_closed[Maximum sustained winds are near 75 mph. According to the forecast, that value will occur tomorrow.]
+FAILED tests/test_automated_evidence_support.py::test_unsafe_or_unsupported_body_constructions_fail_closed[Maximum sustained winds are near 75 mph. The estimate describes a future observation.]

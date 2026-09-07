@@ -1,0 +1,51 @@
+{
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_automated_evidence_support.py",
+        "-o",
+        "addopts=",
+        "-q"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.7051711082458496,
+      "output_file": "final_0.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "src/disastertrace/automated/evidence_support.py",
+        "tests/test_automated_evidence_support.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.1863412857055664,
+      "output_file": "final_1.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src/disastertrace/automated/evidence_support.py",
+        "tests/test_automated_evidence_support.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.16092896461486816,
+      "output_file": "final_2.log"
+    }
+  ],
+  "file_hashes": {
+    "src/disastertrace/automated/evidence_support.py": "67a9b9396311c16db7e93a70ce5dd50bcabc794b859793b4e9b466a7f38b9292",
+    "tests/test_automated_evidence_support.py": "bc3be99d35973e8567846ae6dcb7d01bcc4f5f6150b7f4254f46f6962a22e707",
+    "docs/EVIDENCE_SUPPORT_V2.md": "c0bdc3dc3a522f1b759b8f9c9d6579cdc3e9a8d7219fea714a0e5212d5ab3a40"
+  },
+  "all_ascii": true
+}

@@ -1,0 +1,30 @@
+{
+  "selection_frozen_before_model_results": true,
+  "advisory_numbers_are_not_aligned_storm_phases": true,
+  "policy": {
+    "kind": "research_rule_not_operational_advice",
+    "variable": "maximum_wind_mph",
+    "threshold": 100,
+    "known_at_or_above": "prepare",
+    "known_below": "monitor",
+    "unknown": "request_evidence"
+  },
+  "by_split": {
+    "development": {
+      "reference_action_counts": {
+        "request_evidence": 6,
+        "monitor": 19,
+        "prepare": 5
+      },
+      "independent_events": 3
+    },
+    "heldout": {
+      "reference_action_counts": {
+        "request_evidence": 14,
+        "prepare": 24,
+        "monitor": 32
+      },
+      "independent_events": 7
+    }
+  }
+}

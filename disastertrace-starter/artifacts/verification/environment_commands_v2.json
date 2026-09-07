@@ -1,0 +1,70 @@
+{
+  "commands": [
+    {
+      "argv": [
+        ".venv/bin/disastertrace-auto",
+        "--help"
+      ],
+      "exit_code": 0,
+      "log": "artifacts/verification/environment-v2-00.log"
+    },
+    {
+      "argv": [
+        ".venv/bin/disastertrace-auto",
+        "build",
+        "--references",
+        "../references",
+        "--output",
+        "work/repro-build-v2"
+      ],
+      "exit_code": 0,
+      "log": "artifacts/verification/environment-v2-01.log"
+    },
+    {
+      "argv": [
+        ".venv/bin/disastertrace-auto",
+        "score",
+        "--build",
+        "work/build-v2",
+        "--run",
+        "work/runs/rule-v2",
+        "--output",
+        "work/scores/rule-installed-v2.json"
+      ],
+      "exit_code": 0,
+      "log": "artifacts/verification/environment-v2-02.log"
+    },
+    {
+      "argv": [
+        ".venv/bin/ruff",
+        "check",
+        "--select",
+        "E4,E7,E9,F,I",
+        "src/disastertrace/automated",
+        "tests/test_automated_disasterbench.py",
+        "tests/test_automated_dynamic.py",
+        "tests/test_automated_sources.py",
+        "tests/test_automated_workflow.py"
+      ],
+      "exit_code": 0,
+      "log": "artifacts/verification/environment-v2-03.log"
+    },
+    {
+      "argv": [
+        ".venv/bin/ruff",
+        "format",
+        "--check",
+        "src/disastertrace/automated",
+        "tests/test_automated_disasterbench.py",
+        "tests/test_automated_dynamic.py",
+        "tests/test_automated_sources.py",
+        "tests/test_automated_workflow.py"
+      ],
+      "exit_code": 0,
+      "log": "artifacts/verification/environment-v2-04.log"
+    }
+  ],
+  "identical_rebuild": true,
+  "identical_installed_score": true,
+  "build_id": "78bf330d1d1690b0d6737beeae2f8cd9fcafdd99a6f48d5a3b47b1ca2e583da5"
+}

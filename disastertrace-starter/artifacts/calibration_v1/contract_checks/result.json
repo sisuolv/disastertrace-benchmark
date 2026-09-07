@@ -1,0 +1,106 @@
+{
+  "schema_version": "calibration_output_contract_offline_checks_v1",
+  "recorded_at": "2026-09-06T17:24:17.153204+00:00",
+  "new_model_api_calls": 0,
+  "network_allowed_in_tests": false,
+  "new_dependencies_installed": false,
+  "third_party_jsonschema_validator_run": false,
+  "parser_authoritative": true,
+  "implemented_contract_ids": {
+    "legacy_v1": "68c4b3ef8a18f23eddb9c203be048ac7368e9d3f2635abf83863e128556fd427",
+    "explicit_v1": "b41f98abec418859a5950c062abe39dd2146fce5327450ce8a36b387d82fe140"
+  },
+  "schema_sha256": "76476b7b69f9552c7dd53b4adf56f12a0289fa24b9b387d51a1e48b715284896",
+  "tests_first": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-o",
+      "addopts=",
+      "-q",
+      "tests/test_automated_output_contract.py"
+    ],
+    "exit_code": 2,
+    "log": "artifacts/calibration_v1/contract_checks/pytest_before_implementation.log",
+    "observed_failure": "ModuleNotFoundError for disastertrace.automated.output_contract; tests were written and executed before module implementation.",
+    "elapsed_seconds": 0.85
+  },
+  "final_tests": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-o",
+      "addopts=",
+      "-q",
+      "tests/test_automated_output_contract.py"
+    ],
+    "exit_code": 0,
+    "passed": 53,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_seconds": 0.9,
+    "log": "artifacts/calibration_v1/contract_checks/pytest_first_implementation.log",
+    "interpretation": "The first implementation run passed and binds the unchanged final source/test hashes; no redundant test run was performed after documentation-only edits."
+  },
+  "lint": {
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "src/disastertrace/automated/output_contract.py",
+      "tests/test_automated_output_contract.py"
+    ],
+    "exit_code": 0,
+    "log": "artifacts/calibration_v1/contract_checks/ruff_check.log"
+  },
+  "format": {
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src/disastertrace/automated/output_contract.py",
+      "tests/test_automated_output_contract.py"
+    ],
+    "exit_code": 0,
+    "log": "artifacts/calibration_v1/contract_checks/ruff_format.log"
+  },
+  "original_parser_provider_scorers": {
+    "dynamic.py": {
+      "current_sha256": "d5e5ac8ade781a582369e5a4d8c5223acadfb6d9ac5f178e2365f8fb80574cc5",
+      "historical_sha256": "d5e5ac8ade781a582369e5a4d8c5223acadfb6d9ac5f178e2365f8fb80574cc5",
+      "unchanged": true
+    },
+    "provider.py": {
+      "current_sha256": "08a284fb24f914dbbc1100f58ec32565b226e3bd9a7781f88e6410e3b3b72f2d",
+      "historical_sha256": "08a284fb24f914dbbc1100f58ec32565b226e3bd9a7781f88e6410e3b3b72f2d",
+      "unchanged": true
+    },
+    "scoring_v2.py": {
+      "current_sha256": "d5bb2df3a8c7d66e34a60ebc458d0d2b4f656cf9a99a032a335dc1b473843405",
+      "historical_sha256": "d5bb2df3a8c7d66e34a60ebc458d0d2b4f656cf9a99a032a335dc1b473843405",
+      "unchanged": true
+    },
+    "evidence_support.py": {
+      "current_sha256": "67a9b9396311c16db7e93a70ce5dd50bcabc794b859793b4e9b466a7f38b9292",
+      "historical_sha256": "67a9b9396311c16db7e93a70ce5dd50bcabc794b859793b4e9b466a7f38b9292",
+      "unchanged": true
+    }
+  },
+  "files_sha256": {
+    "src/disastertrace/automated/output_contract.py": "dde86b0397a88fa36441e645f30b1002107203d62152269400385c7be6a54af7",
+    "tests/test_automated_output_contract.py": "4f792e410e12e827a8df2fab70c2b209adf3483bbbe90a1651c305e623328fd1",
+    "docs/OUTPUT_CONTRACT_V1.md": "3679102542cd6541ee9082ee360e704e54fe3d9061c8cbe874ca3be84154707e",
+    "artifacts/calibration_v1/contract_checks/descriptors.json": "4646440f905dbd6ff4b676f15154b8e9a5653dc52dc86874aa97a763bcfa9c28",
+    "artifacts/calibration_v1/contract_checks/pytest_before_implementation.log": "1323f51d605e11bb52edbfb4d32298df4399bed034cdd0e339ec15d6edce596c",
+    "artifacts/calibration_v1/contract_checks/pytest_first_implementation.log": "726fbaa152a2a7c44c00e50b35054ce4b49086f26ea50aeb635f29849447bebb",
+    "artifacts/calibration_v1/contract_checks/ruff_check.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "artifacts/calibration_v1/contract_checks/ruff_format.log": "3bc53bf3e981a98a34a852e175bf9b77af841edea74fca595d9aedcbaf9a4938"
+  },
+  "limitations": [
+    "Existing live collector and collection auditor retain legacy instruction reconstruction; new rendering support is offline only.",
+    "JSON Schema cannot certify duplicate-key rejection, frozen numeric conversion limits or integer token form; frozen parse_decision remains authoritative.",
+    "Known slots with empty evidence and citations with empty record_id are structurally accepted, but are not thereby grounded.",
+    "Offline tests do not establish improved model schema success or reduced truncation."
+  ]
+}

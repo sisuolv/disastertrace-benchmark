@@ -1,0 +1,44 @@
+{
+  "prepared_at": "2026-09-06T15:33:39.628532+00:00",
+  "implementation_id": "58acc19bf32eb83709344c7f8c001b2d86d8b665339ef251a5cd7b774784e716",
+  "matching_full_suite": {
+    "path": "artifacts/optimization_p0/final_checks/test_result.json",
+    "sha256": "8f077c4d2df498bcba41a0abbe0df1e65f2250714009b5111dc0ae8de7428a01",
+    "passed": 611,
+    "skipped": 0
+  },
+  "checks": [
+    {
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.automated",
+        "build",
+        "--references",
+        "../references",
+        "--nhc-snapshot",
+        "../references/nhc_cohort_v1",
+        "--output",
+        "work/build-p1-deepseek-v1"
+      ],
+      "exit_code": 0,
+      "log": "build.log",
+      "log_sha256": "b50e25c44b57874ad00753505116917ed8f03f2c390f4bcc5b608e04970d73e1"
+    },
+    {
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.automated",
+        "audit-dataset",
+        "--build",
+        "work/build-p1-deepseek-v1",
+        "--output",
+        "artifacts/p1_deepseek_development/preparation/dataset_audit.json"
+      ],
+      "exit_code": 0,
+      "log": "audit_dataset.log",
+      "log_sha256": "b08fb0f994e646f7f09373c6713e0317f347b138a41baf5c22283e53c3232484"
+    }
+  ]
+}

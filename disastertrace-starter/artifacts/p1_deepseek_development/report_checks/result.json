@@ -1,0 +1,40 @@
+{
+  "schema_version": "p1_report_checks_v1",
+  "recorded_at": "2026-09-06T15:46:23.274243+00:00",
+  "working_directory": "/mnt/afs/260010168/extreme_weather_benchmark/disastertrace-starter",
+  "execution_timestamp": null,
+  "execution_timestamp_note": "The original tool output provides elapsed durations but no UTC execution timestamp.",
+  "evidence_origin": "Exact command, exit code and output from already completed tools in the current agent thread; commands were not rerun to create this archive.",
+  "source_hash_note": "Current source hashes, captured after the final successful checks; these owned files have not changed since those checks.",
+  "source_sha256": {
+    "artifacts/p1_deepseek_development/report_results.py": "d364ec543a03f972b2433c54b051eb1e1b56a0fb54f95fca5e81bfe004075669",
+    "artifacts/p1_deepseek_development/test_report_results.py": "db566656a505a5082ce588363867d94ddc14400aaec722babd2b5288712c7b72"
+  },
+  "commands": [
+    {
+      "command": ".venv/bin/python -m pytest -o addopts= -q artifacts/p1_deepseek_development/test_report_results.py",
+      "exit_code": 0,
+      "tool_chunk_id": "a4d99d",
+      "tool_wall_time_seconds": 2.340164515,
+      "log": "pytest.log",
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "log_sha256": "9d2e29b0bb711a526796811eb1951c44cd8022cb06c2f708e217d00b456c11b9"
+    },
+    {
+      "command": ".venv/bin/python -m ruff check --select E4,E7,E9,F,I artifacts/p1_deepseek_development/report_results.py artifacts/p1_deepseek_development/test_report_results.py && .venv/bin/python -m ruff format --check artifacts/p1_deepseek_development/report_results.py artifacts/p1_deepseek_development/test_report_results.py",
+      "exit_code": 0,
+      "tool_chunk_id": "ce1c95",
+      "tool_wall_time_seconds": 0.178894019,
+      "log": "ruff.log",
+      "log_sha256": "afa20b27dacc9bf0aba3c1d265964c21e04ab42f6e39e2dd4769718ceded003a"
+    }
+  ],
+  "pytest_passed": 14,
+  "pytest_failed": 0,
+  "pytest_skipped": 0,
+  "correctness_import_check_passed": true,
+  "format_check_passed": true,
+  "new_provider_requests": 0
+}

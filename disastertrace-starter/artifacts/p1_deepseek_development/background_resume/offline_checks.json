@@ -1,0 +1,77 @@
+{
+  "schema_version": "p1_background_continuation_offline_checks_v1",
+  "recorded_at": "2026-09-06T16:28:53.855418+00:00",
+  "new_model_api_calls": 0,
+  "authorization_received_by_this_agent": false,
+  "background_worker_launched": false,
+  "tests": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-o",
+      "addopts=",
+      "-q",
+      "artifacts/p1_deepseek_development/background_resume/test_resume_background.py"
+    ],
+    "exit_code": 0,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_seconds": 43.3,
+    "log": "artifacts/p1_deepseek_development/background_resume/pytest_final.log"
+  },
+  "lint": {
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "artifacts/p1_deepseek_development/background_resume"
+    ],
+    "exit_code": 0,
+    "log": "artifacts/p1_deepseek_development/background_resume/ruff_check.log"
+  },
+  "format": {
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "artifacts/p1_deepseek_development/background_resume"
+    ],
+    "exit_code": 0,
+    "log": "artifacts/p1_deepseek_development/background_resume/ruff_format.log"
+  },
+  "preparation": {
+    "command": [
+      ".venv/bin/python",
+      "artifacts/p1_deepseek_development/background_resume/resume_background.py",
+      "prepare",
+      "--experiment",
+      "artifacts/p1_deepseek_development/experiment.json",
+      "--source",
+      "work/p1-deepseek-development-v1",
+      "--output",
+      "artifacts/p1_deepseek_development/background_resume/prepared"
+    ],
+    "exit_code": 0,
+    "amendment_id": "ecd9840f5e679a8f789192b904d231c2eaef990bd1e40c197932d1c2bf672456",
+    "log": "artifacts/p1_deepseek_development/background_resume/prepare.log"
+  },
+  "pre_freeze_issues_resolved": [
+    "Independent review: payload hashes legitimately repeat across base/delay checkpoints; use immutable collector position and exclusive amendment claim, not payload deduplication.",
+    "Independent review: output-local lock allowed cross-output duplicate launch; add canonical amendment-package claim and reject relocated copied manifests.",
+    "Independent review: base ledger initializer briefly persisted zero counters; suppress initial write until all 79 historical rows and retained reserve are seeded.",
+    "Regression test first failed because prepared budget object aliased the module constant; freeze a deepcopy and retain forged-scope regression."
+  ],
+  "files_sha256": {
+    "artifacts/p1_deepseek_development/background_resume/resume_background.py": "958fd0de6a4d6f4fe0b14029b1fc342e1b534742a9546d346de57ec0eb72a870",
+    "artifacts/p1_deepseek_development/background_resume/test_resume_background.py": "9e721b784a6523c05b50ab84dded2eadab75a4c15b61f4bc211e3638085a416e",
+    "artifacts/p1_deepseek_development/background_resume/README.md": "c91f3ff78382e095f05897df2f25e79874719fde5aa4dbe8cf2e8f9bdb5e6e42",
+    "artifacts/p1_deepseek_development/background_resume/pytest_final.log": "6f59f91bf1bd2370598ba107e429a78158d838d6d1249243e5df3e60e1f065f3",
+    "artifacts/p1_deepseek_development/background_resume/ruff_check.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "artifacts/p1_deepseek_development/background_resume/ruff_format.log": "3bc53bf3e981a98a34a852e175bf9b77af841edea74fca595d9aedcbaf9a4938",
+    "artifacts/p1_deepseek_development/background_resume/prepare.log": "35fb94d18367524c3706a8439fe9bd3f484f8c51f678b2c5e5679b4becc6bbf9",
+    "artifacts/p1_deepseek_development/background_resume/prepared/amendment.json": "ab996a43f438b0fbe382b6170f9f260b9c6014412408b809a7c4d5b1d70cb07a"
+  },
+  "original_files_unchanged_verified_by_preparation": true,
+  "next_action": "Root agent may launch once, only after actual approval is recorded against this amendment; no live authorization is inferred by this preparation."
+}

@@ -1,0 +1,62 @@
+........................................................................ [ 16%]
+........................................................................ [ 32%]
+........................................................................ [ 49%]
+........................................................................ [ 65%]
+........................................................................ [ 82%]
+...F.................................................................... [ 98%]
+.......                                                                  [100%]
+=================================== FAILURES ===================================
+_________________ test_real_loopback_transport_and_no_redirect _________________
+
+config_dict = {'model': 'local-test-model', 'base_url': 'http://127.0.0.1:8000/v1', 'key_env': None, 'max_output_tokens': 128, ...}
+public_request = {'protocol': 'disastertrace_text_v1', 'instruction': 'Return the requested state and action as JSON.', 'checkpoint_tim...ired_fields': ['maximum_wind_mph', 'latitude_deg', 'longitude_deg', 'minimum_pressure_mb', 'port_reopening_time'], ...}
+
+    def test_real_loopback_transport_and_no_redirect(config_dict, public_request):
+        received = []
+    
+        class Handler(BaseHTTPRequestHandler):
+            def do_POST(self):
+                received.append((self.path, self.rfile.read(int(self.headers["Content-Length"]))))
+                if self.path.startswith("/redirect"):
+                    self.send_response(307)
+                    self.send_header("Location", "/v1/chat/completions")
+                    self.end_headers()
+                else:
+                    self.send_response(200)
+                    self.end_headers()
+                    self.wfile.write(response_body())
+    
+            def log_message(self, *args):
+                pass
+    
+>       server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+
+tests/test_automated_provider.py:310: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.10/socketserver.py:448: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=AddressFamily.AF_UNSPEC, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/usr/lib/python3.10/socket.py:232: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_automated_provider.py::test_real_loopback_transport_and_no_redirect
+1 failed, 438 passed in 28.47s
