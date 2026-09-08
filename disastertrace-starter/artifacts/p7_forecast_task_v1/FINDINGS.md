@@ -1,0 +1,147 @@
+# P7 native forecast-claim task findings
+
+This milestone implements and verifies the first native NHC task. All results
+below are deterministic software diagnostics. There are zero P7 model calls,
+GPU jobs, new downloads, package installs, heldout queries or training runs.
+
+## What the benchmark asks
+
+At a controlled delivery checkpoint, answer the exact storm and absolute future
+valid time using the latest visible advisory that explicitly covers that key.
+Return latitude, longitude and maximum sustained wind, together with the product
+and numbered source lines supporting the answer. Terminal rows return null
+numbers and their explicit status; a key without an explicit visible row returns
+not_stated. Gusts, pressure, observations and qualifiers remain visible material.
+
+The latest-explicit-covering rule is a *task-defined claim-resolution policy*.
+It does not establish that an old horizon remains an operationally current NHC
+forecast whenever a newer product omits it. Historical availability is unknown;
+issue order is used as a controlled schedule, not as proof of historical arrival.
+
+## Source and query accounting
+
+The sources remain Francine AL062024 advisories 005-010 and Ida AL092021 advisories
+009-014, admitted by both original source parsers. The source set contains 95
+forecast rows, nine terminal source rows and 49 adjacent versions matching the
+same absolute valid time. It has two independent storms; Ida was already in
+development, and Francine was admitted to development after plan exposure.
+
+| Quantity | Count |
+| --- | ---: |
+| Unique storm/valid-time targets | 46 |
+| All target-by-delivery candidates | 276 |
+| Excluded because target is no longer future | 19 |
+| Included query checkpoints | 257 |
+| Numeric / terminal / not_stated query answers | 176 / 26 / 55 |
+| Target episodes with 2 / 3 / 4 / 5 / 6 checkpoints | 2 / 2 / 2 / 1 / 39 |
+| Method/repeat trajectories | 276 |
+| Answer opportunities per policy | 1542 |
+| Variable opportunities per policy | 4626 |
+
+The target catalogue is selected from all admitted forecast rows before model
+performance. It therefore includes query dates before their first explicit
+forecast is delivered. The query itself is design-public; future advisory text,
+answers and source identities are never placed in its request. This is a declared
+query design, not a claim that later query dates were unknown to the experimenter.
+
+| Checkpoint transition label | Count before methods/repeats |
+| --- | ---: |
+| First checkpoint | 46 |
+| Still not stated | 25 |
+| First explicit forecast | 30 |
+| No new target coverage; retain prior explicit row | 107 |
+| Changed sustained wind across covering versions | 23 |
+| Unchanged sustained wind across covering versions | 24 |
+| Revision involving an explicit terminal status | 2 |
+
+The 24 unchanged-wind revisions need not have unchanged coordinates or qualifiers.
+The 107 coverage omissions are natural consequences of different product grids,
+not fabricated revisions. Repeated checkpoints, versions, methods and repeats
+are dependent observations and do not increase the independent storm count.
+
+## Program controls and full denominators
+
+All nine policies use the exact public messages and their own separate histories.
+The reference compiler uses the admitted dual-parser rows and raw support spans;
+the public resolver independently parses the complete numbered advisory text.
+They agree on all 257 unique queries and every expanded legal schedule slot.
+
+| Policy | Received | Shape valid | Fully correct / 1542 |
+| --- | ---: | ---: | ---: |
+| Latest explicit covering key | 1542 | 1542 | 1542 |
+| Last displayed row | 1542 | 1542 | 72 |
+| Same relative lead instead of same absolute time | 1542 | 1542 | 606 |
+| Newest document, ignoring older explicit coverage | 1542 | 1542 | 900 |
+| Maximum wind across visible times | 1542 | 1542 | 42 |
+| Copy current pressure into forecast wind | 1542 | 1542 | 486 |
+| Earliest covering source | 1542 | 1542 | 1044 |
+| Fenced/invalid JSON at even delivery steps | 1542 | 780 | 780 |
+| Missing response at even delivery steps | 780 | 780 | 780 |
+
+Every wrong policy retains its real agreements. For example, the pressure policy
+leaves nonnumeric queries unchanged, so 486 successes are expected no-effect
+cases. The missing and invalid controls each retain 762 failed opportunities.
+The earliest-source policy includes 42 superseded-same-value answers: all three
+values remain literally supported, while current-source correctness fails.
+
+Shape validity does not constrain correct units, sources, dates or values.
+Literal support checks the exact storm/valid-time key and relevant source line;
+it cannot be earned by citing a different horizon, an unseen product, a gust,
+current center or observed pressure. Source-version and locator errors remain
+separate from numerical errors. No per-item human Gold or LLM judge is used.
+
+## Context and reconstruction
+
+The copied Qwen3 tokenizer checks all 2831 distinct requests generated by the
+program histories, covering 13878 planned diagnostic answer opportunities.
+The maximum prompt is 16059 tokens. Reserving all 8192 output tokens gives 24251,
+within the common 32768 context and the model configuration's 40960 maximum.
+No source lines or failed histories are truncated. Future actual model carriers
+still require a runtime check; program carriers do not prove their length bounds.
+
+The exact frozen execution contains 115 files and binds its source closure,
+original acquisition/review copies, data, candidate table, schedule, requests,
+diagnostics, output contract and tokenizer. A copied CPU-only CLI reproduces
+every data, request, capture, score and context object with the original project,
+original weights, connections and child processes blocked before task import.
+
+The initial isolation wrapper reproduces all scientific objects but exits 1 at
+its outer guard check. A diagnostic probe identifies urllib3.util.connection's
+import-time `_has_ipv6("::1")` bind to port 0. The v2 wrapper still blocks the
+operation, recognizes only that exact module/function/address, and records it
+separately. There are no unexpected original-path, connection, subprocess or
+backend-import attempts in the final receipt; Torch/vLLM are not loaded. The
+initial wrapper, its failure and the dependency source are preserved.
+
+## Validation and identities
+
+64 new tests pass (59 core and five four-worker ownership tests), plus all 26
+relevant historical source tests. The new generated calendar test exercises 100
+deterministic examples; the historical source property test exercises 80. These
+are examples within test functions, not additional independent weather cases.
+All actual commands, observed exits and full logs are under `validation/`.
+
+The large-integer regression initially exposes a scorer crash caused by converting
+a finite Python integer to float for a finiteness check. The fix checks float
+finiteness only and lets the independent scorer retain the enormous integer as a
+semantic error. Its original failure and the later passing test remain recorded.
+Initial core lint feedback is also retained. No old source/parser/scorer changed.
+
+Both P6 acceptances reverify: 5703 entries in the offline record and 9434 in the
+completed live/source record. Those inventories overlap; their sum is not a
+unique-file count. Historical failed ACP jobs, model outputs and consumed claims
+are preserved. This phase does not publish a Git commit or change repository
+visibility.
+
+- Dataset: `af79000fb17eb37f83a775442bcb70802bed90aefb0086cf53ce6b5aa189cfe5`
+- Execution: `55b0c3cf14c9b0cb1809666542ed5410c2d147b1d5e0dc6e62a5f02ec7c83ffc`
+- Execution package: `c832afcb902b4b30f96d8106c91d7145c754786904095b4fcf2fe9de0b4f0819`
+- Source closure: `dee4558f0ada151a55efd2dc821cf846cfde7f6b05ea31962d0058fd2143927a`
+- Four-worker preview: `592696f9df3f6c79226d16e84a86e7586c6f8e0d32f0737c2e27c87e79d83ed7`
+
+The next work is a native model collector, four-worker failure-aware aggregation,
+backend tests and generation-disabled H100 preflight, followed by a fresh bounded
+1542-answer execution. The detailed resource and research plan is in
+`NEXT_EXECUTION_PLAN.md`. Automatic GPU authorization persists; the preview itself
+has no dispatch path. Two development storms and program correctness support
+instrument validation, not claims about general extreme-weather competence.

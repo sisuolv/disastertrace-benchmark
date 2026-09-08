@@ -1,0 +1,178 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____ test_actual_saved_starting_zero_is_pending_not_final_hardware_evidence ____
+
+    def test_actual_saved_starting_zero_is_pending_not_final_hardware_evidence():
+        details, request = fixture()
+        assert details["state"] == "STARTING"
+        assert details["roles"][0]["resource_spec"][0]["replicas"] == 0
+>       observed = module().observe_job(details, request)
+
+tests/p9_chain/test_observer_starting.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p9_chain/test_observer_starting.py:17: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:879: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1016: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7f4f48249990>
+path = '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+<frozen importlib._bootstrap_external>:1073: FileNotFoundError
+_ test_transient_exception_does_not_weaken_final_or_resource_validation[terminal_zero] _
+
+mutation = 'terminal_zero'
+
+    @pytest.mark.parametrize("mutation", ["terminal_zero", "wrong_gpu", "wrong_command", "running_zero"])
+    def test_transient_exception_does_not_weaken_final_or_resource_validation(mutation):
+        details, request = fixture()
+        details = deepcopy(details)
+        if mutation == "terminal_zero":
+            details["state"] = "SUCCEEDED"
+        elif mutation == "running_zero":
+            details["state"] = "RUNNING"
+        elif mutation == "wrong_gpu":
+            details["roles"][0]["resource_spec"][0]["limits"]["nvidia.com/gpu"] = "4"
+        else:
+            details["roles"][0]["startup_script"] = "unbound"
+        with pytest.raises(ValueError):
+>           module().observe_job(details, request)
+
+tests/p9_chain/test_observer_starting.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p9_chain/test_observer_starting.py:17: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:879: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1016: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7f4f480f7220>
+path = '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+<frozen importlib._bootstrap_external>:1073: FileNotFoundError
+_ test_transient_exception_does_not_weaken_final_or_resource_validation[wrong_gpu] _
+
+mutation = 'wrong_gpu'
+
+    @pytest.mark.parametrize("mutation", ["terminal_zero", "wrong_gpu", "wrong_command", "running_zero"])
+    def test_transient_exception_does_not_weaken_final_or_resource_validation(mutation):
+        details, request = fixture()
+        details = deepcopy(details)
+        if mutation == "terminal_zero":
+            details["state"] = "SUCCEEDED"
+        elif mutation == "running_zero":
+            details["state"] = "RUNNING"
+        elif mutation == "wrong_gpu":
+            details["roles"][0]["resource_spec"][0]["limits"]["nvidia.com/gpu"] = "4"
+        else:
+            details["roles"][0]["startup_script"] = "unbound"
+        with pytest.raises(ValueError):
+>           module().observe_job(details, request)
+
+tests/p9_chain/test_observer_starting.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p9_chain/test_observer_starting.py:17: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:879: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1016: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7f4f4811bc70>
+path = '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+<frozen importlib._bootstrap_external>:1073: FileNotFoundError
+_ test_transient_exception_does_not_weaken_final_or_resource_validation[wrong_command] _
+
+mutation = 'wrong_command'
+
+    @pytest.mark.parametrize("mutation", ["terminal_zero", "wrong_gpu", "wrong_command", "running_zero"])
+    def test_transient_exception_does_not_weaken_final_or_resource_validation(mutation):
+        details, request = fixture()
+        details = deepcopy(details)
+        if mutation == "terminal_zero":
+            details["state"] = "SUCCEEDED"
+        elif mutation == "running_zero":
+            details["state"] = "RUNNING"
+        elif mutation == "wrong_gpu":
+            details["roles"][0]["resource_spec"][0]["limits"]["nvidia.com/gpu"] = "4"
+        else:
+            details["roles"][0]["startup_script"] = "unbound"
+        with pytest.raises(ValueError):
+>           module().observe_job(details, request)
+
+tests/p9_chain/test_observer_starting.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p9_chain/test_observer_starting.py:17: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:879: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1016: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7f4f480f5780>
+path = '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+<frozen importlib._bootstrap_external>:1073: FileNotFoundError
+_ test_transient_exception_does_not_weaken_final_or_resource_validation[running_zero] _
+
+mutation = 'running_zero'
+
+    @pytest.mark.parametrize("mutation", ["terminal_zero", "wrong_gpu", "wrong_command", "running_zero"])
+    def test_transient_exception_does_not_weaken_final_or_resource_validation(mutation):
+        details, request = fixture()
+        details = deepcopy(details)
+        if mutation == "terminal_zero":
+            details["state"] = "SUCCEEDED"
+        elif mutation == "running_zero":
+            details["state"] = "RUNNING"
+        elif mutation == "wrong_gpu":
+            details["roles"][0]["resource_spec"][0]["limits"]["nvidia.com/gpu"] = "4"
+        else:
+            details["roles"][0]["startup_script"] = "unbound"
+        with pytest.raises(ValueError):
+>           module().observe_job(details, request)
+
+tests/p9_chain/test_observer_starting.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/p9_chain/test_observer_starting.py:17: in module
+    spec.loader.exec_module(value)
+<frozen importlib._bootstrap_external>:879: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1016: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7f4f4811a920>
+path = '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p9_forecast_model_v1/watch_live_v2.py'
+
+<frozen importlib._bootstrap_external>:1073: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/p9_chain/test_observer_starting.py::test_actual_saved_starting_zero_is_pending_not_final_hardware_evidence
+FAILED tests/p9_chain/test_observer_starting.py::test_transient_exception_does_not_weaken_final_or_resource_validation[terminal_zero]
+FAILED tests/p9_chain/test_observer_starting.py::test_transient_exception_does_not_weaken_final_or_resource_validation[wrong_gpu]
+FAILED tests/p9_chain/test_observer_starting.py::test_transient_exception_does_not_weaken_final_or_resource_validation[wrong_command]
+FAILED tests/p9_chain/test_observer_starting.py::test_transient_exception_does_not_weaken_final_or_resource_validation[running_zero]
+5 failed in 0.70s

@@ -1,5 +1,23 @@
 # Blockers
 
+## Current: P6 offline complete; live engineering and source expansion remain
+
+P6 posthoc, full2160-slot program controls, context sweep, new tests and CPU
+relocation complete. Legacy environment-only failures are resolved by corresponding
+installed-environment CPU tests; no missing dependency blocks offline acceptance.
+See README_P6_OFFLINE_V1.md and artifacts/p6_offline_v1/VALIDATION_RESULTS.json.
+
+The new execution intentionally has no model backend dispatch authorization or ACP
+launcher; actual full-H100 preflight and a fresh live resource/scope freeze remain.
+These are engineering prerequisites under existing GPU permission, not a request
+to renew permission or reopen P5. Current status is offline_verified_live_pending.
+
+Research limits remain three source groups, cumulative evidence and a legal domain
+solvable by per-key latest-issued. Nine synthetic source-binding probes do not
+replace real forecast evidence. No new official source bytes or dual-parser real
+forecast cohort exist yet. Four plans' example storms are already exposed; check
+the existing split before future acquisition, and never silently relabel heldout.
+
 ## Current: P5 ACP execution and reconstruction complete
 
 No collection or verification blocker remains. All three ACP jobs succeed with

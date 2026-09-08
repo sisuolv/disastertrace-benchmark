@@ -1,0 +1,111 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/disastertrace/forecast_cohort/package.py:3:1
+   |
+ 1 |   """Frozen expanded task with two tokenizers and independent CPU reconstruction."""
+ 2 |
+ 3 | / from pathlib import Path
+ 4 | | import shutil
+ 5 | |
+ 6 | | from disastertrace.forecast_task import package as inherited
+ 7 | | from disastertrace.forecast_task.common import digest, fingerprint, inventory, read, seal, verify, write
+ 8 | | from disastertrace.forecast_task.contract import SCHEMA, SYSTEM
+ 9 | | from disastertrace.forecast_task.diagnostics import run_programs
+10 | |
+11 | | from .loader import compile_bundle
+12 | | from .protocol import METHODS, REPEATS, schedule
+   | |________________________________________________^
+13 |
+14 |   PROFILES = ("qwen3", "deepseek_r1")
+   |
+help: Organize imports
+   |
+2  |
+3  + import shutil
+4  | from pathlib import Path
+   - import shutil
+5  |
+6  | from disastertrace.forecast_task import package as inherited
+   - from disastertrace.forecast_task.common import digest, fingerprint, inventory, read, seal, verify, write
+7  + from disastertrace.forecast_task.common import (
+8  +     digest,
+9  +     fingerprint,
+10 +     inventory,
+11 +     read,
+12 +     seal,
+13 +     verify,
+14 +     write,
+15 + )
+16 | from disastertrace.forecast_task.contract import SCHEMA, SYSTEM
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> src/disastertrace/forecast_cohort/protocol.py:3:1
+  |
+1 | """One declared sampling repeat, retaining inherited slot and seed definitions."""
+2 |
+3 | from disastertrace.forecast_task.protocol import METHODS, schedule as inherited_schedule
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+4 |
+5 | REPEATS = 1
+  |
+help: Organize imports
+  |
+2 |
+  - from disastertrace.forecast_task.protocol import METHODS, schedule as inherited_schedule
+3 + from disastertrace.forecast_task.protocol import METHODS
+4 + from disastertrace.forecast_task.protocol import schedule as inherited_schedule
+5 |
+  |
+
+F401 [*] `disastertrace.forecast_task.protocol.METHODS` imported but unused
+ --> src/disastertrace/forecast_cohort/protocol.py:3:50
+  |
+1 | """One declared sampling repeat, retaining inherited slot and seed definitions."""
+2 |
+3 | from disastertrace.forecast_task.protocol import METHODS, schedule as inherited_schedule
+  |                                                  ^^^^^^^
+4 |
+5 | REPEATS = 1
+  |
+help: Remove unused import: `disastertrace.forecast_task.protocol.METHODS`
+  |
+2 |
+  - from disastertrace.forecast_task.protocol import METHODS, schedule as inherited_schedule
+3 + from disastertrace.forecast_task.protocol import schedule as inherited_schedule
+4 |
+  |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/p10_forecast_cohort/test_loader.py:1:1
+   |
+ 1 | / from pathlib import Path
+ 2 | | import shutil
+ 3 | |
+ 4 | | import pytest
+ 5 | |
+ 6 | | from disastertrace.forecast_cohort.loader import STORMS, compile_bundle, contained, load_sources
+ 7 | | from disastertrace.forecast_cohort.protocol import schedule
+ 8 | | from disastertrace.forecast_task.diagnostics import collect_program
+ 9 | | from disastertrace.forecast_task.scoring import summarize
+10 | | from disastertrace.forecast_task.common import canonical, fingerprint, inventory, read
+   | |______________________________________________________________________________________^
+11 |
+12 |   ROOT = Path(__file__).resolve().parents[2] / "artifacts/p10_source_catalog_v1/review_v2"
+   |
+help: Organize imports
+   |
+1  + import shutil
+2  | from pathlib import Path
+   - import shutil
+3  |
+--------------------------------------------------------------------------------
+7  | from disastertrace.forecast_cohort.protocol import schedule
+8  + from disastertrace.forecast_task.common import canonical, fingerprint, inventory, read
+9  | from disastertrace.forecast_task.diagnostics import collect_program
+10 | from disastertrace.forecast_task.scoring import summarize
+   - from disastertrace.forecast_task.common import canonical, fingerprint, inventory, read
+11 |
+   |
+
+Found 4 errors.
+[*] 4 fixable with the `--fix` option.

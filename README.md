@@ -1,5 +1,16 @@
 # DisasterTrace：LLM 极端天气证据推理评测审查包
 
+## 当前新增：P6 首轮离线里程碑
+
+四份 plan_v3 已整合并完成第一阶段实现。入口为
+[P6 离线结果](disastertrace-starter/README_P6_OFFLINE_V1.md) 与
+[详细交接](disastertrace-starter/artifacts/p6_offline_v1/HANDOFF_POST_P5.md)。
+P5 的230个纯引用错误已逐项细分，其中109个为同值旧版本引用；旧分数保持不变。
+新候选为两条件、两重复、2160个机会。correct与invalid-control各2160条程序诊断、
+实际tokenizer上下文检查、独立CPU迁移及新增69项测试完成，新增模型/GPU/API调用为0。
+这批是离线准备，尚未发布P6到GitHub；下一步见
+[后续执行计划](disastertrace-starter/artifacts/p6_offline_v1/NEXT_STEP_EXECUTION_PLAN.md)。
+
 ## 当前复查入口：P5 三因素 GPU 评测已完成
 
 请先读新的中文 **[ChatGPT Pro 完整复查文档](disastertrace-starter/REVIEW_FOR_CHATGPT_PRO_P5.md)**。

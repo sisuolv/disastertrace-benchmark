@@ -1,5 +1,29 @@
 # Decisions
 
+## P6 first offline milestone and supplemental fourth plan
+
+- Choose one2-condition/2-repeat E1,2160 opportunities, from the convergent plans.
+  The fourth plan confirms this option. New source-binding probes and examples
+  remain separate; do not silently change a frozen matrix or launch all budgets.
+- Keep field value, literal support, current authority, locator and action errors
+  separate. Preserve all P5 counts and disclose that109 of230 citation errors use
+  superseded same-value sources. Do not infer internal model causes from matching
+  earlier carrier references.
+- Derive exposure from actual evidence, preserving six revision no-op episodes.
+  Report both directions of change; paired conditions share sampling seeds while
+  methods/repeats/conditions have independent run identities and carriers.
+- Persist all returned raw items before parsing, stop on unknowns/partial batches,
+  and reconstruct without regeneration. Reject diagnostic origins as model scores.
+- Admit latest-issued sufficiency in the current legal single-chain domain.
+  Same-content carrier representation, length controls, independent sources and
+  real forecast versions are separate future studies, not score repairs.
+- Use existing CPU dependencies and installed-runtime CPU tests; no downloads or
+  environment upgrades. Preserve first environment failures and deduplicate node
+  coverage across subsequent verification. No P6 publication occurs this phase.
+- Keep GPU permission persistent, but this phase remains offline. A new live
+  backend/launcher, actual hardware preflight and bounded live freeze are still
+  required; the offline candidate cannot be toggled into production authorization.
+
 ## P5 ACP completion and repeatability priority
 
 - Use the user's CPU-CCI/ACP instruction for three independent one-H100 factor

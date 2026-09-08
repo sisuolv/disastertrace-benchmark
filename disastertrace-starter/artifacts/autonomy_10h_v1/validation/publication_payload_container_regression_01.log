@@ -1,0 +1,33 @@
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+__________ test_plain_gzip_does_not_receive_a_tar_container_exemption __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f405823b4f0>
+
+    def test_plain_gzip_does_not_receive_a_tar_container_exemption(monkeypatch):
+        monkeypatch.setattr(scan, "MAX_MEMBER_BYTES", 1024, raising=False)
+        monkeypatch.setattr(scan, "MAX_TAR_CONTAINER_BYTES", 32768, raising=False)
+>       with pytest.raises(ValueError, match="inspection bound"):
+E       Failed: DID NOT RAISE ValueError
+
+publication/autonomy_review_20260909/test_payload_scan.py:68: Failed
+____________ test_individual_tar_member_still_has_the_smaller_bound ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4058235240>
+
+    def test_individual_tar_member_still_has_the_smaller_bound(monkeypatch):
+        monkeypatch.setattr(scan, "MAX_MEMBER_BYTES", 1024, raising=False)
+        monkeypatch.setattr(scan, "MAX_TAR_CONTAINER_BYTES", 32768, raising=False)
+        output = io.BytesIO()
+        with tarfile.open(fileobj=output, mode="w") as archive:
+            info = tarfile.TarInfo("oversized.txt")
+            info.size = 2048
+            archive.addfile(info, io.BytesIO(b"x" * 2048))
+>       with pytest.raises(ValueError, match="TAR member"):
+E       Failed: DID NOT RAISE ValueError
+
+publication/autonomy_review_20260909/test_payload_scan.py:80: Failed
+=========================== short test summary info ============================
+FAILED publication/autonomy_review_20260909/test_payload_scan.py::test_plain_gzip_does_not_receive_a_tar_container_exemption
+FAILED publication/autonomy_review_20260909/test_payload_scan.py::test_individual_tar_member_still_has_the_smaller_bound
+2 failed, 4 passed in 0.43s

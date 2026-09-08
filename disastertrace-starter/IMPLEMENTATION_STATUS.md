@@ -1,5 +1,47 @@
 # Implementation Status
 
+## Completed: P6 first offline milestone, 2026-09-08
+
+Integrate the three initial plan_v3 inputs and the fourth plan supplied during
+execution. Preserve their bytes and both versioned input indexes. Entry:
+README_P6_OFFLINE_V1.md; detailed handoff and next executable work are under
+artifacts/p6_offline_v1/. No model generations, GPU jobs, paid calls, new upstream
+downloads, heldout inference, training or P6 Git publication occur.
+
+Independently reverify P4 plus all three P5 reports with frozen source. Reconcile
+6,480 P5 fields: 90 value/status errors, 230 citation-only errors, 320 field errors
+across 260 checkpoints, 29 overlapping action errors; 1,360/1,620 remain correct.
+Citation categories include 109 superseded-same-value errors, not all 230.
+First exposure is revision c2 for30/never6, scope c2 for36, stale c4 for36.
+Seven public policies run on all four datasets; legal latest-issued is180/180 in
+each. Add eight deterministically selected actual examples, provenance rows and
+nine separate source-binding probes without changing frozen E1 data.
+
+New post_p5/repeat_eval modules implement isolated trajectory/sampling/attempt
+identities, counterbalanced condition order, raw-first exclusive capture, partial
+batch recovery, independent audit and fixed-denominator repeat statistics.
+Execution0b4a7d7a56d1f82694b3973e89670fc44eb7a098c8708c4689e775fa3a58fb80 binds
+2conditions x36episodes x5checkpoints x3methods x2repeats =2160 slots/432 trajectories.
+Both full diagnostic collections and reports complete: correct2160/2160;
+invalid-control1728/2160, retaining432 invalid answers and all36 failed screens.
+10,800 program context opportunities pass;2,373 unique actual-tokenizer checks,
+max prompt7002 plus reserved8192 fits16384. Arbitrary model carriers still fail closed.
+
+CPU relocation reconstructs both reports with original project/weights/network
+blocked and no Torch/vLLM. New tests:65 core plus4 supplemental pass. Legacy tests
+are reconciled by node: first run1137 pass/2 fail/50 errors due missing dependencies
+and the wrong bound runtime environment; the corresponding71-test installed
+environment run passes all, resolving every unsuccessful node (19 pass overlap).
+Distinct legacy coverage1189; do not call the initial full command an exit-zero run.
+No dependency installs/upgrades. All commands, logs/exits, initial failures and
+source copies are retained in validation and VALIDATION_RESULTS.json.
+
+The acceptance and preservation records provide the final evidence inventory.
+Status:offline_verified_live_pending. Next: a separately versioned model backend,
+one-use ACP launcher, generation-disabled actual H100 preflight and fresh live
+freeze for the same2160 scope under existing GPU permission. Then bounded NHC
+same-valid-time forecast acquisition/dual parsing, never reusing old claims.
+
 ## Publication handoff: P5 review snapshot, 2026-09-08
 
 The user requests GitHub upload and a detailed ChatGPT Pro review document.

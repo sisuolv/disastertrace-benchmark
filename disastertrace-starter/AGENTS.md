@@ -1,5 +1,27 @@
 # DisasterTrace repository instructions
 
+P6 first offline milestone,2026-09-08: four supplied plan_v3 documents are integrated.
+Entry README_P6_OFFLINE_V1.md; artifacts/p6_offline_v1 contains frozen execution,
+posthoc attribution, full program reports, supplemental probes and final acceptance.
+Use post_p5/repeat_eval for this version; P1-P5 source/data/captures stay frozen.
+P6 model calls/GPU jobs/new upstream acquisition/publication remain zero.
+
+Both2160-slot diagnostic runs are consumed; do not reuse their execution/mode
+registry claims. The candidate is offline-only; do not toggle generation flags.
+It contains432 trajectories and1080 sampling pairs; failures keep all opportunities.
+65 new core tests and4 supplemental tests pass. Legacy1189-node coverage is
+reconciled from1137 first-pass nodes and a71/71 installed-environment subset;
+the initial full command exited1 and remains recorded. No environment was upgraded.
+Both reports reconstruct in a copied CPU environment with original data/weights
+and network blocked. Preserve all failure logs and the frozen E1 source snapshot.
+
+Next executable work is artifacts/p6_offline_v1/NEXT_STEP_EXECUTION_PLAN.md:
+separate live backend/one-use ACP launcher, no-generation actual H100 preflight,
+then fresh live freeze for the bounded2160 proposal. Existing automatic GPU
+permission persists; do not ask for it again. Current offline milestone stops
+before that new live phase. Independent NHC forecast-source acquisition and dual
+parsing follow in a separate bundle; no human per-item Gold or LLM judge.
+
 P5 ACP completes on 2026-09-08: all 1,620 actual Qwen3-8B answers arrive by 07:36:54
 UTC, all three ACP jobs succeed, and all nine collector/report/verify subprocesses
 exit zero. No retries, missing answers, length finishes or extraction errors.

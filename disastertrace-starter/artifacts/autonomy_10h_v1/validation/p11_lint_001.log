@@ -1,0 +1,57 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/disastertrace/cohort_live/package.py:3:1
+   |
+ 1 |   """Fresh phase identity and fixed whole-target ownership over the accepted task."""
+ 2 |
+ 3 | / import hashlib
+ 4 | | import importlib.metadata
+ 5 | | import platform
+ 6 | | import shutil
+ 7 | | import uuid
+ 8 | | from collections import Counter, defaultdict
+ 9 | | from datetime import datetime, timedelta, timezone
+10 | | from pathlib import Path
+11 | |
+12 | | from disastertrace.forecast_task.common import digest, fingerprint, inventory, read, seal
+13 | | from disastertrace.forecast_task.common import verify as verify_seal
+14 | | from disastertrace.forecast_cohort.protocol import schedule
+15 | |
+16 | | from . import profiles
+17 | | from .storage import now, write
+   | |_______________________________^
+18 |
+19 |   PROJECT = Path(__file__).resolve().parents[3]
+   |
+help: Organize imports
+   |
+11 |
+12 + from disastertrace.forecast_cohort.protocol import schedule
+13 | from disastertrace.forecast_task.common import digest, fingerprint, inventory, read, seal
+14 | from disastertrace.forecast_task.common import verify as verify_seal
+   - from disastertrace.forecast_cohort.protocol import schedule
+15 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> tests/p11_cohort_live/conftest.py:3:1
+  |
+1 |   """Small synthetic software fixtures, independent of natural task selection."""
+2 |
+3 | / import pytest
+4 | |
+5 | | from disastertrace.forecast_source import normalization, parser_a, parser_b
+6 | | from disastertrace.forecast_task.compiler import compile_sources
+7 | | from disastertrace.forecast_cohort.protocol import schedule
+  | |___________________________________________________________^
+help: Organize imports
+  |
+4 |
+5 + from disastertrace.forecast_cohort.protocol import schedule
+6 | from disastertrace.forecast_source import normalization, parser_a, parser_b
+7 | from disastertrace.forecast_task.compiler import compile_sources
+  - from disastertrace.forecast_cohort.protocol import schedule
+8 |
+  |
+
+Found 2 errors.
+[*] 2 fixable with the `--fix` option.

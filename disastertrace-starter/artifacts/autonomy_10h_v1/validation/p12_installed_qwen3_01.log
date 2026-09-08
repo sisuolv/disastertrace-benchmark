@@ -1,0 +1,220 @@
+..FFFFFF.F.                                                              [100%]
+=================================== FAILURES ===================================
+__ test_large_formatting_padding_is_rejected_without_changing_json_semantics ___
+
+installed = (Qwen2TokenizerFast(name_or_path='artifacts/p12_compact_grammar_v1/resources_qwen3_01/tokenizer', vocab_size=151643, m...c3647f2de73f428', 'repeat': 0, ...}, ...], <disastertrace.compact_live.grammar.GrammarReplay object at 0x7f6c3969f880>)
+
+    def test_large_formatting_padding_is_rejected_without_changing_json_semantics(installed):
+        from disastertrace.forecast_model.grammar import GrammarReplay as PreviousReplay
+    
+        tokenizer, public, slots, replay = installed
+        query = public["opportunities"][slots[0]["opportunity_id"]]["query"]
+        answer = empty_answer(query)
+        canonical_text = canonical(answer)
+        padded = canonical_text.replace(":", ":" + " " * 512, 1)
+        assert parse_answer(padded) == parse_answer(canonical_text)
+        assert PreviousReplay(tokenizer, replay.vocab_size).check_text(padded)["accepted"] is True
+>       assert replay.check_text(canonical_text)["accepted"] is True
+E       assert False is True
+
+tests/p12_compact_live/installed_backend.py:71: AssertionError
+__ test_native_schema_accepts_legal_shapes_including_wrong_semantics[numeric] __
+
+installed = (Qwen2TokenizerFast(name_or_path='artifacts/p12_compact_grammar_v1/resources_qwen3_01/tokenizer', vocab_size=151643, m...c3647f2de73f428', 'repeat': 0, ...}, ...], <disastertrace.compact_live.grammar.GrammarReplay object at 0x7f6c3969f880>)
+kind = 'numeric'
+
+    @pytest.mark.parametrize(
+        "kind", ["numeric", "DISSIPATED", "ABSORBED", "not_stated", "wrong_semantics"]
+    )
+    def test_native_schema_accepts_legal_shapes_including_wrong_semantics(installed, kind):
+        _, public, slots, replay = installed
+        query = public["opportunities"][slots[0]["opportunity_id"]]["query"]
+        answer = empty_answer(query)
+        answer["status"] = kind if kind != "wrong_semantics" else "numeric"
+        if kind in ("numeric", "wrong_semantics"):
+            for field, value in (("latitude", 24.8), ("longitude", -96.4), ("max_sustained_wind", 65)):
+                answer[field]["value"] = value
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": 26}
+        if kind in ("DISSIPATED", "ABSORBED"):
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": None}
+        if kind == "wrong_semantics":
+            answer["storm_id"] = "not-the-storm"
+            answer["valid_at"] = "not-a-time"
+            answer["measurement_kind"] = "observation"
+            answer["max_sustained_wind"] = {"value": None, "unit": "wrong-unit"}
+            answer["citation"]["source_id"] = "never-seen-source"
+        text = canonical(answer)
+        assert parse_answer(text) == answer
+>       assert replay.check_text(text)["accepted"] is True
+E       assert False is True
+
+tests/p12_compact_live/installed_backend.py:97: AssertionError
+_ test_native_schema_accepts_legal_shapes_including_wrong_semantics[DISSIPATED] _
+
+installed = (Qwen2TokenizerFast(name_or_path='artifacts/p12_compact_grammar_v1/resources_qwen3_01/tokenizer', vocab_size=151643, m...c3647f2de73f428', 'repeat': 0, ...}, ...], <disastertrace.compact_live.grammar.GrammarReplay object at 0x7f6c3969f880>)
+kind = 'DISSIPATED'
+
+    @pytest.mark.parametrize(
+        "kind", ["numeric", "DISSIPATED", "ABSORBED", "not_stated", "wrong_semantics"]
+    )
+    def test_native_schema_accepts_legal_shapes_including_wrong_semantics(installed, kind):
+        _, public, slots, replay = installed
+        query = public["opportunities"][slots[0]["opportunity_id"]]["query"]
+        answer = empty_answer(query)
+        answer["status"] = kind if kind != "wrong_semantics" else "numeric"
+        if kind in ("numeric", "wrong_semantics"):
+            for field, value in (("latitude", 24.8), ("longitude", -96.4), ("max_sustained_wind", 65)):
+                answer[field]["value"] = value
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": 26}
+        if kind in ("DISSIPATED", "ABSORBED"):
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": None}
+        if kind == "wrong_semantics":
+            answer["storm_id"] = "not-the-storm"
+            answer["valid_at"] = "not-a-time"
+            answer["measurement_kind"] = "observation"
+            answer["max_sustained_wind"] = {"value": None, "unit": "wrong-unit"}
+            answer["citation"]["source_id"] = "never-seen-source"
+        text = canonical(answer)
+        assert parse_answer(text) == answer
+>       assert replay.check_text(text)["accepted"] is True
+E       assert False is True
+
+tests/p12_compact_live/installed_backend.py:97: AssertionError
+_ test_native_schema_accepts_legal_shapes_including_wrong_semantics[ABSORBED] __
+
+installed = (Qwen2TokenizerFast(name_or_path='artifacts/p12_compact_grammar_v1/resources_qwen3_01/tokenizer', vocab_size=151643, m...c3647f2de73f428', 'repeat': 0, ...}, ...], <disastertrace.compact_live.grammar.GrammarReplay object at 0x7f6c3969f880>)
+kind = 'ABSORBED'
+
+    @pytest.mark.parametrize(
+        "kind", ["numeric", "DISSIPATED", "ABSORBED", "not_stated", "wrong_semantics"]
+    )
+    def test_native_schema_accepts_legal_shapes_including_wrong_semantics(installed, kind):
+        _, public, slots, replay = installed
+        query = public["opportunities"][slots[0]["opportunity_id"]]["query"]
+        answer = empty_answer(query)
+        answer["status"] = kind if kind != "wrong_semantics" else "numeric"
+        if kind in ("numeric", "wrong_semantics"):
+            for field, value in (("latitude", 24.8), ("longitude", -96.4), ("max_sustained_wind", 65)):
+                answer[field]["value"] = value
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": 26}
+        if kind in ("DISSIPATED", "ABSORBED"):
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": None}
+        if kind == "wrong_semantics":
+            answer["storm_id"] = "not-the-storm"
+            answer["valid_at"] = "not-a-time"
+            answer["measurement_kind"] = "observation"
+            answer["max_sustained_wind"] = {"value": None, "unit": "wrong-unit"}
+            answer["citation"]["source_id"] = "never-seen-source"
+        text = canonical(answer)
+        assert parse_answer(text) == answer
+>       assert replay.check_text(text)["accepted"] is True
+E       assert False is True
+
+tests/p12_compact_live/installed_backend.py:97: AssertionError
+_ test_native_schema_accepts_legal_shapes_including_wrong_semantics[not_stated] _
+
+installed = (Qwen2TokenizerFast(name_or_path='artifacts/p12_compact_grammar_v1/resources_qwen3_01/tokenizer', vocab_size=151643, m...c3647f2de73f428', 'repeat': 0, ...}, ...], <disastertrace.compact_live.grammar.GrammarReplay object at 0x7f6c3969f880>)
+kind = 'not_stated'
+
+    @pytest.mark.parametrize(
+        "kind", ["numeric", "DISSIPATED", "ABSORBED", "not_stated", "wrong_semantics"]
+    )
+    def test_native_schema_accepts_legal_shapes_including_wrong_semantics(installed, kind):
+        _, public, slots, replay = installed
+        query = public["opportunities"][slots[0]["opportunity_id"]]["query"]
+        answer = empty_answer(query)
+        answer["status"] = kind if kind != "wrong_semantics" else "numeric"
+        if kind in ("numeric", "wrong_semantics"):
+            for field, value in (("latitude", 24.8), ("longitude", -96.4), ("max_sustained_wind", 65)):
+                answer[field]["value"] = value
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": 26}
+        if kind in ("DISSIPATED", "ABSORBED"):
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": None}
+        if kind == "wrong_semantics":
+            answer["storm_id"] = "not-the-storm"
+            answer["valid_at"] = "not-a-time"
+            answer["measurement_kind"] = "observation"
+            answer["max_sustained_wind"] = {"value": None, "unit": "wrong-unit"}
+            answer["citation"]["source_id"] = "never-seen-source"
+        text = canonical(answer)
+        assert parse_answer(text) == answer
+>       assert replay.check_text(text)["accepted"] is True
+E       assert False is True
+
+tests/p12_compact_live/installed_backend.py:97: AssertionError
+_ test_native_schema_accepts_legal_shapes_including_wrong_semantics[wrong_semantics] _
+
+installed = (Qwen2TokenizerFast(name_or_path='artifacts/p12_compact_grammar_v1/resources_qwen3_01/tokenizer', vocab_size=151643, m...c3647f2de73f428', 'repeat': 0, ...}, ...], <disastertrace.compact_live.grammar.GrammarReplay object at 0x7f6c3969f880>)
+kind = 'wrong_semantics'
+
+    @pytest.mark.parametrize(
+        "kind", ["numeric", "DISSIPATED", "ABSORBED", "not_stated", "wrong_semantics"]
+    )
+    def test_native_schema_accepts_legal_shapes_including_wrong_semantics(installed, kind):
+        _, public, slots, replay = installed
+        query = public["opportunities"][slots[0]["opportunity_id"]]["query"]
+        answer = empty_answer(query)
+        answer["status"] = kind if kind != "wrong_semantics" else "numeric"
+        if kind in ("numeric", "wrong_semantics"):
+            for field, value in (("latitude", 24.8), ("longitude", -96.4), ("max_sustained_wind", 65)):
+                answer[field]["value"] = value
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": 26}
+        if kind in ("DISSIPATED", "ABSORBED"):
+            answer["citation"] = {"source_id": "arbitrary", "forecast_line": 25, "wind_line": None}
+        if kind == "wrong_semantics":
+            answer["storm_id"] = "not-the-storm"
+            answer["valid_at"] = "not-a-time"
+            answer["measurement_kind"] = "observation"
+            answer["max_sustained_wind"] = {"value": None, "unit": "wrong-unit"}
+            answer["citation"]["source_id"] = "never-seen-source"
+        text = canonical(answer)
+        assert parse_answer(text) == answer
+>       assert replay.check_text(text)["accepted"] is True
+E       assert False is True
+
+tests/p12_compact_live/installed_backend.py:97: AssertionError
+____________ test_real_reasoning_mask_and_exact_terminal_rendering _____________
+
+installed = (Qwen2TokenizerFast(name_or_path='artifacts/p12_compact_grammar_v1/resources_qwen3_01/tokenizer', vocab_size=151643, m...c3647f2de73f428', 'repeat': 0, ...}, ...], <disastertrace.compact_live.grammar.GrammarReplay object at 0x7f6c3969f880>)
+
+    def test_real_reasoning_mask_and_exact_terminal_rendering(installed):
+        tokenizer, public, slots, replay = installed
+        slot = slots[0]
+        final = canonical(resolve(request(public, slot["opportunity_id"], slot["method"], [])))
+        ids = tokenizer.encode("Reasoning is not JSON.\n", add_special_tokens=False)
+        ids += tokenizer.encode("</think>", add_special_tokens=False)
+        ids += tokenizer.encode("\n\n" + final, add_special_tokens=False)
+        candidate = {
+            "output_token_ids": ids + [tokenizer.eos_token_id],
+            "finish_reason": "stop",
+            "runtime_output_text": tokenizer.decode(ids, skip_special_tokens=False),
+        }
+        adapter.verify_runtime_text(candidate, tokenizer)
+        assert adapter.extract(candidate["output_token_ids"], tokenizer)["content"] == "\n\n" + final
+        result = replay.check_output(candidate["output_token_ids"])
+        assert result["accepted"] is False and result["rejected_at"] == 0
+        # The compiled root starts at '{'; any_whitespace permits internal JSON whitespace.
+        legal = tokenizer.encode("Reasoning is not JSON.\n", add_special_tokens=False)
+        legal += tokenizer.encode("</think>", add_special_tokens=False)
+        legal += tokenizer.encode(final, add_special_tokens=False) + [tokenizer.eos_token_id]
+        accepted = replay.check_output(legal)
+>       assert accepted["accepted"] and accepted["terminated"]
+E       assert (False)
+
+tests/p12_compact_live/installed_backend.py:131: AssertionError
+=============================== warnings summary ===============================
+../../../../.venvs/disastertrace-qwen3-v1/lib/python3.10/site-packages/_pytest/config/__init__.py:1464
+  /mnt/afs/260010168/.venvs/disastertrace-qwen3-v1/lib/python3.10/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: asyncio_mode
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/p12_compact_live/installed_backend.py::test_large_formatting_padding_is_rejected_without_changing_json_semantics
+FAILED tests/p12_compact_live/installed_backend.py::test_native_schema_accepts_legal_shapes_including_wrong_semantics[numeric]
+FAILED tests/p12_compact_live/installed_backend.py::test_native_schema_accepts_legal_shapes_including_wrong_semantics[DISSIPATED]
+FAILED tests/p12_compact_live/installed_backend.py::test_native_schema_accepts_legal_shapes_including_wrong_semantics[ABSORBED]
+FAILED tests/p12_compact_live/installed_backend.py::test_native_schema_accepts_legal_shapes_including_wrong_semantics[not_stated]
+FAILED tests/p12_compact_live/installed_backend.py::test_native_schema_accepts_legal_shapes_including_wrong_semantics[wrong_semantics]
+FAILED tests/p12_compact_live/installed_backend.py::test_real_reasoning_mask_and_exact_terminal_rendering
+7 failed, 4 passed, 1 warning in 31.89s

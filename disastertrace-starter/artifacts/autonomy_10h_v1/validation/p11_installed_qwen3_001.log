@@ -1,0 +1,48 @@
+.........F                                                               [100%]
+=================================== FAILURES ===================================
+___________ test_installed_profile_reasoner_and_exact_eos_are_bound ____________
+
+installed = (Qwen2TokenizerFast(name_or_path='artifacts/p11_cohort_live_v1/resources_qwen3_01/tokenizer', vocab_size=151643, model...647f2de73f428', 'repeat': 0, ...}, ...], <disastertrace.forecast_model.grammar.GrammarReplay object at 0x7f8cc279bc40>)
+
+    def test_installed_profile_reasoner_and_exact_eos_are_bound(installed):
+        from vllm.reasoning.deepseek_r1_reasoning_parser import DeepSeekR1ReasoningParser
+    
+        tokenizer = installed[0]
+        from vllm.reasoning.qwen3_reasoning_parser import Qwen3ReasoningParser
+    
+        parser_class = (
+            DeepSeekR1ReasoningParser
+            if os.environ["COHORT_PROFILE"] == "deepseek_r1"
+            else Qwen3ReasoningParser
+        )
+        parser = parser_class(tokenizer)
+        assert adapter.ENGINE_OPTIONS["reasoning_parser"] == os.environ["COHORT_PROFILE"]
+>       assert parser.start_token_id == tokenizer.encode("<think>", add_special_tokens=False)[0]
+E       AttributeError: 'Qwen3ReasoningParser' object has no attribute 'start_token_id'. Did you mean: 'think_start_token_id'?
+
+tests/p11_cohort_live/installed_backend.py:137: AttributeError
+----------------------------- Captured stdout call -----------------------------
+INFO 09-08 18:27:27 [__init__.py:220] No platform detected, vLLM is running on UnspecifiedPlatform
+------------------------------ Captured log call -------------------------------
+DEBUG    vllm.plugins:__init__.py:28 No plugins for group vllm.platform_plugins found.
+DEBUG    vllm.platforms:__init__.py:34 Checking if TPU platform is available.
+DEBUG    vllm.platforms:__init__.py:52 TPU platform is not available because: No module named 'libtpu'
+DEBUG    vllm.platforms:__init__.py:58 Checking if CUDA platform is available.
+DEBUG    vllm.platforms:__init__.py:82 Exception happens when checking CUDA platform: Unknown Error
+DEBUG    vllm.platforms:__init__.py:99 CUDA platform is not available because: Unknown Error
+DEBUG    vllm.platforms:__init__.py:106 Checking if ROCm platform is available.
+DEBUG    vllm.platforms:__init__.py:120 ROCm platform is not available because: No module named 'amdsmi'
+DEBUG    vllm.platforms:__init__.py:127 Checking if XPU platform is available.
+DEBUG    vllm.platforms:__init__.py:146 XPU platform is not available because: No module named 'intel_extension_for_pytorch'
+DEBUG    vllm.platforms:__init__.py:153 Checking if CPU platform is available.
+INFO     vllm.platforms:__init__.py:220 No platform detected, vLLM is running on UnspecifiedPlatform
+=============================== warnings summary ===============================
+../../../../.venvs/disastertrace-qwen3-v1/lib/python3.10/site-packages/_pytest/config/__init__.py:1464
+  /mnt/afs/260010168/.venvs/disastertrace-qwen3-v1/lib/python3.10/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: asyncio_mode
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/p11_cohort_live/installed_backend.py::test_installed_profile_reasoner_and_exact_eos_are_bound
+1 failed, 9 passed, 1 warning in 30.98s
