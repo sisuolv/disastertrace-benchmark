@@ -1,0 +1,25 @@
+
+==================================== ERRORS ====================================
+______________ ERROR collecting tests/test_controlled_capture.py _______________
+ImportError while importing test module '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/tests/test_controlled_capture.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_controlled_capture.py:9: in <module>
+    from disastertrace.controlled import provider_capture as p2_capture
+E   ImportError: cannot import name 'provider_capture' from 'disastertrace.controlled' (/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/controlled/__init__.py)
+________________ ERROR collecting tests/test_controlled_live.py ________________
+ImportError while importing test module '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/tests/test_controlled_live.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_controlled_live.py:10: in <module>
+    from disastertrace.controlled.execution import prepare_execution, verify_execution
+E   ModuleNotFoundError: No module named 'disastertrace.controlled.execution'
+=========================== short test summary info ============================
+ERROR tests/test_controlled_capture.py
+ERROR tests/test_controlled_live.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 1.04s

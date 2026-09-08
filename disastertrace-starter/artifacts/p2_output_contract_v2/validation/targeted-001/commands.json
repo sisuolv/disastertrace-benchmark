@@ -1,0 +1,27 @@
+{
+  "records": [
+    {
+      "name": "lint",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "--select",
+        "E,F,I",
+        "src/disastertrace/controlled",
+        "tests/test_controlled_output_contract.py",
+        "tests/test_controlled_live.py",
+        "tests/test_controlled_live_guards.py",
+        "scripts/reproduce_p2_execution.py",
+        "scripts/reproduce_p2_output_contract.py",
+        "scripts/verify_p2_output_contract.py"
+      ],
+      "exit_code": 1,
+      "seconds": 0.354,
+      "log_sha256": "1d9c83a8617f9fda9352f281c6e2675a0d2435926ade52fa32e0dff8c8199af0"
+    }
+  ],
+  "external_network_blocked": true,
+  "model_calls": 0
+}

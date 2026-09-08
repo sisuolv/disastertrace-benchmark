@@ -1,0 +1,127 @@
+...................................F
+=================================== FAILURES ===================================
+_______ test_mutant_outputs_invalid_and_truncated_keep_full_denominators _______
+
+candidate = PosixPath('/tmp/pytest-of-root/pytest-0/constrained0/execution')
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_mutant_outputs_invalid_an0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f979faf6890>
+
+    def test_mutant_outputs_invalid_and_truncated_keep_full_denominators(
+        candidate, tmp_path, monkeypatch
+    ):
+        tokenizer = runtime.tokenizer_for(candidate)
+        original = runtime.FixtureBackend
+    
+        class Faults(original):
+            def generate(self, prepared):
+                outputs = super().generate(prepared)
+                for prep, result in zip(prepared, outputs):
+                    request = strict_json(prep["messages"][1]["content"])
+                    decision = parse_decision(
+                        adapter.extract(result["output_token_ids"], tokenizer)["content"]
+                    )
+                    known = decision["state"][FIELDS[0]]["status"] == "known"
+                    if not known:
+                        continue
+                    method = request["method"]
+                    if method == "snapshot":
+                        decision["action"] = "request_evidence"
+                        raw = contract.serialize_fixture(decision)
+                        result["output_token_ids"] = (
+                            tokenizer.encode("</think>")
+                            + tokenizer.encode(raw)
+                            + [tokenizer.eos_token_id]
+                        )
+                    elif method == "structured_state":
+                        result["output_token_ids"] = tokenizer.encode("</think>{invalid") + [
+                            tokenizer.eos_token_id
+                        ]
+                    else:
+                        result["output_token_ids"] = (
+                            tokenizer.encode("x") * adapter.SETTINGS["max_tokens"]
+                        )
+                        result["finish_reason"] = "length"
+                    result["runtime_output_text"] = tokenizer.decode(
+                        result["output_token_ids"], skip_special_tokens=False
+                    )
+                return outputs
+    
+        monkeypatch.setattr(runtime, "FixtureBackend", Faults)
+        run = tmp_path / "faults"
+        runtime.collect(candidate, run, diagnostic=True)
+        files = audit.reconstruct(candidate, run)
+        report = files["report.json"]
+        for method in ("snapshot", "structured_state", "answer_history"):
+            assert report["methods"][method]["metrics"]["schema_success"]["denominator"] == 180
+        assert report["methods"]["snapshot"]["metrics"]["schema_success"]["numerator"] == 180
+        assert report["errors"]["actions"]
+        assert report["finish_reasons"]["length"] > 0
+        assert report["extraction_errors"]["missing_or_multiple_reasoning_delimiters"] > 0
+        for trace in files["trace.json"]:
+            if trace["method"] == "structured_state" and trace["status"] == "invalid":
+>               assert trace["state_after"] == empty_decision()
+E               AssertionError: assert {'state': {'m...est_evidence'} == {'state': {'m...est_evidence'}
+E                 
+E                 Omitting 1 identical items, use -vv to show
+E                 Differing items:
+E                 {'state': {'maximum_wind_mph': {'status': 'unknown', 'value': None, 'evidence': []}, 'minimum_pressure_mb': {'status':..._deg': {'status': 'known', 'value': -27.8, 'evidence': [{'record_id': 'record-655e2d70f20b2efa227c70cc', 'line': 4}]}}} != {'state': {'maximum_wind_mph': {'status': 'unknown', 'value': None, 'evidence': []}, 'minimum_pressure_mb': {'status':...us': 'unknown', 'value': None, 'evidence': []}, 'longitude_deg': {'status': 'unknown', 'value': None, 'evidence': []}}}
+E                 Use -v to get more diff
+
+tests/test_constrained_eval.py:359: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"at":"2026-09-08T02:01:29.127476+00:00","attempted":12,"last_batch_seconds":0.0059908051043748856,"planned":540,"received":12}
+{"at":"2026-09-08T02:01:29.197832+00:00","attempted":24,"last_batch_seconds":0.005918690003454685,"planned":540,"received":24}
+{"at":"2026-09-08T02:01:29.267639+00:00","attempted":36,"last_batch_seconds":0.006048539653420448,"planned":540,"received":36}
+{"at":"2026-09-08T02:01:29.338422+00:00","attempted":48,"last_batch_seconds":0.005932397209107876,"planned":540,"received":48}
+{"at":"2026-09-08T02:01:29.409255+00:00","attempted":60,"last_batch_seconds":0.005848826840519905,"planned":540,"received":60}
+{"at":"2026-09-08T02:01:29.478993+00:00","attempted":72,"last_batch_seconds":0.005964430049061775,"planned":540,"received":72}
+{"at":"2026-09-08T02:01:29.549022+00:00","attempted":84,"last_batch_seconds":0.005889509804546833,"planned":540,"received":84}
+{"at":"2026-09-08T02:01:29.617961+00:00","attempted":96,"last_batch_seconds":0.006019835360348225,"planned":540,"received":96}
+{"at":"2026-09-08T02:01:29.689035+00:00","attempted":108,"last_batch_seconds":0.00584516953676939,"planned":540,"received":108}
+{"at":"2026-09-08T02:01:29.808905+00:00","attempted":120,"last_batch_seconds":0.018099077977240086,"planned":540,"received":120}
+{"at":"2026-09-08T02:01:29.940794+00:00","attempted":132,"last_batch_seconds":0.02131310384720564,"planned":540,"received":132}
+{"at":"2026-09-08T02:01:30.060777+00:00","attempted":144,"last_batch_seconds":0.01792205683887005,"planned":540,"received":144}
+{"at":"2026-09-08T02:01:30.192582+00:00","attempted":156,"last_batch_seconds":0.0200043311342597,"planned":540,"received":156}
+{"at":"2026-09-08T02:01:30.313004+00:00","attempted":168,"last_batch_seconds":0.018200346268713474,"planned":540,"received":168}
+{"at":"2026-09-08T02:01:30.444270+00:00","attempted":180,"last_batch_seconds":0.02221629209816456,"planned":540,"received":180}
+{"at":"2026-09-08T02:01:30.567525+00:00","attempted":192,"last_batch_seconds":0.02025206107646227,"planned":540,"received":192}
+{"at":"2026-09-08T02:01:30.688189+00:00","attempted":204,"last_batch_seconds":0.01945117674767971,"planned":540,"received":204}
+{"at":"2026-09-08T02:01:30.802426+00:00","attempted":216,"last_batch_seconds":0.016508925706148148,"planned":540,"received":216}
+{"at":"2026-09-08T02:01:30.931059+00:00","attempted":228,"last_batch_seconds":0.01787166576832533,"planned":540,"received":228}
+{"at":"2026-09-08T02:01:31.077927+00:00","attempted":240,"last_batch_seconds":0.023127424530684948,"planned":540,"received":240}
+{"at":"2026-09-08T02:01:31.211416+00:00","attempted":252,"last_batch_seconds":0.01846088469028473,"planned":540,"received":252}
+{"at":"2026-09-08T02:01:31.357171+00:00","attempted":264,"last_batch_seconds":0.022062641568481922,"planned":540,"received":264}
+{"at":"2026-09-08T02:01:31.492590+00:00","attempted":276,"last_batch_seconds":0.019342747516930103,"planned":540,"received":276}
+{"at":"2026-09-08T02:01:31.640257+00:00","attempted":288,"last_batch_seconds":0.023781142197549343,"planned":540,"received":288}
+{"at":"2026-09-08T02:01:31.778697+00:00","attempted":300,"last_batch_seconds":0.02096560876816511,"planned":540,"received":300}
+{"at":"2026-09-08T02:01:31.913094+00:00","attempted":312,"last_batch_seconds":0.020795700140297413,"planned":540,"received":312}
+{"at":"2026-09-08T02:01:32.041034+00:00","attempted":324,"last_batch_seconds":0.017623616382479668,"planned":540,"received":324}
+{"at":"2026-09-08T02:01:32.188568+00:00","attempted":336,"last_batch_seconds":0.019082950428128242,"planned":540,"received":336}
+{"at":"2026-09-08T02:01:32.355899+00:00","attempted":348,"last_batch_seconds":0.02338251005858183,"planned":540,"received":348}
+{"at":"2026-09-08T02:01:32.509739+00:00","attempted":360,"last_batch_seconds":0.020533978007733822,"planned":540,"received":360}
+{"at":"2026-09-08T02:01:32.664696+00:00","attempted":372,"last_batch_seconds":0.022152201272547245,"planned":540,"received":372}
+{"at":"2026-09-08T02:01:32.815977+00:00","attempted":384,"last_batch_seconds":0.02064224798232317,"planned":540,"received":384}
+{"at":"2026-09-08T02:01:32.982718+00:00","attempted":396,"last_batch_seconds":0.026082439348101616,"planned":540,"received":396}
+{"at":"2026-09-08T02:01:33.139139+00:00","attempted":408,"last_batch_seconds":0.02211819402873516,"planned":540,"received":408}
+{"at":"2026-09-08T02:01:33.289684+00:00","attempted":420,"last_batch_seconds":0.02230799477547407,"planned":540,"received":420}
+{"at":"2026-09-08T02:01:33.438773+00:00","attempted":432,"last_batch_seconds":0.020844241604208946,"planned":540,"received":432}
+{"at":"2026-09-08T02:01:33.603140+00:00","attempted":444,"last_batch_seconds":0.020504610612988472,"planned":540,"received":444}
+{"at":"2026-09-08T02:01:33.783921+00:00","attempted":456,"last_batch_seconds":0.02514319121837616,"planned":540,"received":456}
+{"at":"2026-09-08T02:01:33.954798+00:00","attempted":468,"last_batch_seconds":0.022005717270076275,"planned":540,"received":468}
+{"at":"2026-09-08T02:01:34.133469+00:00","attempted":480,"last_batch_seconds":0.0240331394597888,"planned":540,"received":480}
+{"at":"2026-09-08T02:01:34.308021+00:00","attempted":492,"last_batch_seconds":0.022234385833144188,"planned":540,"received":492}
+{"at":"2026-09-08T02:01:34.498466+00:00","attempted":504,"last_batch_seconds":0.027565822936594486,"planned":540,"received":504}
+{"at":"2026-09-08T02:01:34.676992+00:00","attempted":516,"last_batch_seconds":0.023798265494406223,"planned":540,"received":516}
+{"at":"2026-09-08T02:01:34.858863+00:00","attempted":528,"last_batch_seconds":0.024662748910486698,"planned":540,"received":528}
+{"at":"2026-09-08T02:01:35.034672+00:00","attempted":540,"last_batch_seconds":0.02236547600477934,"planned":540,"received":540}
+=============================== warnings summary ===============================
+../../../../.venvs/disastertrace-qwen3-v1/lib/python3.10/site-packages/_pytest/config/__init__.py:1464
+  /mnt/afs/260010168/.venvs/disastertrace-qwen3-v1/lib/python3.10/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: asyncio_mode
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_constrained_eval.py::test_mutant_outputs_invalid_and_truncated_keep_full_denominators
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 35 passed, 1 warning in 62.86s (0:01:02)

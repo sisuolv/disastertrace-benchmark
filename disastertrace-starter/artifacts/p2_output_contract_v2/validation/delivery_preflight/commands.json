@@ -1,0 +1,62 @@
+{
+  "records": [
+    {
+      "name": "lint",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "--select",
+        "E,F,I",
+        "src/disastertrace/controlled",
+        "scripts/reproduce_p2_output_contract.py",
+        "scripts/verify_p2_output_contract.py",
+        "scripts/reproduce_p2_execution.py",
+        "tests/test_controlled_output_contract.py",
+        "tests/test_controlled_live.py",
+        "tests/test_controlled_live_guards.py",
+        "artifacts/p2_output_contract_v2/package_review.py",
+        "artifacts/p2_output_contract_v2/test_equivalence.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.279,
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src/disastertrace/controlled",
+        "scripts/reproduce_p2_output_contract.py",
+        "scripts/verify_p2_output_contract.py",
+        "scripts/reproduce_p2_execution.py",
+        "tests/test_controlled_output_contract.py",
+        "tests/test_controlled_live.py",
+        "tests/test_controlled_live_guards.py",
+        "artifacts/p2_output_contract_v2/package_review.py",
+        "artifacts/p2_output_contract_v2/test_equivalence.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.222,
+      "log_sha256": "7715b02781372f8741fb309aee97a6483e689c9039f0d78081dd910f70b0256e"
+    },
+    {
+      "name": "source_scope",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-c",
+        "from pathlib import Path; from disastertrace.controlled import package; from disastertrace.controlled.execution import read; from disastertrace.controlled.output_contract import V2, identity, system_message; b=Path('artifacts/p2_output_contract_v2'); p=read(b/'execution/execution.json'); assert package.implementation()==p['source_identity']; assert read(b/'output_contract.json')==identity(V2)==p['output_contract']; assert (b/'system_message.txt').read_text()==system_message(V2); assert not read(b/'execution/authorization.template.json')['authorized']; assert not read(b/'proposal.json')['authorized']; assert not list(Path(p['registry_path']).iterdir()); print('Current source, copied execution, contract bytes and unused production scope verified')"
+      ],
+      "exit_code": 0,
+      "seconds": 0.487,
+      "log_sha256": "67df16a1d4f8d3ca6e941786bf293aa511db6ddfc7f5f05cd4937b8a1604f405"
+    }
+  ],
+  "model_calls": 0,
+  "external_network_blocked": true
+}

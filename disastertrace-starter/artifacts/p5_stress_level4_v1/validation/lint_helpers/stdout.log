@@ -1,0 +1,29 @@
+PLW1510 `subprocess.run` without explicit `check` argument
+  --> artifacts/p5_stress_level4_v1/prepare_offline.py:82:22
+   |
+80 |         log = unit / (name + ".log")
+81 |         with log.open("xb") as stream:
+82 |             result = subprocess.run(command, cwd=PROJECT, stdout=stream, stderr=subprocess.STDOUT)
+   |                      ^^^^^^^^^^^^^^
+83 |         outcome = {
+84 |             "command": command,
+   |
+help: Add explicit `check=False`
+
+RUF100 [*] Unused `noqa` directive (non-enabled: `E402`)
+  --> artifacts/p5_stress_level4_v1/verify_preservation.py:14:51
+   |
+12 | PROJECT = HERE.parents[1]
+13 | sys.path.insert(0, str(PROJECT / "scripts"))
+14 | from historical_artifacts import HistoricalFiles  # noqa: E402
+   |                                                   ^^^^^^^^^^^^
+help: Remove unused `noqa` directive
+   |
+13 | sys.path.insert(0, str(PROJECT / "scripts"))
+   - from historical_artifacts import HistoricalFiles  # noqa: E402
+14 + from historical_artifacts import HistoricalFiles
+15 |
+   |
+
+Found 2 errors.
+[*] 1 fixable with the `--fix` option.

@@ -1,0 +1,182 @@
+.F..F..                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_stress_factors_preserve_checkpoint_answers_for_every_branch[4-irrelevant_scope] _
+
+factor = 'irrelevant_scope', level = 4
+
+    @pytest.mark.parametrize('factor', FACTORS)
+    @pytest.mark.parametrize('level', LEVELS)
+    def test_stress_factors_preserve_checkpoint_answers_for_every_branch(factor, level):
+        for original in generator.micro_episodes():
+            saved = deepcopy(original)
+>           changed = transform(original, factor, level)
+
+tests/test_local_difficulty.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/difficulty.py:120: in transform
+    validate_episode(ep)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+episode = {'protocol': 'disastertrace_controlled_v1', 'episode_id': 'synthetic-micro:U2:primary:control:irrelevant_scope-4', 'root_id': 'synthetic-micro:U2:primary:irrelevant_scope-4', 'group_id': 'synthetic-micro', ...}
+
+    def validate_episode(episode: dict) -> None:
+        exact(
+            episode,
+            {
+                "protocol",
+                "episode_id",
+                "root_id",
+                "group_id",
+                "split",
+                "family",
+                "case",
+                "branch",
+                "target",
+                "records",
+                "deliveries",
+                "checkpoints",
+                "provenance",
+            },
+            "episode",
+        )
+        if episode["protocol"] != PROTOCOL or episode["split"] not in (
+            "development",
+            "synthetic_fixture",
+        ):
+            raise ValueError("unsupported controlled scope")
+        if episode["family"] not in ("U1", "U2", "U3") or episode["case"] not in (
+            "primary",
+            "secondary",
+        ):
+            raise ValueError("unsupported family/case")
+        if episode["branch"] not in ("active", "control"):
+            raise ValueError("unsupported branch")
+        for name in ("episode_id", "root_id", "group_id"):
+            identifier(episode[name])
+        validate_target(episode["target"])
+        validate_provenance(episode)
+        if not isinstance(episode["records"], list) or not isinstance(episode["deliveries"], list):
+            raise ValueError("records and deliveries must be JSON arrays")
+        records, revisions, children, roots = {}, {}, {}, {}
+        for record in episode["records"]:
+            exact(
+                record, {"record_id", "issued_at", "operation", "source_origin", "assertions"}, "record"
+            )
+            identifier(record["record_id"])
+            if record["record_id"] in records or record["source_origin"] != "controlled_generated":
+                raise ValueError("duplicate record or wrong origin")
+            if record["operation"] not in ("SET", "PATCH"):
+                raise ValueError("unsupported operation")
+            aware(record["issued_at"])
+            if not isinstance(record["assertions"], list) or not record["assertions"]:
+                raise ValueError("nonempty assertions required")
+            records[record["record_id"]] = record
+            keys = set()
+            for assertion in record["assertions"]:
+                validate_assertion(assertion)
+                key, revision = fact_key(assertion), assertion["revision_id"]
+                if key in keys or revision in revisions:
+                    raise ValueError("duplicate key or revision")
+                keys.add(key)
+                revisions[revision] = (assertion, record)
+                parent = assertion["supersedes"]
+                if (record["operation"] == "SET") != (parent is None):
+                    raise ValueError("SET is root-only; PATCH requires explicit parent")
+                if parent is None:
+                    if key in roots:
+>                       raise ValueError("multiple roots for a fact key")
+E                       ValueError: multiple roots for a fact key
+
+src/disastertrace/controlled/schema.py:254: ValueError
+_ test_stress_factors_preserve_checkpoint_answers_for_every_branch[16-irrelevant_scope] _
+
+factor = 'irrelevant_scope', level = 16
+
+    @pytest.mark.parametrize('factor', FACTORS)
+    @pytest.mark.parametrize('level', LEVELS)
+    def test_stress_factors_preserve_checkpoint_answers_for_every_branch(factor, level):
+        for original in generator.micro_episodes():
+            saved = deepcopy(original)
+>           changed = transform(original, factor, level)
+
+tests/test_local_difficulty.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/difficulty.py:120: in transform
+    validate_episode(ep)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+episode = {'protocol': 'disastertrace_controlled_v1', 'episode_id': 'synthetic-micro:U2:primary:control:irrelevant_scope-16', 'root_id': 'synthetic-micro:U2:primary:irrelevant_scope-16', 'group_id': 'synthetic-micro', ...}
+
+    def validate_episode(episode: dict) -> None:
+        exact(
+            episode,
+            {
+                "protocol",
+                "episode_id",
+                "root_id",
+                "group_id",
+                "split",
+                "family",
+                "case",
+                "branch",
+                "target",
+                "records",
+                "deliveries",
+                "checkpoints",
+                "provenance",
+            },
+            "episode",
+        )
+        if episode["protocol"] != PROTOCOL or episode["split"] not in (
+            "development",
+            "synthetic_fixture",
+        ):
+            raise ValueError("unsupported controlled scope")
+        if episode["family"] not in ("U1", "U2", "U3") or episode["case"] not in (
+            "primary",
+            "secondary",
+        ):
+            raise ValueError("unsupported family/case")
+        if episode["branch"] not in ("active", "control"):
+            raise ValueError("unsupported branch")
+        for name in ("episode_id", "root_id", "group_id"):
+            identifier(episode[name])
+        validate_target(episode["target"])
+        validate_provenance(episode)
+        if not isinstance(episode["records"], list) or not isinstance(episode["deliveries"], list):
+            raise ValueError("records and deliveries must be JSON arrays")
+        records, revisions, children, roots = {}, {}, {}, {}
+        for record in episode["records"]:
+            exact(
+                record, {"record_id", "issued_at", "operation", "source_origin", "assertions"}, "record"
+            )
+            identifier(record["record_id"])
+            if record["record_id"] in records or record["source_origin"] != "controlled_generated":
+                raise ValueError("duplicate record or wrong origin")
+            if record["operation"] not in ("SET", "PATCH"):
+                raise ValueError("unsupported operation")
+            aware(record["issued_at"])
+            if not isinstance(record["assertions"], list) or not record["assertions"]:
+                raise ValueError("nonempty assertions required")
+            records[record["record_id"]] = record
+            keys = set()
+            for assertion in record["assertions"]:
+                validate_assertion(assertion)
+                key, revision = fact_key(assertion), assertion["revision_id"]
+                if key in keys or revision in revisions:
+                    raise ValueError("duplicate key or revision")
+                keys.add(key)
+                revisions[revision] = (assertion, record)
+                parent = assertion["supersedes"]
+                if (record["operation"] == "SET") != (parent is None):
+                    raise ValueError("SET is root-only; PATCH requires explicit parent")
+                if parent is None:
+                    if key in roots:
+>                       raise ValueError("multiple roots for a fact key")
+E                       ValueError: multiple roots for a fact key
+
+src/disastertrace/controlled/schema.py:254: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_local_difficulty.py::test_stress_factors_preserve_checkpoint_answers_for_every_branch[4-irrelevant_scope]
+FAILED tests/test_local_difficulty.py::test_stress_factors_preserve_checkpoint_answers_for_every_branch[16-irrelevant_scope]
+2 failed, 5 passed in 1.27s

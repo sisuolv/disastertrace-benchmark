@@ -1,0 +1,56 @@
+{
+  "records": [
+    {
+      "name": "tests",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "pytest",
+        "artifacts/p2_output_contract_v2/test_equivalence.py",
+        "-q",
+        "-o",
+        "addopts=",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "exit_code": 0,
+      "seconds": 1.459,
+      "log_sha256": "0ba0b96d2dab44af9daf532ad380b84268b972dc08dd196a7cd694b58a1f0057"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "--select",
+        "E,F,I",
+        "scripts/verify_p2_output_contract.py",
+        "artifacts/p2_output_contract_v2/test_equivalence.py",
+        "artifacts/p2_output_contract_v2/package_review.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.227,
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "scripts/verify_p2_output_contract.py",
+        "artifacts/p2_output_contract_v2/test_equivalence.py",
+        "artifacts/p2_output_contract_v2/package_review.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.167,
+      "log_sha256": "eee76f865de5a9f2456950f710ae5d5f9b5bd0ea02aa54f614c5eed6642a0bfd"
+    }
+  ],
+  "model_calls": 0,
+  "external_network_blocked": true
+}

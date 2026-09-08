@@ -1,0 +1,84 @@
+{
+  "schema_version": "t6_prelaunch_validation_v1",
+  "core_tests": {
+    "passed": 949,
+    "log": "artifacts/next_phase_v1/validation/acceptance_002/tests.log",
+    "source_unchanged": true
+  },
+  "runner_tests": {
+    "passed": 4,
+    "seconds": 0.61,
+    "log": "runner_tests.log",
+    "exit_code": 0
+  },
+  "frozen_verify": {
+    "log": "frozen_verify.log",
+    "exit_code": 0
+  },
+  "frozen_diagnostic": {
+    "log": "frozen_diagnostic.log",
+    "exit_code": 0,
+    "planned": 270,
+    "finalized": 270,
+    "model_calls": 0
+  },
+  "commands": [
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "artifacts/t6_deepseek_calibration_v1/test_runner.py",
+        "-o",
+        "addopts=",
+        "-q"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "artifacts/t6_deepseek_calibration_v1/runner.py",
+        "verify"
+      ],
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "artifacts/t6_deepseek_calibration_v1/runner.py",
+        "diagnostic"
+      ],
+      "environment": {
+        "DISASTERTRACE_OFFLINE": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "scripts/offline_guard"
+      },
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "artifacts/t6_deepseek_calibration_v1/runner.py",
+        "launch"
+      ],
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "credential_input": "non-echoing terminal input; omitted from record",
+      "exit_code": 0
+    }
+  ],
+  "log_sha256": {
+    "runner_tests.log": "df496b223cb33efb234280df0a6ec9857ae9ae05964c32c68a02f0d86eedf28e",
+    "frozen_verify.log": "710350e922577db20f2051855efc76a3ecd5a19057fe56eb3f6da440a8305a24",
+    "frozen_diagnostic.log": "118547387b5f076462568127e611d9c71cf08057f96f44f8ffe619bc0751b9a8"
+  },
+  "historical_protection": {
+    "checked_files": 1616,
+    "changed": []
+  }
+}

@@ -1,0 +1,29 @@
+.............F............                                               [100%]
+=================================== FAILURES ===================================
+_________ test_invalid_and_wrong_answers_propagate_without_gold_repair _________
+
+execution = PosixPath('/tmp/pytest-of-root/pytest-2/live-execution0/execution')
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_invalid_and_wrong_answers0')
+
+    def test_invalid_and_wrong_answers_propagate_without_gold_repair(execution, tmp_path):
+        seen = []
+        def altered(*args):
+            request = strict_json(strict_json(args[1].decode())['messages'][1]['content'])
+            seen.append(copy.deepcopy(request))
+            status, body = responder(*args)
+            envelope = strict_json(body.decode())
+            if request['checkpoint_id'] == 'c1':
+                answer = strict_json(envelope['choices'][0]['message']['content'])
+                answer['state']['maximum_wind_mph']['value'] = 1
+                envelope['choices'][0]['message']['content'] = canonical(answer)
+            elif request['checkpoint_id'] == 'c2':
+                envelope['choices'][0]['message']['content'] = '{'
+            return status, canonical(envelope).encode()
+        result = collect(execution, tmp_path / 'run', transport=altered, registry=tmp_path / 'registry')
+>       assert result['completed'] == 270
+E       assert 0 == 270
+
+tests/test_live_calibration.py:144: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_live_calibration.py::test_invalid_and_wrong_answers_propagate_without_gold_repair
+1 failed, 25 passed in 34.56s

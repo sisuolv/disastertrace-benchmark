@@ -1,0 +1,136 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/disastertrace/stress_eval/audit.py:3:1
+   |
+ 1 |   """Independent stress reconstruction; balanced and diagnostic origins remain distinct."""
+ 2 |
+ 3 | / import itertools
+ 4 | | import math
+ 5 | | from collections import Counter
+ 6 | | from copy import deepcopy
+ 7 | | from datetime import datetime
+ 8 | | from pathlib import Path
+ 9 | |
+10 | | from disastertrace.automated.common import fingerprint
+11 | | from disastertrace.controlled import renderer, scorer
+12 | | from disastertrace.controlled.schema import METHODS, parse_decision
+13 | | from disastertrace.local_eval.storage import inventory, read, seal, verify_seal, write
+14 | |
+15 | | from disastertrace.constrained_eval import adapter, contract
+16 | |
+17 | | from . import execution
+18 | | from .runtime import DECODING_OBSERVATION, tokenizer_for
+   | |________________________________________________________^
+help: Organize imports
+   |
+10 | from disastertrace.automated.common import fingerprint
+11 + from disastertrace.constrained_eval import adapter, contract
+12 | from disastertrace.controlled import renderer, scorer
+13 | from disastertrace.controlled.schema import METHODS, parse_decision
+14 | from disastertrace.local_eval.storage import inventory, read, seal, verify_seal, write
+   -
+   - from disastertrace.constrained_eval import adapter, contract
+15 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/disastertrace/stress_eval/runtime.py:3:1
+   |
+ 1 |   """Versioned stress capture fork of P4; retains its no-retry and carrier policy."""
+ 2 |
+ 3 | / import importlib.metadata
+ 4 | | import os
+ 5 | | import platform
+ 6 | | import time
+ 7 | | from copy import deepcopy
+ 8 | | from datetime import datetime
+ 9 | | from pathlib import Path
+10 | |
+11 | | from disastertrace.automated.common import canonical, fingerprint
+12 | | from disastertrace.controlled import public_oracle, renderer
+13 | | from disastertrace.controlled.schema import parse_decision
+14 | | from disastertrace.local_eval.storage import now, read, write
+15 | |
+16 | | from disastertrace.constrained_eval import adapter, contract
+17 | |
+18 | | from . import execution
+   | |_______________________^
+help: Organize imports
+   |
+11 | from disastertrace.automated.common import canonical, fingerprint
+12 + from disastertrace.constrained_eval import adapter, contract
+13 | from disastertrace.controlled import public_oracle, renderer
+14 | from disastertrace.controlled.schema import parse_decision
+15 | from disastertrace.local_eval.storage import now, read, write
+   -
+   - from disastertrace.constrained_eval import adapter, contract
+16 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_stress_level4.py:3:1
+   |
+ 1 |   """Stress factors must preserve answers, opportunities and isolated histories."""
+ 2 |
+ 3 | / from copy import deepcopy
+ 4 | | from pathlib import Path
+ 5 | |
+ 6 | | import pytest
+ 7 | |
+ 8 | | from disastertrace.automated.common import canonical, read_jsonl
+ 9 | | from disastertrace.constrained_eval import adapter, audit as prior_audit, contract
+10 | | from disastertrace.controlled import compiler, renderer
+11 | | from disastertrace.controlled.schema import METHODS, empty_decision
+12 | | from disastertrace.local_eval import data as balanced
+13 | | from disastertrace.local_eval.storage import read, seal, write
+14 | | from disastertrace.stress_eval import audit, data, execution, runtime
+   | |_____________________________________________________________________^
+15 |
+16 |   PROJECT = Path(__file__).resolve().parents[1]
+   |
+help: Organize imports
+   |
+8  | from disastertrace.automated.common import canonical, read_jsonl
+   - from disastertrace.constrained_eval import adapter, audit as prior_audit, contract
+9  + from disastertrace.constrained_eval import adapter, contract
+10 + from disastertrace.constrained_eval import audit as prior_audit
+11 | from disastertrace.controlled import compiler, renderer
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+   --> tests/test_stress_level4.py:136:5
+    |
+134 |   @pytest.mark.parametrize("mutation", ["scope", "factor-metadata", "parent", "loaded-source"])
+135 |   def test_execution_tampering_rejected_after_resealing(frozen, tmp_path, monkeypatch, mutation):
+136 | /     import shutil
+137 | |     from disastertrace.automated.common import fingerprint
+    | |__________________________________________________________^
+138 |
+139 |       path = tmp_path / "execution"
+    |
+help: Organize imports
+    |
+136 |     import shutil
+137 +
+138 |     from disastertrace.automated.common import fingerprint
+    |
+
+PIE807 [*] Prefer `dict` over useless lambda
+   --> tests/test_stress_level4.py:149:60
+    |
+147 |         plan["base_dataset_content_id"] = "other-base"
+148 |     else:
+149 |         monkeypatch.setattr(execution, "source_inventory", lambda: {})
+    |                                                            ^^^^^^^^^^
+150 |     plan["execution_id"] = fingerprint({k: v for k, v in plan.items() if k != "execution_id"})
+151 |     (path / "execution.json").write_text(canonical(plan))
+    |
+help: Replace with `lambda` with `dict`
+    |
+148 |     else:
+    -         monkeypatch.setattr(execution, "source_inventory", lambda: {})
+149 +         monkeypatch.setattr(execution, "source_inventory", dict)
+150 |     plan["execution_id"] = fingerprint({k: v for k, v in plan.items() if k != "execution_id"})
+    |
+
+Found 5 errors.
+[*] 5 fixable with the `--fix` option.

@@ -1,0 +1,964 @@
+EEEEEEEEE.....EEEEEEEEEEEEEEE.                                           [100%]
+==================================== ERRORS ====================================
+__________ ERROR at setup of test_balanced_crossing_and_legacy_subset __________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+______ ERROR at setup of test_wave_schedule_is_complete_and_carrier_safe _______
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+_____ ERROR at setup of test_fixed_denominators_and_public_gold[snapshot] ______
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+_ ERROR at setup of test_fixed_denominators_and_public_gold[structured_state] __
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+__ ERROR at setup of test_fixed_denominators_and_public_gold[answer_history] ___
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+_ ERROR at setup of test_public_messages_contain_only_declared_carrier[snapshot] _
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+_ ERROR at setup of test_public_messages_contain_only_declared_carrier[structured_state] _
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+_ ERROR at setup of test_public_messages_contain_only_declared_carrier[answer_history] _
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+_______ ERROR at setup of test_context_overflow_fails_without_truncation _______
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+__ ERROR at setup of test_complete_diagnostic_and_independent_reconstruction ___
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+__________ ERROR at setup of test_one_use_claim_and_diagnostic_scope ___________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+___________ ERROR at setup of test_tampered_capture_rejected[origin] ___________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+___________ ERROR at setup of test_tampered_capture_rejected[tokens] ___________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+___________ ERROR at setup of test_tampered_capture_rejected[usage] ____________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+__________ ERROR at setup of test_tampered_capture_rejected[carrier] ___________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+__________ ERROR at setup of test_tampered_capture_rejected[binding] ___________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+___________ ERROR at setup of test_tampered_capture_rejected[finish] ___________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+__________ ERROR at setup of test_tampered_capture_rejected[raw_text] __________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+____________ ERROR at setup of test_tampered_intent_rejected[gold] _____________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+___________ ERROR at setup of test_tampered_intent_rejected[future] ____________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+____________ ERROR at setup of test_tampered_intent_rejected[seed] _____________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+___________ ERROR at setup of test_tampered_intent_rejected[method] ____________
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+_ ERROR at setup of test_interrupted_batch_preserves_unresolved_opportunities __
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+_______ ERROR at setup of test_invalid_output_is_not_repaired_or_carried _______
+
+    @pytest.fixture(scope="module")
+    def episodes():
+        bindings = [
+            {
+                "group_id": group,
+                "split": "development",
+                "source_build_id": "test",
+                "inherited_values": dict(zip(FIELDS, (85, 984, 24.8, -86.1))),
+            }
+            for group in generator.EVENTS
+        ]
+>       return data.balanced_episodes(bindings)
+
+tests/test_local_balanced.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/local_eval/data.py:20: in balanced_episodes
+    generator.from_bindings(bindings)
+src/disastertrace/controlled/generator.py:224: in from_bindings
+    _episode(
+src/disastertrace/controlled/generator.py:155: in _episode
+    validate_episode(episode)
+src/disastertrace/controlled/schema.py:224: in validate_episode
+    validate_provenance(episode)
+src/disastertrace/controlled/schema.py:129: in validate_provenance
+    exact(provenance, common | extra, "provenance")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'group_id': 'AL092021', 'split': 'development', 'inherited_values': {'maximum_wind_mph': 85, 'minimum_pressure_mb': 9...titude_deg': 24.8, 'longitude_deg': -86.1}, 'origin': 'controlled_generated_with_source_inherited_initial_values', ...}
+keys = {'generated_components', 'generator_version', 'group_id', 'inherited_values', 'official_historical_correction', 'origin', ...}
+label = 'provenance'
+
+    def exact(value: object, keys: set[str], label: str) -> None:
+        if not isinstance(value, dict) or set(value) != keys:
+>           raise ValueError("invalid " + label + " fields")
+E           ValueError: invalid provenance fields
+
+src/disastertrace/controlled/schema.py:40: ValueError
+=========================== short test summary info ============================
+ERROR tests/test_local_balanced.py::test_balanced_crossing_and_legacy_subset
+ERROR tests/test_local_balanced.py::test_wave_schedule_is_complete_and_carrier_safe
+ERROR tests/test_local_balanced.py::test_fixed_denominators_and_public_gold[snapshot]
+ERROR tests/test_local_balanced.py::test_fixed_denominators_and_public_gold[structured_state]
+ERROR tests/test_local_balanced.py::test_fixed_denominators_and_public_gold[answer_history]
+ERROR tests/test_local_balanced.py::test_public_messages_contain_only_declared_carrier[snapshot]
+ERROR tests/test_local_balanced.py::test_public_messages_contain_only_declared_carrier[structured_state]
+ERROR tests/test_local_balanced.py::test_public_messages_contain_only_declared_carrier[answer_history]
+ERROR tests/test_local_balanced.py::test_context_overflow_fails_without_truncation
+ERROR tests/test_local_balanced.py::test_complete_diagnostic_and_independent_reconstruction
+ERROR tests/test_local_balanced.py::test_one_use_claim_and_diagnostic_scope
+ERROR tests/test_local_balanced.py::test_tampered_capture_rejected[origin] - ...
+ERROR tests/test_local_balanced.py::test_tampered_capture_rejected[tokens] - ...
+ERROR tests/test_local_balanced.py::test_tampered_capture_rejected[usage] - V...
+ERROR tests/test_local_balanced.py::test_tampered_capture_rejected[carrier]
+ERROR tests/test_local_balanced.py::test_tampered_capture_rejected[binding]
+ERROR tests/test_local_balanced.py::test_tampered_capture_rejected[finish] - ...
+ERROR tests/test_local_balanced.py::test_tampered_capture_rejected[raw_text]
+ERROR tests/test_local_balanced.py::test_tampered_intent_rejected[gold] - Val...
+ERROR tests/test_local_balanced.py::test_tampered_intent_rejected[future] - V...
+ERROR tests/test_local_balanced.py::test_tampered_intent_rejected[seed] - Val...
+ERROR tests/test_local_balanced.py::test_tampered_intent_rejected[method] - V...
+ERROR tests/test_local_balanced.py::test_interrupted_batch_preserves_unresolved_opportunities
+ERROR tests/test_local_balanced.py::test_invalid_output_is_not_repaired_or_carried
+6 passed, 24 errors in 1.53s

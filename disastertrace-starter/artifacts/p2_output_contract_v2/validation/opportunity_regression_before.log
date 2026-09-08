@@ -1,0 +1,61 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_denominators_include_matched_pairs_inside_lists[1] ____________
+
+depth = 1
+
+    @pytest.mark.parametrize("depth", [1, 2, 3])
+    def test_denominators_include_matched_pairs_inside_lists(depth):
+        value = {"numerator": 2, "denominator": 5, "value": 0.4}
+        for _ in range(depth):
+            value = [value]
+        result = COMPARISON.denominators({"matched_pairs": value})
+>       assert result == {"/matched_pairs" + "/0" * depth: 5}
+E       AssertionError: assert {} == {'/matched_pairs/0': 5}
+E         
+E         Right contains 1 more item:
+E         {'/matched_pairs/0': 5}
+E         Use -v to get more diff
+
+artifacts/p2_output_contract_v2/test_equivalence.py:22: AssertionError
+___________ test_denominators_include_matched_pairs_inside_lists[2] ____________
+
+depth = 2
+
+    @pytest.mark.parametrize("depth", [1, 2, 3])
+    def test_denominators_include_matched_pairs_inside_lists(depth):
+        value = {"numerator": 2, "denominator": 5, "value": 0.4}
+        for _ in range(depth):
+            value = [value]
+        result = COMPARISON.denominators({"matched_pairs": value})
+>       assert result == {"/matched_pairs" + "/0" * depth: 5}
+E       AssertionError: assert {} == {'/matched_pairs/0/0': 5}
+E         
+E         Right contains 1 more item:
+E         {'/matched_pairs/0/0': 5}
+E         Use -v to get more diff
+
+artifacts/p2_output_contract_v2/test_equivalence.py:22: AssertionError
+___________ test_denominators_include_matched_pairs_inside_lists[3] ____________
+
+depth = 3
+
+    @pytest.mark.parametrize("depth", [1, 2, 3])
+    def test_denominators_include_matched_pairs_inside_lists(depth):
+        value = {"numerator": 2, "denominator": 5, "value": 0.4}
+        for _ in range(depth):
+            value = [value]
+        result = COMPARISON.denominators({"matched_pairs": value})
+>       assert result == {"/matched_pairs" + "/0" * depth: 5}
+E       AssertionError: assert {} == {'/matched_pairs/0/0/0': 5}
+E         
+E         Right contains 1 more item:
+E         {'/matched_pairs/0/0/0': 5}
+E         Use -v to get more diff
+
+artifacts/p2_output_contract_v2/test_equivalence.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED artifacts/p2_output_contract_v2/test_equivalence.py::test_denominators_include_matched_pairs_inside_lists[1]
+FAILED artifacts/p2_output_contract_v2/test_equivalence.py::test_denominators_include_matched_pairs_inside_lists[2]
+FAILED artifacts/p2_output_contract_v2/test_equivalence.py::test_denominators_include_matched_pairs_inside_lists[3]
+3 failed in 0.72s

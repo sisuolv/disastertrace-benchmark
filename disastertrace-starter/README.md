@@ -1,5 +1,69 @@
 # DisasterTrace starter scaffold
 
+Start the current external review with
+[REVIEW_FOR_CHATGPT_PRO_P5.md](REVIEW_FOR_CHATGPT_PRO_P5.md), a detailed Chinese
+handoff covering the research design, code, P1-P5 evidence, limitations and next
+priorities. Publication scope and review attachments are described in
+[the P5 publication note](../publication/p5_review_20260908/README.md).
+
+The latest actual model phase is [P5 level-4 ACP evaluation](README_P5_ACP_V1.md).
+Three independent H100 jobs collect all 1,620 actual Qwen3-8B responses. All output
+contracts pass; 90 value/status and 230 citation errors remain, with 1,360/1,620
+fully correct checkpoints. Independent token replay, CPU relocation and historical
+preservation pass. The P4 baseline and every failure remain available.
+
+The preceding offline extension is [P5 level-4 stress acceptance](README_P5_STRESS_LEVEL4_V1.md).
+All three profiles pass dataset, diagnostic and relocated CPU reconstruction checks:
+1,620 program diagnostics, zero new model calls, 1,118 prior CPU regression tests
+and 27 new stress tests passed. Its live freezes and one-use launcher are completed
+in the subsequent ACP phase.
+
+The prior balanced model result is [P4 constrained final JSON](README_P4_CONSTRAINED_OUTPUT_V1.md).
+All 540 actual Qwen3-8B responses pass the original output contract. Full correctness
+is structured_state 178/180, snapshot 167/180 and answer_history 145/180, with
+semantic failures retained. Independent audit, token-mask checks, CPU relocation
+and same-task track comparison pass. The local scope is consumed; P3 is preserved.
+
+The preceding completed stage is [P3 balanced local evaluation](README_P3_LOCAL_BALANCED_V1.md):
+a 540-slot source-by-case balanced dataset and a complete real Qwen3-8B GPU run.
+Independent audit, CPU relocation reconstruction and historical preservation pass.
+Qwen has 200/540 schema-valid outputs, zero length finishes and fails all nine
+predeclared format screens. Preserve the failed outputs; do not rank its full
+540-version scores against the historical 270-version scores. The bundle also
+contains 216 automatically verified stress candidates, with no stress inference.
+
+The preceding completed experiment is the
+[P2 DeepSeek output-contract v2 development screen](README_P2_DEEPSEEK_OUTPUT_CONTRACT_V2.md):
+270/270 actual responses, all nine format cells passed, and all three methods
+correct on the complete development matrix. Independent audit/reconstruction and
+historical protection pass. The observed ceiling motivates cross-model preparation
+and balanced task design. Captured-price estimate: USD 0.267236704; conservative
+settlement: USD 0.64265696; no pending/unknown v2 reserve. The scope is consumed.
+
+The preceding offline candidate is the
+[common P2 output-contract v2](README_P2_OUTPUT_CONTRACT_V2.md): 1,074 core tests,
+nine supplemental checks, complete program diagnostics and semantic/opportunity
+comparisons pass. Its original proposal and false template remain preserved as
+pre-launch evidence; actual v2 authorization and results are in the new live bundle.
+
+The preceding v1 experiment is the
+[first P2 DeepSeek comparison](README_P2_DEEPSEEK_V1.md): 270 responses with a
+passing independent audit, but a failed common format screen. Its findings,
+reproducible error inventory and next offline contract plan are saved separately.
+
+The preceding completed experiment is
+[T6 output calibration](README_T6_CALIBRATION_V1.md): 270 audited DeepSeek responses
+and a common 8192-token cap selected by the frozen reliability rule. The subsequent
+[P2 captured execution layer](README_P2_EXECUTION_V1.md) adds durable collection,
+independent provenance auditing, direct scoring and offline acceptance. Its
+diagnostic runs do not add real model results or consume T6's completed scope.
+
+The current `next-phase-v1` development entry is
+[README_NEXT_PHASE_V1.md](README_NEXT_PHASE_V1.md): T0-T5 offline calibration
+execution and controlled evidence tasks, with no new model calls. The descriptions
+below retain the earlier pilot/scaffold context. Current validation records are
+in [artifacts/next_phase_v1/README.md](artifacts/next_phase_v1/README.md).
+
 The active implementation is the **automatically scored weather pilot** in
 `src/disastertrace/automated/`, following `../INTEGRATED_BENCHMARK_PLAN.md` v0.3.
 Start with [README_PRE_API.md](README_PRE_API.md) for the current frozen pilot,

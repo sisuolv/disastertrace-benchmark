@@ -1,0 +1,48 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_price_bytes_resolve_without_the_original_machine_path __________
+
+prepared_execution = PosixPath('/tmp/pytest-of-root/pytest-16/p2-execution0/execution')
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-16/test_price_bytes_resolve_witho0')
+
+    def test_price_bytes_resolve_without_the_original_machine_path(prepared_execution, tmp_path):
+        from disastertrace.automated.common import write_json
+    
+        rates = strict_json(RATES.read_text())
+        rates["source"]["path"] = "/nonexistent-historical-machine/pricing.html"
+        saved_rates = tmp_path / "rates.json"
+        write_json(saved_rates, rates)
+        (tmp_path / "pricing.html").write_bytes(RATES.with_name("pricing.html").read_bytes())
+        execution = tmp_path / "relocated_execution"
+>       plan = prepare_execution(prepared_execution / "dataset", execution, rates=saved_rates,
+            registry=tmp_path / "live_registry")
+
+tests/test_controlled_live_guards.py:350: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/controlled/execution.py:140: in prepare_execution
+    if file_hash(price_source) != captured_rates["source"]["sha256"]:
+src/disastertrace/automated/common.py:21: in file_hash
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+/usr/lib/python3.10/pathlib.py:1126: in read_bytes
+    with self.open(mode='rb') as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/nonexistent-historical-machine/pricing.html'), mode = 'rb'
+buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return self._accessor.open(self, mode, buffering, encoding, errors,
+                                   newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/nonexistent-historical-machine/pricing.html'
+
+/usr/lib/python3.10/pathlib.py:1119: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_controlled_live_guards.py::test_price_bytes_resolve_without_the_original_machine_path
+1 failed, 18 deselected in 13.07s

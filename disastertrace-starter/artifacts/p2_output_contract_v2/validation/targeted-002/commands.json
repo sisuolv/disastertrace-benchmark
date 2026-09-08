@@ -1,0 +1,65 @@
+{
+  "records": [
+    {
+      "name": "lint",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "--select",
+        "E,F,I",
+        "src/disastertrace/controlled",
+        "tests/test_controlled_output_contract.py",
+        "tests/test_controlled_live.py",
+        "tests/test_controlled_live_guards.py",
+        "scripts/reproduce_p2_execution.py",
+        "scripts/reproduce_p2_output_contract.py",
+        "scripts/verify_p2_output_contract.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.288,
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src/disastertrace/controlled",
+        "tests/test_controlled_output_contract.py",
+        "tests/test_controlled_live.py",
+        "tests/test_controlled_live_guards.py",
+        "scripts/reproduce_p2_execution.py",
+        "scripts/reproduce_p2_output_contract.py",
+        "scripts/verify_p2_output_contract.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.23,
+      "log_sha256": "37c44e3c541f952bfef4bd8a6bef640b548ef20e76674da09517c0dfcb0e512e"
+    },
+    {
+      "name": "contract_tests",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_controlled_output_contract.py",
+        "tests/test_controlled_capture.py",
+        "-q",
+        "-o",
+        "addopts=",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "exit_code": 0,
+      "seconds": 70.293,
+      "log_sha256": "a39607582eee623d3b9a88538eefe69f079f93084b06249f98d96bbea6f60905"
+    }
+  ],
+  "external_network_blocked": true,
+  "model_calls": 0
+}

@@ -1,0 +1,13 @@
+E402 Module level import not at top of file
+  --> artifacts/p3_local_balanced_v1/verify_portable.py:30:1
+   |
+28 | assert importlib.util.find_spec("torch") is None
+29 | assert importlib.util.find_spec("vllm") is None
+30 | from disastertrace.local_eval.audit import report
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+31 |
+32 | result = report(
+   |
+help: Move module level imports to top of file
+
+Found 1 error.

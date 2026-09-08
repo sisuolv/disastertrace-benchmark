@@ -1,0 +1,49 @@
+........................F.F..                                            [100%]
+=================================== FAILURES ===================================
+___________________ test_store_binding_lock_and_damaged_tail ___________________
+
+tmp_path = PosixPath('/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/next-phase-fs-tests-001/test_store_binding_lock_and_da0')
+
+    def test_store_binding_lock_and_damaged_tail(tmp_path):
+        output, registry = tmp_path / "run", tmp_path / "claims"
+>       with RunStore(output, "e" * 64, registry) as store:
+
+tests/test_execution_storage.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <disastertrace.automated.run_store.RunStore object at 0x7fbe3eca07f0>
+_ = (None, None, None)
+
+    def __exit__(self, *_):
+        if self.lock is not None and not self.lock.closed:
+>           fcntl.flock(self.lock.fileno(), fcntl.LOCK_UN)
+E           FileNotFoundError: [Errno 2] No such file or directory
+
+src/disastertrace/automated/run_store.py:116: FileNotFoundError
+____________ test_independent_process_cannot_claim_same_experiment _____________
+
+tmp_path = PosixPath('/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/next-phase-fs-tests-001/test_independent_process_canno0')
+
+    def test_independent_process_cannot_claim_same_experiment(tmp_path):
+        import subprocess
+        import sys
+    
+        output, registry = tmp_path / "run", tmp_path / "claims"
+>       with RunStore(output, "b" * 64, registry):
+
+tests/test_execution_storage.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <disastertrace.automated.run_store.RunStore object at 0x7fbe3eb82a40>
+_ = (None, None, None)
+
+    def __exit__(self, *_):
+        if self.lock is not None and not self.lock.closed:
+>           fcntl.flock(self.lock.fileno(), fcntl.LOCK_UN)
+E           FileNotFoundError: [Errno 2] No such file or directory
+
+src/disastertrace/automated/run_store.py:116: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_execution_storage.py::test_store_binding_lock_and_damaged_tail
+FAILED tests/test_execution_storage.py::test_independent_process_cannot_claim_same_experiment
+2 failed, 27 passed in 72.41s (0:01:12)

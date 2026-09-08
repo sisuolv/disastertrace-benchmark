@@ -1,0 +1,977 @@
+{
+  "schema_version": "dynamic_score_v1",
+  "method": "snapshot",
+  "methods": [
+    "snapshot"
+  ],
+  "method_contract": {
+    "schema_version": "declared_method_v1",
+    "method": "snapshot",
+    "evidence_view": "all_delivered_records_with_arrival_duplicates",
+    "carrier": "none",
+    "history_includes_invalid_responses": false,
+    "carrier_fact_checked_or_corrected": false,
+    "fresh_messages_per_checkpoint": true,
+    "causal_carrier_dependence_established": false
+  },
+  "schedule_origin": "controlled_release",
+  "gold_origins": [
+    "generated_by_spec"
+  ],
+  "source_origins": [
+    "official_record"
+  ],
+  "independent_event_groups": 3,
+  "model_kinds": [
+    "urllib_http"
+  ],
+  "eligible_for_llm_leaderboard": false,
+  "metrics": {
+    "schema_success": {
+      "numerator": 17,
+      "denominator": 30,
+      "value": 0.5666666666666667
+    },
+    "state_accuracy": {
+      "numerator": 85,
+      "denominator": 150,
+      "value": 0.5666666666666667
+    },
+    "grounded_state": {
+      "numerator": 81,
+      "denominator": 150,
+      "value": 0.54
+    },
+    "action_accuracy": {
+      "numerator": 17,
+      "denominator": 30,
+      "value": 0.5666666666666667
+    },
+    "unknown_accuracy": {
+      "numerator": 41,
+      "denominator": 54,
+      "value": 0.7592592592592593
+    },
+    "known_answer_coverage": {
+      "numerator": 44,
+      "denominator": 96,
+      "value": 0.4583333333333333
+    },
+    "required_change_success": {
+      "numerator": 24,
+      "denominator": 72,
+      "value": 0.3333333333333333
+    },
+    "preservation": {
+      "numerator": 27,
+      "denominator": 48,
+      "value": 0.5625
+    }
+  },
+  "per_checkpoint": [
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c0",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c1",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c2",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c3",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al092021:controlled:base",
+      "checkpoint_id": "c4",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c0",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c1",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c2",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c3",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al092021:controlled:delay",
+      "checkpoint_id": "c4",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c0",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c1",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c2",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c3",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al062018:controlled:base",
+      "checkpoint_id": "c4",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c0",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c1",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c2",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c3",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al062018:controlled:delay",
+      "checkpoint_id": "c4",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c0",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c1",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c2",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c3",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al052019:controlled:base",
+      "checkpoint_id": "c4",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c0",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c1",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c2",
+      "status": "ok",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "latitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "longitude_deg": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "minimum_pressure_mb": {
+          "value_correct": true,
+          "grounded_correct": true
+        },
+        "port_reopening_time": {
+          "value_correct": true,
+          "grounded_correct": true
+        }
+      },
+      "action_correct": true,
+      "all_correct": true
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c3",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    },
+    {
+      "episode_id": "al052019:controlled:delay",
+      "checkpoint_id": "c4",
+      "status": "invalid",
+      "method": "snapshot",
+      "slots": {
+        "maximum_wind_mph": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "latitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "longitude_deg": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "minimum_pressure_mb": {
+          "value_correct": false,
+          "grounded_correct": false
+        },
+        "port_reopening_time": {
+          "value_correct": false,
+          "grounded_correct": false
+        }
+      },
+      "action_correct": false,
+      "all_correct": false
+    }
+  ],
+  "status_counts": {
+    "ok": 17,
+    "invalid": 13
+  }
+}

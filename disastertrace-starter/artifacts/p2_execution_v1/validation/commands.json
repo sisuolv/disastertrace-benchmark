@@ -1,0 +1,246 @@
+{
+  "recorded_at": "2026-09-07T10:49:37.375312+00:00",
+  "records": [
+    {
+      "name": "tests",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests",
+        "-q",
+        "-o",
+        "addopts=",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 559.47,
+      "log_sha256": "3b8e0a2655997334df36264174e443a1c210d6a4782defba27f752e5c9c8c5a0"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "--select",
+        "E,F,I",
+        "src/disastertrace/controlled",
+        "src/disastertrace/automated/provider_capture.py",
+        "tests/test_controlled_capture.py",
+        "tests/test_controlled_live.py",
+        "tests/test_controlled_live_guards.py",
+        "scripts/reproduce_p2_execution.py",
+        "scripts/historical_artifacts.py",
+        "tests/test_p2_historical_artifacts.py"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 0.274,
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src/disastertrace/controlled",
+        "src/disastertrace/automated/provider_capture.py",
+        "tests/test_controlled_capture.py",
+        "tests/test_controlled_live.py",
+        "tests/test_controlled_live_guards.py",
+        "scripts/reproduce_p2_execution.py",
+        "scripts/historical_artifacts.py",
+        "tests/test_p2_historical_artifacts.py"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 0.232,
+      "log_sha256": "37c44e3c541f952bfef4bd8a6bef640b548ef20e76674da09517c0dfcb0e512e"
+    },
+    {
+      "name": "dependencies",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 1.439,
+      "log_sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "name": "build",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-c",
+        "from disastertrace.automated.cli import main; main()",
+        "build",
+        "--references",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/references",
+        "--nhc-snapshot",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/references/nhc_cohort_v1",
+        "--output",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/build"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 1.235,
+      "log_sha256": "e2e8568490a60edf1d57c53bda05509cedaee0882f46c20df8a3ced4679a71e0"
+    },
+    {
+      "name": "p2_prepare",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.controlled.cli",
+        "prepare",
+        "--source-build",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/build",
+        "--output",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/p2"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 5.669,
+      "log_sha256": "9212fc82416bea9dc401387406baa3766783ad671416cc54ddd5ea7c7c8d96b1"
+    },
+    {
+      "name": "p2_verify",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.controlled.cli",
+        "verify",
+        "--dataset",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/p2"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 4.694,
+      "log_sha256": "ff42e606c8572e0238798d1cb69416d0fd1e39d02c71fcdfe5a96ce551d2ba64"
+    },
+    {
+      "name": "execution_prepare",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.controlled.live",
+        "prepare",
+        "--dataset",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/p2",
+        "--rates",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/artifacts/p1_deepseek_development/docs/rates.json",
+        "--registry",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/live_registry",
+        "--output",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/execution"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 6.41,
+      "log_sha256": "606fd002c85d7e4ce2f5a31755917580ccca1663e2ad467ff781611bc2c32458"
+    },
+    {
+      "name": "execution_verify",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.controlled.live",
+        "verify",
+        "--execution",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/execution"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 5.102,
+      "log_sha256": "606fd002c85d7e4ce2f5a31755917580ccca1663e2ad467ff781611bc2c32458"
+    },
+    {
+      "name": "execution_rehearse",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.controlled.live",
+        "rehearse",
+        "--execution",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/execution",
+        "--output",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/rehearsal"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 9.202,
+      "log_sha256": "615e6660651c465c4fc34f6e77dcbffba6c48a23e7fa1eb4ec6f0be2442ede8a"
+    },
+    {
+      "name": "execution_audit",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.controlled.live",
+        "audit",
+        "--execution",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/execution",
+        "--run",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/rehearsal",
+        "--output",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/audit.json"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 5.807,
+      "log_sha256": "aeff0c15bc2b6edce5d475a35e0bf6c1edd08360a3519c267ea7d00d6e0ebcf4"
+    },
+    {
+      "name": "execution_report",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.controlled.live",
+        "report",
+        "--execution",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/execution",
+        "--run",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/rehearsal",
+        "--output",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/report"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 6.265,
+      "log_sha256": "342899284efd5edc161781ac37ca86cc3088572b1287170e48bae0d5a0d5c15a"
+    },
+    {
+      "name": "report_verify",
+      "command": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.controlled.live",
+        "verify-report",
+        "--execution",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/execution",
+        "--run",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/rehearsal",
+        "--output",
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/work/p2-execution-acceptance-002/report"
+      ],
+      "cwd": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+      "exit_code": 0,
+      "seconds": 6.244,
+      "log_sha256": "eebdf2f12b3de70bf800772f64c902c663dfeda8d0f6e917497db26a945152e9"
+    }
+  ],
+  "tests_requested": true,
+  "external_network_blocked": true,
+  "loopback_fixtures_allowed": true,
+  "model_calls": 0
+}

@@ -1,5 +1,330 @@
 # Decisions
 
+## P5 ACP completion and repeatability priority
+
+- Use the user's CPU-CCI/ACP instruction for three independent one-H100 factor
+  jobs, within the four-card cap, preserving the frozen single-GPU model settings.
+  Complete exactly 1,620 actual replies without model/platform retries.
+- Retain all 320 field errors across 260 checkpoints. All 29 action errors overlap
+  wind-field failures. Output-contract success does not establish semantic success.
+- Describe the observed factor-specific scores without a universal method ranking.
+  The zero-effect chain controls also vary (snapshot 27 to 30, structured_state
+  28 to 25, answer_history 29 to 30), motivating same-hardware independent repeats.
+- Preserve existing P4/P5 source, data and captures. Bind the new launcher separately
+  and reconstruct all four reports plus postprocessing in an isolated CPU copy.
+  The completed phase does not authorize reuse of its one-use launch artifacts.
+- Keep the next 6,480-response, four-condition/three-repeat design as an unlaunched
+  proposal requiring a new repeat-aware execution version and offline acceptance.
+
+## P5 scope and authorized GitHub publication
+
+- Apply current upload authorization to the existing private repository and
+  `next-phase-v1` branch. Use the existing gh credentials through a repository-local
+  Git helper; do not store credentials in tracked code or change visibility.
+- Preserve the completed P4 bundle and its archive. Add separate stress data,
+  execution and capture identities; retain all selected level-4 candidates.
+- Continue automatic Gold and deterministic scoring. Check factor equivalence,
+  public-oracle agreement, all metric denominators and program controls before any
+  new local inference. Keep the six zero-effect chain controls.
+- Existing GPU authorization persists across steps. Freeze experiment budgets and
+  provenance for reproducibility; these records are not renewed permission prompts.
+
+## P4 completed: retain semantic errors and separate output-track interpretation
+
+- Complete the fixed 540-response constrained matrix. All outputs pass the original
+  contract, but 50 checkpoints have semantic/action failures. Preserve every error
+  and all fixed opportunities; constraints do not substitute for scored reasoning.
+- Report the observed structured_state 178/180, snapshot 167/180, answer_history
+  145/180 results descriptively. Method order differs from the free-output run;
+  three source groups, one repeat and model-derived carrier differences preclude
+  causal memory or broad weather-competence claims.
+- Verify 540 actual token sequences, including 142,272 constrained final/EOS tokens,
+  without inference. Reconstruct audit, analysis and comparison after relocation
+  with original paths/network blocked and Torch/vLLM absent. Preserve original
+  canonical provenance paths while allowing explicit copied-run paths for review.
+- Advance difficulty through separately versioned level-4 profiles. All three pass
+  the full output reservation under ten program carrier types; level 16 does not.
+  Keep six zero-effect chain controls and do not select variants by observed errors.
+- Consume the current local scope at 540 actual responses. No stress inference,
+  paid API, heldout, training or publication follows from the completed P4 launch.
+
+
+## Separate constrained track and automatic GPU extension, 2026-09-08
+
+- Treat the user's explicit automatic-GPU instruction as authority for one new
+  bounded 540-response constrained local development matrix after offline checks.
+  Use fresh scope, execution, run and deadline; retain the consumed P3 launch.
+- Preserve all task semantics and prompts; add a static structure-only schema.
+  Do not encode Gold, numeric ranges/precision, current record IDs/lines, unknown
+  consistency or wind-to-action logic into decoding. Retain the original strict
+  parser and fixed metric denominators; report three validity layers explicitly.
+- Pin vLLM 0.10.2 V1/XGrammar 0.1.23, no fallback, thinking enabled, unconstrained
+  until the generated closing delimiter, and unchanged P3 sampling/context caps.
+  Reject prompts that already contain the special closing token without silently
+  editing carriers. Disclose schema property-order and EOS constraints.
+- Keep the new collector/auditor in separate versioned modules because historical
+  execution identities bind the prior implementation. CPU review requires no
+  Torch/vLLM/weights. Program token traces remain diagnostic with zero model calls.
+- Preserve negative/offline failures and distinguish grammar reachability, GPU
+  load/config checks and actual model reliability. No paid API, heldout, training,
+  publication, item-level human review or LLM judge is added.
+
+
+## Balanced local matrix completed; separate format and semantic interpretation
+
+- Complete the fixed 540-response Qwen3-8B matrix despite format failures. All
+  responses arrive without retry or length termination; preserve 340 invalid
+  answers and every field/action opportunity. All nine format screens fail.
+- Treat 332 JSON syntax failures and eight root-structure failures as measured
+  interface behavior. The additional two value/status, five citation and one
+  action errors remain visible. Valid-only 193/200 all-correct checkpoints do
+  not replace the full 193/540 primary score.
+- Report snapshot's observed higher score descriptively. Cumulative evidence,
+  output-example exposure, input length, few source groups and one sample prevent
+  a causal internal-memory or broad weather-competence conclusion.
+- Compare only the exact old 18-episode overlap as a labeled historical subset,
+  with identical tasks/Gold/scoring and separately observed model configurations.
+  Do not combine full 270/540 scores into a model ranking.
+- Verify a relocated report in an independent CPU-only environment while denying
+  original data/weight/network access. Keep the first missing-Jinja2 failure and
+  successful correction; no model generation or primary-source change occurs.
+- Prefer a separately frozen structure-constrained track next, without Gold-based
+  values/citation/action constraints. Keep the current free-output baseline. No
+  new local/paid matrix follows automatically from consumed launch artifacts.
+
+## Balanced local GPU development scope, 2026-09-07
+
+- Apply current autonomous/GPU authorization to one new local second-family
+  development matrix, at most 540 responses, no retries or additional probes.
+- Fully cross source and primary/secondary case using a new selector; retain the
+  legacy 18 episodes and all controlled semantics byte-for-byte. New results have
+  a separate identity and cannot be ranked against historical 270-version scores.
+- Use official full-BF16 Qwen3-8B weights with per-file ModelScope revisions and
+  digests, vLLM in a separate environment, model-recommended thinking sampling,
+  and a resource-bounded 8192 cap. The cap is below Qwen's general recommendation;
+  report any truncation rather than claiming an unrestricted Qwen capability score.
+- Predeclare all nine 58/60 and at-most-two-length format thresholds. Preserve
+  missing/invalid responses and method-isolated carriers. Use independent token,
+  prompt and score reconstruction; local origin stays distinct from paid HTTP
+  responses and diagnostic fixtures. Three sources still limit generalization.
+
+## Common output-contract v2 development completed, 2026-09-07
+
+- End the scope at 270 actual responses with no retries or extra probes. All nine
+  frozen format cells pass at 30/30 with zero length finishes. Independent audit
+  and reconstruction pass; all field, citation, unknown and action outputs are
+  correct on the complete matrix. Retain every response and fixed denominator.
+- Treat the all-method perfect scores as a development ceiling, not general
+  reliability or superiority. Preserve historical v1 failures. The separately
+  verified historical contrast checks 321 denominators and 270 opportunities,
+  but different collection times and one sample prevent causal attribution.
+- Distinguish the lower captured-price estimate USD 0.267236704 from the slightly
+  higher conservative settlement USD 0.64265696. Prompt/total tokens increase while
+  completion tokens decrease. Report observed costs/latencies without a general
+  savings claim. Original P1 unknown expense remains separate.
+- Preserve the first finalizer's nine passed subcommands and missing footer/unknown
+  outer exit. In a new directory, verify existing outputs through five commands
+  and finish the 3,116-entry historical check, all successful, observer exit 0.
+  No model collection is restarted, and no successful core suite is rerun.
+- Recommend offline second-family interface preparation and a deliberate choice
+  between the current and source-by-case balanced task versions before new calls.
+  Future difficulty extensions require predeclared factors and automatic Gold
+  checks, rather than model-error-based item selection or a changed current score.
+
+## Common output-contract v2 model authorization, 2026-09-07
+
+- Apply the current "可以" to the preceding exact 270-attempt v2 development
+  proposal and separate USD 3 conditional allowance. Preserve the old unapproved
+  proposal/template and bind actual authorization in a fresh live bundle.
+- Fresh official pricing/settings bytes match the frozen documents. Keep the
+  accepted v2 execution and canonical registry, common 8192/high/thinking settings,
+  fixed nine-cell thresholds and all original task/Gold/scoring semantics.
+- Use a dedicated detached launcher with explicit v2 contract checks. Test it
+  offline and rehearse in a separate diagnostic registry before one real launch.
+  No repeated full core suite is needed for unchanged, verified frozen source.
+- Audit all actual captures and report any stopped prefix with fixed denominators.
+  Historical v1 comparisons are descriptive; collection times differ and each
+  configuration has one sample. No selective repair, extra probe or silent retry.
+
+## Common output-contract v2 offline acceptance, 2026-09-07
+
+- Accept v2 as an offline-ready candidate, with 1,074 core test passes, nine
+  supplemental passes, complete diagnostics and frozen report reconstruction.
+  Do not equate program reliability/usage with model reliability/cost.
+- Compare six task/Gold/source file classes and seven semantic modules by bytes;
+  compare all 30 program score objects by canonical JSON content, matching the
+  existing acceptance policy. Keep both raw file hashes because COUNT_KEYS set
+  iteration can change serialized key order. Preserve all 30 exact program traces.
+- Compare paired-list metrics as well as ordinary metrics: 321 denominators and
+  270 checkpoint opportunity rows match. Preserve the reproduced comparator
+  failures and corrected checks; no scorer/runtime semantics are modified.
+- Reuse the completed 13-step pipeline through explicit log/source/environment
+  and report revalidation when finishing the corrected comparison. Preserve the
+  first failed outer finalization instead of overwriting it or rerunning a passed
+  17-minute core suite without a runtime/source change.
+- Keep the independent production registry unconsumed. The future 270-call / USD 3
+  proposal is a conditional guard, not guaranteed completion at worst-case usage.
+  No new paid calls, second model, two-arm comparison or heldout inference occur.
+
+## Common output-contract v2 offline scope, 2026-09-07
+
+- Retain the exact legacy preparation as v1 and select v2 explicitly. Bind the
+  common system text and version into prepared requests and the frozen execution;
+  audit and report the selected contract. No per-method instruction adaptation.
+- Keep the public user message, strict answer parser, factual Gold and metric
+  opportunities unchanged. Explain structure and citations without filled answers,
+  private fields, future evidence or failure-specific correct values.
+- Retain 8192, high reasoning, thinking enabled, no temperature, no retry and
+  the current deadline/budget guards. The two observed length failures remain
+  unresolved empirically until a separately scoped model screen.
+- Preserve historical artifacts and prepare a fresh 270-call single-contract
+  development proposal only. No live calls are authorized by offline acceptance.
+
+## First P2 development comparison completed, 2026-09-07
+
+- Consume the authorized scope at 270 captured responses without retries or extra
+  probes. Keep all failures, fixed denominators and original pricing/authorization
+  records. Independent audit, direct scores and offline reconstructions pass.
+- Record a failed common format screen: U2 snapshot and answer_history each have
+  28/30 valid answers. Seven passing cells do not replace the all-cell requirement.
+  Structured-state success alone does not authorize final heldout inference.
+- Separate four valid-JSON structural errors from two length/empty responses.
+  Three further snapshot field errors are citation bindings (two delivery IDs used
+  as record IDs and one wrong ASSERT line), with correct numeric values. Preserve
+  them; do not repair IDs, remove extra fields or flatten output for rescoring.
+- Treat 1,056/1,056 valid-answer field values/statuses as conditional diagnosis,
+  not an alternative denominator or proof of general semantic/memory ability.
+  The primary/secondary case allocation also limits source-group interpretations.
+- Report USD 0.298880548 captured-price estimate separately from USD 0.63745748
+  conservative settlement and the unresolved original P1 charge. P2 pending and
+  unknown reserves are zero; no provider invoice is observed.
+- Recommend a common output-contract v2 offline package first, retaining 8192 as
+  an initial controlled setting while tracking both length failures. Any later cap
+  change, live matrix, second model or heldout scope needs its own frozen proposal.
+
+## First P2 development model authorization, 2026-09-07
+
+- Treat the current approval of the preceding 270-request / 8192-cap / USD 3
+  proposal as authorization for that exact P2 matrix. Record its own evidence;
+  leave the historical preparation templates and T6/P1 authorizations unchanged.
+- Re-fetch all four official documents. Their bytes match the previous verified
+  pricing/settings, so retain the frozen execution identity and add a current
+  price attestation. Do not make an extra paid probe.
+- Copy the frozen execution into a separately tested launch bundle while retaining
+  its canonical production registry. Use a fresh run, no diagnostic history,
+  a detached worker, and independent audit, direct scoring and report verification.
+- Keep the 9 family-by-method format screens and every scoring denominator fixed.
+  Schema failures, factual errors and wrong current citations remain observable;
+  no per-item human correction, LLM judge, selective retry or parameter adjustment.
+
+## P2 captured execution integration, 2026-09-07
+
+- Complete the user-approved offline collection/audit/scoring stage without new
+  model calls. Keep the old P2 semantic artifacts and T6 result bundle immutable;
+  new recursive implementation/content IDs bind the added execution dependency.
+- Reuse private byte-transport primitives behind separate strict NHC and P2
+  wrappers. Keep bidirectional protocol rejection before dispatch. Do not add a
+  generic public validator bypass or route P2 through the NHC task scorer.
+- Admit captured results through an independent journal/provenance audit and
+  direct P2 scoring entry. Share metric arithmetic while retaining the existing
+  diagnostic scorer's origin restriction. Preserve full opportunity denominators
+  and distinguish unsent, unknown dispatch, unfinalized capture and invalid answer.
+- Preserve schema-invalid responses and previous valid carriers; propagate
+  schema-valid factual mistakes unchanged. Catch excessive nesting as an invalid
+  answer at collector, auditor and scorer boundaries. Never repair from Gold.
+- Use a separate canonical production registry and explicit authorization/rate
+  attestation, with diagnostic and loopback origins kept outside the scoreboard.
+  Unknown dispatch is not retried, even after a machine restart or released lock.
+- Propose 270 P2 attempts, common 8192 cap and a separate USD 3 conditional
+  allowance, with 2,211,840 aggregate requested output tokens. Preserve the
+  family-by-method 29/30 schema and at-most-one length screen from the integrated
+  plan. Program passes cannot establish measured P2 model reliability.
+- Resolve captured price documents by local bytes and recorded hash; retain old
+  absolute source paths only as provenance. Verify archived history without
+  extraction when ignored work directories are missing from a Git checkout.
+- Final acceptance passes 999 tests and all 13 pipeline steps. Compare all six
+  historical semantic artifact classes byte-for-byte and all 30 program score
+  configurations by canonical content. Preserve the interrupted first acceptance
+  and both reproduced regression failures instead of hiding them.
+
+## T6 completion and P2 handoff, 2026-09-07
+
+- End T6 at its full 270 audited responses; no retries, extra probes or replacement
+  calls occur. The authorized initial scope is consumed. Preserve all raw responses,
+  23 schema failures, 21 length finishes and 20 empty contents with overlapping counts.
+- Select 8192 using the previously frozen all-method schema/length thresholds.
+  Explicit 4096 fails for snapshot and answer_history; explicit 8192 passes all
+  three methods. Do not use best factual scores to redefine this selection rule.
+- Report selected-cap known-value correctness separately from grounding: 286/288
+  values and 277/288 value/source pairs. Two longitude-sign errors differ from nine
+  evaluator_unverifiable citation failures; keep the all-citations-valid policy and
+  original scores, including cases with a valid plus an unverified extra citation.
+- Record observed usage and USD 0.628557504 cache/window estimate separately from
+  USD 0.97628256 conservative settlement and any account invoice. T6 has no unknown
+  reserve; it does not resolve original P1 attempt 79.
+- Hand off 8192 as a P2 starting cap without changing its frozen offline manifest.
+  P2 needs independent protocol-aware collection/audit/scoring integration and its
+  own 270-call scope; 270 times 8192 means 2,211,840 requested output tokens, not
+  T6's mixed-cap reservation limit. Complete that engineering before P2 model work.
+
+## T6 authorized launch, 2026-09-07
+
+- Treat the user's approval of the immediately preceding T6 proposal as actual
+  authorization for its stated three arms, three methods, three development storms,
+  maximum 270 requests and USD 3 conditional allowance. No repeated permission
+  question is needed for that already specified scope.
+- Fetch current official pricing, thinking, completion and rate-limit documents.
+  The pricing document matches the bound snapshot byte-for-byte, so retain the
+  original execution rates and identity with a new dated price attestation.
+- Freeze a separate source copy and tested detached runner before using the
+  user-provided credential via a non-echoing prompt. Preserve the same canonical
+  experiment registry; the new output path does not create extra call allowance.
+- Use the frozen core collector without automatic retries or restart. Generate an
+  independent audit and full-denominator report after either completion or stop;
+  monitoring counts are provisional and do not select parameters while running.
+- Keep P1 and its unknown charge, all P2 model work and seven heldout storms outside
+  this experiment. Any further model matrix requires its own explicit scope.
+
+## T0-T5 integrated implementation, 2026-09-07
+
+- Follow `../plans/INTEGRATED_NEXT_PHASE_PLAN_V1.md` in a separate worktree and
+  `next-phase-v1` branch. Preserve the original project, review baseline and 1,616
+  historical source/test/artifact/reference files. No new model launch is included.
+- Derive a new execution v1.1 from the old calibration preparation. Inherit its
+  three arms, methods, development data, schedule and common-cap thresholds. Use
+  180-second socket timeout and separately enforced total network deadline for all
+  arms. Never edit the frozen 60-second parent preparation to change its identity.
+- Send saved prepared bytes once; capture bounded safe response material before
+  parsing. Finalize valid usage even when task schema fails; preserve earlier valid
+  carrier on schema failure, and propagate schema-valid factual mistakes unchanged.
+- Use one registry claim and single-writer hash-chain journal for the whole
+  experiment. Bind the canonical registry path into execution identity. Unknown
+  dispatch and damaged journals stop network work; local lock expiry does not
+  establish whether the provider processed a request. Offline recovery may finish
+  already captured responses without credentials or new sends.
+- Keep the immutable authorization scope separate from refreshable matching price
+  attestations. Conditional USD 3 reservation arithmetic uses peak/cache-miss rates;
+  cache/window-aware descriptive cost requires verified usage and an unambiguous
+  UTC interval at the saved price snapshot. Neither equals an account invoice.
+- Audit actual views first, then materialize instruction-only compatibility
+  projections for unchanged V1/V2 scorers. Record attempted unresolved and genuinely
+  unsubmitted slots separately; include both in fixed denominators. Only a complete,
+  independently audited real run may select a common cap; simulated passes cannot.
+- Keep P2 under `disastertrace/controlled`, with four-field full-state output and
+  opaque public identifiers. Use explicit legal single-chain supersession, scoped
+  roots for alternate windows, and missing evidence only before first exposure.
+  No retraction, ambiguous conflicts or hidden parent versions are introduced.
+- Bind actual initial source values, raw hashes and locators; label all subsequent
+  controlled transformations as generated. Eighteen development trajectories and
+  twelve separate micro fixtures are fixed independently of model performance.
+  Independent public-only oracle validation and directional program controls replace
+  per-item subjective annotation. Accept per-key-latest-issued success where the
+  restricted semantics make it a legitimate baseline.
+- Freeze recursive implementation/resource identity and reject modified packages.
+  P2 content identity is path-independent; live execution/registry identity is not.
+  P2 live capture provenance is deferred explicitly: offline adapter/scorer success
+  is not readiness to report LLM results. Keep seven heldout storms out of inference.
+
 ## Offline common output contract and calibration preparation
 
 - Execute the user's next-step approval as the proposed offline contract and

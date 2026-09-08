@@ -1,0 +1,35 @@
+{
+  "initial_lint": {
+    "command_record": "validation/targeted-001/commands.json",
+    "exit_code": 1,
+    "resolved": true
+  },
+  "list_traversal_regression": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "artifacts/p2_output_contract_v2/test_equivalence.py",
+      "-q",
+      "-o",
+      "addopts=",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "log": "validation/opportunity_regression_before.log",
+    "log_sha256": "42a33f490311a0fa75e4e4a95c0fbf06b022d2f368407e4479a7b371ad8c2b1f",
+    "exit_code": 1,
+    "failed_tests": 3,
+    "resolved": true
+  },
+  "score_serialization_comparison": {
+    "command_record": "validation/first_finalization_attempt/commands.json",
+    "exit_code": 1,
+    "diagnosis": "All 30 score JSON objects equal; key order differs. Compare canonical score content, retain raw hashes.",
+    "resolved": true
+  },
+  "final_supplemental_record": "validation/equivalence_checks_002/commands.json",
+  "final_core_pipeline_record": "validation/acceptance/pipeline/commands.json",
+  "final_finalization_record": "validation/acceptance/commands.json",
+  "model_calls": 0
+}

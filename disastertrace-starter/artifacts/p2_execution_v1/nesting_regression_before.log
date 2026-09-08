@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_excessive_json_nesting_is_a_retained_schema_failure ___________
+
+prepared_execution = PosixPath('/tmp/pytest-of-root/pytest-13/p2-execution0/execution')
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-13/test_excessive_json_nesting_is0')
+
+    def test_excessive_json_nesting_is_a_retained_schema_failure(prepared_execution, tmp_path):
+        raw = "[" * 2000 + "0" + "]" * 2000
+    
+        def malformed(*args):
+            status, body = diagnostic_transport(*args)
+            envelope = strict_json(body.decode())
+            envelope["choices"][0]["message"]["content"] = raw
+            return status, canonical(envelope).encode()
+    
+        def stop(kind, index):
+            if kind == "decision":
+                raise RuntimeError("retained invalid decision")
+    
+        output = tmp_path / "run"
+>       with pytest.raises(RuntimeError, match="retained invalid decision"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'retained invalid decision'
+E         Actual message: 'maximum recursion depth exceeded while decoding a JSON array from a unicode string'
+
+tests/test_controlled_live_guards.py:212: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_controlled_live_guards.py::test_excessive_json_nesting_is_a_retained_schema_failure
+1 failed, 17 deselected in 13.44s

@@ -1,0 +1,339 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/disastertrace/constrained_eval/audit.py:3:1
+   |
+ 1 |   """Independent constrained-track reconstruction; old captures cannot enter this track."""
+ 2 |
+ 3 | / import itertools
+ 4 | | import math
+ 5 | | from collections import Counter
+ 6 | | from copy import deepcopy
+ 7 | | from datetime import datetime
+ 8 | | from pathlib import Path
+ 9 | |
+10 | | from disastertrace.automated.common import fingerprint
+11 | | from disastertrace.controlled import renderer, scorer
+12 | | from disastertrace.controlled.schema import METHODS, parse_decision
+13 | |
+14 | | from . import adapter, contract, execution
+15 | | from .runtime import DECODING_OBSERVATION, tokenizer_for
+16 | | from disastertrace.local_eval.storage import inventory, read, seal, verify_seal, write
+   | |______________________________________________________________________________________^
+help: Organize imports
+   |
+12 | from disastertrace.controlled.schema import METHODS, parse_decision
+13 + from disastertrace.local_eval.storage import inventory, read, seal, verify_seal, write
+14 |
+15 | from . import adapter, contract, execution
+16 | from .runtime import DECODING_OBSERVATION, tokenizer_for
+   - from disastertrace.local_eval.storage import inventory, read, seal, verify_seal, write
+17 |
+   |
+
+E501 Line too long (112 > 100)
+   --> src/disastertrace/constrained_eval/audit.py:386:101
+    |
+384 |         },
+385 |         "interpretation": "Development only: three dependent source groups, one repeat; "
+386 |         "Free and constrained decoding are distinct tracks; token masks do not establish semantic correctness.",
+    |                                                                                                     ^^^^^^^^^^^^
+387 |         "batch_timing_note": "Captured wall time is shared batch time, not per-request latency.",
+388 |         "gpu_cost_usd": None,
+    |
+
+E501 Line too long (104 > 100)
+   --> src/disastertrace/constrained_eval/execution.py:107:101
+    |
+105 |         distribution = importlib.metadata.distribution(name.split("/")[0])
+106 |         shutil.copyfile(distribution.locate_file(name), target)
+107 |     write(output / "constraint.json", {"identity": contract.identity(), "json": contract.schema_text()})
+    |                                                                                                     ^^^^
+108 |     plan = {
+109 |         "schema_version": "constrained_offline_execution_v1",
+    |
+
+E501 Line too long (119 > 100)
+   --> src/disastertrace/constrained_eval/execution.py:158:101
+    |
+156 |         raise ValueError("constrained settings/scope mismatch")
+157 |     live = plan["scope"] == LIVE_SCOPE
+158 |     if plan["authorization"] != (LIVE_AUTHORIZATION if live else None) or plan["max_attempts"] != (540 if live else 0):
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+159 |         raise ValueError("constrained authorization mismatch")
+160 |     if live:
+    |
+
+E501 Line too long (156 > 100)
+   --> src/disastertrace/constrained_eval/execution.py:161:101
+    |
+159 | …
+160 | …
+161 | …lan["run_path"]).is_absolute() or datetime.fromisoformat(plan["deadline_utc"]).tzinfo is None:
+    |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+162 | …)
+163 | …is not None:
+    |
+
+E501 Line too long (109 > 100)
+   --> src/disastertrace/constrained_eval/execution.py:175:101
+    |
+173 |         if digest(output / "backend_source" / name) != expected:
+174 |             raise ValueError("backend evidence digest mismatch")
+175 |     if read(output / "constraint.json") != {"identity": contract.identity(), "json": contract.schema_text()}:
+    |                                                                                                     ^^^^^^^^^
+176 |         raise ValueError("constraint byte/order binding mismatch")
+177 |     original = read(output / "parent_execution.json")
+    |
+
+E501 Line too long (107 > 100)
+   --> src/disastertrace/constrained_eval/execution.py:183:101
+    |
+181 |     if live and plan["run_path"] == original["run_path"]:
+182 |         raise ValueError("historical production claim cannot be reused")
+183 |     for key in ("dataset_content_id", "dataset_package_id", "model_snapshot_sha256", "environment_sha256"):
+    |                                                                                                     ^^^^^^^
+184 |         if plan[key] != original[key]:
+185 |             raise ValueError("parent semantic/model binding mismatch")
+    |
+
+E501 Line too long (154 > 100)
+   --> src/disastertrace/constrained_eval/execution.py:201:101
+    |
+199 | …h")
+200 | …", full=False)
+201 | …t_id"] or read(output / "dataset/manifest.json")["package_id"] != plan["dataset_package_id"]:
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+202 | …)
+203 | …
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/disastertrace/constrained_eval/runtime.py:3:1
+   |
+ 1 |   """Separate constrained-track collection; retains the P3 no-retry capture policy."""
+ 2 |
+ 3 | / import importlib.metadata
+ 4 | | import os
+ 5 | | import platform
+ 6 | | import time
+ 7 | | from copy import deepcopy
+ 8 | | from datetime import datetime
+ 9 | | from pathlib import Path
+10 | |
+11 | | from disastertrace.automated.common import canonical, fingerprint
+12 | | from disastertrace.controlled import public_oracle, renderer
+13 | | from disastertrace.controlled.schema import parse_decision
+14 | |
+15 | | from . import adapter, contract, execution
+16 | | from disastertrace.local_eval.storage import now, read, write
+   | |_____________________________________________________________^
+help: Organize imports
+   |
+13 | from disastertrace.controlled.schema import parse_decision
+14 + from disastertrace.local_eval.storage import now, read, write
+15 |
+16 | from . import adapter, contract, execution
+   - from disastertrace.local_eval.storage import now, read, write
+17 |
+   |
+
+E501 Line too long (113 > 100)
+   --> src/disastertrace/constrained_eval/runtime.py:204:101
+    |
+202 |     stop, attempted, received = "complete", 0, 0
+203 |     try:
+204 |         backend = FixtureBackend(execution_path) if diagnostic else VLLMBackend(execution_path, plan["settings"])
+    |                                                                                                     ^^^^^^^^^^^^^
+205 |         write(
+206 |             output / "runtime.json",
+    |
+
+E501 Line too long (131 > 100)
+  --> tests/test_constrained_eval.py:48:101
+   |
+46 | def test_schema_has_no_private_or_conditional_constraints():
+47 |     text = contract.schema_text()
+48 |     for forbidden in ("const", "minimum", "maximum", "pattern", "if", "then", "oneOf", "anyOf", "allOf", "100", "record-", "Gold"):
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+49 |         assert '"' + forbidden + '"' not in text
+50 |     assert list(contract.schema()["properties"]) == ["state", "action"]
+   |
+
+E501 Line too long (165 > 100)
+  --> tests/test_constrained_eval.py:62:101
+   |
+62 | …-null", "out-of-range", "too-precise", "negative-line", "arbitrary-id", "empty-id", "stale-value"])
+   |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+63 | …:
+64 | …
+   |
+
+E501 Line too long (138 > 100)
+  --> tests/test_constrained_eval.py:88:101
+   |
+88 | …{},"action":"prepare"}', '{"state":', '```json\n{}\n```', '{"state":{},"state":{}}'])
+   |                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+89 | …grammar, raw):
+90 | …
+   |
+
+E501 Line too long (102 > 100)
+  --> tests/test_constrained_eval.py:97:101
+   |
+95 | def test_property_order_is_decoder_restriction_not_gold_change(grammar):
+96 |     decision = sample()
+97 |     assert parse_decision(canonical(decision)) == parse_decision(contract.serialize_fixture(decision))
+   |                                                                                                     ^^
+98 |     assert grammar.check_text(contract.serialize_fixture(decision))["terminated"]
+99 |     assert not grammar.check_text(canonical(decision))["accepted"]
+   |
+
+E501 Line too long (103 > 100)
+   --> tests/test_constrained_eval.py:125:101
+    |
+123 |     free = free_adapter.prepare(request, slot, tokenizer)
+124 |     constrained = adapter.prepare(request, slot, tokenizer)
+125 |     for name in ("messages", "prompt", "prompt_token_ids", "output_contract", "public_request_sha256"):
+    |                                                                                                     ^^^
+126 |         assert free[name] == constrained[name]
+127 |     assert {k: v for k, v in constrained["sampling"].items() if k != "guided_decoding"} == free["sampling"]
+    |
+
+E501 Line too long (107 > 100)
+   --> tests/test_constrained_eval.py:127:101
+    |
+125 |     for name in ("messages", "prompt", "prompt_token_ids", "output_contract", "public_request_sha256"):
+126 |         assert free[name] == constrained[name]
+127 |     assert {k: v for k, v in constrained["sampling"].items() if k != "guided_decoding"} == free["sampling"]
+    |                                                                                                     ^^^^^^^
+128 |     assert request == before
+    |
+
+E501 Line too long (113 > 100)
+   --> tests/test_constrained_eval.py:145:101
+    |
+143 |     from vllm.engine.arg_utils import EngineArgs
+144 |     ep = generator.micro_episodes()[0]
+145 |     prepared = adapter.prepare(renderer.render_request(ep, "c0", method="snapshot"), {"slot_id": "s"}, tokenizer)
+    |                                                                                                     ^^^^^^^^^^^^^
+146 |     params = adapter.sampling_params(prepared)
+147 |     assert params.guided_decoding.json == contract.schema_text()
+    |
+
+E501 Line too long (130 > 100)
+   --> tests/test_constrained_eval.py:164:101
+    |
+162 |     manager._full_mask = torch.tensor(-1, dtype=torch.int32)
+163 |     manager._grammar_bitmask = grammar.xgr.allocate_token_bitmask(2, grammar.vocab_size)
+164 |     g = XgrammarGrammar(matcher=grammar.xgr.GrammarMatcher(grammar.compiled), vocab_size=grammar.vocab_size, ctx=grammar.compiled)
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+165 |     request = SimpleNamespace(
+166 |         use_structured_output=True,
+    |
+
+E501 Line too long (125 > 100)
+   --> tests/test_constrained_eval.py:181:101
+    |
+179 |     assert manager.should_fill_bitmask(request) is True
+180 |     assert manager.should_advance(request) is True
+181 |     assert g.accept_tokens("test", tokenizer.encode(contract.serialize_fixture(empty_decision())) + [tokenizer.eos_token_id])
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+182 |     assert g.is_terminated()
+183 |     assert not torch.cuda.is_initialized()
+    |
+
+E501 Line too long (105 > 100)
+   --> tests/test_constrained_eval.py:195:101
+    |
+193 |     from jsonschema import Draft202012Validator
+194 |     validator = Draft202012Validator(contract.schema())
+195 |     for value in (sample(), empty_decision(), {"state": {}}, {"state": sample()["state"], "action": []}):
+    |                                                                                                     ^^^^^
+196 |         raw = json.dumps(value)
+197 |         assert validator.is_valid(value) == contract.inspect(raw)["structure_valid"]
+    |
+
+E501 Line too long (112 > 100)
+   --> tests/test_constrained_eval.py:209:101
+    |
+207 |     assert summary["reliability"]["thresholds_passed"]
+208 |     assert not summary["reliability"]["measured_model_reliability"]
+209 |     assert summary["format_layers"]["snapshot"]["task_contract_valid"] == {"numerator": 180, "denominator": 180}
+    |                                                                                                     ^^^^^^^^^^^^
+210 |     with pytest.raises(ValueError, match="relabeled"):
+211 |         audit.audit(candidate, run, require_model=True)
+    |
+
+E501 Line too long (182 > 100)
+   --> tests/test_constrained_eval.py:224:101
+    |
+224 | …zer_config.json", "execution.json", "implementation_source/src/disastertrace/constrained_eval/adapter.py"])
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+225 | …
+226 | …
+    |
+
+E501 Line too long (103 > 100)
+   --> tests/test_constrained_eval.py:234:101
+    |
+234 | def test_mutant_outputs_invalid_and_truncated_keep_full_denominators(candidate, tmp_path, monkeypatch):
+    |                                                                                                     ^^^
+235 |     tokenizer = runtime.tokenizer_for(candidate)
+236 |     original = runtime.FixtureBackend
+    |
+
+E501 Line too long (108 > 100)
+   --> tests/test_constrained_eval.py:243:101
+    |
+241 |             for prep, result in zip(prepared, outputs):
+242 |                 request = strict_json(prep["messages"][1]["content"])
+243 |                 decision = parse_decision(adapter.extract(result["output_token_ids"], tokenizer)["content"])
+    |                                                                                                     ^^^^^^^^
+244 |                 known = decision["state"][FIELDS[0]]["status"] == "known"
+245 |                 if not known:
+    |
+
+E501 Line too long (128 > 100)
+   --> tests/test_constrained_eval.py:251:101
+    |
+249 |                     decision["action"] = "request_evidence"
+250 |                     raw = contract.serialize_fixture(decision)
+251 |                     result["output_token_ids"] = tokenizer.encode("</think>") + tokenizer.encode(raw) + [tokenizer.eos_token_id]
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+252 |                 elif method == "structured_state":
+253 |                     result["output_token_ids"] = tokenizer.encode("</think>{invalid") + [tokenizer.eos_token_id]
+    |
+
+E501 Line too long (112 > 100)
+   --> tests/test_constrained_eval.py:253:101
+    |
+251 |                     result["output_token_ids"] = tokenizer.encode("</think>") + tokenizer.encode(raw) + [tokenizer.eos_token_id]
+252 |                 elif method == "structured_state":
+253 |                     result["output_token_ids"] = tokenizer.encode("</think>{invalid") + [tokenizer.eos_token_id]
+    |                                                                                                     ^^^^^^^^^^^^
+254 |                 else:
+255 |                     result["output_token_ids"] = tokenizer.encode("x") * adapter.SETTINGS["max_tokens"]
+    |
+
+E501 Line too long (103 > 100)
+   --> tests/test_constrained_eval.py:255:101
+    |
+253 |                     result["output_token_ids"] = tokenizer.encode("</think>{invalid") + [tokenizer.eos_token_id]
+254 |                 else:
+255 |                     result["output_token_ids"] = tokenizer.encode("x") * adapter.SETTINGS["max_tokens"]
+    |                                                                                                     ^^^
+256 |                     result["finish_reason"] = "length"
+257 |                 result["runtime_output_text"] = tokenizer.decode(result["output_token_ids"], skip_special_tokens=False)
+    |
+
+E501 Line too long (119 > 100)
+   --> tests/test_constrained_eval.py:257:101
+    |
+255 |                     result["output_token_ids"] = tokenizer.encode("x") * adapter.SETTINGS["max_tokens"]
+256 |                     result["finish_reason"] = "length"
+257 |                 result["runtime_output_text"] = tokenizer.decode(result["output_token_ids"], skip_special_tokens=False)
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+258 |             return outputs
+    |
+
+Found 28 errors.
+[*] 2 fixable with the `--fix` option.

@@ -1,6 +1,739 @@
 # Implementation Status
 
-## Active milestone: offline common contract and calibration preparation complete
+## Publication handoff: P5 review snapshot, 2026-09-08
+
+The user requests GitHub upload and a detailed ChatGPT Pro review document.
+GitHub API confirms the existing login is sisuolv and the repository
+sisuolv/disastertrace-benchmark remains private with push access. The new handoff
+is REVIEW_FOR_CHATGPT_PRO_P5.md; root navigation now points to completed P5
+results. Preserve the historical review document, frozen P1-P5 implementation,
+captures, acceptance records and sealed archives.
+
+The user supplies a new SSH key during publication. SSH authentication succeeds
+as sisuolv using ssh.github.com:443; port 22 times out. Configure only this
+repository's origin/core.sshCommand for that key and GitHub host keys obtained
+from its HTTPS meta endpoint. No private key enters the repository.
+
+Publication files live separately under ../publication/p5_review_20260908/.
+That directory records scope and validation; the push receipt is written outside
+the committed tree under ../review-outputs/p5-publication-20260908/ so it can name
+the final commit without a self-referential hash. A commit on the private remote
+branch is the publication evidence; this pre-commit note alone is not proof of
+push success. No new GPU, model API, heldout or training work is performed.
+The local Actions workflow remains outside the upload; its docs/ci template is
+included and hosted CI is not claimed.
+
+## Completed: P5 ACP GPU matrix and independent verification
+
+All 1,620 actual answers arrive by 2026-09-08 07:36:54.244838 UTC, in 135 batches,
+with no retries, missing answers, length finishes or extraction errors. Three ACP
+jobs use one full H100 each and finish SUCCEEDED, zero platform retries. All nine
+collector/report/report-verification subprocesses exit zero. The last observer
+finishes at 07:37:37.416938 UTC; terminal ACP verification passes at 07:38 UTC.
+The phase launch and all three canonical runs are consumed.
+
+Complete-correct counts (snapshot / structured_state / answer_history, each /180):
+revision_chain 150 / 164 / 135; irrelevant_scope 155 / 154 / 135;
+late_stale_replay 163 / 172 / 132. All 1,620 outputs pass the original task contract
+and all 27 format screens pass at 60/60, zero length. Preserve 90 value/status,
+230 citation errors and 29 action errors overlapping wind errors, across 260
+incorrect checkpoints. Six zero-effect chain controls remain and show sampling
+variation; do not attribute every paired difference to the stress intervention.
+
+All 432,742 actual final/EOS tokens pass XGrammar replay on CPU. Independent CPU
+relocation rebuilds P4 plus all three P5 reports, analysis and matched comparison,
+with original data/weights/network blocked and Torch/vLLM absent, observed exit 0
+at 07:41:22 UTC. Historical preservation passes at 07:40:12 UTC: 9,092 entries,
+56 P4 source files and the GPU environment unchanged. Primary P5 source and both
+acceptance inventories are separately rechecked during finalization.
+
+This extension executes 18 launcher tests and seven comparator tests, all passing.
+The prior 1,145-test acceptance is reverified, not rerun or added to the new count.
+Exact commands, observed exits and preserved unsuccessful checks are in the P5
+validation directory. Entry: `README_P5_ACP_V1.md`; detailed Chinese results:
+`artifacts/p5_stress_level4_v1/MODEL_FINDINGS.md`.
+
+Prompt/generated/total tokens: 5,398,068 / 1,944,316 / 7,342,384. Paid API calls,
+heldout inference and training remain zero; GPU monetary cost is unknown. New
+slot seeds and full H100 versus P4 MIG make the comparison descriptive. Next:
+versioned same-hardware repeat protocol, broader independent development sources
+and second-model coverage, as specified in `NEXT_PHASE_PLAN_ACP.md`. Review archive
+integrity is recorded separately after final packaging; no current Git publication.
+
+## Active: verified P5 ACP launch preparation
+
+The phase launch is now consumed at 07:06 UTC. All three submissions are accepted:
+revision_chain `pt-rtvkp7h8`, irrelevant_scope `pt-rcxzh9sh`, late_stale_replay
+`pt-g3y6l751`. Acceptance ID:
+`52a5bc44e44da133a44874b422c2adc17d111ce66e56ca41604475b97521c523`, binding 4,425
+evidence files. Eighteen new launcher tests pass. Use the bundle's read-only
+`status.py` and exact ACP job IDs; never rerun `launch_p5.py` or either collector.
+Submission acceptance alone does not establish model completion.
+
+2026-09-08: the user confirms the inherited P5 work and requests GPU evaluation
+from CPU CCI, permitting up to four parallel H100s. The inherited 2,229 acceptance
+files, three diagnostic report reconstructions and 9,092 historical preservation
+entries reverify. The first new verification wrapper uses the wrong return-key
+name after a successful diagnostic reconstruction; preserve that failed log and
+exact source, correct the wrapper to `model_calls`, and complete the three audits.
+No frozen P5 implementation changes.
+
+Fresh live freezes and full 540-slot diagnostics for all three factors finish by
+06:59:18 UTC with unchanged method scores. ACP preflight job `pt-nmrxrdxx` loads
+the frozen model on a full H100 with generation disabled; Python 3.10.12,
+Torch 2.8.0+cu128, package inventory, backend and decoding settings match P4.
+The new phase launcher keeps three independent one-use runs, zero platform/model
+retries, and CPU reports after collection. Bind the launcher tests and all fresh
+acceptance evidence before submission. Absolute deadline: 12:30 UTC; worker wall
+limit: 7,200 seconds. Details: `artifacts/p5_stress_level4_v1/ACP_EXECUTION_PLAN.md`.
+
+## Completed: P5 offline profiles, diagnostics and CPU relocation
+
+All three level-4 units finish by 2026-09-08 03:55:34 UTC. Each unit passes data
+preparation, full independent regeneration during freeze, 540-slot diagnostic
+collection, report and report reverification. Total: 540 Gold equivalences, 1,620
+public-oracle comparisons, 16,200 program controls and 1,620 captured diagnostics.
+All 116 metric denominators per method and each checkpoint opportunity match the
+base dataset. Six zero-effect revision-chain controls remain included.
+
+1,118 prior CPU tests pass in 1,147.07 seconds; 27 new stress tests pass separately.
+No repeated historical P4 backend test count is added. Three independent relocated
+CPU reviews pass by 03:58:13 UTC, with original project/weights/network blocked and
+Torch/vLLM absent. All 9,092 historical entries, 56 P4 source files and the GPU
+environment remain unchanged. `OFFLINE_ACCEPTANCE.json` binds 2,229 evidence files.
+Initial lint failures and corrections remain in `validation/`.
+
+P5 has zero actual model calls and no live freezes or claims. Next: create three
+fresh live freezes plus the phase-level launcher, bind this acceptance and use the
+existing GPU authorization for the planned at-most-1,620-response extension. Entry:
+`README_P5_STRESS_LEVEL4_V1.md`. GitHub publication is prepared for the existing
+private branch; its result will be recorded after remote verification. The current
+OAuth scope supports code upload but not Actions workflow modification, so the
+workflow is published as a documentation template. Hosted CI is not claimed.
+
+## Active: GitHub publication and P5 level-4 stress preparation
+
+2026-09-08: the user authorizes upload to the existing private GitHub repository
+and continuation of the next phase. GitHub API confirms `sisuolv` has push access
+to `sisuolv/disastertrace-benchmark`. Repository-local Git credentials now reuse
+the existing gh login; authenticated fetch succeeds without an editor login prompt.
+The repository visibility is unchanged. Publication is pending the prepared commit.
+
+P5 uses `artifacts/p5_stress_level4_v1/`, `src/disastertrace/stress_eval/` and
+`docs/P5_STRESS_LEVEL4_V1.md`. The new preservation baseline binds 9,092 prior
+entries. The three level-4 factors keep all 36 episodes and new factor-specific
+identities, exact checkpoint Gold, unchanged task scoring and full denominators.
+Implementation and offline acceptance are in progress; no P5 model calls have
+occurred. Prior P4 launch scope remains consumed. Existing GPU permission persists;
+each later local factor unit requires a fresh accepted freeze, at most 540 replies
+per factor / 1,620 total, one repeat and no retries or extra probes.
+
+## Completed: P4 constrained GPU matrix and independent reconstruction
+
+2026-09-08 02:49:31 UTC: all 540 actual responses arrive in 45 batches, one repeat,
+no retries, missing slots, length finishes or reasoning extraction errors. All 540
+pass strict JSON, structure-only schema and the unchanged original task contract;
+all nine predeclared 58/60 and at-most-two-length screens pass at 60/60, zero length.
+Entry: `README_P4_CONSTRAINED_OUTPUT_V1.md`; detailed Chinese findings, next plan,
+review instructions and reproducible evidence are under `artifacts/p4_constrained_output_v1/`.
+
+Full-correct checkpoints: structured_state 178/180, snapshot 167/180, answer_history
+145/180. Known grounded counts: 562/564, 547/564, 529/564 respectively. All three
+methods have 156/156 correct unknowns and 178/180 correct actions. Keep 15 field
+value/status errors and 39 citation errors; all six action errors overlap wind
+field failures. No output is repaired and no denominator is filtered.
+
+The collector/report/verify-report subprocesses each exit 0; observer completion
+is recorded at 02:50:40 UTC. Known PIDs 35114, 35184 and 37800 are absent; GPU memory
+returns to 44 MiB. Actual prompt/generated/total tokens: 1,259,669 / 584,387 /
+1,844,056. Collector wall: 1,778.76 seconds; generated cap observed max 5,832 < 8,192.
+Paid API calls are zero; GPU monetary cost is unknown. The P4 launch is consumed.
+
+Audit ID: `0325b226e4ebffe10ad31bdec1aa6a7beee275894a1ad7ecf6248ace0b18c23c`.
+Report package: `171dc256ec3ca7982ba9b1ee48c2d565eb5ce7fb19cc75255067bc4119b615e4`.
+All 142,272 actual final/EOS tokens pass independent XGrammar replay. A relocated
+CPU review blocks original project/weights/network access and lacks Torch/vLLM;
+it reconstructs this audit, analysis and paired track comparison, observed exit 0
+at 02:58:05 UTC. Comparison verifies 348 metric denominators plus all checkpoint
+opportunities, identical public evidence and base settings. Actual prompts match
+180/180 snapshot, 103/180 structured_state and 78/180 answer_history requests.
+
+Validation: 44 new tests, 224 related historical tests and 14 supplemental tests
+pass; no repeated-run counts are added. The primary source is frozen before
+inference. New postprocessing portability support is verified on the actual copied
+reports. The 1,434 prelaunch acceptance entries remain unchanged. All exact commands,
+logs and exits are in the bundle's `validation/` and `runtime/` directories.
+
+Stress context calibration completes on 216 candidates and 32,400 program-carrier
+rows (5,991 unique adapter checks). All level-4 factors fit the full output budget;
+all level-16 factors have failures. Its exact executed source is preserved under
+`calibration_source/` before later line wrapping; no result is overwritten. Next:
+freeze a versioned stress profile offline, then separately scope future factor
+matrices. Seven heldout storms, new paid runs, training and Git publication remain
+unperformed. Final historical preservation passes at 03:06:37 UTC: all 6,932
+entries, 46 historical source files and the GPU environment remain unchanged.
+`FINAL_STATUS.json` binds the completed phase and its evidence; review archive
+integrity is recorded separately in `archive_manifest.json` and
+`archive_verification.json` after packaging.
+
+
+## Active: P4 constrained JSON offline acceptance and fresh GPU setup
+
+2026-09-08: current user permits automatic GPU use during continued optimization.
+The separately versioned `disastertrace.constrained_eval` implementation preserves
+the P3 dataset, common prompt v2, Gold/parser/scorer and carrier policies. Its
+grammar only constrains containers, required keys, types and allowed literals.
+Numbers, citations, unknown consistency and action reasoning remain scored tasks.
+
+The new 44-test suite passes in 70.95 seconds (zero skips), including actual vLLM
+reasoning/mask transitions, full diagnostic reconstruction, tampering rejection,
+wrong/invalid/length retention and stopped-prefix fixed denominators. The separate
+224-test prior regression passes in 136.24 seconds. Initial test failure is an
+incorrect assertion that every retained prior state must be all-unknown; correct
+it to the actual last valid state, preserving the failed log and implementation.
+The initial pytest configuration warning and Ruff formatting failures also remain.
+
+Actual XGrammar 0.1.23 checks all 180 automatic Gold and 5,400 program controls:
+5,472 accepted and 108 deliberately invalid outputs rejected. All 5,580 sequences
+are covered by 153 unique text/token walks, 27,425 checked tokens. This is grammar
+reachability, not model sampling. The full 540-slot offline diagnostic completes.
+GPU preflight loads the same pinned model with generation disabled. Official tagged
+source retrieval initially times out; installed backend sources are independently
+copied and hashed, and their real behavior is tested. No benchmark model response
+has been generated at this boundary.
+
+Bundle `artifacts/p4_constrained_output_v1/` contains the 6,932-entry preservation
+baseline and exact command/exit logs under `validation/`. Current offline execution
+is `17a7eb8f50edb87cef0ff9e735ecd5badaa063a05788262291a3030e1f615958`.
+Next: finish GPU/diagnostic acceptance, launch the separate frozen 540-response
+matrix once, audit and compare distinct free/constrained tracks, and package CPU
+review evidence. The historical GPU environment remains unchanged.
+
+
+## Completed: balanced Qwen3 local matrix; format screen fails
+
+2026-09-07 19:40:46 UTC: all 540 attempts produce actual local model responses,
+45 batches, one repeat, no retries or missing responses. All finish with stop;
+there are zero length or reasoning extraction errors. Entry:
+`README_P3_LOCAL_BALANCED_V1.md`; detailed results, next plan and review guide:
+`artifacts/p3_local_balanced_v1/`. This local launch scope is consumed.
+
+Schema valid counts are snapshot 80/180, structured_state 68/180, answer_history
+52/180. All-correct checkpoint counts are 75/180, 68/180 and 50/180 respectively.
+All nine 58/60 format screens fail. Of 340 invalid answers, 332 are invalid JSON
+and eight have invalid root structure. Retain all 1,360 associated field failures,
+plus two value/status errors, five citation errors and one valid-answer action error.
+Scores remain on their full fixed denominators; valid-only statistics are diagnostic.
+
+Usage: 1,213,443 prompt + 609,130 generated = 1,822,573 tokens. Collection process
+wall time is 1,788.67 seconds. No paid API calls; GPU monetary cost is unknown.
+Collector, report and verify-report each exit 0; observer completion is recorded at
+19:41:43.205351 UTC. All related processes are absent and GPU memory returns to 44 MiB.
+
+Core audit ID: `f9b61e097337f3b72c1744e8bc6bf86de70527e62eeef070a048525f3cc89896`.
+Report package: `5a03217947774ca335e81839e3eb1289bff779d1006bbaa56c41c4f57b8753e5`.
+Analysis and exact 18-episode historical overlap each regenerate identically.
+The new GPU environment passes 44 local/stress tests, the targeted prior regression
+has 244 passes with overlapping tests, and five extra overlap tests pass separately.
+
+Portable verification copies execution/run/report and reconstructs the same audit ID
+without Torch/vLLM, network, original project data or original model weights. Its
+first attempt exposes missing Jinja2 in the minimal CPU dependency list; preserve
+that failure. Add Jinja2 only to the separate CPU environment, update reproduction
+instructions, and pass the second verification at 19:46:17.158344 UTC. Model data,
+frozen implementation and GPU environment are unchanged. All 3,369 historical/source
+entries and 46 current frozen source/spec files verify unchanged.
+
+Next executable research task: define a separate format-constrained output track
+and its offline adapter/Gold compatibility, then complete matched-model evaluation
+on the same balanced version. The 216 stress candidates still need context-budget
+calibration before inference. Seven heldout storms, training and Git publication
+remain outside this stage. Review archive integrity is recorded separately.
+
+## Active: frozen Qwen3 balanced local observer launched
+
+2026-09-07 19:11 UTC: the single local matrix observer is launched, PID 31823,
+observed launcher exit 0. Execution ID:
+`6e411cc806d5c381fe2f5d046bb16250b6602f7864879d551effeb4c568e6f17`.
+Canonical run: `work/p3-qwen3-balanced-v1`; bundle:
+`artifacts/p3_local_balanced_v1/`. Its launch is consumed; never relaunch. The
+observer captures actual collection/report/reconstruction subprocess exit codes.
+
+Frozen acceptance includes a complete 540-response diagnostic and independent
+report reconstruction, full model SHA256 verification, GPU load preflight and
+dependency check. The targeted regression has 244 passes; the final new-environment
+run has 44 current local/stress test passes (overlapping tests, not additive).
+All 3,369 protected historical/source entries verify unchanged. No old controlled
+generator/renderer/compiler/parser/scorer source is edited.
+
+The balanced dataset has 36 episodes, 108 trajectories, 18 matched roots and 540
+slots. Its content ID is `a441dfc3752fe9572556295ba609bfe313a81aae89db09a5ab4b18ea38eeb3d4`.
+Independent compiler/public oracle checks: 720. Program control responses: 5,400.
+Three separately predeclared stress factors also pass offline acceptance on 216
+candidate episodes, with 1,080 unchanged-Gold checks and 3,240 public oracle checks;
+none of those stress variants receives model inference in this scope.
+
+The next task is read-only monitoring followed by actual model result verification,
+error analysis, documentation and a portable local review package. No paid API,
+heldout, training, selective repair, commit or Git publication is performed.
+
+## Active milestone: balanced local GPU development preparation
+
+2026-09-07: the user requests autonomous next-phase work and permits GPU use.
+The allocated device is an H100 MIG 3g.40gb; system Torch successfully detects CUDA.
+An isolated runtime is being installed through the Tsinghua mirror. Official Qwen
+ModelScope per-file commit/SHA256 downloads are in progress; Hugging Face and its
+mirror are unavailable. No model responses have been generated at this boundary.
+
+The fresh bundle `artifacts/p3_local_balanced_v1/` records a 3,369-entry preservation
+baseline. New `disastertrace.local_eval` modules implement a 540-slot balanced
+profile, local preparation/capture, exclusive launch, independent reconstruction
+and deterministic reporting. Existing controlled modules remain unchanged.
+The protocol predeclares a 58/60 and at-most-two-length format screen per cell.
+Next: finish regression checks/runtime preflight, freeze identities, execute the
+authorized one-repeat local matrix, and independently audit all saved outputs.
+
+Initial infrastructure issues are preserved in logs: standard venv lacks ensurepip;
+virtualenv bootstrap succeeds instead, and a preconfigured inaccessible NVIDIA
+pip index is removed only from the new installation command's environment. Old
+project `.venv` is not modified. No paid API, heldout, training or Git publication.
+
+## Active milestone: v2 development complete; format screen passed, score ceiling observed
+
+2026-09-07 16:11:26 UTC: the v2 worker completes 270 attempts and 270 actual model
+responses, 54 trajectories, no retries, missing slots, length/empty/schema failures,
+or pending/unknown v2 reserve. Independent audit and frozen report reconstruction
+pass. Entry: `README_P2_DEEPSEEK_OUTPUT_CONTRACT_V2.md`; findings and next plan:
+`artifacts/p2_deepseek_output_contract_v2/`. This launch scope is consumed.
+
+All nine family-by-method cells have 30/30 valid outputs and zero length finishes.
+Every method has 282/282 known values and current citations, 78/78 correct unknown
+states, 90/90 all-correct checkpoints and 90/90 action-rule outputs. Automatic
+field/action/schema inventories contain zero errors. This is a ceiling on the
+small development matrix, not evidence of general zero error or a method advantage.
+
+Usage: 609,487 prompt + 283,699 completion = 893,186 tokens. The estimate covers
+all 270 attempts: USD 0.267236704. Conservative settlement: USD 0.64265696. Both
+unsettled and unknown reserves are zero; these records are not provider invoices
+and do not resolve the original P1 attempt 79. Audit ID:
+`e56e25662cb2cbee123704b824b2486ea73c476c7ee85e006ed161e47cce152f`.
+
+Thirteen launcher tests and six later historical-comparison tests pass, zero
+skips, alongside Ruff E/F/I/format checks and the complete frozen diagnostic.
+The prior 1,074-test core suite is not rerun; unchanged frozen source/environment
+verify. The first finalizer records nine successful offline subcommands, but its
+session ends before the preservation footer, with outer exit unobserved. Preserve
+`validation/finalization_001/` and its interruption observation. No process remains
+when inspected; the interruption cause is not established from these observations.
+
+The isolated finalizer in `validation/finalization_002/` re-verifies existing
+outputs through five offline subcommands, all exit 0, then verifies all 3,116
+protected historical/source entries unchanged. Its observer records outer exit 0
+at 18:02:02 UTC. Both old/new reports use their own frozen sources. Six semantic
+file classes, 321 metric denominators and all 270 checkpoint opportunities match.
+No new model request occurs during this finalization continuation.
+
+Reproduction command:
+
+```bash
+.venv/bin/python artifacts/p2_deepseek_output_contract_v2/finalize.py --output work/p2-v2-independent-review-001
+```
+
+The completed worker records intended exit 0 and is subsequently absent; its OS
+exit code is not independently observed. Original authorization/templates, captures,
+claims, failed v1 scores and frozen archives remain unchanged. Review archive
+verification is recorded separately in the live bundle's `archive_verification.json`.
+
+Next executable research task: an offline cross-model comparison preparation
+package, deciding the task version before dispatch. Prefer a source-by-case balanced
+variant for later comparable runs; separately predeclare difficulty factors if
+more discrimination is needed. No second-model, two-contract, heldout, training,
+commit or Git publication is performed in this stage.
+
+## Previous boundary: v2 development worker running
+
+2026-09-07 15:32:07 UTC: the dedicated launcher starts detached worker PID 71928
+with observed launcher exit 0. By 15:33:10 UTC, nine decisions are finalized.
+Entry: `README_P2_DEEPSEEK_OUTPUT_CONTRACT_V2.md`; read-only command:
+`.venv/bin/python artifacts/p2_deepseek_output_contract_v2/runner.py status`.
+The one-use initial scope is now consumed. Never relaunch this worker or reset
+its canonical claim; audit the complete run or any stopped prefix.
+
+All 13 dedicated launcher tests pass in 0.48 seconds, zero skips; Ruff E/F/I and
+format checks pass. Frozen execution/authorization/price verification exits 0.
+The dedicated launcher diagnostic also exits 0 with 270/270 program responses,
+an independent audit, direct report and report reconstruction. Its separate
+registry leaves production unconsumed until the actual launch. Exact commands,
+timestamps, exit codes and logs are in the new bundle's `validation/` directory.
+The previously passed 1,074-test core suite is not rerun; its unchanged source and
+environment are verified. Worker OS exit status remains unobserved during execution.
+
+The next executable step is read-only monitoring, then final independent report
+reconstruction, deterministic error analysis and descriptive historical comparison.
+
+## Previous boundary: authorized v2 development launch preparation
+
+2026-09-07: the user approves the preceding full 270-attempt v2 development screen,
+with a separate USD 3 conditional allowance, common 8192/high/thinking settings and
+no retries. The new bundle is `artifacts/p2_deepseek_output_contract_v2/`; actual
+authorization is separate from the preserved offline proposal and false template.
+All four official documents are re-fetched at 15:26:16 UTC with HTTP 200 and exact
+matches to the verified pricing/settings bytes. The copied frozen execution
+retains the canonical production registry and has no new core implementation.
+
+The preparation baseline verifies 2,554 prior protected entries and records 3,116
+historical/source entries for final comparison. Production registry is empty and
+the proposed run does not exist at preparation. A dedicated launcher adds explicit
+v2 contract/version/hash checks to the previous detached, one-use launcher.
+The next executable step is launcher validation and isolated diagnostic execution,
+followed by the one authorized model launch and independent result reconstruction.
+No new model call has occurred at this preparation boundary.
+
+## Previous milestone: common output-contract v2 is offline-ready
+
+2026-09-07 14:50:55 UTC: the common output-contract v2 completes offline acceptance.
+Entry: [README_P2_OUTPUT_CONTRACT_V2.md](README_P2_OUTPUT_CONTRACT_V2.md). The complete
+shared system contract and explicit version/hash binding are implemented across
+preparation, capture validation, execution, collection, recovery, audit and report.
+The default v1 preparer preserves historical wire bytes. The public renderer,
+compiler, generator, strict answer parser, oracle, runtime and scorer are unchanged.
+
+Full regression: **1,074 passed in 1058.76 seconds, zero skips**. The 43 earlier
+targeted checks are part of that suite, not additional unique tests. Nine later
+supplemental comparator/reuse tests pass separately. Ruff E/F/I, format and
+dependency checks pass. Both contracts exercise interruption, carrier and audit
+guards; unknown dispatch stays stopped and saved captures recover without credentials.
+
+All 13 core pipeline steps pass in `work/p2-output-contract-v2-acceptance-001/pipeline`:
+build, data/execution verification, complete 270-response diagnostic, independent
+audit, report and report reconstruction. A first outer finalization fails on an
+overstrict score-byte comparison. All 30 score objects are identical; only JSON
+key order differs. The comparator is corrected without changing score files or
+the scoring implementation. Its earlier missing-list traversal regression and
+the initial lint failure also remain recorded.
+
+Five finalization steps pass in `work/p2-output-contract-v2-acceptance-002`. This
+explicitly reuses and validates the completed full-suite pipeline, its log hashes,
+current implementation/environment and report; it does not claim a second core
+test execution. Both old/new frozen sources independently reverify their reports.
+Six semantic file classes and seven semantic modules are byte-identical, all 30
+program scores are semantically equal, all 30 program traces are byte-identical,
+and 321 metric denominators plus 270 checkpoint opportunity rows match. All 270
+historical preparations reproduce exactly, and v2 changes only the common system
+in their unsent projections. All 2,554 protected historical entries still match.
+
+Reproduction commands:
+
+```bash
+.venv/bin/python scripts/reproduce_p2_output_contract.py --output work/p2-output-contract-v2-acceptance-001
+.venv/bin/python scripts/reproduce_p2_output_contract.py --completed-pipeline work/p2-output-contract-v2-acceptance-001/pipeline --output work/p2-output-contract-v2-acceptance-002
+```
+
+The first command's outer exit is 1 as described; the second exits 0. Exact records
+are in `artifacts/p2_output_contract_v2/validation/`. An additional full diagnostic
+from the copied frozen source is recorded separately under `frozen_rehearsal`,
+with its final result in the delivery's `FINAL_STATUS.json`. Archive integrity is
+recorded independently in `archive_verification.json`.
+
+Execution ID: `6285f92ac7af631816b272b14ff51f975464a11aabdca731815f581d607d684c`.
+Implementation ID: `9f66b6898c11b04accc52221d2f34c0f6c5ccfade601701b7ca2f427c6f9ce3e`.
+The new production registry is independent and unconsumed. The proposed 270-call,
+8192/high/thinking, separate USD 3 conditional screen remains unauthorized. New
+actual approval and current matching price applicability precede any model launch.
+
+Next executable research task: that complete v2 development screen, keeping all
+nine 29/30 and at-most-one-length thresholds. Empirical v2 reliability is unknown;
+the old two length failures remain unresolved by offline tests. No model API calls,
+credential access, human annotation, LLM judge, commit or push occur in this stage.
+
+## Previous milestone: P2 development complete; common format screen failed
+
+2026-09-07 13:15:39 UTC: the separate P2 DeepSeek matrix completes all 270 attempts
+and responses, 54 trajectories, with no retries, halt, missing slots or P2 unknown
+reservation. Independent audit passes; seven additional offline commands verify
+the frozen report, generate/recompute the field analysis, schema inventory and
+result tables, all observed exit 0 with external networking disabled.
+Entry: [README_P2_DEEPSEEK_V1.md](README_P2_DEEPSEEK_V1.md). Exact commands and logs:
+`artifacts/p2_deepseek_development_v1/validation/final_checks.json`.
+
+Schema counts are 88/90, 89/90 and 87/90 for snapshot, structured_state and
+answer_history. Known grounded scores are 271/282, 278/282 and 271/282. U2
+snapshot and answer_history each have only 28/30 valid answers, so the common
+9-cell screen fails. All six invalid answers remain: four valid-JSON structural
+failures and two length finishes with empty content. Twenty-four field failures
+come from invalid answers; three further correct-value fields have wrong citations.
+Among valid answers, all 1,056 field values/statuses match, a conditional diagnostic
+that does not replace the fixed denominators. No general method superiority follows.
+
+Usage is 459,121 prompt + 329,882 completion = 789,003 tokens. All 270 responses
+support the cache/window estimate USD 0.298880548; conservative settlement is
+USD 0.63745748. Pending and unknown P2 reserves are zero. These are not invoices
+and do not resolve P1 attempt 79. Audit ID:
+`83f4e1a4432022a73befbab49cd3a4669b55973db8131ccc32ab5f24d1a56f95`.
+
+The worker completion record intends exit 0 and the process is observed absent;
+its OS exit code is not independently observed. Launcher and offline finalizer
+exit 0 are observed. Core source re-verifies against the frozen implementation
+`5f7ce56f1d9a803f0c718dff7b64c1547c4a936176dc331f1e6d8f32aa8f9a11`.
+The previous 999-test core result remains applicable; eight new launcher tests
+and the full diagnostic pass. Auxiliary first format/line-length failures are
+preserved beside corrected checks. A table caption is clarified using explicit
+source IDs; its earlier diagnostic source/output is retained separately.
+
+Next executable task: prepare the common output-contract v2 offline implementation,
+with unchanged task evidence/Gold/metrics, new bound identities, complete diagnostics
+and a separately scoped future development proposal. Keep both length and structural
+failures visible. The current P2 launch is consumed; second-model and heldout calls
+remain unexecuted. No commit, push or remote CI is performed in this stage.
+
+## Previous milestone: P2 DeepSeek development worker running
+
+2026-09-07 12:29:08 UTC: the new one-use launcher starts the detached P2 worker,
+PID 8808, with observed launcher exit 0. The worker is a separate process; its
+eventual OS exit code is not implied by the launcher's exit. Read-only status:
+`.venv/bin/python artifacts/p2_deepseek_development_v1/runner.py status`.
+Entry: [README_P2_DEEPSEEK_V1.md](README_P2_DEEPSEEK_V1.md).
+
+The complete frozen diagnostic finishes with 270/270 responses, independent audit,
+direct report and full report reconstruction (observed exit 0). Its separate
+diagnostic registry does not consume the production claim. Actual collection now
+uses `work/p2-deepseek-development-v1`; do not relaunch the initial worker.
+Historical preservation is reverified: 1,923 historical entries and 262 files in
+the completed P2/T6 bundles match their captured baselines. Final actual coverage,
+format reliability and scores are pending until the worker completes or stops.
+
+### Launch preparation record
+
+2026-09-07: the user approves the immediately proposed P2 matrix: at most 270
+requests, common 8192 cap, separate USD 3 conditional allowance, no retries.
+Actual authorization and matching fresh price attestation are saved under
+`artifacts/p2_deepseek_development_v1/`. All four official documents return HTTP
+200 and match the prior verified bytes. The frozen execution and environment
+verify successfully; the canonical production registry remains unconsumed at
+preparation. Eight new launcher tests, Ruff E/F/I and format checks pass (exit 0).
+Exact commands and logs are in the bundle's `validation/` directory. The complete
+270-slot frozen diagnostic is being run before model dispatch. No new core source
+or scoring rule is changed; the previous 999-test core validation still applies.
+
+This environment runs as root while the worktree belongs to UID 11329. Git 2.34.1
+rejects per-command safe.directory overrides here; `SUDO_UID=11329 git status`
+successfully inspects the existing worktree without global configuration changes.
+Branch and HEAD remain `next-phase-v1` and
+`a23f73adadcbec077b9fcf2aecf8f45dfa4fe061`. Existing uncommitted work is preserved.
+
+Next executable step: finish the frozen diagnostic, launch the new runner once,
+then independently audit and report all actual responses or any stopped prefix.
+
+## Previous milestone: P2 captured execution is offline-ready
+
+2026-09-07: implemented the next authorized offline P2 engineering stage after T6.
+Entry: [README_P2_EXECUTION_V1.md](README_P2_EXECUTION_V1.md). The Chinese overview
+is in [README_NEXT_PHASE_V1.md](README_NEXT_PHASE_V1.md). No actual model or heldout
+inference occurs; the separate P2 launch authorization template remains false.
+
+P2 now has a strict prepared-byte capture wrapper, a durable sequential collector,
+independent captured-response/carrier/budget audit, and direct scoring/report
+verification. The legacy NHC capture wrapper retains its protocol checks while
+sharing private transport primitives. The P2 diagnostic scorer retains its origin
+gate; only a separately audited captured-result entry can admit model responses.
+The task renderer, source compiler and Gold definitions remain unchanged.
+
+The collector preserves invalid answers, propagates valid factual errors, resumes
+verified prefixes, finalizes saved captures offline, and stops on unknown dispatch,
+invalid usage/model, request-size limits or budget limits. A malformed, deeply
+nested JSON answer now becomes a retained schema failure rather than an uncaught
+recursion exception. Price bytes resolve locally by hash, without depending on
+the original machine path. Historical runtime bytes can be read from verified
+archives without extraction when ignored work directories are absent.
+
+Final acceptance, all 13 steps exit 0:
+
+```bash
+.venv/bin/python scripts/reproduce_p2_execution.py --output work/p2-execution-acceptance-002
+```
+
+Full regression: **999 passed in 558.75 seconds, zero skips**. Strict Ruff E/F/I,
+format and dependency checks pass. The fresh build, P2 data preparation/verification,
+execution freeze/verification, full 270-slot diagnostic collection, independent
+audit, direct report and report recomputation all pass with external networking
+blocked and loopback fixtures allowed. Records are copied to
+`artifacts/p2_execution_v1/validation/`.
+
+The frozen implementation source also independently re-verifies the saved report,
+exit 0, with external networking disabled and zero additional model requests.
+Command: `python -m disastertrace.controlled.live verify-report` using the frozen
+`execution/dataset/implementation_source/src` on PYTHONPATH; exact paths and
+exit record: `artifacts/p2_execution_v1/frozen_verification.json`.
+
+The completed diagnostic run has 270 attempts/responses and 54 trajectories,
+with no pending reservation. Each method has 90 schema-valid checkpoints,
+282/282 known grounded fields and 78/78 correct unknown fields. All nine
+family-by-method format screens pass only as program diagnostics; measured P2
+model reliability remains unknown. No LLM leaderboard result is produced.
+
+New versus historical P2: episodes, micro fixtures, schedule, private Gold,
+initial public requests and parent source records are byte-identical. All 30
+historical program score configurations are semantically identical. New package
+IDs bind the changed implementation and dependencies rather than changed tasks.
+All **1,923 historical protection entries** remain unchanged, including T6's
+completed bundle and the old P2 package. A separate relocated-archive check
+verifies 97 historical runtime files with zero extraction and absent original paths.
+
+Execution ID: `67b01bc7bf8d6e6ef8e27fd2aab31999e0745080b055acd887b9c5edbcabc8a4`.
+Dataset content ID: `d4cf9fb6188db2687b054bdcaca263db878d264135e308538c5cd3556ea002ab`.
+Dataset package ID: `001bf3f83ef5b2170720d16eb7bc635a26c07a3f79d95fb94a47e5053a92d78a`.
+Audit ID: `2554bd1f6aff4990cc65465dc124ee21d2b93dfdc1ad2745ddf2e5be2a5d6d33`.
+
+Prior checks remain recorded: 30 initial targeted passes; a reproduced nesting
+failure followed by 23 additional targeted passes; a reproduced relocation failure
+followed by two relocation/archive passes. Full acceptance attempt 001 was
+intentionally interrupted to fix the reproduced portability defect; its observed
+exit 2 and partial log remain preserved and are not claimed as a completed suite.
+
+Next executable research task: one separately authorized P2 DeepSeek development
+matrix, at most 270 attempts, common 8192 output cap, high reasoning/thinking,
+USD 3 conditional allowance and no retries. Its requested output reservation is
+2,211,840 tokens. Confirm current matching pricing and bind actual authorization
+to this execution before dispatch. T6/P1 scopes are consumed; second-model and
+heldout work remain later. Original P1 attempt 79 is still unresolved. Changes
+remain local to the development worktree; no new commit, push or remote CI run
+is claimed for this stage.
+
+## Previous milestone: T6 complete; common cap selected at 8192
+
+2026-09-07 09:36:28 UTC: the frozen T6 worker completes all 270 attempts and receives
+270 responses, with no retries, unsubmitted slots, halt or unresolved T6 reservation.
+Independent audit and full-denominator report succeed; the worker has exited.
+Entry: [README_T6_CALIBRATION_V1.md](README_T6_CALIBRATION_V1.md). Findings and
+next implementation tasks: `artifacts/t6_deepseek_calibration_v1/FINDINGS.md`.
+
+The predeclared common-cap rule selects **8192**. Explicit 4096 schema counts are
+27/30, 30/30, 28/30 (snapshot / structured_state / answer_history), with length
+counts 3, 0, 2, so it fails the all-method requirement. Explicit 8192 has 30/30
+schema and zero length in every method. Its known-value-and-source results are
+91/96, 90/96 and 96/96. Larger output does not imply monotonically better factual
+or citation scores: selection targets common format reliability, not best score.
+
+At 8192, 286/288 known values and 277/288 known value/source pairs pass. Automatic
+error inventory separates two longitude-sign value mismatches from nine correct
+values with evaluator_unverifiable citation failures. Six structured-state failures
+contain both a valid summary citation and an unverified additional body locator;
+the frozen all-citations-valid policy is retained. No references or scores change.
+
+Verified usage: 1,023,948 prompt + 398,292 completion = 1,422,240 tokens. The
+cache/window-aware estimate covers all 270 responses: USD 0.628557504. Conservative
+settlement is USD 0.97628256; pending/unknown reserves are zero. Neither is an
+invoice. Original P1 attempt 79 remains unresolved outside this experiment.
+The 23 schema-invalid, 21 length and 20 empty results overlap and remain recorded.
+
+Final report and audited results are saved under
+`artifacts/t6_deepseek_calibration_v1/runtime/`; actual journal:
+`work/t6-deepseek-calibration-v1/journal.jsonl`. The Chinese report is generated
+offline from the final audited results. Core source/settings remain unchanged from
+the 949-test baseline; the added launcher has four passing tests and a complete
+frozen diagnostic run. No extra model requests are made for final verification.
+
+Next work: implement P2-specific durable collection, independent captured-response
+audit and actual model-result scoring using 8192 as an initial common cap. Keep
+P2's historical offline package immutable; its separate handoff records the new
+recommendation without claiming live readiness or authorization. T6's 270-request
+scope is complete and consumed; P2, second-model and heldout calls remain outside it.
+
+## Previous milestone: T6 authorized calibration launched
+
+2026-09-07 08:43:29 UTC: launched one detached DeepSeek calibration worker,
+PID 35152, following the user's approval of the immediately proposed T6 scope:
+at most 270 fresh requests / USD 3 conditional allowance. Entry:
+[README_T6_CALIBRATION_V1.md](README_T6_CALIBRATION_V1.md).
+The current official pricing/settings pages are captured at 08:36 UTC; pricing
+HTML is byte-identical to the previously bound official snapshot. Actual
+authorization and price attestation are recorded against execution
+`590ac03ab8c2ee53cf8b2a7764e069fd5b97167c6c689ca2f491899b476c48a0`.
+
+Runtime source is a separate frozen copy with 84 bound launch files. Four launcher
+tests pass in 0.61s; strict Ruff passes. Frozen verification and a complete 270-slot
+offline diagnostic rehearsal/audit/report exit 0 before launch. Existing 949-test
+core validation remains applicable; no benchmark source or settings changed.
+
+The worker writes `work/t6-deepseek-calibration-v1/journal.jsonl` and automatically
+audits/reports on completion or stop. Read progress using
+`.venv/bin/python artifacts/t6_deepseek_calibration_v1/status.py`; the final result
+appears in `artifacts/t6_deepseek_calibration_v1/runtime/completion.json`. The
+initial launch is consumed; do not start it again. This is actual T6 model work,
+separate from previous zero-call diagnostics, P1 and the future P2 matrix. Final
+model counts, fees and cap selection are not known at launch. No heldout requests,
+extra model probes, automatic retry or P1 background restart occur.
+
+## Previous milestone: T0-T5 offline execution and controlled tasks complete
+
+2026-09-07: implemented the integrated four-plan next phase on branch
+`next-phase-v1`, based on `a23f73adadcbec077b9fcf2aecf8f45dfa4fe061`, in a separate
+development worktree. Entry: [README_NEXT_PHASE_V1.md](README_NEXT_PHASE_V1.md).
+Scope is T0-T3 calibration execution plus T4-T5 controlled task development.
+New model calls, heldout inference, human item annotations and LLM judging: zero.
+Neither the original project nor the published review checkout is edited.
+
+Implemented a new prepared-byte transport with bounded pre-parse response capture,
+credential-reflection filtering, hard network deadline in a reaped child process,
+shared Decimal ledger, experiment registry claim, writer lock, durable hash-chain
+journal, contract-aware sequential collection, offline recovery, independent audit,
+and full-denominator report. All 270 slots / 54 trajectories complete under the
+diagnostic transport. Records distinguish UTC collection brackets, network latency,
+raw usage, overlapping failure categories, per-event scores, paired arm differences,
+conservative accounting, conditional price-snapshot estimates and unknown reserves.
+Legacy provider, parser, source and scorer implementations remain byte-identical.
+
+P2 implements four weather fields and U1 partial update/preservation, U2 same-window
+correction and stale replay, and U3 withheld-support recovery. The three source
+groups genuinely inherit original advisory009 initial values; later records are
+explicitly generated. Public IDs are opaque. Compiler A and independent public-only
+oracle B agree at 450 checkpoints across development and micro fixtures/methods.
+The development matrix has 18 trajectories, 90 checkpoints per method and 270
+planned model slots. Twelve micro fixtures / 60 checkpoints remain separate tests.
+Thirty program configurations produce 2,700 diagnostic answers; correct and
+legitimate per-key-latest-issued controls pass, with directed bad controls failing
+their specified opportunities. P2 reports `P2_OFFLINE_READY`, `live_ready=false`:
+the provider adapter prepares unsent requests; live P2 collection/audit/scoring
+provenance still needs implementation after execution settings are frozen.
+
+Executed full acceptance (all eleven steps exit 0):
+
+```bash
+.venv/bin/python scripts/reproduce_next_phase.py --output work/next-phase-acceptance-001
+.venv/bin/python scripts/reproduce_next_phase.py --output work/next-phase-acceptance-002
+```
+
+Run 001: **931 passed in 127.10s**. Run 002 includes the additional timestamp,
+cache/window cost and partial-report checks: **949 passed in 131.14s**, zero skips.
+Both runs build fresh NHC data, prepare/verify legacy and new calibration packages,
+rehearse all 270 slots, independently audit/report, and prepare/verify P2.
+External network is blocked during acceptance; loopback service fixtures are allowed.
+Targeted observation/integration checks also pass 35 tests in 49.05s. AFS-specific
+storage checks pass 12 tests after correcting unlock on a never-acquired lock.
+
+Final Ruff E/F/I checks, formatting checks (28 files) and pip dependency checks pass.
+A final adjacent-string wrapping change addresses one E501 report line; its Python
+AST and runtime string value are unchanged, recorded in
+`artifacts/next_phase_v1/root_checks/format_equivalence.json`. Run 003 regenerates
+all packages for the final source identity with explicit `--skip-tests`; it does
+not represent another full-suite execution. Detailed commands, logs, identities,
+archive checks and protected-file verification are indexed in
+`artifacts/next_phase_v1/README.md`. Earlier failed checks remain preserved, including
+tests-first missing modules, the AFS lock failure, and formatting-check failures.
+
+The 1,616 historical protection entries are verified unchanged. P1 remains 90
+received responses / 91 attempts; unknown original attempt 79 is not resolved or
+cleared. Current real model results remain P1. Program control scores are not new
+LLM results, and no common cap has been selected from live calibration evidence.
+
+Next executable research stage: T6 fresh output calibration after current pricing,
+provider limits and actual 270-attempt / USD 3 scope are confirmed for a specific
+execution identity. The proposal is not a launch record. Do not restart historical
+P1. Then implement P2-specific live collection/audit and freeze its separate model
+matrix; second-model and all heldout work remain later stages. GitHub Actions has
+been added locally but not run on GitHub or claimed as passing remotely.
+
+## Previous milestone: offline common contract and calibration preparation complete
 
 2026-09-06: executed the user's next offline package after completed P1.
 Entry: `README_CALIBRATION_V1.md`. Added standalone output_contract.py and

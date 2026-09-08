@@ -1,0 +1,18 @@
+{
+  "recorded_at": "2026-09-07T13:21:42.895646+00:00",
+  "command": [
+    "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+    "-"
+  ],
+  "observed_exit_code": 0,
+  "current_core_matches_frozen_source": true,
+  "source_implementation_id": "5f7ce56f1d9a803f0c718dff7b64c1547c4a936176dc331f1e6d8f32aa8f9a11",
+  "additional_model_calls": 0,
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "scripts/offline_guard:src",
+    "DISASTERTRACE_OFFLINE": "1"
+  },
+  "workdir": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter",
+  "stdin_script": "import json\nfrom disastertrace.controlled.execution import verify_execution\nplan = verify_execution('artifacts/p2_deepseek_development_v1/execution')\nprint(json.dumps({'status': 'passed', 'execution_id': plan['execution_id'], 'source_implementation_id': plan['source_identity']['implementation_id'], 'current_core_matches_frozen_source': True, 'additional_model_calls': 0}))\n"
+}

@@ -1,0 +1,35 @@
+name: Offline benchmark verification
+on: [push, pull_request]
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install the recorded dependency versions
+        working-directory: disastertrace-starter
+        run: python -m pip install -c ../handoff_validation/requirements-installed.txt -r artifacts/p4_constrained_output_v1/requirements-review.txt -e '.[dev]'
+      - name: CPU regression tests
+        working-directory: disastertrace-starter
+        # The frozen P4 backend suite requires its exact vLLM environment.
+        # Its 44-test result is saved; CPU CI reconstructs actual P4 results below.
+        run: PYTHONPATH=scripts/offline_guard:src DISASTERTRACE_OFFLINE=1 python -m pytest tests --ignore=tests/test_constrained_eval.py
+      - name: Fresh builds, calibration rehearsal and P2
+        working-directory: disastertrace-starter
+        run: python scripts/reproduce_next_phase.py --skip-tests --output work/next-phase-ci
+      - name: Reconstruct the captured P4 model report without inference
+        working-directory: disastertrace-starter
+        env:
+          PYTHONPATH: artifacts/p4_constrained_output_v1/execution_live/implementation_source/src
+          PYTHONDONTWRITEBYTECODE: '1'
+          HF_HUB_OFFLINE: '1'
+          TRANSFORMERS_OFFLINE: '1'
+        run: >-
+          python -m disastertrace.constrained_eval.cli report
+          --execution artifacts/p4_constrained_output_v1/execution_live
+          --run work/p4-qwen3-constrained-v1
+          --output artifacts/p4_constrained_output_v1/model_report
+          --require-model --verify

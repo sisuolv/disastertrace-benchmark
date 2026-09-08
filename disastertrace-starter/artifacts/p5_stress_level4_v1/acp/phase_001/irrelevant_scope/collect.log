@@ -1,0 +1,113 @@
+INFO 09-08 07:08:14 [__init__.py:216] Automatically detected platform cuda.
+INFO 09-08 07:08:20 [arg_utils.py:486] HF_HUB_OFFLINE is True, replace model_id [/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1] to model_path [/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1]
+INFO 09-08 07:08:20 [arg_utils.py:486] HF_HUB_OFFLINE is True, replace model_id [/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1] to model_path [/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1]
+INFO 09-08 07:08:20 [utils.py:328] non-default args: {'tokenizer': '/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1', 'dtype': 'bfloat16', 'seed': 20260907, 'max_model_len': 16384, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_batched_tokens': 16384, 'max_num_seqs': 12, 'disable_log_stats': True, 'enforce_eager': True, 'guided_decoding_backend': 'xgrammar', 'guided_decoding_disable_fallback': True, 'reasoning_parser': 'qwen3', 'model': '/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1'}
+INFO 09-08 07:08:46 [__init__.py:742] Resolved architecture: Qwen3ForCausalLM
+INFO 09-08 07:08:46 [__init__.py:1815] Using max model len 16384
+INFO 09-08 07:08:47 [scheduler.py:222] Chunked prefill is enabled with max_num_batched_tokens=16384.
+INFO 09-08 07:08:47 [__init__.py:3400] Cudagraph is disabled under eager mode
+INFO 09-08 07:09:07 [__init__.py:216] Automatically detected platform cuda.
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:09:12 [core.py:654] Waiting for init message from front-end.
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:09:12 [core.py:76] Initializing a V1 LLM engine (v0.10.2) with config: model='/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1', speculative_config=None, tokenizer='/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=16384, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=True, kv_cache_dtype=auto, device_config=cuda, decoding_config=DecodingConfig(backend='xgrammar', disable_fallback=True, disable_any_whitespace=False, disable_additional_properties=False, reasoning_backend='qwen3'), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=20260907, served_model_name=/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1, enable_prefix_caching=False, chunked_prefill_enabled=True, use_async_output_proc=True, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":0,"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"pass_config":{},"max_capture_size":0,"local_cache_dir":null}
+[W908 07:09:18.311191550 ProcessGroupNCCL.cpp:981] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:09:18 [parallel_state.py:1165] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+[1;36m(EngineCore_DP0 pid=100)[0;0m WARNING 09-08 07:09:18 [topk_topp_sampler.py:69] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:09:18 [gpu_model_runner.py:2338] Starting to load model /mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1...
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:09:18 [gpu_model_runner.py:2370] Loading model from scratch...
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:09:18 [cuda.py:362] Using Flash Attention backend on V1 engine.
+[1;36m(EngineCore_DP0 pid=100)[0;0m Loading safetensors checkpoint shards:   0% Completed | 0/5 [00:00<?, ?it/s]
+[1;36m(EngineCore_DP0 pid=100)[0;0m Loading safetensors checkpoint shards:  20% Completed | 1/5 [00:07<00:31,  7.92s/it]
+[1;36m(EngineCore_DP0 pid=100)[0;0m Loading safetensors checkpoint shards:  40% Completed | 2/5 [00:18<00:28,  9.37s/it]
+[1;36m(EngineCore_DP0 pid=100)[0;0m Loading safetensors checkpoint shards:  60% Completed | 3/5 [00:28<00:19,  9.89s/it]
+[1;36m(EngineCore_DP0 pid=100)[0;0m Loading safetensors checkpoint shards:  80% Completed | 4/5 [00:37<00:09,  9.29s/it]
+[1;36m(EngineCore_DP0 pid=100)[0;0m Loading safetensors checkpoint shards: 100% Completed | 5/5 [00:40<00:00,  7.14s/it]
+[1;36m(EngineCore_DP0 pid=100)[0;0m Loading safetensors checkpoint shards: 100% Completed | 5/5 [00:40<00:00,  8.10s/it]
+[1;36m(EngineCore_DP0 pid=100)[0;0m 
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:09:59 [default_loader.py:268] Loading weights took 40.54 seconds
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:10:00 [gpu_model_runner.py:2392] Model loading took 15.2683 GiB and 40.892692 seconds
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:10:01 [gpu_worker.py:298] Available KV cache memory: 50.43 GiB
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:10:01 [kv_cache_utils.py:864] GPU KV cache size: 367,216 tokens
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:10:01 [kv_cache_utils.py:868] Maximum concurrency for 16,384 tokens per request: 22.41x
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:10:01 [gpu_worker.py:391] Free memory on device (78.72/79.32 GiB) on startup. Desired GPU memory utilization is (0.85, 67.42 GiB). Actual usage is 15.27 GiB for weight, 1.66 GiB for peak activation, 0.07 GiB for non-torch memory, and 0.0 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=53992596684` to fit into requested memory, or `--kv-cache-memory=66127091712` to fully utilize gpu memory. Current kv cache memory in use is 54149883084 bytes.
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:10:01 [core.py:218] init engine (profile, create kv cache, warmup model) took 1.69 seconds
+[1;36m(EngineCore_DP0 pid=100)[0;0m INFO 09-08 07:10:02 [__init__.py:3400] Cudagraph is disabled under eager mode
+INFO 09-08 07:10:02 [llm.py:295] Supported_tasks: ['generate']
+INFO 09-08 07:10:02 [__init__.py:36] No IOProcessor plugins requested by the model
+[1;36m(EngineCore_DP0 pid=100)[0;0m WARNING 09-08 07:10:03 [cudagraph_dispatcher.py:102] cudagraph dispatching keys are not initialized. No cudagraph will be used.
+{"at":"2026-09-08T07:10:15.728342+00:00","attempted":12,"last_batch_seconds":13.096341231837869,"planned":540,"received":12}
+{"at":"2026-09-08T07:10:23.144886+00:00","attempted":24,"last_batch_seconds":7.302510736510158,"planned":540,"received":24}
+{"at":"2026-09-08T07:10:30.678252+00:00","attempted":36,"last_batch_seconds":7.415417585521936,"planned":540,"received":36}
+{"at":"2026-09-08T07:10:40.308512+00:00","attempted":48,"last_batch_seconds":9.512736214324832,"planned":540,"received":48}
+{"at":"2026-09-08T07:10:48.701379+00:00","attempted":60,"last_batch_seconds":8.275510907173157,"planned":540,"received":60}
+{"at":"2026-09-08T07:10:56.044443+00:00","attempted":72,"last_batch_seconds":7.221006467938423,"planned":540,"received":72}
+{"at":"2026-09-08T07:11:03.687860+00:00","attempted":84,"last_batch_seconds":7.526201121509075,"planned":540,"received":84}
+{"at":"2026-09-08T07:11:12.520030+00:00","attempted":96,"last_batch_seconds":8.70861480385065,"planned":540,"received":96}
+{"at":"2026-09-08T07:11:19.772019+00:00","attempted":108,"last_batch_seconds":7.134693833068013,"planned":540,"received":108}
+{"at":"2026-09-08T07:11:34.063711+00:00","attempted":120,"last_batch_seconds":14.133938418701291,"planned":540,"received":120}
+{"at":"2026-09-08T07:11:50.231294+00:00","attempted":132,"last_batch_seconds":16.01539246365428,"planned":540,"received":132}
+{"at":"2026-09-08T07:12:03.938204+00:00","attempted":144,"last_batch_seconds":13.550686568021774,"planned":540,"received":144}
+{"at":"2026-09-08T07:12:21.509878+00:00","attempted":156,"last_batch_seconds":17.416640235111117,"planned":540,"received":156}
+{"at":"2026-09-08T07:12:38.059780+00:00","attempted":168,"last_batch_seconds":16.396276051178575,"planned":540,"received":168}
+{"at":"2026-09-08T07:12:53.713291+00:00","attempted":180,"last_batch_seconds":15.46246567927301,"planned":540,"received":180}
+{"at":"2026-09-08T07:13:10.151730+00:00","attempted":192,"last_batch_seconds":16.276361597701907,"planned":540,"received":192}
+{"at":"2026-09-08T07:13:24.172476+00:00","attempted":204,"last_batch_seconds":13.858837908133864,"planned":540,"received":204}
+{"at":"2026-09-08T07:13:40.229376+00:00","attempted":216,"last_batch_seconds":15.894523596391082,"planned":540,"received":216}
+{"at":"2026-09-08T07:14:19.762629+00:00","attempted":228,"last_batch_seconds":39.14062839001417,"planned":540,"received":228}
+{"at":"2026-09-08T07:14:59.389485+00:00","attempted":240,"last_batch_seconds":39.249975591897964,"planned":540,"received":240}
+{"at":"2026-09-08T07:15:55.033173+00:00","attempted":252,"last_batch_seconds":55.290875794366,"planned":540,"received":252}
+{"at":"2026-09-08T07:16:41.491423+00:00","attempted":264,"last_batch_seconds":46.165271274745464,"planned":540,"received":264}
+{"at":"2026-09-08T07:17:26.600911+00:00","attempted":276,"last_batch_seconds":44.80909784696996,"planned":540,"received":276}
+{"at":"2026-09-08T07:18:16.150184+00:00","attempted":288,"last_batch_seconds":49.18349325470626,"planned":540,"received":288}
+{"at":"2026-09-08T07:18:50.551278+00:00","attempted":300,"last_batch_seconds":34.09756945259869,"planned":540,"received":300}
+{"at":"2026-09-08T07:19:28.958599+00:00","attempted":312,"last_batch_seconds":38.0548796877265,"planned":540,"received":312}
+{"at":"2026-09-08T07:20:31.175626+00:00","attempted":324,"last_batch_seconds":61.87313366867602,"planned":540,"received":324}
+{"at":"2026-09-08T07:21:25.805341+00:00","attempted":336,"last_batch_seconds":54.228155847638845,"planned":540,"received":336}
+{"at":"2026-09-08T07:22:10.474281+00:00","attempted":348,"last_batch_seconds":44.34214667417109,"planned":540,"received":348}
+{"at":"2026-09-08T07:23:14.899316+00:00","attempted":360,"last_batch_seconds":64.0985460281372,"planned":540,"received":360}
+{"at":"2026-09-08T07:24:00.227535+00:00","attempted":372,"last_batch_seconds":44.953339863568544,"planned":540,"received":372}
+{"at":"2026-09-08T07:25:09.630551+00:00","attempted":384,"last_batch_seconds":69.06008150614798,"planned":540,"received":384}
+{"at":"2026-09-08T07:26:05.341740+00:00","attempted":396,"last_batch_seconds":55.3075230717659,"planned":540,"received":396}
+{"at":"2026-09-08T07:26:35.539498+00:00","attempted":408,"last_batch_seconds":29.73010683618486,"planned":540,"received":408}
+{"at":"2026-09-08T07:27:17.516009+00:00","attempted":420,"last_batch_seconds":41.617857499048114,"planned":540,"received":420}
+{"at":"2026-09-08T07:28:05.454411+00:00","attempted":432,"last_batch_seconds":47.536411076784134,"planned":540,"received":432}
+{"at":"2026-09-08T07:29:19.811688+00:00","attempted":444,"last_batch_seconds":73.98137173429132,"planned":540,"received":444}
+{"at":"2026-09-08T07:30:35.839782+00:00","attempted":456,"last_batch_seconds":75.64421817660332,"planned":540,"received":456}
+{"at":"2026-09-08T07:31:33.750863+00:00","attempted":468,"last_batch_seconds":57.52712631970644,"planned":540,"received":468}
+{"at":"2026-09-08T07:32:06.658468+00:00","attempted":480,"last_batch_seconds":32.41917712427676,"planned":540,"received":480}
+{"at":"2026-09-08T07:32:58.561961+00:00","attempted":492,"last_batch_seconds":51.5246664006263,"planned":540,"received":492}
+{"at":"2026-09-08T07:33:39.115686+00:00","attempted":504,"last_batch_seconds":40.22246335633099,"planned":540,"received":504}
+{"at":"2026-09-08T07:34:41.286125+00:00","attempted":516,"last_batch_seconds":61.8010178450495,"planned":540,"received":516}
+{"at":"2026-09-08T07:35:50.109525+00:00","attempted":528,"last_batch_seconds":68.50012873113155,"planned":540,"received":528}
+{"at":"2026-09-08T07:36:54.244116+00:00","attempted":540,"last_batch_seconds":63.813469026237726,"planned":540,"received":540}
+[rank0]:[W908 07:36:54.772055733 ProcessGroupNCCL.cpp:1538] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+nanobind: leaked 2 instances!
+ - leaked instance 0x7f913964cca8 of type "xgrammar.xgrammar_bindings.CompiledGrammar"
+ - leaked instance 0x7f913964d128 of type "xgrammar.xgrammar_bindings.GrammarMatcher"
+nanobind: leaked 2 types!
+ - leaked type "xgrammar.xgrammar_bindings.GrammarMatcher"
+ - leaked type "xgrammar.xgrammar_bindings.CompiledGrammar"
+nanobind: leaked 16 functions!
+ - leaked function "accept_string"
+ - leaked function "deserialize_json"
+ - leaked function "reset"
+ - leaked function ""
+ - leaked function "rollback"
+ - leaked function "fill_next_token_bitmask"
+ - leaked function "is_terminated"
+ - leaked function "accept_token"
+ - leaked function "_debug_print_internal_state"
+ - leaked function ""
+ - leaked function "find_jump_forward_string"
+ - leaked function ""
+ - leaked function ""
+ - leaked function "serialize_json"
+ - leaked function "__init__"
+ - leaked function ""
+nanobind: this is likely caused by a reference counting issue in the binding code.
+{"attempted": 540, "received": 540, "stop_reason": "complete"}

@@ -1,0 +1,26 @@
+SIM117 [*] Use a single `with` statement with multiple contexts instead of nested `with` statements
+   --> artifacts/p5_stress_level4_v1/package_review.py:115:5
+    |
+113 |       paths.append(internal)
+114 |       files[str(internal.relative_to(PROJECT))] = digest(internal)
+115 | /     with (HERE / NAME).open("xb") as sink:
+116 | |         with tarfile.open(fileobj=sink, mode="w:gz") as archive:
+    | |________________________________________________________________^
+117 |               for path in paths:
+118 |                   archive.add(path, arcname=str(path.relative_to(PROJECT)), recursive=False)
+    |
+help: Combine `with` statements
+    |
+114 |     files[str(internal.relative_to(PROJECT))] = digest(internal)
+    -     with (HERE / NAME).open("xb") as sink:
+    -         with tarfile.open(fileobj=sink, mode="w:gz") as archive:
+    -             for path in paths:
+    -                 archive.add(path, arcname=str(path.relative_to(PROJECT)), recursive=False)
+115 +     with (HERE / NAME).open("xb") as sink, tarfile.open(fileobj=sink, mode="w:gz") as archive:
+116 +         for path in paths:
+117 +             archive.add(path, arcname=str(path.relative_to(PROJECT)), recursive=False)
+118 |     write(
+    |
+
+Found 1 error.
+[*] 1 fixable with the `--fix` option.
