@@ -1,0 +1,209 @@
+{
+  "schema_version": "disastertrace.data_selection.v1",
+  "decision_date": "2026-09-11",
+  "status": "source_stack_and_processing_policy_selected; final_episode_and_split_freeze_pending",
+  "primary_hazards": [
+    "tropical_system_intensity",
+    "river_hydrology"
+  ],
+  "source_decisions": [
+    {
+      "id": "nhc_forecast_advisory",
+      "decision": "selected_v1_engineering_bridge",
+      "provider": "NOAA/NWS/NHC",
+      "endpoint": "https://www.nhc.noaa.gov/archive/{year}/{storm_short}/{storm_id_lower}.fstadv.{advisory_number:03d}.shtml",
+      "roles": [
+        "forecast_input",
+        "natural_fixed_target_revisions"
+      ],
+      "target": "storm maximum sustained wind at fixed future instant, kt",
+      "current_evidence": "nhc_audit_01/AUDIT.json",
+      "formal_historical_asof_admitted": false
+    },
+    {
+      "id": "hurdat2_atlantic",
+      "decision": "selected_v1_private_outcome_reference",
+      "provider": "NOAA/NWS/NHC",
+      "endpoint": "https://www.nhc.noaa.gov/data/hurdat/hurdat2-1851-2025-02272026.txt",
+      "roles": [
+        "private_retrospective_reference"
+      ],
+      "target": "exact storm_id + UTC instant; no time interpolation",
+      "version": "hurdat2-1851-2025-02272026",
+      "limitations": [
+        "same-agency retrospective analysis",
+        "magnitude threshold does not label local exposure or cyclone status"
+      ]
+    },
+    {
+      "id": "nwps_gauge_stage_forecast",
+      "decision": "selected_v1_hydrology_source; formal_admission_pending",
+      "provider": "NOAA/NWS/RFC through NWPS",
+      "endpoints": [
+        "https://api.water.noaa.gov/nwps/v1/gauges/{lid}",
+        "https://api.water.noaa.gov/nwps/v1/gauges/{lid}/stageflow"
+      ],
+      "roles": [
+        "deterministic_stage_forecast",
+        "official_station_mapping",
+        "versioned_threshold_candidate"
+      ],
+      "pilot_stations": [
+        {
+          "lid": "SCOC1",
+          "usgs_id": "11477000",
+          "basin": "Eel River",
+          "minor_stage_ft": "51"
+        },
+        {
+          "lid": "GUEC1",
+          "usgs_id": "11467002",
+          "basin": "Russian River",
+          "minor_stage_ft": "32"
+        }
+      ],
+      "current_evidence": "hydro_audit_01/AUDIT.json",
+      "limitations": [
+        "current threshold vintage only",
+        "historical availability not established",
+        "no flood-positive target in current sample"
+      ]
+    },
+    {
+      "id": "usgs_continuous",
+      "decision": "selected_v1_hydrology_observations",
+      "provider": "USGS",
+      "endpoints": [
+        "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items/USGS-{site_id}",
+        "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items"
+      ],
+      "parameters": {
+        "00065": "gage height, ft",
+        "00060": "discharge, ft^3/s"
+      },
+      "roles": [
+        "legal_pre_target_observation_input",
+        "separate_future_outcome"
+      ],
+      "stable_identity": [
+        "time_series_id",
+        "time"
+      ],
+      "current_evidence": "hydro_audit_01/AUDIT.json",
+      "limits": [
+        "current samples Provisional",
+        "no same-site discharge records returned for GUEC1 mapped station in this window"
+      ]
+    },
+    {
+      "id": "hefs_qine",
+      "decision": "selected_supplementary_flow_forecast; flood_probability_target_pending",
+      "provider": "NOAA/NWS HEFS experimental NWPS API",
+      "endpoints": [
+        "https://api.water.noaa.gov/hefs/v1/headers/",
+        "https://api.water.noaa.gov/hefs/v1/ensembles/"
+      ],
+      "roles": [
+        "ensemble_streamflow",
+        "natural_same_target_forecast_updates"
+      ],
+      "pilot_station": "SCOC1",
+      "forecast_cycles": [
+        "2026-09-09T12:00:00Z",
+        "2026-09-10T12:00:00Z"
+      ],
+      "unit": "CFS",
+      "current_evidence": "hydro_audit_01/AUDIT.json",
+      "limits": [
+        "no stage conversion admitted",
+        "no flow threshold admitted for Scotia",
+        "member weights and flag semantics require contract completion before probability main track"
+      ]
+    },
+    {
+      "id": "usgs_nims",
+      "decision": "conditional_native_image_extension_not_required_v1",
+      "provider": "USGS",
+      "endpoint": "https://api.waterdata.usgs.gov/nims/v0/cameras?siteId={site_id}",
+      "roles": [
+        "camera_images_if_same_target_overlap_verified"
+      ],
+      "existing_station_image_pair": "05366800, inherited preceding review",
+      "pilot_scoc1_guec1_status": "both camera queries returned 404",
+      "limits": [
+        "no native-image necessity established",
+        "no image-depth Gold without reliable reference"
+      ]
+    },
+    {
+      "id": "sevir",
+      "decision": "retain_existing_evidence_diagnostic",
+      "roles": [
+        "native_radar_product",
+        "coverage_and_missingness"
+      ],
+      "limits": [
+        "VIL is not ground rainfall or flood loss",
+        "native missing mask remains in denominator"
+      ]
+    },
+    {
+      "id": "ghcn_isd",
+      "decision": "retain_broad_bank; temperature_transfer_pending_forecast_join",
+      "roles": [
+        "station_temperature_precipitation_weather_codes",
+        "future_outcome_candidate"
+      ],
+      "limits": [
+        "station-day support distinct from UTC day",
+        "QC and climate baseline required"
+      ]
+    },
+    {
+      "id": "usdm",
+      "decision": "retain_existing_evidence_diagnostic",
+      "roles": [
+        "weekly_drought_product"
+      ],
+      "limits": [
+        "weekly valid states are not same-target revisions",
+        "product label not physical unique drought truth"
+      ]
+    },
+    {
+      "id": "geoid_cems",
+      "decision": "conditional_spatial_diagnostic",
+      "roles": [
+        "flood_extent_under_dataset_label_definition"
+      ],
+      "limits": [
+        "current observed external-test tiles not fresh heldout",
+        "positive train samples and rights still required",
+        "label-derived validity private"
+      ]
+    },
+    {
+      "id": "gfs_ewb_exebench_temperature",
+      "decision": "reserve_transfer_route_not_admitted_future_chain",
+      "roles": [
+        "operational_forecast_candidate",
+        "event_index_and_existing_benchmark_reference"
+      ],
+      "limits": [
+        "business forecast must actually be fetched and matched",
+        "reanalysis cannot substitute for as-of operational forecast"
+      ]
+    }
+  ],
+  "broad_bank_policy": {
+    "hazard_target_count": 16,
+    "existing_registry_items": 74,
+    "not_independent_sources": true,
+    "reference": "../v6_0911_dataset_selection/HAZARD_COVERAGE.md"
+  },
+  "formal_warning_episodes_created_this_turn": 0,
+  "new_model_calls": 0,
+  "new_gpu_jobs": 0,
+  "scope": "NHC and hydrology numerical source-stack detail; overall coverage is defined by HAZARD_SOURCE_MATRIX.json",
+  "overall_plan": "OVERALL_BENCHMARK_DATA_PLAN_CN.md"
+}

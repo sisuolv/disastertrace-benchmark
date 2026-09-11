@@ -1,0 +1,156 @@
+[
+  {
+    "id": "ghcnh-denver-tail",
+    "source": "GHCNh",
+    "url": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2026/psv/GHCNh_USW00003017_2026.psv",
+    "max_bytes": 1048576,
+    "headers": {
+      "Range": "bytes=34527426-35576001"
+    },
+    "declared_object_size": 35576002
+  },
+  {
+    "id": "ofs-current-stations-list",
+    "source": "OFS",
+    "url": "https://noaa-ofs-pds.s3.amazonaws.com/?list-type=2&prefix=cbofs.20260910/cbofs.t00z.20260910.stations&max-keys=5",
+    "max_bytes": 524288
+  },
+  {
+    "id": "cpc-seasonal-complete",
+    "source": "CPC",
+    "url": "https://ftp.cpc.ncep.noaa.gov/GIS/droughtlook/sdo_polygons_20260820.zip",
+    "max_bytes": 16777216
+  },
+  {
+    "id": "mrms-readme",
+    "source": "MRMS-MESH",
+    "url": "https://raw.githubusercontent.com/NOAA-Big-Data-Program/bdp-data-docs/main/MRMS/README.md",
+    "max_bytes": 524288
+  },
+  {
+    "id": "wpc-qpf-grib-local",
+    "source": "WPC",
+    "url": "https://www.wpc.ncep.noaa.gov/5km_grids/day1_00z.grb",
+    "max_bytes": 8388608
+  },
+  {
+    "id": "cams-small-retrieval",
+    "source": "CAMS",
+    "url": "https://ads.atmosphere.copernicus.eu/api/retrieve/v1/processes/cams-global-atmospheric-composition-forecasts/execution",
+    "max_bytes": 1048576,
+    "method": "POST",
+    "json_body": {
+      "inputs": {
+        "variable": [
+          "dust_aerosol_optical_depth_550nm"
+        ],
+        "date": "2026-09-10/2026-09-10",
+        "type": [
+          "forecast"
+        ],
+        "time": [
+          "00:00"
+        ],
+        "leadtime_hour": [
+          "6"
+        ],
+        "data_format": "netcdf_zip",
+        "area": [
+          41,
+          -5,
+          39,
+          -3
+        ]
+      }
+    }
+  },
+  {
+    "id": "glofas-small-retrieval",
+    "source": "GloFAS",
+    "url": "https://ewds.climate.copernicus.eu/api/retrieve/v1/processes/cems-glofas-forecast/execution",
+    "max_bytes": 1048576,
+    "method": "POST",
+    "json_body": {
+      "inputs": {
+        "system_version": [
+          "operational"
+        ],
+        "hydrological_model": [
+          "lisflood"
+        ],
+        "product_type": [
+          "control_forecast"
+        ],
+        "variable": [
+          "river_discharge_in_the_last_24_hours"
+        ],
+        "year": [
+          "2026"
+        ],
+        "month": [
+          "09"
+        ],
+        "day": [
+          "10"
+        ],
+        "leadtime_hour": [
+          "24"
+        ],
+        "data_format": "netcdf",
+        "download_format": "unarchived",
+        "area": [
+          41,
+          -5,
+          39,
+          -3
+        ]
+      }
+    }
+  },
+  {
+    "id": "efas-small-retrieval",
+    "source": "EFAS",
+    "url": "https://ewds.climate.copernicus.eu/api/retrieve/v1/processes/efas-forecast/execution",
+    "max_bytes": 1048576,
+    "method": "POST",
+    "json_body": {
+      "inputs": {
+        "system_version": [
+          "operational"
+        ],
+        "origin": [
+          "ecmwf"
+        ],
+        "variable": [
+          "river_discharge_in_the_last_6_hours"
+        ],
+        "product_type": [
+          "control_forecast"
+        ],
+        "year": [
+          "2026"
+        ],
+        "month": [
+          "09"
+        ],
+        "day": [
+          "10"
+        ],
+        "time": [
+          "00:00"
+        ],
+        "leadtime_hour": [
+          "24"
+        ],
+        "data_format": "netcdf",
+        "download_format": "unarchived",
+        "area": [
+          51,
+          5,
+          50,
+          6
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,3310 @@
+{
+  "status": "inherited_file_integrity_verified",
+  "scope": "Reuses prior scientific decoding claims; hash verification this turn does not mean all decoders were rerun.",
+  "files_checked": 375,
+  "bytes_checked": 507620720,
+  "source_records": [
+    {
+      "source_id": "D01",
+      "name": "NHC Public / Forecast Advisories + GIS",
+      "inherited_content_evidence": "inherited",
+      "inherited_decision_cn": "复用已有 NHC 公告/GIS 和 Francine 种子；新增风暴独立分组；issued_at 不等于历史 available_at。",
+      "evidence_checks": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "nhc_operational",
+          "result": "inherited_samples_rechecked"
+        }
+      ],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D02",
+      "name": "IBTrACS v4r01",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "已解码 21,923 条轨迹、378 个 SID；属于事后参考，隔离 outcome；跨机构及跨盆地去重。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ibtracs-full-retry02-assembled",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:ibtracs-full",
+        "multihazard_source_validation_20260911:ibtracs-full-retry02",
+        "multihazard_source_validation_20260911:ibtracs-full-retry02-rest-0"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D03",
+      "name": "Digital Typhoon V2",
+      "inherited_content_evidence": "partial",
+      "inherited_decision_cn": "Digital Typhoon ZIP Range 获取未完成；保留亚洲气旋扩容路线，不把目录计为帧。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:digital-typhoon-page",
+        "multihazard_source_validation_20260911:digital-typhoon-wp-tail-corrected"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D04",
+      "name": "TCIR",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "TCIR 仅入口/读取器候选；尚未完成真实影像解码，需确认版本和切分。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-tcir",
+        "multihazard_source_validation_20260911:tcir-README_md"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D05",
+      "name": "NOAA Storm Events Database",
+      "inherited_content_evidence": "catalog",
+      "inherited_decision_cn": "136,982 条灾害报告仅作检索索引；EPISODE_ID 不等于独立天气系统；需要气象事件跨县合并。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "storm-events-2021-assembled",
+          "result": "catalog_records_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "storm-events-2023-assembled",
+          "result": "catalog_records_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:storm-events-index",
+        "multihazard_source_validation_20260911:storm-events-2021",
+        "multihazard_source_validation_20260911:storm-events-2023",
+        "multihazard_source_validation_20260911:storm-events-2021-remainder-0",
+        "multihazard_source_validation_20260911:storm-events-2021-remainder-1",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-0",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-1",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-2",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-3",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-4"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D06",
+      "name": "SEVIR",
+      "inherited_content_evidence": "inherited",
+      "inherited_decision_cn": "复核 3 条 VIL 序列，每条 49 帧；不能据此声称已验证闪电/光学多模态；补地面报告桥接。",
+      "evidence_checks": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "sevir",
+          "result": "inherited_samples_rechecked"
+        }
+      ],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D07",
+      "name": "TorNet",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "3 个 TorNet train NetCDF 均为 NUL 负例；核对 v1.1 修订并获取正例和匹配困难负例。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "tornet-three-prefix-members",
+          "result": "radar_samples_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-tornet",
+        "multihazard_source_validation_20260911:tornet-bucket",
+        "multihazard_source_validation_20260911:tornet-registry",
+        "multihazard_source_validation_20260911:tornet-LICENSE",
+        "multihazard_source_validation_20260911:tornet-README_md",
+        "multihazard_source_validation_20260911:tornet-tornet_data_loader_py",
+        "multihazard_source_validation_20260911:tornet-tornet_data_tfds_tornet_checksums_tsv",
+        "multihazard_source_validation_20260911:tornet-zenodo",
+        "multihazard_source_validation_20260911:tornet-catalog-prefix",
+        "multihazard_source_validation_20260911:tornet-three-prefix"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D08",
+      "name": "NOAA NEXRAD",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "NEXRAD 原始体扫尚无本轮解码样本；优先按 TorNet/SEVIR 具体雷达时刻补取。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D09",
+      "name": "NOAA MRMS",
+      "inherited_content_evidence": "metadata",
+      "inherited_decision_cn": "MRMS 桶目录可列，尚无实际 MESH/降水文件；不能将 MESH 估计直接等同地面冰雹报告。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D09-list"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D10",
+      "name": "GOES-R ABI / GLM archives",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "3 个 GLM 20 秒文件及父子 ID 已校验；须构建空间密度基线并补极端窗口；ABI 尚未取样。",
+      "evidence_checks": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "glm-three-products",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D10-glm-list",
+        "v6_0911_dataset_selection:D10-glm-0",
+        "v6_0911_dataset_selection:D10-glm-1",
+        "v6_0911_dataset_selection:D10-glm-2"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D11",
+      "name": "Global Flood Database v1",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "GFD 入口明确但没有实际事件栅格；GEE 项目访问与公开替代产品分开记录。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:gfd-data-list"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D12",
+      "name": "GEOID-Flood",
+      "inherited_content_evidence": "paired",
+      "inherited_decision_cn": "3 组前后 SAR/标签/有效性完整匹配同一发布清单，但洪水正像素均为 0；同一 EMSR712/AOI10 且原 split 为 test，仅作已观察审计材料。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-post-0",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-post-1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-post-2",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-pre-1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-validity-1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-pre-2",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-validity-2",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-paired-check",
+          "result": "paired_rasters_checked"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "geoid-complete-pairs-and-cems",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:geoid-post-0",
+        "multihazard_source_validation_20260911:geoid-post-1",
+        "multihazard_source_validation_20260911:geoid-post-2",
+        "multihazard_source_validation_20260911:geoid-label-0",
+        "multihazard_source_validation_20260911:geoid-label-1",
+        "multihazard_source_validation_20260911:geoid-label-2",
+        "multihazard_source_validation_20260911:geoid-pre-0",
+        "multihazard_source_validation_20260911:geoid-pre-1",
+        "multihazard_source_validation_20260911:geoid-pre-2",
+        "multihazard_source_validation_20260911:geoid-validity-0",
+        "multihazard_source_validation_20260911:geoid-validity-1",
+        "multihazard_source_validation_20260911:geoid-validity-2",
+        "v6_0911_dataset_selection:D12-hf-mirror",
+        "v6_0911_dataset_selection:D12-hf-official",
+        "v6_0911_dataset_selection:D12-geoid-label-0-retry",
+        "v6_0911_dataset_selection:D12-geoid-label-1-retry",
+        "v6_0911_dataset_selection:D12-geoid-label-2-retry",
+        "v6_0911_dataset_selection:D12-geoid-pre-0-retry",
+        "v6_0911_dataset_selection:D12-geoid-validity-0-retry"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D13",
+      "name": "KuroSiwo",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "KuroSiwo 的 HF 连接失败；下一轮锁定版本后仅取 train 正负样例，不承诺整个数据不可用。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D13-hf-mirror",
+        "v6_0911_dataset_selection:D13-hf-official"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D14",
+      "name": "UrbanSARFloods",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "UrbanSARFloods 的 HF 连接失败；保留城市内涝候选，必须验证城市标签/事件身份。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D14-hf-mirror",
+        "v6_0911_dataset_selection:D14-hf-official"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D15",
+      "name": "Sen1Floods11 v1.1",
+      "inherited_content_evidence": "inherited",
+      "inherited_decision_cn": "已复核 3 个 Sen1Floods11 图像标签对、2 个事件地区；许可字段存在歧义，先澄清数据再分发条款。",
+      "evidence_checks": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "sen1floods11",
+          "result": "inherited_samples_rechecked"
+        }
+      ],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D16",
+      "name": "SpaceNet 8",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "SpaceNet8 读取文档可得；本轮未获取成对影像/道路标签，需保留原 split 并分开洪水与道路状态语义。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D16-spacenet8"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D17",
+      "name": "FloodNet",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "FloodNet 文档可得，真实图像/标签未取样；无人机图像多样性不等于多个风暴。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D17-floodnet"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D18",
+      "name": "CEMS Rapid Mapping",
+      "inherited_content_evidence": "catalog",
+      "inherited_decision_cn": "CEMS EMSR712/AOI10 产品与影像时刻已列举；部分版本状态 N、无产品，不能当成成功下载或同目标修订。",
+      "evidence_checks": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "geoid-complete-pairs-and-cems",
+          "result": "activation_AOI_metadata_bridge"
+        }
+      ],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D18-EMSR712",
+        "v6_0911_dataset_selection:D18-activations"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D19",
+      "name": "WildfireSpreadTS",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "3 天同一火场 TIFF；按作者读取器复算活动火像素 4/0/0；需新增独立火场、正例与火灭/缺测区别。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "wildfire-three-days",
+          "result": "arrays_decoded_label_semantics_pending"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "wildfire-label-semantics",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:wildfirespreadts-readme",
+        "multihazard_source_validation_20260911:wildfire-author-readme",
+        "multihazard_source_validation_20260911:wildfire-author-tree",
+        "v6_0911_dataset_selection:D19-reader",
+        "v6_0911_dataset_selection:D19-utils",
+        "v6_0911_dataset_selection:D19-reader-blob",
+        "v6_0911_dataset_selection:D19-utils-blob"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D20",
+      "name": "Next Day Wildfire Spread",
+      "inherited_content_evidence": "partial",
+      "inherited_decision_cn": "Next Day Wildfire ZIP 前缀已取得，TFRecord 尚未解码；需字段、CRC 和标签时距核验。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:nextdayfire-readme",
+        "multihazard_source_validation_20260911:kaggle-nextday-list",
+        "multihazard_source_validation_20260911:nextday-sample-0",
+        "v6_0911_dataset_selection:D20-parser"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D21",
+      "name": "TS-SatFire",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "TS-SatFire 3 天同一火场 19 波段栅格可解码；最终标签通道和未来标签切片仍需读取器验证。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ts_satfire-roi_fire_all_csv",
+          "result": "catalog_records_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ts-satfire-sample-0-decoded",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ts-satfire-sample-1-decoded",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ts-satfire-sample-2-decoded",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-ts_satfire",
+        "multihazard_source_validation_20260911:ts_satfire-README_md",
+        "multihazard_source_validation_20260911:ts_satfire-roi_fire_all_csv",
+        "multihazard_source_validation_20260911:kaggle-ts-satfire-list",
+        "multihazard_source_validation_20260911:ts-satfire-sample-0",
+        "multihazard_source_validation_20260911:ts-satfire-sample-1",
+        "multihazard_source_validation_20260911:ts-satfire-sample-2",
+        "v6_0911_dataset_selection:D21-data_generator_pred_torch-py",
+        "v6_0911_dataset_selection:D21-dataset_gen_pred-py"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D22",
+      "name": "Sen2Fire",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "Sen2Fire 尚未获取实际图像；只在需要独立火场/新地区时补源，不与同源火点重复计数。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D23",
+      "name": "NASA FIRMS",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "公开 FIRMS VIIRS CSV 可匿名取得；2,606 条为热点，不是 2,606 场野火；归因与事件分组待完成。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "firms-viirs",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:firms-viirs"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D24",
+      "name": "MTBS burned-area boundaries",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "MTBS 公开直链尝试失败；不必把 GEE 作为唯一入口，后续检查官方周界产品和许可。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D24-mtbs"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D25",
+      "name": "ERA5-Land Hourly",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "ERA5-Land 未实际验证；已有 WeatherBench2 ERA5 chunk 不能代替 ERA5-Land 认证与变量验证。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D26",
+      "name": "GHCN-Daily",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "5 个站点窗口 40 站日已解析；Toronto 查询为空；需季节基准、日界、质量标记和缺测规则。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-houston_cold",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-buffalo_snow",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-heathrow_heat",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-melbourne",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-newyork_rain",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:ghcnd-buffalo_snow",
+        "multihazard_source_validation_20260911:ghcnd-format",
+        "multihazard_source_validation_20260911:ghcnd-heathrow_heat",
+        "multihazard_source_validation_20260911:ghcnd-houston_cold",
+        "multihazard_source_validation_20260911:ghcnd-melbourne",
+        "multihazard_source_validation_20260911:ghcnd-newyork_rain",
+        "multihazard_source_validation_20260911:ghcnd-toronto"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D27",
+      "name": "ISD / Global Hourly",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "北京和沙特两个站年 28,733 报告；实有雾及浮/扬尘码，未发现本批沙尘暴/冻雨码正例。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "isd-54511099999",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "isd-40416099999",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "isd-phenomenon-samples",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:isd-40416099999",
+        "multihazard_source_validation_20260911:isd-54511099999",
+        "multihazard_source_validation_20260911:isd-72503014732",
+        "multihazard_source_validation_20260911:isd-format"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D28",
+      "name": "NOAA GFS0P25",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "已从公开 S3 读 GFS 3 个变量 GRIB；仅同一次初始化 f000，不是多轮修订或 3 场极端。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "gfs-tmp",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "gfs-ugrd",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "gfs-cape",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:gfs-index",
+        "multihazard_source_validation_20260911:gfs-cape",
+        "multihazard_source_validation_20260911:gfs-tmp",
+        "multihazard_source_validation_20260911:gfs-ugrd"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D29",
+      "name": "GPM IMERG V07",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "IMERG V07 尚无实测切片；CHIRPS DAILY_SAT 对 IMERG 的依赖不代表独立 IMERG 取样成功。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D30",
+      "name": "CHIRPS v3 DAILY_SAT",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "CHIRPS v3 DAILY_SAT 完成 2 个日栅格，第三日未完成；补站点、有效值编码与产品版本说明。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "chirps-2024.01.01-assembled",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "chirps-2024.01.02-assembled",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:chirps-index",
+        "multihazard_source_validation_20260911:chirps-2024",
+        "multihazard_source_validation_20260911:chirps-2024.01.01",
+        "multihazard_source_validation_20260911:chirps-2024.01.02",
+        "multihazard_source_validation_20260911:chirps-2024.01.03",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-0",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-1",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-2",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-3",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-4",
+        "multihazard_source_validation_20260911:chirps-2024.01.02-rest-0",
+        "multihazard_source_validation_20260911:chirps-2024.01.02-rest-1",
+        "multihazard_source_validation_20260911:chirps-2024.01.03-rest-0",
+        "multihazard_source_validation_20260911:chirps-2024.01.03-rest-1"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D31",
+      "name": "US Drought Monitor",
+      "inherited_content_evidence": "inherited",
+      "inherited_decision_cn": "USDM 3 个周次已复核；采用已有专家标注，不新增逐题人工复核；不能把周次算独立干旱过程。",
+      "evidence_checks": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "usdm",
+          "result": "inherited_samples_rechecked"
+        }
+      ],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D32",
+      "name": "SMAP Enhanced L3 Soil Moisture",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "SMAP 无实测土壤湿度切片；干旱/闪旱升级时再补，先确认冻土/植被与质量标记。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D33",
+      "name": "MODIS Snow MOD10A1.061",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "MODIS Snow 未实测；雪盖与降雪/暴雪/冻雨分开，当前 SNODAS 可作为积雪补源。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D34",
+      "name": "MODIS LST MOD11A1.061",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "MODIS LST 未实测；地表温度不能替代 2 米气温热浪标签。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D35",
+      "name": "MERRA-2 aerosol diagnostics",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "MERRA-2 气溶胶仅文档与入口；优先补 dust 专属变量并与现象码配对，不能以高 AOD 单独判沙尘暴。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:merra2-collections",
+        "multihazard_source_validation_20260911:merra2-sample-link"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D36",
+      "name": "Sentinel-5P OFFL Aerosol Index",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "S5P Aerosol Index 尚无实际切片；需将沙尘、烟羽、云和缺测区分。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D37",
+      "name": "NOAA CO-OPS water levels",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "3 个潮位站各 240 对同基准面观测/潮汐预报已匹配；残差含多种作用，不能单独称纯风暴潮。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-8761724-water_level",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-8761724-predictions",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-8518750-water_level",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-8518750-predictions",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-9414290-water_level",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-9414290-predictions",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "coops-time-pairing",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:coops-8518750-predictions",
+        "multihazard_source_validation_20260911:coops-8518750-water_level",
+        "multihazard_source_validation_20260911:coops-8761724-predictions",
+        "multihazard_source_validation_20260911:coops-8761724-water_level",
+        "multihazard_source_validation_20260911:coops-9414290-predictions",
+        "multihazard_source_validation_20260911:coops-9414290-water_level"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D38",
+      "name": "NOAA OISST v2.1",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "OISST 3 个日 NetCDF 可读；海洋热浪为扩展方向，需长期气候态与持续性定义。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "oisst-20240910",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "oisst-20240911",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "oisst-20240912",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:oisst-20240910",
+        "multihazard_source_validation_20260911:oisst-20240911",
+        "multihazard_source_validation_20260911:oisst-20240912"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D39",
+      "name": "EM-DAT",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "EM-DAT 注册和许可入口；不绕过访问条件；ExEBench 的案例 ID 也需检查派生使用条款。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D40",
+      "name": "NASA EONET v3",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "EONET 为事件检索备选，尚未有本轮解码事件；不能将事件目录当像素 Gold。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D41",
+      "name": "GDACS",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "GDACS 仅候选入口，当前未验证实际 feed；如已有 CEMS GDACS ID 再定向桥接。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D42",
+      "name": "Sentinel-1 GRD",
+      "inherited_content_evidence": "inherited_component",
+      "inherited_decision_cn": "S1 派生资产已在洪水数据中验证；独立原始 GRD/GEE 访问未验证，不重复算独立来源增量。",
+      "evidence_checks": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "geoid-complete-pairs-and-cems",
+          "result": "derived_S1_component_only_raw_GRD_access_not_validated"
+        }
+      ],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D43",
+      "name": "Sentinel-2 SR Harmonized",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "S2 原始 SR 访问尚未验证；现有 SAR/背景切片不代表其可用，按事件补光学和云质量层。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D44",
+      "name": "xBD",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "xBD 有注册/许可门槛；建筑损伤属于下游影响，且需排除地震等非天气灾种。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:xbd-page"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D45",
+      "name": "CrisisMMD v2.0",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "CrisisMMD 仅入口候选；社交图像版权和文本真实性尚未落实，不作为因果真值。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:crisismmd-page",
+        "multihazard_source_validation_20260911:crisismmd-split"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D46",
+      "name": "Landslide4Sense",
+      "inherited_content_evidence": "paired",
+      "inherited_decision_cn": "Landslide4Sense 已验证 3 个 train 图像掩膜对；HDF5 缺时空/事件属性，降雨诱发成因仍未确认。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "landslide-three-pairs",
+          "result": "paired_arrays_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:lands4sense-readme"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D47",
+      "name": "ExEBench / EarthExtreme-Bench",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "固定 commit 的寒潮 ZIP 完整校验：9 案例、559 时间步、8 国家/地区；其他六个子包未下载，ERA5/EM-DAT 来源与极端定义待核。",
+      "evidence_checks": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "exebench-coldwave",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-earthextreme",
+        "multihazard_source_validation_20260911:earthextreme-README_md",
+        "multihazard_source_validation_20260911:earthextreme-config_dataset_toml",
+        "multihazard_source_validation_20260911:earthextreme-schema_data_loader_py",
+        "multihazard_source_validation_20260911:earthextreme-README_md-retry02",
+        "multihazard_source_validation_20260911:earthextreme-config",
+        "multihazard_source_validation_20260911:earthextreme-hf",
+        "v6_0911_dataset_selection:D47-hf-mirror",
+        "v6_0911_dataset_selection:D47-hf-official",
+        "v6_0911_dataset_selection:D47-author-tree",
+        "v6_0911_dataset_selection:D47-resolve-probe",
+        "v6_0911_dataset_selection:D47-coldwave-pinned",
+        "v6_0911_dataset_selection:D47-config-blob",
+        "v6_0911_dataset_selection:D47-temp-reader-blob"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D48",
+      "name": "ExtremeWeatherBench",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "EWB 解码 329 案例定义及 GHCN-hourly 一个 row group 122,880 行；尚未把该观测组匹配到 EWB 极端案例。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ewb-src_extremeweatherbench_data_events_yaml",
+          "result": "benchmark_case_definitions_decoded"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "ewb-hourly-rowgroup",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-ewb",
+        "multihazard_source_validation_20260911:ewb-LICENSE",
+        "multihazard_source_validation_20260911:ewb-README_md",
+        "multihazard_source_validation_20260911:ewb-docs_data_md",
+        "multihazard_source_validation_20260911:ewb-src_extremeweatherbench_cases_py",
+        "multihazard_source_validation_20260911:ewb-src_extremeweatherbench_data_events_yaml",
+        "multihazard_source_validation_20260911:ewb-LICENSE-retry02",
+        "multihazard_source_validation_20260911:ewb-docs_data_md-retry02",
+        "v6_0911_dataset_selection:D48-ghcnh-footer",
+        "v6_0911_dataset_selection:D48-lsr-footer",
+        "v6_0911_dataset_selection:D48-ghcnh-full-footer",
+        "v6_0911_dataset_selection:D48-ghcnh-rg0"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D49",
+      "name": "WeatherQA",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "WeatherQA 的 Drive 下载失败；SPC 2018/md0398 原文可取回；README 的 20 幅图是变量组，不是 20 个时刻。",
+      "evidence_checks": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "weatherqa-spc-product",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D49-hf-mirror",
+        "v6_0911_dataset_selection:D49-hf-official",
+        "v6_0911_dataset_selection:D49-readme",
+        "v6_0911_dataset_selection:D49-repo",
+        "v6_0911_dataset_selection:D49-spc-md0398",
+        "v6_0911_dataset_selection:D49-text-download"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D50",
+      "name": "CyPortQA",
+      "inherited_content_evidence": "multiformat",
+      "inherited_decision_cn": "CyPortQA 已取得 Dorian/Harvey/Florence 各 1 图 1 文；精确公告时刻对齐及港口标签规则尚未验证。",
+      "evidence_checks": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "cyport-three-storm-bundles",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D50-readme",
+        "v6_0911_dataset_selection:D50-repo",
+        "v6_0911_dataset_selection:D50-CyPortQA_template-json",
+        "v6_0911_dataset_selection:D50-DORIAN_2019-png",
+        "v6_0911_dataset_selection:D50-DORIAN_2019-txt",
+        "v6_0911_dataset_selection:D50-FLORENCE_2018-png",
+        "v6_0911_dataset_selection:D50-FLORENCE_2018-txt",
+        "v6_0911_dataset_selection:D50-HARVEY_2017-png",
+        "v6_0911_dataset_selection:D50-HARVEY_2017-txt",
+        "v6_0911_dataset_selection:D50-LICENSE",
+        "v6_0911_dataset_selection:D50-README-md",
+        "v6_0911_dataset_selection:D50-DORIAN_2019-txt-blob",
+        "v6_0911_dataset_selection:D50-FLORENCE_2018-txt-blob",
+        "v6_0911_dataset_selection:D50-HARVEY_2017-png-blob",
+        "v6_0911_dataset_selection:D50-HARVEY_2017-txt-blob"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D51",
+      "name": "WorldFloods v2 / ml4floods",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "WorldFloods v2 的 HF 数据连接未完成；保留为全球光学洪水备选，核验每类源产品的许可。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D51-hf-mirror",
+        "v6_0911_dataset_selection:D51-hf-official"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D52",
+      "name": "DroughtED",
+      "inherited_content_evidence": "prefix_records",
+      "inherited_decision_cn": "DroughtED train ZIP 前缀解析 26,666 行，含 3,809 非空周标签；实际至 2016 与文档 train 2000-2009 冲突；需固定原文件切分。",
+      "evidence_checks": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "droughted-prefix",
+          "result": "verified"
+        }
+      ],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D52-kaggle-files",
+        "v6_0911_dataset_selection:D52-readme",
+        "v6_0911_dataset_selection:D52-repo",
+        "v6_0911_dataset_selection:D52-metadata",
+        "v6_0911_dataset_selection:D52-train-prefix",
+        "v6_0911_dataset_selection:D52-train-prefix-encoded"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D53",
+      "name": "M4Fog",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "M4Fog 仓库和网盘页可读，未取到真实 cube；镜像身份/条款和海雾正例均未完成验证。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "v6_0911_dataset_selection:D53-readme",
+        "v6_0911_dataset_selection:D53-repo",
+        "v6_0911_dataset_selection:D53-share"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D54",
+      "name": "CLLMate",
+      "inherited_content_evidence": "catalog",
+      "inherited_decision_cn": "CLLMate 公共 JSON 7,747 节点已解析；包括非天气事件；新闻/原图与因果边未验证，不作因果 Gold。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "cllmate-data_dataset_cllmate_json-retry02",
+          "result": "benchmark_records_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-cllmate",
+        "multihazard_source_validation_20260911:cllmate-README_md",
+        "multihazard_source_validation_20260911:cllmate-data_dataset_cllmate_json",
+        "multihazard_source_validation_20260911:cllmate-README_md-retry02",
+        "multihazard_source_validation_20260911:cllmate-data_dataset_cllmate_json-retry02"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D55",
+      "name": "SNODAS SWE",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "SNODAS 3 日 SWE 网格已解码；积雪不是暴雪/冻雨，32767 编码上限须结合产品说明。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "snodas-20240101",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "snodas-20240102",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "snodas-20240103-assembled",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:snodas-winter-index",
+        "multihazard_source_validation_20260911:snodas-20240101",
+        "multihazard_source_validation_20260911:snodas-20240102",
+        "multihazard_source_validation_20260911:snodas-20240103",
+        "multihazard_source_validation_20260911:snodas-20240103-remainder-0",
+        "multihazard_source_validation_20260911:snodas-20240103-remainder-1",
+        "multihazard_source_validation_20260911:snodas-20240103-remainder-2",
+        "multihazard_source_validation_20260911:snodas-doc"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D56",
+      "name": "USGS Water Data",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "USGS 3 站各 3 条流量记录，9 条真实记录；返回日期不连续且不代表最新；需按洪水窗口重取。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "usgs-07374000",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "usgs-01646500",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "usgs-02323500",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:usgs-01646500",
+        "multihazard_source_validation_20260911:usgs-02323500",
+        "multihazard_source_validation_20260911:usgs-07374000"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D57",
+      "name": "NWPS Stageflow",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "NWPS 3 站阶段水位可解析，流量字段 -999；BTRL1 未提供 usgsId，不能自动接到附近 USGS 站。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "nwps-BTRL1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "nwps-STFL1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "nwps-DONL1",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:nwps-BRDO2",
+        "multihazard_source_validation_20260911:nwps-BTRL1",
+        "multihazard_source_validation_20260911:nwps-CINI2",
+        "multihazard_source_validation_20260911:nwps-documentation",
+        "multihazard_source_validation_20260911:nwps-gauges",
+        "multihazard_source_validation_20260911:nwps-gauge-detail",
+        "multihazard_source_validation_20260911:nwps-DONL1",
+        "multihazard_source_validation_20260911:nwps-STFL1"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D58",
+      "name": "NDBC Buoys",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "NDBC 3 个浮标波高可解析；多条报告仍需按风暴/站点配对，波高不等于风暴潮。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ndbc-41009",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ndbc-46042",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ndbc-44025",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:ndbc-41009",
+        "multihazard_source_validation_20260911:ndbc-44025",
+        "multihazard_source_validation_20260911:ndbc-46042"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D59",
+      "name": "MeteoNet",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "MeteoNet 111,623 站报/484 站及 IR108 数组可读；雷达 NPZ object 时间不启用 pickle，时间桥接未完成。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "meteonet-data_samples_radar_rainfall_SE_2016_08_3_npz",
+          "result": "array_values_decoded_time_unresolved"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "meteonet-data_samples_satellite_IR108_SE_2016_nc",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "meteonet-data_samples_ground_stations_SE_20160101_csv-retry02",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-meteonet",
+        "multihazard_source_validation_20260911:meteonet-README_md",
+        "multihazard_source_validation_20260911:meteonet-data_samples_ground_stations_SE_20160101_csv",
+        "multihazard_source_validation_20260911:meteonet-data_samples_radar_rainfall_SE_2016_08_3_npz",
+        "multihazard_source_validation_20260911:meteonet-data_samples_satellite_IR108_SE_2016_nc",
+        "multihazard_source_validation_20260911:meteonet-docs_src_english_data_ground-observations_md",
+        "multihazard_source_validation_20260911:meteonet-docs_src_english_data_rain-radar_md",
+        "multihazard_source_validation_20260911:meteonet-README_md-retry02",
+        "multihazard_source_validation_20260911:meteonet-data_samples_ground_stations_SE_20160101_csv-retry02"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D60",
+      "name": "Caravan",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "Caravan 3 个 CAMELS 美国流域各 14,609 日；流域属性/单位/极端阈值待补，ERA5-Land 驱动不是独立真值。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "caravan-three-basins",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:caravan-public",
+        "multihazard_source_validation_20260911:repo-caravan",
+        "multihazard_source_validation_20260911:caravan-README_md"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D61",
+      "name": "HANZE v2.1",
+      "inherited_content_evidence": "catalog",
+      "inherited_decision_cn": "HANZE 2,521 欧洲洪水影响记录、40 国；用于非美国检索与类型校验，事件族去重另做。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hanze-events",
+          "result": "catalog_records_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:hanze-events"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D62",
+      "name": "Dheed",
+      "inherited_content_evidence": "catalog",
+      "inherited_decision_cn": "Dheed 82,839 派生干热事件记录可读；先查上游依赖和定义，不能作为另一份独立观测真值。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "dheed-events",
+          "result": "derived_event_records_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:dheed-events",
+        "multihazard_source_validation_20260911:dheed-readme"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D63",
+      "name": "DAWN",
+      "inherited_content_evidence": "metadata",
+      "inherited_decision_cn": "DAWN 官方 API 枚举 Fog/Rain/Sand/Snow 四包；未抽取图片，时间/地点不足时仅作视觉条件辅助集。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:dawn-mendeley",
+        "multihazard_source_validation_20260911:dawn-page",
+        "multihazard_source_validation_20260911:dawn-files"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D64",
+      "name": "SenForFlood",
+      "inherited_content_evidence": "background",
+      "inherited_decision_cn": "SenForFlood TAR 前缀取得 3 个 LULC TIFF；目前仅背景层，不是三组洪水图像标签对。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "senforflood-tar-prefix-members",
+          "result": "background_only_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:senforflood-api",
+        "multihazard_source_validation_20260911:senforflood-api-retry",
+        "multihazard_source_validation_20260911:senforflood-tar-prefix"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D65",
+      "name": "FPA-FOD6",
+      "inherited_content_evidence": "inherited",
+      "inherited_decision_cn": "FPA-FOD6 已复核 3 条火灾记录；与 FIRMS、火烧迹地按事件合并，起火原因不能默认极端天气。",
+      "evidence_checks": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "fpa_fod6",
+          "result": "inherited_catalog_rechecked"
+        }
+      ],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D66",
+      "name": "WeatherBench2 ERA5",
+      "inherited_content_evidence": "inherited",
+      "inherited_decision_cn": "WeatherBench2 一个 ERA5 温度 chunk 已复核；记录为 ERA5 衍生产品，不冒充 D25 ERA5-Land。",
+      "evidence_checks": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "weatherbench2",
+          "result": "inherited_array_rechecked"
+        }
+      ],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D67",
+      "name": "HRRR",
+      "inherited_content_evidence": "numeric",
+      "inherited_decision_cn": "HRRR 已读同一次初始化 3 个 GRIB 变量；若做修订需同 valid_time 的多 init_time，当前未证实。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hrrr-tmp",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hrrr-ugrd",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hrrr-cape",
+          "result": "sample_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:hrrr-index",
+        "multihazard_source_validation_20260911:hrrr-cape",
+        "multihazard_source_validation_20260911:hrrr-tmp",
+        "multihazard_source_validation_20260911:hrrr-ugrd"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D68",
+      "name": "HKO-7",
+      "inherited_content_evidence": "catalog",
+      "inherited_decision_cn": "HKO-7 仓库日天气统计 2,556 行可读；实际雷达序列尚未取样。",
+      "evidence_checks": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hko7-hko_data_weather_statistics_csv",
+          "result": "catalog_records_decoded"
+        }
+      ],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:hko-sample",
+        "multihazard_source_validation_20260911:repo-hko7",
+        "multihazard_source_validation_20260911:hko7-README_md",
+        "multihazard_source_validation_20260911:hko7-hko_data_README_md",
+        "multihazard_source_validation_20260911:hko7-hko_data_weather_statistics_csv"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D69",
+      "name": "GESLA current / GESLA-3 candidate",
+      "inherited_content_evidence": "metadata",
+      "inherited_decision_cn": "GESLA 站点目录可读；现端点报告 format 5.0/2026，不能标作 GESLA-3；潮位实际切片未取回。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:gesla-files",
+        "multihazard_source_validation_20260911:gesla-erddap-info",
+        "multihazard_source_validation_20260911:gesla-station-list"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D70",
+      "name": "ESWD",
+      "inherited_content_evidence": "unverified",
+      "inherited_decision_cn": "ESWD 适合补欧洲龙卷/冰雹，但本轮未获得许可明确的批量样本。",
+      "evidence_checks": [],
+      "capture_ids": [],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D71",
+      "name": "CAMELSH",
+      "inherited_content_evidence": "metadata",
+      "inherited_decision_cn": "CAMELSH 发布元数据候选；未解码水文时序，需确认与 Caravan/CAMELS 的派生重叠。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:camelsh-info"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D72",
+      "name": "MSETCD / MSCAR",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "MSETCD/MSCAR 读取器或目录候选；未验证实际图像，用于后续亚洲气旋补源。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-msetcd",
+        "multihazard_source_validation_20260911:msetcd-README_md"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D73",
+      "name": "CMA Best Track",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "CMA 最佳路径入口已登记；尚无完整样例解码，仅作未来多机构事后对照。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:cma-besttrack-page"
+      ],
+      "new_task_admitted": false
+    },
+    {
+      "source_id": "D74",
+      "name": "NOAA Billion-Dollar Disasters",
+      "inherited_content_evidence": "reference",
+      "inherited_decision_cn": "NOAA Billion-Dollar 仅影响事件索引候选；经济损失阈值造成地区偏差，不定义全球气象极端。",
+      "evidence_checks": [],
+      "capture_ids": [
+        "multihazard_source_validation_20260911:billion-dollar-events"
+      ],
+      "new_task_admitted": false
+    }
+  ],
+  "file_bindings": [
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0001/body.bin",
+      "bytes": 53138,
+      "sha256": "70319dcccbd3fdfd199bf899154e05a6fd47b2b1dee7f44847211f4411d0eda6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0002/body.bin",
+      "bytes": 3883,
+      "sha256": "b82a9291be30b298543249d100fb5d83be5598f1668504897bb1635306aeec9d"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0003/body.bin",
+      "bytes": 1621,
+      "sha256": "f872b75d75c504b4a769b0125b36e4cbe3605ece595742d9a85b4904cc3523e4"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0004/body.bin",
+      "bytes": 2463,
+      "sha256": "6b738381b6dd9c1229c0cf853fdd0c96fbf62ef97464e1dfaf27475162accc2b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0005/body.bin",
+      "bytes": 28567,
+      "sha256": "3a71ae355252a6693a56a473ed7182b500ae7816c2cb2b2ce708c1e9ea9dcfde"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0006/body.bin",
+      "bytes": 1782,
+      "sha256": "70eaa724a5c951025d5ff5042318eba20396770ba2d923de219d19e4708d3966"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0007/body.bin",
+      "bytes": 2963,
+      "sha256": "738aef2f11c30d5815fa61a2b1f690f179c2734dacfab6ff14351d09d2f5dff6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0008/body.bin",
+      "bytes": 4,
+      "sha256": "3fbbd4c6d76130399b0c79cdf41758669224a91e05b7b216953f0c9728750865"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0009/body.bin",
+      "bytes": 6504448,
+      "sha256": "e429a2a1b8f2ce0b348f9226519462db8792444dc3f501ae0ad5f2115ee4057a"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0010/body.bin",
+      "bytes": 7184935,
+      "sha256": "8b5cd4c2ff1f2a73217d8343206ddf7bbc325d05934adcda2fb602fd014b592e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0011/body.bin",
+      "bytes": 2600952,
+      "sha256": "64fa03925cf2f6e18e91c83561269b822a0802632b85cbdaa1aa194e889171e3"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0012/body.bin",
+      "bytes": 887431,
+      "sha256": "68c501705fb057f4619a143575a158ab9c5601f16dd9733108142c211e5032f3"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0013/body.bin",
+      "bytes": 3712,
+      "sha256": "484f9fec7408daa1ce2738012fae75a37504a54748baf779a189a392c952521d"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0014/body.bin",
+      "bytes": 3715,
+      "sha256": "35e9e7af7c86c5213a46414869b88c6f2737a431b5376bfa6b67354a357541af"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0015/body.bin",
+      "bytes": 3702,
+      "sha256": "7282888e22113edf4653b50757df4cb7020135798daaa78bf053518bb849ecb6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0016/body.bin",
+      "bytes": 127510,
+      "sha256": "e2880ba4d2ba30c10a705afa33118980e06a4cbf607fdedd4b68b4efe224bdf9"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0017/body.bin",
+      "bytes": 83,
+      "sha256": "6db4a119e236f615d6cdd93f2ddc4637e7d781265ecb20b6d638d493bf8e56fc"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0018/body.bin",
+      "bytes": 83,
+      "sha256": "2f4f512c5ef7e0bb983dbf274c22a198b0774ccd9a83f4b20ef34e9556665928"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0019/body.bin",
+      "bytes": 18072,
+      "sha256": "284c6932f55c652ad2baf96653f6b0fd0179cb0f929855de81bba895bccc6a2f"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0020/body.bin",
+      "bytes": 9118,
+      "sha256": "c08ad7dce3cea8a121f62de597db13989fd92c8c3fbd753594092fdcca42a01e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0021/body.bin",
+      "bytes": 18037,
+      "sha256": "19c98de999caac5397bfae8c173b07f32a4c76540449bc911fcdef16bc673ffd"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0022/body.bin",
+      "bytes": 9120,
+      "sha256": "224f230cee9345ea9940043365ce1324f58e56618676ed2f88195dde535273d1"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0023/body.bin",
+      "bytes": 18053,
+      "sha256": "df3ef708d5bba0c856f4822a5b02125e31c63e023520779d4d0b3e4e0f136775"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0024/body.bin",
+      "bytes": 9116,
+      "sha256": "076d5c39ba718e717f646e97f950f1b08f5ae92ece232baccf79776ea48d3e2e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0025/body.bin",
+      "bytes": 597840,
+      "sha256": "0f541b37b704ca6612f00c7bf264977d331caf143bd77abf18acf110c468ec73"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0026/body.bin",
+      "bytes": 600002,
+      "sha256": "a4c1887c9a752605c015b19dfcdd80afda715a1cd81b8a96c292b39505b93924"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0027/body.bin",
+      "bytes": 170704,
+      "sha256": "8834c224be6fa3160f31fe9776544dd7a66a45643ec52336a7919115dd9557b5"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0028/body.bin",
+      "bytes": 805,
+      "sha256": "1b66c7cd0f7794ee38bc1e6244684e279e7a4b8c1d97c549809be18f358e2fac"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0029/body.bin",
+      "bytes": 1532662,
+      "sha256": "3c36fa0d4ea5e8d445d1844650024efbbb2012eea559d7a4263506c8a248664b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0030/body.bin",
+      "bytes": 1534657,
+      "sha256": "6f354705301872ecd886c76d0bc064bd57391f1dd936159c6bac3dbc1e480751"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0031/body.bin",
+      "bytes": 1532461,
+      "sha256": "95200b38825a465e1ba4ebeca5b7c618b0b52a24eb3f3749ed62cf4308bd9776"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0032/body.bin",
+      "bytes": 4041,
+      "sha256": "891680868badb41ae86da062ae125d87fa6744e7c79348e5766e6b240e62c955"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0033/body.bin",
+      "bytes": 6053,
+      "sha256": "d92cc9d7682231515dd9c02e4970e215bcd33f9845d797c865c4c000bbc5dbba"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0034/body.bin",
+      "bytes": 476080,
+      "sha256": "92c4b0108ba155e930e41f41c574acd59470e126f6a022646fa9a9bdb6807500"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0035/body.bin",
+      "bytes": 13933050,
+      "sha256": "ddfbd97f193a13356c51e1c0cf933b370963e2ab8712d36eeea5acab1929aafd"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0036/body.bin",
+      "bytes": 4621,
+      "sha256": "57939a8383054bb4bda5aa0bba5a886f405099054944e19293273e4bc6558ef6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0037/body.bin",
+      "bytes": 1162939,
+      "sha256": "54b20b26dd8a992cfd780686c76f6517b09d4043f5c6576b8cb9f9b7f98ad526"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0038/body.bin",
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0039/body.bin",
+      "bytes": 316,
+      "sha256": "4ab6a58bac76185ed85aeea0e8d248dda5475b66769c8f5d7e8cd0a628246cb8"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0040/body.bin",
+      "bytes": 6115,
+      "sha256": "73113b92bef39bac9f09ce4edce38b5190a063ce925e33f6cbe0e2ddb4e84b69"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0041/body.bin",
+      "bytes": 180,
+      "sha256": "d0ec8658cffd82e73704c00130a97196fa3097cc97104dfc82e7458e5e700b71"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0042/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0043/body.bin",
+      "bytes": 694,
+      "sha256": "e21213f67e8a41a1c9d5f300c860578f975cf0ba064dae0b5df4b818b1173efa"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0044/body.bin",
+      "bytes": 35537,
+      "sha256": "97f38d9a4a2972c6a7d95ee120e5e3459cb1bc01b0a65046bb0c5badd3158245"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0045/body.bin",
+      "bytes": 18751,
+      "sha256": "17d514ec374049ad599d47c63cd3bf1d27d2e96235b15a5e8702a7492881290f"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0046/body.bin",
+      "bytes": 6420,
+      "sha256": "990d17a92ec1d2df108f93f50ed1cc07bcda3b6f92a7b9d0fabce1e68d0a1712"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0047/body.bin",
+      "bytes": 61990,
+      "sha256": "f63f9ed617ba256fe250f8b422579e38df93aa3797ba0580e4a660da16328b01"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0048/body.bin",
+      "bytes": 29452,
+      "sha256": "a863c71dccb2ee236aaa872c8902112035f287adbaef0ac9a1db3e7d6793a15f"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0049/body.bin",
+      "bytes": 3033,
+      "sha256": "d3bad3f63dd9e44aeee0cee566e8f1b647ef50524f258172ac27385cd9f62892"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0050/body.bin",
+      "bytes": 7169,
+      "sha256": "93c957ca5e6828e63c2669a79fcfab18a3777760fff32ee1197e192963c7cbec"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0051/body.bin",
+      "bytes": 12782,
+      "sha256": "a1e309ed7bc65a279f585ea4a3f1198d2d9373e9267d49b1947b83fbcdbdbf1a"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0052/body.bin",
+      "bytes": 54881,
+      "sha256": "8e8052a0c2d1b3568998cc84bea4b37c23a7db71d547cf8f34b6b109f2f55a30"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0053/body.bin",
+      "bytes": 18466,
+      "sha256": "7672ec82045e6af632d3ea68c52233e5f0a8445d5d2c34beff1399d10e250364"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0054/body.bin",
+      "bytes": 25816,
+      "sha256": "6d119ff544949657980ba2721684400bfef9bac7e6fb2dc6cf5c535a58737f17"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0055/body.bin",
+      "bytes": 392,
+      "sha256": "562e53b8f38ccd2bcb84b83ba76a4c11b94f21270abff4ad9839ceefddb0c4b0"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0056/body.bin",
+      "bytes": 2981,
+      "sha256": "319f77ec83ec6cd6b76af97d974b79ca81d8115c805788ca4541a8c7fa18c3d1"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0057/body.bin",
+      "bytes": 6553600,
+      "sha256": "5e207d573b1fc2db6cf1871dd08fabae4b0d5da47f2e17de6ff0331358c03776"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0058/body.bin",
+      "bytes": 13096960,
+      "sha256": "ef73eaaf9bff0ccf8513abd47e0b285da5a0b450721b7a55ef8c97c99a217512"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0059/body.bin",
+      "bytes": 8519680,
+      "sha256": "553a87aa3094d365e068da3c06bae8cd96742bc9a6dd2cfe06d8936a8f111132"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0060/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0061/body.bin",
+      "bytes": 4308992,
+      "sha256": "59bc8f79416adea1b59f01c6872f2f7402cb61649c6f9efd2508d0cea479149b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0062/body.bin",
+      "bytes": 13015040,
+      "sha256": "3d1841d12bda30e87545acfc6c829fb8d7e8e2d06f59c12fe67085c6be3b6cf9"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0063/body.bin",
+      "bytes": 80326,
+      "sha256": "1e1f1b0cc190397aedfe37c82292dc78a712f7605f6a6b59970291778be68015"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0064/body.bin",
+      "bytes": 222,
+      "sha256": "0b624c7e99328265f012c49c223db5c8a6ce0247a3be8964682bff8a5087a5fa"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0065/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0066/body.bin",
+      "bytes": 4845,
+      "sha256": "877cc046a36e8567ea05388ae6bfdb802d3c97765c4348dfcf59715ac0575ef8"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0067/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0068/body.bin",
+      "bytes": 99782,
+      "sha256": "9629f125737aeed7bf70e7dbeffb9c806b5901c7a7e201666f125293e28b7a5a"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0069/body.bin",
+      "bytes": 6083,
+      "sha256": "07f836dc99038313aa1f8a6b6398ce1e20ba604bd12593c92db80def35c7a683"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0070/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0071/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0072/body.bin",
+      "bytes": 7225,
+      "sha256": "ac1c8c2c2d9e97bcf57c604fb5943c10f79fa253616e2ea3fdccd1f382ec2303"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0073/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0074/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0075/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0076/body.bin",
+      "bytes": 6646,
+      "sha256": "07c3bb871edcc8e117b04423f7a27436ece4b5164129aa12a03ad8384444d312"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0077/body.bin",
+      "bytes": 1079,
+      "sha256": "da63d4ad3f2c973198536d3b89577760ba916311113cb6a1b7733dd29dc9f740"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0078/body.bin",
+      "bytes": 9381,
+      "sha256": "7c0693fad50b668276d615130dcba6cacb5c5f66f0650a5bd25e094eca6a8f31"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0079/body.bin",
+      "bytes": 153,
+      "sha256": "61f08aa3c4ae3b6603773ba0c54ab6bbf68a4bf6055514e954b4bfb459f98ec3"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0080/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0081/body.bin",
+      "bytes": 1456,
+      "sha256": "a587e82a2d945c684b96daafb21da7fba7115b6609ae6220799ffcf4231a04fc"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0082/body.bin",
+      "bytes": 8132,
+      "sha256": "0aded09f370b5573f12b3538d31595643d0a5e3775cdee0c2c9e5c7e339618d8"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0083/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0084/body.bin",
+      "bytes": 459600,
+      "sha256": "37c06b69b019992ee9ecee22300f6ef7d90c3cb177298d36d77ea18bf42eb09b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0085/body.bin",
+      "bytes": 4305588,
+      "sha256": "f82dec0110944e2a450761e0d44b0326ebbc496e7632c39c0f0569b7cb817a46"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0086/body.bin",
+      "bytes": 5395,
+      "sha256": "adc363795dd6ccf3d624d773b291089d73597afa12c53b1a6bf53fa8d681746b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0087/body.bin",
+      "bytes": 6644,
+      "sha256": "2b0c4b9ac7784d9a6c5aacd3bf25cb3c5e5c19c467eaba496621c5c7de0c0ce3"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0088/body.bin",
+      "bytes": 4992,
+      "sha256": "1217c18efd02bdac99bd7809fd7512252882a40f8d45f4bbc51c574d05cf7386"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0089/body.bin",
+      "bytes": 14664,
+      "sha256": "471253b78307f430c78ab24d456a9c299c02a96cee57e2e55312c7857f427b83"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0090/body.bin",
+      "bytes": 9536,
+      "sha256": "2347176255a8e0778a828777b97a9caa5f72e14e4a67a19eef8ee21dc070e7ab"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0091/body.bin",
+      "bytes": 146921,
+      "sha256": "8747efce2c96126bcaeee0a7b69740ef0da935efe294f7fbb3dca2a42c9a6853"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0092/body.bin",
+      "bytes": 1179,
+      "sha256": "c529e4528e39c16b649d233cb7ddfa0a5384f9b6b2a93239c8a07d0064ecf69e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0093/body.bin",
+      "bytes": 5588,
+      "sha256": "c5173b8e9f630dab39a4fc26d4b1e6f967d9ebf9995df37b7e00bdaf49bacbad"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0094/body.bin",
+      "bytes": 116413,
+      "sha256": "a80edbea8554b0ffdc339e66d7c673183e22326fe625a05ddef71be46a1e4a31"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0095/body.bin",
+      "bytes": 87746,
+      "sha256": "159cc28c319e6be47eaee5a7befdb857fa40a01582072fd2598bd4c4e838fe60"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0096/body.bin",
+      "bytes": 247,
+      "sha256": "3cc4c9da40b1a5bdcec0845ad24e24b8c1057cfe0dd375e0238f8b88b4497c99"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0097/body.bin",
+      "bytes": 36490,
+      "sha256": "fbe9bbcba93bd90e8e49aed9ca6f93869c5d136b1903ea00c50f8bc9ef36b976"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0098/body.bin",
+      "bytes": 14862,
+      "sha256": "6e04502ef85871ea531fd927c393396425781add1e081f6ea70ca67b04990e52"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0099/body.bin",
+      "bytes": 1580,
+      "sha256": "944e1676c73b39cc44842ef351505eb205d6c3f444270eabc8f609a1b4a95ab2"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0100/body.bin",
+      "bytes": 19650,
+      "sha256": "c02e19c819c9e5d4003dbb73a0fcbc8a132b1777772b9121be6fe9d58b661ddc"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0101/body.bin",
+      "bytes": 2438,
+      "sha256": "e8905d7981da678e9cdc508f9fa33b9b30244652c3ddd9a4988c0ea795d647db"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0102/body.bin",
+      "bytes": 214365,
+      "sha256": "a5d3249191ee2ea824afa1b4de341cd920ec4986c792742bfaeea0c88c10e9fb"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0103/body.bin",
+      "bytes": 29191,
+      "sha256": "f1714b3b9ab64162ba33ff0401c50299b70fcccf7a2cec76b5620c6c07b3af35"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0104/body.bin",
+      "bytes": 31819,
+      "sha256": "f14ce0fd2a5e5059fe3ec631bdca05aecf1d4fd4c54787bdd9a36d045b9b03a8"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0105/body.bin",
+      "bytes": 9000,
+      "sha256": "0f42955f7686a53ca4aceec58f7f031d5415cf254ce47ebe2f97939d31b33350"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0106/body.bin",
+      "bytes": 131072,
+      "sha256": "4e72a484654638c795a1d38acfff22effdbbbc265f6714a4e1a7f0ca46817be8"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0107/body.bin",
+      "bytes": 552561,
+      "sha256": "8f97ee95536e91e49f4e01cda6a63e4d0523915935f4670fc17983de0b52a219"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0108/body.bin",
+      "bytes": 65536,
+      "sha256": "c6028d1c7b803399dd749ede51c6be3ddf84bc66bfaa2e29ce8922e46c517ffe"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0109/body.bin",
+      "bytes": 741582,
+      "sha256": "77ff22145d9aaf18db440abe2eac283b8180ac66cb80dd2f523f77a21bcdabf0"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0110/body.bin",
+      "bytes": 65536,
+      "sha256": "ae94a44948523d784f286a4c29b96bab5baa64940098eaee89955b211345a2ca"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0111/body.bin",
+      "bytes": 695494,
+      "sha256": "222122e3cac43722246f3b69ba7fcdd195ab77a420fe18413ab2c27f80e0d7c0"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0112/body.bin",
+      "bytes": 65536,
+      "sha256": "657db4c782686267eb04e760ac31e0670ba272f01eaf02dde299e2dd79e39ce1"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0113/body.bin",
+      "bytes": 724669,
+      "sha256": "e9d9fa07697cee5cad5c425e16577124e588c1bb51be4124a1796b4e5dd0696b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0114/body.bin",
+      "bytes": 65536,
+      "sha256": "8bbd40c8a8475ffc77a1e9d3b984b5603335666968e2314906b51ec87aa044d2"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0115/body.bin",
+      "bytes": 681335,
+      "sha256": "f94ee0b8bbe0da1004d13519cc790ed4732b03e1c22a914490de8651f9398413"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0116/body.bin",
+      "bytes": 65536,
+      "sha256": "305c36ae6810a8f5eb11705681cfcc0026cf4fe76c9e7d7049826159ecf93af6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0117/body.bin",
+      "bytes": 769083,
+      "sha256": "b07e855f438fae923dcbf552f3907738a61591ae755d1f4ac24f7540e02dfd62"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0118/body.bin",
+      "bytes": 65536,
+      "sha256": "9c275863e95601edea2a57c283109f1650fe3c6803c9b7829363a12ccaaa4a78"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0119/body.bin",
+      "bytes": 765131,
+      "sha256": "1cdc6bde251ba20373c7704a7e91bb88d142fd931b78202e18cfae6793bffeda"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0120/body.bin",
+      "bytes": 131072,
+      "sha256": "4e72a484654638c795a1d38acfff22effdbbbc265f6714a4e1a7f0ca46817be8"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0121/body.bin",
+      "bytes": 552561,
+      "sha256": "8f97ee95536e91e49f4e01cda6a63e4d0523915935f4670fc17983de0b52a219"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0122/body.bin",
+      "bytes": 65536,
+      "sha256": "76933cd0d47bd35e602b8b2b3630f3559c0bb8ae01df26cf28635c9aa9779414"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0123/body.bin",
+      "bytes": 131072,
+      "sha256": "db5b25c6c530fa306d9c8ce2adc171f1ec4ca4b74dc4d85e6a9a98150d3a147b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0124/body.bin",
+      "bytes": 1871505,
+      "sha256": "64cb41b75568630b9206f5e6a16b977ce0f4a9619404d24fe0ca51d4ba44ab7b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0125/body.bin",
+      "bytes": 65536,
+      "sha256": "cd4e8ec95d1fd9b117f8f419afd3c188b3c82de35a1236edcb7cfbc0b4ca800b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0126/body.bin",
+      "bytes": 1026172,
+      "sha256": "cfde0b8e9aa10311017068af4ec94171cece2a8ff97d4a7de27b52ffa30414fc"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0127/body.bin",
+      "bytes": 65536,
+      "sha256": "adb2d5a717a2e58ded7a13b671bc7a8c9313e3d029273224d0387dea48bbab84"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0128/body.bin",
+      "bytes": 1030136,
+      "sha256": "7e5337f2ca18c66bc163eeb16cf003f2db365913c9c73c233c7e3085144957e5"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0129/body.bin",
+      "bytes": 65536,
+      "sha256": "3e8732fd4c5c99f688174c02c3a8abd3855f5e323c37d82ff42e8955a3b988cb"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0130/body.bin",
+      "bytes": 1030434,
+      "sha256": "14260b6ea1dbd9206c722aaa3b73dc6821b44234b5e42e279424732c37fa2ea6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0131/body.bin",
+      "bytes": 236,
+      "sha256": "9448f8a1159c9b14e3e1b9d8eab1a6ddf88d26e1f888a34cef430c756e4e6e1e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0132/body.bin",
+      "bytes": 131072,
+      "sha256": "2fee2c17ef3990443a4b9003755cb976d2ca5f32246c79e58954b1f8d5507cc7"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0133/body.bin",
+      "bytes": 1611820,
+      "sha256": "dc79ea3c46e2989ff6317a88a662c765fcd3866a766a117e18cc7e32ff7bc93e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0134/body.bin",
+      "bytes": 65536,
+      "sha256": "d764f701d696947a0811682b8e6963d1dae967b6eb85727a18ab002be12c10f6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0135/body.bin",
+      "bytes": 3060800,
+      "sha256": "7384f8f66af45bb92ed020a1f2deac407ff1196f1574259b8c68e4a18c6bbee5"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0136/body.bin",
+      "bytes": 65536,
+      "sha256": "2d0d49efad07049576dfd3c5cc19a83db27dc2b4429bf41eaae83d3bc4ae6a3d"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0137/body.bin",
+      "bytes": 3097052,
+      "sha256": "81f8229fcdb707348ba4b703bce4e818e710d05fc6429e970bcc59652766563a"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0138/body.bin",
+      "bytes": 65536,
+      "sha256": "84e568c256f3b79e649f05205ee519e428a1bdb7075385907dcf931135d14521"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0139/body.bin",
+      "bytes": 3212023,
+      "sha256": "608e335b88a9ad9499b129a7a99f55261dae3a1b4b430ba883e9f5c2634207b2"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0140/body.bin",
+      "bytes": 2097152,
+      "sha256": "1942c5f37b76afba197738b5494c7b4cc2cc68772683d9480732e0e9f9d8df42"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0141/body.bin",
+      "bytes": 2097152,
+      "sha256": "4d279cab53bc8189b4f0d3bfa42bb03e6260ed5d5a1c24a8e370e753dbba3c2f"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0142/body.bin",
+      "bytes": 2097152,
+      "sha256": "f0d4f41b3e75888b689e412fad056fda3aefa7488b5317511e67fb8c5846c73c"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0143/body.bin",
+      "bytes": 190492,
+      "sha256": "d99c7a55692e95b40a5b066519feb7ba8346fec80c21f3d419f0575bc1faa537"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0144/body.bin",
+      "bytes": 1913201,
+      "sha256": "2a12707ce2aa1efc39bf977572d1be94f1479c4c76ae3f23925b1a7396f425ab"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0145/body.bin",
+      "bytes": 2097152,
+      "sha256": "251d33b2ab84be15c6950be4ab95eb6ae1ecabb20f0b91123271272428bc232e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0146/body.bin",
+      "bytes": 2097152,
+      "sha256": "a9259ca8697ab2928a514248b1122c76946694ccfa7acb6942090c6382c50e31"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0147/body.bin",
+      "bytes": 2097152,
+      "sha256": "f3d80299bf7c5c6130a556c03c569ad322acac11bc1da5f87daac5d315a889b8"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0148/body.bin",
+      "bytes": 2097152,
+      "sha256": "c0e5da2e01e78597f6a3c6f41bf03a3adeeb377c023a9d8f9c3bd403914a414d"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0149/body.bin",
+      "bytes": 1427456,
+      "sha256": "0534abb55036d86924f35aa25a4e1070cecf4b7e44e024bc7fadf8111b65a318"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0150/body.bin",
+      "bytes": 1851392,
+      "sha256": "b0ec29741c458104fe67fa9047a552f3f088aeb6032dcb76ace63f6fcc4c4e91"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0151/body.bin",
+      "bytes": 9289728,
+      "sha256": "08c0455051233895e0dfd6c2e140992cd4cf29604d422b554a5991076055d279"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0152/body.bin",
+      "bytes": 10190848,
+      "sha256": "4c4232d4b97d86c1ce9086c996539eb63c3f8811764efcbc8a1200f453da0a5c"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0153/body.bin",
+      "bytes": 510714,
+      "sha256": "2a37790365b059e4957835ea48f3991fae020bbeb8b906472b1d4badcff46c41"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0154/body.bin",
+      "bytes": 976421,
+      "sha256": "af82a5df9e1ed79df63091ade07682bac71336b39dcc8374d0838dd1b5a0e034"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0155/body.bin",
+      "bytes": 577776,
+      "sha256": "bbc2b265ea92c37054f76a95949bb410b61beed5ee72eb2a443167305682158b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0156/body.bin",
+      "bytes": 1247276,
+      "sha256": "6b1b927ab1bf67b3b8529a22666ef4d428bcbb18372d8f4e73b65436013b5687"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0157/body.bin",
+      "bytes": 2381615,
+      "sha256": "3f141650d22b11ed7b939325fe307f6e73566918c221d5c8a17bec844ea1a782"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0158/body.bin",
+      "bytes": 856170,
+      "sha256": "fa9774309411af2481190760052699710b98cc30ce03c994a01368e782ec416e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0159/body.bin",
+      "bytes": 10240000,
+      "sha256": "36f10756d9e8c03eeb6e1d929863681cd9b77c27d38247f6a0d81c649b42ba4f"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0160/body.bin",
+      "bytes": 1825400,
+      "sha256": "a36bfcf9c0ae5281974aac591f9c5619bce99857d8f58be27a9061750ed7dab8"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0161/body.bin",
+      "bytes": 1972,
+      "sha256": "3a8ad4b3f76577d5b2c668d47d83728492ae101efb0a792b03e674c28ff47ff2"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0162/body.bin",
+      "bytes": 1067,
+      "sha256": "2320dbfc474fa1fb3b6da4f8c62d6f22ff67e0316465cbe8ea66f4bbc90b3afa"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0163/body.bin",
+      "bytes": 11730,
+      "sha256": "52c3e4f78fdf1f6d21e2721786715e10865eb126b7c8a48ef9be6870bd324c7d"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0164/body.bin",
+      "bytes": 7679526,
+      "sha256": "9a58a2858bb51f0e408bfd6969d564a622d3c793a92ee8d425486199a5feb877"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0165/body.bin",
+      "bytes": 494,
+      "sha256": "d82155629778fd07d0c8e52e91f6340419639498ae790f7f0a100190f5fa942a"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0166/body.bin",
+      "bytes": 2685,
+      "sha256": "84ed5a329523a1b52b273b4f3c482111d5ae898ed807b7d6be3aab0f494785a6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0167/body.bin",
+      "bytes": 36766,
+      "sha256": "09cb7dc9b9fc0f6fcd554c3b6165834075387007ec21a1a176baed1f2fc718ec"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0168/body.bin",
+      "bytes": 5045,
+      "sha256": "fc902d69218c73107a572040480d5aa3a8e5be8a413a260e0fbc7927627bfb8e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0169/body.bin",
+      "bytes": 2791,
+      "sha256": "738646b048bc9875539ecc5d81bda1a2b0732e24a3e2607ce058fb3549cc07bd"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0170/body.bin",
+      "bytes": 9997,
+      "sha256": "56f49fe855670e9379c1f9b5858d77fcb18aa9d27ef9ff0134edb351b5cbfa90"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0171/body.bin",
+      "bytes": 3964,
+      "sha256": "92831f18295f3b3c78157e93c202c8e01123d562d56085291c8167a157917adb"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0172/body.bin",
+      "bytes": 3072270,
+      "sha256": "daee55291203af7ed6fd7f5bbb51153d5ec5b9c6662b36e3e289d9ce4a375a53"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0173/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0174/body.bin",
+      "bytes": 75176,
+      "sha256": "3c1a1de9ab2f3ce45c5280a027716384093f484350dd23ef13ebf56dac762094"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0175/body.bin",
+      "bytes": 8679,
+      "sha256": "19909f2c32272d715d6a6bf73dbdcb5cd4ea8409154f2b662c842e3c1d086886"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0176/body.bin",
+      "bytes": 7430,
+      "sha256": "5d081a56da0417c062957e6a12fd3d0f1d56171ff403e02c47eb99b24ff739c6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0177/body.bin",
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0178/body.bin",
+      "bytes": 15506,
+      "sha256": "2d3960dfa9b7ae851bb461137c5fe771f09f46d7e396edfd27ce1afafe7b340b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0179/body.bin",
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0180/body.bin",
+      "bytes": 64538,
+      "sha256": "ce90e802dd2f2d9f0a599a7b466ff5cc74c6af892ed80426d57c2be489318e4b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0181/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0182/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0183/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0184/body.bin",
+      "bytes": 9805934,
+      "sha256": "1526fa22e326b9d89abc4cbea9190e0231159897466600669c1650fbdf361866"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0185/body.bin",
+      "bytes": 9795902,
+      "sha256": "11626ec9169f2e2c565d0a9a52dcdda55844fc6fdeb153d66b695430fc42271e"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0186/body.bin",
+      "bytes": 9845073,
+      "sha256": "05b805354073a3868d1344122197dc4fd5f31c56e8c017b69416d58669988f18"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0187/body.bin",
+      "bytes": 128576,
+      "sha256": "cc4a21ea80b44ab22c51c6660e7feff59fedc14a2aa66e04f38b7ab4f041a32f"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0188/body.bin",
+      "bytes": 2097152,
+      "sha256": "c3eeb0435cb8bb64a60e301db80f9e874d4fcc297b0f16eaabc10ca971902fc3"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0189/body.bin",
+      "bytes": 2097152,
+      "sha256": "2564aa64105fc1518ad161b29df7a72f095b794e8be13b7da6dda8d38ef61ac5"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0190/body.bin",
+      "bytes": 2097152,
+      "sha256": "97456235c0a6b9374576de04da9674dc0f18543f845f70d3c2f977f5f482f162"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0191/body.bin",
+      "bytes": 2097152,
+      "sha256": "05185543e7ba9e2b30152b5e9d54f1da2e3514eb0dcbdf2ea97e526e67a78ced"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0192/body.bin",
+      "bytes": 1626618,
+      "sha256": "ad7aaddcacf660d24cfd210a84d23214331154996f56d591f63394a89fbc90cf"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0193/body.bin",
+      "bytes": 2097152,
+      "sha256": "95312a84b1e723ef095bffa652060481a929a1d62052f82644a980e6b5039c1d"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0194/body.bin",
+      "bytes": 1021958,
+      "sha256": "0772840db971629e7fe7af2bcae92637f6a9e761842e472c8bf0d38b759844de"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0195/body.bin",
+      "bytes": 1310720,
+      "sha256": "17f141414ba4416af3ba24a706f5991fd32f942b3b4f601c4f617b3d0f055867"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0196/body.bin",
+      "bytes": 123616,
+      "sha256": "b13bd78ce72b9c955a5d3136a745f4a81fefbd7e55e1305041f952c241aef79b"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0197/body.bin",
+      "bytes": 120335,
+      "sha256": "e76c819584a1745b139fe0ae0a017ee46d02141a66f91ade070892532ff6a4e9"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0198/body.bin",
+      "bytes": 128456,
+      "sha256": "227e6cbae74e5838d5b57fe5bb482b3af58a8a0e20df492abf8c326d00fadee3"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0199/body.bin",
+      "bytes": 11223040,
+      "sha256": "4ba630811b145a620255e6c82ca348b0e669bde0f93c7561f5cde59b3bf046b0"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0200/body.bin",
+      "bytes": 524288,
+      "sha256": "26676b9b99055cc2b5fa9b7fe9057c4d9075c37f379234bd5b6a57c2b64d350f"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0201/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0202/body.bin",
+      "bytes": 4769,
+      "sha256": "281e02eb7965f5eb15a6a67a32e27080a6d7ab361ffe8da6797154223084a154"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0203/body.bin",
+      "bytes": 33554432,
+      "sha256": "4938fcb529f08e0093b4330a30617f14c9848fcd7ea7db3f1d7909c836236536"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0204/body.bin",
+      "bytes": 12211,
+      "sha256": "e074a1e5664dca561ed9410f3f50ec3ecc9f74968bc3d14b7f975022e9b8d23a"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0205/body.bin",
+      "bytes": 418235,
+      "sha256": "cca3410a9691f9d19857391ce4ca9725effff1278b15cbc877605f41ead35c79"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0206/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0207/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0208/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0209/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0210/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0211/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0212/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0213/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0214/body.bin",
+      "bytes": 9835349,
+      "sha256": "7003385d4c5d03d5d7f4127139c9c03d3fc92ce7c9d688e94c41fa46813d1d19"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0215/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0216/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0217/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0218/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0219/body.bin",
+      "bytes": 6774729,
+      "sha256": "7376972cff0455a4036b00d5b1bae2ada98b5239e5dfb4b514ac51eda2ef69d8"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0220/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0221/body.bin",
+      "bytes": 9296,
+      "sha256": "cce99304c4e9ad723dcc8480b361cac8ae6f918320a692ed1549073756b734d4"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0222/body.bin",
+      "bytes": 6897905,
+      "sha256": "0620214f507a14b2a76fa593b84f5a8f8d94f547c3091d5cd83dde0aa22227dc"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0223/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0224/body.bin",
+      "bytes": 6880985,
+      "sha256": "c84891ce59f5594c6346003562217410cbfa908ede980fc289aa4aa34878f137"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0225/body.bin",
+      "bytes": 9897750,
+      "sha256": "9068fab1e53b1c34a6f7ea0a104af86e0ee8c52bc0664eb88835a8a0878c3ae3"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0226/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0227/body.bin",
+      "bytes": 8388608,
+      "sha256": "d15e32e023ed4024b86750752bf2e8eadf456270f714c8bcb2f0840287cfa374"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/attempts/0228/body.bin",
+      "bytes": 9628,
+      "sha256": "d498978718ecec25f723c667c32510bd903040beec16e7e04fa1877010ee5089"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/caravan_csv_01/member_000.bin",
+      "bytes": 3252501,
+      "sha256": "11f6f7263be2a2742903eb8524923c6248e687207a98019a3fd94abf3ab885cf"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/caravan_csv_01/member_001.bin",
+      "bytes": 3244745,
+      "sha256": "2100fddf7c8f463c7bebb43e015f21005c10b37da63ae85e77b08f1bbcc167b2"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/caravan_csv_01/member_002.bin",
+      "bytes": 3248375,
+      "sha256": "9971b441d0ae17e8043555eb8b0b0dd1589b31e2c45e1c1a7a9f0069ef7d773c"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/landslide4sense_masks_02/member_000.bin",
+      "bytes": 18432,
+      "sha256": "5ab8737ab1c08d51ace62c5d02a21b78944baf6dbc6f942f71cc07696319f8b6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/landslide4sense_masks_02/member_001.bin",
+      "bytes": 18432,
+      "sha256": "fc21e7ac2e5f0ae4551a97f9f97bd5d996eef7c6aedcbc312e15691b19be1bf0"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/landslide4sense_masks_02/member_002.bin",
+      "bytes": 18432,
+      "sha256": "9be5ecdda01899fa930370af990c756db558fb569fa14daf63dc938ba971da73"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/landslide4sense_train_01/member_000.bin",
+      "bytes": 1837056,
+      "sha256": "05933f459b84368f046a6dacf4204528b470718754dd617dfb60755de50ecb6d"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/landslide4sense_train_01/member_001.bin",
+      "bytes": 1837056,
+      "sha256": "8c9139e1d6f4eb064da38da2349e11384bcc80f9af8218454fca1baa9a8dc1ee"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/landslide4sense_train_01/member_002.bin",
+      "bytes": 1837056,
+      "sha256": "7b648b30721a99d344069dd7aae8aa795dc4f6495ef4d3b7b47ed2c644e70555"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/landslide4sense_train_01/member_003.bin",
+      "bytes": 1837056,
+      "sha256": "7ddc95e5f23aeb20aa282b8e8324f260ecaac37251481c2b86b933afc98968f4"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/landslide4sense_train_01/member_004.bin",
+      "bytes": 1837056,
+      "sha256": "19450d533e5c5fd51579ceccebb4950af8958dfb02c3d25b366dfef5b45a27a6"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/landslide4sense_train_01/member_005.bin",
+      "bytes": 1837056,
+      "sha256": "0ca5083cf6d3b879d45540d27f40540d5cff1de1bce542131062e0e2dd38963a"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/wildfirespreadts_01/member_000.bin",
+      "bytes": 3104767,
+      "sha256": "d262dfc1802ee5e936d43de9ec646569ad0fe28793433f93cb8a6319dcbe9413"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/wildfirespreadts_01/member_001.bin",
+      "bytes": 3144771,
+      "sha256": "2dfb1005eb6fd1aae58ebfaefb78863c4a0203135beb0ade4822882aa720175d"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/archive_runs/wildfirespreadts_01/member_002.bin",
+      "bytes": 3265320,
+      "sha256": "1807981a238265920d061e5ceb2e17393759b1b33e1001fa0fff952e13f7866c"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/assemblies/completion_01/snodas-20240103.bin",
+      "bytes": 14141440,
+      "sha256": "c0a9450cabd71232953233992e3708943e09c5ad006adda2226688436ca36d56"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/assemblies/completion_01/storm-events-2021.bin",
+      "bytes": 10563953,
+      "sha256": "60c1daf96dbe8eafd48c80df5b70df51a0125ab95d467ee7009a646761d57715"
+    },
+    {
+      "path": "plans/multihazard_source_validation_20260911/assemblies/completion_01/storm-events-2023.bin",
+      "bytes": 12888092,
+      "sha256": "713784bed40d9e5a95b1d6240a654f865f3ef97703713105c7b35437270da134"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0001/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0002/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0003/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0004/body.bin",
+      "bytes": 16384,
+      "sha256": "681266bebac8fa6aef15d41e05d215930ac302f25c3318296e302b324a8bd07a"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0005/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0006/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0007/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0008/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0009/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0010/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0011/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0012/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0013/body.bin",
+      "bytes": 3975,
+      "sha256": "5de2d51dcdd94a89dd817b670939118321e51374348e9b4f071bb5fd741409ae"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0014/body.bin",
+      "bytes": 18193,
+      "sha256": "be9e2cd5a411755364e9bf5260587ef47e89148aa8e2fe59f48572c8dd928072"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0015/body.bin",
+      "bytes": 1231034,
+      "sha256": "ffed39020c1dffd266dbc7e6bc762e6695f22781ff81ecbcb0be86ad9fe03c7b"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0016/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0017/body.bin",
+      "bytes": 198464,
+      "sha256": "06092308dfd4c32e60a1928db6c1369404c68d5a704bcadc6eac1d5c52c89343"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0018/body.bin",
+      "bytes": 11997,
+      "sha256": "799fed94d7a382d7af8c0dafe25b1a97b0831abcbd03bd31ce9ff7418bb0e133"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0019/body.bin",
+      "bytes": 110,
+      "sha256": "8c177a38af7c68d455e9554231def022cc2bcf62c1d3dab3626aaf5c319a5e04"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0020/body.bin",
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0021/body.bin",
+      "bytes": 1571,
+      "sha256": "7294cc82cd93ceb41b1d08b61c71e2b34493a3778f85908929fac0438f7fe597"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0022/body.bin",
+      "bytes": 65536,
+      "sha256": "fb0a93940a87ddb0aee1c80e2e9dc3d108778ab914ce6bccb85895c05f8f1907"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0023/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0024/body.bin",
+      "bytes": 1152,
+      "sha256": "1f3f9ea0bfcc730edfd8180501a0e1833f570a7d07bf5a33c4212f591ffa7baf"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0025/body.bin",
+      "bytes": 308902,
+      "sha256": "8d8e28bfe531313346a6353a3791673d528ad96b0dfa257d29a363f5a38ece51"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0026/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0027/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0028/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0029/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0030/body.bin",
+      "bytes": 16009,
+      "sha256": "5d3dd995fa4b8386d98c1ae9b0192819f60736e6ea198aff1df5a8207134005a"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0031/body.bin",
+      "bytes": 1138,
+      "sha256": "8fd637be5a3e62cc54160c18b784b81192e6f5f33a888c2cff0457bdd77f6eca"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0032/body.bin",
+      "bytes": 1376,
+      "sha256": "5ee91d0cd6a050c25c606830e1349c6b423ce4bc86b9253b1f91c772a49611ce"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0033/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0034/body.bin",
+      "bytes": 8029,
+      "sha256": "1969750d16218a45efb9b759b5fd5884a3df81e0bc163c88aaca4d59459f4cfe"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0035/body.bin",
+      "bytes": 5012,
+      "sha256": "bfd5bec8d7963c28d95d1d7e86e8d6fe58ebf6b8f1535ccdff41dc8163b7d73a"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0036/body.bin",
+      "bytes": 294716,
+      "sha256": "fb9505ba681331cd1a07102d79edc31ad284804b42eae8f372c45232c3ae876e"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0037/body.bin",
+      "bytes": 298812,
+      "sha256": "ea202373f0f2bee15a43cfaf302b34330f3611f6e21a9919994989bd2dab88a1"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0038/body.bin",
+      "bytes": 276284,
+      "sha256": "d631f00b04bf98326fca63bab962596d612e6610c574b2709df21469575c9121"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0039/body.bin",
+      "bytes": 43572,
+      "sha256": "9161891bd025bab2d8225de16553ce0bd39794a5812b032333edaee48428c5fd"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0040/body.bin",
+      "bytes": 13515,
+      "sha256": "9e851f4c6d5aebf10c9a422ea306067c96a0874b1d311d586a11f5f1d0d04f86"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0041/body.bin",
+      "bytes": 5243,
+      "sha256": "8a9a8d4068e2ce04d406687b14fdaead40b75448422deb70b569f00e6290a659"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0042/body.bin",
+      "bytes": 17642,
+      "sha256": "4d87dc8642b38ad245aeea7c23154562377e6b2f0093cd90f4b7e06ba383d6ae"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0043/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0044/body.bin",
+      "bytes": 18751,
+      "sha256": "17d514ec374049ad599d47c63cd3bf1d27d2e96235b15a5e8702a7492881290f"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0045/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0046/body.bin",
+      "bytes": 18463,
+      "sha256": "974827b1d994782ce0d0f130c4ff3d3ce3633696a593e48fcd4f64f304f0aefa"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0047/body.bin",
+      "bytes": 3281933,
+      "sha256": "e8e1cebcfc41aa5281ab723deb76bf28954d14149ce1b7b8f8742aa56e5affa3"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0048/body.bin",
+      "bytes": 99001,
+      "sha256": "c676c07bba764c858c8d239853d45353a49a310b5fbeac8f401139295b3ad18f"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0049/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0050/body.bin",
+      "bytes": 1024,
+      "sha256": "a4fb575fcc02d7802cf93c72d55bbf7310c2d307473822c7ffc8993370153618"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0051/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0052/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0053/body.bin",
+      "bytes": 102902,
+      "sha256": "7754d3394232649f3b9c2486ef69f16492d23529f1ef4cf0322ddb6460eda2a3"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0054/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0055/body.bin",
+      "bytes": 1770,
+      "sha256": "0f3319fd0be2d174116ccc4c14a0afe690561c048d47938b83e7c70f461d4afd"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0056/body.bin",
+      "bytes": 5932,
+      "sha256": "b8d1380544b42d9625fc67103ad3652e9acd6bb515550bbd7fc0fa41384e6e53"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0057/body.bin",
+      "bytes": 55847,
+      "sha256": "89d4f5df5c1a5d66ecb7f2a3cc1011ed34392556fa0497834bace9796805b3c1"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0058/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0059/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0060/body.bin",
+      "bytes": 9464,
+      "sha256": "5831507e143de4108d3e18bb4f1c16c1230d3d434e7bceb3e154a62c8f2d61b9"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0061/body.bin",
+      "bytes": 9538,
+      "sha256": "17ff0f2ebc19459a603442f6c31b72f9834c3f94118ec88d9ca41381cfc19b3e"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0062/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0063/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0064/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0065/body.bin",
+      "bytes": 9663,
+      "sha256": "512897e9f06850bebc1a744af3f17257c2b28cc1a7c94f963d24556d66e82b52"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0066/body.bin",
+      "bytes": 9862725,
+      "sha256": "7c41e9783075600a21d6e380c46e858260935014d16d081470d56eb980f8203f"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0067/body.bin",
+      "bytes": 9464,
+      "sha256": "f27d72473c502384fc4e84195c79799049d52d64d5e73597fa1993ef6729e116"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0068/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0069/body.bin",
+      "bytes": 16539,
+      "sha256": "8f7b48769957d8cd02207c3777124b4d1acfe3ff9d8e6a9659fed907960bbde6"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0070/body.bin",
+      "bytes": 10252,
+      "sha256": "dac9f1522443242f76316d313252e28b90f47f187a4fa979287c7d3fd7708b59"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0071/body.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0072/body.bin",
+      "bytes": 952000,
+      "sha256": "04f38d24eca644fee8511f9b19fe603a8f7ad93a7e8c59dbb9e6833ade0c95ca"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0073/body.bin",
+      "bytes": 1048576,
+      "sha256": "87e1cb9d2d48e6885aa3cf681b9d0dd27e733f463d064f4ff8c530bd560271b7"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0074/body.bin",
+      "bytes": 7512,
+      "sha256": "0e367ae6e41c623080830fc3082d963904c60e53fa93e8b093dff405af053536"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0075/body.bin",
+      "bytes": 4385936,
+      "sha256": "26138d7a1a64d251fe2b2737b86a2ee33882b60274e588ce83f56539de148e73"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0076/body.bin",
+      "bytes": 111433,
+      "sha256": "6a3b72f718eef388b129f3cf40ded84eb3d426c12d31eb1ccab462a124ff65bc"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0077/body.bin",
+      "bytes": 9186,
+      "sha256": "f344b9c11f224492430c4eb6696f9c8e66360ee07c2e1ef6b69aba512e33fb07"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0078/body.bin",
+      "bytes": 8566,
+      "sha256": "93368ed03280b21d118267f8c7c7be0c103a28f9ec9cf2930fcb4d46617f31ae"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0079/body.bin",
+      "bytes": 9268,
+      "sha256": "36fb9a7cccecf9b7196ff00dfcc3cbcd4fb241d17c68ed69c1f82cab0d557e29"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/attempts/0080/body.bin",
+      "bytes": 4388,
+      "sha256": "ffcfa76ed86e87c29d68be6371bb64758ccab9b3a873712de305defedcbb935c"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/chirps-2024.01.01.bin",
+      "bytes": 11866618,
+      "sha256": "931c94eb825465b2c46a8cd2c416053ef57ac6d5d722c8aebf6a73bf71a3b9e4"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/chirps-2024.01.02.bin",
+      "bytes": 12408838,
+      "sha256": "a36f386ecf16db24006915784a83e88cf8414dc8ca7881f8b9f654bb5c614b69"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/droughted_train_prefix.csv",
+      "bytes": 3028159,
+      "sha256": "ff41d654e76ce1d025554840b025153727050aa6fb292293bcacf2af1b640798"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/ibtracs-full-retry02.bin",
+      "bytes": 10368576,
+      "sha256": "cc63b13389b637f6b02904fb0aa8bdc2ef82a7445f36cae63eb79e49228739c1"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/senforflood-0.tif",
+      "bytes": 15882,
+      "sha256": "e547ca425134c9e93aea8dd95d939c908ea57e50fc67f0cdb7312aab3281e8c8"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/senforflood-1.tif",
+      "bytes": 20264,
+      "sha256": "cdd06a58f3416c94f9c038a39ae4adada051cb086487cc6c21cac1a847a54958"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/senforflood-2.tif",
+      "bytes": 3298,
+      "sha256": "d01a45c1725abc8f17d240ecc85e2878cf6eb5ed39c53d0fa255968b2fcfd945"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/tornet-0.nc",
+      "bytes": 1010954,
+      "sha256": "d9b389ca9b3dc6d111c977807491ac7d5fe161ab90754bacbe739720210dd68e"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/tornet-1.nc",
+      "bytes": 1117203,
+      "sha256": "d636d1723859b996c7451d94218ecac6c545aed06801081700a7a8afed5a4186"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/samples/tornet-2.nc",
+      "bytes": 359850,
+      "sha256": "8f8fc661cfd5862021746df32f32b119df6c41a168d74540261e0558770a9459"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D19-reader-blob.bin",
+      "bytes": 31408,
+      "sha256": "7557504015b496ff973d5eb20b45126ba13109ca361926a43c6f4f0cb84d44eb"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D19-utils-blob.bin",
+      "bytes": 9594,
+      "sha256": "52af793ac876fe5f59eb53b12710c868bf2029938878da9cdc74c0c8693ceef8"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D21-data_generator_pred_torch-py.bin",
+      "bytes": 6517,
+      "sha256": "de074c2ce46e83784ccac7533bca6ea8e33d07172108a809814c32c7ba3c1676"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D21-dataset_gen_pred-py.bin",
+      "bytes": 2976,
+      "sha256": "fff73347f982ac354554f3ee3c5ad45093df404914c7ab23bb9092ea12d9af87"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D47-config-blob.bin",
+      "bytes": 7225,
+      "sha256": "ac1c8c2c2d9e97bcf57c604fb5943c10f79fa253616e2ea3fdccd1f382ec2303"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D47-temp-reader-blob.bin",
+      "bytes": 11790,
+      "sha256": "eb09fff8f2d479ed8e61d41ea060fa6834c80d8747843d2171d5a00d3b43ca8e"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D50-CyPortQA_template-json.bin",
+      "bytes": 40313,
+      "sha256": "4b0947bf55a60931e49d7a3eb93a10b555bc94c6dc58c585d7a3b25af8e68f11"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D50-DORIAN_2019-txt-blob.bin",
+      "bytes": 5230,
+      "sha256": "b0f911b5c25a7ded15043bdb06d72d47ce535eb9aaee4fff6174a9786e9c7725"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D50-FLORENCE_2018-txt-blob.bin",
+      "bytes": 5996,
+      "sha256": "b79e13e67433b5eb316ec35cce5b11ab2fe467fb025301bbffe8432c19137607"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D50-HARVEY_2017-png-blob.bin",
+      "bytes": 80656,
+      "sha256": "4b2610cb77b38020771fe0c566f7f8ffea40edc1c1994fe047439e084ba6aacb"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D50-HARVEY_2017-txt-blob.bin",
+      "bytes": 6446,
+      "sha256": "898a5662d25f268f9742c69d39982da18619a291b143c68577e9c6e31a4e1238"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D50-LICENSE.bin",
+      "bytes": 1065,
+      "sha256": "6ca250cd579bd7ac34a6bf16a9f2d4764d67788a0e88aca43499efbb1d334966"
+    },
+    {
+      "path": "plans/v6_0911_dataset_selection/references/D50-README-md.bin",
+      "bytes": 4084,
+      "sha256": "5980acaea0f9d47e18c02c6d7d7cccd2dbf64362de99c5d730bef62acc645bfe"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/data/NHC_PRODUCTS.json",
+      "bytes": 298641,
+      "sha256": "783080890ff72fa71f66133e22d1a79801821b7a73ac8e3704787618250fbbbe"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0038/body.bin",
+      "bytes": 24447,
+      "sha256": "5d856f51b1f95bc5fcb884721a22cc462aa527b1f3d6713e0e48b26c7ac71856"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0054/body.bin",
+      "bytes": 24533,
+      "sha256": "f66df86d1e8165a6bbc0513720e07165e30c0196e0a668c8b15a307fafa05482"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0070/body.bin",
+      "bytes": 24485,
+      "sha256": "e5c0340fae154f51ec3e3a1e6b06cca1ccaba0140e48ceb46dbf691b6bc41bb3"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/data/SEVIR_ARRAYS.json",
+      "bytes": 123622,
+      "sha256": "38f04b4e44d96b130800306fa4ca544bc032593e6914081f8f549c20562c217d"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/data/sevir_arrays/sevir-event-dd87d9dba0-262.npy",
+      "bytes": 7225472,
+      "sha256": "91085f597f4cc2f8bc1ea46784c8184a2af1e5443163a95b08f259ac2a8cd156"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0149/body.bin",
+      "bytes": 65536,
+      "sha256": "a0297c48760d450cb0e5727eeed5783c81e5f5ec6a097204053654575d59e7b6"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0172/body.bin",
+      "bytes": 65536,
+      "sha256": "951a2ac3e100c2273d96d1fea07ca0644e613d61229cee4eacc9e015ec99ba72"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0188/body.bin",
+      "bytes": 7225344,
+      "sha256": "fa29094eb23dfc4aca227b8e3c493adfb648b1c6b4aeae87ffc9de7f0d06183d"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/data/sevir_arrays/sevir-event-dd87d9dba0-141.npy",
+      "bytes": 7225472,
+      "sha256": "4fbbe1b5efd759cb03dd53fb921c3a37549a6688f5e8031d4fee541ebf3c7687"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0192/body.bin",
+      "bytes": 7225344,
+      "sha256": "44f7e1c3464be41be10ea3d38f33d8bb17808165fc0db32363236fd5feaaf35e"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/data/sevir_arrays/sevir-event-dd87d9dba0-0.npy",
+      "bytes": 7225472,
+      "sha256": "4508b2223b1a674a5fe7ac9508e63d0fb23c64bc6731864a61967be53df32011"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0194/body.bin",
+      "bytes": 7225344,
+      "sha256": "4fc84f220327e1669588da0b9d704d9948d3e383b4eee078feecbedad65cfd65"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0114/body.bin",
+      "bytes": 1918917,
+      "sha256": "996fb3f5cdb30b5eb00f5eb0c8806034d2cf41ea9766ac415e8b195e6c822998"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0115/body.bin",
+      "bytes": 1648428,
+      "sha256": "fd4bfd7df76539d38fb4fb4a062cb2ba8f04e506591ffe383084a516bfa6d54d"
+    },
+    {
+      "path": "plans/v5_0910_source_probe_20260910/attempts/0272/body.bin",
+      "bytes": 1578587,
+      "sha256": "d1c63750c8b0df099eeea9527c9e6cf6e2adac5bcfa20d9ab47d1d7591b0d41d"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/analysis/SEN1_FEASIBILITY_03.json",
+      "bytes": 4556,
+      "sha256": "3abc036b9a3d2d75f2ca816ac9eb7a7fd5d5c22a0a2dfcba20093fe6ed62a4fd"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0218/body.bin",
+      "bytes": 8399,
+      "sha256": "c5535788f6eaaeb5386c10102f9c4923ebc1eedf794dd8c408cf8a2780629796"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0219/body.bin",
+      "bytes": 1654895,
+      "sha256": "3db2f06ab052abea0dd47612a918c81e21bb2451a9573399abbc7fa4a3a320ec"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0222/body.bin",
+      "bytes": 7162,
+      "sha256": "f5a3832d5dd82a8cda98748bad2fbcd1a2d213e31b126cd12f9921cb61ce98cc"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0223/body.bin",
+      "bytes": 1782427,
+      "sha256": "941757942b80aa513548ebbaf1ea5ba2ade11faafdedb9eecb8ea9ac3a9bd50c"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0224/body.bin",
+      "bytes": 8686,
+      "sha256": "15c5dafbd4086efea9a26d530eee8b8b0bb01c8963e1c885cee87155fe96fee4"
+    },
+    {
+      "path": "plans/v5_0910_feasibility_12h_20260910/attempts/0225/body.bin",
+      "bytes": 1774686,
+      "sha256": "e73a8e62fa7fd0349fe881a36f6d5c944a57b6e6f9484ef6c7dc3c011c5dde04"
+    },
+    {
+      "path": "plans/v5_0910_source_probe_20260910/attempts/0303/body.bin",
+      "bytes": 8440,
+      "sha256": "f3dc9ed0edc0d523611fd8d19ee81b19cb6b3ee7fd0f6ca9ceff8d72229fbe3e"
+    },
+    {
+      "path": "plans/v5_0910_source_probe_20260910/attempts/0293/body.bin",
+      "bytes": 36678,
+      "sha256": "b50a8e860472cf1905aa96b679421bf1ef94b6d72443b86853ca6f96d6edf765"
+    },
+    {
+      "path": "plans/v5_0910_source_probe_20260910/attempts/0309/body.bin",
+      "bytes": 618098,
+      "sha256": "0093c09eb1076dfcb6769fae91b529ff40a84a7c042839c2a7a8391d38b2c22b"
+    }
+  ],
+  "source_registry_sha256": "13a6541e6340296b4ccaf902f646580bd7c1e3d542221837d76cd375f3059363"
+}

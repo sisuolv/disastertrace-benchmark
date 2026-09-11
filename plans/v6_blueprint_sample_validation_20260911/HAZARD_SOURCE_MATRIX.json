@@ -1,0 +1,678 @@
+{
+  "schema": "disastertrace.hazard_blueprint.v2",
+  "family_count": 16,
+  "group_count": 6,
+  "reference_kinds": {
+    "O": "observation",
+    "P": "analysis_or_derived_product",
+    "R": "confirmed_report"
+  },
+  "legacy_A_alias": "P",
+  "formal_new_tasks": 0,
+  "hazards": [
+    {
+      "hazard_id": "H01",
+      "group": "气旋与非对流风暴",
+      "name_cn": "热带气旋",
+      "subtypes": [
+        "强度",
+        "路径",
+        "局地风影响另设"
+      ],
+      "fixed_future_target_cn": "已监测气旋在固定未来 T 的最大持续风或位置；不得根据事后登陆结果选择监测时刻。",
+      "outcome_kinds": [
+        "P"
+      ],
+      "forecast_sources": [
+        "D01"
+      ],
+      "outcome_and_observation_sources": [
+        "AW-HURDAT2",
+        "D02"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "AW-ABI",
+        "D50"
+      ],
+      "conditional_extension_sources": [
+        "D03",
+        "D04",
+        "D73"
+      ],
+      "time_scale_cn": "6-72h；按公告合法有效时刻对齐",
+      "processing_rules_cn": [
+        "storm_id 与 UTC 时刻精确连接，不默认时间插值。",
+        "风速平均时长/机构/盆地保留；最佳路径机构差异不平均成唯一真值。",
+        "HURDAT2、事后 IBTrACS 只进私有结果层；同风暴洪水/潮位任务共享事件组。"
+      ],
+      "current_readiness_cn": "既有数值预报—参考匹配最完整；四个风暴都是已暴露开发材料，正式历史 as-of 待证。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H02",
+      "group": "气旋与非对流风暴",
+      "name_cn": "温带风暴/非对流大风",
+      "subtypes": [
+        "持续风",
+        "阵风",
+        "风暴系统"
+      ],
+      "fixed_future_target_cn": "固定站点/区域未来窗口持续风或阵风越阈；非对流归因单列。",
+      "outcome_kinds": [
+        "O",
+        "R"
+      ],
+      "forecast_sources": [
+        "D28",
+        "AW-GEFS",
+        "D67"
+      ],
+      "outcome_and_observation_sources": [
+        "AW-GHCNH",
+        "AW-METAR"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D05",
+        "D48"
+      ],
+      "conditional_extension_sources": [
+        "D27"
+      ],
+      "time_scale_cn": "6-48h；点值与窗内最大分开",
+      "processing_rules_cn": [
+        "10m 持续风、阵风、测量高度和平均时长分别存储。",
+        "冻结网格到站点方法；阵风预报的时间支持不能直接当持续风。",
+        "非对流身份必须有过程/产品依据，否则仅名为大风任务。"
+      ],
+      "current_readiness_cn": "站点与未来预报字段均实际可读；同窗匹配、QC、极端正例及非对流归因待完成。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H03",
+      "group": "强对流",
+      "name_cn": "雷暴大风/下击暴流",
+      "subtypes": [
+        "对流阵风",
+        "下击暴流专门子类"
+      ],
+      "fixed_future_target_cn": "固定未来时空窗口的合格对流阵风 O 或雷暴大风报告 R；两种结果分开。",
+      "outcome_kinds": [
+        "O",
+        "R"
+      ],
+      "forecast_sources": [
+        "AW-SPC",
+        "D67"
+      ],
+      "outcome_and_observation_sources": [
+        "AW-GHCNH",
+        "AW-METAR",
+        "D05"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D08",
+        "AW-ABI",
+        "D06"
+      ],
+      "conditional_extension_sources": [
+        "D49"
+      ],
+      "time_scale_cn": "分钟至小时；SPC 使用原有效窗",
+      "processing_rules_cn": [
+        "VIL、反射率、雷电和阵风保持各自语义。",
+        "下击暴流不能只由强风或高 VIL 自动标注。",
+        "报告无记录仅能作完备报告库下的 R 负例，不能作 O 的物理无灾标签。"
+      ],
+      "current_readiness_cn": "SPC 多边形、NEXRAD 体扫与站报均可用；地面测量和过程归因需建立连接。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H04",
+      "group": "强对流",
+      "name_cn": "龙卷风",
+      "subtypes": [
+        "未来事件报告",
+        "雷达感知诊断"
+      ],
+      "fixed_future_target_cn": "指定未来窗口内是否有按冻结数据库确认的龙卷报告 R；TorNet 现时标签只作独立诊断。",
+      "outcome_kinds": [
+        "R"
+      ],
+      "forecast_sources": [
+        "AW-SPC"
+      ],
+      "outcome_and_observation_sources": [
+        "D05"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D08",
+        "AW-ABI",
+        "D06"
+      ],
+      "conditional_extension_sources": [
+        "D07",
+        "D49",
+        "D70"
+      ],
+      "time_scale_cn": "分钟至小时；区域 outlook 目标保留其时空支持",
+      "processing_rules_cn": [
+        "不把 TorNet 同时刻分类当成提前预测。",
+        "选窗截止必须早于目标开始，轨迹及报告修订版本保留。",
+        "同一母风暴多体扫跨县报告归组；原作者 split 与本项目暴露状态并存。"
+      ],
+      "current_readiness_cn": "报告和雷达源成立；TorNet 仍只有三个已验证负例，v1.1 新正例未下载成功。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H05",
+      "group": "强对流",
+      "name_cn": "冰雹",
+      "subtypes": [
+        "地面雹径报告",
+        "雷达 MESH 代理"
+      ],
+      "fixed_future_target_cn": "未来窗口地面报告雹径越阈 R；另设同支持的未来 MESH 产品越阈 P。",
+      "outcome_kinds": [
+        "R",
+        "P"
+      ],
+      "forecast_sources": [
+        "AW-SPC",
+        "D67"
+      ],
+      "outcome_and_observation_sources": [
+        "D05"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D08",
+        "D06",
+        "AW-ABI"
+      ],
+      "conditional_extension_sources": [
+        "AW-MESH",
+        "D70"
+      ],
+      "time_scale_cn": "分钟至小时",
+      "processing_rules_cn": [
+        "报告大小/测量估计属性及 inch-mm 转换保留。",
+        "MESH 尚需局地 GRIB 单位与负代码表；数组可读不能直接准入阈值。",
+        "SPC 25-mile 等概率定义不可原样赋给任意像元/站点小时。"
+      ],
+      "current_readiness_cn": "报告路线可构建；MESH 已实际解码但科学语义准入未完成，P 子任务保留条件。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H06",
+      "group": "强对流",
+      "name_cn": "强雷电",
+      "subtypes": [
+        "flash 数量",
+        "有效覆盖面积密度"
+      ],
+      "fixed_future_target_cn": "固定区域未来 10-60min 内 GLM flash 密度是否越过冻结阈值。",
+      "outcome_kinds": [
+        "P"
+      ],
+      "forecast_sources": [],
+      "outcome_and_observation_sources": [
+        "D10"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "AW-ABI",
+        "D08",
+        "D06"
+      ],
+      "conditional_extension_sources": [],
+      "time_scale_cn": "10-60min 为拟定合同，需连续文件覆盖",
+      "processing_rules_cn": [
+        "flash/group/event 不混算；跨文件/边界去重。",
+        "按有效覆盖面积和时间归一，非观测区不能填零。",
+        "气候极端阈值只由训练期同传感器/季节确定；专业概率未具备时用持续性及外推基线。"
+      ],
+      "current_readiness_cn": "三个 GLM 产品可读且已有 ABI；连续极端窗口、跨文件 ID 与密度基准待完成。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H07",
+      "group": "降水与水灾",
+      "name_cn": "极端降水",
+      "subtypes": [
+        "短时强降水",
+        "日累计暴雨",
+        "格点估计产品"
+      ],
+      "fixed_future_target_cn": "站点/区域未来固定 1/3/6/24h 累计越阈；O 与降水分析产品 P 分榜。",
+      "outcome_kinds": [
+        "O",
+        "P"
+      ],
+      "forecast_sources": [
+        "D28",
+        "AW-GEFS",
+        "D67"
+      ],
+      "outcome_and_observation_sources": [
+        "AW-GHCNH",
+        "D26",
+        "D30"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D59",
+        "D48"
+      ],
+      "conditional_extension_sources": [
+        "AW-QPE",
+        "D29",
+        "AW-WPC"
+      ],
+      "time_scale_cn": "1-24h；慢日产品单独支持",
+      "processing_rules_cn": [
+        "保留起止、降水率/累计量及累计重置，禁止重叠窗口相加。",
+        "GHCNd 当地站日不可假作 UTC 日；GFS 0-6h 必须匹配同窗。",
+        "MRMS Pass2 的处理滞后单列；CHIRPS DAILY_SAT 上游依赖不得当独立站雨量。"
+      ],
+      "current_readiness_cn": "GFS/GEFS 未来累计和实际站雨量可读；新增 MRMS QPE 数组可读但单位/累计窗/代码表未准入；IMERG 401。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H08",
+      "group": "降水与水灾",
+      "name_cn": "洪水/山洪/城市内涝",
+      "subtypes": [
+        "河洪",
+        "山洪报告",
+        "空间淹没/城市内涝"
+      ],
+      "fixed_future_target_cn": "河站未来水位或流量越阈 O；山洪 R 与未来合格淹没图 P 各自固定目标。",
+      "outcome_kinds": [
+        "O",
+        "R",
+        "P"
+      ],
+      "forecast_sources": [
+        "D57",
+        "AW-HEFS"
+      ],
+      "outcome_and_observation_sources": [
+        "D56",
+        "D05"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D12",
+        "D18",
+        "D60",
+        "D61"
+      ],
+      "conditional_extension_sources": [
+        "AW-GLOFAS",
+        "AW-EFAS",
+        "AW-NIMS",
+        "D15",
+        "D13",
+        "D14",
+        "D51"
+      ],
+      "time_scale_cn": "河洪 6-72h；山洪短时；空间图按实际过境窗",
+      "processing_rules_cn": [
+        "用官方站号桥；水位/流量及垂直基准不互换。",
+        "HEFS CFS 需要同变量阈值及成员权重，不直接生成洪水水位概率。",
+        "SAR 标签保留永久水、无效/遮挡、地图制作时刻；城市子类须有城市证据，河洪不补其名额。"
+      ],
+      "current_readiness_cn": "两站业务预报—观测连接已核；观测暂为 Provisional。GEOID 三个负瓦片已暴露；城市/山洪的完整 F 路线未通过。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H09",
+      "group": "降水与水灾",
+      "name_cn": "风暴潮/沿岸淹没",
+      "subtypes": [
+        "沿岸总水位",
+        "增水残差",
+        "空间淹没"
+      ],
+      "fixed_future_target_cn": "固定潮位站未来窗口总水位越同基准阈值 O；增水与淹没范围另设任务。",
+      "outcome_kinds": [
+        "O"
+      ],
+      "forecast_sources": [],
+      "outcome_and_observation_sources": [
+        "D37"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D58",
+        "D01"
+      ],
+      "conditional_extension_sources": [
+        "AW-OFS",
+        "AW-PETSS"
+      ],
+      "time_scale_cn": "1-48h；以合格模型和潮位覆盖为准",
+      "processing_rules_cn": [
+        "首选实际采集到的 CBOFS/P-ETSS 配对候选；站位/基准未核前不作正式专业基线。",
+        "P-ETSS 当前公告明确不适用于热带风暴，气旋沿岸子类必须另验证 P-Surge 等产品。",
+        "天文潮不是总水位预报；残差不唯一归因为风暴潮，波高不是潮位。"
+      ],
+      "current_readiness_cn": "真实 OFS 数组、P-ETSS 数值表与潮位站样例俱在；正式站号、基准、产品适用范围是剩余核心门槛。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H10",
+      "group": "温度与冬季天气",
+      "name_cn": "高温/热浪",
+      "subtypes": [
+        "点/日高温",
+        "连续热浪"
+      ],
+      "fixed_future_target_cn": "未来指定时刻/站日高温越阈，或固定多日窗满足气候相对阈值与持续规则。",
+      "outcome_kinds": [
+        "O"
+      ],
+      "forecast_sources": [
+        "D28",
+        "AW-GEFS",
+        "D67"
+      ],
+      "outcome_and_observation_sources": [
+        "AW-GHCNH",
+        "D26"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D48"
+      ],
+      "conditional_extension_sources": [
+        "D47",
+        "D25",
+        "D34"
+      ],
+      "time_scale_cn": "6h-7d，点值/日极值/持续过程分开",
+      "processing_rules_cn": [
+        "2m 气温、皮肤温度、体感指标不得互换。",
+        "小时采样最大不是整日连续最大；热浪须完整持续窗与固定季节基准。",
+        "基准期/地区阈值仅在开发侧确定，站点移动和 QC 纳入。"
+      ],
+      "current_readiness_cn": "GHCNh 2026 记录与 +6h 预报实际可读；EWB 事件与观测未全连接，ExEBench 热浪包尚未取样。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H11",
+      "group": "温度与冬季天气",
+      "name_cn": "寒潮/低温/霜冻",
+      "subtypes": [
+        "绝对低温",
+        "快速降温",
+        "空气霜冻条件"
+      ],
+      "fixed_future_target_cn": "未来固定窗口低温越阈或满足降温幅度/持续规则；实际作物损害独立排除。",
+      "outcome_kinds": [
+        "O"
+      ],
+      "forecast_sources": [
+        "D28",
+        "AW-GEFS",
+        "D67"
+      ],
+      "outcome_and_observation_sources": [
+        "AW-GHCNH",
+        "D26"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D47",
+        "D48"
+      ],
+      "conditional_extension_sources": [
+        "D25"
+      ],
+      "time_scale_cn": "6h-7d",
+      "processing_rules_cn": [
+        "温降必须有两个合格支持窗口；缺前值不可生成寒潮标签。",
+        "空气 0 摄氏度附近条件不等于实际地表结霜或损害。",
+        "ExEBench 事后案例只作检索/诊断，不暴露其极端结果给未来模型。"
+      ],
+      "current_readiness_cn": "寒潮 benchmark 实包、站观测与通用预报均有样例；逐过程独立性、阈值和未来配对待完成。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H12",
+      "group": "温度与冬季天气",
+      "name_cn": "暴雪/积雪/冰冻降水",
+      "subtypes": [
+        "新降雪",
+        "积雪/SWE",
+        "冻雨/冻毛毛雨",
+        "暴风雪条件"
+      ],
+      "fixed_future_target_cn": "未来固定窗的降雪/积雪越阈，或站点出现 FZRA/FZDZ；SWE 分列 P。",
+      "outcome_kinds": [
+        "O",
+        "P",
+        "R"
+      ],
+      "forecast_sources": [
+        "D28",
+        "D67"
+      ],
+      "outcome_and_observation_sources": [
+        "D26",
+        "AW-GHCNH",
+        "AW-METAR",
+        "AW-IEM",
+        "D55"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D05"
+      ],
+      "conditional_extension_sources": [
+        "AW-WPC",
+        "D33"
+      ],
+      "time_scale_cn": "1-48h；积雪日尺度另列",
+      "processing_rules_cn": [
+        "雪深、SWE、新降雪及冻雨分别建 target。",
+        "实际已取得 FZRA/FZDZ 正例站报；GFS/HRRR 分类是输入预报。",
+        "暴风雪需要同时满足风、能见度、雪和持续规则；积雪正例不能替代。"
+      ],
+      "current_readiness_cn": "已补冻雨真实正例，SNODAS 与站雪字段可用；WPC 冬季概率数组、暴风雪完整多变量样例仍缺。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H13",
+      "group": "干旱与火险",
+      "name_cn": "干旱/闪旱",
+      "subtypes": [
+        "USDM 周等级",
+        "独立定义的快速土壤干旱"
+      ],
+      "fixed_future_target_cn": "未来指定 USDM 周版等级/面积越阈 P；闪旱以冻结快速下降、持续和恢复规则另建。",
+      "outcome_kinds": [
+        "P"
+      ],
+      "forecast_sources": [],
+      "outcome_and_observation_sources": [
+        "D31"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "AW-EDDI",
+        "AW-CPC",
+        "D30"
+      ],
+      "conditional_extension_sources": [
+        "AW-SMAPL4",
+        "D32",
+        "D52",
+        "D25"
+      ],
+      "time_scale_cn": "周到季；闪旱按五日/日产品可用支持另定",
+      "processing_rules_cn": [
+        "USDM 有效日与发布日分开；专家分析是既有 P，不新增逐题人工评审。",
+        "CPC 季节 outlook 只在匹配季节目标时作基线，其余作背景。",
+        "SMAP L4 根区水分需完整序列、质量/冻土掩膜与基准；EDDI 不单独充当闪旱真值。"
+      ],
+      "current_readiness_cn": "USDM 周图、EDDI 数组、CPC 矢量均真实可读；持续性/转移基线可设计，闪旱数值源受 401 阻塞。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H14",
+      "group": "低能见度与沙尘",
+      "name_cn": "沙尘暴",
+      "subtypes": [
+        "站点沙尘暴",
+        "浮尘/扬沙对照",
+        "沙尘成分产品"
+      ],
+      "fixed_future_target_cn": "固定站点未来窗口出现 DS/SS 等规定现象并满足能见度条件；气溶胶产品另列 P 扩展。",
+      "outcome_kinds": [
+        "O"
+      ],
+      "forecast_sources": [
+        "D28",
+        "D67"
+      ],
+      "outcome_and_observation_sources": [
+        "AW-GHCNH",
+        "AW-METAR",
+        "AW-IEM"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "AW-ABI"
+      ],
+      "conditional_extension_sources": [
+        "AW-CAMS",
+        "D35",
+        "D36"
+      ],
+      "time_scale_cn": "1-24h",
+      "processing_rules_cn": [
+        "DS 与 BLDU、BR、HZ 不混同；只统计主站报，排除 RMK/vicinity。",
+        "通用能见度预报不是沙尘专属概率；基线需现象分类/校准。",
+        "高 AOD 不自动作地面沙尘暴 Gold。"
+      ],
+      "current_readiness_cn": "Phoenix 实际 5 条 DS 和 10 条 BLDU 已补；CAMS 没有匿名数值样例，当前先走站点现象路线。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H15",
+      "group": "低能见度与沙尘",
+      "name_cn": "浓雾/极端低能见度",
+      "subtypes": [
+        "雾现象",
+        "低能见度",
+        "海雾扩展"
+      ],
+      "fixed_future_target_cn": "站点未来窗口能见度低于阈值；浓雾额外要求 FG/FZFG 与持续性。",
+      "outcome_kinds": [
+        "O"
+      ],
+      "forecast_sources": [
+        "AW-TAF",
+        "D28",
+        "D67"
+      ],
+      "outcome_and_observation_sources": [
+        "AW-METAR",
+        "AW-GHCNH"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "AW-ABI",
+        "D27"
+      ],
+      "conditional_extension_sources": [
+        "D53"
+      ],
+      "time_scale_cn": "1-24h；以 TAF 变化组及站报支持为准",
+      "processing_rules_cn": [
+        "TAF 与 METAR 同机场身份，FM/TEMPO/PROB 分组明确解释。",
+        "10+SM 等区间值不变成精确值；站点缺报不能标无雾。",
+        "低能见度成因与浓雾标签分开，海雾需对应海域观测合同。"
+      ],
+      "current_readiness_cn": "三站真实 TAF/METAR 与小时归档已可解析；M4Fog 未得到 cube，不让其阻断站点主线。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    },
+    {
+      "hazard_id": "H16",
+      "group": "干旱与火险",
+      "name_cn": "天气相关野火/火险",
+      "subtypes": [
+        "火险指数",
+        "已知火场活动产品扩展"
+      ],
+      "fixed_future_target_cn": "已知火场未来固定观测窗活动火产品面积/像素变化 P；火险指数越阈单独定义。",
+      "outcome_kinds": [
+        "P"
+      ],
+      "forecast_sources": [],
+      "outcome_and_observation_sources": [
+        "D19",
+        "D23"
+      ],
+      "auxiliary_or_benchmark_sources": [
+        "D28",
+        "AW-GEFS",
+        "AW-ABI"
+      ],
+      "conditional_extension_sources": [
+        "D21",
+        "AW-GWIS",
+        "AW-EFFIS",
+        "D20",
+        "D24",
+        "D65"
+      ],
+      "time_scale_cn": "数小时至数日；固定合格观测窗",
+      "processing_rules_cn": [
+        "热点先按冻结时空规则归并火场，气象驱动不等于起火原因证明。",
+        "下一次合格观测必须限制在预定窗口内，超窗仍为未结算，不能根据结果任意延后。",
+        "FWI、活动火、烧毁面积分开；无热点与无覆盖/云遮不能直接解释为扑灭。"
+      ],
+      "current_readiness_cn": "真实火场日栅格和 FIRMS 热点可用；多火场正扩展样例仍缺，FWI 目前只有渲染图，没有已验证数值业务预报。",
+      "E_status": "source_sample_supported_task_compilation_pending",
+      "F_status": "designed_not_formally_admitted",
+      "D_status": "requires_admitted_F_and_public_cost_contract",
+      "new_formal_tasks": 0
+    }
+  ]
+}

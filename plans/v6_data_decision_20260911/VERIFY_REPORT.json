@@ -1,0 +1,675 @@
+{
+  "schema_version": "disastertrace.overall_data_plan_verification.v1",
+  "verified_at": "2026-09-11T09:42:20.031182+00:00",
+  "status": "pass",
+  "scope": "Overall plan/artifact integrity and existing audit consistency; not full scientific data admission or a model evaluation.",
+  "checks": {
+    "protected_bound_files_unchanged": 18,
+    "previously_modified_files_unchanged": 8,
+    "git_head_tracked_status_and_staged_index_unchanged": true,
+    "hazard_families": 16,
+    "referenced_catalog_entries_not_independent_sources": 61,
+    "matrix_json_csv_agree": true,
+    "captures_verified": 30,
+    "saved_response_bytes_verified": 6601231,
+    "complete_http_200_not_necessarily_scientific_success": 23,
+    "incomplete_or_http_error_records_retained": 7,
+    "bounded_probe_limits_satisfied": true,
+    "inherited_nhc_files_verified": 65,
+    "inherited_nhc_bytes_verified": 8652138,
+    "audit_jsonl_row_counts": {
+      "hydro_audit_01/flow_point_pairs_private.jsonl": 4,
+      "hydro_audit_01/stage_point_pairs_private.jsonl": 4,
+      "nhc_audit_01/forecast_rows.jsonl": 461,
+      "nhc_audit_01/outcome_targets_private.jsonl": 115,
+      "nhc_audit_01/unresolved_rows_private.jsonl": 39
+    },
+    "audit_summaries_consistent_with_emitted_rows": true,
+    "prior_audit_returncodes": {
+      "NHC": 0,
+      "hydrology": 0
+    },
+    "formal_new_future_warning_episodes": 0,
+    "json_documents_parsed_excluding_this_report": 49,
+    "python_audit_files_syntax_checked_without_execution": 2,
+    "local_markdown_links_resolved_including_report_generated_here": 37,
+    "external_markdown_links_not_reprobed": 104
+  },
+  "errors": [],
+  "additional_report_input_snapshots": [
+    {
+      "path": "/mnt/afs/260010168/extreme_weather_benchmark/plan/plan_v6_0911/plan_2.md",
+      "bytes": 119547,
+      "sha256": "17fee24aaa9f5929dd25ce8d373269e4b8fcbe572ffb97d3979a5e0cf8ad54dc"
+    },
+    {
+      "path": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v6_0911_dataset_selection/DATA_READINESS_REVIEW_CN.md",
+      "bytes": 10748,
+      "sha256": "d2bac8529136596d0e7b8259140f5d36eb68362f8f363aa8bdef0b88d134b8a9"
+    }
+  ],
+  "limitations": [
+    "No new network calls in this verification.",
+    "Earlier 127 CPU tests were not rerun or counted as new tests.",
+    "NHC and hydrology audit processors were not rerun; their successful receipts, source hashes and emitted row counts were checked.",
+    "No new model calls, GPU jobs, or Git publication.",
+    "Sixteen hazard families are the target design; formal new warning episodes remain zero."
+  ],
+  "artifact_bindings_excluding_this_report": [
+    {
+      "path": "DATA_PROCESSING_CONTRACT.json",
+      "bytes": 5205,
+      "sha256": "8e68e2c412cb309e6da6991306517517c7f4ce3a8eb69a034a7f470b48bce56c"
+    },
+    {
+      "path": "HAZARD_SOURCE_MATRIX.csv",
+      "bytes": 4548,
+      "sha256": "efe5533a1bdd95bc291bc93aa06e1bf483dc76480401b64b469a3145a223f8a2"
+    },
+    {
+      "path": "HAZARD_SOURCE_MATRIX.json",
+      "bytes": 55775,
+      "sha256": "eea6e13397d89b4cf6b6ecd5c844a0458828018ab2d10a0d354dbc92b5b3ee75"
+    },
+    {
+      "path": "HAZARD_SOURCE_MATRIX.md",
+      "bytes": 20262,
+      "sha256": "613fd6855552cb9eacf5cb786431d387eb358632082758ed24d5dbf14905ddd5"
+    },
+    {
+      "path": "HYDRO_AUDIT_RUN_01.json",
+      "bytes": 294,
+      "sha256": "c0aa391eed1f5bedaa60ef748a9b7acadc99394c6439933bab4fb0d992627c8d"
+    },
+    {
+      "path": "HYDRO_AUDIT_RUN_01.log",
+      "bytes": 2380,
+      "sha256": "d84e1b1bb6163b59c20c95f86898bf5d2b3707bc7b06fef18243b31c897d05b8"
+    },
+    {
+      "path": "INPUT_BINDINGS.json",
+      "bytes": 7418,
+      "sha256": "24bc7c61bfc0717303489f286249448901991b93b41c6ac54776a139709491c8"
+    },
+    {
+      "path": "NHC_AUDIT_RUN_01.json",
+      "bytes": 290,
+      "sha256": "59ab47568f59f6e246cf8597075b7bbdf3dc5411aff4303ebec08dbcbcfc3a07"
+    },
+    {
+      "path": "NHC_AUDIT_RUN_01.log",
+      "bytes": 3425,
+      "sha256": "882c126564edd97bc9b26bad2ffedd0007de96d71baaf717a2e9a6709d624858"
+    },
+    {
+      "path": "OVERALL_BENCHMARK_DATA_PLAN_CN.md",
+      "bytes": 31600,
+      "sha256": "f59939d589f2e12e1f62164ee10a707283ea538572806a2ad7f127837ccad2fe"
+    },
+    {
+      "path": "OVERALL_INPUT_BINDINGS.json",
+      "bytes": 764,
+      "sha256": "6320394325616b2278cd5fabb4e077b3eef6f67474d0f583e579d06ae73cc072"
+    },
+    {
+      "path": "PROBE_INTENT.json",
+      "bytes": 948,
+      "sha256": "519564c915bf31cd639427a6ed59c590c50c7f41907a5245de4b3106798fb30c"
+    },
+    {
+      "path": "PROBE_SUMMARY.json",
+      "bytes": 24615,
+      "sha256": "bf08537982ff622792d3bb7d07338a43a679a01c32e2762b1b8e5330e8eb44bd"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2086,
+      "sha256": "086b6889c8dedceec3424bb8f0497274582fa43d7e0d391a6ecd98da119b7eae"
+    },
+    {
+      "path": "SOURCE_SELECTION.json",
+      "bytes": 6931,
+      "sha256": "b1bd2cede90e96f0cc28e831a23cf8954ac8ad05b7fd6e5e9064239774553207"
+    },
+    {
+      "path": "audit_hydro_data.py",
+      "bytes": 14057,
+      "sha256": "87aa426477a41e70c1377ab343c95c95252dbe2b44edf1b7669058245c2c12cf"
+    },
+    {
+      "path": "audit_nhc_data.py",
+      "bytes": 10774,
+      "sha256": "04cc4b8cee0a7051357b8704fe48365693d4f092de90f95f67fb0931d2d9763d"
+    },
+    {
+      "path": "captures_01/MANIFEST.json",
+      "bytes": 5777,
+      "sha256": "7dc257e9f4b261921c5eae4466563462c2152a7d89f133b90436834707f593f3"
+    },
+    {
+      "path": "captures_01/hefs-abec2-headers.json",
+      "bytes": 775,
+      "sha256": "a438fa34d814bca4aca477cf2cbcfaf1afbbc44454560d33fccfef118a85074b"
+    },
+    {
+      "path": "captures_01/hefs-abec2-headers.raw",
+      "bytes": 460,
+      "sha256": "92f2d57e33e01f9e253f3ca98a768dc59e033124eb8d9ab0752a6146de454b0b"
+    },
+    {
+      "path": "captures_01/hefs-abec2-headers.txt",
+      "bytes": 460,
+      "sha256": "92f2d57e33e01f9e253f3ca98a768dc59e033124eb8d9ab0752a6146de454b0b"
+    },
+    {
+      "path": "captures_01/hefs-abvc2-headers.json",
+      "bytes": 775,
+      "sha256": "bed14e57f2328fa7c5ea3e41fd04cc654164de05c8a8ae3ea7099f441ab14b88"
+    },
+    {
+      "path": "captures_01/hefs-abvc2-headers.raw",
+      "bytes": 470,
+      "sha256": "f3415c430fb98b03ed3ca1d61f42a2283ed5a22d1e1bf2198c30e85ea3f56a61"
+    },
+    {
+      "path": "captures_01/hefs-abvc2-headers.txt",
+      "bytes": 470,
+      "sha256": "f3415c430fb98b03ed3ca1d61f42a2283ed5a22d1e1bf2198c30e85ea3f56a61"
+    },
+    {
+      "path": "captures_01/hefs-frnc1-headers.json",
+      "bytes": 773,
+      "sha256": "8b470eead7c7c559bf6369b55752498676595f6938e71d178779936d7117193e"
+    },
+    {
+      "path": "captures_01/hefs-frnc1-headers.raw",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "captures_01/hefs-frnc1-headers.txt",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "captures_01/nwps-abec2-metadata.json",
+      "bytes": 629,
+      "sha256": "018edf8ae27bd6f3f7671a62cb8466a121e95f463783842d02afb81f59c86e67"
+    },
+    {
+      "path": "captures_01/nwps-abec2-metadata.raw",
+      "bytes": 83,
+      "sha256": "7031082d343260f0014e986af8b474f35882d61cb67d16d6dda8f003a3f3622e"
+    },
+    {
+      "path": "captures_01/nwps-abec2-metadata.txt",
+      "bytes": 83,
+      "sha256": "7031082d343260f0014e986af8b474f35882d61cb67d16d6dda8f003a3f3622e"
+    },
+    {
+      "path": "captures_01/nwps-abvc2-metadata.json",
+      "bytes": 629,
+      "sha256": "c45967e1c694207f1b75e4f0d08071db98020e8c717853f2c7664610340e74f3"
+    },
+    {
+      "path": "captures_01/nwps-abvc2-metadata.raw",
+      "bytes": 83,
+      "sha256": "e9c183256c130d1d315dd54c3f7dfa9fabc925d912dd6a2962aa51727deb3224"
+    },
+    {
+      "path": "captures_01/nwps-abvc2-metadata.txt",
+      "bytes": 83,
+      "sha256": "e9c183256c130d1d315dd54c3f7dfa9fabc925d912dd6a2962aa51727deb3224"
+    },
+    {
+      "path": "captures_01/nwps-eauw3-metadata.json",
+      "bytes": 629,
+      "sha256": "38eb7a2065e61932206d07933068f6de63e5804b5027d3949c12654c2b8f326a"
+    },
+    {
+      "path": "captures_01/nwps-eauw3-metadata.raw",
+      "bytes": 83,
+      "sha256": "496d562a488898773459cad76db4ac154ae8c6be72df51c9ace6ce5d505d461a"
+    },
+    {
+      "path": "captures_01/nwps-eauw3-metadata.txt",
+      "bytes": 83,
+      "sha256": "496d562a488898773459cad76db4ac154ae8c6be72df51c9ace6ce5d505d461a"
+    },
+    {
+      "path": "captures_01/nwps-frnc1-metadata.json",
+      "bytes": 616,
+      "sha256": "cba7438e96fe62abb2a89325652404581a4d614d58a26ca820dfdc444eb4c1fa"
+    },
+    {
+      "path": "captures_01/nwps-frnc1-metadata.raw",
+      "bytes": 32730,
+      "sha256": "7078766e485e812f504f7e52783ea0dc83ccfd35a123280d20260bccce373d68"
+    },
+    {
+      "path": "captures_01/nwps-frnc1-metadata.txt",
+      "bytes": 32730,
+      "sha256": "7078766e485e812f504f7e52783ea0dc83ccfd35a123280d20260bccce373d68"
+    },
+    {
+      "path": "captures_01/nwps-frnc1-stageflow.json",
+      "bytes": 668,
+      "sha256": "31c2d9a294b498780fcb938eec38a3e1caa704822beddff1e2cbf43ddf84be9f"
+    },
+    {
+      "path": "captures_01/nwps-frnc1-stageflow.partial",
+      "bytes": 262144,
+      "sha256": "7baf6a3f290b3f4d94e483cbe3e4d7eeae22714bbdca36a0218ca4fde477f93a"
+    },
+    {
+      "path": "captures_01/nwps-frnc1-stageflow.txt",
+      "bytes": 262144,
+      "sha256": "7baf6a3f290b3f4d94e483cbe3e4d7eeae22714bbdca36a0218ca4fde477f93a"
+    },
+    {
+      "path": "captures_02/MANIFEST.json",
+      "bytes": 4885,
+      "sha256": "40014215841494faf34a430be631fe270009ed7afbdfbc9395b287f71fc0b439"
+    },
+    {
+      "path": "captures_02/hefs-abec2-ensemble.json",
+      "bytes": 698,
+      "sha256": "564cb2c6a669802fc8c385f2abc1ea3a200e64e0a554790509b0a2fb55653186"
+    },
+    {
+      "path": "captures_02/hefs-abec2-ensemble.raw",
+      "bytes": 298752,
+      "sha256": "7c8ae3e40473ffbb38ab8e3be365b1fee0f065e19a327c4bfbecbdde0e5ce160"
+    },
+    {
+      "path": "captures_02/hefs-abec2-ensemble.txt",
+      "bytes": 298752,
+      "sha256": "7c8ae3e40473ffbb38ab8e3be365b1fee0f065e19a327c4bfbecbdde0e5ce160"
+    },
+    {
+      "path": "captures_02/hefs-frnc1-recent-headers.json",
+      "bytes": 581,
+      "sha256": "0bbf39e26fbbff7dc60f3247f6ca722fd2f3b32f1341b3bd296b9bd834a3ff12"
+    },
+    {
+      "path": "captures_02/hefs-frnc1-recent-headers.raw",
+      "bytes": 1324,
+      "sha256": "17cc7e1ed8ee9868201d78297549a1321ec86f20204d02db570bda6db9edfeed"
+    },
+    {
+      "path": "captures_02/hefs-frnc1-recent-headers.txt",
+      "bytes": 1324,
+      "sha256": "17cc7e1ed8ee9868201d78297549a1321ec86f20204d02db570bda6db9edfeed"
+    },
+    {
+      "path": "captures_02/hefs-scoc1-recent-headers.json",
+      "bytes": 581,
+      "sha256": "e2ef4413f8b31ab5a3f898fefc52a61a54b2cf812b80438c2c0ad5daa14063ac"
+    },
+    {
+      "path": "captures_02/hefs-scoc1-recent-headers.raw",
+      "bytes": 1357,
+      "sha256": "01677e2c2e85b62add76c31a4c9d3da5fe810081d871950809095b2f937dae6e"
+    },
+    {
+      "path": "captures_02/hefs-scoc1-recent-headers.txt",
+      "bytes": 1357,
+      "sha256": "01677e2c2e85b62add76c31a4c9d3da5fe810081d871950809095b2f937dae6e"
+    },
+    {
+      "path": "captures_02/nwps-frnc1-stageflow-complete.json",
+      "bytes": 639,
+      "sha256": "d04a08c222c8c0604f43f49a6016a91b9744e51f3344308f285319b5bbe692ae"
+    },
+    {
+      "path": "captures_02/nwps-frnc1-stageflow-complete.raw",
+      "bytes": 495842,
+      "sha256": "e2e7bb945288f785465f5bc3f4dac4e4cc01a2feef6cc61f8fc409ead1d33d19"
+    },
+    {
+      "path": "captures_02/nwps-frnc1-stageflow-complete.txt",
+      "bytes": 495842,
+      "sha256": "e2e7bb945288f785465f5bc3f4dac4e4cc01a2feef6cc61f8fc409ead1d33d19"
+    },
+    {
+      "path": "captures_02/nwps-scoc1-metadata.json",
+      "bytes": 583,
+      "sha256": "ec4665b421eb12467e020761493b5651cde9cdbfea72e1aaf45b5adfe0969040"
+    },
+    {
+      "path": "captures_02/nwps-scoc1-metadata.raw",
+      "bytes": 31859,
+      "sha256": "6fbae9c727e1573b2e72f49abc91710bf50f1e849237893509754b932af943f6"
+    },
+    {
+      "path": "captures_02/nwps-scoc1-metadata.txt",
+      "bytes": 31859,
+      "sha256": "6fbae9c727e1573b2e72f49abc91710bf50f1e849237893509754b932af943f6"
+    },
+    {
+      "path": "captures_02/usgs-frnc1-site.json",
+      "bytes": 715,
+      "sha256": "a9492952d0029ccb86e2af211f883c2db2bfb1a47d19a325f6de2255b8f00332"
+    },
+    {
+      "path": "captures_02/usgs-frnc1-site.raw",
+      "bytes": 119,
+      "sha256": "d90ff26ac3ce5c44fbd30495081f3edae7dad078c254375d3b5ff8c63216ec4c"
+    },
+    {
+      "path": "captures_02/usgs-frnc1-site.txt",
+      "bytes": 119,
+      "sha256": "d90ff26ac3ce5c44fbd30495081f3edae7dad078c254375d3b5ff8c63216ec4c"
+    },
+    {
+      "path": "captures_02/usgs-frnc1-stage-history.json",
+      "bytes": 864,
+      "sha256": "184732fde655bb8bdd7c22dfcc9b29a20bf88d460d7e7e0e8b64a004e277293b"
+    },
+    {
+      "path": "captures_02/usgs-frnc1-stage-history.raw",
+      "bytes": 1677,
+      "sha256": "1859b7212f557ebb63f3076ff799d44bec14f8327c28c55b7ce2e44ef90fa9dc"
+    },
+    {
+      "path": "captures_02/usgs-frnc1-stage-history.txt",
+      "bytes": 1677,
+      "sha256": "1859b7212f557ebb63f3076ff799d44bec14f8327c28c55b7ce2e44ef90fa9dc"
+    },
+    {
+      "path": "captures_03/MANIFEST.json",
+      "bytes": 6346,
+      "sha256": "0a26e16e848dca5ba050c08a1e20b1392276acff6904588900f4403bb02bf2b8"
+    },
+    {
+      "path": "captures_03/hefs-guec1-headers.json",
+      "bytes": 567,
+      "sha256": "20c35615973660ca30bffe6fedd23ca2c180f25e966f7825f0f4c70a1d246b30"
+    },
+    {
+      "path": "captures_03/hefs-guec1-headers.raw",
+      "bytes": 1390,
+      "sha256": "d95e7dd7f96411a12918dfb905787a6046af25665b473ef95fb24025c8844d96"
+    },
+    {
+      "path": "captures_03/hefs-guec1-headers.txt",
+      "bytes": 1390,
+      "sha256": "d95e7dd7f96411a12918dfb905787a6046af25665b473ef95fb24025c8844d96"
+    },
+    {
+      "path": "captures_03/hefs-scoc1-ensemble.json",
+      "bytes": 779,
+      "sha256": "9d4b6582b0f2895f3b0991b2ffd651d6e59c0ef57b64c77b9d25821f1c75fc05"
+    },
+    {
+      "path": "captures_03/hefs-scoc1-ensemble.raw",
+      "bytes": 2188149,
+      "sha256": "8dca40dfbbc9fc7ab5ffb86784119261c73eefb6d17ff6e698b81f92de15e726"
+    },
+    {
+      "path": "captures_03/hefs-scoc1-ensemble.txt",
+      "bytes": 2188149,
+      "sha256": "8dca40dfbbc9fc7ab5ffb86784119261c73eefb6d17ff6e698b81f92de15e726"
+    },
+    {
+      "path": "captures_03/nims-scoc1-camera.json",
+      "bytes": 565,
+      "sha256": "0ac9ea81b35862f0ebcf5ebfc0453512af01a9b7d6b4082cf5ca610c9b0a0c21"
+    },
+    {
+      "path": "captures_03/nims-scoc1-camera.raw",
+      "bytes": 55,
+      "sha256": "f7ff3d28280a7e47b1066e56c674dea34c5e7bdd1f70861fb7172dacc55754e9"
+    },
+    {
+      "path": "captures_03/nims-scoc1-camera.txt",
+      "bytes": 55,
+      "sha256": "f7ff3d28280a7e47b1066e56c674dea34c5e7bdd1f70861fb7172dacc55754e9"
+    },
+    {
+      "path": "captures_03/nwps-guec1-metadata.json",
+      "bytes": 627,
+      "sha256": "45d924ec0d79001b3b81ceecb8a39ea40d2f5ad2d1b5aaa067dcebfd6ba4acc2"
+    },
+    {
+      "path": "captures_03/nwps-guec1-metadata.raw",
+      "bytes": 29498,
+      "sha256": "4d826ffb7921a23a2313e94d403cdc2c129cd936c34b4680d62da3cb45cd423f"
+    },
+    {
+      "path": "captures_03/nwps-guec1-metadata.txt",
+      "bytes": 29498,
+      "sha256": "4d826ffb7921a23a2313e94d403cdc2c129cd936c34b4680d62da3cb45cd423f"
+    },
+    {
+      "path": "captures_03/nwps-scoc1-stageflow.json",
+      "bytes": 550,
+      "sha256": "e589ace736665d18183e6365b0a17deb285ce4cf4466ac9baa54712e11933644"
+    },
+    {
+      "path": "captures_03/nwps-scoc1-stageflow.raw",
+      "bytes": 495615,
+      "sha256": "b9610efd93d065578b23a8fc6b8fceccea5c606e765980d3b9c2a7f5a4223d9c"
+    },
+    {
+      "path": "captures_03/nwps-scoc1-stageflow.txt",
+      "bytes": 495615,
+      "sha256": "b9610efd93d065578b23a8fc6b8fceccea5c606e765980d3b9c2a7f5a4223d9c"
+    },
+    {
+      "path": "captures_03/usgs-scoc1-00060.json",
+      "bytes": 849,
+      "sha256": "1bb2e8db0973d03b82d18f778a713fc1778b58bc396d66adc75173338a671c2d"
+    },
+    {
+      "path": "captures_03/usgs-scoc1-00060.raw",
+      "bytes": 18780,
+      "sha256": "aa31268ba676cc9b6a635b1e6a5a980d1a0880e23075aea5e884226eabb85505"
+    },
+    {
+      "path": "captures_03/usgs-scoc1-00060.txt",
+      "bytes": 18780,
+      "sha256": "aa31268ba676cc9b6a635b1e6a5a980d1a0880e23075aea5e884226eabb85505"
+    },
+    {
+      "path": "captures_03/usgs-scoc1-00065.json",
+      "bytes": 849,
+      "sha256": "e495c9fe1b9ccd20d27147f94fe61622d315da19fe84adf2fdcbde2d4b030200"
+    },
+    {
+      "path": "captures_03/usgs-scoc1-00065.raw",
+      "bytes": 18705,
+      "sha256": "7c2c338e5350dc137f50af69f27514694fae400228719d9d502da20fd1ecf0f8"
+    },
+    {
+      "path": "captures_03/usgs-scoc1-00065.txt",
+      "bytes": 18705,
+      "sha256": "7c2c338e5350dc137f50af69f27514694fae400228719d9d502da20fd1ecf0f8"
+    },
+    {
+      "path": "captures_03/usgs-scoc1-site.json",
+      "bytes": 638,
+      "sha256": "e5894581f8ae07247de84755badba2c747b2c91e13e0c2c1cb02846023aa2a6a"
+    },
+    {
+      "path": "captures_03/usgs-scoc1-site.raw",
+      "bytes": 4235,
+      "sha256": "dab668b28e97f997fed6c7c7d67c86acc78f8982a7d2a09bd2c0dabcd6a69ded"
+    },
+    {
+      "path": "captures_03/usgs-scoc1-site.txt",
+      "bytes": 4235,
+      "sha256": "dab668b28e97f997fed6c7c7d67c86acc78f8982a7d2a09bd2c0dabcd6a69ded"
+    },
+    {
+      "path": "captures_03/usgs-site-queryables.json",
+      "bytes": 638,
+      "sha256": "1d312879369210e9304db73323428af07eee2a802e135bd620dfa6f73cac8b69"
+    },
+    {
+      "path": "captures_03/usgs-site-queryables.raw",
+      "bytes": 15438,
+      "sha256": "b97cc3003b8a17f7fdf6c2f19b1ec23a384d6c88ee731d86d95c0ab4c352a40f"
+    },
+    {
+      "path": "captures_03/usgs-site-queryables.txt",
+      "bytes": 15438,
+      "sha256": "b97cc3003b8a17f7fdf6c2f19b1ec23a384d6c88ee731d86d95c0ab4c352a40f"
+    },
+    {
+      "path": "captures_04/MANIFEST.json",
+      "bytes": 4434,
+      "sha256": "da42f1a97b3c258ccf68163055b55cae651708fc8ea496e6070c0b4193745930"
+    },
+    {
+      "path": "captures_04/hefs-scoc1-ensemble-earlier.json",
+      "bytes": 795,
+      "sha256": "a47d678d60c797e45c820ebbf06d742bfab9a2d5e1b3934bea78dc1acdc10be5"
+    },
+    {
+      "path": "captures_04/hefs-scoc1-ensemble-earlier.raw",
+      "bytes": 2188444,
+      "sha256": "8f74c8f5c25d91663d2eb7e3cb52263f2678d01094350ff210849a655a5c5eaf"
+    },
+    {
+      "path": "captures_04/hefs-scoc1-ensemble-earlier.txt",
+      "bytes": 2188444,
+      "sha256": "8f74c8f5c25d91663d2eb7e3cb52263f2678d01094350ff210849a655a5c5eaf"
+    },
+    {
+      "path": "captures_04/nims-guec1-camera.json",
+      "bytes": 565,
+      "sha256": "2487892171d4c4fb3cc73f1896bddfcc9411b6393bd49c379966e2fce6c77f40"
+    },
+    {
+      "path": "captures_04/nims-guec1-camera.raw",
+      "bytes": 55,
+      "sha256": "97fd81bbaaf06104b68e8a2f3a0f703c0ebc0dd6de0ae014559204d071b38de4"
+    },
+    {
+      "path": "captures_04/nims-guec1-camera.txt",
+      "bytes": 55,
+      "sha256": "97fd81bbaaf06104b68e8a2f3a0f703c0ebc0dd6de0ae014559204d071b38de4"
+    },
+    {
+      "path": "captures_04/nwps-guec1-stageflow.json",
+      "bytes": 550,
+      "sha256": "091ba7faf46f0dcaf4c6aa52bcde940dba1accbbc60fbe80f859c2437db46a4c"
+    },
+    {
+      "path": "captures_04/nwps-guec1-stageflow.raw",
+      "bytes": 489678,
+      "sha256": "b0fa78b883714010da906be443458001e7dc735fade822fdc06699acd93ae2e0"
+    },
+    {
+      "path": "captures_04/nwps-guec1-stageflow.txt",
+      "bytes": 489678,
+      "sha256": "b0fa78b883714010da906be443458001e7dc735fade822fdc06699acd93ae2e0"
+    },
+    {
+      "path": "captures_04/usgs-guec1-00060.json",
+      "bytes": 848,
+      "sha256": "395e7d06b576366963a32a667e7debb8f6b0e4438a1b90b132f770927b1df416"
+    },
+    {
+      "path": "captures_04/usgs-guec1-00060.raw",
+      "bytes": 1677,
+      "sha256": "307470a8e6525ae3021affd60f8a98756ce36cdc636991c1c7d3a92d03c1c2dd"
+    },
+    {
+      "path": "captures_04/usgs-guec1-00060.txt",
+      "bytes": 1677,
+      "sha256": "307470a8e6525ae3021affd60f8a98756ce36cdc636991c1c7d3a92d03c1c2dd"
+    },
+    {
+      "path": "captures_04/usgs-guec1-00065.json",
+      "bytes": 849,
+      "sha256": "dcffd4306b3747dc9ffc92f55b164ef2553766b90b8d233829f719e5208e6f3e"
+    },
+    {
+      "path": "captures_04/usgs-guec1-00065.raw",
+      "bytes": 18605,
+      "sha256": "0794450c0e91c86363259f6f7c2a79f5b4572b3a80fd81e7ec32e06372bc0403"
+    },
+    {
+      "path": "captures_04/usgs-guec1-00065.txt",
+      "bytes": 18605,
+      "sha256": "0794450c0e91c86363259f6f7c2a79f5b4572b3a80fd81e7ec32e06372bc0403"
+    },
+    {
+      "path": "captures_04/usgs-guec1-site.json",
+      "bytes": 638,
+      "sha256": "1a1069246eee0cb1c233a19d5ac615b5f1ac4fc932fc7d6481b5d17f91eea989"
+    },
+    {
+      "path": "captures_04/usgs-guec1-site.raw",
+      "bytes": 3922,
+      "sha256": "112bb80b1c8cfe88b226acb82d6a28656960e77ad7a11b21b55c7496971400fa"
+    },
+    {
+      "path": "captures_04/usgs-guec1-site.txt",
+      "bytes": 3922,
+      "sha256": "112bb80b1c8cfe88b226acb82d6a28656960e77ad7a11b21b55c7496971400fa"
+    },
+    {
+      "path": "hydro_audit_01/AUDIT.json",
+      "bytes": 8336,
+      "sha256": "c83a4b6a20e7e47279070d379cc0c5688185f77fb3812c4b563dea4b1d70eb1c"
+    },
+    {
+      "path": "hydro_audit_01/JOIN_TABLE.csv",
+      "bytes": 425,
+      "sha256": "aa6ad9ff79487dfa4cea64bbdf7cfcb9fb54e2a08fa62a8763e76f3a5b8347e3"
+    },
+    {
+      "path": "hydro_audit_01/flow_point_pairs_private.jsonl",
+      "bytes": 1808,
+      "sha256": "a7a73c2ce7cc7d68f31c6209315289d6b20c98498aac28afc005d24236fdade6"
+    },
+    {
+      "path": "hydro_audit_01/stage_point_pairs_private.jsonl",
+      "bytes": 3112,
+      "sha256": "68f46a80844c8c2d367472a1d77114f736f73c5557ddb8ccdeb7fc5470e4b03c"
+    },
+    {
+      "path": "nhc_audit_01/AUDIT.json",
+      "bytes": 16251,
+      "sha256": "bc24de294071db095ab6bb4184f4fa64cc88c7abb381769f26312419c4da8285"
+    },
+    {
+      "path": "nhc_audit_01/forecast_rows.jsonl",
+      "bytes": 230801,
+      "sha256": "a4caa8db1e547ea8772c5c0be732c8b2d8eb1ad8dd01f7c5b68fc6ccc5efeac0"
+    },
+    {
+      "path": "nhc_audit_01/outcome_targets_private.jsonl",
+      "bytes": 83793,
+      "sha256": "4f99d190c3a71cdb0b9d875390c8f8e16985edfa49c117f41837e9820834c007"
+    },
+    {
+      "path": "nhc_audit_01/unresolved_rows_private.jsonl",
+      "bytes": 21041,
+      "sha256": "b01a60fcd57feed8b317e15c53ab05b611c58ca3dbe93529325effdea40b1556"
+    },
+    {
+      "path": "probe_spec_01.json",
+      "bytes": 2035,
+      "sha256": "a8eb378ceb0f02dd6eae2ba044de0d2923f7ca548f9ee8b55eb4047fe7ec02f5"
+    },
+    {
+      "path": "probe_spec_02.json",
+      "bytes": 1436,
+      "sha256": "73edc9c6bb811c0b0ffc8694cf93743bac6998e87f2d8c82fce9ee6deba68eb0"
+    },
+    {
+      "path": "probe_spec_03.json",
+      "bytes": 1832,
+      "sha256": "62959baae7a5a48ab99d331296f687262bfdd1f0208c42cc76b53ecd44473813"
+    },
+    {
+      "path": "probe_spec_04.json",
+      "bytes": 1287,
+      "sha256": "26ea369540aedb1316fbbdc5afdb592c1cac899b257c6f6ce960c9c3bb59325d"
+    }
+  ]
+}

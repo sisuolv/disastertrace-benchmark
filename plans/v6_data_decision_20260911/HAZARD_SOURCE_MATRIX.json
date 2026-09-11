@@ -1,0 +1,1283 @@
+{
+  "schema_version": "disastertrace.overall_hazard_data_plan.v1",
+  "scope": "whole-benchmark target design, not a next-step-only plan or claim of completed 16-hazard dataset",
+  "hazard_families": 16,
+  "weather_related_compound_family": [
+    "H16"
+  ],
+  "subtype_coverage_must_be_reported_separately": true,
+  "score_panels": [
+    "E_evidence",
+    "F_future_by_reference_kind",
+    "D_public_decision_scenarios_where_F_eligible"
+  ],
+  "source_catalog": {
+    "AW-CAMS": {
+      "name": "Copernicus CAMS atmospheric composition forecasts",
+      "urls": [
+        "https://ads.atmosphere.copernicus.eu/"
+      ],
+      "status": "proposed dust forecast route; access, variable, archive, issue times and rights not tested"
+    },
+    "AW-CPC": {
+      "name": "NOAA CPC drought outlooks",
+      "urls": [
+        "https://www.cpc.ncep.noaa.gov/products/Drought/"
+      ],
+      "status": "proposed contextual forecast product; not sampled; seasonal support not interchangeable with weekly USDM"
+    },
+    "AW-HEFS": {
+      "name": "NOAA/NWS HEFS",
+      "urls": [
+        "https://api.water.noaa.gov/hefs/v1/headers/",
+        "https://api.water.noaa.gov/hefs/v1/ensembles/"
+      ],
+      "status": "two Scotia cycles decoded and paired with discharge; flow threshold/probability contract pending"
+    },
+    "AW-HURDAT2": {
+      "name": "NHC HURDAT2 Atlantic",
+      "urls": [
+        "https://www.nhc.noaa.gov/data/hurdat/hurdat2-1851-2025-02272026.txt"
+      ],
+      "status": "inherited raw bytes reverified this turn; same-agency retrospective reference"
+    },
+    "AW-NIMS": {
+      "name": "USGS NIMS",
+      "urls": [
+        "https://api.waterdata.usgs.gov/docs/nims"
+      ],
+      "status": "inherited camera/stage sample; selected new hydrology sites camera queries 404"
+    },
+    "AW-SPC": {
+      "name": "NOAA SPC convective outlooks / mesoscale discussions",
+      "urls": [
+        "https://www.spc.noaa.gov/products/outlook/archive/",
+        "https://www.spc.noaa.gov/products/md/"
+      ],
+      "status": "planned forecast archive adapter; inherited individual discussion text only; outlook arrays not sampled"
+    },
+    "AW-SURGE": {
+      "name": "NOAA operational total-water-level / storm-surge guidance (ESTOFS / ETSS candidates)",
+      "urls": [
+        "https://polar.ncep.noaa.gov/estofs/",
+        "https://slosh.nws.noaa.gov/etsurge/"
+      ],
+      "status": "proposed additional forecast source; endpoint/data not tested this turn; choose exact variable/product after join"
+    },
+    "D01": {
+      "name": "NHC Public / Forecast Advisories + GIS",
+      "urls": [
+        "https://www.nhc.noaa.gov/archive/",
+        "https://prod-east-nhc.woc.noaa.gov/gis/",
+        "https://ftp.nhc.noaa.gov/atcf/gis/fst/",
+        "https://www.nhc.noaa.gov/archive/2019/al05/al052019.fstadv.001.shtml"
+      ],
+      "observed_content_status": "inherited",
+      "prior_readiness_cn": "复用已有 NHC 公告/GIS 和 Francine 种子；新增风暴独立分组；issued_at 不等于历史 available_at。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D02": {
+      "name": "IBTrACS v4r01",
+      "urls": [
+        "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/",
+        "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.since1980.list.v04r01.csv",
+        "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.ALL.list.v04r01.csv",
+        "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.last3years.list.v04r01.csv"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "已解码 21,923 条轨迹、378 个 SID；属于事后参考，隔离 outcome；跨机构及跨盆地去重。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D03": {
+      "name": "Digital Typhoon V2",
+      "urls": [
+        "https://agora.ex.nii.ac.jp/digital-typhoon/dataset/V2/",
+        "https://agora.ex.nii.ac.jp/digital-typhoon/dataset/"
+      ],
+      "observed_content_status": "partial",
+      "prior_readiness_cn": "Digital Typhoon ZIP Range 获取未完成；保留亚洲气旋扩容路线，不把目录计为帧。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D04": {
+      "name": "TCIR",
+      "urls": [
+        "https://www.csie.ntu.edu.tw/~htlin/program/TCIR/",
+        "https://tinyurl.com/ntuTCIR",
+        "https://drive.google.com/drive/folders/10tGM8DA-zWJRSYlW5OJyH15KtaKKYHAN?usp=drive_link"
+      ],
+      "observed_content_status": "reference",
+      "prior_readiness_cn": "TCIR 仅入口/读取器候选；尚未完成真实影像解码，需确认版本和切分。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D05": {
+      "name": "NOAA Storm Events Database",
+      "urls": [
+        "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/"
+      ],
+      "observed_content_status": "catalog",
+      "prior_readiness_cn": "136,982 条灾害报告仅作检索索引；EPISODE_ID 不等于独立天气系统；需要气象事件跨县合并。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D06": {
+      "name": "SEVIR",
+      "urls": [
+        "https://registry.opendata.aws/sevir/",
+        "s3://sevir/",
+        "https://github.com/MIT-AI-Accelerator/eie-sevir"
+      ],
+      "observed_content_status": "inherited",
+      "prior_readiness_cn": "复核 3 条 VIL 序列，每条 49 帧；不能据此声称已验证闪电/光学多模态；补地面报告桥接。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D07": {
+      "name": "TorNet",
+      "urls": [
+        "https://github.com/mit-ll/tornet",
+        "https://zenodo.org/records/12636522",
+        "https://zenodo.org/records/12637032",
+        "https://zenodo.org/records/12655151",
+        "https://zenodo.org/records/12655179",
+        "https://zenodo.org/records/12655183",
+        "https://zenodo.org/records/12655187",
+        "https://zenodo.org/records/12655716",
+        "https://zenodo.org/records/12655717",
+        "https://zenodo.org/records/12655718",
+        "https://zenodo.org/records/12655719",
+        "https://zenodo.org/records/12636522/files/catalog.csv?download=1",
+        "https://zenodo.org/records/12636522/files/tornet_2013.tar.gz?download=1"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "3 个 TorNet train NetCDF 均为 NUL 负例；核对 v1.1 修订并获取正例和匹配困难负例。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D08": {
+      "name": "NOAA NEXRAD",
+      "urls": [
+        "https://registry.opendata.aws/noaa-nexrad/",
+        "s3://unidata-nexrad-level2/",
+        "s3://unidata-nexrad-level3/"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "NEXRAD 原始体扫尚无本轮解码样本；优先按 TorNet/SEVIR 具体雷达时刻补取。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D09": {
+      "name": "NOAA MRMS",
+      "urls": [
+        "s3://noaa-mrms-pds/",
+        "https://registry.opendata.aws/noaa-mrms-pds/"
+      ],
+      "observed_content_status": "metadata",
+      "prior_readiness_cn": "MRMS 桶目录可列，尚无实际 MESH/降水文件；不能将 MESH 估计直接等同地面冰雹报告。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D10": {
+      "name": "GOES-R ABI / GLM archives",
+      "urls": [
+        "https://registry.opendata.aws/noaa-goes/",
+        "s3://noaa-goes16/",
+        "s3://noaa-goes17/",
+        "s3://noaa-goes18/",
+        "s3://noaa-goes19/"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "3 个 GLM 20 秒文件及父子 ID 已校验；须构建空间密度基线并补极端窗口；ABI 尚未取样。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D12": {
+      "name": "GEOID-Flood",
+      "urls": [
+        "https://github.com/links-ads/geoid-flood",
+        "https://huggingface.co/datasets/links-ads/geoid-flood/tree/main",
+        "https://huggingface.co/datasets/links-ads/geoid-flood/tree/main/sample",
+        "https://huggingface.co/datasets/links-ads/geoid-flood/resolve/main/shard_index.json.gz",
+        "https://huggingface.co/datasets/links-ads/geoid-flood/resolve/main/SHA256SUMS"
+      ],
+      "observed_content_status": "paired",
+      "prior_readiness_cn": "3 组前后 SAR/标签/有效性完整匹配同一发布清单，但洪水正像素均为 0；同一 EMSR712/AOI10 且原 split 为 test，仅作已观察审计材料。",
+      "rights_status": "provider_license_captured",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D13": {
+      "name": "KuroSiwo",
+      "urls": [
+        "https://github.com/Orion-AI-Lab/KuroSiwo",
+        "https://huggingface.co/datasets/orion-ai-lab/Kuro-Siwo-GeoTIFFs",
+        "https://huggingface.co/datasets/orion-ai-lab/Kuro-Siwo-Webdataset",
+        "https://github.com/Orion-AI-Lab/KuroSiwo-annotations"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "KuroSiwo 的 HF 连接失败；下一轮锁定版本后仅取 train 正负样例，不承诺整个数据不可用。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D14": {
+      "name": "UrbanSARFloods",
+      "urls": [
+        "https://github.com/jie666-6/UrbanSARFloods",
+        "https://huggingface.co/datasets/S1Floodbenchmark/UrbanSARFloods_v1/tree/main",
+        "https://huggingface.co/datasets/S1Floodbenchmark/UrbanSARFloods_v1/resolve/main/urban_sar_floods.tar.gz",
+        "https://huggingface.co/datasets/S1Floodbenchmark/UrbanSARFloods_v1/tree/main/Sentinel-1_SLC_data"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "UrbanSARFloods 的 HF 连接失败；保留城市内涝候选，必须验证城市标签/事件身份。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D16": {
+      "name": "SpaceNet 8",
+      "urls": [
+        "https://spacenet.ai/sn8-challenge/",
+        "s3://spacenet-dataset/spacenet/SN8_floods/",
+        "s3://spacenet-dataset/spacenet/SN8_floods/tarballs/Germany_Training_Public.tar.gz",
+        "s3://spacenet-dataset/spacenet/SN8_floods/tarballs/Louisiana-East_Training_Public.tar.gz",
+        "s3://spacenet-dataset/spacenet/SN8_floods/tarballs/Louisiana-West_Test_Public.tar.gz"
+      ],
+      "observed_content_status": "reference",
+      "prior_readiness_cn": "SpaceNet8 读取文档可得；本轮未获取成对影像/道路标签，需保留原 split 并分开洪水与道路状态语义。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D18": {
+      "name": "CEMS Rapid Mapping",
+      "urls": [
+        "https://mapping.emergency.copernicus.eu/about/how-to-harvest-cems-mapping-data/emergency-response-data/",
+        "https://rapidmapping.emergency.copernicus.eu/backend/dashboard-api/public-activations-info/",
+        "https://rapidmapping.emergency.copernicus.eu/backend/dashboard-api/public-activations/?code=EMSR842",
+        "https://rapidmapping.emergency.copernicus.eu/backend/EMSR842/AOI01/GRA_PRODUCT/EMSR842_AOI01_GRA_PRODUCT_v1.zip"
+      ],
+      "observed_content_status": "catalog",
+      "prior_readiness_cn": "CEMS EMSR712/AOI10 产品与影像时刻已列举；部分版本状态 N、无产品，不能当成成功下载或同目标修订。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D19": {
+      "name": "WildfireSpreadTS",
+      "urls": [
+        "https://zenodo.org/records/8006177",
+        "https://zenodo.org/records/8006177/files/WildfireSpreadTS.zip?download=1",
+        "https://github.com/SebastianGer/WildfireSpreadTS"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "3 天同一火场 TIFF；按作者读取器复算活动火像素 4/0/0；需新增独立火场、正例与火灭/缺测区别。",
+      "rights_status": "data_terms_pending",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D20": {
+      "name": "Next Day Wildfire Spread",
+      "urls": [
+        "https://www.kaggle.com/datasets/fantineh/next-day-wildfire-spread",
+        "https://github.com/google-research/google-research/tree/master/simulation_research/next_day_wildfire_spread"
+      ],
+      "observed_content_status": "partial",
+      "prior_readiness_cn": "Next Day Wildfire ZIP 前缀已取得，TFRecord 尚未解码；需字段、CRC 和标签时距核验。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D21": {
+      "name": "TS-SatFire",
+      "urls": [
+        "https://www.kaggle.com/datasets/z789456sx/ts-satfire",
+        "https://github.com/zhaoyutim/TS-SatFire"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "TS-SatFire 3 天同一火场 19 波段栅格可解码；最终标签通道和未来标签切片仍需读取器验证。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D23": {
+      "name": "NASA FIRMS",
+      "urls": [
+        "https://firms.modaps.eosdis.nasa.gov/api/area/",
+        "https://firms.modaps.eosdis.nasa.gov/api/data_availability/"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "公开 FIRMS VIIRS CSV 可匿名取得；2,606 条为热点，不是 2,606 场野火；归因与事件分组待完成。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D24": {
+      "name": "MTBS burned-area boundaries",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/USFS_GTAC_MTBS_burned_area_boundaries_v1",
+        "https://burnseverity.cr.usgs.gov/direct-download"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "MTBS 公开直链尝试失败；不必把 GEE 作为唯一入口，后续检查官方周界产品和许可。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D25": {
+      "name": "ERA5-Land Hourly",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_HOURLY",
+        "https://cds.climate.copernicus.eu/"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "ERA5-Land 未实际验证；已有 WeatherBench2 ERA5 chunk 不能代替 ERA5-Land 认证与变量验证。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D26": {
+      "name": "GHCN-Daily",
+      "urls": [
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/by_year/"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "5 个站点窗口 40 站日已解析；Toronto 查询为空；需季节基准、日界、质量标记和缺测规则。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D27": {
+      "name": "ISD / Global Hourly",
+      "urls": [
+        "https://www.ncei.noaa.gov/data/global-hourly/access/",
+        "https://www.ncei.noaa.gov/pub/data/noaa/",
+        "https://www.ncei.noaa.gov/pub/data/noaa/isd-history.txt"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "北京和沙特两个站年 28,733 报告；实有雾及浮/扬尘码，未发现本批沙尘暴/冻雨码正例。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D28": {
+      "name": "NOAA GFS0P25",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/NOAA_GFS0P25"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "已从公开 S3 读 GFS 3 个变量 GRIB；仅同一次初始化 f000，不是多轮修订或 3 场极端。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D29": {
+      "name": "GPM IMERG V07",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/NASA_GPM_L3_IMERG_V07"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "IMERG V07 尚无实测切片；CHIRPS DAILY_SAT 对 IMERG 的依赖不代表独立 IMERG 取样成功。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D30": {
+      "name": "CHIRPS v3 DAILY_SAT",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_DAILY_SAT",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/README-CHIRPSv3.0.txt",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "CHIRPS v3 DAILY_SAT 完成 2 个日栅格，第三日未完成；补站点、有效值编码与产品版本说明。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D31": {
+      "name": "US Drought Monitor",
+      "urls": [
+        "https://droughtmonitor.unl.edu/DmData/DataDownload/WebServiceInfo.aspx",
+        "https://usdmdataservices.unl.edu/api/USStatistics/GetDroughtSeverityStatisticsByArea?aoi=us&startdate=1/1/2012&enddate=1/1/2013&statisticsType=1",
+        "https://droughtmonitor.unl.edu/DmData/GISData.aspx",
+        "https://droughtmonitor.unl.edu/Maps/MapArchive.aspx"
+      ],
+      "observed_content_status": "inherited",
+      "prior_readiness_cn": "USDM 3 个周次已复核；采用已有专家标注，不新增逐题人工复核；不能把周次算独立干旱过程。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D32": {
+      "name": "SMAP Enhanced L3 Soil Moisture",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/NASA_SMAP_SPL3SMP_E_006"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "SMAP 无实测土壤湿度切片；干旱/闪旱升级时再补，先确认冻土/植被与质量标记。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D33": {
+      "name": "MODIS Snow MOD10A1.061",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD10A1"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "MODIS Snow 未实测；雪盖与降雪/暴雪/冻雨分开，当前 SNODAS 可作为积雪补源。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D34": {
+      "name": "MODIS LST MOD11A1.061",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD11A1"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "MODIS LST 未实测；地表温度不能替代 2 米气温热浪标签。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D35": {
+      "name": "MERRA-2 aerosol diagnostics",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/NASA_GSFC_MERRA_aer_2"
+      ],
+      "observed_content_status": "reference",
+      "prior_readiness_cn": "MERRA-2 气溶胶仅文档与入口；优先补 dust 专属变量并与现象码配对，不能以高 AOD 单独判沙尘暴。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D36": {
+      "name": "Sentinel-5P OFFL Aerosol Index",
+      "urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S5P_OFFL_L3_AER_AI"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "S5P Aerosol Index 尚无实际切片；需将沙尘、烟羽、云和缺测区分。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D37": {
+      "name": "NOAA CO-OPS water levels",
+      "urls": [
+        "https://api.tidesandcurrents.noaa.gov/api/prod/",
+        "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20200101&end_date=20200102&station=8518750&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&application=DisasterTrace&format=json"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "3 个潮位站各 240 对同基准面观测/潮汐预报已匹配；残差含多种作用，不能单独称纯风暴潮。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D47": {
+      "name": "ExEBench / EarthExtreme-Bench",
+      "urls": [
+        "https://github.com/zhaoshan2/EarthExtreme-Bench",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/tree/stable/data",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/coldwave.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/heatwave.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/expcp.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/tropicalCyclone.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/storm.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/eo/fire.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/eo/flood.zip"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "固定 commit 的寒潮 ZIP 完整校验：9 案例、559 时间步、8 国家/地区；其他六个子包未下载，ERA5/EM-DAT 来源与极端定义待核。",
+      "rights_status": "upstream_rights_pending",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D48": {
+      "name": "ExtremeWeatherBench",
+      "urls": [
+        "https://extremeweatherbench.readthedocs.io/en/latest/data/",
+        "https://github.com/brightbandtech/extremeweatherbench",
+        "gs://gcp-public-data-arco-era5/ar/full_37-1h-0p25deg-chunk-1.zarr-v3",
+        "gs://extremeweatherbench/datasets/ghcnh_all_2020_2024.parq",
+        "gs://extremeweatherbench/datasets/combined_canada_australia_us_lsr_01012020_09272025.parq",
+        "gs://extremeweatherbench/datasets/practically_perfect_hindcast_20200104_20250927.zarr"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "EWB 解码 329 案例定义及 GHCN-hourly 一个 row group 122,880 行；尚未把该观测组匹配到 EWB 极端案例。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D49": {
+      "name": "WeatherQA",
+      "urls": [
+        "https://github.com/chengqianma/WeatherQA",
+        "https://drive.google.com/file/d/1GpEp6EFrCA6wqU6FEHsaMO7jwTckP_m4/view?usp=sharing",
+        "https://drive.google.com/file/d/1mViaf1f-sWB1DyfCrw-NwmZp4gj96mYr/view?usp=drive_link",
+        "https://drive.google.com/file/d/17Hfv2NOLpy6rJBUrghaZmU_7r6WDCuDs/view?usp=sharing",
+        "https://huggingface.co/datasets/ZhanxiangHua/WeatherQA_SFT",
+        "https://www.spc.noaa.gov/exper/ma_archive/",
+        "https://www.spc.noaa.gov/products/md/"
+      ],
+      "observed_content_status": "reference",
+      "prior_readiness_cn": "WeatherQA 的 Drive 下载失败；SPC 2018/md0398 原文可取回；README 的 20 幅图是变量组，不是 20 个时刻。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D50": {
+      "name": "CyPortQA",
+      "urls": [
+        "https://github.com/ChenchenMobility/MLLM-Bench-CyPortQA",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/contents/source_data",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/contents/dataset"
+      ],
+      "observed_content_status": "multiformat",
+      "prior_readiness_cn": "CyPortQA 已取得 Dorian/Harvey/Florence 各 1 图 1 文；精确公告时刻对齐及港口标签规则尚未验证。",
+      "rights_status": "repository_license_only",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D51": {
+      "name": "WorldFloods v2 / ml4floods",
+      "urls": [
+        "https://spaceml-org.github.io/ml4floods/content/worldfloods_dataset.html",
+        "https://huggingface.co/datasets/isp-uv-es/WorldFloodsv2",
+        "https://zenodo.org/records/8153514",
+        "https://github.com/spaceml-org/ml4floods"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "WorldFloods v2 的 HF 数据连接未完成；保留为全球光学洪水备选，核验每类源产品的许可。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D52": {
+      "name": "DroughtED",
+      "urls": [
+        "https://www.kaggle.com/datasets/cdminix/us-drought-meteorological-data",
+        "https://www.climatechange.ai/papers/icml2021/22"
+      ],
+      "observed_content_status": "prefix_records",
+      "prior_readiness_cn": "DroughtED train ZIP 前缀解析 26,666 行，含 3,809 非空周标签；实际至 2016 与文档 train 2000-2009 冲突；需固定原文件切分。",
+      "rights_status": "provider_license_captured",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D53": {
+      "name": "M4Fog",
+      "urls": [
+        "https://github.com/Clynie/M4Fog",
+        "https://pan.baidu.com/s/1aOw3TqzkS7E0ymLG0k2BhA?pwd=6vm7",
+        "https://pan.baidu.com/s/1FSNdZoZCZ4mdu9_ehMRLIA?pwd=wp9k",
+        "https://pan.baidu.com/s/16RCgHSbdbNDgV8HMwKojPw?pwd=jv7g",
+        "https://pan.baidu.com/s/1q0s9eqAlydmyX6lu0znd3w?pwd=8q75",
+        "https://pan.baidu.com/s/1it_gK_v_RDLXRoxMX-X4Ow?pwd=99ci",
+        "https://pan.baidu.com/s/1_8hTqhCS5ZyrkCqvTrT7KQ?pwd=yfat",
+        "https://pan.baidu.com/s/1QE5QicyA1tFalcguP_fY_Q?pwd=amwc"
+      ],
+      "observed_content_status": "reference",
+      "prior_readiness_cn": "M4Fog 仓库和网盘页可读，未取到真实 cube；镜像身份/条款和海雾正例均未完成验证。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D55": {
+      "name": "SNODAS SWE",
+      "urls": [
+        "https://nsidc.org/data/g02158/versions/1"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "SNODAS 3 日 SWE 网格已解码；积雪不是暴雪/冻雨，32767 编码上限须结合产品说明。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D56": {
+      "name": "USGS Water Data",
+      "urls": [
+        "https://api.waterdata.usgs.gov/",
+        "https://api.waterdata.usgs.gov/docs/nims/"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "USGS 3 站各 3 条流量记录，9 条真实记录；返回日期不连续且不代表最新；需按洪水窗口重取。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D57": {
+      "name": "NWPS Stageflow",
+      "urls": [],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "NWPS 3 站阶段水位可解析，流量字段 -999；BTRL1 未提供 usgsId，不能自动接到附近 USGS 站。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D58": {
+      "name": "NDBC Buoys",
+      "urls": [],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "NDBC 3 个浮标波高可解析；多条报告仍需按风暴/站点配对，波高不等于风暴潮。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D59": {
+      "name": "MeteoNet",
+      "urls": [
+        "https://meteofrance.github.io/meteonet/english/data/summary/",
+        "https://meteonet.umr-cnrm.fr/",
+        "https://github.com/meteofrance/meteonet"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "MeteoNet 111,623 站报/484 站及 IR108 数组可读；雷达 NPZ object 时间不启用 pickle，时间桥接未完成。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D60": {
+      "name": "Caravan",
+      "urls": [
+        "https://www.nature.com/articles/s41597-023-01975-w",
+        "https://doi.org/10.5281/zenodo.7540792",
+        "https://github.com/kratzert/Caravan"
+      ],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "Caravan 3 个 CAMELS 美国流域各 14,609 日；流域属性/单位/极端阈值待补，ERA5-Land 驱动不是独立真值。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D61": {
+      "name": "HANZE v2.1",
+      "urls": [
+        "https://essd.copernicus.org/articles/16/5145/2024/",
+        "https://doi.org/10.5281/zenodo.8410025"
+      ],
+      "observed_content_status": "catalog",
+      "prior_readiness_cn": "HANZE 2,521 欧洲洪水影响记录、40 国；用于非美国检索与类型校验，事件族去重另做。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D62": {
+      "name": "Dheed",
+      "urls": [
+        "https://essd.copernicus.org/articles/17/6621/2025/index.html",
+        "https://doi.org/10.5281/zenodo.11044871"
+      ],
+      "observed_content_status": "catalog",
+      "prior_readiness_cn": "Dheed 82,839 派生干热事件记录可读；先查上游依赖和定义，不能作为另一份独立观测真值。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D65": {
+      "name": "FPA-FOD6",
+      "urls": [
+        "https://doi.org/10.2737/RDS-2013-0009.6",
+        "https://agdatacommons.nal.usda.gov/articles/dataset/Spatial_wildfire_occurrence_data_for_the_United_States_1992-2011_FPA_FOD_20130422_1st_edition/27005818"
+      ],
+      "observed_content_status": "inherited",
+      "prior_readiness_cn": "FPA-FOD6 已复核 3 条火灾记录；与 FIRMS、火烧迹地按事件合并，起火原因不能默认极端天气。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D66": {
+      "name": "WeatherBench2 ERA5",
+      "urls": [
+        "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-timeseries",
+        "https://climate.copernicus.eu/climate-reanalysis"
+      ],
+      "observed_content_status": "inherited",
+      "prior_readiness_cn": "WeatherBench2 一个 ERA5 温度 chunk 已复核；记录为 ERA5 衍生产品，不冒充 D25 ERA5-Land。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D67": {
+      "name": "HRRR",
+      "urls": [],
+      "observed_content_status": "numeric",
+      "prior_readiness_cn": "HRRR 已读同一次初始化 3 个 GRIB 变量；若做修订需同 valid_time 的多 init_time，当前未证实。",
+      "rights_status": "official_public_data_terms_to_document",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D69": {
+      "name": "GESLA current / GESLA-3 candidate",
+      "urls": [
+        "https://rmets.onlinelibrary.wiley.com/doi/10.1002/gdj3.174",
+        "https://www.gesla.org/"
+      ],
+      "observed_content_status": "metadata",
+      "prior_readiness_cn": "GESLA 站点目录可读；现端点报告 format 5.0/2026，不能标作 GESLA-3；潮位实际切片未取回。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D70": {
+      "name": "ESWD",
+      "urls": [
+        "https://www.essl.org/cms/author/tomas/",
+        "https://www.eswd.eu/"
+      ],
+      "observed_content_status": "unverified",
+      "prior_readiness_cn": "ESWD 适合补欧洲龙卷/冰雹，但本轮未获得许可明确的批量样本。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    },
+    "D73": {
+      "name": "CMA Best Track",
+      "urls": [
+        "https://tcdata.typhoon.org.cn/en/zjljsjj.html"
+      ],
+      "observed_content_status": "reference",
+      "prior_readiness_cn": "CMA 最佳路径入口已登记；尚无完整样例解码，仅作未来多机构事后对照。",
+      "rights_status": "not_fully_verified",
+      "status_scope": "inherited V6 inventory; new water source evidence supersedes only the named sampled sites"
+    }
+  },
+  "hazards": [
+    {
+      "hazard_id": "H01",
+      "name_cn": "热带气旋",
+      "subtypes": [
+        "强度",
+        "路径",
+        "局地风影响另设任务"
+      ],
+      "observation_or_label_sources": [
+        "AW-HURDAT2",
+        "D02"
+      ],
+      "forecast_or_baseline_sources": [
+        "D01"
+      ],
+      "benchmark_and_context_sources": [
+        "D03",
+        "D04",
+        "D50",
+        "D73"
+      ],
+      "future_target_cn": "已在监测系统的固定未来时刻最大持续风/位置；局地风风险单独定义",
+      "reference_kinds": [
+        "retrospective_analysis"
+      ],
+      "processing_cn": [
+        "按storm_id与绝对UTC有效时刻精确匹配",
+        "多机构最佳路径保留权威差异，不平均当唯一真值",
+        "风速统一kt；风暴最大风与地点风暴露分开",
+        "无数字预报与无结果均保留缺失，不补零"
+      ],
+      "observed_readiness_cn": "本轮重核64公告、461数字预报行、96可结算唯一时刻；四个已暴露开发组；历史availability未证",
+      "natural_clock_cn": "小时至数日",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H02",
+      "name_cn": "温带风暴/非对流大风",
+      "subtypes": [
+        "非对流持续风",
+        "阵风",
+        "风暴系统身份"
+      ],
+      "observation_or_label_sources": [
+        "D27"
+      ],
+      "forecast_or_baseline_sources": [
+        "D28",
+        "D67"
+      ],
+      "benchmark_and_context_sources": [
+        "D05",
+        "D48"
+      ],
+      "future_target_cn": "固定站点未来风速或阵风越阈",
+      "reference_kinds": [
+        "station_observation"
+      ],
+      "processing_cn": [
+        "持续风与阵风分开",
+        "核对10m高度、平均时长和瞬时/区间最大语义",
+        "按源事件标签或可验证过程区分非对流与雷暴风",
+        "网格到站点的取样规则预先固定"
+      ],
+      "observed_readiness_cn": "ISD风和报告可读；GFS/HRRR仅有同一初始化少量变量，尚无完整未来预报配对",
+      "natural_clock_cn": "小时至数日",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H03",
+      "name_cn": "雷暴大风/下击暴流",
+      "subtypes": [
+        "雷暴阵风",
+        "下击暴流需专门依据"
+      ],
+      "observation_or_label_sources": [
+        "D27",
+        "D05"
+      ],
+      "forecast_or_baseline_sources": [
+        "D67",
+        "AW-SPC"
+      ],
+      "benchmark_and_context_sources": [
+        "D06",
+        "D08",
+        "D09",
+        "D49"
+      ],
+      "future_target_cn": "固定站点/区域未来雷暴大风；无合格实测时只评价报告或产品目标",
+      "reference_kinds": [
+        "station_observation",
+        "institutional_report"
+      ],
+      "processing_cn": [
+        "雷达/VIL与地面阵风不是同一变量",
+        "按雷暴过程链接雷达、测站和报告",
+        "报告空白不标成无灾害",
+        "下击暴流不由强风或高VIL自动推断"
+      ],
+      "observed_readiness_cn": "SEVIR和报告已抽样；地面风—雷达—合法预报链待配对",
+      "natural_clock_cn": "分钟至小时",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H04",
+      "name_cn": "龙卷风",
+      "subtypes": [
+        "龙卷风险",
+        "带龙卷标签的雷达窗口"
+      ],
+      "observation_or_label_sources": [
+        "D07",
+        "D05"
+      ],
+      "forecast_or_baseline_sources": [
+        "AW-SPC"
+      ],
+      "benchmark_and_context_sources": [
+        "D08",
+        "D06",
+        "D49"
+      ],
+      "future_target_cn": "固定时空窗口的龙卷报告/作者定义标签；直接物理发生须额外可核验覆盖",
+      "reference_kinds": [
+        "dataset_label",
+        "institutional_report"
+      ],
+      "processing_cn": [
+        "TorNet保留作者标签、质量和原split",
+        "先补真实正例；同一风暴多个体扫归组",
+        "SPC概率窗口与目标范围精确对齐",
+        "无报告不是可证负例；不从测试标签选输入时刻"
+      ],
+      "observed_readiness_cn": "TorNet三个train样例均负例；报告正例存在；未完成未来任务链",
+      "natural_clock_cn": "分钟至小时",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H05",
+      "name_cn": "冰雹",
+      "subtypes": [
+        "地面大冰雹",
+        "雷达估计冰雹"
+      ],
+      "observation_or_label_sources": [
+        "D05",
+        "D09"
+      ],
+      "forecast_or_baseline_sources": [
+        "AW-SPC",
+        "D67"
+      ],
+      "benchmark_and_context_sources": [
+        "D08",
+        "D06",
+        "D48",
+        "D70"
+      ],
+      "future_target_cn": "固定窗口报告冰雹直径越阈，或明确标注的未来MESH产品越阈",
+      "reference_kinds": [
+        "institutional_report",
+        "radar_derived_product"
+      ],
+      "processing_cn": [
+        "英寸/mm转换并保留报告测量或估计属性",
+        "MESH与地面直径分表",
+        "时空匹配及缺测遮罩独立处理",
+        "无报告与雷达无有效覆盖均不直接作物理负例"
+      ],
+      "observed_readiness_cn": "冰雹目录和SEVIR样例可读；MESH实际数组与配对预报未核验",
+      "natural_clock_cn": "分钟至小时",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H06",
+      "name_cn": "强雷电",
+      "subtypes": [
+        "闪电频度",
+        "闪电密度极端"
+      ],
+      "observation_or_label_sources": [
+        "D10"
+      ],
+      "forecast_or_baseline_sources": [],
+      "benchmark_and_context_sources": [
+        "D06",
+        "D05"
+      ],
+      "future_target_cn": "固定区域未来窗口的GLM有效观测flash数量或密度",
+      "reference_kinds": [
+        "sensor_derived_observation"
+      ],
+      "processing_cn": [
+        "flash/group/event三层不混计",
+        "空间面积与时间窗口固定，跨文件边界去重",
+        "极端密度阈值来自独立气候基线",
+        "视场和传感器缺测显式保留；默认持续性/气候态基线"
+      ],
+      "observed_readiness_cn": "三个20秒GLM产品已解析；尚无极端密度判定和匹配专业概率预报",
+      "natural_clock_cn": "分钟至小时",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H07",
+      "name_cn": "极端降水",
+      "subtypes": [
+        "短时强降水",
+        "日累计暴雨"
+      ],
+      "observation_or_label_sources": [
+        "D26",
+        "D27",
+        "D59"
+      ],
+      "forecast_or_baseline_sources": [
+        "D28",
+        "D67"
+      ],
+      "benchmark_and_context_sources": [
+        "D09",
+        "D29",
+        "D30",
+        "D47",
+        "D48"
+      ],
+      "future_target_cn": "固定站点/区域未来指定时段累计降水越阈",
+      "reference_kinds": [
+        "station_observation",
+        "precipitation_product"
+      ],
+      "processing_cn": [
+        "累计量与降水率分开",
+        "处理累计起止、重置和重叠报告",
+        "站点日界不冒充UTC日界",
+        "雷达/卫星估计与雨量计结果分层；不随意插值Gold"
+      ],
+      "observed_readiness_cn": "雨量站、CHIRPS、MeteoNet已有样例；未来QPF与同窗结果链待验证",
+      "natural_clock_cn": "分钟、小时或日",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H08",
+      "name_cn": "洪水",
+      "subtypes": [
+        "河流洪水",
+        "山洪",
+        "城市内涝"
+      ],
+      "observation_or_label_sources": [
+        "D56"
+      ],
+      "forecast_or_baseline_sources": [
+        "D57",
+        "AW-HEFS"
+      ],
+      "benchmark_and_context_sources": [
+        "D12",
+        "D18",
+        "D60",
+        "D61",
+        "AW-NIMS",
+        "D13",
+        "D14",
+        "D16",
+        "D51"
+      ],
+      "future_target_cn": "河站未来水位/流量越阈；空间淹没与城市道路另设目标",
+      "reference_kinds": [
+        "station_observation",
+        "mapped_extent_label"
+      ],
+      "processing_cn": [
+        "官方站点映射，水位基准/单位与阈值版本匹配",
+        "水位与流量分轨，无有效评级曲线不转换",
+        "单时刻优先，时间窗负例要求完整注册网格",
+        "空间洪水标签与河站结果不强行拼同一事件"
+      ],
+      "observed_readiness_cn": "本轮两站两流域、50水位和25流量观测；两个HEFS起报完整数组；全为Provisional，四个水位点预览均未越阈",
+      "natural_clock_cn": "小时至数日",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H09",
+      "name_cn": "风暴潮/沿岸淹没",
+      "subtypes": [
+        "总水位越阈",
+        "潮汐残差",
+        "沿岸淹没"
+      ],
+      "observation_or_label_sources": [
+        "D37"
+      ],
+      "forecast_or_baseline_sources": [
+        "AW-SURGE"
+      ],
+      "benchmark_and_context_sources": [
+        "D58",
+        "D69",
+        "D01",
+        "D18"
+      ],
+      "future_target_cn": "固定潮位站未来总水位越阈；气象成因和陆地淹没单独验证",
+      "reference_kinds": [
+        "station_observation"
+      ],
+      "processing_cn": [
+        "统一潮位基准面、单位和时区",
+        "天文潮预测与风暴潮/总水位预报区分",
+        "残差不当作单一风暴潮成因",
+        "波高不是水位；淹没面积需要独立地形和空间标签"
+      ],
+      "observed_readiness_cn": "三站720对水位/天文潮已验证；业务总水位预报尚未取样，不能把潮汐预测充当完整强基线",
+      "natural_clock_cn": "小时至数日",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H10",
+      "name_cn": "热浪/极端高温",
+      "subtypes": [
+        "单时刻或单日高温",
+        "持续热浪"
+      ],
+      "observation_or_label_sources": [
+        "D26",
+        "D27"
+      ],
+      "forecast_or_baseline_sources": [
+        "D28",
+        "D67"
+      ],
+      "benchmark_and_context_sources": [
+        "D48",
+        "D47",
+        "D25",
+        "D34",
+        "D66"
+      ],
+      "future_target_cn": "未来日最高温越阈或预注册连续多日热浪",
+      "reference_kinds": [
+        "station_observation"
+      ],
+      "processing_cn": [
+        "2m气温与地表温度分开",
+        "冻结当地季节阈值/气候基准期",
+        "热浪明确持续天数，单点高温不直接叫热浪",
+        "检查观测日界、QC与预报统计支持"
+      ],
+      "observed_readiness_cn": "温度站、EWB案例可读；ExEBench高温包未取样，尚无完整未来预报配对",
+      "natural_clock_cn": "日及数日",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H11",
+      "name_cn": "寒潮/极端低温/霜冻",
+      "subtypes": [
+        "极端低温",
+        "快速降温",
+        "霜冻需现象依据"
+      ],
+      "observation_or_label_sources": [
+        "D26",
+        "D27"
+      ],
+      "forecast_or_baseline_sources": [
+        "D28",
+        "D67"
+      ],
+      "benchmark_and_context_sources": [
+        "D47",
+        "D48",
+        "D25",
+        "D66"
+      ],
+      "future_target_cn": "未来低温或降温幅度/持续性越阈",
+      "reference_kinds": [
+        "station_observation"
+      ],
+      "processing_cn": [
+        "绝对低温与温度下降分开",
+        "2m温度低于0度不自动等于地表霜冻",
+        "跨国同一次寒潮归并，阈值按当地基准",
+        "ERA5为回溯参考，不当业务初始可用输入"
+      ],
+      "observed_readiness_cn": "ExEBench寒潮包9案例559时步已解码，另有站温；九案例不等于九独立寒潮",
+      "natural_clock_cn": "小时至数日",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H12",
+      "name_cn": "冬季灾害",
+      "subtypes": [
+        "大雪",
+        "暴雪/吹雪",
+        "积雪",
+        "冻雨/结冰"
+      ],
+      "observation_or_label_sources": [
+        "D26",
+        "D27",
+        "D55"
+      ],
+      "forecast_or_baseline_sources": [
+        "D67",
+        "D28"
+      ],
+      "benchmark_and_context_sources": [
+        "D05",
+        "D33",
+        "D49"
+      ],
+      "future_target_cn": "分别定义未来降雪量、雪深/SWE、吹雪条件或冻雨现象",
+      "reference_kinds": [
+        "station_observation",
+        "snow_analysis_product",
+        "institutional_report"
+      ],
+      "processing_cn": [
+        "降雪量、雪深和SWE不混用",
+        "暴雪需雪、风、能见度和持续性联合证据",
+        "冻雨使用对应现象码/标签，不能由雪盖替代",
+        "缺测与产品编码上限保留；各子类单独覆盖统计"
+      ],
+      "observed_readiness_cn": "积雪和灾害报告已有样例；ISD冻雨/吹雪码正例仍缺",
+      "natural_clock_cn": "小时至数日",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H13",
+      "name_cn": "干旱/闪旱",
+      "subtypes": [
+        "持续干旱",
+        "快速恶化/闪旱"
+      ],
+      "observation_or_label_sources": [
+        "D31"
+      ],
+      "forecast_or_baseline_sources": [
+        "AW-CPC"
+      ],
+      "benchmark_and_context_sources": [
+        "D26",
+        "D30",
+        "D32",
+        "D52",
+        "D60",
+        "D62"
+      ],
+      "future_target_cn": "固定地区未来USDM等级/面积变化；物理干旱指数另定义",
+      "reference_kinds": [
+        "expert_analysis_product"
+      ],
+      "processing_cn": [
+        "周次有效状态不当同一目标订正",
+        "先固定USDM产品标签，披露已有专家参与",
+        "季节展望不能直接作为下一周等级概率",
+        "DroughtED小数标签和split冲突解决前隔离；闪旱需独立快速恶化规则"
+      ],
+      "observed_readiness_cn": "USDM周图可用；DroughtED仅部分归档且语义/年份待修；未来概率链未完成",
+      "natural_clock_cn": "周至月",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H14",
+      "name_cn": "沙尘暴",
+      "subtypes": [
+        "沙尘暴",
+        "浮尘/扬沙另列"
+      ],
+      "observation_or_label_sources": [
+        "D27"
+      ],
+      "forecast_or_baseline_sources": [
+        "AW-CAMS"
+      ],
+      "benchmark_and_context_sources": [
+        "D05",
+        "D35",
+        "D36"
+      ],
+      "future_target_cn": "未来具有沙尘现象依据的低能见度/沙尘指标越阈",
+      "reference_kinds": [
+        "station_weather_observation",
+        "aerosol_product"
+      ],
+      "processing_cn": [
+        "核查现象码及能见度，浮尘不自动升格为沙尘暴",
+        "AOD/气溶胶指数不单独证明沙尘来源",
+        "MERRA-2为回溯分析，CAMS业务预报另存版本",
+        "缺失天气码不当无沙尘；需补明确正例"
+      ],
+      "observed_readiness_cn": "有沙尘报告与浮尘/扬沙码；当前ISD样例沙尘暴码正例为零，dust专属数组待取样",
+      "natural_clock_cn": "小时至数日",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H15",
+      "name_cn": "浓雾/极端低能见度",
+      "subtypes": [
+        "浓雾",
+        "海雾",
+        "其他低能见度另列"
+      ],
+      "observation_or_label_sources": [
+        "D27"
+      ],
+      "forecast_or_baseline_sources": [
+        "D67"
+      ],
+      "benchmark_and_context_sources": [
+        "D53",
+        "D05"
+      ],
+      "future_target_cn": "未来站点能见度越阈，并在有依据时判断雾现象",
+      "reference_kinds": [
+        "station_weather_observation",
+        "dataset_label"
+      ],
+      "processing_cn": [
+        "能见度单位/QC/上限或截断编码保留",
+        "用现象码区分雾、烟、沙尘，模糊时只评低能见度",
+        "雾的持续性按完整时间网格判定",
+        "M4Fog未验证影像不能计入已建海雾子集"
+      ],
+      "observed_readiness_cn": "ISD已有34条合格雾码记录；极端程度与持续性需构建，M4Fog真实cube未取得",
+      "natural_clock_cn": "分钟至小时",
+      "formal_new_future_tasks_admitted": false
+    },
+    {
+      "hazard_id": "H16",
+      "name_cn": "天气相关野火/火险",
+      "subtypes": [
+        "活动火扩展",
+        "烧毁范围",
+        "天气火险三者分开"
+      ],
+      "observation_or_label_sources": [
+        "D19",
+        "D23"
+      ],
+      "forecast_or_baseline_sources": [],
+      "benchmark_and_context_sources": [
+        "D20",
+        "D21",
+        "D24",
+        "D65",
+        "D28",
+        "D67"
+      ],
+      "future_target_cn": "未来活动火探测范围进入固定区域，或独立定义的未来火险",
+      "reference_kinds": [
+        "sensor_detection_product",
+        "dataset_label"
+      ],
+      "processing_cn": [
+        "FIRMS热点不等于独立火场",
+        "按作者规则解析HHMM探测时刻、云和未探测状态",
+        "火点消失不当火已扑灭；烧痕不当实时活动火",
+        "天气条件可作输入，不默认极端天气导致起火；先用持续性/简单扩展强基线"
+      ],
+      "observed_readiness_cn": "WildfireSpreadTS与TS-SatFire仅少量同火场时序；未来标签、QC和更多独立火场仍需准入",
+      "natural_clock_cn": "小时至日",
+      "formal_new_future_tasks_admitted": false
+    }
+  ],
+  "source_stack_subset_details": "SOURCE_SELECTION.json",
+  "processing_contract": "DATA_PROCESSING_CONTRACT.json",
+  "source_rights_not_implied_by_recommendation": true,
+  "formal_new_future_tasks_admitted_this_turn": 0
+}

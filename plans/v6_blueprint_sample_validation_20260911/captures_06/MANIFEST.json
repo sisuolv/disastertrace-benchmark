@@ -1,0 +1,260 @@
+[
+  {
+    "id": "cams-small-retrieval",
+    "source": "CAMS",
+    "url": "https://ads.atmosphere.copernicus.eu/api/retrieve/v1/processes/cams-global-atmospheric-composition-forecasts/execution",
+    "max_bytes": 1048576,
+    "method": "POST",
+    "json_body": {
+      "inputs": {
+        "variable": [
+          "dust_aerosol_optical_depth_550nm"
+        ],
+        "date": "2026-09-10/2026-09-10",
+        "type": [
+          "forecast"
+        ],
+        "time": [
+          "00:00"
+        ],
+        "leadtime_hour": [
+          "6"
+        ],
+        "data_format": "netcdf_zip",
+        "area": [
+          41,
+          -5,
+          39,
+          -3
+        ]
+      }
+    },
+    "started_at": "2026-09-11T11:11:16.334640+00:00",
+    "complete": true,
+    "status": "incomplete_or_http_error",
+    "http_status": 401,
+    "final_url": "https://ads.atmosphere.copernicus.eu/api/retrieve/v1/processes/cams-global-atmospheric-composition-forecasts/execution",
+    "response_headers": {
+      "Content-Type": "application/json",
+      "Content-Length": "286"
+    },
+    "raw": "cams-small-retrieval.body",
+    "bytes": 286,
+    "sha256": "e587b4e6cdf159939edc07212481a76c76dd63fd9c0328c3e0e424116e357d44",
+    "finished_at": "2026-09-11T11:11:17.076871+00:00"
+  },
+  {
+    "id": "cpc-seasonal-complete",
+    "source": "CPC",
+    "url": "https://ftp.cpc.ncep.noaa.gov/GIS/droughtlook/sdo_polygons_20260820.zip",
+    "max_bytes": 16777216,
+    "started_at": "2026-09-11T11:11:14.716483+00:00",
+    "complete": false,
+    "status": "failed",
+    "http_status": 200,
+    "final_url": "https://ftp.cpc.ncep.noaa.gov/GIS/droughtlook/sdo_polygons_20260820.zip",
+    "response_headers": {
+      "Content-Type": "application/zip",
+      "Content-Length": "15714252",
+      "Last-Modified": "Thu, 20 Aug 2026 12:30:31 GMT",
+      "Accept-Ranges": "bytes"
+    },
+    "error": "TimeoutError: response wall-time budget reached",
+    "raw": "cpc-seasonal-complete.body",
+    "bytes": 3801088,
+    "sha256": "0cd91dee2d583bc2f28c609a5a22ab79d22f06974fec6ed17f8ab8513090f33f",
+    "finished_at": "2026-09-11T11:12:05.066054+00:00"
+  },
+  {
+    "id": "efas-small-retrieval",
+    "source": "EFAS",
+    "url": "https://ewds.climate.copernicus.eu/api/retrieve/v1/processes/efas-forecast/execution",
+    "max_bytes": 1048576,
+    "method": "POST",
+    "json_body": {
+      "inputs": {
+        "system_version": [
+          "operational"
+        ],
+        "origin": [
+          "ecmwf"
+        ],
+        "variable": [
+          "river_discharge_in_the_last_6_hours"
+        ],
+        "product_type": [
+          "control_forecast"
+        ],
+        "year": [
+          "2026"
+        ],
+        "month": [
+          "09"
+        ],
+        "day": [
+          "10"
+        ],
+        "time": [
+          "00:00"
+        ],
+        "leadtime_hour": [
+          "24"
+        ],
+        "data_format": "netcdf",
+        "download_format": "unarchived",
+        "area": [
+          51,
+          5,
+          50,
+          6
+        ]
+      }
+    },
+    "started_at": "2026-09-11T11:11:17.080197+00:00",
+    "complete": true,
+    "status": "incomplete_or_http_error",
+    "http_status": 401,
+    "final_url": "https://ewds.climate.copernicus.eu/api/retrieve/v1/processes/efas-forecast/execution",
+    "response_headers": {
+      "Content-Type": "application/json",
+      "Content-Length": "252"
+    },
+    "raw": "efas-small-retrieval.body",
+    "bytes": 252,
+    "sha256": "9e400b702451cecde873b3d273627d22bddc22deb59094f4c81eb5aef89b94eb",
+    "finished_at": "2026-09-11T11:11:17.882359+00:00"
+  },
+  {
+    "id": "ghcnh-denver-tail",
+    "source": "GHCNh",
+    "url": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2026/psv/GHCNh_USW00003017_2026.psv",
+    "max_bytes": 1048576,
+    "headers": {
+      "Range": "bytes=34527426-35576001"
+    },
+    "declared_object_size": 35576002,
+    "started_at": "2026-09-11T11:11:14.714842+00:00",
+    "complete": true,
+    "status": "received",
+    "http_status": 206,
+    "final_url": "https://noaa-ghcnh-pds.s3.amazonaws.com/hourly/access/by-year/2026/psv/GHCNh_USW00003017_2026.psv",
+    "response_headers": {
+      "Content-Type": "application/octet-stream",
+      "Content-Length": "1048576",
+      "Content-Range": "bytes 34527426-35576001/35576002",
+      "ETag": "\"c4b1001704afc64f91fa8c7a0c159efb\"",
+      "Last-Modified": "Thu, 10 Sep 2026 19:18:39 GMT",
+      "Accept-Ranges": "bytes"
+    },
+    "range_verified": true,
+    "raw": "ghcnh-denver-tail.body",
+    "bytes": 1048576,
+    "sha256": "be6d3c7a4e0114309fc825be2701dfbbd540b045d41774a6bec68ab4a43f9f5e",
+    "finished_at": "2026-09-11T11:11:16.761097+00:00"
+  },
+  {
+    "id": "glofas-small-retrieval",
+    "source": "GloFAS",
+    "url": "https://ewds.climate.copernicus.eu/api/retrieve/v1/processes/cems-glofas-forecast/execution",
+    "max_bytes": 1048576,
+    "method": "POST",
+    "json_body": {
+      "inputs": {
+        "system_version": [
+          "operational"
+        ],
+        "hydrological_model": [
+          "lisflood"
+        ],
+        "product_type": [
+          "control_forecast"
+        ],
+        "variable": [
+          "river_discharge_in_the_last_24_hours"
+        ],
+        "year": [
+          "2026"
+        ],
+        "month": [
+          "09"
+        ],
+        "day": [
+          "10"
+        ],
+        "leadtime_hour": [
+          "24"
+        ],
+        "data_format": "netcdf",
+        "download_format": "unarchived",
+        "area": [
+          41,
+          -5,
+          39,
+          -3
+        ]
+      }
+    },
+    "started_at": "2026-09-11T11:11:16.764640+00:00",
+    "complete": true,
+    "status": "incomplete_or_http_error",
+    "http_status": 401,
+    "final_url": "https://ewds.climate.copernicus.eu/api/retrieve/v1/processes/cems-glofas-forecast/execution",
+    "response_headers": {
+      "Content-Type": "application/json",
+      "Content-Length": "259"
+    },
+    "raw": "glofas-small-retrieval.body",
+    "bytes": 259,
+    "sha256": "21a3b96dc987f0676a2ad9725628f952e772ddd18c47082300672092bb91b6ce",
+    "finished_at": "2026-09-11T11:11:17.746031+00:00"
+  },
+  {
+    "id": "mrms-readme",
+    "source": "MRMS-MESH",
+    "url": "https://raw.githubusercontent.com/NOAA-Big-Data-Program/bdp-data-docs/main/MRMS/README.md",
+    "max_bytes": 524288,
+    "started_at": "2026-09-11T11:11:14.716735+00:00",
+    "complete": false,
+    "status": "failed",
+    "error": "TimeoutError: The read operation timed out",
+    "finished_at": "2026-09-11T11:11:40.086104+00:00"
+  },
+  {
+    "id": "ofs-current-stations-list",
+    "source": "OFS",
+    "url": "https://noaa-ofs-pds.s3.amazonaws.com/?list-type=2&prefix=cbofs.20260910/cbofs.t00z.20260910.stations&max-keys=5",
+    "max_bytes": 524288,
+    "started_at": "2026-09-11T11:11:14.716169+00:00",
+    "complete": true,
+    "status": "received",
+    "http_status": 200,
+    "final_url": "https://noaa-ofs-pds.s3.amazonaws.com/?list-type=2&prefix=cbofs.20260910/cbofs.t00z.20260910.stations&max-keys=5",
+    "response_headers": {
+      "Content-Type": "application/xml"
+    },
+    "raw": "ofs-current-stations-list.body",
+    "bytes": 959,
+    "sha256": "05987d4ea18cf4e168e03eea1158350d351e27d87fe2553c1ab645f5a3f467d8",
+    "finished_at": "2026-09-11T11:11:15.502514+00:00"
+  },
+  {
+    "id": "wpc-qpf-grib-local",
+    "source": "WPC",
+    "url": "https://www.wpc.ncep.noaa.gov/5km_grids/day1_00z.grb",
+    "max_bytes": 8388608,
+    "started_at": "2026-09-11T11:11:15.505913+00:00",
+    "complete": true,
+    "status": "incomplete_or_http_error",
+    "http_status": 404,
+    "final_url": "https://www.wpc.ncep.noaa.gov/5km_grids/day1_00z.grb",
+    "response_headers": {
+      "Content-Type": "text/html; charset=iso-8859-1",
+      "Content-Length": "196"
+    },
+    "raw": "wpc-qpf-grib-local.body",
+    "bytes": 196,
+    "sha256": "80c3fe2ae1062abf56456f52518bd670f9ec3917b7f85e152b347ac6b6faf880",
+    "links": [],
+    "finished_at": "2026-09-11T11:11:16.331556+00:00"
+  }
+]

@@ -1,5 +1,25 @@
 # DisasterTrace：LLM 极端天气证据推理评测审查包
 
+## 最新：16 类灾害整体方案与真实样例验证（2026-09-11）
+
+请先读 [完善后的整体方案](plans/v6_blueprint_sample_validation_20260911/OVERALL_PLAN_REFINED_CN.md)、
+[逐灾种数据合同](plans/v6_blueprint_sample_validation_20260911/HAZARD_SOURCE_MATRIX.md) 和
+[逐来源样例清单](plans/v6_blueprint_sample_validation_20260911/SOURCE_SAMPLE_INVENTORY.md)。
+本次整合两份整体蓝图，并实际执行 125 次有界请求；最终科学审计含 31 条科学内容解析
+和 2 条渲染地图记录。97 项登记包含不同产品、继承和条件候选，不是独立数据集数量。
+GHCNh、未来业务预报、冻雨/沙尘站报、雷达卫星及海岸/干旱产品均有实际样例证据；
+权限、单位、时空支持、正例和配对缺口分别披露。新正式评测任务和模型调用为 0。
+
+研究主线进一步确定为：在相同专业预报、资料预算和准备截止下，测量主动获取证据
+对固定未来风险预测与决定的增量，并区分来源、表示、版本和状态造成的失效。
+历史产品事实评测继续保留为 E 面板；F/D 的完整未来结果闭环仍待构建。
+
+[本次发布与复查入口](publication/blueprint_review_20260911/README.md) 包含 ChatGPT Pro
+复查问题、阅读 ZIP 和副本校验命令。原始数组和解析环境保留在数据工作区；GitHub
+副本提供代码、方案、回执与审计记录，不能据此声称已独立重跑全部科学解码。
+
+以下保留此前各阶段的进展与结果，历史“当前/最新”字样应按对应阶段理解。
+
 ## 最新复查：V6 数据选择与多灾种可行性核验（2026-09-11）
 
 请从 **[给 ChatGPT Pro 的 V6 复查任务](publication/v6_review_20260911/REVIEW_FOR_CHATGPT_PRO_CN.md)** 开始，

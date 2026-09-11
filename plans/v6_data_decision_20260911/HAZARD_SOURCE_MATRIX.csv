@@ -1,0 +1,17 @@
+hazard_id,name_cn,observation_or_label_sources,forecast_or_baseline_sources,benchmark_and_context_sources,future_target_cn,reference_kinds,natural_clock_cn,observed_readiness_cn
+H01,热带气旋,AW-HURDAT2; D02,D01,D03; D04; D50; D73,已在监测系统的固定未来时刻最大持续风/位置；局地风风险单独定义,retrospective_analysis,小时至数日,本轮重核64公告、461数字预报行、96可结算唯一时刻；四个已暴露开发组；历史availability未证
+H02,温带风暴/非对流大风,D27,D28; D67,D05; D48,固定站点未来风速或阵风越阈,station_observation,小时至数日,ISD风和报告可读；GFS/HRRR仅有同一初始化少量变量，尚无完整未来预报配对
+H03,雷暴大风/下击暴流,D27; D05,D67; AW-SPC,D06; D08; D09; D49,固定站点/区域未来雷暴大风；无合格实测时只评价报告或产品目标,station_observation; institutional_report,分钟至小时,SEVIR和报告已抽样；地面风—雷达—合法预报链待配对
+H04,龙卷风,D07; D05,AW-SPC,D08; D06; D49,固定时空窗口的龙卷报告/作者定义标签；直接物理发生须额外可核验覆盖,dataset_label; institutional_report,分钟至小时,TorNet三个train样例均负例；报告正例存在；未完成未来任务链
+H05,冰雹,D05; D09,AW-SPC; D67,D08; D06; D48; D70,固定窗口报告冰雹直径越阈，或明确标注的未来MESH产品越阈,institutional_report; radar_derived_product,分钟至小时,冰雹目录和SEVIR样例可读；MESH实际数组与配对预报未核验
+H06,强雷电,D10,,D06; D05,固定区域未来窗口的GLM有效观测flash数量或密度,sensor_derived_observation,分钟至小时,三个20秒GLM产品已解析；尚无极端密度判定和匹配专业概率预报
+H07,极端降水,D26; D27; D59,D28; D67,D09; D29; D30; D47; D48,固定站点/区域未来指定时段累计降水越阈,station_observation; precipitation_product,分钟、小时或日,雨量站、CHIRPS、MeteoNet已有样例；未来QPF与同窗结果链待验证
+H08,洪水,D56,D57; AW-HEFS,D12; D18; D60; D61; AW-NIMS; D13; D14; D16; D51,河站未来水位/流量越阈；空间淹没与城市道路另设目标,station_observation; mapped_extent_label,小时至数日,本轮两站两流域、50水位和25流量观测；两个HEFS起报完整数组；全为Provisional，四个水位点预览均未越阈
+H09,风暴潮/沿岸淹没,D37,AW-SURGE,D58; D69; D01; D18,固定潮位站未来总水位越阈；气象成因和陆地淹没单独验证,station_observation,小时至数日,三站720对水位/天文潮已验证；业务总水位预报尚未取样，不能把潮汐预测充当完整强基线
+H10,热浪/极端高温,D26; D27,D28; D67,D48; D47; D25; D34; D66,未来日最高温越阈或预注册连续多日热浪,station_observation,日及数日,温度站、EWB案例可读；ExEBench高温包未取样，尚无完整未来预报配对
+H11,寒潮/极端低温/霜冻,D26; D27,D28; D67,D47; D48; D25; D66,未来低温或降温幅度/持续性越阈,station_observation,小时至数日,ExEBench寒潮包9案例559时步已解码，另有站温；九案例不等于九独立寒潮
+H12,冬季灾害,D26; D27; D55,D67; D28,D05; D33; D49,分别定义未来降雪量、雪深/SWE、吹雪条件或冻雨现象,station_observation; snow_analysis_product; institutional_report,小时至数日,积雪和灾害报告已有样例；ISD冻雨/吹雪码正例仍缺
+H13,干旱/闪旱,D31,AW-CPC,D26; D30; D32; D52; D60; D62,固定地区未来USDM等级/面积变化；物理干旱指数另定义,expert_analysis_product,周至月,USDM周图可用；DroughtED仅部分归档且语义/年份待修；未来概率链未完成
+H14,沙尘暴,D27,AW-CAMS,D05; D35; D36,未来具有沙尘现象依据的低能见度/沙尘指标越阈,station_weather_observation; aerosol_product,小时至数日,有沙尘报告与浮尘/扬沙码；当前ISD样例沙尘暴码正例为零，dust专属数组待取样
+H15,浓雾/极端低能见度,D27,D67,D53; D05,未来站点能见度越阈，并在有依据时判断雾现象,station_weather_observation; dataset_label,分钟至小时,ISD已有34条合格雾码记录；极端程度与持续性需构建，M4Fog真实cube未取得
+H16,天气相关野火/火险,D19; D23,,D20; D21; D24; D65; D28; D67,未来活动火探测范围进入固定区域，或独立定义的未来火险,sensor_detection_product; dataset_label,小时至日,WildfireSpreadTS与TS-SatFire仅少量同火场时序；未来标签、QC和更多独立火场仍需准入

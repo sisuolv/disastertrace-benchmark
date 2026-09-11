@@ -1,0 +1,118 @@
+{
+  "schema_version": "disastertrace.data_processing_contract.v1",
+  "status": "selected_specification; only NHC and hydrology audit processors implemented",
+  "cohorts": {
+    "monitoring": "predefined entities and calendar target times independent of future Y",
+    "diagnostic": "explicitly enriched events and controlled delivery conditions; no population calibration claim"
+  },
+  "identity_layers": [
+    "physical_event_or_monitoring_block",
+    "source_product_revision",
+    "representation_asset",
+    "delivery_receipt"
+  ],
+  "separate_graphs": [
+    "physical_event",
+    "asset_reuse",
+    "source_dependency"
+  ],
+  "time_fields": [
+    "issue_time",
+    "creation_time",
+    "valid_time_or_calendar_support",
+    "available_lower_bound",
+    "available_upper_bound",
+    "captured_at",
+    "first_seen_at",
+    "delivery_at"
+  ],
+  "unknown_availability": "null_with_reason",
+  "time_modes": [
+    "controlled_replay",
+    "historical_asof_verified",
+    "prospective_first_seen"
+  ],
+  "initial_target_type": "single_absolute_future_instant for the NHC/hydrology bridge only",
+  "whole_benchmark_target_types": [
+    "single_absolute_future_instant",
+    "fixed_accumulation_or_extreme_window",
+    "fixed_duration_or_multiday_condition",
+    "fixed_future_product_edition_or_report_window"
+  ],
+  "natural_time_scale": "hazard-specific minutes, hours, days or weeks; common protocol does not impose one forecast horizon",
+  "future_reference_panels": [
+    "station_or_physical_observation",
+    "sensor_derived_or_retrospective_expert_product",
+    "institutional_report_or_published_dataset_label"
+  ],
+  "report_absence_policy": "no report is not physical non-occurrence; score explicitly defined report/dataset endpoints separately",
+  "forecast_target_fields": [
+    "entity",
+    "variable",
+    "unit",
+    "spatial_support",
+    "vertical_reference_if_needed",
+    "absolute_target_time",
+    "threshold",
+    "threshold_version",
+    "observation_sampling",
+    "outcome_policy"
+  ],
+  "canonical_numeric_values": "exact decimal strings; preserve raw values, units and flags",
+  "conversions": {
+    "kcfs_to_cfs": "multiply_by_1000_only_for_valid_values",
+    "cfs_to_ft3_per_s": "identity",
+    "feet_to_meters": "multiply_by_0.3048_if_needed_with_same_datum",
+    "stage_to_discharge": "blocked_without_time_valid_verified_rating_curve",
+    "altitude_to_gage_height": "not_automatic"
+  },
+  "source_identity_rule": "USGS official ID from NWPS crosswalk; no nearest-station substitution",
+  "observation_identity": [
+    "time_series_id",
+    "time"
+  ],
+  "observation_revision_rule": "compare scientific value/unit/quality/support; row UUID or last_modified alone not semantic revision",
+  "outcome_quality": {
+    "confirmed_default": "pass source-specific final quality and outcome policy; USGS bridge requires Approved and no disqualifying qualifier",
+    "provisional": "retain preview only; confirmed_y null",
+    "missing_point": "unresolved",
+    "window_positive": "for any-exceedance targets only: at_least_one_qualifying_observed_exceedance",
+    "window_negative": "for any-exceedance targets only: all preregistered sample instants valid and below threshold",
+    "other_window_targets": "accumulation, sustained conditions and multiday events require their own complete-support rules; one exceedance is not enough",
+    "incomplete_window_without_positive": "unresolved",
+    "interpolation_for_gold": "disabled_v1"
+  },
+  "nhc_missing_numeric_forecast": "keep fixed scheduled target with missing baseline; do not map dissipated/unmatched to zero",
+  "probability_baseline": "official same-target probability or frozen training-only calibration/declared ensemble aggregation; point forecast not renamed probability",
+  "unmatched_professional_baseline": "publish climatology/persistence/simple numeric comparisons; do not claim improvement over a professional forecast without a matched product",
+  "label_roles": [
+    "evidence_reference",
+    "private_future_outcome",
+    "public_decision_rule"
+  ],
+  "public_projection": {
+    "allow": [
+      "admitted_source_text_or_array",
+      "known_at_time_target_and_source_metadata",
+      "read_receipts"
+    ],
+    "deny": [
+      "future_observations",
+      "future_crests_or_outcome_summaries",
+      "unread_values_or_actual_quality",
+      "private_certificates",
+      "future_file_counts",
+      "label_derived_masks",
+      "post_event_metadata_categories"
+    ]
+  },
+  "task_generation": "fix monitoring cohort and dependency groups before deriving checkpoints, budgets, representations or delay branches",
+  "deadline_rule": "derived_from_registered_target_and_scenario, never_from_future_observed_onset",
+  "split_policy": {
+    "previously_observed": "development_exposed",
+    "formal_split": "pending_independent_group_inventory",
+    "purge_embargo": "at_least_dependency_span_of_input_lookback_target_window_shared_products",
+    "dependence": "group storms/basin_weather_processes/overlapping windows; shared global provider alone does not merge all events"
+  },
+  "release": "preserve source terms, publish fetchers/manifests and permitted data; code license does not relabel source data"
+}
