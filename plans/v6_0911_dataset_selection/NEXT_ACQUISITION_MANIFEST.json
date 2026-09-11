@@ -1,0 +1,415 @@
+{
+  "schema": "disastertrace_v6_next_acquisition_v1",
+  "status": "reviewable_plan_not_launched",
+  "items": [
+    {
+      "id": "N01-longtail-event-windows",
+      "source_ids": [
+        "D05",
+        "D27",
+        "D55"
+      ],
+      "priority": 1,
+      "action": "从已冻结报告目录挑选正例/邻近负例，先去重和保护过滤，再取同站逐时记录。",
+      "selectors": {
+        "local_catalogs": [
+          "storm-events-2021-assembled",
+          "storm-events-2023-assembled"
+        ],
+        "report_types": [
+          "Dust Storm",
+          "Ice Storm",
+          "Blizzard",
+          "Dense Fog",
+          "Lightning"
+        ],
+        "selection_rule": "per type first 3 distinct provisional source episodes after identity review by deterministic metadata rules; ambiguous families quarantined",
+        "station_query_template": "https://www.ncei.noaa.gov/data/global-hourly/access/{year}/{station_id}.csv"
+      },
+      "max_captured_bytes": 134217728,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "补目前不足的沙尘暴、冻雨、暴雪、极端雾窗口；目标是证据链，不承诺 15 个独立事件。",
+      "prerequisites": [
+        "recompute local identity map",
+        "resolve stations by coordinates and distance cutoff",
+        "predeclare weather codes and QC"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N02-exebench-next-package",
+      "source_ids": [
+        "D47",
+        "D26"
+      ],
+      "priority": 2,
+      "action": "锁同一 commit 列出 heatwave 包；取包后检查病例、时间轴及与地面站桥接。",
+      "selectors": {
+        "hf_repo": "zhaoshan/ee-bench_v1.0",
+        "revision": "b7b58da2f4b76cad7ba21a9dc4976f96482794c7",
+        "relative_path": "data/weather/heatwave.zip",
+        "source_url": "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/b7b58da2f4b76cad7ba21a9dc4976f96482794c7/data/weather/heatwave.zip",
+        "package_size_reported_decimal_bytes": 65300000
+      },
+      "max_captured_bytes": 100663296,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "扩大热浪和非美国地区；寒潮 9 个病例先合并跨国事件。",
+      "prerequisites": [
+        "verify pinned size and SHA256",
+        "ERA5 and EM-DAT lineage/terms",
+        "protect historic heldout"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N03-tornet-positive",
+      "source_ids": [
+        "D07",
+        "D08"
+      ],
+      "priority": 1,
+      "action": "读取已取得 catalog 的完整成员/版本元数据，找到 v1.1 正例及匹配负例，再定点取 NetCDF。",
+      "selectors": {
+        "zenodo_record": "12636522",
+        "selection": "3 TOR and 3 NUL from train, distinct parent storm IDs; confirm release v1.1 label mapping",
+        "minimum_member_count": 6
+      },
+      "max_captured_bytes": 134217728,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "解决已取得 3 例全为负例的问题。",
+      "prerequisites": [
+        "match release ID to corrected labels",
+        "bounded seekable route or select smaller archive; do not download 3GB archive by default"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N04-flood-positive-bridge",
+      "source_ids": [
+        "D12",
+        "D18",
+        "D15"
+      ],
+      "priority": 1,
+      "action": "只用 train 列表挑新 activation，先验 mask 三类和正负覆盖，再配 CEMS 原产品。",
+      "selectors": {
+        "hf_repo": "links-ads/geoid-flood",
+        "revision": "868407460bf3db492f50730a57585916baa71dc6",
+        "exclude_activation": "EMSR712",
+        "selection": "3 train activations; >=1 flood-positive tile and 1 hard-negative tile each; use label only for private audit strata",
+        "api": "https://rapidmapping.emergency.copernicus.eu/backend/dashboard-api/public-activations/?code={activation_code}"
+      },
+      "max_captured_bytes": 268435456,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "提高独立洪水与真实正例数量；补不同大陆，优先河洪/城市内涝差异。",
+      "prerequisites": [
+        "resolve original split and scene IDs",
+        "freeze label-derived validity as private QA",
+        "exclude protected storm families"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N05-droughted-integrity",
+      "source_ids": [
+        "D52",
+        "D31"
+      ],
+      "priority": 1,
+      "action": "先取静态小表和发布 metadata；计算各文件真实日期范围/score 定义，再制定有界时序获取方案。",
+      "selectors": {
+        "metadata": "https://www.kaggle.com/api/v1/datasets/view/cdminix/us-drought-meteorological-data",
+        "file_list": "https://www.kaggle.com/api/v1/datasets/list/cdminix/us-drought-meteorological-data",
+        "static_file": "soil_data.csv",
+        "static_reported_bytes": 731402,
+        "timeseries_raw_bytes_reported": 2196408881,
+        "full_train_download_this_stage": false
+      },
+      "max_captured_bytes": 4194304,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "处理训练年限冲突、1,330 条小数标签与周频缺失，避免错误生成六分类 Gold。",
+      "prerequisites": [
+        "derive county aggregation formula",
+        "preserve exact original splits",
+        "USDM-to-score authority"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N06-extreme-lightning",
+      "source_ids": [
+        "D10",
+        "D06",
+        "D05"
+      ],
+      "priority": 2,
+      "action": "由强对流事件时空窗取 GLM 小文件集合，按 flash 而非 event 数构建密度检验。",
+      "selectors": {
+        "s3_list_template": "https://noaa-goes16.s3.amazonaws.com/?list-type=2&prefix=GLM-L2-LCFA/{year}/{day_of_year}/{hour}/&max-keys=100",
+        "window_count_target": 3,
+        "max_files_per_window": 30
+      },
+      "max_captured_bytes": 67108864,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "由 1 分钟一般雷电样例升级到已报告事件窗口。",
+      "prerequisites": [
+        "predeclare footprint/time normalization",
+        "deduplicate boundary flashes",
+        "baseline window independent of target labels"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N07-fire-event-diversity",
+      "source_ids": [
+        "D19",
+        "D21",
+        "D23"
+      ],
+      "priority": 2,
+      "action": "在现有 ZIP 索引中选择另外两个 train 火场的连续窗口；优先有正例且具有效覆盖信息的场景。",
+      "selectors": {
+        "local_zip_index": "../multihazard_source_validation_20260911/archive_runs/wildfirespreadts_01/INDEX.json",
+        "exclude": "2018/fire_21458798",
+        "days_per_fire": 3,
+        "new_fire_ids_target": 2,
+        "author_reader_blob": "a7422287ea43725a6deaa27e2af548626ea15629"
+      },
+      "max_captured_bytes": 100663296,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "新增火场而不是增加同一火场裁剪。",
+      "prerequisites": [
+        "bind original split",
+        "active-fire HHMM interpretation",
+        "future weather features as-of review"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N08-water-and-coastal",
+      "source_ids": [
+        "D56",
+        "D57",
+        "D37",
+        "D58",
+        "D69"
+      ],
+      "priority": 2,
+      "action": "把洪水或沿海风险时间窗与站点/基准面元数据成对获取。",
+      "selectors": {
+        "coops_stations": [
+          "8761724",
+          "8518750",
+          "9414290"
+        ],
+        "coops_products": [
+          "water_level",
+          "predictions"
+        ],
+        "datum": "MLLW",
+        "timezone": "gmt",
+        "units": "metric",
+        "usgs_sites": [
+          "07374000",
+          "01646500",
+          "02323500"
+        ],
+        "nwps_sites": [
+          "BTRL1",
+          "STFL1",
+          "DONL1"
+        ],
+        "do_not_assume_BTRL1_equals_USGS07374000": true
+      },
+      "max_captured_bytes": 16777216,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "验证事件窗、阈值与观测/预报对齐；增加海岸灾害的独立参考。",
+      "prerequisites": [
+        "datum and site-ID proof",
+        "retrospective reference remains private",
+        "positive event window selection"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N09-weatherqa-upstream",
+      "source_ids": [
+        "D49",
+        "D50",
+        "D01"
+      ],
+      "priority": 2,
+      "action": "先复现一个精确产品组，再扩大 3 个开发事件的图文时间配对。",
+      "selectors": {
+        "example": "2018_md0398",
+        "upstream_text": "https://www.spc.noaa.gov/products/md/2018/md0398.html",
+        "spc_map_archive": "https://www.spc.noaa.gov/exper/ma_archive/",
+        "cyport_storms": [
+          "DORIAN_2019",
+          "HARVEY_2017",
+          "FLORENCE_2018"
+        ],
+        "max_assets": 12
+      },
+      "max_captured_bytes": 33554432,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "验证图像与正文确属同一时刻；不继承开放题或港口动作真值。",
+      "prerequisites": [
+        "match timestamps printed in graphics",
+        "document product codes and issue time",
+        "exclude protected aliases"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N10-fog-dust-backup",
+      "source_ids": [
+        "D53",
+        "D63",
+        "D35"
+      ],
+      "priority": 3,
+      "action": "核验作者来源和网盘实际文件；如仍受阻，保留 ISD 现象码主线并定向获取原始尘埃/卫星产品。",
+      "selectors": {
+        "M4Fog_repo": "https://github.com/Clynie/M4Fog",
+        "DAWN_listing": "https://data.mendeley.com/public-api/datasets/766ygrbt8y/files?folder_id=root&version=1",
+        "DAWN_packages": [
+          "Fog.zip",
+          "Sand.zip"
+        ],
+        "images_per_package": 3
+      },
+      "max_captured_bytes": 16777216,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "验证视觉条件备用数据；无时间/地点时仅进入辅助感知，不计真实极端事件。",
+      "prerequisites": [
+        "M4Fog provenance/terms",
+        "no login bypass",
+        "DAWN source names verified from actual listing"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N11-nonUS-event-selection",
+      "source_ids": [
+        "D61",
+        "D60",
+        "D59",
+        "D02",
+        "D47"
+      ],
+      "priority": 1,
+      "action": "只处理现有本地索引，生成国家/季节/灾种候选分布和重复事件簇，先不批量下载。",
+      "selectors": {
+        "HANZE_records": 2521,
+        "IBTrACS_source_SIDs": 378,
+        "ExEBench_cold_cases": 9,
+        "existing_Caravan_basins": [
+          "camels_01022500",
+          "camels_01031500",
+          "camels_01047000"
+        ],
+        "selection_target": "at least two regions/climate regimes per main hazard when empirical supply supports it"
+      },
+      "max_captured_bytes": 0,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "把地区增益作为下载优先级；不把全球栅格像元数当全球事件数。",
+      "prerequisites": [
+        "source IDs and event times normalized",
+        "protected IDs union",
+        "uncertain matches quarantined"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    },
+    {
+      "id": "N12-event-contract-and-dryrun",
+      "source_ids": [],
+      "priority": 1,
+      "action": "离线建立 asset/event/product/label 记录、拆分三种图、执行确定性查询准入，无模型。",
+      "selectors": {
+        "interfaces": [
+          "multimodal_v1.ArtifactMeta",
+          "multimodal_v1.FactKey",
+          "multimodal_v1.DeliveryEvent",
+          "active_forecast exact kernel"
+        ],
+        "max_query_diagnostics_per_hazard": 3
+      },
+      "max_captured_bytes": 0,
+      "expected_download_bytes": null,
+      "expected_expanded_bytes": null,
+      "net_new_event_families": null,
+      "expected_gain": "让数据转成可评分结构，量化哪些灾种尚无可计算 Gold。",
+      "prerequisites": [
+        "license and split eligibility",
+        "no label leakage",
+        "independent numeric/geospatial reference"
+      ],
+      "external_train_only": true,
+      "model_calls": 0,
+      "gpu_jobs": 0,
+      "status": "planned_not_launched"
+    }
+  ],
+  "sum_item_capture_caps_bytes": 876609536,
+  "quota_free_bytes": null,
+  "full_registry_bulk_download": false,
+  "stop_rule": "Stop a source after bounded metadata/member attempts; record failures and proceed with independent sources. Caps are planning upper bounds, not expected traffic or reserved resources.",
+  "sampling_plan": "Per accessible source aim for >=3 identifiable units, and positive/negative, time and region strata where available; initial convenience probes do not count as representative sampling.",
+  "all_new_splits_pending": true
+}

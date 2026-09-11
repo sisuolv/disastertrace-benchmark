@@ -1,5 +1,22 @@
 # DisasterTrace：LLM 极端天气证据推理评测审查包
 
+## 最新复查：V6 数据选择与多灾种可行性核验（2026-09-11）
+
+请从 **[给 ChatGPT Pro 的 V6 复查任务](publication/v6_review_20260911/REVIEW_FOR_CHATGPT_PRO_CN.md)** 开始，
+再阅读 [数据选择与后续路线](plans/v6_0911_dataset_selection/DATA_READINESS_REVIEW_CN.md)、
+[逐来源状态](plans/v6_0911_dataset_selection/SOURCE_FEASIBILITY.md) 和
+[16 类灾种覆盖与缺口](plans/v6_0911_dataset_selection/HAZARD_COVERAGE.md)。
+
+本轮登记 54 个原候选和 20 个互补来源，完成重点来源的真实取样、解码与数据审计。
+ExEBench 寒潮包、EWB 小时观测、GLM、GEOID/CEMS、DroughtED 等的实际结果与限制已分别记录。
+74 是来源登记项数；新增正式评测题、GPU 作业及模型调用均为 0。
+
+可用 [单文件 Markdown 复查材料](publication/v6_review_20260911/CHATGPT_PRO_REVIEW_ALL_IN_ONE.md)
+或 [代码与报告阅读包](publication/v6_review_20260911/disastertrace_v6_chatgpt_review.zip)。
+本次发布包含代码、报告和审计清单；大体积原始数据保存在原工作区，完整解码重放的依赖范围见
+[发布说明](publication/v6_review_20260911/README.md)。
+此前 V5/Active Forecast 及 P5–P14 的实现与结果继续保留；下文“当前”字样属于对应历史阶段。
+
 ## 当前新增：P6 首轮离线里程碑
 
 四份 plan_v3 已整合并完成第一阶段实现。入口为

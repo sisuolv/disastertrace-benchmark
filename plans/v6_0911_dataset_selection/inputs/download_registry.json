@@ -1,0 +1,2777 @@
+{
+  "schema_version": "disastertrace_download_registry_v1",
+  "checked_on": "2026-09-10",
+  "purpose": "data_access_and_admission_planning_only",
+  "resource_count": 54,
+  "coverage_target_hazard_count": 16,
+  "all_resources_downloaded": false,
+  "no_full_archive_download_or_authenticated_cloud_execution": true,
+  "size_note": "Archive units follow provider decimal display where reported; budget limits are binary GiB. Upstream counts and file sizes are not local verified counts.",
+  "prior_inventory_sha256": "9906b2836dfed7f6ec3693259f87a98bedc22c9dc23a77e9502e183baea2e4d8",
+  "resources": [
+    {
+      "id": "D01",
+      "name": "NHC Public / Forecast Advisories + GIS",
+      "hazards": "热带气旋；风暴潮；强风",
+      "role": "公告与空间产品",
+      "previous_scale_note": "随风暴、年份和公告编号变化；本次未统计全档案",
+      "count_unit": "公告/产品，不等于独立风暴",
+      "coverage_note": "大西洋及东太平洋；具体产品历史范围不同",
+      "scientific_cautions": "风圈、路径锥、概率图不同；issued_at不等于历史available_at",
+      "intended_reuse": "预报理解、同目标修订、风圈空间关系",
+      "previous_source": "https://prod-east-nhc.woc.noaa.gov/gis/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HTTP_WITH_PROVIDER_FAILURES",
+      "links": [
+        {
+          "label": "NHC原始公告档案",
+          "url": "https://www.nhc.noaa.gov/archive/",
+          "kind": "http_directory",
+          "verification": "官方入口已知；本轮访问失败，需CCI重试"
+        },
+        {
+          "label": "NHC GIS产品入口",
+          "url": "https://prod-east-nhc.woc.noaa.gov/gis/",
+          "kind": "http_directory",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "NHC预报风圈文件目录",
+          "url": "https://ftp.nhc.noaa.gov/atcf/gis/fst/",
+          "kind": "http_directory",
+          "verification": "前序官方入口；本轮未枚举"
+        },
+        {
+          "label": "已有Dorian公告样例",
+          "url": "https://www.nhc.noaa.gov/archive/2019/al05/al052019.fstadv.001.shtml",
+          "kind": "http_file",
+          "verification": "前序已定位；本轮不重复下载"
+        }
+      ],
+      "download_steps": [
+        "优先复用本地封存公告。新采集先下载年份/风暴索引，解析其真实href；只选development事件。",
+        "保留HTML和PRE原文；GIS先取得目录清单，再按返回的ZIP文件名获取一个版本。",
+        "遇403记录为provider_blocked；不得改写旧原文或生成假公告。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D02",
+      "name": "IBTrACS v4r01",
+      "hazards": "热带气旋",
+      "role": "全球轨迹与事件索引",
+      "previous_scale_note": "全球长期轨迹；按冻结版本去重storm ID后统计",
+      "count_unit": "风暴轨迹/时刻点",
+      "coverage_note": "1842年以来；各海盆与年代覆盖不均",
+      "scientific_cautions": "最终best track不是历史实时预报；同一风暴多机构重复与口径差异；本轮有效目录是 /data/international-best-track-archive-for-climate-stewardship-ibtracs/，不要盲用旧 /pub/data/ibtracs 路径。",
+      "intended_reuse": "全球事件统一ID、强度和路径参考",
+      "previous_source": "https://www.ncei.noaa.gov/products/international-best-track-archive",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HTTP",
+      "links": [
+        {
+          "label": "当前官方CSV目录",
+          "url": "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/",
+          "kind": "http_directory",
+          "verification": "本轮目录可读"
+        },
+        {
+          "label": "1980年以来轨迹CSV",
+          "url": "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.since1980.list.v04r01.csv",
+          "kind": "http_file",
+          "verification": "文件名与大小在本轮目录中可见；未下载"
+        },
+        {
+          "label": "全部轨迹CSV",
+          "url": "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.ALL.list.v04r01.csv",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "近三年CSV",
+          "url": "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.last3years.list.v04r01.csv",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先取近三年或1980以来CSV，读取单位行、SID、ISO_TIME、海盆和机构风速定义。",
+        "按SID/别名映射建立事件索引，不按机构或时刻重复计事件。"
+      ],
+      "first_wave": "A",
+      "current_download_note": "本轮目录：since1980约144MB，ALL约331MB，last3years约10.4MB；文件会更新，下载时重新记录字节哈希。"
+    },
+    {
+      "id": "D03",
+      "name": "Digital Typhoon V2",
+      "hazards": "热带气旋",
+      "role": "时序遥感数据",
+      "previous_scale_note": "WP 1,116 / 192,956；AU 480 / 70,087；合计1,596 / 263,043",
+      "count_unit": "气旋序列 / 图像帧",
+      "coverage_note": "WP 1978–2023；AU 1979–2024",
+      "scientific_cautions": "不要与V1累加；部分元数据由best-track插值；帧数不是事件数；V2旧样本参考与新发行时间分开；不要按作者迁移建议删除项目已冻结的V1证据。",
+      "intended_reuse": "图像时序、强度变化、跨海盆外推",
+      "previous_source": "https://arxiv.org/html/2411.16421v1",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_DOWNLOAD_INDEX_LARGE_FILES",
+      "links": [
+        {
+          "label": "V2官方实际下载页",
+          "url": "https://agora.ex.nii.ac.jp/digital-typhoon/dataset/V2/",
+          "kind": "download_index",
+          "verification": "本轮页面有WP/AU归档及SHA256；归档跳转未成功获取"
+        },
+        {
+          "label": "总项目说明",
+          "url": "https://agora.ex.nii.ac.jp/digital-typhoon/dataset/",
+          "kind": "documentation",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "解析V2页中西北太平洋/澳大利亚Download链接href，不猜ZIP/TAR文件名；保存该页快照及两个URL。",
+        "校验作者SHA256；第一轮只做清单/体积评估，单个大包超过上限则标large_single_archive。",
+        "取得后按真实气旋序列和年份登记，不运行pyphoon训练，不把V1/V2相加。"
+      ],
+      "first_wave": "B",
+      "current_download_note": "官方V2下载页：WP约56GB；AU约21GB。",
+      "published_sha256": {
+        "WP": "d90ae06d06c3f9247a5970fd3768e5f40bafcffbd0514906e2d3cbb3b3d2edfc",
+        "AU": "229151465cc1e2fbbf5a0ece9150b429cf58921ff40ff80f902c2de4cf6dcdb5"
+      }
+    },
+    {
+      "id": "D04",
+      "name": "TCIR",
+      "hazards": "热带气旋",
+      "role": "四通道遥感数据",
+      "previous_scale_note": "1,285场；70,501帧",
+      "count_unit": "气旋 / 四通道帧",
+      "coverage_note": "六海域；产品说明涵盖2003–2016主体",
+      "scientific_cautions": "作者数据为201×201×4；缺失NaN；best-track事后估计，非当时已知事实；四个通道及其时间对齐按作者说明；缺测不能补0；标签是事后best-track。",
+      "intended_reuse": "IR/WV/VIS/PMW跨通道理解与强度估计",
+      "previous_source": "https://www.csie.ntu.edu.tw/~htlin/program/TCIR/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_SHARED_FOLDER_ACCESS_TO_VERIFY",
+      "links": [
+        {
+          "label": "作者数据说明及原始下载按钮",
+          "url": "https://www.csie.ntu.edu.tw/~htlin/program/TCIR/",
+          "kind": "documentation",
+          "verification": "本轮作者页面可读"
+        },
+        {
+          "label": "作者Data短链接",
+          "url": "https://tinyurl.com/ntuTCIR",
+          "kind": "download_redirect",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "短链接解析到的Google Drive目录",
+          "url": "https://drive.google.com/drive/folders/10tGM8DA-zWJRSYlW5OJyH15KtaKKYHAN?usp=drive_link",
+          "kind": "shared_folder",
+          "verification": "本轮只确认跳转目标；没有枚举权限或下载文件"
+        }
+      ],
+      "download_steps": [
+        "先枚举目录，保存HDF5真实文件名、大小和访问状态；gdown只针对已选单文件。",
+        "h5py只读检查info/matrix、201×201×4、时间/SID和NaN；统计唯一气旋而非帧。"
+      ],
+      "first_wave": "B"
+    },
+    {
+      "id": "D05",
+      "name": "NOAA Storm Events Database",
+      "hazards": "暴雨；洪水；龙卷风；冰雹；雷暴风；热浪；寒潮；冬季天气等",
+      "role": "多灾种事件记录",
+      "previous_scale_note": "1950–2026年度文件可查；本次未合并计数",
+      "count_unit": "地方事件记录/episode；非全部独立系统",
+      "coverage_note": "美国；灾种历史收录范围随年代不同",
+      "scientific_cautions": "详情/位置/伤亡表不能相加；局地记录需按事件组去重",
+      "intended_reuse": "大规模事件索引、文字叙述、灾种平衡",
+      "previous_source": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HTTP_DIRECTORY",
+      "links": [
+        {
+          "label": "Storm Events年度CSV目录",
+          "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/",
+          "kind": "http_directory",
+          "verification": "本轮真实文件目录可读"
+        }
+      ],
+      "download_steps": [
+        "解析目录，按同一年和同一创建批次选择 StormEvents_details-*.csv.gz；不要猜 cYYYYMMDD 后缀。",
+        "locations/fatalities只做辅助关联。先一年，再分年份增量扩展；保留每个更新版。",
+        "用EVENT_ID/EPISODE_ID/州县和时间建立候选，审查合并关系；地图之外负样本不能由无记录推断。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D06",
+      "name": "SEVIR",
+      "hazards": "强对流；降水；雷电；部分龙卷风/冰雹关联",
+      "role": "配准多模态时序",
+      "previous_scale_note": "超过10,000组序列；完整下载约TB级",
+      "count_unit": "时空影像序列",
+      "coverage_note": "美国；雷达、GOES ABI/GLM配准",
+      "scientific_cautions": "包含采样背景；序列数不是独立极端天气系统数；实际目录需冻结；不能把全部storm片段标成龙卷风或冰雹；传感器缺失须逐事件报告。",
+      "intended_reuse": "雷达-卫星-闪电时序、降水演化",
+      "previous_source": "https://raw.githubusercontent.com/MIT-AI-Accelerator/eie-sevir/refs/heads/master/examples/SEVIR_Tutorial.ipynb",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_S3",
+      "links": [
+        {
+          "label": "官方开放数据登记",
+          "url": "https://registry.opendata.aws/sevir/",
+          "kind": "documentation",
+          "verification": "本轮登记页确认bucket与匿名访问"
+        },
+        {
+          "label": "公开对象目录",
+          "url": "s3://sevir/",
+          "kind": "s3_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "作者数据加载器",
+          "url": "https://github.com/MIT-AI-Accelerator/eie-sevir",
+          "kind": "code",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "aws s3 ls --no-sign-request s3://sevir/；从实际结果定位CATALOG.csv再下载。",
+        "按catalog选择少量id和同一id的传感器；用file_name/file_index定位HDF5。",
+        "若一个容器过大，先登记size，不能为一个样本默认下载全库；必要时验证远程range支持。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D07",
+      "name": "TorNet",
+      "hazards": "龙卷风；强对流",
+      "role": "带标签雷达时序",
+      "previous_scale_note": "约20万样本；v1论文203,133；6.8%龙卷风正样本",
+      "count_unit": "雷达样本",
+      "coverage_note": "2013–2022美国；6变量、4时次",
+      "scientific_cautions": "不能写20万场龙卷风；使用发布版事件ID划分；修订版数量另核验；必须使用1.1：作者修复了部分标签、event/episode IDs并补了龙卷风起止时间。",
+      "intended_reuse": "龙卷风识别、时间变化、困难负样本",
+      "previous_source": "https://arxiv.org/html/2401.16437v1",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_ZENODO",
+      "links": [
+        {
+          "label": "作者v1.1下载说明",
+          "url": "https://github.com/mit-ll/tornet",
+          "kind": "code",
+          "verification": "本轮README列出所有年度记录"
+        },
+        {
+          "label": "2013年度记录",
+          "url": "https://zenodo.org/records/12636522",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2014年度记录",
+          "url": "https://zenodo.org/records/12637032",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2015年度记录",
+          "url": "https://zenodo.org/records/12655151",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2016年度记录",
+          "url": "https://zenodo.org/records/12655179",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2017年度记录",
+          "url": "https://zenodo.org/records/12655183",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2018年度记录",
+          "url": "https://zenodo.org/records/12655187",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2019年度记录",
+          "url": "https://zenodo.org/records/12655716",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2020年度记录",
+          "url": "https://zenodo.org/records/12655717",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2021年度记录",
+          "url": "https://zenodo.org/records/12655718",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2022年度记录",
+          "url": "https://zenodo.org/records/12655719",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "catalog.csv直链",
+          "url": "https://zenodo.org/records/12636522/files/catalog.csv?download=1",
+          "kind": "http_file",
+          "verification": "本轮记录页有此文件，38.2MB；未下载"
+        },
+        {
+          "label": "2013年压缩包",
+          "url": "https://zenodo.org/records/12636522/files/tornet_2013.tar.gz?download=1",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先取2013记录JSON /api/records/12636522 和catalog.csv；核对1.1。",
+        "按记录files[].links.self和checksum下载2013样例包，再按event/episode分组读取NetCDF。",
+        "其余九年分批登记下载；不要运行作者带模型权重的evaluation脚本。"
+      ],
+      "first_wave": "A",
+      "current_download_note": "catalog约38.2MB；2013约3.2GB，其余每年约12–19GB。",
+      "zenodo_record_ids": [
+        12636522,
+        12637032,
+        12655151,
+        12655179,
+        12655183,
+        12655187,
+        12655716,
+        12655717,
+        12655718,
+        12655719
+      ]
+    },
+    {
+      "id": "D08",
+      "name": "NOAA NEXRAD",
+      "hazards": "强对流；降水；龙卷风相关",
+      "role": "连续雷达观测",
+      "previous_scale_note": "连续大规模档案；按站点、扫描、时段筛选",
+      "count_unit": "体扫/雷达文件",
+      "coverage_note": "美国雷达网；历史与新增产品",
+      "scientific_cautions": "需做雷达专业处理；反射率不是直接灾损标签；旧noaa-nexrad-level2桶已弃用；采用当前登记的unidata-nexrad-level2。反射率不是直接灾损真值。",
+      "intended_reuse": "按事件补全雷达证据与序列",
+      "previous_source": "https://registry.opendata.aws/noaa-nexrad/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_S3",
+      "links": [
+        {
+          "label": "官方bucket迁移说明",
+          "url": "https://registry.opendata.aws/noaa-nexrad/",
+          "kind": "documentation",
+          "verification": "本轮确认旧bucket停用日期和新bucket"
+        },
+        {
+          "label": "LevelII归档",
+          "url": "s3://unidata-nexrad-level2/",
+          "kind": "s3_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "LevelIII派生产品",
+          "url": "s3://unidata-nexrad-level3/",
+          "kind": "s3_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "只列目标日期/雷达站前缀，按列表key下载一体扫；解析专业雷达格式和扫描时间。",
+        "使用aws --no-sign-request；禁止全bucket sync。"
+      ],
+      "first_wave": "C"
+    },
+    {
+      "id": "D09",
+      "name": "NOAA MRMS",
+      "hazards": "暴雨；强对流；冰雹相关",
+      "role": "多雷达/多传感器派生产品",
+      "previous_scale_note": "连续产品；按变量和时段统计",
+      "count_unit": "栅格产品/时间步",
+      "coverage_note": "美国及产品覆盖区",
+      "scientific_cautions": "派生算法产品，不是独立人工灾害真值",
+      "intended_reuse": "降水、强对流多源证据",
+      "previous_source": "https://registry.opendata.aws/noaa-mrms-pds/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_S3",
+      "links": [
+        {
+          "label": "公开目录",
+          "url": "s3://noaa-mrms-pds/",
+          "kind": "s3_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "官方登记",
+          "url": "https://registry.opendata.aws/noaa-mrms-pds/",
+          "kind": "documentation",
+          "verification": "本轮页面可读"
+        }
+      ],
+      "download_steps": [
+        "先列产品目录，再锁定QPE/所需变量、日期和少量GRIB2文件；记录软件读取方式和单位。",
+        "不同产品/版本分别登记；与NEXRAD/SEVIR共享上游不可当独立验证。"
+      ],
+      "first_wave": "C"
+    },
+    {
+      "id": "D10",
+      "name": "GOES-R ABI / GLM archives",
+      "hazards": "气旋；强对流；雷电；烟尘",
+      "role": "连续卫星观测",
+      "previous_scale_note": "高频连续影像和闪电产品；无统一事件数",
+      "count_unit": "场景/扫描/闪电产品",
+      "coverage_note": "美洲区域；按卫星历史/在役期选择",
+      "scientific_cautions": "GOES16/17/18/19职责和时段不同；不用旧卫星名称假定当前实时",
+      "intended_reuse": "高频多模态证据补齐",
+      "previous_source": "https://registry.opendata.aws/noaa-goes/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_S3",
+      "links": [
+        {
+          "label": "官方卫星历史与bucket",
+          "url": "https://registry.opendata.aws/noaa-goes/",
+          "kind": "documentation",
+          "verification": "本轮登记页可读"
+        },
+        {
+          "label": "GOES-16资料桶",
+          "url": "s3://noaa-goes16/",
+          "kind": "s3_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "GOES-17资料桶",
+          "url": "s3://noaa-goes17/",
+          "kind": "s3_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "GOES-18资料桶",
+          "url": "s3://noaa-goes18/",
+          "kind": "s3_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "GOES-19资料桶",
+          "url": "s3://noaa-goes19/",
+          "kind": "s3_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "按事件日期、卫星、ABI/GLM产品列目录，选择真实存在的key；先少量NetCDF。",
+        "跨卫星/重处理版本保留身份，不凭GOES-16/17旧教程认定当前实时产品。"
+      ],
+      "first_wave": "C"
+    },
+    {
+      "id": "D11",
+      "name": "Global Flood Database v1",
+      "hazards": "洪水",
+      "role": "事件级淹水与持续时间产品",
+      "previous_scale_note": "913场",
+      "count_unit": "洪水事件地图",
+      "coverage_note": "全球；2000–2018；MODIS 250m",
+      "scientific_cautions": "历史静态库；不是持续更新的实时洪水；保留云覆盖和永久水体",
+      "intended_reuse": "事件范围、持续时间、与设施空间关系",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/GLOBAL_FLOOD_DB_MODIS_EVENTS_V1",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/GLOBAL_FLOOD_DB_MODIS_EVENTS_V1",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=GLOBAL_FLOOD_DB/MODIS_EVENTS/V1、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "先导出事件属性和已有ID；按事件边界导出一份flooded/duration及clear观测相关波段。",
+        "保留永久水体处理和参考不确定性；记录913是目录事件产品口径，不是本次已准入数。"
+      ],
+      "first_wave": "A",
+      "gee_collection_id": "GLOBAL_FLOOD_DB/MODIS_EVENTS/V1"
+    },
+    {
+      "id": "D12",
+      "name": "GEOID-Flood",
+      "hazards": "洪水",
+      "role": "配准多传感器带标签数据",
+      "previous_scale_note": "219事件；65国；超过14,000切片",
+      "count_unit": "洪水事件 / 切片",
+      "coverage_note": "约十年；2026年公开",
+      "scientific_cautions": "与CEMS其他数据可能重合；双时相不等于多轮历史；标签来源分层；floodmask/permwater/部分validity可能来自Gold构造；不能作为普通传感器质量输入。GRD与RTC不是独立观测。",
+      "intended_reuse": "灾前后SAR、灾前光学、DEM联合",
+      "previous_source": "https://arxiv.org/abs/2608.02315",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HUGGINGFACE",
+      "links": [
+        {
+          "label": "作者代码/下载器",
+          "url": "https://github.com/links-ads/geoid-flood",
+          "kind": "code",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "固定版本前先读取HF目录",
+          "url": "https://huggingface.co/datasets/links-ads/geoid-flood/tree/main",
+          "kind": "hf_tree",
+          "verification": "本轮目录可读，显示约588GB"
+        },
+        {
+          "label": "样例目录",
+          "url": "https://huggingface.co/datasets/links-ads/geoid-flood/tree/main/sample",
+          "kind": "hf_tree",
+          "verification": "本轮约3.09GB"
+        },
+        {
+          "label": "分片索引",
+          "url": "https://huggingface.co/datasets/links-ads/geoid-flood/resolve/main/shard_index.json.gz",
+          "kind": "http_file",
+          "verification": "本轮根目录有该文件"
+        },
+        {
+          "label": "SHA256清单",
+          "url": "https://huggingface.co/datasets/links-ads/geoid-flood/resolve/main/SHA256SUMS",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先解析main→完整SHA，使用同SHA读取shard_index.json.gz与SHA256SUMS；列sample目录。",
+        "优先sample中的单个配套COG/标签；若需sample整体则预留约3.09GB。",
+        "按父CEMS激活及原始场景分组；只读借鉴get_data.py，不直接全量运行。"
+      ],
+      "first_wave": "A",
+      "current_download_note": "本轮HF根目录约588GB、sample约3.09GB；这是动态目录展示值，不覆盖旧发布的584/586GB记录。",
+      "hf_repo_id": "links-ads/geoid-flood",
+      "hf_revision": "main"
+    },
+    {
+      "id": "D13",
+      "name": "KuroSiwo",
+      "hazards": "洪水",
+      "role": "多时相SAR及参考",
+      "previous_scale_note": "43场；覆盖约338,000平方公里陆地",
+      "count_unit": "事件 / 覆盖面积",
+      "coverage_note": "全球洪水样本；版本需锁定",
+      "scientific_cautions": "面积不是图像数；不凭通用描述给出未核实切片总量；作者当前README已写v2；旧论文43事件不能自动当当前下载总数。",
+      "intended_reuse": "SAR变化、洪水迁移验证",
+      "previous_source": "https://arxiv.org/abs/2311.12056",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HUGGINGFACE",
+      "links": [
+        {
+          "label": "作者README",
+          "url": "https://github.com/Orion-AI-Lab/KuroSiwo",
+          "kind": "code",
+          "verification": "本轮确认v2及以下公开数据"
+        },
+        {
+          "label": "GeoTIFF数据",
+          "url": "https://huggingface.co/datasets/orion-ai-lab/Kuro-Siwo-GeoTIFFs",
+          "kind": "hf_dataset",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "WebDataset分片",
+          "url": "https://huggingface.co/datasets/orion-ai-lab/Kuro-Siwo-Webdataset",
+          "kind": "hf_dataset",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "原始标注多边形",
+          "url": "https://github.com/Orion-AI-Lab/KuroSiwo-annotations",
+          "kind": "code_data",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "优先GeoTIFF目录锁定SHA并列事件，挑一个完整灾前/后组合；WebDataset为替代序列化，不重复计数。",
+        "标签多边形按版本与事件关联；优先HF而非旧Dropbox批量脚本。"
+      ],
+      "first_wave": "B",
+      "hf_repo_id": "orion-ai-lab/Kuro-Siwo-GeoTIFFs",
+      "hf_revision": "main"
+    },
+    {
+      "id": "D14",
+      "name": "UrbanSARFloods",
+      "hazards": "城市洪水；开放区域洪水",
+      "role": "SAR强度/相干性数据",
+      "previous_scale_note": "18场；8,879切片",
+      "count_unit": "事件 / 512×512切片",
+      "coverage_note": "五大洲；20土地覆盖类",
+      "scientific_cautions": "类别严重不平衡；相干性与普通GRD不是同一输入；相干性依赖SLC，不以GEE GRD替代；保持NF/FO/FU类别口径。",
+      "intended_reuse": "城市与非城市洪水对照、困难空间推理",
+      "previous_source": "https://arxiv.org/abs/2406.04111",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HUGGINGFACE",
+      "links": [
+        {
+          "label": "作者README和订正表",
+          "url": "https://github.com/jie666-6/UrbanSARFloods",
+          "kind": "code",
+          "verification": "本轮作者README可读"
+        },
+        {
+          "label": "实际数据目录",
+          "url": "https://huggingface.co/datasets/S1Floodbenchmark/UrbanSARFloods_v1/tree/main",
+          "kind": "hf_tree",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "训练验证打包文件",
+          "url": "https://huggingface.co/datasets/S1Floodbenchmark/UrbanSARFloods_v1/resolve/main/urban_sar_floods.tar.gz",
+          "kind": "http_file",
+          "verification": "文件名由作者README明确列出，未取回"
+        },
+        {
+          "label": "原始SLC目录",
+          "url": "https://huggingface.co/datasets/S1Floodbenchmark/UrbanSARFloods_v1/tree/main/Sentinel-1_SLC_data",
+          "kind": "hf_tree",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "锁定SHA后列testing_case_orig/testing_case_256及training包；先一个完整事件的SAR/GT。",
+        "按README修正表核对事件日期与原始SLC文件名；不要只查原论文缺项表。"
+      ],
+      "first_wave": "B",
+      "hf_repo_id": "S1Floodbenchmark/UrbanSARFloods_v1",
+      "hf_revision": "main"
+    },
+    {
+      "id": "D15",
+      "name": "Sen1Floods11 v1.1",
+      "hazards": "洪水",
+      "role": "S1/S2影像与标签",
+      "previous_scale_note": "完整发布约14GB；事件/切片数需以manifest重算",
+      "count_unit": "文件体积；本清单未核验统一总样本数",
+      "coverage_note": "多国洪水案例；10m 512×512",
+      "scientific_cautions": "区分手工标签与自动/弱标签；README bucket拼写以实际可访问清单为准",
+      "intended_reuse": "感知基线、标签与无效像素处理",
+      "previous_source": "https://github.com/cloudtostreet/Sen1Floods11",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_GCS",
+      "links": [
+        {
+          "label": "正确GCS桶",
+          "url": "gs://sen1floods11/",
+          "kind": "gcs_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "作者README与样例",
+          "url": "https://github.com/cloudtostreet/Sen1Floods11",
+          "kind": "code",
+          "verification": "本轮README可读，正文有一处bucket拼写错误"
+        },
+        {
+          "label": "仓库内样例",
+          "url": "https://github.com/cloudtostreet/Sen1Floods11/tree/master/sample",
+          "kind": "code_data",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "事件元信息",
+          "url": "https://raw.githubusercontent.com/cloudtostreet/Sen1Floods11/master/Sen1Floods11_Metadata.geojson",
+          "kind": "http_file",
+          "verification": "文件名来自作者README；下载前核对当前树"
+        }
+      ],
+      "download_steps": [
+        "以gs://sen1floods11/为准，先gsutil ls，再选样例S1/S2/Label配套文件；不得用正文误写的senfloods11。",
+        "匿名GCS读取优先；如需要凭据则记录原因，不开启付费工程。",
+        "S2为L1C TOA，不与S2 SR混同；保持-1无效与0非水、1水的区别。"
+      ],
+      "first_wave": "B"
+    },
+    {
+      "id": "D16",
+      "name": "SpaceNet 8",
+      "hazards": "洪水；气旋次生淹水",
+      "role": "高分辨率设施标签",
+      "previous_scale_note": "德国、Louisiana East、Louisiana West三个AOI",
+      "count_unit": "AOI，不等于3场独立灾害",
+      "coverage_note": "德国洪水与Ida相关美国区域",
+      "scientific_cautions": "道路淹水不等于业务上的不可通行；同场事件的不同AOI不跨split；CC BY-SA条款逐层核对；设施淹水不直接表示关闭或可通行。",
+      "intended_reuse": "建筑/道路淹水空间关系",
+      "previous_source": "https://spacenet.ai/sn8-challenge/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_S3",
+      "links": [
+        {
+          "label": "官方资源页",
+          "url": "https://spacenet.ai/sn8-challenge/",
+          "kind": "documentation",
+          "verification": "本轮页面列出以下tarball"
+        },
+        {
+          "label": "SN8目录",
+          "url": "s3://spacenet-dataset/spacenet/SN8_floods/",
+          "kind": "s3_prefix",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "Germany_Training_Public",
+          "url": "s3://spacenet-dataset/spacenet/SN8_floods/tarballs/Germany_Training_Public.tar.gz",
+          "kind": "s3_object",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "Louisiana-East_Training_Public",
+          "url": "s3://spacenet-dataset/spacenet/SN8_floods/tarballs/Louisiana-East_Training_Public.tar.gz",
+          "kind": "s3_object",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "Louisiana-West_Test_Public",
+          "url": "s3://spacenet-dataset/spacenet/SN8_floods/tarballs/Louisiana-West_Test_Public.tar.gz",
+          "kind": "s3_object",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "匿名列SN8目录，优先按单独原图/标签/CSV取一个AOI；若仅大tar包可取则先记录大小并申请bulk档。",
+        "同一次Ida相关AOI联成同事件族；公共test不代表你的新开发集。"
+      ],
+      "first_wave": "B"
+    },
+    {
+      "id": "D17",
+      "name": "FloodNet",
+      "hazards": "洪水；气旋次生灾害",
+      "role": "无人机语义分割",
+      "previous_scale_note": "2,343张；Harvey灾后",
+      "count_unit": "UAV图像",
+      "coverage_note": "美国；同一灾害采集",
+      "scientific_cautions": "2,343图像不是2,343事件；不能伪造灾前后序列；2343图主要来自Harvey；像片量不能代替跨事件覆盖。",
+      "intended_reuse": "道路/建筑与淹水场景、低空多模态",
+      "previous_source": "https://github.com/BinaLab/FloodNet-Supervised_v1.0",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_SHARED_FOLDER_ACCESS_TO_VERIFY",
+      "links": [
+        {
+          "label": "作者当前Dropbox下载",
+          "url": "https://www.dropbox.com/scl/fo/k33qdif15ns2qv2jdxvhx/ANGaa8iPRhvlrvcKXjnmNRc?rlkey=ao2493wzl1cltonowjdbrnp7f&e=2&dl=0",
+          "kind": "shared_folder",
+          "verification": "本轮作者README列出；未枚举文件"
+        },
+        {
+          "label": "作者说明",
+          "url": "https://github.com/BinaLab/FloodNet-Supervised_v1.0",
+          "kind": "code",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先按公开目录取得文件清单；选train图和对应mask检查尺寸、类别及拍摄信息。",
+        "不要把README注释掉的旧Drive链接当首选；如果需要交互授权，标manual_access_required。"
+      ],
+      "first_wave": "B"
+    },
+    {
+      "id": "D18",
+      "name": "CEMS Rapid Mapping",
+      "hazards": "洪水；野火；风暴；其他自然灾害",
+      "role": "事件激活/官方地图与矢量",
+      "previous_scale_note": "滚动激活与产品目录；需按灾种、区域去重",
+      "count_unit": "激活 / 产品 / AOI",
+      "coverage_note": "全球按需制图",
+      "scientific_cautions": "activation≠独立物理事件；观测/制图/发行时间不同；与GEOID等共享来源；expectedDelivery不是实际交付；有字段不证明所有旧版本均可取回。不要拿未来成图作为过去输入。",
+      "intended_reuse": "图文配对、产品交付链、空间参考",
+      "previous_source": "https://mapping.emergency.copernicus.eu/about/how-to-harvest-cems-mapping-data/emergency-response-data/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_JSON_API",
+      "links": [
+        {
+          "label": "官方API与返回字段",
+          "url": "https://mapping.emergency.copernicus.eu/about/how-to-harvest-cems-mapping-data/emergency-response-data/",
+          "kind": "documentation",
+          "verification": "本轮官方文档可读，明确downloadPath/version.deliveryTime"
+        },
+        {
+          "label": "激活分页目录",
+          "url": "https://rapidmapping.emergency.copernicus.eu/backend/dashboard-api/public-activations-info/",
+          "kind": "api",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "文档样例激活详情",
+          "url": "https://rapidmapping.emergency.copernicus.eu/backend/dashboard-api/public-activations/?code=EMSR842",
+          "kind": "api_example",
+          "verification": "参数示例由官方文档支持；本轮未请求JSON"
+        },
+        {
+          "label": "文档所列单产品下载示例",
+          "url": "https://rapidmapping.emergency.copernicus.eu/backend/EMSR842/AOI01/GRA_PRODUCT/EMSR842_AOI01_GRA_PRODUCT_v1.zip",
+          "kind": "http_file",
+          "verification": "仅文档样例URL，不等于本次已获取"
+        }
+      ],
+      "download_steps": [
+        "先limit=10记录results/count/next，再依next分页；批次有截断时保留游标。",
+        "选公开激活后读取public-activations/?code=返回code，跟随aois[].products[].downloadPath下载单产品，不默认整事件zip。",
+        "记录acquisitionTime、version.number/reason/deliveryTime、monitoring字段；资料敏感标记必须遵守。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D19",
+      "name": "WildfireSpreadTS",
+      "hazards": "野火",
+      "role": "逐日多模态序列",
+      "previous_scale_note": "607场；13,607日图像；压缩包48.4GB",
+      "count_unit": "火灾事件 / 逐日观测",
+      "coverage_note": "美国2018-01至2021-10",
+      "scientific_cautions": "不是13,607场火灾；原作者代码有已披露修复与角度特征注意事项；逐日演化不是同目标产品修订；火掩膜派生标签与原始观测区分。",
+      "intended_reuse": "连续状态/火势扩展/下一日预测",
+      "previous_source": "https://zenodo.org/records/8006177",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_ZENODO_LARGE_ARCHIVE",
+      "links": [
+        {
+          "label": "官方Zenodo记录",
+          "url": "https://zenodo.org/records/8006177",
+          "kind": "zenodo_record",
+          "verification": "本轮记录页列出48.4GB ZIP及checksum"
+        },
+        {
+          "label": "数据直链",
+          "url": "https://zenodo.org/records/8006177/files/WildfireSpreadTS.zip?download=1",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "作者加载器与GEE构建代码",
+          "url": "https://github.com/SebastianGer/WildfireSpreadTS",
+          "kind": "code",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先GET /api/records/8006177读取文件大小/checksum，不运行任何训练。",
+        "该发布是约48.4GB单ZIP，超初轮cap；先完成元数据审查，待bulk批准后下载或确认HTTP range+ZIP目录支持后取指定文件。",
+        "不得宣称单个ZIP可以天然按事件独立下载。"
+      ],
+      "first_wave": "A",
+      "current_download_note": "48.4GB压缩包；作者md5 dc1a04e63ccc70037b277d585b8fe761。",
+      "zenodo_record_ids": [
+        8006177
+      ]
+    },
+    {
+      "id": "D20",
+      "name": "Next Day Wildfire Spread",
+      "hazards": "野火",
+      "role": "多变量翌日配对样本",
+      "previous_scale_note": "18,545个t→t+1日样本",
+      "count_unit": "区域-日期样本",
+      "coverage_note": "美国2012–2020；1km",
+      "scientific_cautions": "文中部分称fire events，但不能当18,545场独立火灾；MODIS火掩膜为派生产品；作者默认筛选当前和下一日都有火的ongoing样本，未来结果参与样本选择；不能据此直接估计完整场景虚警。",
+      "intended_reuse": "预测、当前证据与未来参考隔离",
+      "previous_source": "https://arxiv.org/html/2112.02447v2",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "KAGGLE_ACCESS_TO_VERIFY",
+      "links": [
+        {
+          "label": "作者指定Kaggle数据",
+          "url": "https://www.kaggle.com/datasets/fantineh/next-day-wildfire-spread",
+          "kind": "kaggle_dataset",
+          "verification": "Google Research README列出的同一slug"
+        },
+        {
+          "label": "作者原始数据导出/读取器",
+          "url": "https://github.com/google-research/google-research/tree/master/simulation_research/next_day_wildfire_spread",
+          "kind": "code",
+          "verification": "本轮README可读"
+        }
+      ],
+      "download_steps": [
+        "kaggle datasets files -d fantineh/next-day-wildfire-spread；列出真实文件名再选小分片。",
+        "仅解析TFRecord，不运行导出到Cloud Storage或训练；云导出需单列预算。"
+      ],
+      "first_wave": "B",
+      "kaggle_slug": "fantineh/next-day-wildfire-spread"
+    },
+    {
+      "id": "D21",
+      "name": "TS-SatFire",
+      "hazards": "野火",
+      "role": "多任务多时相遥感数据",
+      "previous_scale_note": "3,552景地表反射率影像；约71GB",
+      "count_unit": "影像，不是事件",
+      "coverage_note": "美国2017-01至2021-10",
+      "scientific_cautions": "必须按事件分组；与其他美国火灾数据可能重叠；179事件/3552影像是当前作者说明；不得与WildfireSpreadTS重合火灾重复计。",
+      "intended_reuse": "活动火、过火范围、扩展预测",
+      "previous_source": "https://arxiv.org/abs/2412.11555",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "KAGGLE_ACCESS_TO_VERIFY",
+      "links": [
+        {
+          "label": "作者指定Kaggle数据",
+          "url": "https://www.kaggle.com/datasets/z789456sx/ts-satfire",
+          "kind": "kaggle_dataset",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "作者源码",
+          "url": "https://github.com/zhaoyutim/TS-SatFire",
+          "kind": "code",
+          "verification": "本轮README明确179事件、3552影像及Kaggle地址"
+        }
+      ],
+      "download_steps": [
+        "先kaggle datasets files -d z789456sx/ts-satfire，检查版本、大小、文件结构。",
+        "按火灾和日期检查GeoTIFF/AF/BA标签；不要运行run_*model或自动装CUDA。"
+      ],
+      "first_wave": "B",
+      "kaggle_slug": "z789456sx/ts-satfire"
+    },
+    {
+      "id": "D22",
+      "name": "Sen2Fire",
+      "hazards": "野火",
+      "role": "多传感器影像切片",
+      "previous_scale_note": "2,466个512×512切片；13波段",
+      "count_unit": "切片",
+      "coverage_note": "Sentinel-2与Sentinel-5P相关样本",
+      "scientific_cautions": "切片不是独立火灾；气溶胶高值不必然是火灾；作者标签来自MOD14A1派生火产品，不是逐像素新增人工Gold；相邻patch有重叠。",
+      "intended_reuse": "烟羽/火情识别、模态对照",
+      "previous_source": "https://arxiv.org/abs/2403.17884",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_ZENODO",
+      "links": [
+        {
+          "label": "官方Zenodo数据",
+          "url": "https://zenodo.org/records/10881058",
+          "kind": "zenodo_record",
+          "verification": "本轮页面列出Sen2Fire.zip"
+        },
+        {
+          "label": "Sen2Fire ZIP直链",
+          "url": "https://zenodo.org/records/10881058/files/Sen2Fire.zip?download=1",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先/api/records/10881058读取文件清单和license；Sen2Fire.zip约6.3GB，超初轮单文件cap时等待配置扩额。",
+        "np.load(..., allow_pickle=False)检查NPZ形状和波段；按四个场景分组，不按重叠patch切分。"
+      ],
+      "first_wave": "B",
+      "current_download_note": "6.3GB ZIP；2466切片/13bands；作者md5 135be2af2a8577c6deb12cbd7cc76c1a。",
+      "zenodo_record_ids": [
+        10881058
+      ]
+    },
+    {
+      "id": "D23",
+      "name": "NASA FIRMS",
+      "hazards": "野火；热异常",
+      "role": "近实时火点/检测产品",
+      "previous_scale_note": "随日期/卫星/区域变化；需聚合为事件",
+      "count_unit": "检测点，不是火灾事件",
+      "coverage_note": "全球MODIS/VIIRS等",
+      "scientific_cautions": "无火点不证明熄灭；重复过境/传感器去重；密钥不写入数据包；URL路径含key，日志必须脱敏；RT/URT会随NRT处理被移除/替换；空结果不证明熄灭。",
+      "intended_reuse": "滚动事件发现、新热点和空间变化",
+      "previous_source": "https://firms.modaps.eosdis.nasa.gov/api/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "FREE_MAP_KEY_REQUIRED",
+      "links": [
+        {
+          "label": "FIRMS Area API及申请MAP_KEY",
+          "url": "https://firms.modaps.eosdis.nasa.gov/api/area/",
+          "kind": "api_documentation",
+          "verification": "本轮官方文档可读"
+        },
+        {
+          "label": "可用时间查询入口",
+          "url": "https://firms.modaps.eosdis.nasa.gov/api/data_availability/",
+          "kind": "api_documentation",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "只从环境变量读FIRMS_MAP_KEY；模板见第8节，先查询产品可用日期。",
+        "单次固定bbox和1天，当前文档DAY_RANGE为1..5；真实响应保留版本/产品，逐次保存。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D24",
+      "name": "MTBS burned-area boundaries",
+      "hazards": "野火",
+      "role": "大型火场与烧毁程度参考",
+      "previous_scale_note": "1984年以来；数量按冻结边界ID统计",
+      "count_unit": "大型火灾边界/产品",
+      "coverage_note": "美国；大型火灾筛选机制",
+      "scientific_cautions": "非全部火灾；事后产品不得提前给模型",
+      "intended_reuse": "火场范围与后期参考",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/USFS_GTAC_MTBS_burned_area_boundaries_v1",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/USFS_GTAC_MTBS_burned_area_boundaries_v1",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        },
+        {
+          "label": "当前USGS下载入口",
+          "url": "https://burnseverity.cr.usgs.gov/direct-download",
+          "kind": "download_index",
+          "verification": "MTBS旧站本轮明确迁移到此页面"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=USFS/GTAC/MTBS/burned_area_boundaries/v1、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "这是ee.FeatureCollection，不是ImageCollection；按火灾ID/年份筛少量矢量导出GeoJSON。",
+        "替代入口只从USGS门户实际返回URL获取，避免旧站失效。"
+      ],
+      "first_wave": "B",
+      "gee_collection_id": "USFS/GTAC/MTBS/burned_area_boundaries/v1"
+    },
+    {
+      "id": "D25",
+      "name": "ERA5-Land Hourly",
+      "hazards": "热浪；寒潮；干旱；暴雨；积雪；强风等",
+      "role": "连续重分析",
+      "previous_scale_note": "1950年以来逐小时；50变量；理论20年175,320时次",
+      "count_unit": "全球栅格时间步，不是极端事件",
+      "coverage_note": "全球陆地；各变量质量有差异",
+      "scientific_cautions": "重分析不是历史实时预测；参数和极端阈值必须先固定",
+      "intended_reuse": "连续场阈值筛选、过程检测与背景",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_HOURLY",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_HOURLY",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        },
+        {
+          "label": "CDS原始产品目录",
+          "url": "https://cds.climate.copernicus.eu/",
+          "kind": "account_portal",
+          "verification": "原始备选门户；具体请求参数从产品页面API示例获取"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=ECMWF/ERA5_LAND/HOURLY、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "先少量区域/日期/变量temperature_2m等，读取变量单位、累计量重置规则；不要一次导出全部50变量。",
+        "ERA5与ERA5-Land是不同产品；重分析生成时间不同于观测有效时间，不声称实时可得。"
+      ],
+      "first_wave": "A",
+      "gee_collection_id": "ECMWF/ERA5_LAND/HOURLY"
+    },
+    {
+      "id": "D26",
+      "name": "GHCN-Daily",
+      "hazards": "热浪；寒潮；暴雨；大雪",
+      "role": "站点观测",
+      "previous_scale_note": "超过100,000站点；180国家/地区；温度站超过25,000",
+      "count_unit": "站点；不是全部同时在线",
+      "coverage_note": "全球长期日尺度记录",
+      "scientific_cautions": "站点记录长度不同；缺测不能变零；公开产品存在更新",
+      "intended_reuse": "站点核验、极值与持续时间",
+      "previous_source": "https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HTTP_DIRECTORY",
+      "links": [
+        {
+          "label": "GHCN原始下载目录",
+          "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/",
+          "kind": "http_directory",
+          "verification": "本轮目录可读"
+        },
+        {
+          "label": "站点目录",
+          "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "变量/站点覆盖清单",
+          "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "单站资料目录",
+          "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/",
+          "kind": "http_directory",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "按年汇总目录",
+          "url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/by_year/",
+          "kind": "http_directory",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先stations/inventory及readme；按地域/元素/时间覆盖选少量站点，再从all/目录获取实际ID.dly。",
+        "解码TMAX/TMIN/PRCP/SNOW等元素、倍率与质量标志；缺测保持null，不把所有10万站点当同时有效。",
+        "按固定阈值/持续时间构建冷热/降水事件；定义基准期与区域，不利用模型分数。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D27",
+      "name": "ISD / Global Hourly",
+      "hazards": "低能见度/浓雾；大风；热冷极端；降水",
+      "role": "站点观测",
+      "previous_scale_note": "汇集超过35,000站点",
+      "count_unit": "历史站点数，不是当前活跃站点数",
+      "coverage_note": "全球小时/次小时；历史回溯",
+      "scientific_cautions": "不能仅以低能见度推断雾；不同报告时间和质量控制要保留",
+      "intended_reuse": "能见度、风、温湿压与天气现象",
+      "previous_source": "https://www.ncei.noaa.gov/products/land-based-station/integrated-surface-database",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HTTP_DIRECTORY",
+      "links": [
+        {
+          "label": "Global Hourly按年CSV目录",
+          "url": "https://www.ncei.noaa.gov/data/global-hourly/access/",
+          "kind": "http_directory",
+          "verification": "本轮目录可读"
+        },
+        {
+          "label": "ISD原始年度压缩资料",
+          "url": "https://www.ncei.noaa.gov/pub/data/noaa/",
+          "kind": "http_directory",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "ISD站点历史清单",
+          "url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-history.txt",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先取isd-history.txt，再在目标年份目录中按返回的站号文件下载；并行上限2。",
+        "解析能见度、现象码、风和温湿度，保留报告时间、QC及站点移动。",
+        "雾候选需现象码/可解释规则支持，低能见度可能为尘、烟或降水；不得全部贴fog。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D28",
+      "name": "NOAA GFS0P25",
+      "hazards": "多类天气极端的预测",
+      "role": "模式预报",
+      "previous_scale_note": "滚动预报周期；具体可用初始化与时效由目录统计",
+      "count_unit": "初始化×预报有效时刻",
+      "coverage_note": "全球0.25°；GEE历史覆盖按目录",
+      "scientific_cautions": "初始化与有效时间分开；未来预报可合法输入但未来初始化不可",
+      "intended_reuse": "真正未来预测与预报修订",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/NOAA_GFS0P25",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/NOAA_GFS0P25",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=NOAA/GFS0P25、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "先列实际资产属性forecast_time、creation_time等，按当前目录定义映射issue/init/valid；不要把固定字段名推断作已验证。",
+        "固定初始化和目标时刻；未来有效时刻的已发布预报可以输入，未来初始化产生的产品不能提前输入。"
+      ],
+      "first_wave": "B",
+      "gee_collection_id": "NOAA/GFS0P25"
+    },
+    {
+      "id": "D29",
+      "name": "GPM IMERG V07",
+      "hazards": "暴雨；洪水；气旋降水",
+      "role": "连续降水估计",
+      "previous_scale_note": "2000年以来半小时；理论20年350,640时次",
+      "count_unit": "半小时时间步",
+      "coverage_note": "近全球；产品窗口和版本不同",
+      "scientific_cautions": "临时/最终产品会替换；V07永久产品2025-09-30后受V08迁移限制",
+      "intended_reuse": "高频降水证据、累计量和极值",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/NASA_GPM_L3_IMERG_V07",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/NASA_GPM_L3_IMERG_V07",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=NASA/GPM_L3/IMERG_V07、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "先检查provisional/permanent状态和版本覆盖；保留半小时rate到累计量的转换。",
+        "V07永久产品和V08迁移范围以当次目录/源公告为准；同日期后续产品可能替换。"
+      ],
+      "first_wave": "A",
+      "gee_collection_id": "NASA/GPM_L3/IMERG_V07"
+    },
+    {
+      "id": "D30",
+      "name": "CHIRPS v3 DAILY_SAT",
+      "hazards": "干旱；降水极端",
+      "role": "连续降水产品",
+      "previous_scale_note": "1981年以来日尺度；理论20年7,305日期",
+      "count_unit": "栅格日期，不是干旱事件",
+      "coverage_note": "60°N–60°S陆地；0.05°",
+      "scientific_cautions": "以IMERG分配pentad至daily，两者并非完全独立；最新AOI可用性需实查",
+      "intended_reuse": "干旱累计窗口、降水异常",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_DAILY_SAT",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_DAILY_SAT",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        },
+        {
+          "label": "CHIRPS v3原始可下载目录",
+          "url": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/",
+          "kind": "http_directory",
+          "verification": "本轮目录可读"
+        },
+        {
+          "label": "CHIRPS v3说明",
+          "url": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/README-CHIRPSv3.0.txt",
+          "kind": "http_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "日产品目录",
+          "url": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/",
+          "kind": "http_directory",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=UCSB-CHC/CHIRPS/V3/DAILY_SAT、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "原始HTTP路线先下载README再沿daily/目录列具体SAT版本与文件，勿将ERA5分配日版本与SAT混用。",
+        "固定累计窗口、时间边界；记录CHIRPS日产品依赖IMERG，不能当独立证据。"
+      ],
+      "first_wave": "A",
+      "gee_collection_id": "UCSB-CHC/CHIRPS/V3/DAILY_SAT"
+    },
+    {
+      "id": "D31",
+      "name": "US Drought Monitor",
+      "hazards": "干旱",
+      "role": "周地图/矢量与叙述",
+      "previous_scale_note": "1999年以来每周；约1,400期量级（估算，未枚举）",
+      "count_unit": "周地图，不是干旱事件",
+      "coverage_note": "美国及属地",
+      "scientific_cautions": "周四发布基于周二截止资料；不是预报；同周公布后不追溯修改；官方说明2004以前部分矢量由图像数字化，位置精度较差；空间边界任务需精度分层。",
+      "intended_reuse": "干旱等级、周际演化、跨证据推断",
+      "previous_source": "https://droughtmonitor.unl.edu/About/WhatistheUSDM.aspx",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_API_AND_GIS_INDEX",
+      "links": [
+        {
+          "label": "官方REST下载说明",
+          "url": "https://droughtmonitor.unl.edu/DmData/DataDownload/WebServiceInfo.aspx",
+          "kind": "api_documentation",
+          "verification": "本轮页面明确URL和参数"
+        },
+        {
+          "label": "官方完整API下载示例",
+          "url": "https://usdmdataservices.unl.edu/api/USStatistics/GetDroughtSeverityStatisticsByArea?aoi=us&startdate=1/1/2012&enddate=1/1/2013&statisticsType=1",
+          "kind": "api_example",
+          "verification": "来自官方文档；非本次已请求"
+        },
+        {
+          "label": "GIS/周地图下载",
+          "url": "https://droughtmonitor.unl.edu/DmData/GISData.aspx",
+          "kind": "download_index",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "地图归档",
+          "url": "https://droughtmonitor.unl.edu/Maps/MapArchive.aspx",
+          "kind": "download_index",
+          "verification": "前序已知入口；执行时核对实际href"
+        }
+      ],
+      "download_steps": [
+        "统计先按StateStatistics/CountyStatistics等官方参数查询有限FIPS和时间区间；csv/json Accept显式声明。",
+        "GIS页需提交日期选择时记录参数与响应，只取返回的真实shapefile/GeoJSON链接；不猜USDM_日期.zip。",
+        "记录有效周、周二资料截止与周四发行；同周不追溯修订不强造修订轨。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D32",
+      "name": "SMAP Enhanced L3 Soil Moisture",
+      "hazards": "干旱；洪水前湿度；冻融",
+      "role": "连续遥感土壤湿度",
+      "previous_scale_note": "006在GEE从2023-12-04开始；更早数据查005",
+      "count_unit": "日产品；非每日每点有效观测",
+      "coverage_note": "全球9km网格，冻土等检索限制",
+      "scientific_cautions": "不能把任务2015开始等同006含完整2015历史；中心窗异常可能含未来资料",
+      "intended_reuse": "湿度状态和质量覆盖",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/NASA_SMAP_SPL3SMP_E_006",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/NASA_SMAP_SPL3SMP_E_006",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=NASA/SMAP/SPL3SMP_E/006、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "先检查006实际开始时间和AOI有效检索；更早日期改查经验证的旧版本，不能静默拼接。",
+        "保留土壤湿度QA、冻结/水体等限制；同一窗口的未来数据不能参与历史异常指标。"
+      ],
+      "first_wave": "B",
+      "gee_collection_id": "NASA/SMAP/SPL3SMP_E/006"
+    },
+    {
+      "id": "D33",
+      "name": "MODIS Snow MOD10A1.061",
+      "hazards": "积雪；冬季天气",
+      "role": "连续遥感积雪覆盖",
+      "previous_scale_note": "2000年以来日尺度500m",
+      "count_unit": "栅格日期/瓦片",
+      "coverage_note": "全球",
+      "scientific_cautions": "雪盖不等于雪深/降雪量；云/无效不等于无雪",
+      "intended_reuse": "积雪出现消退、空间范围",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD10A1",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD10A1",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=MODIS/061/MOD10A1、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "包含NDSI_Snow_Cover及相应QA/类别层，取一个地点数日；保存cloud/no decision/night等不同状态。",
+        "雪盖图不是雪深、降雪量或冻雨标签；冬季灾种需与站点/事件资料联合。"
+      ],
+      "first_wave": "B",
+      "gee_collection_id": "MODIS/061/MOD10A1"
+    },
+    {
+      "id": "D34",
+      "name": "MODIS LST MOD11A1.061",
+      "hazards": "热浪；地表高温",
+      "role": "连续遥感地表温度",
+      "previous_scale_note": "2000年以来日尺度1km",
+      "count_unit": "栅格日期/瓦片",
+      "coverage_note": "全球",
+      "scientific_cautions": "地表温度不等于2米气温，不能直接替代热浪标准",
+      "intended_reuse": "地表热异常与空间分布",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD11A1",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD11A1",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=MODIS/061/MOD11A1、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "读取LST_Day_1km/LST_Night_1km及QC与倍率；选两三个日期比较。",
+        "地表温度不是2米气温；与GHCN/ERA5温度任务保持不同variable。"
+      ],
+      "first_wave": "B",
+      "gee_collection_id": "MODIS/061/MOD11A1"
+    },
+    {
+      "id": "D35",
+      "name": "MERRA-2 aerosol diagnostics",
+      "hazards": "沙尘；烟尘",
+      "role": "连续再分析气溶胶",
+      "previous_scale_note": "1980年以来小时数据",
+      "count_unit": "小时栅格",
+      "coverage_note": "全球",
+      "scientific_cautions": "总气溶胶≠沙尘；重分析非当时实时；结合站点天气现象",
+      "intended_reuse": "尘埃输送、沙尘事件筛选",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/NASA_GSFC_MERRA_aer_2",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/NASA_GSFC_MERRA_aer_2",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=NASA/GSFC/MERRA/aer/2、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "目录中选择明确dust相关变量而非总AOD；固定bbox/time/单位和垂直含义。",
+        "将该层用于沙尘候选/输送背景；只有强度代理而无现象或观测支持时，不认定已验证沙尘灾害。"
+      ],
+      "first_wave": "B",
+      "gee_collection_id": "NASA/GSFC/MERRA/aer/2"
+    },
+    {
+      "id": "D36",
+      "name": "Sentinel-5P OFFL Aerosol Index",
+      "hazards": "沙尘；烟羽",
+      "role": "遥感气溶胶指数",
+      "previous_scale_note": "2018年以来卫星产品；数量随AOI筛选",
+      "count_unit": "观测/栅格产品",
+      "coverage_note": "全球",
+      "scientific_cautions": "吸收气溶胶不能单独区分尘/烟；OFFL非即时观测时间可用",
+      "intended_reuse": "跨模态烟尘空间证据",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S5P_OFFL_L3_AER_AI",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S5P_OFFL_L3_AER_AI",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=COPERNICUS/S5P/OFFL/L3_AER_AI、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "先查询absorbing_aerosol_index及可用质量/覆盖，保存过境时刻、OFFL产品版本。",
+        "结合ISD现象码/原始报告区分烟、尘；仅AER_AI高不构成duststorm Gold。"
+      ],
+      "first_wave": "B",
+      "gee_collection_id": "COPERNICUS/S5P/OFFL/L3_AER_AI"
+    },
+    {
+      "id": "D37",
+      "name": "NOAA CO-OPS water levels",
+      "hazards": "风暴潮；沿海洪水",
+      "role": "潮位站观测/潮汐预测",
+      "previous_scale_note": "可按站点与时段提取6分钟水位等",
+      "count_unit": "站点-时间记录",
+      "coverage_note": "美国沿海等站点范围",
+      "scientific_cautions": "潮位≠纯风暴增水；基准面、预测潮与观测需一致",
+      "intended_reuse": "潮位异常和风暴潮过程",
+      "previous_source": "https://api.tidesandcurrents.noaa.gov/api/prod/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_JSON_CSV_API",
+      "links": [
+        {
+          "label": "官方API与参数",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod/",
+          "kind": "api_documentation",
+          "verification": "本轮官方文档可读"
+        },
+        {
+          "label": "站点元数据API",
+          "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+          "kind": "api_documentation",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "有限历史下载示例",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20200101&end_date=20200102&station=8518750&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&application=DisasterTrace&format=json",
+          "kind": "api_example",
+          "verification": "参数依官方规范构造；本轮未请求，不保证指定窗口完整"
+        }
+      ],
+      "download_steps": [
+        "先确认站点/基准面可用，再取固定一天hourly_height或一个月以内6min water_level。",
+        "潮汐predictions单独调用，同基准面、同时间网格配对；记录preliminary/verified。",
+        "观测减天文潮是非潮汐余量，不能不加条件叫纯风暴增水；不要把官方返回error JSON当数据。"
+      ],
+      "first_wave": "B"
+    },
+    {
+      "id": "D38",
+      "name": "NOAA OISST v2.1",
+      "hazards": "海洋热浪（气候扩展）",
+      "role": "连续海表温度",
+      "previous_scale_note": "1981-09以来逐日0.25°；理论20年7,305日期",
+      "count_unit": "全球栅格时间步",
+      "coverage_note": "全球海洋",
+      "scientific_cautions": "海洋热浪应明确单列；融合插值产品非原始独立传感器",
+      "intended_reuse": "海洋热浪阈值与持续时间",
+      "previous_source": "https://www.ncei.noaa.gov/products/optimum-interpolation-sst",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HTTP_DIRECTORY",
+      "links": [
+        {
+          "label": "OISST NetCDF原始月目录",
+          "url": "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/",
+          "kind": "http_directory",
+          "verification": "本轮目录可读"
+        }
+      ],
+      "download_steps": [
+        "沿月份目录列文件，选择一个真实日NetCDF，保存时间、纬经网格、单位及缺测定义。",
+        "海洋热浪需固定季节基准和连续阈值；作为扩展单列，不强塞16主类。"
+      ],
+      "first_wave": "B"
+    },
+    {
+      "id": "D39",
+      "name": "EM-DAT",
+      "hazards": "多灾种；含非天气灾害",
+      "role": "灾害记录目录",
+      "previous_scale_note": "超过27,000条",
+      "count_unit": "灾害记录，不是天气事件子集",
+      "coverage_note": "全球1900年以来",
+      "scientific_cautions": "包含非天气灾害；跨国/多源记录需匹配；非精细时空Gold；不是全量匿名下载URL；不能用聚合HDX表冒充完整EM-DAT记录。",
+      "intended_reuse": "全球候选发现、事件影响元信息",
+      "previous_source": "https://doc.emdat.be/",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "REGISTRATION_AND_LICENSE_GATE",
+      "links": [
+        {
+          "label": "EM-DAT公共下载平台",
+          "url": "https://public.emdat.be/",
+          "kind": "account_portal",
+          "verification": "本轮页面可达；未登录/导出"
+        },
+        {
+          "label": "官方数据文档",
+          "url": "https://doc.emdat.be/",
+          "kind": "documentation",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "仅使用用户已有合法访问；未授权时记录needs_account_or_terms，不填写登录表也不绕过。",
+        "导出后区分国家行/灾害事件/事件族，过滤非天气灾害；受限原文不自动发布。"
+      ],
+      "first_wave": "C"
+    },
+    {
+      "id": "D40",
+      "name": "NASA EONET v3",
+      "hazards": "火灾；风暴；洪水；干旱等及非天气灾害",
+      "role": "事件发现目录",
+      "previous_scale_note": "滚动；按类别与日期查询",
+      "count_unit": "目录条目",
+      "coverage_note": "全球",
+      "scientific_cautions": "目录几何不是灾害边界；closed/time未必精确；无收录≠无灾",
+      "intended_reuse": "新事件导航、空间时间锚点",
+      "previous_source": "https://eonet.gsfc.nasa.gov/docs/v3",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_JSON_API",
+      "links": [
+        {
+          "label": "EONET v3事件API",
+          "url": "https://eonet.gsfc.nasa.gov/api/v3/events",
+          "kind": "api",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "类别API",
+          "url": "https://eonet.gsfc.nasa.gov/api/v3/categories",
+          "kind": "api",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "官方参数说明",
+          "url": "https://eonet.gsfc.nasa.gov/docs/v3",
+          "kind": "api_documentation",
+          "verification": "本轮文档可读"
+        }
+      ],
+      "download_steps": [
+        "先类别表，再固定start/end/status=all/limit=10查询；按官方返回状态判断是否完整，不任意当limit10是总量。",
+        "来源字段用于导航；event geometry/closed时间不作精细洪水界或精确结束时刻。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D41",
+      "name": "GDACS",
+      "hazards": "多自然灾害",
+      "role": "告警与事件导航",
+      "previous_scale_note": "滚动；数量需定期快照统计",
+      "count_unit": "告警/事件条目",
+      "coverage_note": "全球",
+      "scientific_cautions": "风险估计不等于最终损失标签；包含地质灾害",
+      "intended_reuse": "跨灾种在线发现与风险资料",
+      "previous_source": "https://www.gdacs.org/About/overview.aspx",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_FEED_NEEDS_RUNTIME_RECHECK",
+      "links": [
+        {
+          "label": "GDACS RSS",
+          "url": "https://www.gdacs.org/xml/rss.xml",
+          "kind": "rss",
+          "verification": "官方常用公开feed；本轮web读取失败，执行时重验"
+        },
+        {
+          "label": "GDACS官方说明",
+          "url": "https://www.gdacs.org/About/overview.aspx",
+          "kind": "documentation",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "限一次RSS获取，保存HTTP/XML异常；使用XML安全解析，不解析外部实体。",
+        "按eventid/type/date关联EONET/CEMS，RSS滚动窗口不是完整历史档案。"
+      ],
+      "first_wave": "C"
+    },
+    {
+      "id": "D42",
+      "name": "Sentinel-1 GRD",
+      "hazards": "洪水；野火后变化；滑坡等",
+      "role": "通用原始遥感底座",
+      "previous_scale_note": "2014年以来；目标AOI数量动态",
+      "count_unit": "场景/裁剪资产",
+      "coverage_note": "全球；轨道与观测覆盖不同",
+      "scientific_cautions": "不是现成灾害标签；同轨道极化等条件匹配；入库时间不等于观测时间",
+      "intended_reuse": "补充真实多期SAR证据",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=COPERNICUS/S1_GRD、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "明确同轨向、相对轨道、模式与极化，再取灾前后真正可比较的场景；先metadata后小AOI导出。",
+        "保持dB/线性功率、DEM处理和无效区域，不把同一场景多种处理当不同事件。"
+      ],
+      "first_wave": "A",
+      "gee_collection_id": "COPERNICUS/S1_GRD"
+    },
+    {
+      "id": "D43",
+      "name": "Sentinel-2 SR Harmonized",
+      "hazards": "洪水；野火；旱情；积雪；灾后变化",
+      "role": "通用原始遥感底座",
+      "previous_scale_note": "GEE SR自2017年以来；目标AOI可用图像数需查",
+      "count_unit": "场景/裁剪资产",
+      "coverage_note": "全球；受云影雪与重访限制",
+      "scientific_cautions": "底层S2存在不代表论文标签也在GEE；不能把云遮挡当无灾",
+      "intended_reuse": "多光谱与可见光输入",
+      "previous_source": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "GEE_PROJECT_REQUIRED",
+      "links": [
+        {
+          "label": "GEE目录／波段与许可",
+          "url": "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED",
+          "kind": "gee_catalog",
+          "verification": "本轮目录页面可读；未认证查询"
+        }
+      ],
+      "download_steps": [
+        "按第8节 GEE 配方，以 collection_id=COPERNICUS/S2_SR_HARMONIZED、固定AOI/日期/所需波段检索；先导出元数据，再小区域数值+有效性信息。",
+        "按目标区域、时段和质量找实际可用场景；保存SCL/QA选择和缩放。",
+        "用SR影像替换作者原L1C/TOA时属于新协议；不得悄悄改变原benchmark输入。"
+      ],
+      "first_wave": "A",
+      "gee_collection_id": "COPERNICUS/S2_SR_HARMONIZED"
+    },
+    {
+      "id": "D44",
+      "name": "xBD",
+      "hazards": "洪水；气旋；野火；含地震等",
+      "role": "灾前后建筑损毁标签",
+      "previous_scale_note": "850,736建筑标注；45,362平方公里影像",
+      "count_unit": "建筑标注，不是图像/事件数",
+      "coverage_note": "跨灾种多地区",
+      "scientific_cautions": "标签包含非天气事件；高分影像许可需单核；事件数不能用建筑数替代",
+      "intended_reuse": "建筑级影响、多灾种感知对照",
+      "previous_source": "https://arxiv.org/abs/1911.09296",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "REGISTRATION_AND_LICENSE_GATE",
+      "links": [
+        {
+          "label": "xView2数据申请/登录入口",
+          "url": "https://xview2.org/dataset",
+          "kind": "account_portal",
+          "verification": "页面JS渲染；本轮未登录、未确认实际资产URL"
+        },
+        {
+          "label": "官方基线与注册说明",
+          "url": "https://github.com/DIUx-xView/xView2_baseline",
+          "kind": "code",
+          "verification": "本轮README明确数据需注册/login下载"
+        }
+      ],
+      "download_steps": [
+        "读取官方访问与许可条件；用户已有授权文件先只读建立目录，否则needs_account。",
+        "不得下载未知镜像或用代码LICENSE替代影像许可；收到正式下载URL后写私有获取清单。",
+        "按disaster_name、影像前后时间和建筑ID索引，保留非天气灾害为单列扩展。"
+      ],
+      "first_wave": "C"
+    },
+    {
+      "id": "D45",
+      "name": "CrisisMMD v2.0",
+      "hazards": "气旋；洪水；野火；含地震",
+      "role": "社交媒体图文",
+      "previous_scale_note": "7场灾害；16,058文本；18,082图像；约1.8GB",
+      "count_unit": "事件 / 文本 / 图像",
+      "coverage_note": "2017年多地灾害",
+      "scientific_cautions": "全量抓取14M推文不是发布标注量；图文标签可能不同；不是精确几何Gold",
+      "intended_reuse": "真实图文、信息相关性和粗粒度影响",
+      "previous_source": "https://crisisnlp.qcri.org/crisismmd",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HTTP",
+      "links": [
+        {
+          "label": "作者v2说明",
+          "url": "https://crisisnlp.qcri.org/crisismmd",
+          "kind": "documentation",
+          "verification": "本轮页面明确v2包与图文数"
+        },
+        {
+          "label": "v2图文包直链",
+          "url": "https://crisisnlp.qcri.org/data/crisismmd/CrisisMMD_v2.0.tar.gz",
+          "kind": "http_file",
+          "verification": "本轮从作者下载按钮解析；web因gzip类型不渲染，未下载"
+        },
+        {
+          "label": "使用条款入口",
+          "url": "https://crisisnlp.qcri.org/crisismmd",
+          "kind": "license_entry",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先将v2约1.8GB归档放新路径并校验完整性；按许可只读解包，选择weather事件与样例。",
+        "排除地震；事件涉及旧NHC heldout的记录进入隔离区，不用于开发prompt。",
+        "图文标签可能不同，不能只因同一推文就认为空间/语义完全一致；不输出个人身份资料。"
+      ],
+      "first_wave": "B"
+    },
+    {
+      "id": "D46",
+      "name": "Landslide4Sense",
+      "hazards": "降雨诱发滑坡（扩展）；含地震诱发滑坡",
+      "role": "多源滑坡标签",
+      "previous_scale_note": "原论文摘要3,799切片；四地区/时段",
+      "count_unit": "切片；此数字不是各竞赛版统一总量",
+      "coverage_note": "Iburi/Kodagu/Gorkha/Taiwan",
+      "scientific_cautions": "必须筛除地震诱发部分后才称天气相关；版本/划分需重核；本轮竞赛README列训练3799、验证245、测试800；3799不是全套总数。只有训练标签明确公开。",
+      "intended_reuse": "地形+光学的次生灾害迁移",
+      "previous_source": "https://arxiv.org/abs/2206.00515",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_SHARE_ACCESS_TO_VERIFY",
+      "links": [
+        {
+          "label": "作者竞赛数据说明",
+          "url": "https://github.com/iarai/Landslide4Sense-2022",
+          "kind": "code",
+          "verification": "本轮README明确训练/验证下载"
+        },
+        {
+          "label": "训练数据（带标签）",
+          "url": "https://cloud.iarai.ac.at/index.php/s/KrwKngeXN7KjkFm",
+          "kind": "shared_folder",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "验证影像",
+          "url": "https://cloud.iarai.ac.at/index.php/s/N6TacGsfr5nRNWr",
+          "kind": "shared_folder",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先解析公开分享页面中的Download，不猜归档名；训练集含img/mask，验证/测试未必有公开标签。",
+        "只读h5检查14通道、128×128和mask；按地区/灾害诱因筛降雨滑坡。"
+      ],
+      "first_wave": "C"
+    },
+    {
+      "id": "D47",
+      "name": "ExEBench / EarthExtreme-Bench",
+      "hazards": "热浪；寒潮；气旋；极端降水；雷达风暴；火烧迹地；洪水",
+      "role": "整理后数值/遥感任务集合",
+      "previous_scale_note": "作者论文55热浪序列、9寒潮序列、95气旋、1092降水序列、931雷达风暴序列；需按冻结发布复算。",
+      "count_unit": "按实际源清单分开统计事件、记录与资产",
+      "coverage_note": "见原发布与实际manifest",
+      "intended_reuse": "直接复用数据包、变量元信息、加载器和标签，优先降低多灾种准备工作。",
+      "scientific_cautions": "不是原生异步图文；再分析/best track/最终掩膜不得提前作为历史证据。；旧下载器列目录stable、下载默认分支的问题不得照搬；不要把天气雷达storm等同全部强对流细类。",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HUGGINGFACE",
+      "links": [
+        {
+          "label": "作者仓库",
+          "url": "https://github.com/zhaoshan2/EarthExtreme-Bench",
+          "kind": "code",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "发布目录",
+          "url": "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/tree/stable/data",
+          "kind": "hf_tree",
+          "verification": "本轮目录可读"
+        },
+        {
+          "label": "data/weather/coldwave.zip",
+          "url": "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/coldwave.zip",
+          "kind": "http_file",
+          "verification": "本轮HF目录确认精确相对路径；链接仍为移动分支，执行前锁SHA"
+        },
+        {
+          "label": "data/weather/heatwave.zip",
+          "url": "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/heatwave.zip",
+          "kind": "http_file",
+          "verification": "本轮HF目录确认精确相对路径；链接仍为移动分支，执行前锁SHA"
+        },
+        {
+          "label": "data/weather/expcp.zip",
+          "url": "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/expcp.zip",
+          "kind": "http_file",
+          "verification": "本轮HF目录确认精确相对路径；链接仍为移动分支，执行前锁SHA"
+        },
+        {
+          "label": "data/weather/tropicalCyclone.zip",
+          "url": "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/tropicalCyclone.zip",
+          "kind": "http_file",
+          "verification": "本轮HF目录确认精确相对路径；链接仍为移动分支，执行前锁SHA"
+        },
+        {
+          "label": "data/weather/storm.zip",
+          "url": "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/storm.zip",
+          "kind": "http_file",
+          "verification": "本轮HF目录确认精确相对路径；链接仍为移动分支，执行前锁SHA"
+        },
+        {
+          "label": "data/eo/fire.zip",
+          "url": "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/eo/fire.zip",
+          "kind": "http_file",
+          "verification": "本轮HF目录确认精确相对路径；链接仍为移动分支，执行前锁SHA"
+        },
+        {
+          "label": "data/eo/flood.zip",
+          "url": "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/eo/flood.zip",
+          "kind": "http_file",
+          "verification": "本轮HF目录确认精确相对路径；链接仍为移动分支，执行前锁SHA"
+        }
+      ],
+      "download_steps": [
+        "必须通过HF API把stable解析为完整SHA，列目录/文件下载均使用同SHA。",
+        "首轮coldwave→heatwave→expcp，之后按预算取EO火/洪水和大气旋/雷达包；不运行原全量下载器。",
+        "检查ZIP内格式及metadata；pickle/torch pickle不得在有凭据的主环境直接反序列化。"
+      ],
+      "first_wave": "A",
+      "current_download_note": "本轮目录：coldwave 4.39MB；heatwave 65.3MB；expcp 545MB；tropicalCyclone 5.06GB；storm 17.3GB；fire 2.65GB；flood 4.69GB。",
+      "hf_repo_id": "zhaoshan/ee-bench_v1.0",
+      "hf_revision": "stable",
+      "selected_relative_files": [
+        "data/weather/coldwave.zip",
+        "data/weather/heatwave.zip",
+        "data/weather/expcp.zip",
+        "data/weather/tropicalCyclone.zip",
+        "data/weather/storm.zip",
+        "data/eo/fire.zip",
+        "data/eo/flood.zip"
+      ]
+    },
+    {
+      "id": "D48",
+      "name": "ExtremeWeatherBench",
+      "hazards": "热浪；寒潮；强对流；气旋；降水等",
+      "role": "云端事件配置与观测/预测适配器",
+      "previous_scale_note": "不按整库体积估算；按实际Zarr/Parquet读取量登记。",
+      "count_unit": "按实际源清单分开统计事件、记录与资产",
+      "coverage_note": "见原发布与实际manifest",
+      "intended_reuse": "复用事件范围、ERA5/GHCN/LSR/IBTrACS数据访问和init/lead/valid划分。",
+      "scientific_cautions": "与ExEBench不同工作；PPH来自LSR；lazy不等于不产生网络或全零费用。",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_CLOUD_LAZY_ACCESS",
+      "links": [
+        {
+          "label": "官方数据访问文档",
+          "url": "https://extremeweatherbench.readthedocs.io/en/latest/data/",
+          "kind": "documentation",
+          "verification": "本轮文档列出以下精确URI"
+        },
+        {
+          "label": "作者代码",
+          "url": "https://github.com/brightbandtech/extremeweatherbench",
+          "kind": "code",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "ERA5云端Zarr",
+          "url": "gs://gcp-public-data-arco-era5/ar/full_37-1h-0p25deg-chunk-1.zarr-v3",
+          "kind": "gcs_cloud_dataset",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "GHCN小时2020–2024",
+          "url": "gs://extremeweatherbench/datasets/ghcnh_all_2020_2024.parq",
+          "kind": "gcs_cloud_dataset",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "局地风暴报告",
+          "url": "gs://extremeweatherbench/datasets/combined_canada_australia_us_lsr_01012020_09272025.parq",
+          "kind": "gcs_cloud_dataset",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "从报告派生的PPH",
+          "url": "gs://extremeweatherbench/datasets/practically_perfect_hindcast_20200104_20250927.zarr",
+          "kind": "gcs_cloud_dataset",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先锁作者代码版本和具体case配置；只读一个case所需时间、区域、变量。",
+        "读取chunk/row-group元数据估算传输量，必要时在其上重写有预算loader；不得整个Zarr clone或全表转CSV。",
+        "从云端得到的确切切片保存原生维度/单位和来源，不只保存xarray repr。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D49",
+      "name": "WeatherQA",
+      "hazards": "强对流；部分冬季天气",
+      "role": "原生SPC参数图+业务讨论",
+      "previous_scale_note": "作者图像包2014–2019约10GB；2020约1.5GB。",
+      "count_unit": "按实际源清单分开统计事件、记录与资产",
+      "coverage_note": "见原发布与实际manifest",
+      "intended_reuse": "复用讨论ID、图文配对与参数地图，不从零配图。",
+      "scientific_cautions": "20图主要为同一时刻不同参数，非20时刻；风险讨论不是最终天气发生标签。",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_GDRIVE_AND_HF",
+      "links": [
+        {
+          "label": "作者说明",
+          "url": "https://github.com/chengqianma/WeatherQA",
+          "kind": "code",
+          "verification": "本轮README列出下面三个准确Drive文件ID"
+        },
+        {
+          "label": "原始Mesoscale Discussion文本",
+          "url": "https://drive.google.com/file/d/1GpEp6EFrCA6wqU6FEHsaMO7jwTckP_m4/view?usp=sharing",
+          "kind": "gdrive_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2014–2019图像",
+          "url": "https://drive.google.com/file/d/1mViaf1f-sWB1DyfCrw-NwmZp4gj96mYr/view?usp=drive_link",
+          "kind": "gdrive_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "2020图像",
+          "url": "https://drive.google.com/file/d/17Hfv2NOLpy6rJBUrghaZmU_7r6WDCuDs/view?usp=sharing",
+          "kind": "gdrive_file",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "加工SFT版本",
+          "url": "https://huggingface.co/datasets/ZhanxiangHua/WeatherQA_SFT",
+          "kind": "hf_dataset",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "SPC原始分析图档案",
+          "url": "https://www.spc.noaa.gov/exper/ma_archive/",
+          "kind": "download_index",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "SPC原始讨论入口",
+          "url": "https://www.spc.noaa.gov/products/md/",
+          "kind": "download_index",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先原始文本与一个完整20参数图组，记录md_id/year/time/parameter映射；gdown文件ID用第8节配方。",
+        "优先2014–2019开发样例；2020原test可下载隔离以验格式，不用于优化后仍声称原test独立。",
+        "HF加工SFT的正确选项和CoT进入私有标签，不当真实原始公告；找到同天气过程的连续讨论才构建自然时序。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D50",
+      "name": "CyPortQA",
+      "hazards": "气旋；港口相关影响",
+      "role": "NHC图形/公告/USCG资料及场景索引",
+      "previous_scale_note": "117k+QA、2900+气旋–港口场景，非独立气旋计数。",
+      "count_unit": "按实际源清单分开统计事件、记录与资产",
+      "coverage_note": "见原发布与实际manifest",
+      "intended_reuse": "沿用当前NHC基础，复用source_data和场景映射。",
+      "scientific_cautions": "业务开放式答案不直接作自动安全决策Gold；AIS/第三方图层许可另核查。",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_GITHUB_DATA",
+      "links": [
+        {
+          "label": "作者仓库",
+          "url": "https://github.com/ChenchenMobility/MLLM-Bench-CyPortQA",
+          "kind": "code",
+          "verification": "本轮README确认目录"
+        },
+        {
+          "label": "原始资料目录API",
+          "url": "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/contents/source_data",
+          "kind": "github_contents",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "问题与多模态输入目录API",
+          "url": "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/contents/dataset",
+          "kind": "github_contents",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "优先本地已有副本；否则contents/tree API列实际大小写文件名（Encoded_senario.JSON等可能与旧文档不同）。",
+        "锁定commit，选择source_data原始小文件和一个图件；发现LFS pointer需按正式LFS取得实际字节并计费/配额检查。",
+        "不要运行models/run.py、安装全模型依赖或推理；按风暴而不是港口场景分组。"
+      ],
+      "first_wave": "A"
+    },
+    {
+      "id": "D51",
+      "name": "WorldFloods v2 / ml4floods",
+      "hazards": "洪水",
+      "role": "云与水体标签、配准影像及处理代码",
+      "previous_scale_note": "作者约509对影像/掩膜；HF文档约76GB，需按版本清点。",
+      "count_unit": "按实际源清单分开统计事件、记录与资产",
+      "coverage_note": "见原发布与实际manifest",
+      "intended_reuse": "复用图像/掩膜以及cloud-versus-water显式处理。",
+      "scientific_cautions": "原v1 GCS可为requester-pays，代码与数据/模型许可不同。",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_HF_LICENSE_CONDITIONED",
+      "links": [
+        {
+          "label": "作者数据说明",
+          "url": "https://spaceml-org.github.io/ml4floods/content/worldfloods_dataset.html",
+          "kind": "documentation",
+          "verification": "本轮官方文档列HF v2与许可"
+        },
+        {
+          "label": "WorldFloods v2公开HF",
+          "url": "https://huggingface.co/datasets/isp-uv-es/WorldFloodsv2",
+          "kind": "hf_dataset",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "额外整理地图与标签记录",
+          "url": "https://zenodo.org/records/8153514",
+          "kind": "zenodo_record",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        },
+        {
+          "label": "处理代码",
+          "url": "https://github.com/spaceml-org/ml4floods",
+          "kind": "code",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先HF锁SHA列元数据，按一个事件选图和两通道参考；图/云/标签分角色。",
+        "先读并记录非商业条件，旧GCS付费路线默认禁用；Zarr/整库不自动镜像。"
+      ],
+      "first_wave": "B",
+      "hf_repo_id": "isp-uv-es/WorldFloodsv2",
+      "hf_revision": "main"
+    },
+    {
+      "id": "D52",
+      "name": "DroughtED",
+      "hazards": "干旱（闪旱需另定义）",
+      "role": "气象/土壤/县域与USDM等级配对",
+      "previous_scale_note": "记录、县域和滑动时间窗，尚未复算独立事件数。",
+      "count_unit": "按实际源清单分开统计事件、记录与资产",
+      "coverage_note": "见原发布与实际manifest",
+      "intended_reuse": "复用FIPS、时间和气象特征配对，配合D31地图。",
+      "scientific_cautions": "一般干旱不等于闪旱；多个县可能共享同一干旱过程。",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "KAGGLE_ACCESS_TO_VERIFY",
+      "links": [
+        {
+          "label": "作者数据发布slug",
+          "url": "https://www.kaggle.com/datasets/cdminix/us-drought-meteorological-data",
+          "kind": "kaggle_dataset",
+          "verification": "前序作者论文定位；本轮网页可达但客户端渲染未列文件"
+        },
+        {
+          "label": "作者论文说明",
+          "url": "https://www.climatechange.ai/papers/icml2021/22",
+          "kind": "paper",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "kaggle datasets files -d cdminix/us-drought-meteorological-data，锁dataset版本，获取一个有日期/FIPS/目标的分片。",
+        "检查时间窗是否含未来、标签发布时间、县域重叠；不要直接把所有窗口当独立极端事件。"
+      ],
+      "first_wave": "B",
+      "kaggle_slug": "cdminix/us-drought-meteorological-data"
+    },
+    {
+      "id": "D53",
+      "name": "M4Fog",
+      "hazards": "海雾；海洋低能见度",
+      "role": "卫星/海温/稀疏观测和雾标签",
+      "previous_scale_note": "论文68000 data cubes/15海区；实际各公开子集范围独立核验。",
+      "count_unit": "按实际源清单分开统计事件、记录与资产",
+      "coverage_note": "见原发布与实际manifest",
+      "intended_reuse": "作为雾类别的多模态与真实时序候选，保留原始观测和站点信息。",
+      "scientific_cautions": "本轮读取Clynie公开副本README，原kaka0910入口前序404；作者认可发布与完整许可尚需确认。",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_SHARE_MANUAL_ACCESS_AND_PROVENANCE_GATE",
+      "links": [
+        {
+          "label": "本轮取得下载列表的README",
+          "url": "https://github.com/Clynie/M4Fog",
+          "kind": "code",
+          "verification": "公开副本README可读；未验证网盘文件/许可"
+        },
+        {
+          "label": "TrackA H8/H9黄渤海（公开提取码 6vm7）",
+          "url": "https://pan.baidu.com/s/1aOw3TqzkS7E0ymLG0k2BhA?pwd=6vm7",
+          "kind": "baidu_shared_file",
+          "verification": "README公开分享链接；不是用户密钥；本轮未通过网盘认证"
+        },
+        {
+          "label": "TrackA FY4A黄渤海（公开提取码 wp9k）",
+          "url": "https://pan.baidu.com/s/1FSNdZoZCZ4mdu9_ehMRLIA?pwd=wp9k",
+          "kind": "baidu_shared_file",
+          "verification": "README公开分享链接；不是用户密钥；本轮未通过网盘认证"
+        },
+        {
+          "label": "TrackA GOES多海区（公开提取码 jv7g）",
+          "url": "https://pan.baidu.com/s/16RCgHSbdbNDgV8HMwKojPw?pwd=jv7g",
+          "kind": "baidu_shared_file",
+          "verification": "README公开分享链接；不是用户密钥；本轮未通过网盘认证"
+        },
+        {
+          "label": "TrackB H8/H9（公开提取码 8q75）",
+          "url": "https://pan.baidu.com/s/1q0s9eqAlydmyX6lu0znd3w?pwd=8q75",
+          "kind": "baidu_shared_file",
+          "verification": "README公开分享链接；不是用户密钥；本轮未通过网盘认证"
+        },
+        {
+          "label": "TrackC H8/H9多区域（公开提取码 99ci）",
+          "url": "https://pan.baidu.com/s/1it_gK_v_RDLXRoxMX-X4Ow?pwd=99ci",
+          "kind": "baidu_shared_file",
+          "verification": "README公开分享链接；不是用户密钥；本轮未通过网盘认证"
+        },
+        {
+          "label": "ICOADS 2015–2024（公开提取码 yfat）",
+          "url": "https://pan.baidu.com/s/1_8hTqhCS5ZyrkCqvTrT7KQ?pwd=yfat",
+          "kind": "baidu_shared_file",
+          "verification": "README公开分享链接；不是用户密钥；本轮未通过网盘认证"
+        },
+        {
+          "label": "中文海洋天气综述2017–2022（公开提取码 amwc）",
+          "url": "https://pan.baidu.com/s/1QE5QicyA1tFalcguP_fY_Q?pwd=amwc",
+          "kind": "baidu_shared_file",
+          "verification": "README公开分享链接；不是用户密钥；本轮未通过网盘认证"
+        }
+      ],
+      "download_steps": [
+        "先验证公开分享是否有效、作者发布归属与许可；需要交互则登记manual_access_required，不绕验证码/登录。",
+        "公共提取码可保留，用户账户token绝不写入；没有自动获取能力不阻塞其他53项。",
+        "成功取得一份后核验时间、dense/sparse配准和标签；云图预测不等于雾发生预测。"
+      ],
+      "first_wave": "C"
+    },
+    {
+      "id": "D54",
+      "name": "CLLMate",
+      "hazards": "多类天气与气候事件",
+      "role": "结构化事件JSON；气象栅格需另取",
+      "previous_scale_note": "本轮data/dataset_cllmate.json为1,825,400 bytes；新闻原文/完整栅格不等于包含在此文件。",
+      "count_unit": "按实际源清单分开统计事件、记录与资产",
+      "coverage_note": "见原发布与实际manifest",
+      "intended_reuse": "核验event/time/location/coordinate/news_id/image_path，作为跨灾种事件候选和对齐参考。",
+      "scientific_cautions": "新闻原始获取/再分发仍需许可；自动提取caused by/cause等不是已验证因果Gold。",
+      "checked_on": "2026-09-10",
+      "verification": {
+        "archive_downloaded_here": false,
+        "sample_decoded_here": false,
+        "cci_connectivity_tested": false,
+        "disastertrace_admitted": false
+      },
+      "access": "PUBLIC_STRUCTURED_JSON_RAW_NEWS_UNRESOLVED",
+      "links": [
+        {
+          "label": "作者说明",
+          "url": "https://github.com/hobolee/CLLMate",
+          "kind": "code",
+          "verification": "本轮README明确结构化文件及ERA5另取"
+        },
+        {
+          "label": "公开JSON直链",
+          "url": "https://raw.githubusercontent.com/hobolee/CLLMate/main/data/dataset_cllmate.json",
+          "kind": "http_file",
+          "verification": "本轮contents API确认文件名、大小和blobSHA"
+        },
+        {
+          "label": "当前目录元信息",
+          "url": "https://api.github.com/repos/hobolee/CLLMate/contents/data",
+          "kind": "github_contents",
+          "verification": "官方/作者页面已列出；本次未下载文件"
+        }
+      ],
+      "download_steps": [
+        "先解析main→commit，再下载固定commit的数据JSON；json.load统计真实事件键和缺少字段。",
+        "原始新闻和ERA5并非一起打包：按JSON对应时空取ERA5只作受控/回溯资料，新闻权限单列。",
+        "不要沿用“完全没有公开数据”的旧结论，也不要升级成“原文和全部模态均已开放”。"
+      ],
+      "first_wave": "A",
+      "known_git_blob_sha": "f9dd58ac743a1cf7edca11b547ce525b61b21cf2",
+      "known_bytes": 1825400
+    }
+  ],
+  "hazard_source_mapping": [
+    {
+      "hazard_id": "H01",
+      "name": "热带气旋",
+      "source_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D47",
+        "D50"
+      ],
+      "admission_focus": "同一气旋多机构/港口/帧不得重复；best-track是事后参考。"
+    },
+    {
+      "hazard_id": "H02",
+      "name": "温带风暴／非对流大风",
+      "source_ids": [
+        "D05",
+        "D27",
+        "D28",
+        "D48"
+      ],
+      "admission_focus": "风暴身份及非对流性质需原始记录，不能用全部storm序列替代。"
+    },
+    {
+      "hazard_id": "H03",
+      "name": "雷暴大风／下击暴流",
+      "source_ids": [
+        "D05",
+        "D06",
+        "D08",
+        "D09",
+        "D49"
+      ],
+      "admission_focus": "雷达现象与地面风报告配对；下击暴流需特定证据。"
+    },
+    {
+      "hazard_id": "H04",
+      "name": "龙卷风",
+      "source_ids": [
+        "D07",
+        "D05",
+        "D08",
+        "D49"
+      ],
+      "admission_focus": "正负样本与event/episode IDs；采用TorNet v1.1。"
+    },
+    {
+      "hazard_id": "H05",
+      "name": "冰雹",
+      "source_ids": [
+        "D05",
+        "D09",
+        "D48",
+        "D49"
+      ],
+      "admission_focus": "冰雹报告与算法估计区别；不能从强回波直接判定。"
+    },
+    {
+      "hazard_id": "H06",
+      "name": "强雷电",
+      "source_ids": [
+        "D06",
+        "D10",
+        "D05"
+      ],
+      "admission_focus": "闪电检测/聚合与高影响事件区分，强度阈值先定义。"
+    },
+    {
+      "hazard_id": "H07",
+      "name": "极端降水",
+      "source_ids": [
+        "D47",
+        "D29",
+        "D26",
+        "D06",
+        "D09",
+        "D48"
+      ],
+      "admission_focus": "降水率/累计量、窗口和异常阈值；低频资料不冒充短时极值。"
+    },
+    {
+      "hazard_id": "H08",
+      "name": "河流洪水／山洪／城市内涝",
+      "source_ids": [
+        "D11",
+        "D12",
+        "D13",
+        "D14",
+        "D15",
+        "D16",
+        "D17",
+        "D18",
+        "D51"
+      ],
+      "admission_focus": "永久水体、云/覆盖、洪水标签分开；三个子类独立核验。"
+    },
+    {
+      "hazard_id": "H09",
+      "name": "风暴潮／沿海淹没",
+      "source_ids": [
+        "D37",
+        "D01",
+        "D18",
+        "D05"
+      ],
+      "admission_focus": "潮位基准面与天文潮一致；内陆洪水不是风暴潮配额。"
+    },
+    {
+      "hazard_id": "H10",
+      "name": "热浪",
+      "source_ids": [
+        "D47",
+        "D48",
+        "D25",
+        "D26",
+        "D34"
+      ],
+      "admission_focus": "2米气温与LST分开；固定季节/基准期/持续时间。"
+    },
+    {
+      "hazard_id": "H11",
+      "name": "寒潮／极端低温／霜冻",
+      "source_ids": [
+        "D47",
+        "D48",
+        "D25",
+        "D26",
+        "D27"
+      ],
+      "admission_focus": "寒潮、低温与霜冻不同定义；保存温度变量与表面/高度。"
+    },
+    {
+      "hazard_id": "H12",
+      "name": "暴雪／冰冻／冻雨",
+      "source_ids": [
+        "D05",
+        "D49",
+        "D26",
+        "D27",
+        "D33",
+        "D28"
+      ],
+      "admission_focus": "冬季细类需报告支持；雪盖不等于暴雪或冻雨。"
+    },
+    {
+      "hazard_id": "H13",
+      "name": "干旱／闪旱",
+      "source_ids": [
+        "D52",
+        "D31",
+        "D30",
+        "D32",
+        "D25"
+      ],
+      "admission_focus": "一般干旱有成熟数据；闪旱需预先定义变化速度与参考。"
+    },
+    {
+      "hazard_id": "H14",
+      "name": "沙尘暴",
+      "source_ids": [
+        "D35",
+        "D36",
+        "D27",
+        "D05"
+      ],
+      "admission_focus": "目前以原始资料联合为主；必须区分沙尘与烟，不承诺已成立闭环。"
+    },
+    {
+      "hazard_id": "H15",
+      "name": "浓雾／极端低能见度",
+      "source_ids": [
+        "D27",
+        "D53",
+        "D10"
+      ],
+      "admission_focus": "M4Fog海雾获取有条件；陆地雾和一般低能见度分开。"
+    },
+    {
+      "hazard_id": "H16",
+      "name": "野火及相关火险",
+      "source_ids": [
+        "D19",
+        "D20",
+        "D21",
+        "D22",
+        "D23",
+        "D24",
+        "D47"
+      ],
+      "admission_focus": "火点、火场、烧毁面积、受控状态不同；D20保留未来筛选偏差。"
+    }
+  ]
+}

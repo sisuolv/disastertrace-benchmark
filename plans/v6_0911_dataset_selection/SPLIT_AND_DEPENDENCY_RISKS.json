@@ -1,0 +1,76 @@
+{
+  "protected_storm_ids": [
+    "AL142016",
+    "AL112017",
+    "AL152017",
+    "AL142018",
+    "AL132020",
+    "AL092022",
+    "AL102023",
+    "AL022024"
+  ],
+  "event_family_count": null,
+  "guard": "All new material is AUDIT_ONLY or PENDING_SPLIT_CHECK. No new train/dev/test task partition has been minted.",
+  "known_groups": [
+    {
+      "key": "EMSR712",
+      "members": [
+        "D12 3 tiles",
+        "D18 activation/AOI metadata"
+      ],
+      "external_split": "test",
+      "allowed_use": "observed availability audit only; select different train events for development"
+    },
+    {
+      "key": "fire_21458798",
+      "members": [
+        "D19 Jan1",
+        "D19 Jan2",
+        "D19 Jan3"
+      ],
+      "independent_events": 1
+    },
+    {
+      "key": "fire_20562846",
+      "members": [
+        "D21 Apr23",
+        "D21 Apr24",
+        "D21 Apr25"
+      ],
+      "independent_events": 1
+    },
+    {
+      "key": "AL052019",
+      "members": [
+        "D50 Dorian",
+        "D01 related products"
+      ],
+      "status": "join before split"
+    },
+    {
+      "key": "AL092017",
+      "members": [
+        "D50 Harvey",
+        "D01 related products"
+      ],
+      "status": "join before split"
+    },
+    {
+      "key": "AL062018",
+      "members": [
+        "D50 Florence",
+        "D01 related products"
+      ],
+      "status": "join before split"
+    }
+  ],
+  "open_risks": [
+    "Storm Events episodes may share synoptic parent; county lines do not partition events.",
+    "Full annual reports, IBTrACS and hourly station files may contain protected events; quarantine until identity filtering.",
+    "ExEBench country cases can share one transboundary coldwave; event-family count remains null.",
+    "DroughtED temporal splits disagree with documentation; preserve original path and compute actual per-file dates.",
+    "Public benchmark cases and questions may be in LLM pretraining; add future/nonoverlapping withheld events and report contamination limits.",
+    "Shared source families affect independence analyses but do not define physical event grouping.",
+    "Existing pixel crops, maps, branches and question paraphrases never increase independent-event counts."
+  ]
+}

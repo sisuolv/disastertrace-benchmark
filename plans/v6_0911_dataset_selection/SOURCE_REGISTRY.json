@@ -1,0 +1,4354 @@
+{
+  "schema": "disastertrace_v6_selection_registry_v1",
+  "original_sources": 54,
+  "supplements": 20,
+  "registered_entries": 74,
+  "independent_physical_source_count": null,
+  "not_all_sources_sample_verified": true,
+  "sources": [
+    {
+      "source_id": "D01",
+      "name": "NHC Public / Forecast Advisories + GIS",
+      "hazards_reported": "热带气旋；风暴潮；强风",
+      "registered_urls": [
+        "https://www.nhc.noaa.gov/archive/",
+        "https://prod-east-nhc.woc.noaa.gov/gis/",
+        "https://ftp.nhc.noaa.gov/atcf/gis/fst/",
+        "https://www.nhc.noaa.gov/archive/2019/al05/al052019.fstadv.001.shtml"
+      ],
+      "reported_supply": {
+        "value": "随风暴、年份和公告编号变化；本次未统计全档案",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "inherited",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "decision_cn": "复用已有 NHC 公告/GIS 和 Francine 种子；新增风暴独立分组；issued_at 不等于历史 available_at。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "nhc_operational",
+          "result": "inherited_samples_rechecked"
+        }
+      ],
+      "axes": {
+        "access": "inherited_local_sample",
+        "content": "inherited",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "inherited_MM_seed_only_no_new_admission",
+        "C2": "inherited_MM_seed_only_no_new_admission",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "inherited_MM_seed_only_no_new_admission",
+        "C5": "inherited_MM_seed_only_no_new_admission",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D02",
+      "name": "IBTrACS v4r01",
+      "hazards_reported": "热带气旋",
+      "registered_urls": [
+        "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/",
+        "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.since1980.list.v04r01.csv",
+        "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.ALL.list.v04r01.csv",
+        "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.last3years.list.v04r01.csv"
+      ],
+      "reported_supply": {
+        "value": "全球长期轨迹；按冻结版本去重storm ID后统计",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C3",
+        "C7"
+      ],
+      "decision_cn": "已解码 21,923 条轨迹、378 个 SID；属于事后参考，隔离 outcome；跨机构及跨盆地去重。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:ibtracs-full",
+        "multihazard_source_validation_20260911:ibtracs-full-retry02",
+        "multihazard_source_validation_20260911:ibtracs-full-retry02-rest-0"
+      ],
+      "observed_urls": [
+        "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.last3years.list.v04r01.csv"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ibtracs-full-retry02-assembled",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "candidate_evidence_requires_task_checks"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D03",
+      "name": "Digital Typhoon V2",
+      "hazards_reported": "热带气旋",
+      "registered_urls": [
+        "https://agora.ex.nii.ac.jp/digital-typhoon/dataset/V2/",
+        "https://agora.ex.nii.ac.jp/digital-typhoon/dataset/"
+      ],
+      "reported_supply": {
+        "value": "WP 1,116 / 192,956；AU 480 / 70,087；合计1,596 / 263,043",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "partial",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "Digital Typhoon ZIP Range 获取未完成；保留亚洲气旋扩容路线，不把目录计为帧。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:digital-typhoon-page",
+        "multihazard_source_validation_20260911:digital-typhoon-wp-tail-corrected"
+      ],
+      "observed_urls": [
+        "https://agora.ex.nii.ac.jp/digital-typhoon/dataset/V2/index.html.en",
+        "https://agora.ex.nii.ac.jp/digital-typhoon/dataset/archive/standard/V2/WP.zip"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "partial",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D04",
+      "name": "TCIR",
+      "hazards_reported": "热带气旋",
+      "registered_urls": [
+        "https://www.csie.ntu.edu.tw/~htlin/program/TCIR/",
+        "https://tinyurl.com/ntuTCIR",
+        "https://drive.google.com/drive/folders/10tGM8DA-zWJRSYlW5OJyH15KtaKKYHAN?usp=drive_link"
+      ],
+      "reported_supply": {
+        "value": "1,285场；70,501帧",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "defer",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "TCIR 仅入口/读取器候选；尚未完成真实影像解码，需确认版本和切分。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-tcir",
+        "multihazard_source_validation_20260911:tcir-README_md"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/BoyoChen/TCIR/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/BoyoChen/TCIR/HEAD/README.md"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D05",
+      "name": "NOAA Storm Events Database",
+      "hazards_reported": "暴雨；洪水；龙卷风；冰雹；雷暴风；热浪；寒潮；冬季天气等",
+      "registered_urls": [
+        "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/"
+      ],
+      "reported_supply": {
+        "value": "1950–2026年度文件可查；本次未合并计数",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "catalog",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "136,982 条灾害报告仅作检索索引；EPISODE_ID 不等于独立天气系统；需要气象事件跨县合并。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:storm-events-index",
+        "multihazard_source_validation_20260911:storm-events-2021",
+        "multihazard_source_validation_20260911:storm-events-2023",
+        "multihazard_source_validation_20260911:storm-events-2021-remainder-0",
+        "multihazard_source_validation_20260911:storm-events-2021-remainder-1",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-0",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-1",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-2",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-3",
+        "multihazard_source_validation_20260911:storm-events-2023-remainder-4"
+      ],
+      "observed_urls": [
+        "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/",
+        "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2021_c20260323.csv.gz",
+        "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2023_c20260323.csv.gz"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "storm-events-2021-assembled",
+          "result": "catalog_records_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "storm-events-2023-assembled",
+          "result": "catalog_records_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "catalog",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D06",
+      "name": "SEVIR",
+      "hazards_reported": "强对流；降水；雷电；部分龙卷风/冰雹关联",
+      "registered_urls": [
+        "https://registry.opendata.aws/sevir/",
+        "s3://sevir/",
+        "https://github.com/MIT-AI-Accelerator/eie-sevir"
+      ],
+      "reported_supply": {
+        "value": "超过10,000组序列；完整下载约TB级",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "inherited",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "复核 3 条 VIL 序列，每条 49 帧；不能据此声称已验证闪电/光学多模态；补地面报告桥接。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "sevir",
+          "result": "inherited_samples_rechecked"
+        }
+      ],
+      "axes": {
+        "access": "inherited_local_sample",
+        "content": "inherited",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D07",
+      "name": "TorNet",
+      "hazards_reported": "龙卷风；强对流",
+      "registered_urls": [
+        "https://github.com/mit-ll/tornet",
+        "https://zenodo.org/records/12636522",
+        "https://zenodo.org/records/12637032",
+        "https://zenodo.org/records/12655151",
+        "https://zenodo.org/records/12655179",
+        "https://zenodo.org/records/12655183",
+        "https://zenodo.org/records/12655187",
+        "https://zenodo.org/records/12655716",
+        "https://zenodo.org/records/12655717",
+        "https://zenodo.org/records/12655718",
+        "https://zenodo.org/records/12655719",
+        "https://zenodo.org/records/12636522/files/catalog.csv?download=1",
+        "https://zenodo.org/records/12636522/files/tornet_2013.tar.gz?download=1"
+      ],
+      "reported_supply": {
+        "value": "约20万样本；v1论文203,133；6.8%龙卷风正样本",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "3 个 TorNet train NetCDF 均为 NUL 负例；核对 v1.1 修订并获取正例和匹配困难负例。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-tornet",
+        "multihazard_source_validation_20260911:tornet-bucket",
+        "multihazard_source_validation_20260911:tornet-registry",
+        "multihazard_source_validation_20260911:tornet-LICENSE",
+        "multihazard_source_validation_20260911:tornet-README_md",
+        "multihazard_source_validation_20260911:tornet-tornet_data_loader_py",
+        "multihazard_source_validation_20260911:tornet-tornet_data_tfds_tornet_checksums_tsv",
+        "multihazard_source_validation_20260911:tornet-zenodo",
+        "multihazard_source_validation_20260911:tornet-catalog-prefix",
+        "multihazard_source_validation_20260911:tornet-three-prefix"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/mit-ll/tornet/git/trees/HEAD?recursive=1",
+        "https://tornet.s3.amazonaws.com/?list-type=2&max-keys=10",
+        "https://raw.githubusercontent.com/awslabs/open-data-registry/main/datasets/tornet.yaml",
+        "https://raw.githubusercontent.com/mit-ll/tornet/HEAD/LICENSE",
+        "https://raw.githubusercontent.com/mit-ll/tornet/HEAD/README.md",
+        "https://raw.githubusercontent.com/mit-ll/tornet/HEAD/tornet/data/loader.py",
+        "https://raw.githubusercontent.com/mit-ll/tornet/HEAD/tornet/data/tfds/tornet/checksums.tsv",
+        "https://zenodo.org/api/records/12636522",
+        "https://zenodo.org/api/records/12636522/files/catalog.csv/content",
+        "https://zenodo.org/api/records/12636522/files/tornet_2013.tar.gz/content"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "tornet-three-prefix-members",
+          "result": "radar_samples_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D08",
+      "name": "NOAA NEXRAD",
+      "hazards_reported": "强对流；降水；龙卷风相关",
+      "registered_urls": [
+        "https://registry.opendata.aws/noaa-nexrad/",
+        "s3://unidata-nexrad-level2/",
+        "s3://unidata-nexrad-level3/"
+      ],
+      "reported_supply": {
+        "value": "连续大规模档案；按站点、扫描、时段筛选",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "NEXRAD 原始体扫尚无本轮解码样本；优先按 TorNet/SEVIR 具体雷达时刻补取。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D09",
+      "name": "NOAA MRMS",
+      "hazards_reported": "暴雨；强对流；冰雹相关",
+      "registered_urls": [
+        "s3://noaa-mrms-pds/",
+        "https://registry.opendata.aws/noaa-mrms-pds/"
+      ],
+      "reported_supply": {
+        "value": "连续产品；按变量和时段统计",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "metadata",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "MRMS 桶目录可列，尚无实际 MESH/降水文件；不能将 MESH 估计直接等同地面冰雹报告。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D09-list"
+      ],
+      "observed_urls": [
+        "https://noaa-mrms-pds.s3.amazonaws.com/?list-type=2&delimiter=/&max-keys=20"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "metadata",
+        "provenance": "not_locally_established",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D10",
+      "name": "GOES-R ABI / GLM archives",
+      "hazards_reported": "气旋；强对流；雷电；烟尘",
+      "registered_urls": [
+        "https://registry.opendata.aws/noaa-goes/",
+        "s3://noaa-goes16/",
+        "s3://noaa-goes17/",
+        "s3://noaa-goes18/",
+        "s3://noaa-goes19/"
+      ],
+      "reported_supply": {
+        "value": "高频连续影像和闪电产品；无统一事件数",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "3 个 GLM 20 秒文件及父子 ID 已校验；须构建空间密度基线并补极端窗口；ABI 尚未取样。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D10-glm-list",
+        "v6_0911_dataset_selection:D10-glm-0",
+        "v6_0911_dataset_selection:D10-glm-1",
+        "v6_0911_dataset_selection:D10-glm-2"
+      ],
+      "observed_urls": [
+        "https://noaa-goes16.s3.amazonaws.com/?list-type=2&prefix=GLM-L2-LCFA/2024/001/00/&max-keys=3",
+        "https://noaa-goes16.s3.amazonaws.com/GLM-L2-LCFA/2024/001/00/OR_GLM-L2-LCFA_G16_s20240010000000_e20240010000200_c20240010000213.nc",
+        "https://noaa-goes16.s3.amazonaws.com/GLM-L2-LCFA/2024/001/00/OR_GLM-L2-LCFA_G16_s20240010000200_e20240010000400_c20240010000414.nc",
+        "https://noaa-goes16.s3.amazonaws.com/GLM-L2-LCFA/2024/001/00/OR_GLM-L2-LCFA_G16_s20240010000400_e20240010001000_c20240010001014.nc"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "glm-three-products",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D11",
+      "name": "Global Flood Database v1",
+      "hazards_reported": "洪水",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/GLOBAL_FLOOD_DB_MODIS_EVENTS_V1"
+      ],
+      "reported_supply": {
+        "value": "913场",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "GFD 入口明确但没有实际事件栅格；GEE 项目访问与公开替代产品分开记录。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:gfd-data-list"
+      ],
+      "observed_urls": [
+        "https://storage.googleapis.com/storage/v1/b/global-flood-database/o?maxResults=10"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "requests_failed_or_incomplete",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D12",
+      "name": "GEOID-Flood",
+      "hazards_reported": "洪水",
+      "registered_urls": [
+        "https://github.com/links-ads/geoid-flood",
+        "https://huggingface.co/datasets/links-ads/geoid-flood/tree/main",
+        "https://huggingface.co/datasets/links-ads/geoid-flood/tree/main/sample",
+        "https://huggingface.co/datasets/links-ads/geoid-flood/resolve/main/shard_index.json.gz",
+        "https://huggingface.co/datasets/links-ads/geoid-flood/resolve/main/SHA256SUMS"
+      ],
+      "reported_supply": {
+        "value": "219事件；65国；超过14,000切片",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "paired",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "3 组前后 SAR/标签/有效性完整匹配同一发布清单，但洪水正像素均为 0；同一 EMSR712/AOI10 且原 split 为 test，仅作已观察审计材料。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:geoid-post-0",
+        "multihazard_source_validation_20260911:geoid-post-1",
+        "multihazard_source_validation_20260911:geoid-post-2",
+        "multihazard_source_validation_20260911:geoid-label-0",
+        "multihazard_source_validation_20260911:geoid-label-1",
+        "multihazard_source_validation_20260911:geoid-label-2",
+        "multihazard_source_validation_20260911:geoid-pre-0",
+        "multihazard_source_validation_20260911:geoid-pre-1",
+        "multihazard_source_validation_20260911:geoid-pre-2",
+        "multihazard_source_validation_20260911:geoid-validity-0",
+        "multihazard_source_validation_20260911:geoid-validity-1",
+        "multihazard_source_validation_20260911:geoid-validity-2",
+        "v6_0911_dataset_selection:D12-hf-mirror",
+        "v6_0911_dataset_selection:D12-hf-official",
+        "v6_0911_dataset_selection:D12-geoid-label-0-retry",
+        "v6_0911_dataset_selection:D12-geoid-label-1-retry",
+        "v6_0911_dataset_selection:D12-geoid-label-2-retry",
+        "v6_0911_dataset_selection:D12-geoid-pre-0-retry",
+        "v6_0911_dataset_selection:D12-geoid-validity-0-retry"
+      ],
+      "observed_urls": [
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/s1grd/EMSR712-10-0_s1grd_post_20240103T053406.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/s1grd/EMSR712-10-1_s1grd_post_20240103T053406.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/s1grd/EMSR712-10-2_s1grd_post_20240103T053406.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/label/EMSR712-10-0_label.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/label/EMSR712-10-1_label.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/label/EMSR712-10-2_label.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/s1grd/EMSR712-10-0_s1grd_pre_20230908T170841.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/s1grd/EMSR712-10-1_s1grd_pre_20230908T170841.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/s1grd/EMSR712-10-2_s1grd_pre_20230908T170841.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/validity/EMSR712-10-0_validity.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/validity/EMSR712-10-1_validity.tif",
+        "https://hf-mirror.com/datasets/links-ads/geoid-flood/resolve/868407460bf3db492f50730a57585916baa71dc6/sample/geoid-flood/EMSR712-10/validity/EMSR712-10-2_validity.tif",
+        "https://hf-mirror.com/api/datasets/links-ads/geoid-flood",
+        "https://huggingface.co/api/datasets/links-ads/geoid-flood"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-post-0",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-post-1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-post-2",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-pre-1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-validity-1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-pre-2",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-validity-2",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "geoid-paired-check",
+          "result": "paired_rasters_checked"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "geoid-complete-pairs-and-cems",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "paired",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "provider_license_captured",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "CC-BY-4.0 in pinned dataset README; inherited manual labels; upstream/product conditions still checked per asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D13",
+      "name": "KuroSiwo",
+      "hazards_reported": "洪水",
+      "registered_urls": [
+        "https://github.com/Orion-AI-Lab/KuroSiwo",
+        "https://huggingface.co/datasets/orion-ai-lab/Kuro-Siwo-GeoTIFFs",
+        "https://huggingface.co/datasets/orion-ai-lab/Kuro-Siwo-Webdataset",
+        "https://github.com/Orion-AI-Lab/KuroSiwo-annotations"
+      ],
+      "reported_supply": {
+        "value": "43场；覆盖约338,000平方公里陆地",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "KuroSiwo 的 HF 连接失败；下一轮锁定版本后仅取 train 正负样例，不承诺整个数据不可用。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D13-hf-mirror",
+        "v6_0911_dataset_selection:D13-hf-official"
+      ],
+      "observed_urls": [
+        "https://hf-mirror.com/api/datasets/orion-ai-lab/Kuro-Siwo-GeoTIFFs",
+        "https://huggingface.co/api/datasets/orion-ai-lab/Kuro-Siwo-GeoTIFFs"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "requests_failed_or_incomplete",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D14",
+      "name": "UrbanSARFloods",
+      "hazards_reported": "城市洪水；开放区域洪水",
+      "registered_urls": [
+        "https://github.com/jie666-6/UrbanSARFloods",
+        "https://huggingface.co/datasets/S1Floodbenchmark/UrbanSARFloods_v1/tree/main",
+        "https://huggingface.co/datasets/S1Floodbenchmark/UrbanSARFloods_v1/resolve/main/urban_sar_floods.tar.gz",
+        "https://huggingface.co/datasets/S1Floodbenchmark/UrbanSARFloods_v1/tree/main/Sentinel-1_SLC_data"
+      ],
+      "reported_supply": {
+        "value": "18场；8,879切片",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "UrbanSARFloods 的 HF 连接失败；保留城市内涝候选，必须验证城市标签/事件身份。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D14-hf-mirror",
+        "v6_0911_dataset_selection:D14-hf-official"
+      ],
+      "observed_urls": [
+        "https://hf-mirror.com/api/datasets/S1Floodbenchmark/UrbanSARFloods_v1",
+        "https://huggingface.co/api/datasets/S1Floodbenchmark/UrbanSARFloods_v1"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "requests_failed_or_incomplete",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D15",
+      "name": "Sen1Floods11 v1.1",
+      "hazards_reported": "洪水",
+      "registered_urls": [
+        "gs://sen1floods11/",
+        "https://github.com/cloudtostreet/Sen1Floods11",
+        "https://github.com/cloudtostreet/Sen1Floods11/tree/master/sample",
+        "https://raw.githubusercontent.com/cloudtostreet/Sen1Floods11/master/Sen1Floods11_Metadata.geojson"
+      ],
+      "reported_supply": {
+        "value": "完整发布约14GB；事件/切片数需以manifest重算",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "inherited",
+      "capability_candidates": [
+        "C0",
+        "C1"
+      ],
+      "decision_cn": "已复核 3 个 Sen1Floods11 图像标签对、2 个事件地区；许可字段存在歧义，先澄清数据再分发条款。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "sen1floods11",
+          "result": "inherited_samples_rechecked"
+        }
+      ],
+      "axes": {
+        "access": "inherited_local_sample",
+        "content": "inherited",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "unresolved",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Repository/STAC dataset license ambiguity; do not equate code license with data license",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D16",
+      "name": "SpaceNet 8",
+      "hazards_reported": "洪水；气旋次生淹水",
+      "registered_urls": [
+        "https://spacenet.ai/sn8-challenge/",
+        "s3://spacenet-dataset/spacenet/SN8_floods/",
+        "s3://spacenet-dataset/spacenet/SN8_floods/tarballs/Germany_Training_Public.tar.gz",
+        "s3://spacenet-dataset/spacenet/SN8_floods/tarballs/Louisiana-East_Training_Public.tar.gz",
+        "s3://spacenet-dataset/spacenet/SN8_floods/tarballs/Louisiana-West_Test_Public.tar.gz"
+      ],
+      "reported_supply": {
+        "value": "德国、Louisiana East、Louisiana West三个AOI",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "SpaceNet8 读取文档可得；本轮未获取成对影像/道路标签，需保留原 split 并分开洪水与道路状态语义。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D16-spacenet8"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/SpaceNetChallenge/SpaceNet8/contents/README.md"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D17",
+      "name": "FloodNet",
+      "hazards_reported": "洪水；气旋次生灾害",
+      "registered_urls": [
+        "https://www.dropbox.com/scl/fo/k33qdif15ns2qv2jdxvhx/ANGaa8iPRhvlrvcKXjnmNRc?rlkey=ao2493wzl1cltonowjdbrnp7f&e=2&dl=0",
+        "https://github.com/BinaLab/FloodNet-Supervised_v1.0"
+      ],
+      "reported_supply": {
+        "value": "2,343张；Harvey灾后",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "FloodNet 文档可得，真实图像/标签未取样；无人机图像多样性不等于多个风暴。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D17-floodnet"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/BinaLab/FloodNet-Supervised_v1.0/contents/README.md"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D18",
+      "name": "CEMS Rapid Mapping",
+      "hazards_reported": "洪水；野火；风暴；其他自然灾害",
+      "registered_urls": [
+        "https://mapping.emergency.copernicus.eu/about/how-to-harvest-cems-mapping-data/emergency-response-data/",
+        "https://rapidmapping.emergency.copernicus.eu/backend/dashboard-api/public-activations-info/",
+        "https://rapidmapping.emergency.copernicus.eu/backend/dashboard-api/public-activations/?code=EMSR842",
+        "https://rapidmapping.emergency.copernicus.eu/backend/EMSR842/AOI01/GRA_PRODUCT/EMSR842_AOI01_GRA_PRODUCT_v1.zip"
+      ],
+      "reported_supply": {
+        "value": "滚动激活与产品目录；需按灾种、区域去重",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "catalog",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "CEMS EMSR712/AOI10 产品与影像时刻已列举；部分版本状态 N、无产品，不能当成成功下载或同目标修订。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D18-EMSR712",
+        "v6_0911_dataset_selection:D18-activations"
+      ],
+      "observed_urls": [
+        "https://rapidmapping.emergency.copernicus.eu/backend/dashboard-api/public-activations/?code=EMSR712",
+        "https://rapidmapping.emergency.copernicus.eu/backend/dashboard-api/public-activations-info/?limit=3"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "geoid-complete-pairs-and-cems",
+          "result": "activation_AOI_metadata_bridge"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "catalog",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D19",
+      "name": "WildfireSpreadTS",
+      "hazards_reported": "野火",
+      "registered_urls": [
+        "https://zenodo.org/records/8006177",
+        "https://zenodo.org/records/8006177/files/WildfireSpreadTS.zip?download=1",
+        "https://github.com/SebastianGer/WildfireSpreadTS"
+      ],
+      "reported_supply": {
+        "value": "607场；13,607日图像；压缩包48.4GB",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "3 天同一火场 TIFF；按作者读取器复算活动火像素 4/0/0；需新增独立火场、正例与火灭/缺测区别。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:wildfirespreadts-readme",
+        "multihazard_source_validation_20260911:wildfire-author-readme",
+        "multihazard_source_validation_20260911:wildfire-author-tree",
+        "v6_0911_dataset_selection:D19-reader",
+        "v6_0911_dataset_selection:D19-utils",
+        "v6_0911_dataset_selection:D19-reader-blob",
+        "v6_0911_dataset_selection:D19-utils-blob"
+      ],
+      "observed_urls": [
+        "https://raw.githubusercontent.com/FrontierDevelopmentLab/Firecast/main/README.md",
+        "https://raw.githubusercontent.com/SebastianGer/WildfireSpreadTS/main/README.md",
+        "https://api.github.com/repos/SebastianGer/WildfireSpreadTS/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/SebastianGer/WildfireSpreadTS/main/src/dataloader/FireSpreadDataset.py",
+        "https://raw.githubusercontent.com/SebastianGer/WildfireSpreadTS/main/src/dataloader/utils.py",
+        "https://api.github.com/repos/SebastianGer/WildfireSpreadTS/git/blobs/a7422287ea43725a6deaa27e2af548626ea15629",
+        "https://api.github.com/repos/SebastianGer/WildfireSpreadTS/git/blobs/88ebe4f9761ce64b865b469fb9798e4561eed0c1"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "wildfire-three-days",
+          "result": "arrays_decoded_label_semantics_pending"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "wildfire-label-semantics",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "data_terms_pending",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Author reader verified; data publication terms still to be pinned",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D20",
+      "name": "Next Day Wildfire Spread",
+      "hazards_reported": "野火",
+      "registered_urls": [
+        "https://www.kaggle.com/datasets/fantineh/next-day-wildfire-spread",
+        "https://github.com/google-research/google-research/tree/master/simulation_research/next_day_wildfire_spread"
+      ],
+      "reported_supply": {
+        "value": "18,545个t→t+1日样本",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "partial",
+      "capability_candidates": [],
+      "decision_cn": "Next Day Wildfire ZIP 前缀已取得，TFRecord 尚未解码；需字段、CRC 和标签时距核验。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:nextdayfire-readme",
+        "multihazard_source_validation_20260911:kaggle-nextday-list",
+        "multihazard_source_validation_20260911:nextday-sample-0",
+        "v6_0911_dataset_selection:D20-parser"
+      ],
+      "observed_urls": [
+        "https://raw.githubusercontent.com/google-research/google-research/master/simulation_research/next_day_wildfire_spread/README.md",
+        "https://www.kaggle.com/api/v1/datasets/list/fantineh/next-day-wildfire-spread",
+        "https://www.kaggle.com/api/v1/datasets/download/fantineh/next-day-wildfire-spread/next_day_wildfire_spread_train_00.tfrecord",
+        "https://raw.githubusercontent.com/google-research/google-research/master/simulation_research/next_day_wildfire_spread/dataset_demo.ipynb"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "partial",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D21",
+      "name": "TS-SatFire",
+      "hazards_reported": "野火",
+      "registered_urls": [
+        "https://www.kaggle.com/datasets/z789456sx/ts-satfire",
+        "https://github.com/zhaoyutim/TS-SatFire"
+      ],
+      "reported_supply": {
+        "value": "3,552景地表反射率影像；约71GB",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "TS-SatFire 3 天同一火场 19 波段栅格可解码；最终标签通道和未来标签切片仍需读取器验证。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-ts_satfire",
+        "multihazard_source_validation_20260911:ts_satfire-README_md",
+        "multihazard_source_validation_20260911:ts_satfire-roi_fire_all_csv",
+        "multihazard_source_validation_20260911:kaggle-ts-satfire-list",
+        "multihazard_source_validation_20260911:ts-satfire-sample-0",
+        "multihazard_source_validation_20260911:ts-satfire-sample-1",
+        "multihazard_source_validation_20260911:ts-satfire-sample-2",
+        "v6_0911_dataset_selection:D21-data_generator_pred_torch-py",
+        "v6_0911_dataset_selection:D21-dataset_gen_pred-py"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/zhaoyutim/TS-SatFire/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/zhaoyutim/TS-SatFire/HEAD/README.md",
+        "https://raw.githubusercontent.com/zhaoyutim/TS-SatFire/HEAD/roi/fire_all.csv",
+        "https://www.kaggle.com/api/v1/datasets/list/z789456sx/ts-satfire",
+        "https://www.kaggle.com/api/v1/datasets/download/z789456sx/ts-satfire/ts-satfire%2F20562846%2FFirePred%2F2017-04-23_FirePred.tif",
+        "https://www.kaggle.com/api/v1/datasets/download/z789456sx/ts-satfire/ts-satfire%2F20562846%2FFirePred%2F2017-04-24_FirePred.tif",
+        "https://www.kaggle.com/api/v1/datasets/download/z789456sx/ts-satfire/ts-satfire%2F20562846%2FFirePred%2F2017-04-25_FirePred.tif",
+        "https://api.github.com/repos/zhaoyutim/TS-SatFire/git/blobs/20a62a25b6e7d9ad908ddc5a1987253d917ec323",
+        "https://api.github.com/repos/zhaoyutim/TS-SatFire/git/blobs/88681eb965fe07dd9e59c5e0e32b21e2462677fd"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ts_satfire-roi_fire_all_csv",
+          "result": "catalog_records_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ts-satfire-sample-0-decoded",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ts-satfire-sample-1-decoded",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ts-satfire-sample-2-decoded",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D22",
+      "name": "Sen2Fire",
+      "hazards_reported": "野火",
+      "registered_urls": [
+        "https://zenodo.org/records/10881058",
+        "https://zenodo.org/records/10881058/files/Sen2Fire.zip?download=1"
+      ],
+      "reported_supply": {
+        "value": "2,466个512×512切片；13波段",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "Sen2Fire 尚未获取实际图像；只在需要独立火场/新地区时补源，不与同源火点重复计数。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D23",
+      "name": "NASA FIRMS",
+      "hazards_reported": "野火；热异常",
+      "registered_urls": [
+        "https://firms.modaps.eosdis.nasa.gov/api/area/",
+        "https://firms.modaps.eosdis.nasa.gov/api/data_availability/"
+      ],
+      "reported_supply": {
+        "value": "随日期/卫星/区域变化；需聚合为事件",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1"
+      ],
+      "decision_cn": "公开 FIRMS VIIRS CSV 可匿名取得；2,606 条为热点，不是 2,606 场野火；归因与事件分组待完成。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:firms-viirs"
+      ],
+      "observed_urls": [
+        "https://firms.modaps.eosdis.nasa.gov/data/active_fire/suomi-npp-viirs-c2/csv/SUOMI_VIIRS_C2_USA_contiguous_and_Hawaii_24h.csv"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "firms-viirs",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D24",
+      "name": "MTBS burned-area boundaries",
+      "hazards_reported": "野火",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/USFS_GTAC_MTBS_burned_area_boundaries_v1",
+        "https://burnseverity.cr.usgs.gov/direct-download"
+      ],
+      "reported_supply": {
+        "value": "1984年以来；数量按冻结边界ID统计",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "MTBS 公开直链尝试失败；不必把 GEE 作为唯一入口，后续检查官方周界产品和许可。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D24-mtbs"
+      ],
+      "observed_urls": [
+        "https://burnseverity.cr.usgs.gov/direct-download"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "requests_failed_or_incomplete",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D25",
+      "name": "ERA5-Land Hourly",
+      "hazards_reported": "热浪；寒潮；干旱；暴雨；积雪；强风等",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_HOURLY",
+        "https://cds.climate.copernicus.eu/"
+      ],
+      "reported_supply": {
+        "value": "1950年以来逐小时；50变量；理论20年175,320时次",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "ERA5-Land 未实际验证；已有 WeatherBench2 ERA5 chunk 不能代替 ERA5-Land 认证与变量验证。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D26",
+      "name": "GHCN-Daily",
+      "hazards_reported": "热浪；寒潮；暴雨；大雪",
+      "registered_urls": [
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/by_year/"
+      ],
+      "reported_supply": {
+        "value": "超过100,000站点；180国家/地区；温度站超过25,000",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C3"
+      ],
+      "decision_cn": "5 个站点窗口 40 站日已解析；Toronto 查询为空；需季节基准、日界、质量标记和缺测规则。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:ghcnd-buffalo_snow",
+        "multihazard_source_validation_20260911:ghcnd-format",
+        "multihazard_source_validation_20260911:ghcnd-heathrow_heat",
+        "multihazard_source_validation_20260911:ghcnd-houston_cold",
+        "multihazard_source_validation_20260911:ghcnd-melbourne",
+        "multihazard_source_validation_20260911:ghcnd-newyork_rain",
+        "multihazard_source_validation_20260911:ghcnd-toronto"
+      ],
+      "observed_urls": [
+        "https://www.ncei.noaa.gov/access/services/data/v1?dataset=daily-summaries&stations=USW00014733&startDate=2022-11-15&endDate=2022-11-22&format=json&units=metric&dataTypes=TMAX%2CTMIN%2CPRCP%2CSNOW%2CSNWD&includeAttributes=true&includeStationName=true&includeStationLocation=true",
+        "https://www.ncei.noaa.gov/pub/data/ghcn/daily/readme.txt",
+        "https://www.ncei.noaa.gov/access/services/data/v1?dataset=daily-summaries&stations=UKM00003772&startDate=2022-07-15&endDate=2022-07-21&format=json&units=metric&dataTypes=TMAX%2CTMIN%2CPRCP%2CSNOW%2CSNWD&includeAttributes=true&includeStationName=true&includeStationLocation=true",
+        "https://www.ncei.noaa.gov/access/services/data/v1?dataset=daily-summaries&stations=USW00012960&startDate=2021-02-10&endDate=2021-02-20&format=json&units=metric&dataTypes=TMAX%2CTMIN%2CPRCP%2CSNOW%2CSNWD&includeAttributes=true&includeStationName=true&includeStationLocation=true",
+        "https://www.ncei.noaa.gov/access/services/data/v1?dataset=daily-summaries&stations=ASN00086038&startDate=2020-01-01&endDate=2020-01-07&format=json&units=metric&dataTypes=TMAX%2CTMIN%2CPRCP%2CSNOW%2CSNWD&includeAttributes=true&includeStationName=true&includeStationLocation=true",
+        "https://www.ncei.noaa.gov/access/services/data/v1?dataset=daily-summaries&stations=USW00094728&startDate=2023-09-25&endDate=2023-10-01&format=json&units=metric&dataTypes=TMAX%2CTMIN%2CPRCP%2CSNOW%2CSNWD&includeAttributes=true&includeStationName=true&includeStationLocation=true",
+        "https://www.ncei.noaa.gov/access/services/data/v1?dataset=daily-summaries&stations=CA006158350&startDate=2022-01-10&endDate=2022-01-16&format=json&units=metric&dataTypes=TMAX%2CTMIN%2CPRCP%2CSNOW%2CSNWD&includeAttributes=true&includeStationName=true&includeStationLocation=true"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-houston_cold",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-buffalo_snow",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-heathrow_heat",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-melbourne",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ghcnd-newyork_rain",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D27",
+      "name": "ISD / Global Hourly",
+      "hazards_reported": "低能见度/浓雾；大风；热冷极端；降水",
+      "registered_urls": [
+        "https://www.ncei.noaa.gov/data/global-hourly/access/",
+        "https://www.ncei.noaa.gov/pub/data/noaa/",
+        "https://www.ncei.noaa.gov/pub/data/noaa/isd-history.txt"
+      ],
+      "reported_supply": {
+        "value": "汇集超过35,000站点",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C3"
+      ],
+      "decision_cn": "北京和沙特两个站年 28,733 报告；实有雾及浮/扬尘码，未发现本批沙尘暴/冻雨码正例。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:isd-40416099999",
+        "multihazard_source_validation_20260911:isd-54511099999",
+        "multihazard_source_validation_20260911:isd-72503014732",
+        "multihazard_source_validation_20260911:isd-format"
+      ],
+      "observed_urls": [
+        "https://www.ncei.noaa.gov/data/global-hourly/access/2023/40416099999.csv",
+        "https://www.ncei.noaa.gov/data/global-hourly/access/2023/54511099999.csv",
+        "https://www.ncei.noaa.gov/data/global-hourly/access/2023/72503014732.csv",
+        "https://www.ncei.noaa.gov/data/global-hourly/doc/isd-format-document.pdf"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "isd-54511099999",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "isd-40416099999",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "isd-phenomenon-samples",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D28",
+      "name": "NOAA GFS0P25",
+      "hazards_reported": "多类天气极端的预测",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/NOAA_GFS0P25"
+      ],
+      "reported_supply": {
+        "value": "滚动预报周期；具体可用初始化与时效由目录统计",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1"
+      ],
+      "decision_cn": "已从公开 S3 读 GFS 3 个变量 GRIB；仅同一次初始化 f000，不是多轮修订或 3 场极端。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:gfs-index",
+        "multihazard_source_validation_20260911:gfs-cape",
+        "multihazard_source_validation_20260911:gfs-tmp",
+        "multihazard_source_validation_20260911:gfs-ugrd"
+      ],
+      "observed_urls": [
+        "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20260909/00/atmos/gfs.t00z.pgrb2.0p25.f000.idx",
+        "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20260909/00/atmos/gfs.t00z.pgrb2.0p25.f000"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "gfs-tmp",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "gfs-ugrd",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "gfs-cape",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D29",
+      "name": "GPM IMERG V07",
+      "hazards_reported": "暴雨；洪水；气旋降水",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/NASA_GPM_L3_IMERG_V07"
+      ],
+      "reported_supply": {
+        "value": "2000年以来半小时；理论20年350,640时次",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "IMERG V07 尚无实测切片；CHIRPS DAILY_SAT 对 IMERG 的依赖不代表独立 IMERG 取样成功。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D30",
+      "name": "CHIRPS v3 DAILY_SAT",
+      "hazards_reported": "干旱；降水极端",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/UCSB-CHC_CHIRPS_V3_DAILY_SAT",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/README-CHIRPSv3.0.txt",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/"
+      ],
+      "reported_supply": {
+        "value": "1981年以来日尺度；理论20年7,305日期",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "CHIRPS v3 DAILY_SAT 完成 2 个日栅格，第三日未完成；补站点、有效值编码与产品版本说明。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:chirps-index",
+        "multihazard_source_validation_20260911:chirps-2024",
+        "multihazard_source_validation_20260911:chirps-2024.01.01",
+        "multihazard_source_validation_20260911:chirps-2024.01.02",
+        "multihazard_source_validation_20260911:chirps-2024.01.03",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-0",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-1",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-2",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-3",
+        "multihazard_source_validation_20260911:chirps-2024.01.01-rest-4",
+        "multihazard_source_validation_20260911:chirps-2024.01.02-rest-0",
+        "multihazard_source_validation_20260911:chirps-2024.01.02-rest-1",
+        "multihazard_source_validation_20260911:chirps-2024.01.03-rest-0",
+        "multihazard_source_validation_20260911:chirps-2024.01.03-rest-1"
+      ],
+      "observed_urls": [
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/final/sat/",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/final/sat/2024/",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/final/sat/2024/chirps-v3.0.sat.2024.01.01.tif",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/final/sat/2024/chirps-v3.0.sat.2024.01.02.tif",
+        "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/final/sat/2024/chirps-v3.0.sat.2024.01.03.tif"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "chirps-2024.01.01-assembled",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "chirps-2024.01.02-assembled",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D31",
+      "name": "US Drought Monitor",
+      "hazards_reported": "干旱",
+      "registered_urls": [
+        "https://droughtmonitor.unl.edu/DmData/DataDownload/WebServiceInfo.aspx",
+        "https://usdmdataservices.unl.edu/api/USStatistics/GetDroughtSeverityStatisticsByArea?aoi=us&startdate=1/1/2012&enddate=1/1/2013&statisticsType=1",
+        "https://droughtmonitor.unl.edu/DmData/GISData.aspx",
+        "https://droughtmonitor.unl.edu/Maps/MapArchive.aspx"
+      ],
+      "reported_supply": {
+        "value": "1999年以来每周；约1,400期量级（估算，未枚举）",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "inherited",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "USDM 3 个周次已复核；采用已有专家标注，不新增逐题人工复核；不能把周次算独立干旱过程。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "usdm",
+          "result": "inherited_samples_rechecked"
+        }
+      ],
+      "axes": {
+        "access": "inherited_local_sample",
+        "content": "inherited",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D32",
+      "name": "SMAP Enhanced L3 Soil Moisture",
+      "hazards_reported": "干旱；洪水前湿度；冻融",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/NASA_SMAP_SPL3SMP_E_006"
+      ],
+      "reported_supply": {
+        "value": "006在GEE从2023-12-04开始；更早数据查005",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "SMAP 无实测土壤湿度切片；干旱/闪旱升级时再补，先确认冻土/植被与质量标记。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D33",
+      "name": "MODIS Snow MOD10A1.061",
+      "hazards_reported": "积雪；冬季天气",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD10A1"
+      ],
+      "reported_supply": {
+        "value": "2000年以来日尺度500m",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "MODIS Snow 未实测；雪盖与降雪/暴雪/冻雨分开，当前 SNODAS 可作为积雪补源。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D34",
+      "name": "MODIS LST MOD11A1.061",
+      "hazards_reported": "热浪；地表高温",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD11A1"
+      ],
+      "reported_supply": {
+        "value": "2000年以来日尺度1km",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "MODIS LST 未实测；地表温度不能替代 2 米气温热浪标签。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D35",
+      "name": "MERRA-2 aerosol diagnostics",
+      "hazards_reported": "沙尘；烟尘",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/NASA_GSFC_MERRA_aer_2"
+      ],
+      "reported_supply": {
+        "value": "1980年以来小时数据",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "MERRA-2 气溶胶仅文档与入口；优先补 dust 专属变量并与现象码配对，不能以高 AOD 单独判沙尘暴。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:merra2-collections",
+        "multihazard_source_validation_20260911:merra2-sample-link"
+      ],
+      "observed_urls": [
+        "https://cmr.earthdata.nasa.gov/search/collections.json?short_name=M2T1NXAER&page_size=1",
+        "https://cmr.earthdata.nasa.gov/search/granules.json?short_name=M2T1NXAER&version=5.12.4&page_size=1"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D36",
+      "name": "Sentinel-5P OFFL Aerosol Index",
+      "hazards_reported": "沙尘；烟羽",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S5P_OFFL_L3_AER_AI"
+      ],
+      "reported_supply": {
+        "value": "2018年以来卫星产品；数量随AOI筛选",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "S5P Aerosol Index 尚无实际切片；需将沙尘、烟羽、云和缺测区分。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D37",
+      "name": "NOAA CO-OPS water levels",
+      "hazards_reported": "风暴潮；沿海洪水",
+      "registered_urls": [
+        "https://api.tidesandcurrents.noaa.gov/api/prod/",
+        "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20200101&end_date=20200102&station=8518750&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&application=DisasterTrace&format=json"
+      ],
+      "reported_supply": {
+        "value": "可按站点与时段提取6分钟水位等",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C3"
+      ],
+      "decision_cn": "3 个潮位站各 240 对同基准面观测/潮汐预报已匹配；残差含多种作用，不能单独称纯风暴潮。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:coops-8518750-predictions",
+        "multihazard_source_validation_20260911:coops-8518750-water_level",
+        "multihazard_source_validation_20260911:coops-8761724-predictions",
+        "multihazard_source_validation_20260911:coops-8761724-water_level",
+        "multihazard_source_validation_20260911:coops-9414290-predictions",
+        "multihazard_source_validation_20260911:coops-9414290-water_level"
+      ],
+      "observed_urls": [
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240910&end_date=20240910&station=8518750&product=predictions&datum=MLLW&time_zone=gmt&units=metric&format=json&application=DisasterTraceResearch&interval=6",
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240910&end_date=20240910&station=8518750&product=water_level&datum=MLLW&time_zone=gmt&units=metric&format=json&application=DisasterTraceResearch&interval=6",
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240910&end_date=20240910&station=8761724&product=predictions&datum=MLLW&time_zone=gmt&units=metric&format=json&application=DisasterTraceResearch&interval=6",
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240910&end_date=20240910&station=8761724&product=water_level&datum=MLLW&time_zone=gmt&units=metric&format=json&application=DisasterTraceResearch&interval=6",
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240910&end_date=20240910&station=9414290&product=predictions&datum=MLLW&time_zone=gmt&units=metric&format=json&application=DisasterTraceResearch&interval=6",
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240910&end_date=20240910&station=9414290&product=water_level&datum=MLLW&time_zone=gmt&units=metric&format=json&application=DisasterTraceResearch&interval=6"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-8761724-water_level",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-8761724-predictions",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-8518750-water_level",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-8518750-predictions",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-9414290-water_level",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "coops-9414290-predictions",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "coops-time-pairing",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D38",
+      "name": "NOAA OISST v2.1",
+      "hazards_reported": "海洋热浪（气候扩展）",
+      "registered_urls": [
+        "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/"
+      ],
+      "reported_supply": {
+        "value": "1981-09以来逐日0.25°；理论20年7,305日期",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "extension",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "OISST 3 个日 NetCDF 可读；海洋热浪为扩展方向，需长期气候态与持续性定义。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:oisst-20240910",
+        "multihazard_source_validation_20260911:oisst-20240911",
+        "multihazard_source_validation_20260911:oisst-20240912"
+      ],
+      "observed_urls": [
+        "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/202409/oisst-avhrr-v02r01.20240910.nc",
+        "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/202409/oisst-avhrr-v02r01.20240911.nc",
+        "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/202409/oisst-avhrr-v02r01.20240912.nc"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "oisst-20240910",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "oisst-20240911",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "oisst-20240912",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D39",
+      "name": "EM-DAT",
+      "hazards_reported": "多灾种；含非天气灾害",
+      "registered_urls": [
+        "https://public.emdat.be/",
+        "https://doc.emdat.be/"
+      ],
+      "reported_supply": {
+        "value": "超过27,000条",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "defer",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "EM-DAT 注册和许可入口；不绕过访问条件；ExEBench 的案例 ID 也需检查派生使用条款。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "registration_and_terms_required",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "No authenticated dataset access attempted",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D40",
+      "name": "NASA EONET v3",
+      "hazards_reported": "火灾；风暴；洪水；干旱等及非天气灾害",
+      "registered_urls": [
+        "https://eonet.gsfc.nasa.gov/api/v3/events",
+        "https://eonet.gsfc.nasa.gov/api/v3/categories",
+        "https://eonet.gsfc.nasa.gov/docs/v3"
+      ],
+      "reported_supply": {
+        "value": "滚动；按类别与日期查询",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "EONET 为事件检索备选，尚未有本轮解码事件；不能将事件目录当像素 Gold。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D41",
+      "name": "GDACS",
+      "hazards_reported": "多自然灾害",
+      "registered_urls": [
+        "https://www.gdacs.org/xml/rss.xml",
+        "https://www.gdacs.org/About/overview.aspx"
+      ],
+      "reported_supply": {
+        "value": "滚动；数量需定期快照统计",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "GDACS 仅候选入口，当前未验证实际 feed；如已有 CEMS GDACS ID 再定向桥接。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D42",
+      "name": "Sentinel-1 GRD",
+      "hazards_reported": "洪水；野火后变化；滑坡等",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD"
+      ],
+      "reported_supply": {
+        "value": "2014年以来；目标AOI数量动态",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "inherited_component",
+      "capability_candidates": [
+        "C1"
+      ],
+      "decision_cn": "S1 派生资产已在洪水数据中验证；独立原始 GRD/GEE 访问未验证，不重复算独立来源增量。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "geoid-complete-pairs-and-cems",
+          "result": "derived_S1_component_only_raw_GRD_access_not_validated"
+        }
+      ],
+      "axes": {
+        "access": "derived_component_only_raw_access_not_tested",
+        "content": "inherited_component",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D43",
+      "name": "Sentinel-2 SR Harmonized",
+      "hazards_reported": "洪水；野火；旱情；积雪；灾后变化",
+      "registered_urls": [
+        "https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED"
+      ],
+      "reported_supply": {
+        "value": "GEE SR自2017年以来；目标AOI可用图像数需查",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "S2 原始 SR 访问尚未验证；现有 SAR/背景切片不代表其可用，按事件补光学和云质量层。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D44",
+      "name": "xBD",
+      "hazards_reported": "洪水；气旋；野火；含地震等",
+      "registered_urls": [
+        "https://xview2.org/dataset",
+        "https://github.com/DIUx-xView/xView2_baseline"
+      ],
+      "reported_supply": {
+        "value": "850,736建筑标注；45,362平方公里影像",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "defer",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "xBD 有注册/许可门槛；建筑损伤属于下游影响，且需排除地震等非天气灾种。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:xbd-page"
+      ],
+      "observed_urls": [
+        "https://xview2.org/dataset"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "registration_and_terms_required",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "xBD terms and release conditions pending",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D45",
+      "name": "CrisisMMD v2.0",
+      "hazards_reported": "气旋；洪水；野火；含地震",
+      "registered_urls": [
+        "https://crisisnlp.qcri.org/crisismmd",
+        "https://crisisnlp.qcri.org/data/crisismmd/CrisisMMD_v2.0.tar.gz",
+        "https://crisisnlp.qcri.org/crisismmd"
+      ],
+      "reported_supply": {
+        "value": "7场灾害；16,058文本；18,082图像；约1.8GB",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "defer",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "CrisisMMD 仅入口候选；社交图像版权和文本真实性尚未落实，不作为因果真值。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:crisismmd-page",
+        "multihazard_source_validation_20260911:crisismmd-split"
+      ],
+      "observed_urls": [
+        "https://crisisnlp.qcri.org/crisismmd",
+        "https://crisisnlp.qcri.org/data/crisismmd/crisismmd_datasplit_all.zip"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D46",
+      "name": "Landslide4Sense",
+      "hazards_reported": "降雨诱发滑坡（扩展）；含地震诱发滑坡",
+      "registered_urls": [
+        "https://github.com/iarai/Landslide4Sense-2022",
+        "https://cloud.iarai.ac.at/index.php/s/KrwKngeXN7KjkFm",
+        "https://cloud.iarai.ac.at/index.php/s/N6TacGsfr5nRNWr"
+      ],
+      "reported_supply": {
+        "value": "原论文摘要3,799切片；四地区/时段",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "extension",
+      "content_evidence": "paired",
+      "capability_candidates": [
+        "C1"
+      ],
+      "decision_cn": "Landslide4Sense 已验证 3 个 train 图像掩膜对；HDF5 缺时空/事件属性，降雨诱发成因仍未确认。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:lands4sense-readme"
+      ],
+      "observed_urls": [
+        "https://raw.githubusercontent.com/iarai/Landslide4Sense-2022/main/README.md"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "landslide-three-pairs",
+          "result": "paired_arrays_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "paired",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D47",
+      "name": "ExEBench / EarthExtreme-Bench",
+      "hazards_reported": "热浪；寒潮；气旋；极端降水；雷达风暴；火烧迹地；洪水",
+      "registered_urls": [
+        "https://github.com/zhaoshan2/EarthExtreme-Bench",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/tree/stable/data",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/coldwave.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/heatwave.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/expcp.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/tropicalCyclone.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/storm.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/eo/fire.zip",
+        "https://huggingface.co/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/eo/flood.zip"
+      ],
+      "reported_supply": {
+        "value": "作者论文55热浪序列、9寒潮序列、95气旋、1092降水序列、931雷达风暴序列；需按冻结发布复算。",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "固定 commit 的寒潮 ZIP 完整校验：9 案例、559 时间步、8 国家/地区；其他六个子包未下载，ERA5/EM-DAT 来源与极端定义待核。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-earthextreme",
+        "multihazard_source_validation_20260911:earthextreme-README_md",
+        "multihazard_source_validation_20260911:earthextreme-config_dataset_toml",
+        "multihazard_source_validation_20260911:earthextreme-schema_data_loader_py",
+        "multihazard_source_validation_20260911:earthextreme-README_md-retry02",
+        "multihazard_source_validation_20260911:earthextreme-config",
+        "multihazard_source_validation_20260911:earthextreme-hf",
+        "v6_0911_dataset_selection:D47-hf-mirror",
+        "v6_0911_dataset_selection:D47-hf-official",
+        "v6_0911_dataset_selection:D47-author-tree",
+        "v6_0911_dataset_selection:D47-resolve-probe",
+        "v6_0911_dataset_selection:D47-coldwave-pinned",
+        "v6_0911_dataset_selection:D47-config-blob",
+        "v6_0911_dataset_selection:D47-temp-reader-blob"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/zhaoshan2/EarthExtreme-Bench/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/zhaoshan2/EarthExtreme-Bench/HEAD/README.md",
+        "https://raw.githubusercontent.com/zhaoshan2/EarthExtreme-Bench/HEAD/config/dataset.toml",
+        "https://raw.githubusercontent.com/zhaoshan2/EarthExtreme-Bench/HEAD/schema/data_loader.py",
+        "https://raw.githubusercontent.com/zhaoshan2/EarthExtreme-Bench/main/config/dataset.toml",
+        "https://hf-mirror.com/api/datasets/zhaoshan/ee-bench_v1.0/tree/stable/data?recursive=true&limit=100",
+        "https://hf-mirror.com/api/datasets/zhaoshan/ee-bench_v1.0/revision/stable",
+        "https://huggingface.co/api/datasets/zhaoshan/ee-bench_v1.0/revision/stable",
+        "https://hf-mirror.com/datasets/zhaoshan/ee-bench_v1.0/resolve/stable/data/weather/coldwave.zip",
+        "https://hf-mirror.com/datasets/zhaoshan/ee-bench_v1.0/resolve/b7b58da2f4b76cad7ba21a9dc4976f96482794c7/data/weather/coldwave.zip",
+        "https://api.github.com/repos/zhaoshan2/EarthExtreme-Bench/git/blobs/104dab786642908cae5165708b6f361bea25ee52",
+        "https://api.github.com/repos/zhaoshan2/EarthExtreme-Bench/git/blobs/430b569d330f78f85f8afcdae54ba3c2e0e46846"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "exebench-coldwave",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "upstream_rights_pending",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "HF package downloaded; ERA5 and EM-DAT derivative conditions not yet cleared",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D48",
+      "name": "ExtremeWeatherBench",
+      "hazards_reported": "热浪；寒潮；强对流；气旋；降水等",
+      "registered_urls": [
+        "https://extremeweatherbench.readthedocs.io/en/latest/data/",
+        "https://github.com/brightbandtech/extremeweatherbench",
+        "gs://gcp-public-data-arco-era5/ar/full_37-1h-0p25deg-chunk-1.zarr-v3",
+        "gs://extremeweatherbench/datasets/ghcnh_all_2020_2024.parq",
+        "gs://extremeweatherbench/datasets/combined_canada_australia_us_lsr_01012020_09272025.parq",
+        "gs://extremeweatherbench/datasets/practically_perfect_hindcast_20200104_20250927.zarr"
+      ],
+      "reported_supply": {
+        "value": "不按整库体积估算；按实际Zarr/Parquet读取量登记。",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C3"
+      ],
+      "decision_cn": "EWB 解码 329 案例定义及 GHCN-hourly 一个 row group 122,880 行；尚未把该观测组匹配到 EWB 极端案例。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-ewb",
+        "multihazard_source_validation_20260911:ewb-LICENSE",
+        "multihazard_source_validation_20260911:ewb-README_md",
+        "multihazard_source_validation_20260911:ewb-docs_data_md",
+        "multihazard_source_validation_20260911:ewb-src_extremeweatherbench_cases_py",
+        "multihazard_source_validation_20260911:ewb-src_extremeweatherbench_data_events_yaml",
+        "multihazard_source_validation_20260911:ewb-LICENSE-retry02",
+        "multihazard_source_validation_20260911:ewb-docs_data_md-retry02",
+        "v6_0911_dataset_selection:D48-ghcnh-footer",
+        "v6_0911_dataset_selection:D48-lsr-footer",
+        "v6_0911_dataset_selection:D48-ghcnh-full-footer",
+        "v6_0911_dataset_selection:D48-ghcnh-rg0"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/brightbandtech/ExtremeWeatherBench/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/brightbandtech/ExtremeWeatherBench/HEAD/LICENSE",
+        "https://raw.githubusercontent.com/brightbandtech/ExtremeWeatherBench/HEAD/README.md",
+        "https://raw.githubusercontent.com/brightbandtech/ExtremeWeatherBench/HEAD/docs/data.md",
+        "https://raw.githubusercontent.com/brightbandtech/ExtremeWeatherBench/HEAD/src/extremeweatherbench/cases.py",
+        "https://raw.githubusercontent.com/brightbandtech/ExtremeWeatherBench/HEAD/src/extremeweatherbench/data/events.yaml",
+        "https://storage.googleapis.com/extremeweatherbench/datasets/ghcnh_all_2020_2024.parq",
+        "https://storage.googleapis.com/extremeweatherbench/datasets/combined_canada_australia_us_lsr_01012020_09272025.parq"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ewb-src_extremeweatherbench_data_events_yaml",
+          "result": "benchmark_case_definitions_decoded"
+        },
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "ewb-hourly-rowgroup",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D49",
+      "name": "WeatherQA",
+      "hazards_reported": "强对流；部分冬季天气",
+      "registered_urls": [
+        "https://github.com/chengqianma/WeatherQA",
+        "https://drive.google.com/file/d/1GpEp6EFrCA6wqU6FEHsaMO7jwTckP_m4/view?usp=sharing",
+        "https://drive.google.com/file/d/1mViaf1f-sWB1DyfCrw-NwmZp4gj96mYr/view?usp=drive_link",
+        "https://drive.google.com/file/d/17Hfv2NOLpy6rJBUrghaZmU_7r6WDCuDs/view?usp=sharing",
+        "https://huggingface.co/datasets/ZhanxiangHua/WeatherQA_SFT",
+        "https://www.spc.noaa.gov/exper/ma_archive/",
+        "https://www.spc.noaa.gov/products/md/"
+      ],
+      "reported_supply": {
+        "value": "作者图像包2014–2019约10GB；2020约1.5GB。",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "bridge",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "WeatherQA 的 Drive 下载失败；SPC 2018/md0398 原文可取回；README 的 20 幅图是变量组，不是 20 个时刻。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D49-hf-mirror",
+        "v6_0911_dataset_selection:D49-hf-official",
+        "v6_0911_dataset_selection:D49-readme",
+        "v6_0911_dataset_selection:D49-repo",
+        "v6_0911_dataset_selection:D49-spc-md0398",
+        "v6_0911_dataset_selection:D49-text-download"
+      ],
+      "observed_urls": [
+        "https://hf-mirror.com/api/datasets/ZhanxiangHua/WeatherQA_SFT",
+        "https://huggingface.co/api/datasets/ZhanxiangHua/WeatherQA_SFT",
+        "https://raw.githubusercontent.com/chengqianma/WeatherQA/HEAD/README.md",
+        "https://api.github.com/repos/chengqianma/WeatherQA/git/trees/HEAD?recursive=1",
+        "https://www.spc.noaa.gov/products/md/2018/md0398.html",
+        "https://drive.google.com/uc?export=download&id=1GpEp6EFrCA6wqU6FEHsaMO7jwTckP_m4"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "weatherqa-spc-product",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "reference",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D50",
+      "name": "CyPortQA",
+      "hazards_reported": "气旋；港口相关影响",
+      "registered_urls": [
+        "https://github.com/ChenchenMobility/MLLM-Bench-CyPortQA",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/contents/source_data",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/contents/dataset"
+      ],
+      "reported_supply": {
+        "value": "117k+QA、2900+气旋–港口场景，非独立气旋计数。",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "multiformat",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C2"
+      ],
+      "decision_cn": "CyPortQA 已取得 Dorian/Harvey/Florence 各 1 图 1 文；精确公告时刻对齐及港口标签规则尚未验证。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D50-readme",
+        "v6_0911_dataset_selection:D50-repo",
+        "v6_0911_dataset_selection:D50-CyPortQA_template-json",
+        "v6_0911_dataset_selection:D50-DORIAN_2019-png",
+        "v6_0911_dataset_selection:D50-DORIAN_2019-txt",
+        "v6_0911_dataset_selection:D50-FLORENCE_2018-png",
+        "v6_0911_dataset_selection:D50-FLORENCE_2018-txt",
+        "v6_0911_dataset_selection:D50-HARVEY_2017-png",
+        "v6_0911_dataset_selection:D50-HARVEY_2017-txt",
+        "v6_0911_dataset_selection:D50-LICENSE",
+        "v6_0911_dataset_selection:D50-README-md",
+        "v6_0911_dataset_selection:D50-DORIAN_2019-txt-blob",
+        "v6_0911_dataset_selection:D50-FLORENCE_2018-txt-blob",
+        "v6_0911_dataset_selection:D50-HARVEY_2017-png-blob",
+        "v6_0911_dataset_selection:D50-HARVEY_2017-txt-blob"
+      ],
+      "observed_urls": [
+        "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/HEAD/README.md",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/git/trees/HEAD?recursive=1",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/git/blobs/816bf6aa672389eaca31758e6d5a2b7eafacf511",
+        "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/dataset/MultiModalInput/Cyclone%20Graphics%20Archive%20Uncertainty%20Cone/DORIAN_2019_12h.png",
+        "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/dataset/MultiModalInput/Cyclone%20Text%20Archive%20Advisory/DORIAN_2019_12h.txt",
+        "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/dataset/MultiModalInput/Cyclone%20Graphics%20Archive%20Uncertainty%20Cone/FLORENCE_2018_12h.png",
+        "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/dataset/MultiModalInput/Cyclone%20Text%20Archive%20Advisory/FLORENCE_2018_12h.txt",
+        "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/dataset/MultiModalInput/Cyclone%20Graphics%20Archive%20Uncertainty%20Cone/HARVEY_2017_12h.png",
+        "https://raw.githubusercontent.com/ChenchenMobility/MLLM-Bench-CyPortQA/1c38abf339d1471d710f6cb719a5e3874b547077/dataset/MultiModalInput/Cyclone%20Text%20Archive%20Advisory/HARVEY_2017_12h.txt",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/git/blobs/5843c8554667ee641bc4e5c4ad49ed2341cc4449",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/git/blobs/dcd566cf6d5c97957b43cca19b52ce9b525bf553",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/git/blobs/82d2189a34b75952cf4f13de7a9364c4a1336bbd",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/git/blobs/96c622ac4707a958c0071697f7fb6a99d0ee2c3f",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/git/blobs/3464aac47b6d7b4ed39d66d653af545729aad7f6",
+        "https://api.github.com/repos/ChenchenMobility/MLLM-Bench-CyPortQA/git/blobs/84b0b2a95c3623a2de5cc59e572843868afb3ae1"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "cyport-three-storm-bundles",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "multiformat",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "repository_license_only",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "GitHub LICENSE captured; individual NHC products and derived QA rights separate",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "candidate_evidence_requires_task_checks",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D51",
+      "name": "WorldFloods v2 / ml4floods",
+      "hazards_reported": "洪水",
+      "registered_urls": [
+        "https://spaceml-org.github.io/ml4floods/content/worldfloods_dataset.html",
+        "https://huggingface.co/datasets/isp-uv-es/WorldFloodsv2",
+        "https://zenodo.org/records/8153514",
+        "https://github.com/spaceml-org/ml4floods"
+      ],
+      "reported_supply": {
+        "value": "作者约509对影像/掩膜；HF文档约76GB，需按版本清点。",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "WorldFloods v2 的 HF 数据连接未完成；保留为全球光学洪水备选，核验每类源产品的许可。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D51-hf-mirror",
+        "v6_0911_dataset_selection:D51-hf-official"
+      ],
+      "observed_urls": [
+        "https://hf-mirror.com/api/datasets/isp-uv-es/WorldFloodsv2",
+        "https://huggingface.co/api/datasets/isp-uv-es/WorldFloodsv2"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "requests_failed_or_incomplete",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D52",
+      "name": "DroughtED",
+      "hazards_reported": "干旱（闪旱需另定义）",
+      "registered_urls": [
+        "https://www.kaggle.com/datasets/cdminix/us-drought-meteorological-data",
+        "https://www.climatechange.ai/papers/icml2021/22"
+      ],
+      "reported_supply": {
+        "value": "记录、县域和滑动时间窗，尚未复算独立事件数。",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "prefix_records",
+      "capability_candidates": [
+        "C0",
+        "C3"
+      ],
+      "decision_cn": "DroughtED train ZIP 前缀解析 26,666 行，含 3,809 非空周标签；实际至 2016 与文档 train 2000-2009 冲突；需固定原文件切分。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D52-kaggle-files",
+        "v6_0911_dataset_selection:D52-readme",
+        "v6_0911_dataset_selection:D52-repo",
+        "v6_0911_dataset_selection:D52-metadata",
+        "v6_0911_dataset_selection:D52-train-prefix",
+        "v6_0911_dataset_selection:D52-train-prefix-encoded"
+      ],
+      "observed_urls": [
+        "https://www.kaggle.com/api/v1/datasets/list/cdminix/us-drought-meteorological-data",
+        "https://raw.githubusercontent.com/cdminix/DroughtED/HEAD/README.md",
+        "https://api.github.com/repos/cdminix/DroughtED/git/trees/HEAD?recursive=1",
+        "https://www.kaggle.com/api/v1/datasets/view/cdminix/us-drought-meteorological-data",
+        "https://www.kaggle.com/api/v1/datasets/download/cdminix/us-drought-meteorological-data/train_timeseries/train_timeseries.csv",
+        "https://www.kaggle.com/api/v1/datasets/download/cdminix/us-drought-meteorological-data/train_timeseries%2Ftrain_timeseries.csv"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/SELECTION_AUDIT.json",
+          "check_id": "droughted-prefix",
+          "result": "verified"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "prefix_records",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "provider_license_captured",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Kaggle metadata CC0; attribution/terms of NASA POWER, USDM and soil inputs retained",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D53",
+      "name": "M4Fog",
+      "hazards_reported": "海雾；海洋低能见度",
+      "registered_urls": [
+        "https://github.com/Clynie/M4Fog",
+        "https://pan.baidu.com/s/1aOw3TqzkS7E0ymLG0k2BhA?pwd=6vm7",
+        "https://pan.baidu.com/s/1FSNdZoZCZ4mdu9_ehMRLIA?pwd=wp9k",
+        "https://pan.baidu.com/s/16RCgHSbdbNDgV8HMwKojPw?pwd=jv7g",
+        "https://pan.baidu.com/s/1q0s9eqAlydmyX6lu0znd3w?pwd=8q75",
+        "https://pan.baidu.com/s/1it_gK_v_RDLXRoxMX-X4Ow?pwd=99ci",
+        "https://pan.baidu.com/s/1_8hTqhCS5ZyrkCqvTrT7KQ?pwd=yfat",
+        "https://pan.baidu.com/s/1QE5QicyA1tFalcguP_fY_Q?pwd=amwc"
+      ],
+      "reported_supply": {
+        "value": "论文68000 data cubes/15海区；实际各公开子集范围独立核验。",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "conditional",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "M4Fog 仓库和网盘页可读，未取到真实 cube；镜像身份/条款和海雾正例均未完成验证。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "v6_0911_dataset_selection:D53-readme",
+        "v6_0911_dataset_selection:D53-repo",
+        "v6_0911_dataset_selection:D53-share"
+      ],
+      "observed_urls": [
+        "https://raw.githubusercontent.com/Clynie/M4Fog/HEAD/README.md",
+        "https://api.github.com/repos/Clynie/M4Fog/git/trees/HEAD?recursive=1",
+        "https://pan.baidu.com/s/1aOw3TqzkS7E0ymLG0k2BhA?pwd=6vm7"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D54",
+      "name": "CLLMate",
+      "hazards_reported": "多类天气与气候事件",
+      "registered_urls": [
+        "https://github.com/hobolee/CLLMate",
+        "https://raw.githubusercontent.com/hobolee/CLLMate/main/data/dataset_cllmate.json",
+        "https://api.github.com/repos/hobolee/CLLMate/contents/data"
+      ],
+      "reported_supply": {
+        "value": "本轮data/dataset_cllmate.json为1,825,400 bytes；新闻原文/完整栅格不等于包含在此文件。",
+        "basis": "reported_in_user_v6_registry_not_locally_counted"
+      },
+      "seed_id_preserved": true,
+      "recommendation": "auxiliary",
+      "content_evidence": "catalog",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "CLLMate 公共 JSON 7,747 节点已解析；包括非天气事件；新闻/原图与因果边未验证，不作因果 Gold。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-cllmate",
+        "multihazard_source_validation_20260911:cllmate-README_md",
+        "multihazard_source_validation_20260911:cllmate-data_dataset_cllmate_json",
+        "multihazard_source_validation_20260911:cllmate-README_md-retry02",
+        "multihazard_source_validation_20260911:cllmate-data_dataset_cllmate_json-retry02"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/hobolee/CLLMate/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/hobolee/CLLMate/HEAD/README.md",
+        "https://raw.githubusercontent.com/hobolee/CLLMate/HEAD/data/dataset_cllmate.json"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "cllmate-data_dataset_cllmate_json-retry02",
+          "result": "benchmark_records_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "catalog",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D55",
+      "name": "SNODAS SWE",
+      "hazards_reported": [
+        "积雪",
+        "大雪相关风险",
+        "融雪"
+      ],
+      "registered_urls": [
+        "https://nsidc.org/data/g02158/versions/1"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "SNODAS 3 日 SWE 网格已解码；积雪不是暴雪/冻雨，32767 编码上限须结合产品说明。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:snodas-winter-index",
+        "multihazard_source_validation_20260911:snodas-20240101",
+        "multihazard_source_validation_20260911:snodas-20240102",
+        "multihazard_source_validation_20260911:snodas-20240103",
+        "multihazard_source_validation_20260911:snodas-20240103-remainder-0",
+        "multihazard_source_validation_20260911:snodas-20240103-remainder-1",
+        "multihazard_source_validation_20260911:snodas-20240103-remainder-2",
+        "multihazard_source_validation_20260911:snodas-doc"
+      ],
+      "observed_urls": [
+        "https://noaadata.apps.nsidc.org/NOAA/G02158/masked/2024/01_Jan/",
+        "https://noaadata.apps.nsidc.org/NOAA/G02158/masked/2024/01_Jan/SNODAS_20240101.tar",
+        "https://noaadata.apps.nsidc.org/NOAA/G02158/masked/2024/01_Jan/SNODAS_20240102.tar",
+        "https://noaadata.apps.nsidc.org/NOAA/G02158/masked/2024/01_Jan/SNODAS_20240103.tar",
+        "https://nsidc.org/sites/default/files/g02158-v001-userguide_1.pdf"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "snodas-20240101",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "snodas-20240102",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "snodas-20240103-assembled",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D56",
+      "name": "USGS Water Data",
+      "hazards_reported": [
+        "洪水",
+        "水文干旱"
+      ],
+      "registered_urls": [
+        "https://api.waterdata.usgs.gov/",
+        "https://api.waterdata.usgs.gov/docs/nims/"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C3"
+      ],
+      "decision_cn": "USGS 3 站各 3 条流量记录，9 条真实记录；返回日期不连续且不代表最新；需按洪水窗口重取。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:usgs-01646500",
+        "multihazard_source_validation_20260911:usgs-02323500",
+        "multihazard_source_validation_20260911:usgs-07374000"
+      ],
+      "observed_urls": [
+        "https://api.waterdata.usgs.gov/ogcapi/v0/collections/daily/items?f=json&limit=3&monitoring_location_id=USGS-01646500&parameter_code=00060",
+        "https://api.waterdata.usgs.gov/ogcapi/v0/collections/daily/items?f=json&limit=3&monitoring_location_id=USGS-02323500&parameter_code=00060",
+        "https://api.waterdata.usgs.gov/ogcapi/v0/collections/daily/items?f=json&limit=3&monitoring_location_id=USGS-07374000&parameter_code=00060"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "usgs-07374000",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "usgs-01646500",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "usgs-02323500",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D57",
+      "name": "NWPS Stageflow",
+      "hazards_reported": [],
+      "registered_urls": [],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "bridge",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C3"
+      ],
+      "decision_cn": "NWPS 3 站阶段水位可解析，流量字段 -999；BTRL1 未提供 usgsId，不能自动接到附近 USGS 站。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:nwps-BRDO2",
+        "multihazard_source_validation_20260911:nwps-BTRL1",
+        "multihazard_source_validation_20260911:nwps-CINI2",
+        "multihazard_source_validation_20260911:nwps-documentation",
+        "multihazard_source_validation_20260911:nwps-gauges",
+        "multihazard_source_validation_20260911:nwps-gauge-detail",
+        "multihazard_source_validation_20260911:nwps-DONL1",
+        "multihazard_source_validation_20260911:nwps-STFL1"
+      ],
+      "observed_urls": [
+        "https://api.water.noaa.gov/nwps/v1/gauges/BRDO2/stageflow",
+        "https://api.water.noaa.gov/nwps/v1/gauges/BTRL1/stageflow",
+        "https://api.water.noaa.gov/nwps/v1/gauges/CINI2/stageflow",
+        "https://api.water.noaa.gov/nwps/v1/docs/",
+        "https://api.water.noaa.gov/nwps/v1/gauges",
+        "https://api.water.noaa.gov/nwps/v1/gauges/BTRL1",
+        "https://api.water.noaa.gov/nwps/v1/gauges/DONL1/stageflow",
+        "https://api.water.noaa.gov/nwps/v1/gauges/STFL1/stageflow"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "nwps-BTRL1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "nwps-STFL1",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "nwps-DONL1",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D58",
+      "name": "NDBC Buoys",
+      "hazards_reported": [],
+      "registered_urls": [],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "bridge",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C3"
+      ],
+      "decision_cn": "NDBC 3 个浮标波高可解析；多条报告仍需按风暴/站点配对，波高不等于风暴潮。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:ndbc-41009",
+        "multihazard_source_validation_20260911:ndbc-44025",
+        "multihazard_source_validation_20260911:ndbc-46042"
+      ],
+      "observed_urls": [
+        "https://www.ndbc.noaa.gov/data/realtime2/41009.txt",
+        "https://www.ndbc.noaa.gov/data/realtime2/44025.txt",
+        "https://www.ndbc.noaa.gov/data/realtime2/46042.txt"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ndbc-41009",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ndbc-46042",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "ndbc-44025",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D59",
+      "name": "MeteoNet",
+      "hazards_reported": [
+        "降雨",
+        "强对流",
+        "区域天气极端"
+      ],
+      "registered_urls": [
+        "https://meteofrance.github.io/meteonet/english/data/summary/",
+        "https://meteonet.umr-cnrm.fr/",
+        "https://github.com/meteofrance/meteonet"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "MeteoNet 111,623 站报/484 站及 IR108 数组可读；雷达 NPZ object 时间不启用 pickle，时间桥接未完成。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-meteonet",
+        "multihazard_source_validation_20260911:meteonet-README_md",
+        "multihazard_source_validation_20260911:meteonet-data_samples_ground_stations_SE_20160101_csv",
+        "multihazard_source_validation_20260911:meteonet-data_samples_radar_rainfall_SE_2016_08_3_npz",
+        "multihazard_source_validation_20260911:meteonet-data_samples_satellite_IR108_SE_2016_nc",
+        "multihazard_source_validation_20260911:meteonet-docs_src_english_data_ground-observations_md",
+        "multihazard_source_validation_20260911:meteonet-docs_src_english_data_rain-radar_md",
+        "multihazard_source_validation_20260911:meteonet-README_md-retry02",
+        "multihazard_source_validation_20260911:meteonet-data_samples_ground_stations_SE_20160101_csv-retry02"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/meteofrance/meteonet/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/meteofrance/meteonet/HEAD/README.md",
+        "https://raw.githubusercontent.com/meteofrance/meteonet/HEAD/data_samples/ground_stations/SE_20160101.csv",
+        "https://raw.githubusercontent.com/meteofrance/meteonet/HEAD/data_samples/radar/rainfall_SE_2016_08.3.npz",
+        "https://raw.githubusercontent.com/meteofrance/meteonet/HEAD/data_samples/satellite/IR108_SE_2016.nc",
+        "https://raw.githubusercontent.com/meteofrance/meteonet/HEAD/docs_src/english/data/ground-observations.md",
+        "https://raw.githubusercontent.com/meteofrance/meteonet/HEAD/docs_src/english/data/rain-radar.md"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "meteonet-data_samples_radar_rainfall_SE_2016_08_3_npz",
+          "result": "array_values_decoded_time_unresolved"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "meteonet-data_samples_satellite_IR108_SE_2016_nc",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "meteonet-data_samples_ground_stations_SE_20160101_csv-retry02",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D60",
+      "name": "Caravan",
+      "hazards_reported": [
+        "洪水",
+        "水文干旱"
+      ],
+      "registered_urls": [
+        "https://www.nature.com/articles/s41597-023-01975-w",
+        "https://doi.org/10.5281/zenodo.7540792",
+        "https://github.com/kratzert/Caravan"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "core",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C3"
+      ],
+      "decision_cn": "Caravan 3 个 CAMELS 美国流域各 14,609 日；流域属性/单位/极端阈值待补，ERA5-Land 驱动不是独立真值。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:caravan-public",
+        "multihazard_source_validation_20260911:repo-caravan",
+        "multihazard_source_validation_20260911:caravan-README_md"
+      ],
+      "observed_urls": [
+        "https://storage.googleapis.com/storage/v1/b/caravan/o?maxResults=10",
+        "https://api.github.com/repos/kratzert/Caravan/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/kratzert/Caravan/HEAD/README.md"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "caravan-three-basins",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D61",
+      "name": "HANZE v2.1",
+      "hazards_reported": [
+        "河流洪水",
+        "山洪",
+        "沿海洪水",
+        "复合洪水"
+      ],
+      "registered_urls": [
+        "https://essd.copernicus.org/articles/16/5145/2024/",
+        "https://doi.org/10.5281/zenodo.8410025"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "core",
+      "content_evidence": "catalog",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "HANZE 2,521 欧洲洪水影响记录、40 国；用于非美国检索与类型校验，事件族去重另做。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:hanze-events"
+      ],
+      "observed_urls": [
+        "https://zenodo.org/api/records/8410025/files/HANZE_events.csv/content"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hanze-events",
+          "result": "catalog_records_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "catalog",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D62",
+      "name": "Dheed",
+      "hazards_reported": [
+        "复合干热事件"
+      ],
+      "registered_urls": [
+        "https://essd.copernicus.org/articles/17/6621/2025/index.html",
+        "https://doi.org/10.5281/zenodo.11044871"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "bridge",
+      "content_evidence": "catalog",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "Dheed 82,839 派生干热事件记录可读；先查上游依赖和定义，不能作为另一份独立观测真值。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:dheed-events",
+        "multihazard_source_validation_20260911:dheed-readme"
+      ],
+      "observed_urls": [
+        "https://zenodo.org/api/records/14884254/files/MergedEventStats_landonly_int.csv.zip/content",
+        "https://zenodo.org/api/records/14884254/files/dheed_readme_v4.md/content"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "dheed-events",
+          "result": "derived_event_records_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "catalog",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D63",
+      "name": "DAWN",
+      "hazards_reported": [
+        "雾",
+        "雪",
+        "雨",
+        "沙尘（恶劣天气）"
+      ],
+      "registered_urls": [
+        "https://arxiv.org/abs/2008.05402",
+        "https://data.mendeley.com/datasets/766ygrbt8y/1"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "auxiliary",
+      "content_evidence": "metadata",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "DAWN 官方 API 枚举 Fog/Rain/Sand/Snow 四包；未抽取图片，时间/地点不足时仅作视觉条件辅助集。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:dawn-mendeley",
+        "multihazard_source_validation_20260911:dawn-page",
+        "multihazard_source_validation_20260911:dawn-files"
+      ],
+      "observed_urls": [
+        "https://data.mendeley.com/public-api/datasets/766ygrbt8y/versions/1",
+        "https://data.mendeley.com/datasets/766ygrbt8y/1",
+        "https://data.mendeley.com/public-api/datasets/766ygrbt8y/files?folder_id=root&version=1"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "metadata",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D64",
+      "name": "SenForFlood",
+      "hazards_reported": [
+        "洪水"
+      ],
+      "registered_urls": [
+        "https://github.com/GEOHUM-PLUS/SenForFlood",
+        "https://isprs-archives.copernicus.org/articles/XLVIII-M-7-2025/97/2025/"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "conditional",
+      "content_evidence": "background",
+      "capability_candidates": [
+        "C0",
+        "C1"
+      ],
+      "decision_cn": "SenForFlood TAR 前缀取得 3 个 LULC TIFF；目前仅背景层，不是三组洪水图像标签对。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:senforflood-api",
+        "multihazard_source_validation_20260911:senforflood-api-retry",
+        "multihazard_source_validation_20260911:senforflood-tar-prefix"
+      ],
+      "observed_urls": [
+        "https://dataverse.harvard.edu/api/datasets/:persistentId/?persistentId=doi:10.7910/DVN/ZQCODX",
+        "https://dataverse.harvard.edu/api/access/datafile/11094458"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "senforflood-tar-prefix-members",
+          "result": "background_only_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "background",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "provider_license_captured",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Dataverse CC-BY-SA-4.0 metadata; current assets are LULC only",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D65",
+      "name": "FPA-FOD6",
+      "hazards_reported": [
+        "野火"
+      ],
+      "registered_urls": [
+        "https://doi.org/10.2737/RDS-2013-0009.6",
+        "https://agdatacommons.nal.usda.gov/articles/dataset/Spatial_wildfire_occurrence_data_for_the_United_States_1992-2011_FPA_FOD_20130422_1st_edition/27005818"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "bridge",
+      "content_evidence": "inherited",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "FPA-FOD6 已复核 3 条火灾记录；与 FIRMS、火烧迹地按事件合并，起火原因不能默认极端天气。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "fpa_fod6",
+          "result": "inherited_catalog_rechecked"
+        }
+      ],
+      "axes": {
+        "access": "inherited_local_sample",
+        "content": "inherited",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D66",
+      "name": "WeatherBench2 ERA5",
+      "hazards_reported": [
+        "热浪",
+        "寒潮",
+        "干旱",
+        "降水",
+        "强风",
+        "海洋风浪",
+        "复合极端"
+      ],
+      "registered_urls": [
+        "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-timeseries",
+        "https://climate.copernicus.eu/climate-reanalysis"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "bridge",
+      "content_evidence": "inherited",
+      "capability_candidates": [
+        "C0",
+        "C1",
+        "C3"
+      ],
+      "decision_cn": "WeatherBench2 一个 ERA5 温度 chunk 已复核；记录为 ERA5 衍生产品，不冒充 D25 ERA5-Land。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [
+        {
+          "file": "../multihazard_source_validation_20260911/analysis/INHERITED_SAMPLES.json",
+          "source_key": "weatherbench2",
+          "result": "inherited_array_rechecked"
+        }
+      ],
+      "axes": {
+        "access": "inherited_local_sample",
+        "content": "inherited",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "candidate_evidence_requires_task_checks",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D67",
+      "name": "HRRR",
+      "hazards_reported": [],
+      "registered_urls": [],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "bridge",
+      "content_evidence": "numeric",
+      "capability_candidates": [
+        "C0",
+        "C1"
+      ],
+      "decision_cn": "HRRR 已读同一次初始化 3 个 GRIB 变量；若做修订需同 valid_time 的多 init_time，当前未证实。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:hrrr-index",
+        "multihazard_source_validation_20260911:hrrr-cape",
+        "multihazard_source_validation_20260911:hrrr-tmp",
+        "multihazard_source_validation_20260911:hrrr-ugrd"
+      ],
+      "observed_urls": [
+        "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20260909/conus/hrrr.t00z.wrfsfcf00.grib2.idx",
+        "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20260909/conus/hrrr.t00z.wrfsfcf00.grib2"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hrrr-tmp",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hrrr-ugrd",
+          "result": "sample_decoded"
+        },
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hrrr-cape",
+          "result": "sample_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "numeric",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "official_public_data_terms_to_document",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Official public endpoint reachable or registered; per-product attribution and third-party exceptions remain to document",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "candidate_evidence_requires_task_checks",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D68",
+      "name": "HKO-7",
+      "hazards_reported": [
+        "降雨",
+        "暴雨"
+      ],
+      "registered_urls": [
+        "https://arxiv.org/html/1706.03458v2",
+        "https://github.com/sxjscience/HKO-7"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "conditional",
+      "content_evidence": "catalog",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "HKO-7 仓库日天气统计 2,556 行可读；实际雷达序列尚未取样。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:hko-sample",
+        "multihazard_source_validation_20260911:repo-hko7",
+        "multihazard_source_validation_20260911:hko7-README_md",
+        "multihazard_source_validation_20260911:hko7-hko_data_README_md",
+        "multihazard_source_validation_20260911:hko7-hko_data_weather_statistics_csv"
+      ],
+      "observed_urls": [
+        "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en",
+        "https://api.github.com/repos/sxjscience/HKO-7/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/sxjscience/HKO-7/HEAD/README.md",
+        "https://raw.githubusercontent.com/sxjscience/HKO-7/HEAD/hko_data/README.md",
+        "https://raw.githubusercontent.com/sxjscience/HKO-7/HEAD/hko_data/weather_statistics.csv"
+      ],
+      "evidence": [
+        {
+          "file": "analysis/DOWNLOADED_AUDIT.json",
+          "check_id": "hko7-hko_data_weather_statistics_csv",
+          "result": "catalog_records_decoded"
+        }
+      ],
+      "axes": {
+        "access": "response_captured",
+        "content": "catalog",
+        "provenance": "evidence_bound_source_mapping_partial",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D69",
+      "name": "GESLA current / GESLA-3 candidate",
+      "hazards_reported": [
+        "沿海高水位",
+        "风暴潮相关风险"
+      ],
+      "registered_urls": [
+        "https://rmets.onlinelibrary.wiley.com/doi/10.1002/gdj3.174",
+        "https://www.gesla.org/"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "bridge",
+      "content_evidence": "metadata",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "GESLA 站点目录可读；现端点报告 format 5.0/2026，不能标作 GESLA-3；潮位实际切片未取回。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:gesla-files",
+        "multihazard_source_validation_20260911:gesla-erddap-info",
+        "multihazard_source_validation_20260911:gesla-station-list"
+      ],
+      "observed_urls": [
+        "https://gesla787883612.wordpress.com/downloads/",
+        "https://uhslc.soest.hawaii.edu/erddap/info/global_hourly_gesla/index.json",
+        "https://uhslc.soest.hawaii.edu/erddap/tabledap/global_hourly_gesla.csv?record_id,station_name,latitude,longitude&distinct()"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "metadata",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D70",
+      "name": "ESWD",
+      "hazards_reported": [
+        "冰雹",
+        "强风",
+        "龙卷风",
+        "其他强天气"
+      ],
+      "registered_urls": [
+        "https://www.essl.org/cms/author/tomas/",
+        "https://www.eswd.eu/"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "defer",
+      "content_evidence": "unverified",
+      "capability_candidates": [],
+      "decision_cn": "ESWD 适合补欧洲龙卷/冰雹，但本轮未获得许可明确的批量样本。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [],
+      "observed_urls": [],
+      "evidence": [],
+      "axes": {
+        "access": "not_runtime_probed",
+        "content": "unverified",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "not_validated",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D71",
+      "name": "CAMELSH",
+      "hazards_reported": [
+        "洪水",
+        "水文干旱"
+      ],
+      "registered_urls": [
+        "https://www.nature.com/articles/s41597-025-05612-6",
+        "https://zenodo.org/records/15066778",
+        "https://zenodo.org/records/15413207"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "conditional",
+      "content_evidence": "metadata",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "CAMELSH 发布元数据候选；未解码水文时序，需确认与 Caravan/CAMELS 的派生重叠。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:camelsh-info"
+      ],
+      "observed_urls": [
+        "https://zenodo.org/api/records/15066778/files/info.csv/content"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "metadata",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D72",
+      "name": "MSETCD / MSCAR",
+      "hazards_reported": [
+        "热带气旋"
+      ],
+      "registered_urls": [
+        "https://github.com/USTC-AI4EEE/MSCAR"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "conditional",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "MSETCD/MSCAR 读取器或目录候选；未验证实际图像，用于后续亚洲气旋补源。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:repo-msetcd",
+        "multihazard_source_validation_20260911:msetcd-README_md"
+      ],
+      "observed_urls": [
+        "https://api.github.com/repos/USTC-AI4EEE/MSCAR/git/trees/HEAD?recursive=1",
+        "https://raw.githubusercontent.com/USTC-AI4EEE/MSCAR/HEAD/README.md"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D73",
+      "name": "CMA Best Track",
+      "hazards_reported": [
+        "西北太平洋/南海热带气旋"
+      ],
+      "registered_urls": [
+        "https://tcdata.typhoon.org.cn/en/zjljsjj.html"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "conditional",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "CMA 最佳路径入口已登记；尚无完整样例解码，仅作未来多机构事后对照。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:cma-besttrack-page"
+      ],
+      "observed_urls": [
+        "https://tcdata.typhoon.org.cn/en/zjljsjj.html"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "requests_failed_or_incomplete",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    },
+    {
+      "source_id": "D74",
+      "name": "NOAA Billion-Dollar Disasters",
+      "hazards_reported": [
+        "干旱",
+        "洪水",
+        "冻结",
+        "强对流",
+        "热带气旋",
+        "野火",
+        "冬季风暴"
+      ],
+      "registered_urls": [
+        "https://www.ncei.noaa.gov/news/national-climate-202413",
+        "https://www.ncei.noaa.gov/access/billions/state-summary/US"
+      ],
+      "reported_supply": null,
+      "seed_id_preserved": false,
+      "recommendation": "auxiliary",
+      "content_evidence": "reference",
+      "capability_candidates": [
+        "C0"
+      ],
+      "decision_cn": "NOAA Billion-Dollar 仅影响事件索引候选；经济损失阈值造成地区偏差，不定义全球气象极端。",
+      "new_task_admitted": false,
+      "new_qualified_episode_count": 0,
+      "capture_ids": [
+        "multihazard_source_validation_20260911:billion-dollar-events"
+      ],
+      "observed_urls": [
+        "https://www.ncei.noaa.gov/access/billions/events-US-1980-2024.csv"
+      ],
+      "evidence": [],
+      "axes": {
+        "access": "response_captured",
+        "content": "reference",
+        "provenance": "not_locally_established",
+        "license": "not_fully_verified",
+        "task_eligibility": "new_tasks_not_admitted"
+      },
+      "license_note": "Planning links/README do not establish rights to redistribute every upstream asset",
+      "capabilities": {
+        "C0": "candidate_evidence_requires_task_checks",
+        "C1": "not_validated",
+        "C2": "not_validated",
+        "C3": "not_validated",
+        "C4": "not_validated",
+        "C5": "not_validated",
+        "C6": "not_established_historical_availability_null",
+        "C7": "not_validated"
+      },
+      "source_case_count_not_global_event_count": true
+    }
+  ]
+}
