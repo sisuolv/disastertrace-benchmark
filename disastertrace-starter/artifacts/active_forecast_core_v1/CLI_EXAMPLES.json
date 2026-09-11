@@ -1,0 +1,66 @@
+{
+  "origin": "deterministic program demonstration, not model inference",
+  "commands": [
+    {
+      "argv": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.active_forecast",
+        "schema"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "output": "SCHEMAS.json"
+    },
+    {
+      "argv": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.active_forecast",
+        "validate",
+        "artifacts/active_forecast_core_v1/examples/episode_private.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "output": "examples/validation.json"
+    },
+    {
+      "argv": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.active_forecast",
+        "public",
+        "artifacts/active_forecast_core_v1/examples/episode_private.json",
+        "--budget",
+        "2",
+        "--read",
+        "c8e59c80a",
+        "--read",
+        "cc400aa4d"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "output": "examples/public.json"
+    },
+    {
+      "argv": [
+        "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+        "-m",
+        "disastertrace.active_forecast",
+        "score",
+        "artifacts/active_forecast_core_v1/examples/episode_private.json",
+        "--budget",
+        "2",
+        "--answer",
+        "artifacts/active_forecast_core_v1/examples/program_answer.json",
+        "--read",
+        "c8e59c80a",
+        "--read",
+        "cc400aa4d"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "output": "examples/program_score.json"
+    }
+  ]
+}

@@ -1,116 +1,156 @@
-# Current phase pointer
+# Current phase pointer: MM-4 atomic diagnostics complete and reviewed
 
-At 2026-09-08 20:31 UTC, P11 still has three running model workers. DeepSeek
-worker0 stops after718 returns through the context guard; its immutable prefix
-reconstructs the next unsubmitted batch with one40452-token input and three
-fitting inputs. The audit retains488 unattempted worker slots. P12's two fresh
-no-generation H100 preflights both pass and release; its chain waits for P11.
-P13 and P14 complete all three full program controls and isolated CPU acceptance.
-The role diagnostic prompt comparison independently verifies14472 pairs: logical
-messages/sampling match, DeepSeek has equal token counts and Qwen user prompts
-have five fewer tokens. These program histories are not actual model exposures.
-Current result navigation at repo root: RESULTS_20260909.md.
+All 40 actual Qwen3-VL responses are structurally valid, query complete and EOS.
+Strict success: spatial 8/9, watch-list 3/9, privileged logic 9/12, metadata selection
+7/10. All six map-present points are predicted inside; the sole outside is wrong.
+Presence-only posthoc value controls match all spatial and watch predictions.
+These are one-event development diagnostics, not a combined capability score.
 
-Autonomous work is authorized through 2026-09-09T02:05:16.104344+00:00, with at
-most four concurrent full H100 allocations. The authoritative user-window record
-is artifacts/p7_forecast_live_v1/AUTONOMY_WINDOW.json. No paid API, training,
-heldout inference, human per-item Gold, LLM judge or model retries are in scope.
+Four disjoint one-H100 jobs all succeed and release. The retained STARTING-replica
+accounting failure is resolved by submitting only the three never-submitted shards;
+actual peak reserved/allocated concurrency is three. No request or worker is retried.
+All 96 required functional test nodes and five resource regression tests pass.
+All 40 real processor/token captures replay; 1,986 historical bindings are unchanged.
+Both relocated and actual ZIP-extracted CPU reviews reproduce tasks, references,
+independent controls and the raw-response report. Acceptance:
+`860860f54e267cf0064a0b2b3fc22bc09a9fe07e2a04528ff8f7c76f88343e7f`.
 
-P7 is complete: 1542/1542 actual Qwen3-8B answers, 527 fully correct (34.18%).
-All four jobs succeed and release; report reconstruction, exact token replay and
-CPU relocation pass. Method counts: snapshot187/514, structured_state194/514,
-answer_history146/514. Their order differs across the two development storms.
-Entry: README_P7_FORECAST_LIVE_V1.md. Completed acceptance binds6772 files:
-2ef201987e6ce7902abd71fee7fd81f41b07a401dd58eef86df08f466c8d6a2d.
-All P7 scientific files, code, tests and accepted documentation are now frozen.
+Entry: [MM-4 actual results and review archive](README_MM4_ATOMIC_V1.md).
+Next: [input representation and balanced spatial coverage](artifacts/multimodal_v1/mm4_atomic_20260909/NEXT_STEP_CN.md).
+The 40/40 revision gate fails. MM-5A's proposed 80-request comparison has not run.
+All MM-4 preparation, submission, worker, finalization and sealing claims are consumed.
+Preserve its raw failures, old batches and all frozen code, captures and acceptances.
 
-P8 is complete: all844 answers and422 pairs verified,all four jobs succeeded.
-JSON118/422 versus text143/422,descriptive +5.92 percentage points. Text uses
-36-54 more tokens. Entry: README_P8_CARRIER_REPRESENTATION_V1.md.
-Completed acceptance8815bf95c6f833b46046044e14bb80c87ad8df98a326ddd588e95d4194e72bca
-binds4396 files. Its code,tests,execution and accepted documentation are frozen.
+## Previous MM-3 V2 model validation
 
-P9 DeepSeek native evaluation stops with986/1542 actual answers. Jobs:
-pt-vas07y9m,pt-i96fxr5i,pt-waf0a2p4,pt-ksl8tan2 all fail and release. Each worker
-stops because actual carrier history exceeds the full context reservation,after
-218,254,234,280 answers respectively. All1542 planned slots remain in the
-denominator;556 are unattempted. Report and independent verification pass;
-token replay checks763305 constrained tokens without violations,and isolated CPU
-relocation passes. Strict all-field correctness is1/1542. Completed acceptance
-8a4f5e6096eec478f0d0cd07672e6644cb044b383c534a5b3fbf83a5e6c02c8e binds4944 files.
-All P9 scientific artifacts,code,tests and accepted documentation are frozen.
-Observer v1 failed on ACP STARTING
-replica metadata; preserved failure remains in finalization_01. The tested v2
-observer PID169237 uses finalization_02 and strict terminal resource validation.
-No worker is retried. Entry: README_P9_FORECAST_MODEL_V1.md.
+The fresh V2 run returned all 12 answers: structural parsing 12/12, EOS 12/12,
+query-site coverage 10/12, strict correctness 0/12. ACP job pt-yc7yhd4r succeeds
+on one H100. CPU reconstruction and actual processor/token replay pass.
+Entry: [V2 actual results](README_MM3_CONTRACT_V2_LIVE.md).
+Next: [atomic diagnostics and four-GPU scheduling](artifacts/multimodal_v1/mm3_contract_v2_live_20260909/NEXT_STEP_CN.md).
+The V2 launch is consumed; preserve all raw results and never replace failures.
 
-P10 expanded task is offline-complete:36 products,six new development storms,
-144 targets,804 future checkpoints,2412 slots per model (three methods,repeat0).
-110 tests,all9 full program controls,17252 tokenizer checks and isolated CPU
-reconstruction pass. Entry: README_P10_FORECAST_COHORT_V1.md. Acceptance
-78ce4f3e29d175613bb464ce854849c096382d17235b7ea3687ef46e991ca923 binds1399 files.
-Both forecast_cohort and forecast_catalog code/tests/source packages are frozen.
+## Previous MM-3 V1 result and V2 preparation
 
-P11 starts the registered4824-answer expanded comparison:two one-H100 replicas
-per model,four total. All106 core tests,20 installed-backend tests,full three-policy
-runtime diagnostics per model,CPU relocation and both fresh no-generation H100
-preflights pass. Code and tests are frozen; do not edit or toggle execution kind.
-Qwen3 jobs:pt-vzz3moge,pt-h1ida2hf. DeepSeek jobs:pt-sc0yel4m,pt-8a1ae7w8.
-Their common deadline is2026-09-08T23:00:04.077819+00:00. Each planned model
-denominator is2412. The live handoff controller completes its submissions.
-Everything is under artifacts/p11_cohort_live_v1; no controller may be duplicated.
-The legacy scorer field both_repeats means only the scheduled repeat0 here;
-read INTERPRETATION_NOTES.md and report single-repeat whole-target success.
+The first Qwen3-VL-8B-Instruct run completed on one H100 on 2026-09-09.
+All 12 generation opportunities returned with EOS; all 12 failed the required
+state-object output structure. Actual image tensors, CPU/GPU processor checks
+and no-generation multimodal forwards passed. The interface gate failed.
+Entry: [MM-3 actual results](README_MM3_VLM_V1.md).
+The [explicit output-contract V2 offline package](artifacts/multimodal_v1/mm3_contract_v2_offline_20260909/NEXT_STEP_CN.md)
+preserves its zero-generation preparation record with unchanged public evidence
+and references; its later model run lives in the separate V2 live batch. Do not relaunch the
+consumed MM-3 worker, rewrite its failures, or reopen older phase windows.
 
-P12 prepares an independently registered bounded-JSON-spacing comparison on the
-same4824 slots. Only the static whitespace freedom changes;values,citations,
-Gold,scorer,prompts,own-answer history,model weights and sampling stay fixed.
-108 core tests and22 actual installed-backend tests pass. The initial backend
-fixtures used compact separators;all14 failures remain recorded,and corrected
-fixtures use XGrammar's documented default spacing. Full offline diagnostics
-finish with all three2412-slot controls and isolated CPU review passing per model.
-Preflight controller PID193676 waits for P11 dispatch
-completion and spare capacity,then runs one no-generation H100 load per profile.
-The P12 live chain waits for all P11 and P12 preflight jobs to release and all
-CPU/hardware acceptances. No controller may be duplicated. Source/tests are
-frozen by fresh P12 diagnostic executions. See artifacts/p12_compact_grammar_v1.
+## MM-0 through MM-2 offline complete
 
-P13 registers a separate2412-answer DeepSeek prompt-role study before seeing P11
-or P12 model scores. It retains P12's default-spacing grammar and all task/model
-settings,but moves the byte-identical system contract into one user message with
-the unchanged public evidence/carrier JSON. Both logical and rendered messages
-and actual prompt token IDs are captured. Core65,installed-backend12 and chain6
-tests pass. Its offline validation,one no-generation preflight and live handoff
-controllers are launched under artifacts/p13_prompt_role_v1. Live dispatch waits
-for P12's two DeepSeek allocations and its own preflight to release;it may overlap
-P12 Qwen only when capacity permits two more H100s. Deadline stays02:05:16 UTC.
-The existing P12/P11/P9/P7 source,data,runs and accepted documents stay frozen.
+The 2026-09-09 multimodal seed is complete: 96 tests pass, one real Francine
+development episode has six controlled delivery branches and 30 checkpoints,
+and all seven program reports reconstruct in a relocated CPU environment.
+Entry: [README_MULTIMODAL_V1.md](README_MULTIMODAL_V1.md).
+Batch status: [MM implementation record](artifacts/multimodal_v1/mm0_2_20260909/IMPLEMENTATION_STATUS.md).
+Next: [MM-3 VLM preflight](artifacts/multimodal_v1/mm0_2_20260909/NEXT_MM3_CN.md).
+This batch has zero model calls/GPU jobs; program diagnostics are not VLM scores.
+The old final GitHub publication remains a separately recorded handoff.
 
-P14 adds the symmetric2412-answer Qwen role-placement companion,also fixed before
-P11/P12 scores or P13 generations. It passes65 core,12 installed-backend and6
-handoff tests. Controllers/diagnostics run under artifacts/p14_qwen_prompt_role_v1.
-Its preflight waits for P13's submission controller to finish;live dispatch waits
-for P12 Qwen plus its own preflight to release and capacity for two H100s. This
-serializes submissions while allowing P13 DeepSeek plus P14 Qwen to fill four
-GPUs. It is the final additional matrix prepared for this autonomous window.
-All P13 and P14 code/tests become frozen with their diagnostic executions.
+## Preserved P6-P14 closure
 
-Publication preparation:publication/autonomy_review_20260909 contains a tested
-content-addressed archive tool and a32982-path P6-P10 evidence package. Three ZIP
-parts total224567019 bytes and restore all original scientific bytes. Full local
-restoration and all seven acceptance verifications pass. P9's stopped report also
-reconstructs again in the restored isolated CPU copy. The first extra review
-command used relative paths across a wrapper chdir and failed;the preserved
-second command uses absolute paths and exits0 with unchanged wrapper bytes.
-The Chinese handoff is REVIEW_FOR_CHATGPT_PRO_P6_PLUS.md. Nothing is pushed yet.
+The original autonomous model window ended at 2026-09-09T02:05:16.104344+00:00,
+starting at 2026-09-08T16:05:16.104344+00:00. All model collection is over.
+Do not reset this window, reopen a consumed phase/worker claim or relaunch P14.
+The user's later continuation covers CPU recovery, documentation and publication.
 
-P6 remains complete:2160 actual answers,1861 fully correct. Its historical failed
-ACP state remains intact; separate CPU review verifies the replies. Both P6
-acceptances and the P7 offline acceptance reverify unchanged. All predecessor
-claims, failed commands and accepted source/data/captures are preserved.
+Current result entry: [RESULTS_20260909.md](../RESULTS_20260909.md).
+Detailed Chinese review: [REVIEW_FOR_CHATGPT_PRO_P6_PLUS.md](REVIEW_FOR_CHATGPT_PRO_P6_PLUS.md).
+Publication and reconstruction: [review package](../publication/autonomy_review_20260909/README.md).
 
-Root AGENTS/README/IMPLEMENTATION_STATUS/DECISIONS/BLOCKERS are frozen. This
-navigation pointer stays outside scientific inventories and may be updated.
-Use phase-local status files for new work. Private GitHub publication to
-sisuolv/disastertrace-benchmark on next-phase-v1 remains authorized; the unrelated
-local .github directory stays outside publication.
+## Six terminal model cases
+
+All six LOCATION records and four comparisons in
+`artifacts/autonomy_10h_v1/reviews_continuation_v2/FINAL_STATUS.json` pass.
+Each condition has 2,412 planned slots, three methods, six development storms
+and one repeat. Primary accuracy retains all missing/invalid outcomes.
+
+| Case | Returned | Strict correct | Unattempted | Unknown | Collection |
+| --- | ---: | ---: | ---: | ---: | --- |
+| P11 Qwen3-8B | 2412 | 1000 | 0 | 0 | Complete |
+| P11 DeepSeek-R1-Distill-Qwen-7B | 1604 | 3 | 808 | 0 | Context-stopped |
+| P12 Qwen3-8B | 2412 | 1060 | 0 | 0 | Complete |
+| P12 DeepSeek distill | 1994 | 9 | 418 | 0 | Context-stopped |
+| P13 DeepSeek distill | 2064 | 6 | 348 | 0 | Context-stopped |
+| P14 Qwen3-8B | 1628 | 952 | 780 | 4 | Deadline-stopped |
+
+P14 collectors exit 124 at 02:05:00 UTC. Both ACP jobs are FAILED and released
+at 02:05:04/02:05:06 UTC. Its audit passing does not change those states.
+Execution: `69569f3dfb4fab2ddf387c16c47a87b9ae1093d9d8bc975872cf79a6210f3100`.
+Report: `cfd6368dc983a2a0904a92623a69777e636164422d7db1cb2104adb79ba3e054`.
+The zero-byte unpublished worker-1 intent is not an inferred dispatch. The four
+worker-0 unknown outcomes have no replacement requests or fabricated answers.
+
+## Final checks and persistent recovery
+
+The final ACP snapshot at 02:42:53 UTC records 33 in-window jobs, all released,
+maximum four reserved/running H100s. Reservation time is 31.035833 GPU hours;
+allocation time is 30.865556 GPU hours. These are not utilization or billing.
+`gpu_snapshots_01/final_accounting_01.json` builds and verifies unchanged.
+
+`dispatch_deadlines_v3.json` builds/verifies all six cases with zero dispatches
+outside their cutoff and no late raw returns. Its 23-test suite passes. Original
+V1/V2 real-command failures and regression failures remain preserved: V1 lacked
+atomic-intent residue support; V2 rejected normal parsed caches. V3 counts only
+published records and does not change scientific capture/scoring code.
+
+`pair_coverage_v1.json` builds/verifies four comparisons after nine tests. Qwen's
+P12/P14 difference of -108 strict successes is +68 on common returns minus176
+on P12-only returns. This selected subset is descriptive, not a causal adjustment.
+`result_tables_v1` exports all six verified analyses and reconstructs every byte.
+
+All four P11-P14 phase acceptances and archives exist. P11's unchanged v2
+acceptance omits14 analysis/command files; its separate30-file addendum covers
+them. Full P11 analysis closure requires the global supplement. P12-P14 use v3.
+The earlier P12 QUEUEING/INIT observer failures and CPU-only continuation remain
+in their original directories; exact finalization paths come from LOCATION files.
+
+The first publication CPU processes and temporary restore roots were absent in
+the continuing environment. `CPU_PUBLICATION_INTERRUPTION_02.json` records the
+observation without guessing the cause or missing process exit codes.
+`recover_cpu_publication_v2.py` completes P14 sealing, rebuilds no existing phase
+archive, restores five archive groups and verifies four inventories. Its first
+CPU report command fails before task import because the receipt is outside the
+unchanged wrapper's isolation directory. `complete_cpu_reconstruction_v3.py`
+reuses those successful steps, writes receipts inside each isolated copy and
+immediately copies successful bytes to AFS. All failures stay preserved.
+
+The receipt copier is `copy_reconstruction_receipts_v2.py`; the final closure is
+`close_cpu_publication_v3.py`. The final CLOSE_GLOBAL_03 status passes at
+2026-09-09 03:06:27 UTC and the completed supplement binds 572 files.
+The earlier v2 failed attempt remains preserved. Do not run the original failed or
+interrupted controllers again. Their source and command chains are evidence.
+Final accepted CPU copies live in `artifacts/autonomy_10h_v1/publication_reconstruction_02`.
+Publication receipts live outside the committed tree under
+`../review-outputs/autonomy-publication-20260909/`.
+
+## Frozen boundaries and next work
+
+P6 remains1861/2160 strict; P7 is527/1542 with complete Qwen answers; P8 retains
+422 JSON/text pairs (118 vs143 strict); P9 is1/1542 with986 returns and four
+context stops; P10 is the accepted six-storm offline task. Their distinct tasks,
+cohorts and repeats must not be pooled into a single capability score.
+
+All accepted source, raw captures, execution identities, scores, failure records
+and archives remain frozen. Root AGENTS/README/IMPLEMENTATION_STATUS/DECISIONS/
+BLOCKERS also retain their accepted historical bytes. This pointer is mutable
+navigation, outside the phase scientific inventories.
+
+Next priorities are in `artifacts/autonomy_10h_v1/POST_WINDOW_PRIORITIES.md`:
+trajectory-level failure isolation and unknown-outcome recovery, public output
+representation bounds, storm-stage coverage, equal-budget comparisons and
+independent model families, followed by a separately frozen heldout plan.
+No paid API, training, heldout inference, human per-item Gold, LLM judge, model
+retry or selective replacement occurs in this autonomous window or CPU recovery.
+
+Private publication to `sisuolv/disastertrace-benchmark`, branch `next-phase-v1`,
+remains authorized; default branch `main` and repository visibility stay as they
+are. The unrelated local `.github/` directory is outside the publication.
+Select the final commit containing this pointer and verify it against the local
+FINAL_PUBLICATION_01 receipt; no hosted Actions success is implied.

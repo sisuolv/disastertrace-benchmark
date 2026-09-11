@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "started_at": "2026-09-10T19:02:00.869563+00:00",
+  "finished_at": "2026-09-10T19:02:13.312352+00:00",
+  "schema_version": "active_forecast.v1",
+  "episodes": 104,
+  "families": {
+    "NHC": 24,
+    "GHCND": 32,
+    "USDM": 16,
+    "SEVIR": 32
+  },
+  "groups_by_family": {
+    "GHCND": 4,
+    "NHC": 4,
+    "SEVIR": 11,
+    "USDM": 1
+  },
+  "checks": {
+    "certificates": 104,
+    "frozen_certificates": 92,
+    "frozen_goals": 92,
+    "read_decisions": 1296,
+    "read_reasons": 1296,
+    "numeric_compatibility": 3888,
+    "read_sufficiency": 1296,
+    "extra_cost": 1296,
+    "public_roundtrip": 1296,
+    "score_cases": 41600
+  },
+  "failure_count": 0,
+  "failures_first_50": [],
+  "fact_checks_with_repeated_variants": {
+    "NHC_raw_wind_rows": 659,
+    "GHCND_raw_daily_rows": 112,
+    "USDM_frozen_point_rows": 56,
+    "SEVIR_raw_tiles": 118
+  },
+  "bound_files": 68,
+  "resolved_unique_locators": 1724,
+  "public_payloads_sha256": "a7dc0c82f861161045d1e95b094a444f4be73d63d6be05b1c4357a0420697d1c",
+  "prototype_sha256": "b44dadb128e38d36958702eaefbdc6b30d520380fc66e5b06ad9e3094d75cf87",
+  "core_source_sha256": {
+    "__init__.py": "7375c293ca9a96fc85c89a668b63555089d50449046644e496a63ccd3dbcf30a",
+    "__main__.py": "a70bcb6d4703b447c8b2704ce35693eb9a5cd35c669384a6073383f238ce6a03",
+    "core.py": "489b2dd8e458e8de221e622315a865d606c45343b2aca458c2fa3abc0b6f6ab6",
+    "legacy.py": "a327acaea93ea148dc107a7862701f5fd3e9e87e3aed833682397f67e895fe9c",
+    "provenance.py": "5cc176eef6709e1f370904015450cd20c7f9c5e262199cf70c25a835a3ef06a9",
+    "public.py": "073b8fea1753244700b390dd19db698c5ebf046fac7cba197b7f68f4975c3973",
+    "replay.py": "a24e01369b6c1ec926bf7cc517d6e1e294a56a9d5274def681408d65fdd80667",
+    "schema.py": "d593df069ecf05cf61fbccedb90191d0e1d6e352a1d9ab772c02630a5a6cf992"
+  },
+  "environment": {
+    "python": "3.10.12",
+    "pydantic": "2.13.5"
+  },
+  "numeric_comparison": "Decisions/certificates/scores exact; old displayed float bounds compared within 1e-12. New arithmetic uses Fraction.",
+  "intentional_protocol_changes": [
+    "Strict schema rejects floats at the Python API; JSON loader preserves decimal tokens with Decimal.",
+    "Instants normalize to UTC; station dates and map dates remain calendar supports.",
+    "Logical archive delivery remains separate from unproved historical public availability.",
+    "Only NHC issue timestamps are established; legacy SEVIR frame and USDM map labels are not product issue times.",
+    "Duplicate citations, duplicate read IDs and unrecognized fields fail closed.",
+    "An unavailable read raises an error in reference as well as scoring.",
+    "Area targets require a geometrically disjoint complete rectangle partition."
+  ],
+  "limits": [
+    "Migration compatibility, not a new model evaluation or benchmark score.",
+    "USDM source bytes and frozen point facts verified; polygon operations not repeated in this milestone.",
+    "Fact-check counts include repeated variants and distractors; they are not independent event counts.",
+    "Source-native images, online acquisition, automatic group assignment and scaled source admission remain subsequent work."
+  ],
+  "model_calls": 0,
+  "gpu_jobs": 0,
+  "historical_results_rewritten": false
+}

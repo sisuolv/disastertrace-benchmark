@@ -1,0 +1,1446 @@
+{
+  "episode": {
+    "$defs": {
+      "AreaTarget": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "minLength": 1,
+            "title": "Entity",
+            "type": "string"
+          },
+          "variable": {
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "supports": {
+            "items": {
+              "$ref": "#/$defs/Support"
+            },
+            "minLength": 1,
+            "title": "Supports",
+            "type": "array"
+          },
+          "operator": {
+            "const": "area_threshold",
+            "title": "Operator",
+            "type": "string"
+          },
+          "height": {
+            "exclusiveMinimum": 0,
+            "title": "Height",
+            "type": "integer"
+          },
+          "width": {
+            "exclusiveMinimum": 0,
+            "title": "Width",
+            "type": "integer"
+          },
+          "fraction_threshold": {
+            "pattern": "^-?[0-9]+/[1-9][0-9]*$",
+            "title": "Fraction Threshold",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity",
+          "variable",
+          "unit",
+          "supports",
+          "operator",
+          "height",
+          "width",
+          "fraction_threshold"
+        ],
+        "title": "AreaTarget",
+        "type": "object"
+      },
+      "Availability": {
+        "additionalProperties": false,
+        "properties": {
+          "lower": {
+            "format": "date-time",
+            "title": "Lower",
+            "type": "string"
+          },
+          "upper": {
+            "format": "date-time",
+            "title": "Upper",
+            "type": "string"
+          },
+          "proof": {
+            "$ref": "#/$defs/SourceLocator"
+          }
+        },
+        "required": [
+          "lower",
+          "upper",
+          "proof"
+        ],
+        "title": "Availability",
+        "type": "object"
+      },
+      "Capture": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "title": "Id",
+            "type": "string"
+          },
+          "url": {
+            "minLength": 1,
+            "title": "Url",
+            "type": "string"
+          },
+          "captured_at": {
+            "format": "date-time",
+            "title": "Captured At",
+            "type": "string"
+          },
+          "artifact": {
+            "$ref": "#/$defs/SourceLocator"
+          },
+          "origin_range": {
+            "anyOf": [
+              {
+                "maxItems": 3,
+                "minItems": 3,
+                "prefixItems": [
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Origin Range"
+          }
+        },
+        "required": [
+          "id",
+          "url",
+          "captured_at",
+          "artifact"
+        ],
+        "title": "Capture",
+        "type": "object"
+      },
+      "Card": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "title": "Id",
+            "type": "string"
+          },
+          "cost": {
+            "exclusiveMinimum": 0,
+            "title": "Cost",
+            "type": "integer"
+          },
+          "title": {
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "source_id": {
+            "minLength": 1,
+            "title": "Source Id",
+            "type": "string"
+          },
+          "issued_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issued At"
+          },
+          "issue_label": {
+            "minLength": 1,
+            "title": "Issue Label",
+            "type": "string"
+          },
+          "issue_missing_reason": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issue Missing Reason"
+          },
+          "availability": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Availability"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "availability_missing_reason": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Availability Missing Reason"
+          },
+          "delivery_step": {
+            "minimum": 0,
+            "title": "Delivery Step",
+            "type": "integer"
+          },
+          "captures": {
+            "items": {
+              "$ref": "#/$defs/Capture"
+            },
+            "title": "Captures",
+            "type": "array"
+          },
+          "records": {
+            "items": {
+              "$ref": "#/$defs/Record"
+            },
+            "minLength": 1,
+            "title": "Records",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "cost",
+          "title",
+          "source_id",
+          "issued_at",
+          "issue_label",
+          "issue_missing_reason",
+          "availability",
+          "availability_missing_reason",
+          "delivery_step",
+          "captures",
+          "records"
+        ],
+        "title": "Card",
+        "type": "object"
+      },
+      "CountTarget": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "minLength": 1,
+            "title": "Entity",
+            "type": "string"
+          },
+          "variable": {
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "supports": {
+            "items": {
+              "$ref": "#/$defs/Support"
+            },
+            "minLength": 1,
+            "title": "Supports",
+            "type": "array"
+          },
+          "operator": {
+            "const": "count_threshold",
+            "title": "Operator",
+            "type": "string"
+          },
+          "value_threshold": {
+            "pattern": "^-?[0-9]+/[1-9][0-9]*$",
+            "title": "Value Threshold",
+            "type": "string"
+          },
+          "count_threshold": {
+            "minimum": 0,
+            "title": "Count Threshold",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "entity",
+          "variable",
+          "unit",
+          "supports",
+          "operator",
+          "value_threshold",
+          "count_threshold"
+        ],
+        "title": "CountTarget",
+        "type": "object"
+      },
+      "PixelCounts": {
+        "additionalProperties": false,
+        "properties": {
+          "positive": {
+            "minimum": 0,
+            "title": "Positive",
+            "type": "integer"
+          },
+          "negative": {
+            "minimum": 0,
+            "title": "Negative",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "positive",
+          "negative"
+        ],
+        "title": "PixelCounts",
+        "type": "object"
+      },
+      "Record": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "minLength": 1,
+            "title": "Entity",
+            "type": "string"
+          },
+          "variable": {
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "support": {
+            "$ref": "#/$defs/Support"
+          },
+          "version": {
+            "minLength": 1,
+            "title": "Version",
+            "type": "string"
+          },
+          "quality": {
+            "enum": [
+              "valid",
+              "missing",
+              "invalid"
+            ],
+            "title": "Quality",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "pattern": "^-?[0-9]+/[1-9][0-9]*$",
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/PixelCounts"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "locators": {
+            "items": {
+              "$ref": "#/$defs/SourceLocator"
+            },
+            "minLength": 1,
+            "title": "Locators",
+            "type": "array"
+          }
+        },
+        "required": [
+          "entity",
+          "variable",
+          "unit",
+          "support",
+          "version",
+          "quality",
+          "value",
+          "locators"
+        ],
+        "title": "Record",
+        "type": "object"
+      },
+      "RevisionTarget": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "minLength": 1,
+            "title": "Entity",
+            "type": "string"
+          },
+          "variable": {
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "supports": {
+            "items": {
+              "$ref": "#/$defs/Support"
+            },
+            "minLength": 1,
+            "title": "Supports",
+            "type": "array"
+          },
+          "operator": {
+            "const": "revision_delta",
+            "title": "Operator",
+            "type": "string"
+          },
+          "versions": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "minLength": 1,
+                "type": "string"
+              }
+            ],
+            "title": "Versions",
+            "type": "array"
+          },
+          "threshold": {
+            "pattern": "^-?[0-9]+/[1-9][0-9]*$",
+            "title": "Threshold",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity",
+          "variable",
+          "unit",
+          "supports",
+          "operator",
+          "versions",
+          "threshold"
+        ],
+        "title": "RevisionTarget",
+        "type": "object"
+      },
+      "SourceLocator": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "whole_file",
+              "json_pointer",
+              "byte_range",
+              "uint8_tile"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "path": {
+            "minLength": 1,
+            "title": "Path",
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Sha256",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "source_bytes",
+              "derived_product",
+              "episode_snapshot",
+              "availability_proof"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "pointer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Pointer"
+          },
+          "start": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Start"
+          },
+          "end": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "End"
+          },
+          "array_shape": {
+            "anyOf": [
+              {
+                "maxItems": 3,
+                "minItems": 3,
+                "prefixItems": [
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Array Shape"
+          },
+          "frame": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Frame"
+          },
+          "box": {
+            "anyOf": [
+              {
+                "maxItems": 4,
+                "minItems": 4,
+                "prefixItems": [
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Box"
+          }
+        },
+        "required": [
+          "kind",
+          "path",
+          "sha256",
+          "role"
+        ],
+        "title": "SourceLocator",
+        "type": "object"
+      },
+      "Support": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "instant",
+              "station_day",
+              "product_date",
+              "tile"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "minLength": 1,
+            "title": "Label",
+            "type": "string"
+          },
+          "valid_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Valid At"
+          },
+          "day": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Day"
+          },
+          "box": {
+            "anyOf": [
+              {
+                "maxItems": 4,
+                "minItems": 4,
+                "prefixItems": [
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Box"
+          }
+        },
+        "required": [
+          "kind",
+          "label"
+        ],
+        "title": "Support",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "schema_version": {
+        "const": "active_forecast.v1",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "id": {
+        "minLength": 1,
+        "title": "Id",
+        "type": "string"
+      },
+      "family": {
+        "minLength": 1,
+        "title": "Family",
+        "type": "string"
+      },
+      "group": {
+        "minLength": 1,
+        "title": "Group",
+        "type": "string"
+      },
+      "variant": {
+        "minLength": 1,
+        "title": "Variant",
+        "type": "string"
+      },
+      "split": {
+        "enum": [
+          "development",
+          "validation",
+          "test"
+        ],
+        "title": "Split",
+        "type": "string"
+      },
+      "origin": {
+        "enum": [
+          "real",
+          "synthetic"
+        ],
+        "title": "Origin",
+        "type": "string"
+      },
+      "question": {
+        "minLength": 1,
+        "title": "Question",
+        "type": "string"
+      },
+      "time_policy": {
+        "enum": [
+          "archive_delivery",
+          "historical_asof"
+        ],
+        "title": "Time Policy",
+        "type": "string"
+      },
+      "as_of": {
+        "anyOf": [
+          {
+            "format": "date-time",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "As Of"
+      },
+      "delivery_step": {
+        "minimum": 0,
+        "title": "Delivery Step",
+        "type": "integer"
+      },
+      "target": {
+        "discriminator": {
+          "mapping": {
+            "area_threshold": "#/$defs/AreaTarget",
+            "count_threshold": "#/$defs/CountTarget",
+            "revision_delta": "#/$defs/RevisionTarget"
+          },
+          "propertyName": "operator"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/RevisionTarget"
+          },
+          {
+            "$ref": "#/$defs/CountTarget"
+          },
+          {
+            "$ref": "#/$defs/AreaTarget"
+          }
+        ],
+        "title": "Target"
+      },
+      "cards": {
+        "items": {
+          "$ref": "#/$defs/Card"
+        },
+        "maxLength": 8,
+        "minLength": 1,
+        "title": "Cards",
+        "type": "array"
+      }
+    },
+    "required": [
+      "schema_version",
+      "id",
+      "family",
+      "group",
+      "variant",
+      "split",
+      "origin",
+      "question",
+      "time_policy",
+      "as_of",
+      "delivery_step",
+      "target",
+      "cards"
+    ],
+    "title": "Episode",
+    "type": "object"
+  },
+  "answer": {
+    "additionalProperties": false,
+    "properties": {
+      "decision": {
+        "enum": [
+          "yes",
+          "no",
+          "unknown"
+        ],
+        "title": "Decision",
+        "type": "string"
+      },
+      "citations": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "title": "Citations",
+        "type": "array"
+      }
+    },
+    "required": [
+      "decision",
+      "citations"
+    ],
+    "title": "Answer",
+    "type": "object"
+  },
+  "public": {
+    "$defs": {
+      "AreaTarget": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "minLength": 1,
+            "title": "Entity",
+            "type": "string"
+          },
+          "variable": {
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "supports": {
+            "items": {
+              "$ref": "#/$defs/Support"
+            },
+            "minLength": 1,
+            "title": "Supports",
+            "type": "array"
+          },
+          "operator": {
+            "const": "area_threshold",
+            "title": "Operator",
+            "type": "string"
+          },
+          "height": {
+            "exclusiveMinimum": 0,
+            "title": "Height",
+            "type": "integer"
+          },
+          "width": {
+            "exclusiveMinimum": 0,
+            "title": "Width",
+            "type": "integer"
+          },
+          "fraction_threshold": {
+            "pattern": "^-?[0-9]+/[1-9][0-9]*$",
+            "title": "Fraction Threshold",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity",
+          "variable",
+          "unit",
+          "supports",
+          "operator",
+          "height",
+          "width",
+          "fraction_threshold"
+        ],
+        "title": "AreaTarget",
+        "type": "object"
+      },
+      "CatalogCard": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "title": "Id",
+            "type": "string"
+          },
+          "cost": {
+            "exclusiveMinimum": 0,
+            "title": "Cost",
+            "type": "integer"
+          },
+          "title": {
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "issued_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issued At"
+          },
+          "issue_label": {
+            "minLength": 1,
+            "title": "Issue Label",
+            "type": "string"
+          },
+          "record_index": {
+            "items": {
+              "$ref": "#/$defs/PublicIndex"
+            },
+            "title": "Record Index",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "cost",
+          "title",
+          "issued_at",
+          "issue_label",
+          "record_index"
+        ],
+        "title": "CatalogCard",
+        "type": "object"
+      },
+      "CountTarget": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "minLength": 1,
+            "title": "Entity",
+            "type": "string"
+          },
+          "variable": {
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "supports": {
+            "items": {
+              "$ref": "#/$defs/Support"
+            },
+            "minLength": 1,
+            "title": "Supports",
+            "type": "array"
+          },
+          "operator": {
+            "const": "count_threshold",
+            "title": "Operator",
+            "type": "string"
+          },
+          "value_threshold": {
+            "pattern": "^-?[0-9]+/[1-9][0-9]*$",
+            "title": "Value Threshold",
+            "type": "string"
+          },
+          "count_threshold": {
+            "minimum": 0,
+            "title": "Count Threshold",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "entity",
+          "variable",
+          "unit",
+          "supports",
+          "operator",
+          "value_threshold",
+          "count_threshold"
+        ],
+        "title": "CountTarget",
+        "type": "object"
+      },
+      "EvidenceCard": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "title": "Id",
+            "type": "string"
+          },
+          "records": {
+            "items": {
+              "$ref": "#/$defs/PublicRecord"
+            },
+            "title": "Records",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "records"
+        ],
+        "title": "EvidenceCard",
+        "type": "object"
+      },
+      "PixelCounts": {
+        "additionalProperties": false,
+        "properties": {
+          "positive": {
+            "minimum": 0,
+            "title": "Positive",
+            "type": "integer"
+          },
+          "negative": {
+            "minimum": 0,
+            "title": "Negative",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "positive",
+          "negative"
+        ],
+        "title": "PixelCounts",
+        "type": "object"
+      },
+      "PublicIndex": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "minLength": 1,
+            "title": "Entity",
+            "type": "string"
+          },
+          "variable": {
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "support": {
+            "$ref": "#/$defs/Support"
+          },
+          "version": {
+            "minLength": 1,
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity",
+          "variable",
+          "unit",
+          "support",
+          "version"
+        ],
+        "title": "PublicIndex",
+        "type": "object"
+      },
+      "PublicRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "minLength": 1,
+            "title": "Entity",
+            "type": "string"
+          },
+          "variable": {
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "support": {
+            "$ref": "#/$defs/Support"
+          },
+          "version": {
+            "minLength": 1,
+            "title": "Version",
+            "type": "string"
+          },
+          "quality": {
+            "enum": [
+              "valid",
+              "missing",
+              "invalid"
+            ],
+            "title": "Quality",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "pattern": "^-?[0-9]+/[1-9][0-9]*$",
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/PixelCounts"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "entity",
+          "variable",
+          "unit",
+          "support",
+          "version",
+          "quality",
+          "value"
+        ],
+        "title": "PublicRecord",
+        "type": "object"
+      },
+      "RevisionTarget": {
+        "additionalProperties": false,
+        "properties": {
+          "entity": {
+            "minLength": 1,
+            "title": "Entity",
+            "type": "string"
+          },
+          "variable": {
+            "minLength": 1,
+            "title": "Variable",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "supports": {
+            "items": {
+              "$ref": "#/$defs/Support"
+            },
+            "minLength": 1,
+            "title": "Supports",
+            "type": "array"
+          },
+          "operator": {
+            "const": "revision_delta",
+            "title": "Operator",
+            "type": "string"
+          },
+          "versions": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "minLength": 1,
+                "type": "string"
+              }
+            ],
+            "title": "Versions",
+            "type": "array"
+          },
+          "threshold": {
+            "pattern": "^-?[0-9]+/[1-9][0-9]*$",
+            "title": "Threshold",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity",
+          "variable",
+          "unit",
+          "supports",
+          "operator",
+          "versions",
+          "threshold"
+        ],
+        "title": "RevisionTarget",
+        "type": "object"
+      },
+      "Support": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "instant",
+              "station_day",
+              "product_date",
+              "tile"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "minLength": 1,
+            "title": "Label",
+            "type": "string"
+          },
+          "valid_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Valid At"
+          },
+          "day": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Day"
+          },
+          "box": {
+            "anyOf": [
+              {
+                "maxItems": 4,
+                "minItems": 4,
+                "prefixItems": [
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Box"
+          }
+        },
+        "required": [
+          "kind",
+          "label"
+        ],
+        "title": "Support",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "schema_version": {
+        "const": "active_forecast.public.v1",
+        "default": "active_forecast.public.v1",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "representation": {
+        "const": "exact_product_values",
+        "default": "exact_product_values",
+        "title": "Representation",
+        "type": "string"
+      },
+      "question": {
+        "minLength": 1,
+        "title": "Question",
+        "type": "string"
+      },
+      "target": {
+        "discriminator": {
+          "mapping": {
+            "area_threshold": "#/$defs/AreaTarget",
+            "count_threshold": "#/$defs/CountTarget",
+            "revision_delta": "#/$defs/RevisionTarget"
+          },
+          "propertyName": "operator"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/RevisionTarget"
+          },
+          {
+            "$ref": "#/$defs/CountTarget"
+          },
+          {
+            "$ref": "#/$defs/AreaTarget"
+          }
+        ],
+        "title": "Target"
+      },
+      "time_policy": {
+        "enum": [
+          "archive_delivery",
+          "historical_asof"
+        ],
+        "title": "Time Policy",
+        "type": "string"
+      },
+      "as_of": {
+        "anyOf": [
+          {
+            "format": "date-time",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "As Of"
+      },
+      "catalog_complete": {
+        "const": true,
+        "default": true,
+        "title": "Catalog Complete",
+        "type": "boolean"
+      },
+      "catalog": {
+        "items": {
+          "$ref": "#/$defs/CatalogCard"
+        },
+        "title": "Catalog",
+        "type": "array"
+      },
+      "evidence": {
+        "items": {
+          "$ref": "#/$defs/EvidenceCard"
+        },
+        "title": "Evidence",
+        "type": "array"
+      },
+      "remaining_budget": {
+        "minimum": 0,
+        "title": "Remaining Budget",
+        "type": "integer"
+      },
+      "rules": {
+        "default": [
+          "The catalog lists the complete eligible pool and record scopes, not unread values or quality.",
+          "Unobserved or invalid values are unknown, never zero or negative.",
+          "Compare only the fixed entity, variable, unit, support and requested versions.",
+          "revision_delta: both exact versions must be valid; yes iff after-before >= threshold.",
+          "count_threshold: lower=valid exceedances; upper=all supports-valid nonexceedances.",
+          "area_threshold: lower=positive/(height*width); upper=1-negative/(height*width).",
+          "For count/area: yes if lower >= threshold, no if upper < threshold, else unknown.",
+          "Numbers n/d are exact rationals. Missing pixels stay in the full denominator.",
+          "Certify the complete-pool decision; local unknown may require further reading.",
+          "Cite only acquired cards sufficient to establish the decision; catalog absence may suffice.",
+          "Return exactly {decision: yes|no|unknown, citations: [acquired card IDs]} as JSON."
+        ],
+        "items": {
+          "type": "string"
+        },
+        "title": "Rules",
+        "type": "array"
+      }
+    },
+    "required": [
+      "question",
+      "target",
+      "time_policy",
+      "as_of",
+      "catalog",
+      "evidence",
+      "remaining_budget"
+    ],
+    "title": "PublicView",
+    "type": "object"
+  }
+}

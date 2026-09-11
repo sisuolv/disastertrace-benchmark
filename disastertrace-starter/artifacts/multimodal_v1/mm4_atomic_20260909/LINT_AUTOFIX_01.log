@@ -1,0 +1,27 @@
+SIM102 Use a single `if` statement instead of nested `if` statements
+  --> src/disastertrace/multimodal_atomic_v1/audit.py:85:17
+   |
+83 |                   if cached["origin"] != ORIGIN or cached["request_sha256"] != digest(canonical(task).encode()):
+84 |                       raise ValueError("cached outcome identity mismatch")
+85 | /                 if cached["status"] != outcome["status"] or cached.get("value") != outcome.get("value"):
+86 | |                     # Raw is still an observation if metadata publication was interrupted.
+87 | |                     if not (cached["status"] == "unknown" and (slot / "raw.txt").exists()
+88 | |                             and not (slot / "generation.json").exists()):
+   | |_________________________________________________________________________^
+89 |                           raise ValueError("cached outcome differs from raw reconstruction")
+90 |               row = score(task, refs[tid], outcome, finish)
+   |
+help: Combine `if` statements using `and`
+
+RUF012 Mutable default value for class attribute
+   --> tests/test_multimodal_atomic_v1.py:173:16
+    |
+172 | class FakeBackend:
+173 |     settings = {"max_generation_seconds": 1}
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+174 |
+175 |     def __init__(self, mode):
+    |
+help: Consider initializing in `__init__` or annotating with `typing.ClassVar`
+
+Found 9 errors (7 fixed, 2 remaining).

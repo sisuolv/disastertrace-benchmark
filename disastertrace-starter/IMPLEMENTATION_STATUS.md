@@ -1,5 +1,60 @@
 # Implementation Status
 
+## Completed: Active Forecast v1 evidence kernel, 2026-09-10
+
+The V5 feasibility study is closed. Execute D1-D2 of its final roadmap in the new
+`src/disastertrace/active_forecast/` namespace. Entry and Chinese handoff:
+`artifacts/active_forecast_core_v1/README_CN.md`. This is an engineering migration,
+not another model experiment; no GPU job, paid call, training, heldout inference,
+new upstream acquisition, human item review, LLM judge or Git publication occurs.
+
+Implement strict immutable schemas, UTC instant normalization, distinct calendar
+supports and archive/historical time policies, exact Fraction calculations,
+complete disjoint pixel partitions, deterministic references/certificates/scoring,
+and whitelist public value-track DTOs. Missing historical availability stays null.
+Preserve original issue labels in source snapshots and avoid treating frame/map
+dates or archive markers as product issue instants. Add offline source locators,
+provider-specific frozen imports and schema/validate/public/score/replay CLI.
+
+The canonical compatibility result is `replay_02/COMPATIBILITY.json`: 104 frozen
+development episodes, all 1,296 legal read subsets and 41,600 score cases agree
+with the prototype. All 104 certificate sets and the existing 92 frozen goal/
+certificate pairs match. Exact decision/cost/score comparison is separate from
+the 1e-12 comparison of old displayed float bounds. Source verification binds
+68 files and resolves 1,724 distinct locators. Raw fact checks include repeated
+variants/distractors: NHC 659 wind rows, GHCND 112 rows, SEVIR 118 raster tiles;
+USDM 56 frozen point rows plus source ZIP integrity, without rerunning geometry.
+
+Regression tests precede implementation. Final new suite: 59 passed, exit 0;
+unchanged prototype suite: 10 passed, exit 0. Ruff check and format check pass.
+Four actual offline CLI examples exit 0. Use existing Python 3.10.12/Pydantic
+2.13.5 in `.venv`, with `PYTHONPATH=src`; no dependencies installed or upgraded.
+This does not claim a fresh environment installation or a full legacy test run.
+
+Retain `replay_01/` and `08_replay_01.log`: the first comparator read old float
+reports as Decimal, causing comparison artifacts and a report serialization
+failure. Two failing regression tests are retained in
+`11_replay_regressions_before.log`. Separate prototype-float and core-exact reads,
+and encode JSON before creating the output file; the fresh replay_02 succeeds.
+Do not treat the partial replay_01 COMPATIBILITY.json as an acceptance record.
+
+Actual final commands, run from this package, all exit 0:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python -m pytest tests/active_forecast
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m unittest discover -s ../plans/v5_0910_feasibility_12h_20260910/code -p test_evidence_core.py -v
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python -m disastertrace.active_forecast replay-legacy --bundle ../plans/v5_0910_feasibility_12h_20260910 --output artifacts/active_forecast_core_v1/replay_02
+.venv/bin/python -m ruff check src/disastertrace/active_forecast tests/active_forecast
+.venv/bin/python -m ruff format --check src/disastertrace/active_forecast tests/active_forecast
+```
+
+Next executable task: D2-D3 source admission and stable grouping, separating
+raw/product/capture/delivery/target/outcome objects; then predeclared real-source
+expansion. Existing group tags are not a validated statistical split. Native
+image/tool tracks, acquisition receipts, public-input solvability, the model
+adapter and a fresh frozen GPU matrix remain subsequent work. Existing permission
+for up to four parallel H100s persists; no permission renewal is needed.
+
 ## Completed: P6 first offline milestone, 2026-09-08
 
 Integrate the three initial plan_v3 inputs and the fourth plan supplied during

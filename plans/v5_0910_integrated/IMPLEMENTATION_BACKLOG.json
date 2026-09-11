@@ -1,0 +1,706 @@
+{
+  "schema_version": "v5_integrated_backlog_v1",
+  "status": "planning_only",
+  "date": "2026-09-10",
+  "count": 30,
+  "task_id_order_is_not_execution_order": true,
+  "first_execution_scope": [
+    "V5-00",
+    "V5-01",
+    "V5-02",
+    "V5-03",
+    "V5-04",
+    "V5-05",
+    "V5-06",
+    "V5-07",
+    "V5-08",
+    "V5-09",
+    "V5-12",
+    "V5-23"
+  ],
+  "gated_first_week_extensions": [
+    "V5-10",
+    "V5-13"
+  ],
+  "tasks": [
+    {
+      "id": "V5-00",
+      "title_zh": "执行基线与新范围",
+      "status": "proposed",
+      "target_window": "D1",
+      "workstream": "core",
+      "depends_on": [],
+      "deliverables": [
+        "新阶段输入/历史保护清单",
+        "独立 scope 和可续接状态"
+      ],
+      "acceptance": [
+        "不重启任何已消耗批次",
+        "本地源码和原始结果的版本可定位"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-01",
+      "title_zh": "来源产品身份、版本与权利",
+      "status": "proposed",
+      "target_window": "D1-D2",
+      "workstream": "data",
+      "depends_on": [
+        "V5-00"
+      ],
+      "deliverables": [
+        "257 条原记录映射状态",
+        "首批产品身份表",
+        "最小取得清单"
+      ],
+      "acceptance": [
+        "镜像/产品/release/角色分别计数",
+        "首批外部版本与许可有实际证据",
+        "未知保持待核不冒称已接通"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-02",
+      "title_zh": "分类、极端定义与计数",
+      "status": "proposed",
+      "target_window": "D1-D2",
+      "workstream": "data",
+      "depends_on": [
+        "V5-00"
+      ],
+      "deliverables": [
+        "分层标签映射",
+        "首批变量/区域/阈值定义",
+        "事件与监测窗口计数规则"
+      ],
+      "acceptance": [
+        "原标签不丢失",
+        "阈值不用测试时段拟合",
+        "多标签不增加独立事件数"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-03",
+      "title_zh": "共用目标、时间、状态契约",
+      "status": "proposed",
+      "target_window": "D2-D3",
+      "workstream": "core",
+      "depends_on": [
+        "V5-00"
+      ],
+      "deliverables": [
+        "新 contracts",
+        "完整 locator",
+        "四种时间 profile"
+      ],
+      "acceptance": [
+        "KEEP 值与来源刷新正交",
+        "未来预报/未来发布旧观测合法性不同",
+        "目标/单位/时间/区域全匹配"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-04",
+      "title_zh": "内容储存与捕获/投递账本",
+      "status": "proposed",
+      "target_window": "D2-D3",
+      "workstream": "core",
+      "depends_on": [
+        "V5-03"
+      ],
+      "deliverables": [
+        "内容和版本分离",
+        "追加捕获/投递",
+        "断点与独占写入规则"
+      ],
+      "acceptance": [
+        "重复字节可去重但 delivery 不丢",
+        "并发和中断不覆盖历史",
+        "原始失败与未知保留"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-05",
+      "title_zh": "公开投影与递归可见性",
+      "status": "proposed",
+      "target_window": "D2-D4",
+      "workstream": "core",
+      "depends_on": [
+        "V5-03",
+        "V5-04"
+      ],
+      "deliverables": [
+        "白名单 public view",
+        "目录/索引/缓存隔离",
+        "派生资产父链检查"
+      ],
+      "acceptance": [
+        "未来/Gold/文件名/父资产泄漏反例被拒绝",
+        "模型只能读当前合法暴露资产"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-06",
+      "title_zh": "三参考与资格计算",
+      "status": "proposed",
+      "target_window": "D3-D4",
+      "workstream": "reference",
+      "depends_on": [
+        "V5-02",
+        "V5-03",
+        "V5-05"
+      ],
+      "deliverables": [
+        "goal/visible/sufficiency",
+        "private outcome 接口",
+        "P/C/R/F/A eligibility"
+      ],
+      "acceptance": [
+        "不读取不能凭 unknown 获得目标满分",
+        "覆盖/缺测/非法/缺答分开",
+        "不同任务资格非严格梯子"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-07",
+      "title_zh": "多格式语义 fixture",
+      "status": "proposed",
+      "target_window": "D3-D4",
+      "workstream": "core",
+      "depends_on": [
+        "V5-04",
+        "V5-05",
+        "V5-06"
+      ],
+      "deliverables": [
+        "文本/表格/图像几何/栅格时序 fixtures",
+        "明确 synthetic/real 标签"
+      ],
+      "acceptance": [
+        "覆盖时间与单位冲突、边界、空名单、同值换源、重复送达",
+        "fixture 不计真实数据接入"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-08",
+      "title_zh": "六家族真实 instrument",
+      "status": "proposed",
+      "target_window": "D4-D7",
+      "workstream": "data",
+      "depends_on": [
+        "V5-01",
+        "V5-02",
+        "V5-04",
+        "V5-05",
+        "V5-06",
+        "V5-07"
+      ],
+      "deliverables": [
+        "六家族各至少两个真实 slice 的目标",
+        "逐资产准入/排除表",
+        "真实往返校验"
+      ],
+      "acceptance": [
+        "每源字节、版本、质量、空间时间可追踪",
+        "未接通家族明确列缺口",
+        "CPU 重建使用真实原始字节"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-09",
+      "title_zh": "MM-5A 等信息离线准备",
+      "status": "proposed",
+      "target_window": "D1-D5",
+      "workstream": "measurement",
+      "depends_on": [
+        "V5-00"
+      ],
+      "deliverables": [
+        "40 任务的两种公共表示",
+        "等信息/引用/processor 检查",
+        "新运行计划"
+      ],
+      "acceptance": [
+        "图像/目标/参考/输出设置固定",
+        "对全部40任务检查不是只挑错误",
+        "不引入点标记或新空间采样"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-10",
+      "title_zh": "MM-5A 四卡模型比较",
+      "status": "proposed",
+      "target_window": "D5-D7",
+      "workstream": "model",
+      "depends_on": [
+        "V5-09"
+      ],
+      "deliverables": [
+        "M1 原始输出与 processor 记录",
+        "分项报告",
+        "资源/CPU重建报告"
+      ],
+      "acceptance": [
+        "最多80次和4GPUh",
+        "四个一卡片各20次且混合条件",
+        "未知提交占槽、无模型重试",
+        "旧 MM-4 结果不重写"
+      ],
+      "implementation_not_created_by_this_plan": true,
+      "model_scope_id": "M1"
+    },
+    {
+      "id": "V5-11",
+      "title_zh": "空间平衡与边界新版本",
+      "status": "proposed",
+      "target_window": "W2",
+      "workstream": "measurement",
+      "depends_on": [
+        "V5-03",
+        "V5-05",
+        "V5-06"
+      ],
+      "deliverables": [
+        "独立空间采样协议",
+        "正负/边界/无变化/版本变化集",
+        "候选排除清单"
+      ],
+      "acceptance": [
+        "网格与容差先于模型输出固定",
+        "私有几何与公开像素可解性匹配",
+        "同事件新坐标不计新事件"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-12",
+      "title_zh": "强程序与专业基线接口",
+      "status": "proposed",
+      "target_window": "D3-W2",
+      "workstream": "reference",
+      "depends_on": [
+        "V5-06",
+        "V5-07"
+      ],
+      "deliverables": [
+        "恒答/存在性/目标匹配/latest-issued/full-evidence",
+        "持久性/气候/专业预报接口"
+      ],
+      "acceptance": [
+        "各基线访问权限明确",
+        "诊断原点不能混入真实模型分数",
+        "完整合法池与独立参考一致"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-13",
+      "title_zh": "短窗口有界前瞻捕获",
+      "status": "proposed",
+      "target_window": "D4-W2",
+      "workstream": "capture",
+      "depends_on": [
+        "V5-01",
+        "V5-03",
+        "V5-04",
+        "V5-05"
+      ],
+      "deliverables": [
+        "端点最新说明快照",
+        "72小时采集 scope",
+        "缺口/哈希/停止/恢复报告"
+      ],
+      "acceptance": [
+        "最多2provider/768请求/2GiB/72h",
+        "保留窗口和频率重新核对",
+        "没有事件不伪造事件",
+        "不依赖主动模型环境完成"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-14",
+      "title_zh": "NHC 固定未来目标与结算",
+      "status": "proposed",
+      "target_window": "W2-W4",
+      "workstream": "outcome",
+      "depends_on": [
+        "V5-01",
+        "V5-03",
+        "V5-04",
+        "V5-06"
+      ],
+      "deliverables": [
+        "预报-HURDAT2 对齐表",
+        "风速/位置目标",
+        "独立结算与缺失原因"
+      ],
+      "acceptance": [
+        "storm/valid/单位/插值/版本匹配",
+        "最佳路径只作私有后验",
+        "不能当港口风/经济损失"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-15",
+      "title_zh": "水文/水位/海浪匹配试点",
+      "status": "proposed",
+      "target_window": "W4-W6",
+      "workstream": "outcome",
+      "depends_on": [
+        "V5-01",
+        "V5-03",
+        "V5-04",
+        "V5-06"
+      ],
+      "deliverables": [
+        "NWPS/HEFS-USGS/CO-OPS 站点表",
+        "NDBC 波浪目标候选",
+        "QC与缺测分母"
+      ],
+      "acceptance": [
+        "stage/flow/datum/单位兼容",
+        "不同变量不可替代",
+        "无观测不记负例"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-16",
+      "title_zh": "六家族 P/C 双模型面板",
+      "status": "proposed",
+      "target_window": "W2-W3",
+      "workstream": "model",
+      "depends_on": [
+        "V5-08",
+        "V5-11",
+        "V5-12",
+        "V5-24"
+      ],
+      "deliverables": [
+        "M2 冻结面板",
+        "两家族 VLM 原始捕获",
+        "分家族/任务/表示报告"
+      ],
+      "acceptance": [
+        "最多192调用和8GPUh",
+        "相同公共表示与预算",
+        "少于合格样本配额就预冻结较小规模"
+      ],
+      "implementation_not_created_by_this_plan": true,
+      "model_scope_id": "M2"
+    },
+    {
+      "id": "V5-17",
+      "title_zh": "同目标修订和轨迹执行器",
+      "status": "proposed",
+      "target_window": "W2-W4",
+      "workstream": "core",
+      "depends_on": [
+        "V5-08",
+        "V5-12"
+      ],
+      "deliverables": [
+        "自然/受控 R 标签",
+        "完整轨迹调度",
+        "原回答历史隔离与失败处理"
+      ],
+      "acceptance": [
+        "同目标修订与世界演化分开",
+        "单轨失败不抹掉其他轨迹",
+        "自己的历史不被 oracle 替换"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-18",
+      "title_zh": "R 三载体双模型比较",
+      "status": "proposed",
+      "target_window": "W3-W4",
+      "workstream": "model",
+      "depends_on": [
+        "V5-17",
+        "V5-24"
+      ],
+      "deliverables": [
+        "M3 冻结矩阵",
+        "固定分母报告",
+        "事件组配对分析"
+      ],
+      "acceptance": [
+        "最多24轨迹/4实际检查点/3载体/2模型",
+        "最多576调用和24GPUh",
+        "不为静态样本制造重复时间点"
+      ],
+      "implementation_not_created_by_this_plan": true,
+      "model_scope_id": "M3"
+    },
+    {
+      "id": "V5-19",
+      "title_zh": "有限证据池主动环境",
+      "status": "proposed",
+      "target_window": "W3-W4",
+      "workstream": "core",
+      "depends_on": [
+        "V5-06",
+        "V5-08",
+        "V5-12"
+      ],
+      "deliverables": [
+        "GET_EVIDENCE/SUBMIT 环境",
+        "成本/可见性/固定目标",
+        "小池穷举充分性参考"
+      ],
+      "acceptance": [
+        "最多4次读取加1最终提交",
+        "大池搜索失败不写 unavoidable",
+        "所有策略共享潜在目标参考"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-20",
+      "title_zh": "A-evidence 小矩阵",
+      "status": "proposed",
+      "target_window": "W5-W6",
+      "workstream": "model",
+      "depends_on": [
+        "V5-19",
+        "V5-24"
+      ],
+      "deliverables": [
+        "M4 三读取策略",
+        "支持性/目标完成度/成本曲线",
+        "读取日志CPU重建"
+      ],
+      "acceptance": [
+        "最多720决策调用和28GPUh",
+        "最多24场景/3策略/2模型",
+        "固定一种载体与表示",
+        "缺答不当正确 unknown"
+      ],
+      "implementation_not_created_by_this_plan": true,
+      "model_scope_id": "M4"
+    },
+    {
+      "id": "V5-21",
+      "title_zh": "Broad/Trace 数据分波扩展",
+      "status": "proposed",
+      "target_window": "W3-W8",
+      "workstream": "data",
+      "depends_on": [
+        "V5-08",
+        "V5-02"
+      ],
+      "deliverables": [
+        "8-10家族 beta inventory",
+        "地域/季节/时标覆盖",
+        "自然监测和诊断集"
+      ],
+      "acceptance": [
+        "物理事件图和泄漏图分别构造",
+        "不按 provider 把全球合为一组",
+        "数据规模由实际资格统计"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-22",
+      "title_zh": "统计预声明与污染/分母审计",
+      "status": "proposed",
+      "target_window": "W2-W9",
+      "workstream": "statistics",
+      "depends_on": [
+        "V5-02",
+        "V5-06"
+      ],
+      "deliverables": [
+        "事件/过程组统计方案",
+        "自然队列抽样和结果分母",
+        "模型/任务/多重比较主次表"
+      ],
+      "acceptance": [
+        "组聚类不按checkpoint冒充独立",
+        "缺答不填p=0",
+        "平衡诊断不直接推自然概率校准",
+        "完整与共同可比子集都报告"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-23",
+      "title_zh": "近邻文献与官方 reader 复核",
+      "status": "proposed",
+      "target_window": "D1-W3",
+      "workstream": "research",
+      "depends_on": [
+        "V5-00"
+      ],
+      "deliverables": [
+        "原文逐维度比较",
+        "官方仓库release/commit/许可证",
+        "首批reader真实样本对照"
+      ],
+      "acceptance": [
+        "不凭摘要宣称首次",
+        "代码许可和数据许可分开",
+        "复用 reader 不证明 outcome 独立"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-24",
+      "title_zh": "第二 VLM 家族适配与曝光核验",
+      "status": "proposed",
+      "target_window": "W2",
+      "workstream": "model_adapter",
+      "depends_on": [
+        "V5-00",
+        "V5-09",
+        "V5-23"
+      ],
+      "deliverables": [
+        "候选型号/权重/许可证冻结",
+        "真实 processor no-generation preflight",
+        "上下文/图像/资源配置"
+      ],
+      "acceptance": [
+        "只在技术核验后锁模型",
+        "预检在总资源预算内",
+        "不看正式面板错误选替代模型"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-25",
+      "title_zh": "开发 pilot 独立验收与收缩决定",
+      "status": "proposed",
+      "target_window": "W2-W4",
+      "workstream": "review",
+      "depends_on": [
+        "V5-08",
+        "V5-12",
+        "V5-22"
+      ],
+      "deliverables": [
+        "真实数据卡",
+        "CPU可搬迁重建",
+        "实际达到的阶段与缺口"
+      ],
+      "acceptance": [
+        "模型低分不等于数据拒收",
+        "数据/参考错误阻塞相应版本",
+        "全部失败/历史哈希保留"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-26",
+      "title_zh": "论文候选与可复查交付包",
+      "status": "proposed",
+      "target_window": "W9-W12",
+      "workstream": "release",
+      "depends_on": [
+        "V5-21",
+        "V5-22",
+        "V5-23",
+        "V5-25"
+      ],
+      "deliverables": [
+        "数据/代码卡",
+        "论文证据矩阵",
+        "许可适配的复现包和发布清单"
+      ],
+      "acceptance": [
+        "只对已合格/已测轨道作结论",
+        "R/A/F分支未完成则明确收缩",
+        "未经许可原始资料不随代码发布"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-27",
+      "title_zh": "正式 heldout 范围准备",
+      "status": "proposed",
+      "target_window": "W9-W12",
+      "workstream": "design",
+      "depends_on": [
+        "V5-21",
+        "V5-22",
+        "V5-23",
+        "V5-25"
+      ],
+      "deliverables": [
+        "新 heldout 边界与隔离",
+        "预声明目标/阈值/模板/模型",
+        "未来执行预算提案"
+      ],
+      "acceptance": [
+        "保持现有 heldout 未推理",
+        "本工单只准备不运行",
+        "不依正式测试反馈改提示或删题"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-28",
+      "title_zh": "WAIT/未来预测/研究预警 profile",
+      "status": "proposed",
+      "target_window": "W5-W8",
+      "workstream": "design",
+      "depends_on": [
+        "V5-14",
+        "V5-19",
+        "V5-22"
+      ],
+      "deliverables": [
+        "固定评价日程",
+        "carry-forward/WAIT/COMMIT",
+        "proper scores与研究损失",
+        "未来新矩阵提案"
+      ],
+      "acceptance": [
+        "F/outcome资格成立才谈未来价值",
+        "缺失结果分母明确",
+        "没有成本/截止差异不凭空奖励早停",
+        "本轮1568范围不包含其新增推理"
+      ],
+      "implementation_not_created_by_this_plan": true
+    },
+    {
+      "id": "V5-29",
+      "title_zh": "复验、域外与消融的下一范围",
+      "status": "proposed",
+      "target_window": "W7-W9",
+      "workstream": "design",
+      "depends_on": [
+        "V5-16",
+        "V5-18",
+        "V5-20",
+        "V5-22"
+      ],
+      "deliverables": [
+        "基于首批时延与方差的新scope",
+        "地域/时段外推",
+        "有限重复与长度/表示消融"
+      ],
+      "acceptance": [
+        "重复不是原批失败替换",
+        "新预算独立声明",
+        "本轮1568范围不自动增加"
+      ],
+      "implementation_not_created_by_this_plan": true
+    }
+  ]
+}

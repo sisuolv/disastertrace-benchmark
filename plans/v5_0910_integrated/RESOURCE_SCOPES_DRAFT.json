@@ -1,0 +1,171 @@
+{
+  "schema_version": "v5_resource_scopes_draft_v1",
+  "status": "planning_only_not_an_execution_file",
+  "gpu_permission_persists_from_user": true,
+  "execution_scope_frozen": false,
+  "dispatch_enabled": false,
+  "max_h100_global": 4,
+  "paid_api": false,
+  "training": false,
+  "heldout_inference": false,
+  "new_model_calls_this_planning_task": 0,
+  "new_gpu_jobs_this_planning_task": 0,
+  "model_scopes": [
+    {
+      "id": "M1",
+      "task_id": "V5-10",
+      "status": "proposed_not_frozen",
+      "factors": {
+        "tasks": 40,
+        "representations": 2,
+        "models": 1
+      },
+      "max_model_calls": 80,
+      "max_requested_output_tokens_per_call": 2048,
+      "max_requested_output_tokens": 163840,
+      "proposed_max_reserved_h100_hours": 4,
+      "max_h100_global": 4,
+      "model_repeats": 1,
+      "model_retries": 0,
+      "execution_enabled": false,
+      "absolute_deadline": null,
+      "actual_counts": null
+    },
+    {
+      "id": "M2",
+      "task_id": "V5-16",
+      "status": "proposed_not_frozen",
+      "factors": {
+        "families": 6,
+        "episodes_per_family": 8,
+        "atomic_tasks_per_episode": 2,
+        "models": 2
+      },
+      "max_model_calls": 192,
+      "max_requested_output_tokens_per_call": 2048,
+      "max_requested_output_tokens": 393216,
+      "proposed_max_reserved_h100_hours": 8,
+      "max_h100_global": 4,
+      "model_repeats": 1,
+      "model_retries": 0,
+      "execution_enabled": false,
+      "absolute_deadline": null,
+      "actual_counts": null
+    },
+    {
+      "id": "M3",
+      "task_id": "V5-18",
+      "status": "proposed_not_frozen",
+      "factors": {
+        "eligible_trajectories": 24,
+        "actual_checkpoints_max": 4,
+        "carriers": 3,
+        "models": 2
+      },
+      "max_model_calls": 576,
+      "max_requested_output_tokens_per_call": 2048,
+      "max_requested_output_tokens": 1179648,
+      "proposed_max_reserved_h100_hours": 24,
+      "max_h100_global": 4,
+      "model_repeats": 1,
+      "model_retries": 0,
+      "execution_enabled": false,
+      "absolute_deadline": null,
+      "actual_counts": null
+    },
+    {
+      "id": "M4",
+      "task_id": "V5-20",
+      "status": "proposed_not_frozen",
+      "factors": {
+        "scenarios": 24,
+        "read_policies": 3,
+        "models": 2,
+        "decisions_per_trajectory_max": 5
+      },
+      "max_model_calls": 720,
+      "max_requested_output_tokens_per_call": 2048,
+      "max_requested_output_tokens": 1474560,
+      "proposed_max_reserved_h100_hours": 28,
+      "max_h100_global": 4,
+      "model_repeats": 1,
+      "model_retries": 0,
+      "execution_enabled": false,
+      "absolute_deadline": null,
+      "actual_counts": null
+    }
+  ],
+  "combined_max_model_calls": 1568,
+  "combined_max_requested_output_tokens": 3211264,
+  "combined_proposed_max_reserved_h100_hours": 64,
+  "no_generation_preflight_counts_toward_gpu_hours": true,
+  "not_a_measured_throughput_or_billing_estimate": true,
+  "future_forecast_warning_and_repeat_scopes_included": false,
+  "data_scopes": [
+    {
+      "id": "SOURCE_SLICE_PILOT",
+      "status": "proposed_not_frozen",
+      "max_http_attempts": 100,
+      "max_download_bytes": 2147483648,
+      "max_wall_seconds": 7200,
+      "max_aois": 2,
+      "max_stations": 5,
+      "max_retry_per_idempotent_get": 1,
+      "existing_local_assets_count_as_new_downloads": false,
+      "quota_covers_all_providers_combined": true,
+      "metadata_redirects_pagination_retries_count_towards_request_cap": true
+    },
+    {
+      "id": "CAPTURE_72H",
+      "status": "proposed_not_frozen",
+      "max_providers": 2,
+      "minimum_poll_interval_seconds": 900,
+      "max_wall_seconds": 259200,
+      "scheduled_poll_opportunities_max": 576,
+      "max_http_attempts": 768,
+      "max_download_bytes": 2147483648,
+      "max_aois": 2,
+      "max_stations": 5,
+      "max_retry_per_idempotent_get": 1,
+      "metadata_redirects_pagination_retries_count_towards_request_cap": true,
+      "source_rules_may_require_lower_frequency": true,
+      "capture_service_started": false
+    },
+    {
+      "id": "BROAD_PILOT_W2",
+      "status": "capacity_proposal_requires_product_manifests",
+      "max_http_attempts": 1000,
+      "max_download_bytes": 53687091200,
+      "max_wall_seconds": 21600,
+      "scope_not_automatically_added_to_first_week": true
+    },
+    {
+      "id": "PROSPECTIVE_RESEARCH",
+      "status": "future_scope_to_design",
+      "target_calendar_days": [
+        30,
+        60
+      ],
+      "http_budget": null,
+      "byte_budget": null,
+      "event_yield_guaranteed": false,
+      "does_not_auto_extend_capture_72h": true
+    }
+  ],
+  "storage_and_weights": {
+    "data_cache_initial_capacity_suggestion_bytes": 53687091200,
+    "second_model_download_capacity_suggestion_bytes": 34359738368,
+    "actual_available_quota_checked": false,
+    "separate_data_and_weight_ledgers": true,
+    "historical_raw_and_failures_must_be_preserved": true,
+    "no_automatic_historical_deletion": true
+  },
+  "stop_policy": [
+    "stop_new_dispatch_at_any_call_time_or_resource_limit",
+    "unknown_submissions_reserve_requested_gpu_slots",
+    "terminal_release_required_before_slot_reuse",
+    "no_model_retry_or_selective_failure_replacement",
+    "source_capture_resume_is_not_model_regeneration",
+    "unused_quotas_not_transferred_without_new_frozen_scope"
+  ]
+}
