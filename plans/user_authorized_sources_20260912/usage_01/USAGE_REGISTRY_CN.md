@@ -1,0 +1,105 @@
+# 97 项候选数据使用清单：用户授权数据补充
+
+2026-09-12。仅更新 EM-DAT、CMA、xBD 三项，其余 94 项逐字段继承上一版。
+
+86 项已解析目标内容，7 项事件/派生目录，2 项待授权，2 项未取到目标样例。条目数不等于独立数据集数，更不等于完成预测闭环的任务数。
+
+| 编号 | 来源 | 当前状态 | 实测与用途边界 |
+| --- | --- | --- | --- |
+| D01 | NHC forecast advisories / GIS | decoded_sample | 64 份公告、461 行数字预报；4 个已暴露风暴组，96 个唯一时刻有事后参考匹配。 96 个匹配目标不是 96 场独立气旋；历史公开可用时间仍未证实。 |
+| D02 | IBTrACS v4r01 | decoded_sample | 已解码 21,923 条轨迹记录、378 个 SID；作分盆地事后分析参考。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D03 | Digital Typhoon V2 | decoded_sample | ZIP 前缀中取出并 CRC 校验 3 帧完整 HDF5，原生数组可读。 同一台风的连续帧；强度标签、版本和原始切分待连接。 |
+| D04 | TCIR | decoded_sample | 完整 2017 压缩包 868,340,269 字节，gzip CRC 通过；HDF5 含 4,580 帧、94 个气旋 ID，已解析全部元数据及 6 帧原生数组，连接一个 +6h 强度参考。 只对 6 帧做数组检查；已暴露开发资料；需业务预报、历史可用时点及独立事件切分，不能把 4,580 帧当独立气旋。 |
+| D05 | NOAA Storm Events Database | decoded_sample | 136,982 条实际灾害报告；作事件检索及独立定义的 R 结果。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D06 | SEVIR | decoded_sample | 3 条完整 VIL 序列，每条 49 帧；用于雷达时序感知。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D07 | TorNet / v1.1 check | decoded_sample | 继承 3 个可解码 train 负例；本轮确认 v1.1 发布记录，新增归档前缀超时、无完整成员。 新增前缀不是成功 NetCDF 样本；仍缺实际正例及其与预警窗口的桥接。 |
+| D08 | NOAA NEXRAD Level II | decoded_sample | KTLX 2026-09-10 00:01:20.788 完整体扫，12 个 sweep，反射率/偏振矩可解析。 MetPy 报 unknown message 32；并非所有报文或科学 QC 都已验证。 |
+| D09 | NOAA MRMS | decoded_sample | MRMS 的完整 MESH、1 小时 QPE GRIB 数组已有下载和解析证据，关联 AW-MESH/AW-QPE。 产品别名不增加独立来源数；局地 GRIB 参数、负代码和时间支持待严格绑定。 |
+| D10 | GOES GLM (inherited sampled product) | decoded_sample | 3 个 GLM 20 秒文件及父子 ID 已校验；须构建空间密度基线并补极端窗口；ABI 尚未取样。 本项实际继承 3 个 20 秒 GLM 产品；新 ABI 样例单列 AW-ABI，避免重复统计。 |
+| D11 | Global Flood Database v1 | decoded_sample | GEE 项目认证成功，GFD 事件栅格取到 3 组 flooded/duration/clear_views 像元及可解码 GeoTIFF。 当前 3 点均非洪水；需事件内正例与质量有效区。回顾性洪水范围不等于未来流量真值。 |
+| D12 | GEOID-Flood | decoded_sample | 3 组前后 SAR/标签/有效性配对；均为同一外部 test 激活下的洪水负瓦片。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D13 | KuroSiwo | decoded_sample | HF 镜像取到 TAR 前缀，解析 3 组完整 SAR/掩膜/info 共 24 个成员。 同一激活中的 3 组瓦片；标签图例、原始 train/test 身份、事件独立性需连接。 |
+| D14 | UrbanSARFloods | decoded_sample | 8×256×256 SAR 与完整 GT 文件的同网格窗口精确配对；0 类 50,726、开阔地洪水 14,755、城市洪水 55 像素，原负瓦片保留。 GT 为经校验的窗口而非全文件下载；正瓦片按标签探查后选择，仅作开发可行性；需独立事件与任务时间链。 |
+| D15 | Sen1Floods11 v1.1 | decoded_sample | 已复核 3 个 Sen1Floods11 图像标签对、2 个事件地区；许可字段存在歧义，先澄清数据再分发条款。 已有真实配对样例；数据再分发条款歧义未解，先保留配方和引用。 |
+| D16 | SpaceNet 8 | decoded_sample | SpaceNet 8 原生灾前、灾后 TIFF 与映射对应 GeoJSON 标签均已完整下载解析。 原生网格不同；重投影配准、标签栅格化、覆盖和道路/建筑语义需单独核验。 |
+| D17 | FloodNet | decoded_sample | 作者原始 Google Drive 取得 3 组 4000×3000 RGB—标签对，10 类编码可读。 这 3 组没有建筑受淹/道路受淹像素，保留负例；需补正例、事件拆分及拍摄时点，灾后图像不自动支持预警。 |
+| D18 | CEMS Rapid Mapping | decoded_sample | 完整 EMSR842/AOI01 野火分级 ZIP，7 个 GeoJSON 层、604 条记录；602 有几何，2 条空几何保留，0 个无效几何。 实际取样是 Zamora 野火，不是原计划洪水 AOI；烧毁范围是事后参考；原始卫星影像与事件时点链须补齐。 |
+| D19 | WildfireSpreadTS | decoded_sample | 一个火场 3 天 TIFF；活动火像素 4/0/0，不能解释为后两天灭火。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D20 | Next Day Wildfire Spread | decoded_sample | 从已有 ZIP 前缀解析 3 个完整 TFRecord，长度和数据 CRC32C 均通过；13 字段包含前日/次日火掩膜。 整个 ZIP 未下载，未校验全包 CRC；原始时空事件身份和切分仍需核验。 |
+| D21 | TS-SatFire | decoded_sample | TS-SatFire 3 天同一火场 19 波段栅格可解码；最终标签通道和未来标签切片仍需读取器验证。 真实 19 波段数组可读；未来目标通道和有效掩膜语义未完成准入。 |
+| D22 | Sen2Fire | decoded_sample | Sen2Fire 大 ZIP 通过 HTTP Range 取出 3 个完整 NPZ并通过成员 CRC，12 波段/气溶胶/掩膜均可读。 当前 3 个掩膜全为负例；还需火灾正例、时序标签和独立火场身份。 |
+| D23 | NASA FIRMS | decoded_sample | 匿名 VIIRS CSV 有 2,606 条热点；尚未归并为火场。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D24 | MTBS burned-area boundaries | decoded_sample | GEE 实取 3 个 MTBS 周界矢量，并读取火烧严重度产品的有效像元。 历史周界/严重度属于事后产品；不提供原生次日火势或起火归因真值。 |
+| D25 | ERA5-Land Hourly | decoded_sample | CDS ERA5-Land 原生温度切片已验证；GEE 日聚合和小时集合也返回真实温度/降水值。 再分析不能冒充当时预报；小时总降水与累积变量的定义需按各产品单独绑定。 |
+| D26 | GHCN-Daily | decoded_sample | 5 个站点窗口共 40 个站日，实际温度/降水/雪字段可读。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D27 | ISD / Global Hourly | decoded_sample | 北京和沙特两个站年 28,733 报告；实有雾及浮/扬尘码，未发现本批沙尘暴/冻雨码正例。 ISD 已被 GHCNh 替代；保留旧冻结资产兼容，不用于持续获取当前站点数据。 |
+| D28 | NOAA GFS 0.25 degree operational forecasts | decoded_sample | 2026-09-10 00Z 起报、+6h：温度、10m U/V、0-6h 累计降水、能见度、阵风、冻雨分类，共 7 条完整 GRIB。 同一次起报不构成修订序列；690 个冻雨非零格点属于预报，不是冻雨实测。 |
+| D29 | IMERG V07 Early / Late | decoded_sample | NASA 原生 IMERG Early、Late V07B 各下载并解码 5×5 降水和质量切片；此前 Final 也已验证。 当前 E/L 样例降水均为 0；需要降水正例、累计时窗换算和版本延迟。GEE IMERG 接口不是 E/L 身份的替代证明。 |
+| D30 | CHIRPS v3 DAILY_SAT | decoded_sample | CHIRPS v3 DAILY_SAT 两个完整日栅格；用于明确标注的降水产品结果/背景。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D31 | US Drought Monitor | decoded_sample | 3 个实际 USDM 周产品；采用既有专家分析等级，程序化提取。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D32 | SMAP Enhanced L3 Soil Moisture | decoded_sample | SMAP L3 原生 DAP4 切片取得 437 个有效湿度值及坐标/质量字段；GEE 也有数值样本。 最初小窗全缺测，保留失败；GEE 3 点推荐质量位未通过。必须联合冻土/植被/质量位，不能直接作骤旱标签。 |
+| D33 | MODIS Snow MOD10A1.061 | decoded_sample | MOD10A1.061 完整 HDF4已下载，2400×2400 雪盖及 QA 数组已解码并筛出有效像元。 区分 0–100 雪盖值与云/水体/缺测代码；雪盖不等于新降雪、暴雪或冻雨。 |
+| D34 | MODIS LST MOD11A1.061 | decoded_sample | MOD11A1.061 完整 HDF4已下载，1200×1200 日间 LST 与 QC 已解析，应用 0.02 K 缩放。 地表温度不能替代 2m 气温；完整 QC、日夜条件与热浪持续性待规定。 |
+| D35 | MERRA-2 aerosol diagnostics | decoded_sample | MERRA-2 实际取得并解析 DUEXTTAU、DUSMASS 各 27 个 dust 数值，附原生变量属性。 再分析尘 AOD/近地面质量浓度不能单独作观测沙尘暴标签；需天气现象码等外部结果。 |
+| D36 | Sentinel-5P OFFL Aerosol Index | decoded_sample | Sentinel-5P OFFL 原生 DAP4 数值切片有 532 个有效气溶胶指数及坐标/QA。 低纬/极夜窗口可全缺测；L2 原生与 GEE L3 栅格身份不同，气溶胶指数不能单独区分烟尘或确定沙尘暴。 |
+| D37 | NOAA CO-OPS water levels | decoded_sample | 3 个潮位站共 720 对同基准观测/天文潮预报；不是完整风暴潮预报。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D38 | NOAA OISST v2.1 | decoded_sample | OISST 3 个日 NetCDF 可读；海洋热浪为扩展方向，需长期气候态与持续性定义。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D39 | EM-DAT | catalog_records_only | 用户授权 XLSX 已完整解析：17,022 条、47 列；核心天气灾害 8,584 条国家记录、6,863 个事件编号组。 只作事件目录；7,463 条核心记录缺经纬度，日期粒度不一；灾害报告阈值与漏报偏差、2026 年未完结、事件归并和再分发条件需遵循。缺记录不能作负例。 |
+| D40 | NASA EONET v3 | catalog_records_only | EONET v3 取得并解析 5 个带几何/日期的真实事件条目。 仅事件检索；含非天气灾害，不能当像元或未来预警真值。 |
+| D41 | GDACS | catalog_records_only | GDACS 实际 RSS/XML 事件 feed 已下载解析。 目录/告警条目不等同独立观测结果；需灾种过滤与版本/时间保存。 |
+| D42 | Sentinel-1 GRD | decoded_sample | AWS 原始 GRD 路径收到文件前缀；GEE Sentinel-1 VV/VH/angle 有真实像元与可解码 GeoTIFF。 GEE 是经处理的 GRD 产品；不等于原始 SAFE 全处理链已验证，也不增加独立 SAR 来源数。 |
+| D43 | Sentinel-2 SR Harmonized | decoded_sample | AWS L2A 反射率波段和 SCL 完整可读；GEE SR_HARMONIZED 也下载到真实像元和 TIFF。 当前 GEE 3 点为高概率云，不能纳入清晰地表任务；缩放/offset/重采样和云质量需严格处理。 |
+| D44 | xBD | decoded_sample | 真实取得 3 组 Florence 灾前/后 GeoTIFF 与标签，6 个 TIFF + 6 个 JSON；官方 geotransforms 22,068 项且 SHA1 通过。灾后 286 无损、176 未分类。 三组来自同一 Florence 过程、原 hold split，现为开发样例。像素/经纬度标签转换与 native affine 不一致，空间评分阻断；样例无损伤正类；完整分卷未下载校验，原始 PNG 与 TIFF 像素配准未证实。 |
+| D45 | CrisisMMD v2.0 | decoded_sample | 原始完整标注 ZIP 与 QCRI 官方托管图像精确路径连接 3 组图文标签，覆盖野火/Harvey/Irma。 社交相关性与影响标签不是天气真值；需转发去重、素材使用条款与真实拍摄/发布时点，过滤非天气事件。 |
+| D46 | Landslide4Sense | decoded_sample | Landslide4Sense 已验证 3 个 train 图像掩膜对；HDF5 缺时空/事件属性，降雨诱发成因仍未确认。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D47 | ExEBench / EarthExtreme-Bench | decoded_sample | ExEBench 寒潮子包完整：9 个来源案例、559 时间步；不是 9 个已确认独立过程。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D48 | ExtremeWeatherBench | decoded_sample | EWB 329 个案例定义及一个小时站点 parquet row group 的 122,880 行；未全部配对到案例。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D49 | WeatherQA | decoded_sample | 官方 12,803,203 字节 JSON 分片完整重建，共 8,511 条标注；3 张完整 GIF 与标注内配图路径精确匹配并解码。 这里只验证官方图文内容；图为不同天气变量，不能按时刻计数；预报讨论文字不是独立灾害结果真值。 |
+| D50 | CyPortQA | decoded_sample | CyPortQA 已取得 Dorian/Harvey/Florence 各 1 图 1 文；精确公告时刻对齐及港口标签规则尚未验证。 3 组图文可读；公告精确时间和港口影响标签待核，不能自动作未来结果。 |
+| D51 | WorldFloods v2 / ml4floods | decoded_sample | WorldFloods v2 完整 train S2 图像、gt 栅格和事件元数据已下载并通过网格一致性检查。 一组图像不是独立事件覆盖；混合来源许可和标签/时序定义需核验。 |
+| D52 | DroughtED | decoded_sample | DroughtED train ZIP 前缀解析 26,666 行，含 3,809 非空周标签；实际至 2016 与文档 train 2000-2009 冲突；需固定原文件切分。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D53 | M4Fog | no_decoded_target_sample | M4Fog 作者仓库与公开网盘分享页可访问。 尚未取得原生多模态 cube；需要可直接下载的作者分包或已登录网盘访问。 |
+| D54 | CLLMate | catalog_records_only | CLLMate 公共 JSON 7,747 节点已解析；包括非天气事件；新闻/原图与因果边未验证，不作因果 Gold。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D55 | SNODAS SWE | decoded_sample | 3 个 SNODAS SWE 日网格；SWE 与新降雪深度分开。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D56 | USGS continuous observations | decoded_sample | 两个正式站点映射，50 个水位样值；Scotia 另有 25 个同站流量样值。 当前样例均为 Provisional；地点、变量、基准及冻结质量政策逐任务绑定。 |
+| D57 | NWPS stage forecasts | decoded_sample | SCOC1/GUEC1 两站各 119 个水位预报记录，已核官方 USGS 对应关系。 普通 API 的滚动服务不证明历史业务版本；当前阈值不自动适用于历史。 |
+| D58 | NDBC Buoys | decoded_sample | 3 个 NDBC 浮标的波浪记录；只作海岸风浪背景。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D59 | MeteoNet | decoded_sample | MeteoNet 111,623 条站报、484 站和红外数组；雷达 NPZ 时间对象未启用 pickle。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D60 | Caravan | decoded_sample | Caravan 三个美国流域，各 14,609 日；适合历史水文与属性辅助。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D61 | HANZE v2.1 | catalog_records_only | HANZE 2,521 个欧洲洪水影响目录条目；仅用于事件索引。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D62 | Dheed | catalog_records_only | Dheed 82,839 派生干热事件记录可读；先查上游依赖和定义，不能作为另一份独立观测真值。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D63 | DAWN | decoded_sample | DAWN Fog/Rain/Sand/Snow 四个子包各取 3 张原始图片，共 12 张，ZIP 成员 CRC 和图片解码均通过。 视觉条件数据缺乏可验证时空/天气严重度，Fog 样例文件名含 haze；只能先作视觉辅助集。 |
+| D64 | SenForFlood | decoded_sample | 官方镜像取得 EMSR339 的 7 个完整 TIFF：S1/S2 灾前与灾中、地形、LULC、掩膜；512×512 同 EPSG:3857 网格。 掩膜 0/1/2 的准确图例、波段定义及精确观测 UTC 尚未确认；不得把非零统一当洪水，暂不评分二值洪水/未来预警。 |
+| D65 | FPA-FOD6 | decoded_sample | FPA-FOD6 已复核 3 条火灾记录；与 FIRMS、火烧迹地按事件合并，起火原因不能默认极端天气。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D66 | WeatherBench2 ERA5 | decoded_sample | WeatherBench2 一个 ERA5 温度 chunk 已复核；记录为 ERA5 衍生产品，不冒充 D25 ERA5-Land。 继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。 |
+| D67 | NOAA HRRR operational forecasts | decoded_sample | 同一 00Z 起报 +6h：气温、能见度、冻雨分类，1799×1059。 冻雨样例全零；仅确认数值字段可读，尚无实际冬季正例链。 |
+| D68 | HKO-7 | authorization_pending | 公开日天气统计和时间索引可得；已核对作者原始雷达数据申请说明。 雷达影像和掩膜须由高校/研究机构成员签署承诺书，并用机构邮箱申请；本机没有这部分样本。 |
+| D69 | GESLA current / GESLA-3 candidate | decoded_sample | 当前 GESLA 端点实取一个站点 4 条完整小时海平面记录，单位 m，包含双质量标记。 不是已锁定的 GESLA-3 版本；站点基准、flag1/flag2和天文潮/风暴潮区分仍需核验。 |
+| D70 | ESWD | authorization_pending | ESWD 公共页面可访问，尚无许可明确的批量事件样本。 需要确认研究用途的数据访问许可和批量提供方式。 |
+| D71 | CAMELSH | decoded_sample | 官方公开版本 16729675 的 Hourly2.zip 经 9 次 Range 取得 3 个完整 NetCDF；各 394,488 个名义小时格，1980—2024，流量/水位含单位和缺测。 流量 m3/s、水位 m 分开；缺测格不是有效观测；需水位基准、质量成熟度和专业预报匹配，所取成员不含完整气象驱动。 |
+| D72 | MSETCD / MSCAR | no_decoded_target_sample | MSCAR 仓库明确对应 MSETCD 数据集；作者网盘分享入口已访问。 MSCAR 是代码/模型而非另一独立数据集；原生 MSETCD 影像尚未取回。 |
+| D73 | CMA Best Track | decoded_sample | 用户提供 CMA RAR 的 77 个年度文件均通过 CRC；1949—2025 年，2,549 个气旋段、74,370 个时次，保留 734 行可选第七列。 官方格式页仍返回 468。经纬度比例、风速单位/平均时段、缺失码及 UTC 定义待原始文档绑定；最佳路径是事后分析，历史预报配对和发布时间另验。 |
+| D74 | NOAA Billion-Dollar Disasters | catalog_records_only | NOAA Billion-Dollar Disasters 完整事件 CSV 已获取并解析。 经济损失阈值决定入选，地区偏差明显；只作影响事件索引。 |
+| AW-HURDAT2 | NHC HURDAT2 Atlantic | decoded_sample | 已与四个风暴的数字预报精确匹配；原始结果文件本轮重新核验哈希。 同机构事后分析 P；不用作独立原始传感器 O。 |
+| AW-HEFS | NOAA HEFS QINE ensemble | decoded_sample | Scotia 两轮完整集合产品，每轮 45 成员 × 721 时次。 流量 CFS 不能直接套用水位洪水阈值；成员权重、flag 与概率合同待冻结。 |
+| AW-NIMS | USGS NIMS cameras | decoded_sample | 旧审计有一个站点三张真实影像与近时水位；本轮水文两站相机接口未找到。 仅作条件性原生视觉证据；不把像素直接反演为精确水位 Gold。 |
+| AW-GHCNH | NOAA GHCNh current hourly archive | decoded_sample | 2026 Denver 单站文件首尾各 1 MiB，4,558 个完整稀疏行；476 行非空气温，涵盖 1 月及 9 月。 不是整年下载；9 月气温 QC 为空不能当作通过 QC。温度已为摄氏度，能见度为 km，现象码含 TS:17 等字符串。 |
+| AW-GEFS | NOAA GEFS ensemble | decoded_sample | 同一 00Z 起报 +6h，c00/p01 两成员各有气温与 0-6h 降水，720×361。 仅抽样两个成员；不能用此宣称完整集合、官方概率或已校准概率。 |
+| AW-SPC | SPC Day 1 convective outlook | decoded_sample | 2026-09-10 13Z outlook ZIP 完整 CRC 通过；7 类产品有 28 个 shapefile 表示层，含 cat/hail/torn/wind 及 CIG。 28 层不是 28 个独立预报或灾害；DN、CIG 与区域/时间支持需按版本解释。 |
+| AW-MESH | MRMS MESH | decoded_sample | 一个完整 gzip/GRIB，7000×3500；时间 2026-09-10 00:00:43，最大原值 24.9。 本地 ecCodes 名称/单位为 unknown，含负代码；先补官方局地表/有效掩膜再设阈值，不能等同地面雹径。 |
+| AW-QPE | MRMS MultiSensor QPE 01H Pass2 | decoded_sample | 一个完整 gzip/GRIB，7000×3500；2026-09-10 00Z，1,676,667 个正原值，含 -3 代码。 文件名为 1h QPE，但通用 GRIB 解码显示 instant/unknown units；产品累计窗、单位、Pass2 延迟与代码表须以产品规范绑定。 |
+| AW-ABI | GOES-19 ABI C01 / C13 | decoded_sample | 2026-09-10 可见光 C01 与红外 C13 两个完整 NetCDF；C01 1000×1000，DQF 均为 0。 两个通道/同一上游不是独立事件；原始变量、投影及 DQF 必须保留。 |
+| AW-METAR | AWC METAR observations | decoded_sample | KDEN/KJFK/KSFO 共 35 条实际站报。 滚动接口不是长期历史档案；SM/kt 等原始单位及能见度上下界要解析。 |
+| AW-TAF | AWC TAF forecasts | decoded_sample | KDEN/KJFK/KSFO 三站 TAF 原文和结构化预报组。 FM/TEMPO/PROB 语义与机场范围必须保留；TAF 预报雾不能作未来观测标签。 |
+| AW-IEM | IEM historical METAR archive | decoded_sample | OKC 2020 冰暴窗口 108 行：47 条 FZRA、8 条 FZDZ；PHX 2011 沙尘窗口 68 行：5 条 DS、10 条 BLDU。 IEM 是历史站报再分发端，不是独立传感器；两次选择性历史过程均已暴露，仅作开发/可行性材料。 |
+| AW-EDDI | NOAA EDDI 01-month | decoded_sample | 2026-01-01 ESRI ASCII，224×464；79,831 个非缺测有限值。 文件没有显式 CRS；EDDI 不直接等于土壤水分、闪旱或已发布预报。 |
+| AW-CPC | CPC Seasonal Drought Outlook | decoded_sample | 完整 15,714,252 字节 ZIP，19 个成员；2026-08-20 签发，目标 November30，两个形状层。 季节性分类展望不对应下一周 USDM 概率；类别及空间范围保持原产品定义。 |
+| AW-OFS | NOAA CBOFS station forecast | decoded_sample | 完整 50,650,138 字节 NetCDF；209 个模型位置、481 时次/48h，100,529 个有限 zeta 值，单位 m。 模型位置尚无正式 CO-OPS 站号/垂直基准桥；不能直接和潮位站阈值比较。 |
+| AW-PETSS | NOAA P-ETSS tide/surge station bulletins | decoded_sample | 两份完整数值公告，各 290 个位置 × 102 值；210 个数字 ID、80 个 est ID，原单位 0.1 ft。 明确 NOT VALID FOR TROPICAL STORM；e10 概率含义、时间对齐、基准及 -400 代码未准入。 |
+| AW-WPC | WPC QPF / winter products | decoded_sample | 从实际 2p5km_qpf 目录取回完整 GRIB 数值降水预报并解析。 当前只验证 QPF；冬季雪/冰概率及厚度产品仍须独立抽样。 |
+| AW-GWIS | GWIS FWI map service | decoded_sample | 从官方前端定位数值接口，实取 (-4,40) 五天、八项火险指数，含 FWI/FFMC/ISI。 FWI 不是起火概率；缺原始签发版本与历史发布证明；完整原生格点导出另核。 |
+| AW-EFFIS | EFFIS fire danger service | decoded_sample | 旧版停用后验证新版专属配置绑定数值接口，实取 (-7,42) 五天、八项指数。 与 GWIS 共享 ECMWF 后端，不能作为另一独立模型；缺签发版本、历史发布时间和格点导出验证。 |
+| AW-CAMS | CAMS dust/composition forecast | decoded_sample | 此前 ADS 授权后已实取并解码 dust AOD 数值预报，旧 401 状态已失效。 光学厚度不等于地面沙尘暴；未来有效窗、现象观测和延迟需配对。 |
+| AW-GLOFAS | GloFAS operational forecast | decoded_sample | 此前 EWDS 授权后已实取并解码流量数值预报，旧 401 状态已失效。 网格与河网/站点匹配、平均时窗及阈值不能默认兼容。 |
+| AW-EFAS | EFAS operational forecast | decoded_sample | EWDS 历史 forecast 数值已下载解码；公开历史路径不再受旧 403 许可阻断。 公共下载约有 30 天延迟；实时合作伙伴权限未验证，不宣称实时 EFAS 可用。 |
+| AW-SMAPL4 | SMAP L4 SPL4SMGP v008 | decoded_sample | NASA 原生 rootzone/surface 3×3 数值和 GEE 样例均已取回。 同化产品不是独立实测真值；时制、冻结/积雪和质量支持仍需细化。 |

@@ -1,0 +1,75 @@
+{
+  "schema": "monitoring.plan_decisions.v1",
+  "status": "proposed",
+  "repository_commit": "ae69453ff15bc3def6c513fafbfd8758437a8587",
+  "initial_scope": {
+    "unit": "real-region same-period MonitorSession",
+    "initial_hazard": "airport_visibility_candidate",
+    "sites_engineering_target": [
+      4,
+      6
+    ],
+    "real_data_verified_for_this_session": false,
+    "min_first_real_sites": 2,
+    "cross_hazard_initially": false
+  },
+  "state": {
+    "default": "FOLLOW_BASELINE",
+    "new_baseline_when_follow": "update_effective_prediction_until_target_deadline",
+    "new_baseline_when_override": "retain_previous_explicit_forecast",
+    "no_action": "keep_current_mode",
+    "explicit_follow": "clear_override_and_delegate",
+    "target_close": "freeze_effective_prediction_at_own_deadline",
+    "finish_acquisition": "no_active_actions_but_followed_baselines_continue_until_deadlines",
+    "stale_baseline_inflight": "accept_if_deadline_legal_and_tag_snapshot_age_not_automatic_rebase"
+  },
+  "budgets": {
+    "research_capture_separate": true,
+    "logical_entitlement_per_strategy_session": true,
+    "atomic_reservations": true,
+    "scalar_real_world_cost_claim": false,
+    "count_selector_compute": true,
+    "count_repeated_visual_exposure": true,
+    "allow_batch_cache_to_all_baselines": true
+  },
+  "clocks": {
+    "replay": "explicit_virtual_time_and_frozen_tariff",
+    "live": "UTC_durable_receipts_and_monotonic_duration",
+    "evidence_freeze_at": "request_or_inference_input_snapshot_as_applicable",
+    "future_outcome_in_worker": false,
+    "same_time_event_order": "freeze a total order before execution; never backdate real late commits"
+  },
+  "comparison": {
+    "main": "shared_latest_complete_professional_baseline_plus_extra_evidence_budget",
+    "optional_secondary": "professional_forecast_acquisition_also_costed",
+    "predictor_initially": "same_single_target_backend_for_all_allocators",
+    "joint_target_prediction": "separate_later_factor",
+    "must_include": [
+      "delegate_only",
+      "cheap_calibration_or_persistence",
+      "uniform_poll",
+      "deadline_priority",
+      "public_coverage_greedy",
+      "batch_all_read_if_feasible",
+      "independent_with_reasonable_cache",
+      "active"
+    ]
+  },
+  "gold": {
+    "new_itemwise_human_review": false,
+    "llm_judge": false,
+    "existing_annotations": "allowed_with_identity_and_limits",
+    "probability_per_item_gold": "none",
+    "E": "legal_evidence_based",
+    "F": "same_physical_outcome_across_information_branches",
+    "D": "deferred_scenario_only"
+  },
+  "safety_and_permissions": {
+    "private_results_unmounted": true,
+    "arbitrary_agent_shell": false,
+    "new_downloads_require_explicit_scope": true,
+    "new_model_or_gpu_requires_explicit_scope": true,
+    "no_remote_push": true,
+    "preserve_old_runs": true
+  }
+}

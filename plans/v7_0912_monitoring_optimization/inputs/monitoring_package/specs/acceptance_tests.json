@@ -1,0 +1,390 @@
+{
+  "status": "planned_acceptance_specifications_not_test_results",
+  "repository_commit": "ae69453ff15bc3def6c513fafbfd8758437a8587",
+  "tests": [
+    {
+      "id": "T01",
+      "work_package": "M01",
+      "title": "FOLLOW随业务基线合法更新",
+      "setup": "初始0.20→新基线0.35，未提交覆盖",
+      "expected": "生效0.35；记录default delegation或显式follow身份，不算模型REVISE",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T02",
+      "work_package": "M01",
+      "title": "覆盖不隐式重置",
+      "setup": "模型override0.60后基线0.35",
+      "expected": "没有新动作仍0.60，保留as_of基线版本",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T03",
+      "work_package": "M01",
+      "title": "显式撤销覆盖",
+      "setup": "override后FOLLOW",
+      "expected": "恢复最新合法基线并继续跟随",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T04",
+      "work_package": "M04",
+      "title": "逐目标截止",
+      "setup": "A已截止B未截止，新基线与模型结果到达",
+      "expected": "A冻结，B可更新，session不因A提前停止",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T05",
+      "work_package": "M01",
+      "title": "域与删失",
+      "setup": "负温度与P/M能见度；非法单位组合",
+      "expected": "合法负温度保留；区间保存；越阈不确定不转负例",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T06",
+      "work_package": "M01",
+      "title": "异构输入",
+      "setup": "水位目标+有关系的降雨证据",
+      "expected": "保留各自单位和变量；结果仍严格匹配目标",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T07",
+      "work_package": "M02",
+      "title": "观测主体与BECMG",
+      "setup": "当前能见度缺失，趋势出现0800",
+      "expected": "当前值缺失/拒收，不得用趋势填值",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T08",
+      "work_package": "M02",
+      "title": "完整TAF",
+      "setup": "prevailing与TEMPO不同，含未支持操作符",
+      "expected": "条件段保留；未知操作符有拒收；不固定编造TEMPO点概率",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T09",
+      "work_package": "M02",
+      "title": "原生身份时间",
+      "setup": "站号/原生时间与目录不一致",
+      "expected": "逐行拒收原因；不可静默用目录覆盖正文",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T10",
+      "work_package": "M03",
+      "title": "共享获取一次",
+      "setup": "同策略session同版本被A/B请求",
+      "expected": "获取成本一次；每个交付/渲染/模型成本据实计",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T11",
+      "work_package": "M03",
+      "title": "跨策略缓存隔离",
+      "setup": "策略甲读了文件，乙尚未读",
+      "expected": "物理文件可共享；乙不可自动有权限或零逻辑获取费用",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T12",
+      "work_package": "M03",
+      "title": "重复模型曝光",
+      "setup": "同图进入两次实际processor",
+      "expected": "两次实际token/视觉费用保留；有真缓存则明确测量",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T13",
+      "work_package": "M03",
+      "title": "版本身份",
+      "setup": "同URL正文或版本变化",
+      "expected": "旧内容不覆盖，形成新身份；未声明内容变化不得复用旧视图",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T14",
+      "work_package": "M03",
+      "title": "不同提供方同目标",
+      "setup": "两个独立产品相同valid_at",
+      "expected": "不以全局last-write-wins删除；依赖未知保留",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T15",
+      "work_package": "M03",
+      "title": "并发预算原子性",
+      "setup": "两个动作同时争最后一份额度",
+      "expected": "有界预留使最多一个被准入；失败费用仍计",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T16",
+      "work_package": "M04",
+      "title": "请求时快照",
+      "setup": "请求中出现新版",
+      "expected": "已发请求仍返回绑定版本；新请求可取新版",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T17",
+      "work_package": "M04",
+      "title": "推理时新基线",
+      "setup": "基于b1推理中b2到达",
+      "expected": "请求不变；按预定政策提交并标记baseline age，不隐式平移预测",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T18",
+      "work_package": "M04",
+      "title": "同刻事件与落盘截止",
+      "setup": "完成/基线/截止同刻及截止后微秒",
+      "expected": "确定优先级；真实迟到收据不通过排序变为准时",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T19",
+      "work_package": "M03",
+      "title": "目录未来泄漏",
+      "setup": "目录含未来asset ID/总数或隐藏正例质量分",
+      "expected": "公开view拒绝；仅原本已发布metadata可见",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T20",
+      "work_package": "M03",
+      "title": "未读质量与coverage",
+      "setup": "未读像元才可确定云和有效范围",
+      "expected": "不可提前向selector暴露数组计算结论",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T21",
+      "work_package": "M04",
+      "title": "零时等待",
+      "setup": "WAIT(当前时刻)反复请求",
+      "expected": "拒收或推进到合法事件；动作数上限防无穷循环",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T22",
+      "work_package": "M04",
+      "title": "重启不重复执行",
+      "setup": "intent已写、raw未知后重启",
+      "expected": "不自动重生成/重扣费；未知状态及恢复证据保留",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T23",
+      "work_package": "M04",
+      "title": "局部提交失败",
+      "setup": "同批A迟到B合法",
+      "expected": "按目标独立结果和收据；不删除整个批次失败证据",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T24",
+      "work_package": "M05",
+      "title": "自然session身份",
+      "setup": "不同日期/地区旧样例拟合并",
+      "expected": "禁止称为自然同时发生；仅合成fixture可显式标注",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T25",
+      "work_package": "M05",
+      "title": "原生图像真实绑定",
+      "setup": "原图→渲染→processor",
+      "expected": "source/view/png哈希、尺寸、通道、时间、mask政策齐全",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T26",
+      "work_package": "M08",
+      "title": "处理器视觉一致性",
+      "setup": "图片计数与image_grid_thw/pixel_values异常",
+      "expected": "preflight拒收；不把base64字符串当图片证据",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T27",
+      "work_package": "M08",
+      "title": "上下文预算",
+      "setup": "输入加输出预留超过限制",
+      "expected": "dispatch前明确失败；无静默裁剪或擅自缩图",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T28",
+      "work_package": "M08",
+      "title": "策略自有记忆",
+      "setup": "不同策略/条件carrier串用",
+      "expected": "拒收或严格命名隔离；结果不可跨条件喂入",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T29",
+      "work_package": "M07",
+      "title": "全目标分母",
+      "setup": "未读取、未提交、非法输出、结果缺失混合",
+      "expected": "分别保留状态；没有查询的目标仍按模式评分",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T30",
+      "work_package": "M06",
+      "title": "共同业务资料一致",
+      "setup": "不同策略同检查点",
+      "expected": "完整基线产品与表示版本绑定一致；额外信息不藏入某策略",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T31",
+      "work_package": "M07",
+      "title": "引用权限与语义",
+      "setup": "引用未读取资产或读取了但不适用",
+      "expected": "未读取硬拒；适用性单独E计分，不能只查ID存在",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T32",
+      "work_package": "M07",
+      "title": "独立grader",
+      "setup": "worker试图访问outcome目录/评分端点",
+      "expected": "权限阻止；评分只能在独立区域运行",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T33",
+      "work_package": "M07",
+      "title": "分数损益复算",
+      "setup": "固定三个目标已知baseline/override/result",
+      "expected": "标准库复算与主评分一致，改善/恶化算术和等于净差",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T34",
+      "work_package": "M07",
+      "title": "不变结果与证据分支",
+      "setup": "同目标资料遮蔽/旧版/延迟",
+      "expected": "E按可见资料变；F结果不变；不使用LLM补Gold",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T35",
+      "work_package": "M09",
+      "title": "真正多目标耦合",
+      "setup": "一图覆盖多个目标与无共享控制",
+      "expected": "展示计费/策略机会差；无差异则不声称调度增益",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T36",
+      "work_package": "M09",
+      "title": "廉价批量强基线",
+      "setup": "官方批量缓存可用",
+      "expected": "独立预测同样允许合理IO缓存；不人为加重复下载成本",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T37",
+      "work_package": "M10",
+      "title": "真实收据时间",
+      "setup": "推理开始早但落盘晚",
+      "expected": "按最终持久化收据标迟到，不回填早时间",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T38",
+      "work_package": "M10",
+      "title": "结果成熟与版本",
+      "setup": "provisional/final和多次修订",
+      "expected": "追加记录；所有策略同结果快照；不挑最小误差版本",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T39",
+      "work_package": "M07",
+      "title": "早目标与晚目标",
+      "setup": "早目标观测真实发布，晚目标仍开放",
+      "expected": "仅合法provider观测可输入晚目标；grader分数/私有未来结果不开放",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T40",
+      "work_package": "M09",
+      "title": "事件族切分",
+      "setup": "共享风暴/重叠影像/同站邻日",
+      "expected": "分组切分；统计N不是目标/阈值/模型调用数",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T41",
+      "work_package": "M03",
+      "title": "AFA特权API隔离",
+      "setup": "第三方方法接口接收label参数",
+      "expected": "普通adapter不包含label；oracle独立命名且不用于排名",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T42",
+      "work_package": "M05",
+      "title": "再处理历史产品",
+      "setup": "GOES重处理版本和运行时版本",
+      "expected": "记录product lineage；不声称后处理版本当时可用",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T43",
+      "work_package": "M07",
+      "title": "FOLLOW不是模型成功",
+      "setup": "默认跟随产生合格分数但无模型调用",
+      "expected": "报告委托成绩和零调用，不计算成模型400/400成功",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T44",
+      "work_package": "M06",
+      "title": "校准数据边界",
+      "setup": "TAF概率映射在同一测试过程拟合",
+      "expected": "拒绝确认性使用；开发fit与确认集分离，缺基础则不宣称概率校准",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T45",
+      "work_package": "M01",
+      "title": "任务内结果支持",
+      "setup": "站点日累计/瞬时/窗口错配",
+      "expected": "按合同拒绝跨时间支持替代，近时诊断单列",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T46",
+      "work_package": "M04",
+      "title": "FINISH不冻结跟随太早",
+      "setup": "停止取证后基线合法更新",
+      "expected": "FOLLOW仍持续到各deadline；OVERRIDE不自动跟随",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T47",
+      "work_package": "M03",
+      "title": "物理缓存不等于预测知识",
+      "setup": "研究端已存未来数组但当前未授权",
+      "expected": "读代理无未来内容；文件绝对路径/密钥不进入worker",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "T48",
+      "work_package": "M09",
+      "title": "不把范围不交等同预测独立",
+      "setup": "另一地区新观测与目标可能相关",
+      "expected": "E局部不变按确定性合同，F不无条件强制不变；评价质量与公开关联",
+      "status": "planned_not_executed"
+    }
+  ]
+}

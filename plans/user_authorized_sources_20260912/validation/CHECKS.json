@@ -1,0 +1,36 @@
+[
+  {
+    "check": "regression_after",
+    "exit_code": 0,
+    "command": [
+      "python",
+      "plans/user_authorized_sources_20260912/test_user_contracts.py"
+    ],
+    "log": "validation/regression_after.log"
+  },
+  {
+    "check": "ruff_check",
+    "exit_code": 0,
+    "command": [
+      "disastertrace-starter/.venv/bin/python",
+      "-m",
+      "ruff",
+      "check",
+      "plans/user_authorized_sources_20260912"
+    ],
+    "log": "validation/ruff_check.log"
+  },
+  {
+    "check": "ruff_format",
+    "exit_code": 0,
+    "command": [
+      "disastertrace-starter/.venv/bin/python",
+      "-m",
+      "ruff",
+      "format",
+      "--check",
+      "plans/user_authorized_sources_20260912"
+    ],
+    "log": "validation/ruff_format.log"
+  }
+]

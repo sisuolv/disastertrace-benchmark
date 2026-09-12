@@ -1,0 +1,324 @@
+{
+  "schema": "disastertrace.v7.integrated_backlog.v1",
+  "status": "planning_only",
+  "tasks": [
+    {
+      "id": "V7-00",
+      "title_cn": "基线保护、协议冻结与文献差异表",
+      "depends_on": [],
+      "deliverables_proposed": [
+        "BASELINE_PIN.json",
+        "PROTOCOL_FREEZE.json",
+        "NOVELTY_COMPARISON.md"
+      ],
+      "acceptance_cn": [
+        "原结果与输入hash不变",
+        "协议分歧有独立ID",
+        "文献定位不预写首次或正收益"
+      ],
+      "source_task_mapping": [
+        "master:P00",
+        "monitoring_package:M00",
+        "monitoring_spec:PR0"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-01",
+      "title_cn": "合同与预测修订状态",
+      "depends_on": [
+        "V7-00"
+      ],
+      "deliverables_proposed": [
+        "contracts.py",
+        "state.py",
+        "state_regression_results.json"
+      ],
+      "acceptance_cn": [
+        "session/target/opportunity分开",
+        "负值/区间/证据关联合法",
+        "FOLLOW零模型调用且等于基线",
+        "两种覆盖协议不能混用"
+      ],
+      "source_task_mapping": [
+        "master:D03,R00",
+        "monitoring_package:M01",
+        "monitoring_spec:PR1"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-02",
+      "title_cn": "时钟、预算、证据授权与恢复",
+      "depends_on": [
+        "V7-01"
+      ],
+      "deliverables_proposed": [
+        "scheduler.py",
+        "budget.py",
+        "catalog.py",
+        "replay.py",
+        "offline_protocol_results.json"
+      ],
+      "acceptance_cn": [
+        "spent+reserved不越界",
+        "快照与截止确定",
+        "跨策略权限隔离",
+        "恢复不重采样",
+        "无标签挂载或隐藏内容回包"
+      ],
+      "source_task_mapping": [
+        "master:R02,R03,R04",
+        "monitoring_package:M03,M04",
+        "monitoring_spec:PR2"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-03",
+      "title_cn": "来源纯解析、完整基线与Range修正",
+      "depends_on": [
+        "V7-00",
+        "V7-01"
+      ],
+      "deliverables_proposed": [
+        "adapters/aviation.py",
+        "adapters/station_temperature.py",
+        "provider_regression_results.json",
+        "range_regression_results.json"
+      ],
+      "acceptance_cn": [
+        "TAF条件及字段继承",
+        "METAR主体/趋势/COR分开",
+        "原生阈值与删失",
+        "累计加实际Range含预读先验检查",
+        "缺版本头不能当稳定证明"
+      ],
+      "source_task_mapping": [
+        "master:D02,D03,S00",
+        "monitoring_package:M02",
+        "monitoring_spec:PR0,PR3"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-04",
+      "title_cn": "真实区域会话与共享影像编译",
+      "depends_on": [
+        "V7-02",
+        "V7-03"
+      ],
+      "deliverables_proposed": [
+        "REGIONAL_JOIN_AUDIT.json",
+        "opportunities.parquet",
+        "public_bundle_manifest.json",
+        "private_outcomes_manifest.json",
+        "native_view_manifest.json",
+        "CALIBRATION_COVERAGE.json"
+      ],
+      "acceptance_cn": [
+        "真实同区域同日期",
+        "完整日历分母",
+        "全结果/基线缺口账本",
+        "至少一份共享原生图像否则不称多模态",
+        "独立校准资格单独放行"
+      ],
+      "source_task_mapping": [
+        "master:D04,D05,D06,D07",
+        "monitoring_package:M05",
+        "monitoring_spec:PR3,PR6"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-05",
+      "title_cn": "程序强基线与独立评分",
+      "depends_on": [
+        "V7-02",
+        "V7-04"
+      ],
+      "deliverables_proposed": [
+        "program_traces.jsonl",
+        "all_opportunity_scores.parquet",
+        "independent_score_check.json"
+      ],
+      "acceptance_cn": [
+        "无需LLM真实闭环",
+        "相同mask及当前基线",
+        "廉价批量基线不削弱",
+        "净差等于改善减破坏",
+        "无概率校准则不发布概率主榜"
+      ],
+      "source_task_mapping": [
+        "master:S00,S01,E00,E01",
+        "monitoring_package:M06,M07",
+        "monitoring_spec:PR4"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-06",
+      "title_cn": "真实文本与VLM后端",
+      "depends_on": [
+        "V7-05"
+      ],
+      "deliverables_proposed": [
+        "MODEL_PIN.json",
+        "PROCESSOR_AUDIT.json",
+        "model_requests_and_raw_responses",
+        "cost_receipts.jsonl"
+      ],
+      "acceptance_cn": [
+        "版本与模板冻结",
+        "真实像素进入processor",
+        "prepare/reserve/intent/raw完整",
+        "成本与失败保留",
+        "先短链小批"
+      ],
+      "source_task_mapping": [
+        "master:R05",
+        "monitoring_package:M08",
+        "monitoring_spec:PR5"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-07",
+      "title_cn": "共享分配与修订机制实验",
+      "depends_on": [
+        "V7-06"
+      ],
+      "deliverables_proposed": [
+        "MECHANISM_PREREGISTRATION.json",
+        "allocation_sharing_2x2.csv",
+        "revision_sensitivity.csv",
+        "paired_history_manifest.json"
+      ],
+      "acceptance_cn": [
+        "固定同预测器",
+        "机制消融与真实竞争基线区分",
+        "base_bound和persistent分表",
+        "只对可证实字段归因",
+        "保留负收益"
+      ],
+      "source_task_mapping": [
+        "master:S02,E02,E03",
+        "monitoring_package:M09",
+        "monitoring_spec:PR6"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-08",
+      "title_cn": "区域温度迁移",
+      "depends_on": [
+        "V7-03",
+        "V7-05"
+      ],
+      "deliverables_proposed": [
+        "TEMPERATURE_JOIN_AUDIT.json",
+        "temperature_scores.parquet"
+      ],
+      "acceptance_cn": [
+        "真实valid_time网格",
+        "负温度与QC",
+        "多年热浪合同未通过不冒称热浪",
+        "未暴露区域时间块"
+      ],
+      "source_task_mapping": [
+        "master:H-H10,H-H11",
+        "monitoring_spec:PR4"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-09",
+      "title_cn": "相关流域多站水文条件扩展",
+      "depends_on": [
+        "V7-03",
+        "V7-05"
+      ],
+      "deliverables_proposed": [
+        "forecast_archive_coverage.parquet",
+        "HYDRO_REGIONAL_JOIN_AUDIT.json"
+      ],
+      "acceptance_cn": [
+        "水网关系不能仅凭距离",
+        "流量水位基准支持分开",
+        "归档不足明确受限",
+        "不重启旧后台作业"
+      ],
+      "source_task_mapping": [
+        "master:H-H08,O01",
+        "monitoring_package:M10"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-10",
+      "title_cn": "16类合同与来源状态映射",
+      "depends_on": [
+        "V7-00"
+      ],
+      "deliverables_proposed": [
+        "hazard_contracts_v7.json",
+        "hazard_E_F_D_status.csv"
+      ],
+      "acceptance_cn": [
+        "保留16类6组",
+        "沿用97来源ID",
+        "EM-DAT/CMA/xBD状态升级但保留任务门槛",
+        "每个子轨独立声明"
+      ],
+      "source_task_mapping": [
+        "master:D01,H-H01..H-H16,REL"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "V7-11",
+      "title_cn": "独立确认、有限前瞻适配与发布",
+      "depends_on": [
+        "V7-07",
+        "V7-08",
+        "V7-10"
+      ],
+      "deliverables_proposed": [
+        "CONFIRMATION_FREEZE.json",
+        "grouped_intervals.csv",
+        "BENCHMARK_CARD.md",
+        "rebuild_and_review_package"
+      ],
+      "acceptance_cn": [
+        "独立块功效规划",
+        "方法与阈值先冻结",
+        "全失败与覆盖",
+        "online/replay分表",
+        "完整16类声明需另逐项通过"
+      ],
+      "source_task_mapping": [
+        "master:REL,O01",
+        "monitoring_package:M10",
+        "monitoring_spec:PR7"
+      ],
+      "status": "planned_not_executed"
+    }
+  ],
+  "first_batch": [
+    "V7-00",
+    "V7-01",
+    "V7-02"
+  ],
+  "parallel_contract_and_existing_data_review": [
+    "V7-03",
+    "V7-10"
+  ],
+  "first_real_no_model_loop": [
+    "V7-04",
+    "V7-05"
+  ],
+  "conditional_nonblocking_work": [
+    "V7-09"
+  ],
+  "paths_are_proposed_not_installed": true
+}

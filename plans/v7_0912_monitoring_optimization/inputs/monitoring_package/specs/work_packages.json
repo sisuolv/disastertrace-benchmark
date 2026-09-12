@@ -1,0 +1,368 @@
+{
+  "status": "planned_not_implemented",
+  "repository_commit": "ae69453ff15bc3def6c513fafbfd8758437a8587",
+  "first_scope": [
+    "M00",
+    "M01",
+    "M03",
+    "M04"
+  ],
+  "parallel_existing_asset_review": [
+    "M02"
+  ],
+  "allowed_partial_work": [
+    "M07 synthetic fixtures before real-data gates"
+  ],
+  "work_packages": [
+    {
+      "id": "M00",
+      "title": "工作区和继承保护",
+      "depends_on": [],
+      "status": "planned",
+      "proposed_paths": [
+        "AGENTS.md",
+        "git status",
+        "现有测试配置"
+      ],
+      "deliverables": [
+        "REVIEW_BASELINE.json",
+        "REUSE_MAP.md"
+      ],
+      "acceptance": [
+        "不reset、不覆盖冻结产物",
+        "记录本地与固定阅读提交差异",
+        "先盘点已有依赖与数据"
+      ],
+      "test_ids": [],
+      "execution_scope": "offline_read_and_planning",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    },
+    {
+      "id": "M01",
+      "title": "合同与选择性修订状态",
+      "depends_on": [
+        "M00"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/contracts.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/state.py"
+      ],
+      "deliverables": [
+        "contracts.py",
+        "state.py"
+      ],
+      "acceptance": [
+        "FOLLOW/OVERRIDE/NO_CHANGE/CLOSED语义明确",
+        "输入与目标分离",
+        "域/区间/时间校验"
+      ],
+      "test_ids": [
+        "T01",
+        "T02",
+        "T03",
+        "T05",
+        "T06",
+        "T45"
+      ],
+      "execution_scope": "offline_implementation",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    },
+    {
+      "id": "M02",
+      "title": "科学语义与完整业务基线",
+      "depends_on": [
+        "M00"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/adapters/aviation.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/baseline.py",
+        "plans/task_chain_feasibility_20260912/"
+      ],
+      "deliverables": [
+        "SEMANTIC_AUDIT.json",
+        "ROW_REJECTIONS.jsonl"
+      ],
+      "acceptance": [
+        "保留旧解析结果新版本做差分",
+        "主体/趋势和完整TAF条件解析",
+        "无概率映射证据时不伪造基线概率"
+      ],
+      "test_ids": [
+        "T07",
+        "T08",
+        "T09"
+      ],
+      "execution_scope": "offline_existing_assets_first",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    },
+    {
+      "id": "M03",
+      "title": "共享证据代理与成本账本",
+      "depends_on": [
+        "M01"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/evidence.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/budget.py"
+      ],
+      "deliverables": [
+        "evidence.py",
+        "budget.py",
+        "ACCESS_AUDIT.json"
+      ],
+      "acceptance": [
+        "三层缓存与策略权限分离",
+        "原子预算预留",
+        "hidden quality/未来目录不公开"
+      ],
+      "test_ids": [
+        "T10",
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15",
+        "T19",
+        "T20",
+        "T41",
+        "T47"
+      ],
+      "execution_scope": "offline_fake_io_then_bounded_real",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    },
+    {
+      "id": "M04",
+      "title": "session时钟与提交持久化",
+      "depends_on": [
+        "M01",
+        "M03"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/scheduler.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/runner.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/cli.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/__main__.py"
+      ],
+      "deliverables": [
+        "scheduler.py",
+        "runner.py",
+        "events.jsonl",
+        "commits.jsonl"
+      ],
+      "acceptance": [
+        "一个全局时钟多目标截止",
+        "逐target提交与恢复",
+        "幂等命令与未知transport不重试"
+      ],
+      "test_ids": [
+        "T04",
+        "T16",
+        "T17",
+        "T18",
+        "T21",
+        "T22",
+        "T23",
+        "T46"
+      ],
+      "execution_scope": "offline_implementation",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    },
+    {
+      "id": "M05",
+      "title": "真实区域多模态资料编译",
+      "depends_on": [
+        "M02",
+        "M03"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/adapters/satellite.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/adapters/radar.py",
+        "plans/monitoring_v1_20260912/data/"
+      ],
+      "deliverables": [
+        "REGIONAL_JOIN_AUDIT.json",
+        "PUBLIC_MANIFEST.json",
+        "PRIVATE_MANIFEST.json",
+        "RENDER_MANIFEST.json"
+      ],
+      "acceptance": [
+        "同区域同真实时段",
+        "至少一份共享图像绑定多个目标",
+        "原始/展示/私有参考隔离"
+      ],
+      "test_ids": [
+        "T24",
+        "T25",
+        "T42"
+      ],
+      "execution_scope": "requires_explicit_bounded_capture_scope_if_new_data",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    },
+    {
+      "id": "M06",
+      "title": "强基线与预测接口",
+      "depends_on": [
+        "M02",
+        "M04",
+        "M05"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/baseline.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/runner.py",
+        "plans/monitoring_v1_20260912/configs/"
+      ],
+      "deliverables": [
+        "BASELINE_CONTRACT.json",
+        "PROGRAM_RESULTS.json"
+      ],
+      "acceptance": [
+        "共同最新业务基线哈希相同",
+        "程序批量/时空/截止优先和不修改对照",
+        "selector与predictor交叉因素独立"
+      ],
+      "test_ids": [
+        "T30",
+        "T44"
+      ],
+      "execution_scope": "program_cpu_first",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    },
+    {
+      "id": "M07",
+      "title": "独立评分与审计",
+      "depends_on": [
+        "M01",
+        "M04",
+        "M05"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/scoring.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/replay.py",
+        "disastertrace-starter/tests/monitoring_v1/"
+      ],
+      "deliverables": [
+        "INDEPENDENT_SCORE_CHECK.json",
+        "DENOMINATORS.json",
+        "RESULT_VERSION_POLICY.json"
+      ],
+      "acceptance": [
+        "固定全目标分母",
+        "合法预测按模式解析",
+        "不重生成模型回答做复算"
+      ],
+      "test_ids": [
+        "T29",
+        "T31",
+        "T32",
+        "T33",
+        "T34",
+        "T39",
+        "T43"
+      ],
+      "execution_scope": "offline_implementation",
+      "notes": "合成fixture子任务可提前执行；真实数据完整验收仍依赖M05。"
+    },
+    {
+      "id": "M08",
+      "title": "真实VLM输入与故障隔离",
+      "depends_on": [
+        "M04",
+        "M05",
+        "M06",
+        "M07"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/adapters/vlm.py",
+        "disastertrace-starter/src/disastertrace/multimodal_live_v1/adapter.py"
+      ],
+      "deliverables": [
+        "MODEL_INPUT_AUDIT.json",
+        "PROCESSOR_CAPTURES/",
+        "MODEL_RAW/"
+      ],
+      "acceptance": [
+        "复用但不改旧适配器限制/提示",
+        "真实images和视觉token核验",
+        "每调用prepare/reserve/intent/raw/receipt闭环"
+      ],
+      "test_ids": [
+        "T26",
+        "T27",
+        "T28"
+      ],
+      "execution_scope": "model_requires_new_explicit_execution_scope",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    },
+    {
+      "id": "M09",
+      "title": "机制试点和确认集设计",
+      "depends_on": [
+        "M06",
+        "M07",
+        "M08"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "plans/monitoring_v1_20260912/experiments/"
+      ],
+      "deliverables": [
+        "FACTORIAL_PLAN.json",
+        "PAIRWISE_RESULTS.json",
+        "CONFIRMATION_PLAN.md"
+      ],
+      "acceptance": [
+        "共享缓存/调度/联合预测因子分开",
+        "强批量基线不削弱",
+        "负结果与事件族区间完整保留"
+      ],
+      "test_ids": [
+        "T35",
+        "T36",
+        "T40",
+        "T48"
+      ],
+      "execution_scope": "bounded_model_scope_then_analysis",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    },
+    {
+      "id": "M10",
+      "title": "有限前瞻和发布",
+      "depends_on": [
+        "M04",
+        "M05",
+        "M06",
+        "M07"
+      ],
+      "status": "planned",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/adapters/live.py",
+        "plans/monitoring_v1_20260912/live/"
+      ],
+      "deliverables": [
+        "LIVE_REGISTRY.json",
+        "LIVE_RECEIPTS/",
+        "SETTLEMENTS/",
+        "RELEASE_DATA_CARD.md"
+      ],
+      "acceptance": [
+        "真实UTC落盘收据",
+        "有限scope无接管旧job",
+        "online结果与replay分表；模型live另依赖M08"
+      ],
+      "test_ids": [
+        "T37",
+        "T38"
+      ],
+      "execution_scope": "requires_new_live_scope",
+      "notes": "不得自动视为已实现；优先复用职责相同的已有模块。"
+    }
+  ]
+}

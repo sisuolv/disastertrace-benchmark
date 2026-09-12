@@ -1,0 +1,1633 @@
+{
+  "schema": "disastertrace.v7.acceptance_routing.v1",
+  "source_specification_count": 90,
+  "not_a_deduplicated_test_count": true,
+  "new_tests_executed_this_turn": 0,
+  "policy_conflicts_explicit": true,
+  "specifications": [
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T01",
+      "source_specification": {
+        "id": "T01",
+        "work_package": "M01",
+        "title": "FOLLOW随业务基线合法更新",
+        "setup": "初始0.20→新基线0.35，未提交覆盖",
+        "expected": "生效0.35；记录default delegation或显式follow身份，不算模型REVISE",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T02",
+      "source_specification": {
+        "id": "T02",
+        "work_package": "M01",
+        "title": "覆盖不隐式重置",
+        "setup": "模型override0.60后基线0.35",
+        "expected": "没有新动作仍0.60，保留as_of基线版本",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "persistent_override"
+      ],
+      "integration_note": "The original retains explicit forecasts after new baseline content; main protocol has the opposite expected state, covered by M004.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T03",
+      "source_specification": {
+        "id": "T03",
+        "work_package": "M01",
+        "title": "显式撤销覆盖",
+        "setup": "override后FOLLOW",
+        "expected": "恢复最新合法基线并继续跟随",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T04",
+      "source_specification": {
+        "id": "T04",
+        "work_package": "M04",
+        "title": "逐目标截止",
+        "setup": "A已截止B未截止，新基线与模型结果到达",
+        "expected": "A冻结，B可更新，session不因A提前停止",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T05",
+      "source_specification": {
+        "id": "T05",
+        "work_package": "M01",
+        "title": "域与删失",
+        "setup": "负温度与P/M能见度；非法单位组合",
+        "expected": "合法负温度保留；区间保存；越阈不确定不转负例",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T06",
+      "source_specification": {
+        "id": "T06",
+        "work_package": "M01",
+        "title": "异构输入",
+        "setup": "水位目标+有关系的降雨证据",
+        "expected": "保留各自单位和变量；结果仍严格匹配目标",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T07",
+      "source_specification": {
+        "id": "T07",
+        "work_package": "M02",
+        "title": "观测主体与BECMG",
+        "setup": "当前能见度缺失，趋势出现0800",
+        "expected": "当前值缺失/拒收，不得用趋势填值",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T08",
+      "source_specification": {
+        "id": "T08",
+        "work_package": "M02",
+        "title": "完整TAF",
+        "setup": "prevailing与TEMPO不同，含未支持操作符",
+        "expected": "条件段保留；未知操作符有拒收；不固定编造TEMPO点概率",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T09",
+      "source_specification": {
+        "id": "T09",
+        "work_package": "M02",
+        "title": "原生身份时间",
+        "setup": "站号/原生时间与目录不一致",
+        "expected": "逐行拒收原因；不可静默用目录覆盖正文",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T10",
+      "source_specification": {
+        "id": "T10",
+        "work_package": "M03",
+        "title": "共享获取一次",
+        "setup": "同策略session同版本被A/B请求",
+        "expected": "获取成本一次；每个交付/渲染/模型成本据实计",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T11",
+      "source_specification": {
+        "id": "T11",
+        "work_package": "M03",
+        "title": "跨策略缓存隔离",
+        "setup": "策略甲读了文件，乙尚未读",
+        "expected": "物理文件可共享；乙不可自动有权限或零逻辑获取费用",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T12",
+      "source_specification": {
+        "id": "T12",
+        "work_package": "M03",
+        "title": "重复模型曝光",
+        "setup": "同图进入两次实际processor",
+        "expected": "两次实际token/视觉费用保留；有真缓存则明确测量",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T13",
+      "source_specification": {
+        "id": "T13",
+        "work_package": "M03",
+        "title": "版本身份",
+        "setup": "同URL正文或版本变化",
+        "expected": "旧内容不覆盖，形成新身份；未声明内容变化不得复用旧视图",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T14",
+      "source_specification": {
+        "id": "T14",
+        "work_package": "M03",
+        "title": "不同提供方同目标",
+        "setup": "两个独立产品相同valid_at",
+        "expected": "不以全局last-write-wins删除；依赖未知保留",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T15",
+      "source_specification": {
+        "id": "T15",
+        "work_package": "M03",
+        "title": "并发预算原子性",
+        "setup": "两个动作同时争最后一份额度",
+        "expected": "有界预留使最多一个被准入；失败费用仍计",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T16",
+      "source_specification": {
+        "id": "T16",
+        "work_package": "M04",
+        "title": "请求时快照",
+        "setup": "请求中出现新版",
+        "expected": "已发请求仍返回绑定版本；新请求可取新版",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T17",
+      "source_specification": {
+        "id": "T17",
+        "work_package": "M04",
+        "title": "推理时新基线",
+        "setup": "基于b1推理中b2到达",
+        "expected": "请求不变；按预定政策提交并标记baseline age，不隐式平移预测",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Main rejects activation on outdated base revision; persistent track may accept a deadline-legal snapshot with age. Both preserve raw request, costs and frozen input.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T18",
+      "source_specification": {
+        "id": "T18",
+        "work_package": "M04",
+        "title": "同刻事件与落盘截止",
+        "setup": "完成/基线/截止同刻及截止后微秒",
+        "expected": "确定优先级；真实迟到收据不通过排序变为准时",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T19",
+      "source_specification": {
+        "id": "T19",
+        "work_package": "M03",
+        "title": "目录未来泄漏",
+        "setup": "目录含未来asset ID/总数或隐藏正例质量分",
+        "expected": "公开view拒绝；仅原本已发布metadata可见",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T20",
+      "source_specification": {
+        "id": "T20",
+        "work_package": "M03",
+        "title": "未读质量与coverage",
+        "setup": "未读像元才可确定云和有效范围",
+        "expected": "不可提前向selector暴露数组计算结论",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T21",
+      "source_specification": {
+        "id": "T21",
+        "work_package": "M04",
+        "title": "零时等待",
+        "setup": "WAIT(当前时刻)反复请求",
+        "expected": "拒收或推进到合法事件；动作数上限防无穷循环",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T22",
+      "source_specification": {
+        "id": "T22",
+        "work_package": "M04",
+        "title": "重启不重复执行",
+        "setup": "intent已写、raw未知后重启",
+        "expected": "不自动重生成/重扣费；未知状态及恢复证据保留",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T23",
+      "source_specification": {
+        "id": "T23",
+        "work_package": "M04",
+        "title": "局部提交失败",
+        "setup": "同批A迟到B合法",
+        "expected": "按目标独立结果和收据；不删除整个批次失败证据",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T24",
+      "source_specification": {
+        "id": "T24",
+        "work_package": "M05",
+        "title": "自然session身份",
+        "setup": "不同日期/地区旧样例拟合并",
+        "expected": "禁止称为自然同时发生；仅合成fixture可显式标注",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T25",
+      "source_specification": {
+        "id": "T25",
+        "work_package": "M05",
+        "title": "原生图像真实绑定",
+        "setup": "原图→渲染→processor",
+        "expected": "source/view/png哈希、尺寸、通道、时间、mask政策齐全",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T26",
+      "source_specification": {
+        "id": "T26",
+        "work_package": "M08",
+        "title": "处理器视觉一致性",
+        "setup": "图片计数与image_grid_thw/pixel_values异常",
+        "expected": "preflight拒收；不把base64字符串当图片证据",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T27",
+      "source_specification": {
+        "id": "T27",
+        "work_package": "M08",
+        "title": "上下文预算",
+        "setup": "输入加输出预留超过限制",
+        "expected": "dispatch前明确失败；无静默裁剪或擅自缩图",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T28",
+      "source_specification": {
+        "id": "T28",
+        "work_package": "M08",
+        "title": "策略自有记忆",
+        "setup": "不同策略/条件carrier串用",
+        "expected": "拒收或严格命名隔离；结果不可跨条件喂入",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T29",
+      "source_specification": {
+        "id": "T29",
+        "work_package": "M07",
+        "title": "全目标分母",
+        "setup": "未读取、未提交、非法输出、结果缺失混合",
+        "expected": "分别保留状态；没有查询的目标仍按模式评分",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T30",
+      "source_specification": {
+        "id": "T30",
+        "work_package": "M06",
+        "title": "共同业务资料一致",
+        "setup": "不同策略同检查点",
+        "expected": "完整基线产品与表示版本绑定一致；额外信息不藏入某策略",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T31",
+      "source_specification": {
+        "id": "T31",
+        "work_package": "M07",
+        "title": "引用权限与语义",
+        "setup": "引用未读取资产或读取了但不适用",
+        "expected": "未读取硬拒；适用性单独E计分，不能只查ID存在",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T32",
+      "source_specification": {
+        "id": "T32",
+        "work_package": "M07",
+        "title": "独立grader",
+        "setup": "worker试图访问outcome目录/评分端点",
+        "expected": "权限阻止；评分只能在独立区域运行",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T33",
+      "source_specification": {
+        "id": "T33",
+        "work_package": "M07",
+        "title": "分数损益复算",
+        "setup": "固定三个目标已知baseline/override/result",
+        "expected": "标准库复算与主评分一致，改善/恶化算术和等于净差",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T34",
+      "source_specification": {
+        "id": "T34",
+        "work_package": "M07",
+        "title": "不变结果与证据分支",
+        "setup": "同目标资料遮蔽/旧版/延迟",
+        "expected": "E按可见资料变；F结果不变；不使用LLM补Gold",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T35",
+      "source_specification": {
+        "id": "T35",
+        "work_package": "M09",
+        "title": "真正多目标耦合",
+        "setup": "一图覆盖多个目标与无共享控制",
+        "expected": "展示计费/策略机会差；无差异则不声称调度增益",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T36",
+      "source_specification": {
+        "id": "T36",
+        "work_package": "M09",
+        "title": "廉价批量强基线",
+        "setup": "官方批量缓存可用",
+        "expected": "独立预测同样允许合理IO缓存；不人为加重复下载成本",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T37",
+      "source_specification": {
+        "id": "T37",
+        "work_package": "M10",
+        "title": "真实收据时间",
+        "setup": "推理开始早但落盘晚",
+        "expected": "按最终持久化收据标迟到，不回填早时间",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T38",
+      "source_specification": {
+        "id": "T38",
+        "work_package": "M10",
+        "title": "结果成熟与版本",
+        "setup": "provisional/final和多次修订",
+        "expected": "追加记录；所有策略同结果快照；不挑最小误差版本",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T39",
+      "source_specification": {
+        "id": "T39",
+        "work_package": "M07",
+        "title": "早目标与晚目标",
+        "setup": "早目标观测真实发布，晚目标仍开放",
+        "expected": "仅合法provider观测可输入晚目标；grader分数/私有未来结果不开放",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T40",
+      "source_specification": {
+        "id": "T40",
+        "work_package": "M09",
+        "title": "事件族切分",
+        "setup": "共享风暴/重叠影像/同站邻日",
+        "expected": "分组切分；统计N不是目标/阈值/模型调用数",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T41",
+      "source_specification": {
+        "id": "T41",
+        "work_package": "M03",
+        "title": "AFA特权API隔离",
+        "setup": "第三方方法接口接收label参数",
+        "expected": "普通adapter不包含label；oracle独立命名且不用于排名",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T42",
+      "source_specification": {
+        "id": "T42",
+        "work_package": "M05",
+        "title": "再处理历史产品",
+        "setup": "GOES重处理版本和运行时版本",
+        "expected": "记录product lineage；不声称后处理版本当时可用",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T43",
+      "source_specification": {
+        "id": "T43",
+        "work_package": "M07",
+        "title": "FOLLOW不是模型成功",
+        "setup": "默认跟随产生合格分数但无模型调用",
+        "expected": "报告委托成绩和零调用，不计算成模型400/400成功",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T44",
+      "source_specification": {
+        "id": "T44",
+        "work_package": "M06",
+        "title": "校准数据边界",
+        "setup": "TAF概率映射在同一测试过程拟合",
+        "expected": "拒绝确认性使用；开发fit与确认集分离，缺基础则不宣称概率校准",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T45",
+      "source_specification": {
+        "id": "T45",
+        "work_package": "M01",
+        "title": "任务内结果支持",
+        "setup": "站点日累计/瞬时/窗口错配",
+        "expected": "按合同拒绝跨时间支持替代，近时诊断单列",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T46",
+      "source_specification": {
+        "id": "T46",
+        "work_package": "M04",
+        "title": "FINISH不冻结跟随太早",
+        "setup": "停止取证后基线合法更新",
+        "expected": "FOLLOW仍持续到各deadline；OVERRIDE不自动跟随",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "STOP preserves all baseline updates and cutoffs. Its OVERRIDE-retention clause applies to persistent mode; main still applies declared content-revision invalidation.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T47",
+      "source_specification": {
+        "id": "T47",
+        "work_package": "M03",
+        "title": "物理缓存不等于预测知识",
+        "setup": "研究端已存未来数组但当前未授权",
+        "expected": "读代理无未来内容；文件绝对路径/密钥不进入worker",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_package",
+      "source_path": "inputs/monitoring_package/specs/acceptance_tests.json",
+      "source_id": "T48",
+      "source_specification": {
+        "id": "T48",
+        "work_package": "M09",
+        "title": "不把范围不交等同预测独立",
+        "setup": "另一地区新观测与目标可能相关",
+        "expected": "E局部不变按确定性合同，F不无条件强制不变；评价质量与公开关联",
+        "status": "planned_not_executed"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M001",
+      "source_specification": {
+        "id": "M001",
+        "category": "defaults",
+        "assertion_cn": "Follow/empty策略在全部有基线机会上的输出与当前基线一致，Delta=0",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M002",
+      "source_specification": {
+        "id": "M002",
+        "category": "denominator",
+        "assertion_cn": "零预算、STOP、超时、非法输出不删除opportunity",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M003",
+      "source_specification": {
+        "id": "M003",
+        "category": "identity",
+        "assertion_cn": "固定target与cutoff身份分开，跨target禁止复用预测值",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M004",
+      "source_specification": {
+        "id": "M004",
+        "category": "override",
+        "assertion_cn": "基线事实版本更新使旧覆盖失效；同内容镜像不使其失效",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override"
+      ],
+      "integration_note": "Main baseline-content invalidation; transport-only or other-target updates must not invalidate. Persistent comparison is T02.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M005",
+      "source_specification": {
+        "id": "M005",
+        "category": "override",
+        "assertion_cn": "expires_at==cutoff先评分后清理；commit晚于cutoff拒收",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M006",
+      "source_specification": {
+        "id": "M006",
+        "category": "time",
+        "assertion_cn": "请求时刻选定的版本不因在途更新被替换",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M007",
+      "source_specification": {
+        "id": "M007",
+        "category": "time",
+        "assertion_cn": "推理开始后的新资料不进入在途提示；完成时检查基线版本",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Both freeze inputs; activation after base revision changes follows the explicit policy, not a shared pass condition.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M008",
+      "source_specification": {
+        "id": "M008",
+        "category": "time",
+        "assertion_cn": "WAIT跨越多个事件逐个处理，日志记录实际事件时刻",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M009",
+      "source_specification": {
+        "id": "M009",
+        "category": "time",
+        "assertion_cn": "同刻事件顺序确定且无零耗时无限动作",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M010",
+      "source_specification": {
+        "id": "M010",
+        "category": "visibility",
+        "assertion_cn": "变化隐藏未来内容/文件名不改变此前public_view",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M011",
+      "source_specification": {
+        "id": "M011",
+        "category": "visibility",
+        "assertion_cn": "未读观测趋势/质量不得出现在公共summary",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M012",
+      "source_specification": {
+        "id": "M012",
+        "category": "visibility",
+        "assertion_cn": "未来结果不改变固定运行轨迹；private scorer无反馈",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M013",
+      "source_specification": {
+        "id": "M013",
+        "category": "cache",
+        "assertion_cn": "同run已读资产跨目标可复用，跨run不可共享权限",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M014",
+      "source_specification": {
+        "id": "M014",
+        "category": "cache",
+        "assertion_cn": "物理磁盘命中不改变逻辑成本/可得时间",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M015",
+      "source_specification": {
+        "id": "M015",
+        "category": "cache",
+        "assertion_cn": "缓存键区分版本、变量、ROI、时间、分辨率及处理政策",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M016",
+      "source_specification": {
+        "id": "M016",
+        "category": "cost",
+        "assertion_cn": "已支出+预留+新请求预计成本不超过硬预算",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M017",
+      "source_specification": {
+        "id": "M017",
+        "category": "cost",
+        "assertion_cn": "失败、重试和无效模型输出全部计入适用的调用/计算上限",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M018",
+      "source_specification": {
+        "id": "M018",
+        "category": "cost",
+        "assertion_cn": "重复上下文仍计token，不以唯一资产数替代总输入token",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M019",
+      "source_specification": {
+        "id": "M019",
+        "category": "data",
+        "assertion_cn": "负温度合法，非有限值和错单位拒绝",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M020",
+      "source_specification": {
+        "id": "M020",
+        "category": "data",
+        "assertion_cn": "1000m严格阈值由原生报文计算，不用舍入英里反算",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M021",
+      "source_specification": {
+        "id": "M021",
+        "category": "data",
+        "assertion_cn": "P/M/CAVOK/9999/0000和区间开闭性按适用官方定义",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M022",
+      "source_specification": {
+        "id": "M022",
+        "category": "data",
+        "assertion_cn": "TAF临时组省略字段正确继承，不机械给TEMPO=0.5",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M023",
+      "source_specification": {
+        "id": "M023",
+        "category": "data",
+        "assertion_cn": "不支持的TAF操作符/COR/月份边界隔离或正确解析，不能静默丢弃",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M024",
+      "source_specification": {
+        "id": "M024",
+        "category": "data",
+        "assertion_cn": "SPECI不控制目标采样分母，例行报槽位按事先规则生成",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M025",
+      "source_specification": {
+        "id": "M025",
+        "category": "data",
+        "assertion_cn": "累计窗、站点、基准、质量或空间支持不符不得误配",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M026",
+      "source_specification": {
+        "id": "M026",
+        "category": "data",
+        "assertion_cn": "更晚目标可查询已发布的过去观测，但旧提交不可回写",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M027",
+      "source_specification": {
+        "id": "M027",
+        "category": "data",
+        "assertion_cn": "未结算不是负例，所有策略共用同一结果资格mask",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M028",
+      "source_specification": {
+        "id": "M028",
+        "category": "scoring",
+        "assertion_cn": "无合法概率时使用声明回退并标记，不能冒充完整概率预测",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M029",
+      "source_specification": {
+        "id": "M029",
+        "category": "scoring",
+        "assertion_cn": "检查点只采用此前最后有效提交，不选择事后最好预测",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M030",
+      "source_specification": {
+        "id": "M030",
+        "category": "scoring",
+        "assertion_cn": "G_plus-G_minus==Delta，权重和资格掩膜一致",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M031",
+      "source_specification": {
+        "id": "M031",
+        "category": "scoring",
+        "assertion_cn": "裸流量误差不无条件跨流域平均；尺度只从开发集冻结",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M032",
+      "source_specification": {
+        "id": "M032",
+        "category": "scoring",
+        "assertion_cn": "提醒合并/冷却/解除不增加重复命中，虚警指标分母明确",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M033",
+      "source_specification": {
+        "id": "M033",
+        "category": "replay",
+        "assertion_cn": "已落盘模型回复不在恢复时重新采样",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M034",
+      "source_specification": {
+        "id": "M034",
+        "category": "replay",
+        "assertion_cn": "已接受动作幂等且不重复扣费；在途中断保留failure",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M035",
+      "source_specification": {
+        "id": "M035",
+        "category": "replay",
+        "assertion_cn": "内部损坏JSONL拒绝静默跳过；末尾未提交碎片按明确政策隔离",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M036",
+      "source_specification": {
+        "id": "M036",
+        "category": "isolation",
+        "assertion_cn": "模型worker无未裁剪原始全时段文件、Gold或自由互联网权限",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M037",
+      "source_specification": {
+        "id": "M037",
+        "category": "splits",
+        "assertion_cn": "同母事件/时空块与干预变体不跨split，窗口边界purge",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M038",
+      "source_specification": {
+        "id": "M038",
+        "category": "range",
+        "assertion_cn": "127MiB+2MiB请求在128MiB硬上限前被拒，含实际Range预读",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M039",
+      "source_specification": {
+        "id": "M039",
+        "category": "range",
+        "assertion_cn": "缺版本标识不能仅比较(None,None)放行跨请求对象一致性",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M040",
+      "source_specification": {
+        "id": "M040",
+        "category": "sources",
+        "assertion_cn": "同后台不同空间事实不当副本；同事实多渠道不当独立观测",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M041",
+      "source_specification": {
+        "id": "M041",
+        "category": "multimodal",
+        "assertion_cn": "ROI不由未来mask选择；同资产摘要只从已读合法像元计算",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    },
+    {
+      "source_package": "monitoring_spec",
+      "source_path": "inputs/monitoring_spec/acceptance_checks.json",
+      "source_id": "M042",
+      "source_specification": {
+        "id": "M042",
+        "category": "fairness",
+        "assertion_cn": "主获取对照固定预测后端、输入格式、解码约束与预算政策",
+        "status": "not_run"
+      },
+      "applies_to": [
+        "base_bound_override",
+        "persistent_override"
+      ],
+      "integration_note": "Implement under the declared protocol; source text is retained as a specification, not a test result.",
+      "implementation_status": "planned_not_executed"
+    }
+  ]
+}

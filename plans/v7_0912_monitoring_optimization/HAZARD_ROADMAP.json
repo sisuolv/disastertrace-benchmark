@@ -1,0 +1,1220 @@
+{
+  "schema": "disastertrace.v7.hazard_plan.v1",
+  "source_contract": "inputs/master/HAZARD_ENGINEERING_CONTRACTS.json",
+  "latest_access_registry": "../user_authorized_sources_20260912/usage_01/USAGE_REGISTRY.json",
+  "hazard_count": 16,
+  "group_count": 6,
+  "hazards": [
+    {
+      "id": "H01",
+      "name_cn": "热带气旋",
+      "group": "A",
+      "engine_family": "cyclone",
+      "source_ids": {
+        "professional_forecast": [
+          "D01"
+        ],
+        "outcome_reference": [
+          "AW-HURDAT2",
+          "D02"
+        ],
+        "optional_evidence": [
+          "D03",
+          "D04",
+          "AW-ABI",
+          "D38",
+          "D50"
+        ]
+      },
+      "target_contract": "起始时已经进入监测的气旋，在固定未来绝对时刻的总体最大持续风；地点风风险必须另建子任务。",
+      "operators": [
+        "value_at",
+        "window_exceedance",
+        "revision_delta"
+      ],
+      "measurement_type": [
+        "scalar",
+        "forecast_ensemble",
+        "image"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "最新同目标NHC点预报＋持续性；概率用同目标原生概率或分组开发拟合的误差分布，不冒称官方概率。",
+      "processing_requirements": [
+        "SID/机构别名与公告编号连接",
+        "风速平均时长、单位和分析机构分开",
+        "TCIR等影像只使用合法观测时刻，检查裁剪中心是否来自事后轨迹",
+        "HURDAT2/IBTrACS原始强度标签只在结果侧"
+      ],
+      "negative_and_missingness_policy": "风暴后期缺少精确记录时unresolved，不用0代替；现有暴露风暴不进入盲测。",
+      "forecast_track_gate": [
+        "同气旋同有效时刻预报—结果配对",
+        "输入时刻/受控模式声明",
+        "辅助影像与预报重合"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "legacy_regression_then_cyclone_extension",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [
+        "D73"
+      ],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [
+        "D44"
+      ],
+      "latest_access_states": {
+        "AW-ABI": "decoded_sample",
+        "AW-HURDAT2": "decoded_sample",
+        "D01": "decoded_sample",
+        "D02": "decoded_sample",
+        "D03": "decoded_sample",
+        "D04": "decoded_sample",
+        "D38": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D44": "decoded_sample",
+        "D50": "decoded_sample",
+        "D73": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "已有NHC窄F链；多模态增量和全球扩展未通过。",
+      "latest_user_data_note_cn": "CMA已解码77年、74370时次；官方单位/平均时段/时区待绑定，不直接拼大西洋NHC链。",
+      "xbd_note_cn": "Florence 3组开发对已读取；空间残差约111像素且无损伤正类，未准入grounding。"
+    },
+    {
+      "id": "H02",
+      "name_cn": "温带风暴/非对流大风",
+      "group": "A",
+      "engine_family": "station_nwp",
+      "source_ids": {
+        "professional_forecast": [
+          "D28",
+          "D67",
+          "AW-GEFS"
+        ],
+        "outcome_reference": [
+          "AW-GHCNH",
+          "AW-METAR",
+          "D05"
+        ],
+        "optional_evidence": [
+          "D48",
+          "AW-ABI"
+        ]
+      },
+      "target_contract": "固定站点未来瞬时或窗口平均风/阵风越阈；非对流成因要求额外依据。",
+      "operators": [
+        "value_at",
+        "window_exceedance"
+      ],
+      "measurement_type": [
+        "scalar",
+        "interval",
+        "forecast_ensemble",
+        "map"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "同高度、同统计支持的业务风预报；点到概率的转换训练组隔离。",
+      "processing_requirements": [
+        "平均风与阵风分开",
+        "高度/时间平均窗口/站点迁移记录",
+        "区域格点到站点映射预先冻结",
+        "缺成因证据时只称强风，不能硬标非对流"
+      ],
+      "negative_and_missingness_policy": "测站缺测不判无强风；匹配的负例来自预注册正常监测。",
+      "forecast_track_gate": [
+        "阵风或平均风支持一致",
+        "强风正例与普通窗口",
+        "成因标签可追溯"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_2",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-ABI": "decoded_sample",
+        "AW-GEFS": "decoded_sample",
+        "AW-GHCNH": "decoded_sample",
+        "AW-METAR": "decoded_sample",
+        "D05": "decoded_sample",
+        "D28": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D48": "decoded_sample",
+        "D67": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "已有源样例，完整非对流强风F链待准入。"
+    },
+    {
+      "id": "H03",
+      "name_cn": "雷暴大风/下击暴流",
+      "group": "B",
+      "engine_family": "convective",
+      "source_ids": {
+        "professional_forecast": [
+          "AW-SPC",
+          "D67"
+        ],
+        "outcome_reference": [
+          "D05",
+          "AW-GHCNH",
+          "AW-METAR"
+        ],
+        "optional_evidence": [
+          "D06",
+          "D08",
+          "AW-ABI",
+          "D49"
+        ]
+      },
+      "target_contract": "固定区域/站点未来对流阵风越阈；确认下击暴流为独立子类。",
+      "operators": [
+        "value_at",
+        "window_exceedance",
+        "report_occurrence"
+      ],
+      "measurement_type": [
+        "scalar",
+        "event_report",
+        "radar",
+        "map"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "SPC区域时窗匹配或另行冻结的局地研究预测器；不可将区域长窗概率复制为站点短窗概率。",
+      "processing_requirements": [
+        "实测/估计风报告分开",
+        "报告发生时间与发布时间分开",
+        "雷达体扫/天气过程关联",
+        "不得以强回波直接给下击暴流Gold"
+      ],
+      "negative_and_missingness_policy": "无报告不自动等于物理未发生；报告型队列与观测型队列分开。",
+      "forecast_track_gate": [
+        "目标概率时空支持匹配",
+        "对流归因",
+        "报告覆盖/漏报政策"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_3",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-ABI": "decoded_sample",
+        "AW-GHCNH": "decoded_sample",
+        "AW-METAR": "decoded_sample",
+        "AW-SPC": "decoded_sample",
+        "D05": "decoded_sample",
+        "D06": "decoded_sample",
+        "D08": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D49": "decoded_sample",
+        "D67": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "来源候选已登记；需联合雷达—地面结果与专业基线映射。"
+    },
+    {
+      "id": "H04",
+      "name_cn": "龙卷风",
+      "group": "B",
+      "engine_family": "convective",
+      "source_ids": {
+        "professional_forecast": [
+          "AW-SPC"
+        ],
+        "outcome_reference": [
+          "D05"
+        ],
+        "optional_evidence": [
+          "D07",
+          "D08",
+          "D06",
+          "D49"
+        ]
+      },
+      "target_contract": "固定区域和未来窗口内的确认龙卷报告；物理发生声明另需覆盖依据。",
+      "operators": [
+        "report_occurrence"
+      ],
+      "measurement_type": [
+        "event_report",
+        "radar",
+        "image"
+      ],
+      "threshold_direction": [
+        "event"
+      ],
+      "baseline_contract": "匹配SPC概率；TorNet预测器须确认使用的帧早于目标，检测模型不直接冒充提前预测。",
+      "processing_requirements": [
+        "锁TorNet v1.1/实际发布版本",
+        "事件起止与雷达帧对齐",
+        "同storm跨帧不可跨split",
+        "地点/裁剪中心来源核查"
+      ],
+      "negative_and_missingness_policy": "确认报告0/1与真实发生0/1分开；NUL样例不自动代表全域无龙卷。",
+      "forecast_track_gate": [
+        "合格正负样例",
+        "事件身份与发生前帧",
+        "报告参考可结算"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_3",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-SPC": "decoded_sample",
+        "D05": "decoded_sample",
+        "D06": "decoded_sample",
+        "D07": "decoded_sample",
+        "D08": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D49": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "当前报告列举的TorNet样例仍为负；不得称正负闭环已建。"
+    },
+    {
+      "id": "H05",
+      "name_cn": "冰雹",
+      "group": "B",
+      "engine_family": "convective",
+      "source_ids": {
+        "professional_forecast": [
+          "AW-SPC",
+          "D67"
+        ],
+        "outcome_reference": [
+          "D05"
+        ],
+        "optional_evidence": [
+          "AW-MESH",
+          "D08",
+          "D06"
+        ]
+      },
+      "target_contract": "未来地面报告雹径越阈；MRMS MESH产品越阈为另一个有名称的代理任务。",
+      "operators": [
+        "window_exceedance",
+        "report_occurrence"
+      ],
+      "measurement_type": [
+        "scalar",
+        "event_report",
+        "raster"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "匹配SPC雹风险或冻结雷达研究基线；MESH本身不是地面真值。",
+      "processing_requirements": [
+        "GRIB局地参数表版本与负值代码",
+        "直径单位",
+        "报告/雷达目标域匹配",
+        "产品代理与地面标签隔离"
+      ],
+      "negative_and_missingness_policy": "缺报告按报告制度处理；负代码/缺雷达不能当0mm。",
+      "forecast_track_gate": [
+        "MESH代码表验证",
+        "地面结果或明确代理参考",
+        "概率支持匹配"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_3",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-MESH": "decoded_sample",
+        "AW-SPC": "decoded_sample",
+        "D05": "decoded_sample",
+        "D06": "decoded_sample",
+        "D08": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D67": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "MESH部分语义尚待准入。"
+    },
+    {
+      "id": "H06",
+      "name_cn": "强雷电",
+      "group": "B",
+      "engine_family": "convective",
+      "source_ids": {
+        "professional_forecast": [],
+        "outcome_reference": [
+          "D10"
+        ],
+        "optional_evidence": [
+          "D06",
+          "D08",
+          "AW-ABI"
+        ]
+      },
+      "target_contract": "未来区域内单位有效观测时间和面积的GLM检测flash密度；不是全部地面雷击。",
+      "operators": [
+        "event_density",
+        "window_exceedance"
+      ],
+      "measurement_type": [
+        "event_points",
+        "raster",
+        "image"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "尚无已核验同目标专业雷电预报；先用持续性/外推等明确命名的研究基线；不声称超越官方雷电预报。",
+      "processing_requirements": [
+        "flash/group/event父子结构",
+        "跨文件标识和重复检查",
+        "有效足迹和时间覆盖",
+        "历史基准冻结极端密度阈值"
+      ],
+      "negative_and_missingness_policy": "传感器无覆盖时unresolved；检测0与没有全部物理闪电不同。",
+      "forecast_track_gate": [
+        "足够时间窗口与密度定义",
+        "验证结果覆盖",
+        "明确baseline provenance"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_3_research_baseline_gate",
+      "index_sources": [],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-ABI": "decoded_sample",
+        "D06": "decoded_sample",
+        "D08": "decoded_sample",
+        "D10": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "短GLM观测可读，同目标专业预报未定。"
+    },
+    {
+      "id": "H07",
+      "name_cn": "极端降水",
+      "group": "C",
+      "engine_family": "station_nwp",
+      "source_ids": {
+        "professional_forecast": [
+          "D28",
+          "D67",
+          "AW-GEFS",
+          "AW-WPC"
+        ],
+        "outcome_reference": [
+          "D26",
+          "AW-GHCNH",
+          "D29",
+          "D30",
+          "AW-QPE"
+        ],
+        "optional_evidence": [
+          "D08",
+          "AW-ABI",
+          "D59"
+        ]
+      },
+      "target_contract": "固定时段累计降水或规定时刻降水率越阈；参考类型分实测和产品估计。",
+      "operators": [
+        "accumulation_threshold",
+        "window_exceedance",
+        "duration_condition"
+      ],
+      "measurement_type": [
+        "scalar",
+        "interval",
+        "forecast_ensemble",
+        "radar"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "同累计窗的专业QPF；有合格雷达雨率时可用pysteps短临基线；VIL不能直接作为毫米雨量。",
+      "processing_requirements": [
+        "startStep/endStep/stepType",
+        "累计重置与跨周期",
+        "trace/缺测/QC分别编码",
+        "整段产品与子段累积不能重复相加"
+      ],
+      "negative_and_missingness_policy": "间断累计不得补0；严格窗口结果拒收时保留unresolved，不靠最近记录凑完整。",
+      "forecast_track_gate": [
+        "精确累计窗口",
+        "QC合格雨量或明确估计产品",
+        "合法先验与完整采样"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_2",
+      "index_sources": [],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-ABI": "decoded_sample",
+        "AW-GEFS": "decoded_sample",
+        "AW-GHCNH": "decoded_sample",
+        "AW-QPE": "decoded_sample",
+        "AW-WPC": "decoded_sample",
+        "D08": "decoded_sample",
+        "D26": "decoded_sample",
+        "D28": "decoded_sample",
+        "D29": "decoded_sample",
+        "D30": "decoded_sample",
+        "D59": "decoded_sample",
+        "D67": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "已解码预报；历史严格雨量结果有拒收样例。"
+    },
+    {
+      "id": "H08",
+      "name_cn": "河洪/山洪/城市内涝",
+      "group": "C",
+      "engine_family": "hydrology",
+      "source_ids": {
+        "professional_forecast": [
+          "AW-HEFS",
+          "D57",
+          "AW-GLOFAS",
+          "AW-EFAS"
+        ],
+        "outcome_reference": [
+          "D56",
+          "D71",
+          "D11",
+          "D18"
+        ],
+        "optional_evidence": [
+          "D14",
+          "D64",
+          "D17",
+          "D16",
+          "D12",
+          "D13",
+          "D15",
+          "D51",
+          "AW-NIMS",
+          "D42",
+          "D43",
+          "D60"
+        ]
+      },
+      "target_contract": "河洪流量/水位越阈；山洪与城市内涝以独立结果合同建子轨；不能用河站代理所有子类。",
+      "operators": [
+        "value_at",
+        "window_exceedance",
+        "duration_condition",
+        "spatial_extent_change"
+      ],
+      "measurement_type": [
+        "scalar",
+        "forecast_ensemble",
+        "raster",
+        "geometry",
+        "image"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "最新同站同变量HEFS/NWPS或匹配日支持的GloFAS/EFAS；不同统计时间支持不混。",
+      "processing_requirements": [
+        "站号映射及数据证据",
+        "流量与水位分开、基准转换有来源和有效期",
+        "成员标识与轨迹保留",
+        "上游关系来自水网而非距离",
+        "图像与目标站/区域真实重合",
+        "洪水/永久水体/未知图例"
+      ],
+      "negative_and_missingness_policy": "固定时刻无合格观测unresolved；窗口无越阈但缺测可能藏越阈时不能判负；provisional与最终参考分榜。",
+      "forecast_track_gate": [
+        "阈值可解释",
+        "站点/变量/基准/支持匹配",
+        "结果成熟度和历史可用性",
+        "空间子轨独立标注"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "conditional_hydrology",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [
+        "D44"
+      ],
+      "latest_access_states": {
+        "AW-EFAS": "decoded_sample",
+        "AW-GLOFAS": "decoded_sample",
+        "AW-HEFS": "decoded_sample",
+        "AW-NIMS": "decoded_sample",
+        "D11": "decoded_sample",
+        "D12": "decoded_sample",
+        "D13": "decoded_sample",
+        "D14": "decoded_sample",
+        "D15": "decoded_sample",
+        "D16": "decoded_sample",
+        "D17": "decoded_sample",
+        "D18": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D42": "decoded_sample",
+        "D43": "decoded_sample",
+        "D44": "decoded_sample",
+        "D51": "decoded_sample",
+        "D56": "decoded_sample",
+        "D57": "decoded_sample",
+        "D60": "decoded_sample",
+        "D64": "decoded_sample",
+        "D71": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "连续流量窄链已通；部分水位前瞻试点；16灾种矩阵不等于洪水各子类完成。",
+      "xbd_note_cn": "Florence 3组开发对已读取；空间残差约111像素且无损伤正类，未准入grounding。"
+    },
+    {
+      "id": "H09",
+      "name_cn": "风暴潮/沿岸淹没",
+      "group": "C",
+      "engine_family": "hydrology",
+      "source_ids": {
+        "professional_forecast": [
+          "AW-OFS",
+          "AW-PETSS"
+        ],
+        "outcome_reference": [
+          "D37",
+          "D69"
+        ],
+        "optional_evidence": [
+          "D58",
+          "D01"
+        ]
+      },
+      "target_contract": "先做固定站点极端总水位；天气成因与实际沿岸淹没为另外的子目标。",
+      "operators": [
+        "value_at",
+        "window_exceedance",
+        "spatial_extent_change"
+      ],
+      "measurement_type": [
+        "scalar",
+        "forecast_ensemble",
+        "geometry",
+        "raster"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "适用区域和天气类型的业务总水位/潮汐残差产品；P-ETSS已取得样例注明的热带风暴不适用限制必须继承。",
+      "processing_requirements": [
+        "潮位基准和epoch",
+        "模型位置—站号桥接",
+        "天文潮与总水位分开",
+        "残差不自动命名纯风暴潮"
+      ],
+      "negative_and_missingness_policy": "质量标记剔除保留原因；缺测不证明无沿岸高水位。",
+      "forecast_track_gate": [
+        "适用天气系统类型",
+        "预测量与观测量同一",
+        "实际淹没必须有独立结果"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_2",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-OFS": "decoded_sample",
+        "AW-PETSS": "decoded_sample",
+        "D01": "decoded_sample",
+        "D37": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D58": "decoded_sample",
+        "D69": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "已有潮位样例，模型—站点完整映射待做。"
+    },
+    {
+      "id": "H10",
+      "name_cn": "高温/热浪",
+      "group": "D",
+      "engine_family": "station_nwp",
+      "source_ids": {
+        "professional_forecast": [
+          "D28",
+          "D67",
+          "AW-GEFS"
+        ],
+        "outcome_reference": [
+          "D26",
+          "AW-GHCNH"
+        ],
+        "optional_evidence": [
+          "D25",
+          "D34",
+          "D47",
+          "D48",
+          "D62",
+          "D66"
+        ]
+      },
+      "target_contract": "固定时刻2m气温越阈；热浪子轨需要固定当地日界、阈值与连续天数。",
+      "operators": [
+        "value_at",
+        "duration_condition",
+        "window_exceedance"
+      ],
+      "measurement_type": [
+        "scalar",
+        "forecast_ensemble",
+        "map"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "最新GFS/GEFS或其他同支持预报；校准器用独立训练组。",
+      "processing_requirements": [
+        "源单位与缩放标记",
+        "2m气温/LST不同",
+        "格点到站点规则冻结",
+        "气候态基准仅历史训练期",
+        "数据源时区/日界/QC"
+      ],
+      "negative_and_missingness_policy": "被拒的温度QC保留，不能因极端离群就删除；热浪缺日不能自动打断或补齐。",
+      "forecast_track_gate": [
+        "多年基准和持续性",
+        "未见高温过程",
+        "业务预报历史模式"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "temperature_transfer",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-GEFS": "decoded_sample",
+        "AW-GHCNH": "decoded_sample",
+        "D25": "decoded_sample",
+        "D26": "decoded_sample",
+        "D28": "decoded_sample",
+        "D34": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D47": "decoded_sample",
+        "D48": "decoded_sample",
+        "D62": "catalog_records_only",
+        "D66": "decoded_sample",
+        "D67": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "已有历史高温瞬时窄链；不等于多日热浪完成。"
+    },
+    {
+      "id": "H11",
+      "name_cn": "寒潮/极端低温/霜冻",
+      "group": "D",
+      "engine_family": "station_nwp",
+      "source_ids": {
+        "professional_forecast": [
+          "D28",
+          "D67",
+          "AW-GEFS"
+        ],
+        "outcome_reference": [
+          "D26",
+          "AW-GHCNH"
+        ],
+        "optional_evidence": [
+          "D25",
+          "D47",
+          "D48",
+          "D66"
+        ]
+      },
+      "target_contract": "负温度越阈/快速降温分别定义；霜冻或作物损伤需专用观测，不由2m温度直接推出。",
+      "operators": [
+        "value_at",
+        "rate_change",
+        "duration_condition"
+      ],
+      "measurement_type": [
+        "scalar",
+        "forecast_ensemble",
+        "map"
+      ],
+      "threshold_direction": [
+        "le",
+        "ge_for_cooling_magnitude"
+      ],
+      "baseline_contract": "同高度同支持温度业务预报＋持续性，后处理训练隔离。",
+      "processing_requirements": [
+        "允许合法负值",
+        "冷却幅度方向明确",
+        "基准期和气候区",
+        "跨国同一冷空气过程归组"
+      ],
+      "negative_and_missingness_policy": "前后端任一温度缺失，快速降温目标unresolved。",
+      "forecast_track_gate": [
+        "负值schema",
+        "快速变化定义",
+        "独立过程和基准"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "temperature_transfer",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-GEFS": "decoded_sample",
+        "AW-GHCNH": "decoded_sample",
+        "D25": "decoded_sample",
+        "D26": "decoded_sample",
+        "D28": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D47": "decoded_sample",
+        "D48": "decoded_sample",
+        "D66": "decoded_sample",
+        "D67": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "已有负温度历史配对；旧active_warning.v1不可直接加载。"
+    },
+    {
+      "id": "H12",
+      "name_cn": "冬季灾害",
+      "group": "D",
+      "engine_family": "station_nwp",
+      "source_ids": {
+        "professional_forecast": [
+          "D28",
+          "D67"
+        ],
+        "outcome_reference": [
+          "D26",
+          "AW-GHCNH",
+          "AW-IEM",
+          "D55",
+          "D33"
+        ],
+        "optional_evidence": [
+          "AW-ABI",
+          "D63"
+        ]
+      },
+      "target_contract": "新雪、雪深、SWE、冻雨/冰冻毛毛雨、吹雪分别建子类，使用匹配结果。",
+      "operators": [
+        "value_at",
+        "accumulation_threshold",
+        "duration_condition",
+        "report_occurrence"
+      ],
+      "measurement_type": [
+        "scalar",
+        "interval",
+        "weather_code",
+        "raster"
+      ],
+      "threshold_direction": [
+        "ge",
+        "event"
+      ],
+      "baseline_contract": "匹配变量与相态的业务预报；没有冬季概率产品的子类明确研究基线。",
+      "processing_requirements": [
+        "SNOW/SNWD/SWE不同变量",
+        "FZRA/FZDZ代码与发生时间",
+        "雪盖不能当冻雨",
+        "缺测/积累周期/日界"
+      ],
+      "negative_and_missingness_policy": "雪盖无变化不证明没有冻雨或新雪；不相容子类不替代完成。",
+      "forecast_track_gate": [
+        "冬季预报与已有现象码配对",
+        "每个子类自己的标签",
+        "QC与支持"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_2",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-ABI": "decoded_sample",
+        "AW-GHCNH": "decoded_sample",
+        "AW-IEM": "decoded_sample",
+        "D26": "decoded_sample",
+        "D28": "decoded_sample",
+        "D33": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D55": "decoded_sample",
+        "D63": "decoded_sample",
+        "D67": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "已有冰冻降水现象码样例；完整预报连接待做。"
+    },
+    {
+      "id": "H13",
+      "name_cn": "干旱/闪旱",
+      "group": "E",
+      "engine_family": "land_products",
+      "source_ids": {
+        "professional_forecast": [
+          "AW-CPC"
+        ],
+        "outcome_reference": [
+          "D31",
+          "D32",
+          "AW-SMAPL4"
+        ],
+        "optional_evidence": [
+          "AW-EDDI",
+          "D25",
+          "D30",
+          "D52",
+          "D62"
+        ]
+      },
+      "target_contract": "未来USDM等级/面积为评估产品预测；物理土壤水分或快速恶化另建目标。",
+      "operators": [
+        "duration_condition",
+        "rate_change",
+        "spatial_extent_change",
+        "value_at"
+      ],
+      "measurement_type": [
+        "ordinal",
+        "scalar",
+        "raster"
+      ],
+      "threshold_direction": [
+        "ge",
+        "le"
+      ],
+      "baseline_contract": "CPC展望只用于相匹配季节尺度；下周USDM不能直接拿季节概率；必要时冻结持久性/统计研究模型。",
+      "processing_requirements": [
+        "USDM既有专家参考身份",
+        "DroughtED小数聚合不取整",
+        "土壤深度/植被/冻土QC",
+        "闪旱速率和历史基准",
+        "ERA5等回顾数据不可伪造实时"
+      ],
+      "negative_and_missingness_policy": "周产品缺失不算干旱消失；时间修订生成新版本。",
+      "forecast_track_gate": [
+        "目标期限与基础预报一致",
+        "完整长期基准",
+        "逐变量参考语义"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_4",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-CPC": "decoded_sample",
+        "AW-EDDI": "decoded_sample",
+        "AW-SMAPL4": "decoded_sample",
+        "D25": "decoded_sample",
+        "D30": "decoded_sample",
+        "D31": "decoded_sample",
+        "D32": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D52": "decoded_sample",
+        "D62": "catalog_records_only"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "有周级产品样例，完整闪旱或下周专业预测匹配未定。"
+    },
+    {
+      "id": "H14",
+      "name_cn": "沙尘暴",
+      "group": "F",
+      "engine_family": "land_products",
+      "source_ids": {
+        "professional_forecast": [
+          "AW-CAMS",
+          "D28",
+          "D67"
+        ],
+        "outcome_reference": [
+          "AW-IEM",
+          "AW-METAR",
+          "AW-GHCNH"
+        ],
+        "optional_evidence": [
+          "D35",
+          "D36",
+          "AW-ABI",
+          "D63"
+        ]
+      },
+      "target_contract": "未来沙尘相关天气码与低能见度；AOD/AI产品预测只能作为代理子轨。",
+      "operators": [
+        "report_occurrence",
+        "value_at",
+        "duration_condition"
+      ],
+      "measurement_type": [
+        "weather_code",
+        "interval",
+        "raster",
+        "forecast_ensemble"
+      ],
+      "threshold_direction": [
+        "lt",
+        "event"
+      ],
+      "baseline_contract": "同发行时刻/支持范围的CAMS dust相关预报＋天气；不把AOD直接映射起沙尘暴概率。",
+      "processing_requirements": [
+        "DS/BLDU/浮尘区分",
+        "烟/沙尘/云质量区分",
+        "站点能见度删失与单位",
+        "尘埃专属变量和产品版本"
+      ],
+      "negative_and_missingness_policy": "低能见度无沙尘码时只做低能见度结果；未报告归因不强贴标签。",
+      "forecast_track_gate": [
+        "同期CAMS与地面结果",
+        "预报发行版本",
+        "成因/代理区分"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_4",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-ABI": "decoded_sample",
+        "AW-CAMS": "decoded_sample",
+        "AW-GHCNH": "decoded_sample",
+        "AW-IEM": "decoded_sample",
+        "AW-METAR": "decoded_sample",
+        "D28": "decoded_sample",
+        "D35": "decoded_sample",
+        "D36": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D63": "decoded_sample",
+        "D67": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "已有DS/BLDU历史样例，连接同期预报待做。"
+    },
+    {
+      "id": "H15",
+      "name_cn": "浓雾/极端低能见度",
+      "group": "F",
+      "engine_family": "aviation",
+      "source_ids": {
+        "professional_forecast": [
+          "AW-TAF",
+          "D28",
+          "D67"
+        ],
+        "outcome_reference": [
+          "AW-METAR",
+          "AW-GHCNH",
+          "D27"
+        ],
+        "optional_evidence": [
+          "AW-ABI",
+          "D63",
+          "D53"
+        ]
+      },
+      "target_contract": "未来机场报告的能见度低于阈值；雾子类需FG等合法证据；海雾未来mask需真实标签。",
+      "operators": [
+        "value_at",
+        "duration_condition",
+        "report_occurrence",
+        "spatial_extent_change"
+      ],
+      "measurement_type": [
+        "interval",
+        "weather_code",
+        "image",
+        "raster"
+      ],
+      "threshold_direction": [
+        "lt"
+      ],
+      "baseline_contract": "完整TAF条件段和修订，不止prevailing；TEMPO不能任意转0.5；PROB需保留原时空/时间范围。",
+      "processing_requirements": [
+        "原生米/SM精确转换而非舍入衍生列",
+        "P6SM/9999删失区间",
+        "INITIAL/FM/BECMG/TEMPO/PROB和跨月",
+        "SN/FZRA/烟/尘与FG不同",
+        "M4Fog未来云图不当未来雾mask"
+      ],
+      "negative_and_missingness_policy": "阈值恰等于1000m与严格<1000不同；不使用特殊报告时间本身给模型泄露未来风险。",
+      "forecast_track_gate": [
+        "TAF完整支持",
+        "同机场观测和成因",
+        "原始档案与分组"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "initial_monitoring",
+      "index_sources": [],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-ABI": "decoded_sample",
+        "AW-GHCNH": "decoded_sample",
+        "AW-METAR": "decoded_sample",
+        "AW-TAF": "decoded_sample",
+        "D27": "decoded_sample",
+        "D28": "decoded_sample",
+        "D53": "no_decoded_target_sample",
+        "D63": "decoded_sample",
+        "D67": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "美国低能见度窄链已通，正例含降雪；M4Fog原生包仍是缺口。"
+    },
+    {
+      "id": "H16",
+      "name_cn": "天气相关野火/火险",
+      "group": "E",
+      "engine_family": "land_products",
+      "source_ids": {
+        "professional_forecast": [
+          "AW-GWIS",
+          "AW-EFFIS"
+        ],
+        "outcome_reference": [
+          "D23",
+          "D24",
+          "D18",
+          "D65"
+        ],
+        "optional_evidence": [
+          "D19",
+          "D20",
+          "D21",
+          "D22",
+          "AW-ABI",
+          "D43",
+          "D45",
+          "D28",
+          "AW-GEFS"
+        ]
+      },
+      "target_contract": "未来火险指数产品与已知火场活动/蔓延分轨；不统一为天气导致的点火。",
+      "operators": [
+        "value_at",
+        "spatial_extent_change",
+        "event_density",
+        "window_exceedance"
+      ],
+      "measurement_type": [
+        "scalar",
+        "raster",
+        "geometry",
+        "event_points"
+      ],
+      "threshold_direction": [
+        "ge"
+      ],
+      "baseline_contract": "GWIS/EFFIS FWI作为指数预报且共享上游；蔓延任务需匹配的研究/专业基线，不能把FWI当点火概率。",
+      "processing_requirements": [
+        "热异常/活动火/烧痕/周界不同",
+        "未来天气特征as-of",
+        "卫星覆盖/云/探测时间",
+        "GWIS/EFFIS同源不计两个模型",
+        "确认标注图例"
+      ],
+      "negative_and_missingness_policy": "无热点不证明熄灭；未知覆盖保留；人类点火与灭火未建模限制独立说明。",
+      "forecast_track_gate": [
+        "签发版本和历史支持",
+        "未来标签真实时距",
+        "火场独立分组"
+      ],
+      "status": "planned_contract_not_new_task_admission",
+      "implementation_stage": "wave_4",
+      "index_sources": [
+        "D39"
+      ],
+      "conditional_outcome_sources": [],
+      "native_diagnostic_sources_with_unresolved_spatial_gates": [],
+      "latest_access_states": {
+        "AW-ABI": "decoded_sample",
+        "AW-EFFIS": "decoded_sample",
+        "AW-GEFS": "decoded_sample",
+        "AW-GWIS": "decoded_sample",
+        "D18": "decoded_sample",
+        "D19": "decoded_sample",
+        "D20": "decoded_sample",
+        "D21": "decoded_sample",
+        "D22": "decoded_sample",
+        "D23": "decoded_sample",
+        "D24": "decoded_sample",
+        "D28": "decoded_sample",
+        "D39": "catalog_records_only",
+        "D43": "decoded_sample",
+        "D45": "decoded_sample",
+        "D65": "decoded_sample"
+      },
+      "new_monitoring_E_admitted": false,
+      "new_monitoring_F_admitted": false,
+      "new_monitoring_D_admitted": false,
+      "legacy_reported_readiness": "数值火险样例已取得，共享上游和历史签发版本仍有缺口。"
+    }
+  ],
+  "operator_names_note": {
+    "duration_condition": "Resolve to an explicitly parameterized duration operator; verify semantics before migration.",
+    "accumulation_threshold": "Compose accumulation over fixed support with a declared comparator; not a blind rename.",
+    "revision_delta": "E diagnostic only unless a separate F target is specified."
+  },
+  "configuration_is_not_scientific_admission": true
+}

@@ -1,5 +1,23 @@
 # DisasterTrace：LLM 极端天气证据推理评测审查包
 
+## 最新：v7 整体研究方案与数据验证（2026-09-12）
+
+请先阅读 [v7 整体研究主计划](plans/v7_0912_overall_research/OVERALL_PLAN_CN.md)、
+[16 类灾害数据合同](plans/v7_0912_overall_research/HAZARD_DATA_PLAN_CN.md) 和
+[近邻工作与 novelty 对照](plans/v7_0912_overall_research/RELATED_WORK_MATRIX_CN.md)。
+整体路线包含 10 组实验、8 个阶段；既有下一步计划作为实施附录保留。
+
+最新 97 个来源/产品条目中 86 有解析内容、7 为目录、2 待授权、2 缺原生目标内容。
+本轮加入 [EM-DAT/CMA/xBD 的实际审计与代码](plans/user_authorized_sources_20260912/README_CN.md)。
+下载可读不等于任务准入；CMA 字段语义与 xBD 配准仍有门槛。
+新的 monitoring_v1 尚未实现，本次没有新增模型或 GPU 评测，也未证明主动取证正收益。
+
+用于进一步复查的 [ChatGPT Pro 任务书](publication/v7_overall_review_20260912/REVIEW_FOR_CHATGPT_PRO_CN.md)
+与 [阅读附件](publication/v7_overall_review_20260912/chatgpt_pro_v7_overall_review_20260912.zip)
+一并提供。原始大数据、模型权重及环境保留本地。
+
+以下为既有阶段记录，其数字按对应版本解释。
+
 ## 最新：全部候选数据补缺与使用清单（2026-09-12）
 
 当前 97 个来源/产品入口中，84 项有已解析样例、6 项可作事件目录，7 项仍有获取或授权缺口。

@@ -1,0 +1,1108 @@
+{
+  "schema_version": "disastertrace.planning.backlog.v1",
+  "based_on_commit": "ae69453ff15bc3def6c513fafbfd8758437a8587",
+  "execution_enabled": false,
+  "authorization_note": "用户当前请求为分析与规划；此文件不自动授权网络、GPU、付费API、GEE、推送或删除操作。",
+  "paths_note": "所有proposed_paths默认相对disastertrace-starter/src/disastertrace，configs等显式路径由执行前确认；存在同名目录时先读取，不覆盖。",
+  "task_count": 39,
+  "tasks": [
+    {
+      "id": "P00",
+      "title_cn": "固定当前基线、原始结果和暴露集合",
+      "depends_on": [],
+      "proposed_paths": [],
+      "deliverables": [
+        "BASELINE_LOCK.json",
+        "EXPOSURE_LEDGER.parquet"
+      ],
+      "acceptance": [
+        "记录实际HEAD/worktree；不reset/clean/push",
+        "旧阶段成绩和输入文件哈希不变",
+        "已阅读test样例标为暴露"
+      ],
+      "phase": 0,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "D01",
+      "title_cn": "将97入口审计导入版本化注册表",
+      "depends_on": [
+        "P00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/registry.py"
+      ],
+      "deliverables": [
+        "SOURCE_REGISTRY",
+        "CAPABILITY_MATRIX"
+      ],
+      "acceptance": [
+        "沿用Dxx/AW-xx ID",
+        "role/status/rights/lineage分列",
+        "配置不等于准入"
+      ],
+      "phase": 1,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "D02",
+      "title_cn": "提取有界来源IO与纯解码函数",
+      "depends_on": [
+        "D01"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/source_io.py",
+        "multihazard_v1/providers/"
+      ],
+      "deliverables": [
+        "DECODER_PARITY_REPORT"
+      ],
+      "acceptance": [
+        "同原字节重放与旧解码一致",
+        "原始/归一化/展示不混写",
+        "每主机限流、Range和压缩完整性检查",
+        "无授权不联网"
+      ],
+      "phase": 1,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "D03",
+      "title_cn": "通用测量、支持域、删失与阈值合同",
+      "depends_on": [
+        "D01"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/records.py",
+        "multihazard_v1/semantics.py"
+      ],
+      "deliverables": [
+        "MEASUREMENT_SCHEMA",
+        "SEMANTIC_FIXTURES"
+      ],
+      "acceptance": [
+        "负温度合法",
+        "比较符gt/ge/lt/le显式",
+        "P6SM/9999/trace保留区间",
+        "单位基准和时区不隐式猜测"
+      ],
+      "phase": 1,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "D04",
+      "title_cn": "来源关系、事件分组和时空连接",
+      "depends_on": [
+        "D02",
+        "D03"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/joins.py",
+        "multihazard_v1/lineage.py"
+      ],
+      "deliverables": [
+        "JOIN_AUDIT",
+        "DEPENDENCY_EDGES"
+      ],
+      "acceptance": [
+        "auxiliary允许不同变量但要求显式关联",
+        "共同机构不自动去重",
+        "同一过程/资产不跨split",
+        "未知关联隔离"
+      ],
+      "phase": 1,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "D05",
+      "title_cn": "冻结监测队列与基准期/切分",
+      "depends_on": [
+        "D04"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/sampling.py",
+        "multihazard_v1/splits.py"
+      ],
+      "deliverables": [
+        "SAMPLING_SPEC",
+        "THRESHOLD_REGISTRY",
+        "SPLIT_MANIFEST"
+      ],
+      "acceptance": [
+        "基于事前站点/日历规则",
+        "困难富集另列",
+        "training/dev/test与时间隔离",
+        "所有未结算保留分母"
+      ],
+      "phase": 1,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "D06",
+      "title_cn": "实现可复用结果算子及独立验证器",
+      "depends_on": [
+        "D03"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/operators/",
+        "multihazard_v1/outcomes.py"
+      ],
+      "deliverables": [
+        "OUTCOME_VALIDATION"
+      ],
+      "acceptance": [
+        "实测/评估/报告/代理分别标识",
+        "窗口缺测可能隐藏越阈则不判负",
+        "独立计算不得仅调用同一solver作验证"
+      ],
+      "phase": 1,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "D07",
+      "title_cn": "构建冻结公共包、私有结果包与表示资产",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/compiler.py",
+        "multihazard_v1/presentations.py"
+      ],
+      "deliverables": [
+        "PUBLIC_BUNDLE",
+        "PRIVATE_OUTCOMES",
+        "BUILD_MANIFEST"
+      ],
+      "acceptance": [
+        "目录/路径/裁剪/缓存不泄漏结果",
+        "全部派生保存配置和parent",
+        "未取得资产不伪造",
+        "允许原生数值合法工具，不强制盲读图"
+      ],
+      "phase": 2,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "R00",
+      "title_cn": "独立active_warning.v2协议",
+      "depends_on": [
+        "D03"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/schema.py"
+      ],
+      "deliverables": [
+        "SCHEMA_V2"
+      ],
+      "acceptance": [
+        "兼容所有16类的测量类型",
+        "目标和证据scope分离",
+        "概率/点值/类别分开",
+        "旧v1不放宽或重标"
+      ],
+      "phase": 2,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "R01",
+      "title_cn": "v1无损映射及回归边界",
+      "depends_on": [
+        "R00",
+        "P00"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/legacy.py"
+      ],
+      "deliverables": [
+        "V1_COMPATIBILITY_REPORT"
+      ],
+      "acceptance": [
+        "原始trace仍用旧scorer复算",
+        "新字段空缺有理由",
+        "不宣称重新产生旧模型结果"
+      ],
+      "phase": 2,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "R02",
+      "title_cn": "工具参数、快照选择和只读broker",
+      "depends_on": [
+        "R00",
+        "D07"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/tools.py"
+      ],
+      "deliverables": [
+        "TOOL_CONTRACTS",
+        "ACCESS_TESTS"
+      ],
+      "acceptance": [
+        "source/entity/variable/window/representation有界查询",
+        "请求时锁版本",
+        "不可访问全部未来数组/私有score",
+        "缓存和失败成本固定"
+      ],
+      "phase": 2,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "R03",
+      "title_cn": "事件队列和自由查询等待",
+      "depends_on": [
+        "R02"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/environment.py",
+        "active_warning_v2/scheduler.py"
+      ],
+      "deliverables": [
+        "CLOCK_REPLAY_REPORT"
+      ],
+      "acceptance": [
+        "不再固定checkpoint-120s发起",
+        "同时刻排序固定",
+        "过D完成内容不影响D分数",
+        "STOP不删除检查点"
+      ],
+      "phase": 2,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "R04",
+      "title_cn": "运行时隔离与持久化日志",
+      "depends_on": [
+        "R02"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/broker.py",
+        "active_warning_v2/ledger.py"
+      ],
+      "deliverables": [
+        "ISOLATION_REPORT",
+        "RESUME_REPORT"
+      ],
+      "acceptance": [
+        "原始输出解析前落盘",
+        "同root不同目录不宣称强隔离",
+        "沙箱只挂公开资产、禁任意联网",
+        "恢复不重置预算/成本"
+      ],
+      "phase": 2,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "R05",
+      "title_cn": "共同LLM/VLM后端适配",
+      "depends_on": [
+        "R03",
+        "R04"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/runner.py"
+      ],
+      "deliverables": [
+        "DRYRUN_PROTOCOL_REPORT"
+      ],
+      "acceptance": [
+        "先用程序/固定回应后端",
+        "像素/数值工具权限相同",
+        "生成耗时与回放时钟分轨",
+        "无GPU/API授权不推理"
+      ],
+      "phase": 2,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "S00",
+      "title_cn": "共同专业预报和同支持概率基线",
+      "depends_on": [
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/baselines.py"
+      ],
+      "deliverables": [
+        "BASELINE_MANIFEST"
+      ],
+      "acceptance": [
+        "主轨共同最新合法预报",
+        "mean/median按点损失声明",
+        "集合概率按成员及时间窗计算",
+        "无同目标官方基线明确标研究基线"
+      ],
+      "phase": 3,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "S01",
+      "title_cn": "共享带mask的固定融合器",
+      "depends_on": [
+        "S00",
+        "D05"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/forecasters.py"
+      ],
+      "deliverables": [
+        "FORECASTER_LOCK"
+      ],
+      "acceptance": [
+        "支持缺测/资料年龄",
+        "训练校准与评测过程分组隔离",
+        "不同方法仅换取证时F相同",
+        "不得用private label实现value-of-information"
+      ],
+      "phase": 3,
+      "hazard_scope": [],
+      "authorization": "fit_requires_separate_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "S02",
+      "title_cn": "固定/随机/贪心/两步与LLM策略",
+      "depends_on": [
+        "R05",
+        "S01"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/policies.py"
+      ],
+      "deliverables": [
+        "POLICY_REGISTRY"
+      ],
+      "acceptance": [
+        "label/full hidden features不进入策略",
+        "保留read-all与wait-until-D",
+        "AFABench STOP不被force覆盖",
+        "LEAP/BLF-style不冒充完整原作者复现"
+      ],
+      "phase": 3,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "E00",
+      "title_cn": "E/F/D独立评分与组级汇总",
+      "depends_on": [
+        "R05",
+        "S00",
+        "D06"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/scoring.py",
+        "active_warning_v2/statistics.py"
+      ],
+      "deliverables": [
+        "SCORER_PARITY",
+        "METRIC_CONTRACT"
+      ],
+      "acceptance": [
+        "固定检查点不精选提交",
+        "合法概率回退与无提交率单列",
+        "不同单位MAE不混加",
+        "FPR/FAR区分、事件组不确定性"
+      ],
+      "phase": 3,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "E01",
+      "title_cn": "证据互补与任务退化审计",
+      "depends_on": [
+        "S01",
+        "E00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/evidence_audit.py"
+      ],
+      "deliverables": [
+        "EVIDENCE_UTILITY_AUDIT"
+      ],
+      "acceptance": [
+        "先看开发组的base/单组/全读合法对照",
+        "收益可为负或零",
+        "不按主动是否胜出筛选监测测试",
+        "区分无有用数据与融合器未学会"
+      ],
+      "phase": 3,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "E02",
+      "title_cn": "六类配对干预与前缀一致性",
+      "depends_on": [
+        "R03",
+        "E00"
+      ],
+      "proposed_paths": [
+        "active_warning_v2/interventions.py"
+      ],
+      "deliverables": [
+        "COUNTERFACTUAL_REGISTRY"
+      ],
+      "acceptance": [
+        "同结果同目标",
+        "延迟源时派生资产时间因果闭合",
+        "副本/新表示/新观测区分",
+        "不将多种修复增益相加成原因百分比"
+      ],
+      "phase": 3,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H01",
+      "title_cn": "完成H01 热带气旋的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h01.py",
+        "configs/hazards/h01.yaml"
+      ],
+      "deliverables": [
+        "H01_ADMISSION",
+        "H01_DEV_BUNDLE",
+        "H01_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "同气旋同有效时刻预报—结果配对",
+        "输入时刻/受控模式声明",
+        "辅助影像与预报重合",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_1",
+      "hazard_scope": [
+        "H01"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H02",
+      "title_cn": "完成H02 温带风暴/非对流大风的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h02.py",
+        "configs/hazards/h02.yaml"
+      ],
+      "deliverables": [
+        "H02_ADMISSION",
+        "H02_DEV_BUNDLE",
+        "H02_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "阵风或平均风支持一致",
+        "强风正例与普通窗口",
+        "成因标签可追溯",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_2",
+      "hazard_scope": [
+        "H02"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H03",
+      "title_cn": "完成H03 雷暴大风/下击暴流的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h03.py",
+        "configs/hazards/h03.yaml"
+      ],
+      "deliverables": [
+        "H03_ADMISSION",
+        "H03_DEV_BUNDLE",
+        "H03_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "目标概率时空支持匹配",
+        "对流归因",
+        "报告覆盖/漏报政策",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_3",
+      "hazard_scope": [
+        "H03"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H04",
+      "title_cn": "完成H04 龙卷风的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h04.py",
+        "configs/hazards/h04.yaml"
+      ],
+      "deliverables": [
+        "H04_ADMISSION",
+        "H04_DEV_BUNDLE",
+        "H04_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "合格正负样例",
+        "事件身份与发生前帧",
+        "报告参考可结算",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_3",
+      "hazard_scope": [
+        "H04"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H05",
+      "title_cn": "完成H05 冰雹的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h05.py",
+        "configs/hazards/h05.yaml"
+      ],
+      "deliverables": [
+        "H05_ADMISSION",
+        "H05_DEV_BUNDLE",
+        "H05_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "MESH代码表验证",
+        "地面结果或明确代理参考",
+        "概率支持匹配",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_3",
+      "hazard_scope": [
+        "H05"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H06",
+      "title_cn": "完成H06 强雷电的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h06.py",
+        "configs/hazards/h06.yaml"
+      ],
+      "deliverables": [
+        "H06_ADMISSION",
+        "H06_DEV_BUNDLE",
+        "H06_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "足够时间窗口与密度定义",
+        "验证结果覆盖",
+        "明确baseline provenance",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_3",
+      "hazard_scope": [
+        "H06"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H07",
+      "title_cn": "完成H07 极端降水的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h07.py",
+        "configs/hazards/h07.yaml"
+      ],
+      "deliverables": [
+        "H07_ADMISSION",
+        "H07_DEV_BUNDLE",
+        "H07_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "精确累计窗口",
+        "QC合格雨量或明确估计产品",
+        "合法先验与完整采样",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_2",
+      "hazard_scope": [
+        "H07"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H08",
+      "title_cn": "完成H08 河洪/山洪/城市内涝的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h08.py",
+        "configs/hazards/h08.yaml"
+      ],
+      "deliverables": [
+        "H08_ADMISSION",
+        "H08_DEV_BUNDLE",
+        "H08_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "阈值可解释",
+        "站点/变量/基准/支持匹配",
+        "结果成熟度和历史可用性",
+        "空间子轨独立标注",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_1",
+      "hazard_scope": [
+        "H08"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H09",
+      "title_cn": "完成H09 风暴潮/沿岸淹没的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h09.py",
+        "configs/hazards/h09.yaml"
+      ],
+      "deliverables": [
+        "H09_ADMISSION",
+        "H09_DEV_BUNDLE",
+        "H09_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "适用天气系统类型",
+        "预测量与观测量同一",
+        "实际淹没必须有独立结果",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_2",
+      "hazard_scope": [
+        "H09"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H10",
+      "title_cn": "完成H10 高温/热浪的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h10.py",
+        "configs/hazards/h10.yaml"
+      ],
+      "deliverables": [
+        "H10_ADMISSION",
+        "H10_DEV_BUNDLE",
+        "H10_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "多年基准和持续性",
+        "未见高温过程",
+        "业务预报历史模式",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_1",
+      "hazard_scope": [
+        "H10"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H11",
+      "title_cn": "完成H11 寒潮/极端低温/霜冻的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h11.py",
+        "configs/hazards/h11.yaml"
+      ],
+      "deliverables": [
+        "H11_ADMISSION",
+        "H11_DEV_BUNDLE",
+        "H11_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "负值schema",
+        "快速变化定义",
+        "独立过程和基准",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_1",
+      "hazard_scope": [
+        "H11"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H12",
+      "title_cn": "完成H12 冬季灾害的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h12.py",
+        "configs/hazards/h12.yaml"
+      ],
+      "deliverables": [
+        "H12_ADMISSION",
+        "H12_DEV_BUNDLE",
+        "H12_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "冬季预报与已有现象码配对",
+        "每个子类自己的标签",
+        "QC与支持",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_2",
+      "hazard_scope": [
+        "H12"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H13",
+      "title_cn": "完成H13 干旱/闪旱的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h13.py",
+        "configs/hazards/h13.yaml"
+      ],
+      "deliverables": [
+        "H13_ADMISSION",
+        "H13_DEV_BUNDLE",
+        "H13_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "目标期限与基础预报一致",
+        "完整长期基准",
+        "逐变量参考语义",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_4",
+      "hazard_scope": [
+        "H13"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H14",
+      "title_cn": "完成H14 沙尘暴的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h14.py",
+        "configs/hazards/h14.yaml"
+      ],
+      "deliverables": [
+        "H14_ADMISSION",
+        "H14_DEV_BUNDLE",
+        "H14_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "同期CAMS与地面结果",
+        "预报发行版本",
+        "成因/代理区分",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_4",
+      "hazard_scope": [
+        "H14"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H15",
+      "title_cn": "完成H15 浓雾/极端低能见度的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h15.py",
+        "configs/hazards/h15.yaml"
+      ],
+      "deliverables": [
+        "H15_ADMISSION",
+        "H15_DEV_BUNDLE",
+        "H15_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "TAF完整支持",
+        "同机场观测和成因",
+        "原始档案与分组",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_1",
+      "hazard_scope": [
+        "H15"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "H-H16",
+      "title_cn": "完成H16 天气相关野火/火险的独立插件与子轨合同",
+      "depends_on": [
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "R00"
+      ],
+      "proposed_paths": [
+        "multihazard_v1/hazards/h16.py",
+        "configs/hazards/h16.yaml"
+      ],
+      "deliverables": [
+        "H16_ADMISSION",
+        "H16_DEV_BUNDLE",
+        "H16_REFERENCE_TESTS"
+      ],
+      "acceptance": [
+        "签发版本和历史支持",
+        "未来标签真实时距",
+        "火场独立分组",
+        "E/F/D与子类状态分别验收；blocked项不能标完成"
+      ],
+      "phase": "hazard_wave_4",
+      "hazard_scope": [
+        "H16"
+      ],
+      "authorization": "offline_first; bounded_data_requires_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "E03",
+      "title_cn": "小规模分阶段开发矩阵",
+      "depends_on": [
+        "S02",
+        "E01",
+        "E02",
+        "H-H01",
+        "H-H08",
+        "H-H10",
+        "H-H11",
+        "H-H15"
+      ],
+      "proposed_paths": [
+        "configs/experiments/"
+      ],
+      "deliverables": [
+        "PILOT_PREREG",
+        "DEV_RESULTS"
+      ],
+      "acceptance": [
+        "模型/策略/预算不是全笛卡尔积",
+        "保留现有无主动收益的结果",
+        "新方法比较不以格式重跑作为独立事件",
+        "先冻结协议再批准GPU"
+      ],
+      "phase": 4,
+      "hazard_scope": [],
+      "authorization": "model_execution_requires_separate_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "O01",
+      "title_cn": "可选有界前瞻影子捕获",
+      "depends_on": [
+        "D02",
+        "R03",
+        "R04",
+        "S00"
+      ],
+      "proposed_paths": [
+        "capture_configs/"
+      ],
+      "deliverables": [
+        "CAPTURE_PLAN",
+        "FIRST_SEEN_LOG",
+        "FUTURE_SETTLEMENT"
+      ],
+      "acceptance": [
+        "不依赖等待其完成才推进历史研究",
+        "固定频率/请求/字节上限",
+        "不自动发布公众预警",
+        "回执时刻只称本采集端first-seen"
+      ],
+      "phase": 4,
+      "hazard_scope": [],
+      "authorization": "capture_requires_separate_approval",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "REL",
+      "title_cn": "按能力矩阵发布16类整体版本",
+      "depends_on": [
+        "E03",
+        "H-H01",
+        "H-H02",
+        "H-H03",
+        "H-H04",
+        "H-H05",
+        "H-H06",
+        "H-H07",
+        "H-H08",
+        "H-H09",
+        "H-H10",
+        "H-H11",
+        "H-H12",
+        "H-H13",
+        "H-H14",
+        "H-H15",
+        "H-H16"
+      ],
+      "proposed_paths": [
+        "release/"
+      ],
+      "deliverables": [
+        "RELEASE_MANIFEST",
+        "CAPABILITY_CARD",
+        "REPRODUCE_GUIDE"
+      ],
+      "acceptance": [
+        "全部16合同登记并列出实际状态",
+        "完整16类F/D声明须所有声明子轨通过",
+        "未结算/拒收/暴露/参考类型可见",
+        "许可受限数据提供合规获取说明，不复制凭据或受限字节"
+      ],
+      "phase": 5,
+      "hazard_scope": [],
+      "authorization": "offline_only",
+      "status": "planned_not_executed"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+# 待实现的配置合同；不是当前仓库可直接执行的配置。
+# 未选择真实站点、日期、校准器和数据包前，必须拒绝运行。
+status: design_template_not_executable
+schema_version: disastertrace.monitoring.v1.draft
+reviewed_commit: ae69453ff15bc3def6c513fafbfd8758437a8587
+execution:
+  enabled: false
+  download_authorized: false
+  model_inference_authorized: false
+  max_gpus_if_separately_authorized: 4
+  overwrite_existing_run: false
+  network_for_agent: false
+  feedback_from_private_scorer: false
+cohort:
+  id: airport_group_smoke
+  station_ids: []       # 必须来自冻结的可访问元数据，而非未来标签
+  start_utc: null       # 选定并冻结后填写
+  end_utc: null
+  planned_duration_hours: 72
+  planned_station_count: 3
+  sampling: calendar_fixed_not_outcome_selected
+  initial_lookback_hours: null  # 由task contract冻结
+  split_manifest: null
+  task_contract: null
+  baseline_bundle: null
+  input_bundle: null
+  private_outcome_bundle: null # 仅评分进程能读，不进入model-view
+opportunities:
+  public_tick_seconds: 3600
+  lead_hours: [1, 3, 6]
+  outcome_support: fixed_future_hour_routine_report_support
+  create_all_calendar_slots: true
+  drop_missing_outcomes: false
+  reference_mask_shared_across_methods: true
+  count_as_independent_weather_events: false
+baseline:
+  mode: shared_baseline
+  content: complete_applicable_taf
+  calibrated_probability_model: null
+  point_threshold_as_calibrated_probability: false
+  on_missing: frozen_development_fallback_required
+  professional_content_is_free_query: true
+  model_context_tokens_are_accounted: true
+prediction_state:
+  default_mode: follow_latest
+  override_policy: base_bound_override
+  bind_to_target: true
+  bind_to_baseline_content_revision: true
+  invalidated_by_changed_baseline_content: true
+  invalidated_by_transport_only_duplicate: false
+  carry_old_residual_to_new_baseline: false
+  expiry_policy: target_and_protocol_defined
+  expiry_endpoint: inclusive_for_cutoff_snapshot
+  invalid_action_policy: preserve_failure_and_use_effective_prior_or_baseline
+budgets:
+  scope: session
+  logical_query_limit: 72     # 仅smoke建议，非现实接口成本声明
+  max_inflight_queries: 2
+  max_inflight_model_calls: 1
+  model_call_limit: 144       # 包含额外completion唤醒；不是每轮保证调用
+  total_model_tokens: null   # dry-run后冻结，不允许无上限运行
+  total_delivery_bytes: null
+  max_tool_operation_units: null
+  max_steps: 3000
+  charge_failed_accepted_queries: true
+  reuse_same_run_read_asset_upstream_charge: false
+  reuse_model_context_tokens_charge: true
+  share_authorization_between_runs: false
+  physical_disk_hit_changes_logical_cost: false
+clock:
+  mode: archive_costed
+  latency_manifest: null
+  timestamp_unit: utc_microsecond
+  stable_tie_order:
+    - provider_and_baseline_release
+    - already_inflight_completion
+    - baseline_revision_invalidation
+    - cutoff_snapshot
+    - equal_time_expiry_cleanup
+    - public_wakeup
+  private_provider_release_wakes_model: false
+  freeze_view_when_inference_starts: true
+  process_world_events_during_inference: true
+  accept_late_commit: false
+cache:
+  scope: run
+  key_components:
+    - product_id
+    - content_revision
+    - variable
+    - spatial_crop
+    - valid_window
+    - resolution
+    - unit_transform_version
+    - quality_policy_version
+  model_sees_unread_cache_content: false
+models:
+  text: null
+  vlm: null
+  weight_revision: null
+  tokenizer_revision: null
+  decoding_configuration: null
+  json_schema_constraints: same_within_comparison
+scoring:
+  primary_population: all_registered_opportunities
+  baseline_pairing: identical_target_cutoff_and_result_mask
+  diagnostics: [net_gain, positive_gain, negative_gain, override_rate, failures, coverage, resources]
+  binary_primary: brier
+  continuous_primary: mae_by_variable_and_scale
+  macro_unit: independent_region_time_block
+  synthetic_examples_in_scientific_scores: false
+  calibration_fit_on_test: false

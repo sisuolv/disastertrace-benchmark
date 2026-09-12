@@ -1,0 +1,171 @@
+{
+  "schema": "disastertrace.v7.overall_experiments.v1",
+  "generated_at": "2026-09-12T15:51:42.662119+00:00",
+  "status": "planned_not_run",
+  "experiments": [
+    {
+      "id": "X00",
+      "name_cn": "基线与任务审计",
+      "milestone_ids": [
+        "P2"
+      ],
+      "prerequisite_milestone_ids": [
+        "P1"
+      ],
+      "comparators": "FOLLOW/persistence/climatology/calibrated operational forecast/fusion/domain model",
+      "controlled_factors": "Same target support; separate calibration groups; common outcome mask",
+      "outputs_cn": "可结算率、基线损失与缺口",
+      "interpretation_guard": "No score-based cohort selection",
+      "execution_status": "not_started"
+    },
+    {
+      "id": "X01",
+      "name_cn": "分配与共享 2x2",
+      "milestone_ids": [
+        "P3",
+        "P5"
+      ],
+      "prerequisite_milestone_ids": [
+        "P2"
+      ],
+      "comparators": "fixed or heuristic vs global allocation; private vs shared entitlements; strong batch comparator",
+      "controlled_factors": "Frozen predictor; identical total budget, archive, timing, batch API; permission cache isolated",
+      "outputs_cn": "分配主效应/共享主效应/交互、净收益/成本",
+      "interpretation_guard": "Single-target prediction initially; cache gain not called reasoning gain",
+      "execution_status": "not_started"
+    },
+    {
+      "id": "X02",
+      "name_cn": "选择性修订与双覆盖协议",
+      "milestone_ids": [
+        "P3",
+        "P5"
+      ],
+      "prerequisite_milestone_ids": [
+        "P2"
+      ],
+      "comparators": "FOLLOW/all override/rule gate/model gate; base-bound and persistent separately",
+      "controlled_factors": "Same predictor and evidence; calibration frozen; attribute automatic reset",
+      "outputs_cn": "G_plus/G_minus/Delta、改写与陈旧率、协议失效作用",
+      "interpretation_guard": "Do not pool protocols or only score edited targets",
+      "execution_status": "not_started"
+    },
+    {
+      "id": "X03",
+      "name_cn": "信息历史与谱系",
+      "milestone_ids": [
+        "P3",
+        "P5"
+      ],
+      "prerequisite_milestone_ids": [
+        "P2"
+      ],
+      "comparators": "new support/duplicate/derived/reordered old version/delay/failure/revision",
+      "controlled_factors": "Same outcomes; update dependent artifacts; full rerun and prefix fork separate",
+      "outputs_cn": "支持错误、版本错误、成本浪费和未来损失变化",
+      "interpretation_guard": "No physical-weather causal claim or general F locality invariant",
+      "execution_status": "not_started"
+    },
+    {
+      "id": "X04",
+      "name_cn": "证据支持与有限可达性",
+      "milestone_ids": [
+        "P3",
+        "P5"
+      ],
+      "prerequisite_milestone_ids": [
+        "P2"
+      ],
+      "comparators": "bounded E rule engine/exact small-path reference/executable gap selector/model selector",
+      "controlled_factors": "Declared finite support; public metadata policy; hindsight answer-dependent oracle isolated",
+      "outputs_cn": "充分性判断、可达路径、及时取得/停止、缺口类别",
+      "interpretation_guard": "Do not label greedy path optimal or E insufficiency as F impossibility",
+      "execution_status": "not_started"
+    },
+    {
+      "id": "X05",
+      "name_cn": "多模态与信息量",
+      "milestone_ids": [
+        "P3",
+        "P5"
+      ],
+      "prerequisite_milestone_ids": [
+        "P2"
+      ],
+      "comparators": "native image/same-source lawful features/structured representation/additional modality",
+      "controlled_factors": "Real matched image; preprocessing and compute costs; record actual VLM input",
+      "outputs_cn": "预测增量、感知/取证误差与成本",
+      "interpretation_guard": "Gold masks/future products not fed as cheap features",
+      "execution_status": "not_started"
+    },
+    {
+      "id": "X06",
+      "name_cn": "跨过程跨灾种迁移",
+      "milestone_ids": [
+        "P5"
+      ],
+      "prerequisite_milestone_ids": [
+        "P3",
+        "P4"
+      ],
+      "comparators": "unseen region/process/product/hazard group",
+      "controlled_factors": "Freeze method; predefined adapter rules and grouped split",
+      "outputs_cn": "逐组损失、迁移差异、独立块区间",
+      "interpretation_guard": "Six groups and all 16 admission statuses disclosed",
+      "execution_status": "not_started"
+    },
+    {
+      "id": "X07",
+      "name_cn": "时间预算与静态对照",
+      "milestone_ids": [
+        "P3",
+        "P5"
+      ],
+      "prerequisite_milestone_ids": [
+        "P2"
+      ],
+      "comparators": "static full information/controlled replay/realistic budgets and delays",
+      "controlled_factors": "Same outcomes; include nonbinding resources; measured vs simulated latency separate",
+      "outputs_cn": "排序、成本/损失曲线、迟到/虚警/提前量",
+      "interpretation_guard": "Do not tune resource scarcity on test gains",
+      "execution_status": "not_started"
+    },
+    {
+      "id": "X08",
+      "name_cn": "有限前瞻捕获与结算",
+      "milestone_ids": [
+        "P6"
+      ],
+      "prerequisite_milestone_ids": [
+        "P1",
+        "P2"
+      ],
+      "comparators": "frozen shadow policies in fixed natural-calendar capture",
+      "controlled_factors": "Bounded 2-4 week capture and outcome tail; maturity ledger; no test-time learning",
+      "outputs_cn": "first-seen/修订/缺测分布、成熟未来目标分数",
+      "interpretation_guard": "Historical primary does not wait for a new real disaster",
+      "execution_status": "not_started"
+    },
+    {
+      "id": "X09",
+      "name_cn": "联合目标推理扩展",
+      "milestone_ids": [
+        "P5"
+      ],
+      "prerequisite_milestone_ids": [
+        "P3"
+      ],
+      "comparators": "single-target vs joint-target predictor",
+      "controlled_factors": "Same inputs, entitlements and total inference resources",
+      "outputs_cn": "共享推理增量、时效与资源",
+      "interpretation_guard": "Separate from shared acquisition and core allocation effect",
+      "execution_status": "not_started"
+    }
+  ],
+  "primary_confirmatory_hypotheses": [
+    "HYP1",
+    "HYP2",
+    "HYP3"
+  ],
+  "other_experiments": "Mechanism, transport, or sensitivity analyses; select finite matrix before confirmation, not full factorial expansion."
+}

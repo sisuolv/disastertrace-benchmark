@@ -1,0 +1,67 @@
+{
+  "schema": "monitoring.plan_template.v1",
+  "runnable": false,
+  "data_verified": false,
+  "notice": "结构示意，不是实际机场、观测、合格数据或可执行任务；编译器应拒绝直接进入科学评测。",
+  "session_id": "DEMO_SHARED_MONITORING",
+  "origin": "design_template_only",
+  "region_geometry": null,
+  "start_at": null,
+  "end_at": null,
+  "source_manifest_sha256": null,
+  "targets": [
+    {
+      "id": "A_FUTURE",
+      "entity_id": "DEMO_SITE_A",
+      "variable": "visibility",
+      "unit": "m",
+      "target_support": null,
+      "deadline": null,
+      "threshold": {
+        "op": "lt",
+        "value": 1000,
+        "role": "illustrative_research_threshold_not_operational_rule"
+      },
+      "initial_mode": "FOLLOW_BASELINE",
+      "baseline_revision_id": null,
+      "parent_event_group": null
+    },
+    {
+      "id": "B_FUTURE",
+      "entity_id": "DEMO_SITE_B",
+      "variable": "visibility",
+      "unit": "m",
+      "target_support": null,
+      "deadline": null,
+      "threshold": {
+        "op": "lt",
+        "value": 1000,
+        "role": "illustrative_research_threshold_not_operational_rule"
+      },
+      "initial_mode": "FOLLOW_BASELINE",
+      "baseline_revision_id": null,
+      "parent_event_group": null
+    }
+  ],
+  "candidate_views": [
+    {
+      "id": "REGIONAL_IMAGE_EXAMPLE",
+      "public_geometry": null,
+      "source_sha256": null,
+      "product_version": null,
+      "view_sha256": null,
+      "declared_nominal_overlap": [
+        "A_FUTURE",
+        "B_FUTURE"
+      ],
+      "overlap_verified": false
+    }
+  ],
+  "resource_scope": {
+    "max_network_bytes": null,
+    "max_visual_tokens": null,
+    "max_model_calls": null,
+    "max_wall_seconds": null
+  },
+  "outcomes_private_external": true
+}

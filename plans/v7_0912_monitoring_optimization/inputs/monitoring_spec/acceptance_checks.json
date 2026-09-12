@@ -1,0 +1,258 @@
+{
+  "status": "planned_not_executed",
+  "reviewed_commit": "ae69453ff15bc3def6c513fafbfd8758437a8587",
+  "checks": [
+    {
+      "id": "M001",
+      "category": "defaults",
+      "assertion_cn": "Follow/empty策略在全部有基线机会上的输出与当前基线一致，Delta=0",
+      "status": "not_run"
+    },
+    {
+      "id": "M002",
+      "category": "denominator",
+      "assertion_cn": "零预算、STOP、超时、非法输出不删除opportunity",
+      "status": "not_run"
+    },
+    {
+      "id": "M003",
+      "category": "identity",
+      "assertion_cn": "固定target与cutoff身份分开，跨target禁止复用预测值",
+      "status": "not_run"
+    },
+    {
+      "id": "M004",
+      "category": "override",
+      "assertion_cn": "基线事实版本更新使旧覆盖失效；同内容镜像不使其失效",
+      "status": "not_run"
+    },
+    {
+      "id": "M005",
+      "category": "override",
+      "assertion_cn": "expires_at==cutoff先评分后清理；commit晚于cutoff拒收",
+      "status": "not_run"
+    },
+    {
+      "id": "M006",
+      "category": "time",
+      "assertion_cn": "请求时刻选定的版本不因在途更新被替换",
+      "status": "not_run"
+    },
+    {
+      "id": "M007",
+      "category": "time",
+      "assertion_cn": "推理开始后的新资料不进入在途提示；完成时检查基线版本",
+      "status": "not_run"
+    },
+    {
+      "id": "M008",
+      "category": "time",
+      "assertion_cn": "WAIT跨越多个事件逐个处理，日志记录实际事件时刻",
+      "status": "not_run"
+    },
+    {
+      "id": "M009",
+      "category": "time",
+      "assertion_cn": "同刻事件顺序确定且无零耗时无限动作",
+      "status": "not_run"
+    },
+    {
+      "id": "M010",
+      "category": "visibility",
+      "assertion_cn": "变化隐藏未来内容/文件名不改变此前public_view",
+      "status": "not_run"
+    },
+    {
+      "id": "M011",
+      "category": "visibility",
+      "assertion_cn": "未读观测趋势/质量不得出现在公共summary",
+      "status": "not_run"
+    },
+    {
+      "id": "M012",
+      "category": "visibility",
+      "assertion_cn": "未来结果不改变固定运行轨迹；private scorer无反馈",
+      "status": "not_run"
+    },
+    {
+      "id": "M013",
+      "category": "cache",
+      "assertion_cn": "同run已读资产跨目标可复用，跨run不可共享权限",
+      "status": "not_run"
+    },
+    {
+      "id": "M014",
+      "category": "cache",
+      "assertion_cn": "物理磁盘命中不改变逻辑成本/可得时间",
+      "status": "not_run"
+    },
+    {
+      "id": "M015",
+      "category": "cache",
+      "assertion_cn": "缓存键区分版本、变量、ROI、时间、分辨率及处理政策",
+      "status": "not_run"
+    },
+    {
+      "id": "M016",
+      "category": "cost",
+      "assertion_cn": "已支出+预留+新请求预计成本不超过硬预算",
+      "status": "not_run"
+    },
+    {
+      "id": "M017",
+      "category": "cost",
+      "assertion_cn": "失败、重试和无效模型输出全部计入适用的调用/计算上限",
+      "status": "not_run"
+    },
+    {
+      "id": "M018",
+      "category": "cost",
+      "assertion_cn": "重复上下文仍计token，不以唯一资产数替代总输入token",
+      "status": "not_run"
+    },
+    {
+      "id": "M019",
+      "category": "data",
+      "assertion_cn": "负温度合法，非有限值和错单位拒绝",
+      "status": "not_run"
+    },
+    {
+      "id": "M020",
+      "category": "data",
+      "assertion_cn": "1000m严格阈值由原生报文计算，不用舍入英里反算",
+      "status": "not_run"
+    },
+    {
+      "id": "M021",
+      "category": "data",
+      "assertion_cn": "P/M/CAVOK/9999/0000和区间开闭性按适用官方定义",
+      "status": "not_run"
+    },
+    {
+      "id": "M022",
+      "category": "data",
+      "assertion_cn": "TAF临时组省略字段正确继承，不机械给TEMPO=0.5",
+      "status": "not_run"
+    },
+    {
+      "id": "M023",
+      "category": "data",
+      "assertion_cn": "不支持的TAF操作符/COR/月份边界隔离或正确解析，不能静默丢弃",
+      "status": "not_run"
+    },
+    {
+      "id": "M024",
+      "category": "data",
+      "assertion_cn": "SPECI不控制目标采样分母，例行报槽位按事先规则生成",
+      "status": "not_run"
+    },
+    {
+      "id": "M025",
+      "category": "data",
+      "assertion_cn": "累计窗、站点、基准、质量或空间支持不符不得误配",
+      "status": "not_run"
+    },
+    {
+      "id": "M026",
+      "category": "data",
+      "assertion_cn": "更晚目标可查询已发布的过去观测，但旧提交不可回写",
+      "status": "not_run"
+    },
+    {
+      "id": "M027",
+      "category": "data",
+      "assertion_cn": "未结算不是负例，所有策略共用同一结果资格mask",
+      "status": "not_run"
+    },
+    {
+      "id": "M028",
+      "category": "scoring",
+      "assertion_cn": "无合法概率时使用声明回退并标记，不能冒充完整概率预测",
+      "status": "not_run"
+    },
+    {
+      "id": "M029",
+      "category": "scoring",
+      "assertion_cn": "检查点只采用此前最后有效提交，不选择事后最好预测",
+      "status": "not_run"
+    },
+    {
+      "id": "M030",
+      "category": "scoring",
+      "assertion_cn": "G_plus-G_minus==Delta，权重和资格掩膜一致",
+      "status": "not_run"
+    },
+    {
+      "id": "M031",
+      "category": "scoring",
+      "assertion_cn": "裸流量误差不无条件跨流域平均；尺度只从开发集冻结",
+      "status": "not_run"
+    },
+    {
+      "id": "M032",
+      "category": "scoring",
+      "assertion_cn": "提醒合并/冷却/解除不增加重复命中，虚警指标分母明确",
+      "status": "not_run"
+    },
+    {
+      "id": "M033",
+      "category": "replay",
+      "assertion_cn": "已落盘模型回复不在恢复时重新采样",
+      "status": "not_run"
+    },
+    {
+      "id": "M034",
+      "category": "replay",
+      "assertion_cn": "已接受动作幂等且不重复扣费；在途中断保留failure",
+      "status": "not_run"
+    },
+    {
+      "id": "M035",
+      "category": "replay",
+      "assertion_cn": "内部损坏JSONL拒绝静默跳过；末尾未提交碎片按明确政策隔离",
+      "status": "not_run"
+    },
+    {
+      "id": "M036",
+      "category": "isolation",
+      "assertion_cn": "模型worker无未裁剪原始全时段文件、Gold或自由互联网权限",
+      "status": "not_run"
+    },
+    {
+      "id": "M037",
+      "category": "splits",
+      "assertion_cn": "同母事件/时空块与干预变体不跨split，窗口边界purge",
+      "status": "not_run"
+    },
+    {
+      "id": "M038",
+      "category": "range",
+      "assertion_cn": "127MiB+2MiB请求在128MiB硬上限前被拒，含实际Range预读",
+      "status": "not_run"
+    },
+    {
+      "id": "M039",
+      "category": "range",
+      "assertion_cn": "缺版本标识不能仅比较(None,None)放行跨请求对象一致性",
+      "status": "not_run"
+    },
+    {
+      "id": "M040",
+      "category": "sources",
+      "assertion_cn": "同后台不同空间事实不当副本；同事实多渠道不当独立观测",
+      "status": "not_run"
+    },
+    {
+      "id": "M041",
+      "category": "multimodal",
+      "assertion_cn": "ROI不由未来mask选择；同资产摘要只从已读合法像元计算",
+      "status": "not_run"
+    },
+    {
+      "id": "M042",
+      "category": "fairness",
+      "assertion_cn": "主获取对照固定预测后端、输入格式、解码约束与预算政策",
+      "status": "not_run"
+    }
+  ]
+}
