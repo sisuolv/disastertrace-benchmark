@@ -1,0 +1,1 @@
+"""Frozen schema dependencies only."""

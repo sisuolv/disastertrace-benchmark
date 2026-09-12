@@ -1,0 +1,57 @@
+Completed scenario clean traces 1764
+Completed scenario duplicate traces 3528
+Completed scenario stale traces 5292
+Completed scenario delayed traces 7056
+{
+  "completed_at": "2026-09-12T04:16:45.362945+00:00",
+  "seconds": 14.272927140817046,
+  "targets": 84,
+  "pilot_targets": 20,
+  "traces": 7056,
+  "trace_reconstructions": 7056,
+  "model_calls": 0,
+  "scenarios": [
+    "clean",
+    "duplicate",
+    "stale",
+    "delayed"
+  ],
+  "budgets": [
+    0,
+    2,
+    4
+  ],
+  "methods": [
+    [
+      "initial",
+      "official"
+    ],
+    [
+      "initial_persistence",
+      "persistence"
+    ],
+    [
+      "latest",
+      "official"
+    ],
+    [
+      "observe",
+      "persistence"
+    ],
+    [
+      "forecast_then_observe",
+      "blend"
+    ],
+    [
+      "observe_then_forecast",
+      "blend"
+    ],
+    [
+      "all_read",
+      "blend"
+    ]
+  ],
+  "primary_metric": "within-family group-macro continuous MAE",
+  "probability_warning": "Point-threshold 0/1 scores are diagnostic; no calibrated NHC probability baseline.",
+  "inference": "development only; four exposed storms and one recent river segment; no significance claim"
+}

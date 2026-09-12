@@ -1,0 +1,247 @@
+{
+  "episode_id": "t084",
+  "scenario": "clean",
+  "budget": 2,
+  "spent": 2,
+  "receipts": [
+    {
+      "id": "q0000",
+      "tool_id": "observation",
+      "requested_at": "2026-09-10T09:28:00+00:00",
+      "completed_at": "2026-09-10T09:29:00+00:00",
+      "delivered_at": "2026-09-10T09:30:00+00:00",
+      "read_at": "2026-09-10T09:30:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "usgs-20260910T0845",
+          "product_id": "d17e8b9895784ec78451ec80a0923a42:2026-09-10T08:45:00+00:00",
+          "provider": "USGS",
+          "entity": "USGS-11477000",
+          "variable": "instantaneous_discharge",
+          "unit": "ft3/s",
+          "kind": "observation",
+          "issued_at": null,
+          "valid_at": "2026-09-10T08:45:00+00:00",
+          "values": [
+            103.0
+          ],
+          "quality": "Provisional"
+        }
+      ],
+      "bytes": 346
+    },
+    {
+      "id": "q0001",
+      "tool_id": "observation",
+      "requested_at": "2026-09-11T00:58:00+00:00",
+      "completed_at": "2026-09-11T00:59:00+00:00",
+      "delivered_at": "2026-09-11T01:00:00+00:00",
+      "read_at": "2026-09-11T01:00:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "usgs-20260911T0015",
+          "product_id": "d17e8b9895784ec78451ec80a0923a42:2026-09-11T00:15:00+00:00",
+          "provider": "USGS",
+          "entity": "USGS-11477000",
+          "variable": "instantaneous_discharge",
+          "unit": "ft3/s",
+          "kind": "observation",
+          "issued_at": null,
+          "valid_at": "2026-09-11T00:15:00+00:00",
+          "values": [
+            110.0
+          ],
+          "quality": "Provisional"
+        }
+      ],
+      "bytes": 346
+    }
+  ],
+  "commits": [
+    {
+      "at": "2026-09-10T09:30:00+00:00",
+      "target_id": "t084",
+      "value": 89.11,
+      "probability": null,
+      "citations": [
+        "initial"
+      ]
+    },
+    {
+      "at": "2026-09-11T01:00:00+00:00",
+      "target_id": "t084",
+      "value": 89.11,
+      "probability": null,
+      "citations": [
+        "initial"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "index": 0,
+      "at": "2026-09-09T18:00:00+00:00",
+      "kind": "start",
+      "previous_sha256": null,
+      "budget": 2,
+      "availability_mode": "controlled_replay",
+      "sha256": "30be24aecd5e32976458d363efbe52c03df52fa167892884590df3a47bef5f30"
+    },
+    {
+      "index": 1,
+      "at": "2026-09-10T09:28:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "30be24aecd5e32976458d363efbe52c03df52fa167892884590df3a47bef5f30",
+      "sha256": "582fcc76bb30937f07a078800485d388b9dcb1ec25a0c06d2c3c546c42516a30"
+    },
+    {
+      "index": 2,
+      "at": "2026-09-10T09:28:00+00:00",
+      "kind": "query",
+      "previous_sha256": "582fcc76bb30937f07a078800485d388b9dcb1ec25a0c06d2c3c546c42516a30",
+      "receipt_id": "q0000",
+      "tool_id": "observation",
+      "cost": 1,
+      "sha256": "1f847fccd0aeb6205e4b9e4487afbc9efe366167f315a560538b53f20926d450"
+    },
+    {
+      "index": 3,
+      "at": "2026-09-10T09:30:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "1f847fccd0aeb6205e4b9e4487afbc9efe366167f315a560538b53f20926d450",
+      "receipt_id": "q0000",
+      "completed_at": "2026-09-10T09:29:00+00:00",
+      "sha256": "c9baf948db8188d2a673685b41469217ddc44436411585395790396014f5c45f"
+    },
+    {
+      "index": 4,
+      "at": "2026-09-10T09:30:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "c9baf948db8188d2a673685b41469217ddc44436411585395790396014f5c45f",
+      "sha256": "53d43607fb64558d13ec06b8c326554eef69cdbd5131cb515e29fc11c82579c3"
+    },
+    {
+      "index": 5,
+      "at": "2026-09-10T09:30:00+00:00",
+      "kind": "read",
+      "previous_sha256": "53d43607fb64558d13ec06b8c326554eef69cdbd5131cb515e29fc11c82579c3",
+      "receipt_id": "q0000",
+      "artifact_ids": [
+        "usgs-20260910T0845"
+      ],
+      "bytes": 346,
+      "payload_sha256": "f25cc657bc2ff2bbff445def2abb9b06fc76363f81eb20fc10ada3ccac3a83cf",
+      "sha256": "fed0753b3ed59dac39a787f65dc5c87afbc0877f699b23f81f95ed9b008a4de9"
+    },
+    {
+      "index": 6,
+      "at": "2026-09-10T09:30:00+00:00",
+      "kind": "forecast",
+      "previous_sha256": "fed0753b3ed59dac39a787f65dc5c87afbc0877f699b23f81f95ed9b008a4de9",
+      "target_id": "t084",
+      "value": 89.11,
+      "probability": null,
+      "citations": [
+        "initial"
+      ],
+      "sha256": "f0ee3f56117ef34ebcba175f7741b43949be929a97b8524d9df4b9257bc5a430"
+    },
+    {
+      "index": 7,
+      "at": "2026-09-11T00:58:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "f0ee3f56117ef34ebcba175f7741b43949be929a97b8524d9df4b9257bc5a430",
+      "sha256": "2d62fefff1c5574c0fe8ef2b799850cca5c7c74666f26de0b8e9aca7f556242d"
+    },
+    {
+      "index": 8,
+      "at": "2026-09-11T00:58:00+00:00",
+      "kind": "query",
+      "previous_sha256": "2d62fefff1c5574c0fe8ef2b799850cca5c7c74666f26de0b8e9aca7f556242d",
+      "receipt_id": "q0001",
+      "tool_id": "observation",
+      "cost": 1,
+      "sha256": "f83cfb1f29cf07e92cefc267e9f2d9ab0530191b3446e3c621f4d032da4a0273"
+    },
+    {
+      "index": 9,
+      "at": "2026-09-11T01:00:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "f83cfb1f29cf07e92cefc267e9f2d9ab0530191b3446e3c621f4d032da4a0273",
+      "receipt_id": "q0001",
+      "completed_at": "2026-09-11T00:59:00+00:00",
+      "sha256": "2b9e671b123b226932dfe7c6fde33ab0b9f7ba16d409a1cf37d1b6ccc915ce23"
+    },
+    {
+      "index": 10,
+      "at": "2026-09-11T01:00:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "2b9e671b123b226932dfe7c6fde33ab0b9f7ba16d409a1cf37d1b6ccc915ce23",
+      "sha256": "ceaf892040bfdc4c36a9077d4391caeb62b8b42979277f91a153168c0e4ab7b7"
+    },
+    {
+      "index": 11,
+      "at": "2026-09-11T01:00:00+00:00",
+      "kind": "read",
+      "previous_sha256": "ceaf892040bfdc4c36a9077d4391caeb62b8b42979277f91a153168c0e4ab7b7",
+      "receipt_id": "q0001",
+      "artifact_ids": [
+        "usgs-20260911T0015"
+      ],
+      "bytes": 346,
+      "payload_sha256": "b09e905d364b53068f8291d590e06753557cbe1874703e5552927ba1b10daf54",
+      "sha256": "46c47d3f3e372fdd8258c0cbc55667802abb8f9643c8fb8a3300f35e596421fe"
+    },
+    {
+      "index": 12,
+      "at": "2026-09-11T01:00:00+00:00",
+      "kind": "forecast",
+      "previous_sha256": "46c47d3f3e372fdd8258c0cbc55667802abb8f9643c8fb8a3300f35e596421fe",
+      "target_id": "t084",
+      "value": 89.11,
+      "probability": null,
+      "citations": [
+        "initial"
+      ],
+      "sha256": "6b2a815918636d9084a5c3646be0af638b922210cf1a4c0143f57f35541d7379"
+    },
+    {
+      "index": 13,
+      "at": "2026-09-11T01:00:00+00:00",
+      "kind": "stop_acquisition",
+      "previous_sha256": "6b2a815918636d9084a5c3646be0af638b922210cf1a4c0143f57f35541d7379",
+      "sha256": "aa381fae45cfe48a58e79c946ae5286fdda30acda6fae6b4ac106eaea6991ee8"
+    }
+  ],
+  "policy": "fixed_observation",
+  "fusion": "llm",
+  "backend": "model",
+  "calls": [
+    {
+      "stage": "forecast",
+      "round": 0,
+      "input_tokens": 1497,
+      "output_tokens": 27,
+      "seconds": 0.627825372852385,
+      "ended_with_eos": true,
+      "raw_sha256": "f153813c72235102bd2db4a32ced563e9692d80e2990a189f72ab072cccaafa7",
+      "capture_prefix": "forecast-0"
+    },
+    {
+      "stage": "forecast",
+      "round": 1,
+      "input_tokens": 1759,
+      "output_tokens": 27,
+      "seconds": 0.6371711352840066,
+      "ended_with_eos": true,
+      "raw_sha256": "f153813c72235102bd2db4a32ced563e9692d80e2990a189f72ab072cccaafa7",
+      "capture_prefix": "forecast-1"
+    }
+  ],
+  "run_id": "t084-clean-fixed_observation",
+  "plan_sha256": "f9ecf5d91227c0cdd888c61a4ae6e53bef1ad8515d6c7235fa816dac19323a34"
+}

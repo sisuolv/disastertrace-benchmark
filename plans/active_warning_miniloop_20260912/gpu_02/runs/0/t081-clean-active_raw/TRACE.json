@@ -1,0 +1,355 @@
+{
+  "episode_id": "t081",
+  "scenario": "clean",
+  "budget": 2,
+  "spent": 2,
+  "receipts": [
+    {
+      "id": "q0000",
+      "tool_id": "forecast",
+      "requested_at": "2026-09-10T04:58:00+00:00",
+      "completed_at": "2026-09-10T04:59:00+00:00",
+      "delivered_at": "2026-09-10T05:00:00+00:00",
+      "read_at": "2026-09-10T05:00:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "hefs-20260909T1200",
+          "product_id": "hefs-2026-09-09T12:00:00+00:00",
+          "provider": "NOAA/NWS HEFS",
+          "entity": "USGS-11477000",
+          "variable": "instantaneous_discharge",
+          "unit": "ft3/s",
+          "kind": "forecast",
+          "issued_at": "2026-09-09T12:00:00+00:00",
+          "valid_at": "2026-09-10T18:00:00+00:00",
+          "values": [
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79,
+            90.79
+          ],
+          "quality": "45 equal-weight MEFP members; deterministic summary is ensemble mean"
+        }
+      ],
+      "bytes": 712
+    },
+    {
+      "id": "q0001",
+      "tool_id": "forecast",
+      "requested_at": "2026-09-10T15:58:00+00:00",
+      "completed_at": "2026-09-10T15:59:00+00:00",
+      "delivered_at": "2026-09-10T16:00:00+00:00",
+      "read_at": "2026-09-10T16:00:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "hefs-20260910T1200",
+          "product_id": "hefs-2026-09-10T12:00:00+00:00",
+          "provider": "NOAA/NWS HEFS",
+          "entity": "USGS-11477000",
+          "variable": "instantaneous_discharge",
+          "unit": "ft3/s",
+          "kind": "forecast",
+          "issued_at": "2026-09-10T12:00:00+00:00",
+          "valid_at": "2026-09-10T18:00:00+00:00",
+          "values": [
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02,
+            98.02
+          ],
+          "quality": "45 equal-weight MEFP members; deterministic summary is ensemble mean"
+        }
+      ],
+      "bytes": 712
+    }
+  ],
+  "commits": [
+    {
+      "at": "2026-09-10T05:00:00+00:00",
+      "target_id": "t081",
+      "value": 90.79,
+      "probability": null,
+      "citations": [
+        "initial"
+      ]
+    },
+    {
+      "at": "2026-09-10T16:00:00+00:00",
+      "target_id": "t081",
+      "value": 98.02,
+      "probability": null,
+      "citations": [
+        "q0001"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "index": 0,
+      "at": "2026-09-09T18:00:00+00:00",
+      "kind": "start",
+      "previous_sha256": null,
+      "budget": 2,
+      "availability_mode": "controlled_replay",
+      "sha256": "30be24aecd5e32976458d363efbe52c03df52fa167892884590df3a47bef5f30"
+    },
+    {
+      "index": 1,
+      "at": "2026-09-10T04:58:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "30be24aecd5e32976458d363efbe52c03df52fa167892884590df3a47bef5f30",
+      "sha256": "65219ed775141caebe59ec4978660e0b94e72fd4afcee95c7330777f28141133"
+    },
+    {
+      "index": 2,
+      "at": "2026-09-10T04:58:00+00:00",
+      "kind": "query",
+      "previous_sha256": "65219ed775141caebe59ec4978660e0b94e72fd4afcee95c7330777f28141133",
+      "receipt_id": "q0000",
+      "tool_id": "forecast",
+      "cost": 1,
+      "sha256": "fe104ffb7223aae5e3df277a5b06d9b78a30ed74732e03c440b185d2c949d2b4"
+    },
+    {
+      "index": 3,
+      "at": "2026-09-10T05:00:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "fe104ffb7223aae5e3df277a5b06d9b78a30ed74732e03c440b185d2c949d2b4",
+      "receipt_id": "q0000",
+      "completed_at": "2026-09-10T04:59:00+00:00",
+      "sha256": "f415568028c2e4018147398fb8dd2c1961cc62978215654391adfdd8da53ccef"
+    },
+    {
+      "index": 4,
+      "at": "2026-09-10T05:00:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "f415568028c2e4018147398fb8dd2c1961cc62978215654391adfdd8da53ccef",
+      "sha256": "21b02cb5908cfde20062aa97586f37ba32748e2fa95d2fedc254ec52a41bb477"
+    },
+    {
+      "index": 5,
+      "at": "2026-09-10T05:00:00+00:00",
+      "kind": "read",
+      "previous_sha256": "21b02cb5908cfde20062aa97586f37ba32748e2fa95d2fedc254ec52a41bb477",
+      "receipt_id": "q0000",
+      "artifact_ids": [
+        "hefs-20260909T1200"
+      ],
+      "bytes": 712,
+      "payload_sha256": "cfdfe884e2e06a5bb72a786ad6c0367b5d627ea1b591cc070fe9f5bb9322ce4a",
+      "sha256": "04f0604e4f83960de6667ef72307d4cb5b10a7b7fb108df2e501c1d5f8a57cbc"
+    },
+    {
+      "index": 6,
+      "at": "2026-09-10T05:00:00+00:00",
+      "kind": "forecast",
+      "previous_sha256": "04f0604e4f83960de6667ef72307d4cb5b10a7b7fb108df2e501c1d5f8a57cbc",
+      "target_id": "t081",
+      "value": 90.79,
+      "probability": null,
+      "citations": [
+        "initial"
+      ],
+      "sha256": "1dad0b62e766799e7be7ea5c268d5bf922701dc6b020f9c8ee96ab204a6ab71d"
+    },
+    {
+      "index": 7,
+      "at": "2026-09-10T15:58:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "1dad0b62e766799e7be7ea5c268d5bf922701dc6b020f9c8ee96ab204a6ab71d",
+      "sha256": "fb84640ffd3765fba873dc1404bc053d5684df11802e4c30f9c75a4e32efae88"
+    },
+    {
+      "index": 8,
+      "at": "2026-09-10T15:58:00+00:00",
+      "kind": "query",
+      "previous_sha256": "fb84640ffd3765fba873dc1404bc053d5684df11802e4c30f9c75a4e32efae88",
+      "receipt_id": "q0001",
+      "tool_id": "forecast",
+      "cost": 1,
+      "sha256": "4b2333dff7b9b556179e0b239d2573f4a83d00bb61e59a25edba2d79a381750c"
+    },
+    {
+      "index": 9,
+      "at": "2026-09-10T16:00:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "4b2333dff7b9b556179e0b239d2573f4a83d00bb61e59a25edba2d79a381750c",
+      "receipt_id": "q0001",
+      "completed_at": "2026-09-10T15:59:00+00:00",
+      "sha256": "618d5991b62c942490d80b9dd843fc9f6575d5d635878246fe0adabb22f15c1c"
+    },
+    {
+      "index": 10,
+      "at": "2026-09-10T16:00:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "618d5991b62c942490d80b9dd843fc9f6575d5d635878246fe0adabb22f15c1c",
+      "sha256": "1d3f6d4162231c4824578c4aabf09aca60b78196415dccc5b94ad244042c73a6"
+    },
+    {
+      "index": 11,
+      "at": "2026-09-10T16:00:00+00:00",
+      "kind": "read",
+      "previous_sha256": "1d3f6d4162231c4824578c4aabf09aca60b78196415dccc5b94ad244042c73a6",
+      "receipt_id": "q0001",
+      "artifact_ids": [
+        "hefs-20260910T1200"
+      ],
+      "bytes": 712,
+      "payload_sha256": "4f6a0c5b5d26c77c5a660f9419a837852d0074baabaacff0b453023600ccb2b2",
+      "sha256": "5c3c9ac3a20277ab02e0d88f2221b83dcb08db9a6ebadd502b65246e1de80f87"
+    },
+    {
+      "index": 12,
+      "at": "2026-09-10T16:00:00+00:00",
+      "kind": "forecast",
+      "previous_sha256": "5c3c9ac3a20277ab02e0d88f2221b83dcb08db9a6ebadd502b65246e1de80f87",
+      "target_id": "t081",
+      "value": 98.02,
+      "probability": null,
+      "citations": [
+        "q0001"
+      ],
+      "sha256": "baa11b9461f3a09738f5cfc4bf409be71fdf8e798c444fac55fa90b039b55cd7"
+    },
+    {
+      "index": 13,
+      "at": "2026-09-10T16:00:00+00:00",
+      "kind": "stop_acquisition",
+      "previous_sha256": "baa11b9461f3a09738f5cfc4bf409be71fdf8e798c444fac55fa90b039b55cd7",
+      "sha256": "4a3280bafa377e11b2cbba1164920c96a558c62cb9740f54f7717537043db4a7"
+    }
+  ],
+  "policy": "active_raw",
+  "fusion": "llm",
+  "backend": "model",
+  "calls": [
+    {
+      "stage": "acquire",
+      "round": 0,
+      "input_tokens": 1247,
+      "output_tokens": 6,
+      "seconds": 0.16175746079534292,
+      "ended_with_eos": true,
+      "raw_sha256": "7299db31cad32309f709dd607f396e6825cda66fa5fbb142504ecb8de48544fc",
+      "capture_prefix": "acquire-0"
+    },
+    {
+      "stage": "forecast",
+      "round": 0,
+      "input_tokens": 1816,
+      "output_tokens": 27,
+      "seconds": 0.6423976114019752,
+      "ended_with_eos": true,
+      "raw_sha256": "7f8e9c18421cfdecf57ef7a4aeab1c06203a53f058361595d9e0b329b5001ab8",
+      "capture_prefix": "forecast-0"
+    },
+    {
+      "stage": "acquire",
+      "round": 1,
+      "input_tokens": 1828,
+      "output_tokens": 6,
+      "seconds": 0.17619980685412884,
+      "ended_with_eos": true,
+      "raw_sha256": "7299db31cad32309f709dd607f396e6825cda66fa5fbb142504ecb8de48544fc",
+      "capture_prefix": "acquire-1"
+    },
+    {
+      "stage": "forecast",
+      "round": 1,
+      "input_tokens": 2397,
+      "output_tokens": 31,
+      "seconds": 0.7265347810462117,
+      "ended_with_eos": true,
+      "raw_sha256": "f8c04d4e628029739b575aa9248ac5ee0d96a5f0868aa843686cb8bd48c5ef78",
+      "capture_prefix": "forecast-1"
+    }
+  ],
+  "run_id": "t081-clean-active_raw",
+  "plan_sha256": "f9ecf5d91227c0cdd888c61a4ae6e53bef1ad8515d6c7235fa816dac19323a34"
+}

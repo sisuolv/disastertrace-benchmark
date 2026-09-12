@@ -1,0 +1,367 @@
+{
+  "episode_id": "t066",
+  "scenario": "clean",
+  "budget": 4,
+  "spent": 4,
+  "receipts": [
+    {
+      "id": "q0000",
+      "tool_id": "forecast",
+      "requested_at": "2024-10-07T04:58:00+00:00",
+      "completed_at": "2024-10-07T04:59:00+00:00",
+      "delivered_at": "2024-10-07T05:00:00+00:00",
+      "read_at": "2024-10-07T05:00:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "AL142024-a006-forecast",
+          "product_id": "AL142024-a006",
+          "provider": "NOAA NHC",
+          "entity": "AL142024",
+          "variable": "storm_maximum_sustained_wind",
+          "unit": "kt",
+          "kind": "forecast",
+          "issued_at": "2024-10-06T21:00:00+00:00",
+          "valid_at": "2024-10-08T18:00:00+00:00",
+          "values": [
+            125.0
+          ],
+          "quality": "operational intensity forecast; not local wind exposure"
+        }
+      ],
+      "bytes": 370
+    },
+    {
+      "id": "q0001",
+      "tool_id": "observation",
+      "requested_at": "2024-10-07T04:58:00+00:00",
+      "completed_at": "2024-10-07T04:59:00+00:00",
+      "delivered_at": "2024-10-07T05:00:00+00:00",
+      "read_at": "2024-10-07T05:00:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "AL142024-a007-observation",
+          "product_id": "AL142024-a007",
+          "provider": "NOAA NHC",
+          "entity": "AL142024",
+          "variable": "storm_maximum_sustained_wind",
+          "unit": "kt",
+          "kind": "observation",
+          "issued_at": "2024-10-07T03:00:00+00:00",
+          "valid_at": "2024-10-07T03:00:00+00:00",
+          "values": [
+            80.0
+          ],
+          "quality": "same-agency current intensity estimate; independence not assumed"
+        }
+      ],
+      "bytes": 384
+    },
+    {
+      "id": "q0002",
+      "tool_id": "forecast",
+      "requested_at": "2024-10-08T11:58:00+00:00",
+      "completed_at": "2024-10-08T11:59:00+00:00",
+      "delivered_at": "2024-10-08T12:00:00+00:00",
+      "read_at": "2024-10-08T12:00:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "AL142024-a013-forecast",
+          "product_id": "AL142024-a013",
+          "provider": "NOAA NHC",
+          "entity": "AL142024",
+          "variable": "storm_maximum_sustained_wind",
+          "unit": "kt",
+          "kind": "forecast",
+          "issued_at": "2024-10-08T09:00:00+00:00",
+          "valid_at": "2024-10-08T18:00:00+00:00",
+          "values": [
+            140.0
+          ],
+          "quality": "operational intensity forecast; not local wind exposure"
+        }
+      ],
+      "bytes": 370
+    },
+    {
+      "id": "q0003",
+      "tool_id": "observation",
+      "requested_at": "2024-10-08T11:58:00+00:00",
+      "completed_at": "2024-10-08T11:59:00+00:00",
+      "delivered_at": "2024-10-08T12:00:00+00:00",
+      "read_at": "2024-10-08T12:00:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "AL142024-a013-observation",
+          "product_id": "AL142024-a013",
+          "provider": "NOAA NHC",
+          "entity": "AL142024",
+          "variable": "storm_maximum_sustained_wind",
+          "unit": "kt",
+          "kind": "observation",
+          "issued_at": "2024-10-08T09:00:00+00:00",
+          "valid_at": "2024-10-08T09:00:00+00:00",
+          "values": [
+            135.0
+          ],
+          "quality": "same-agency current intensity estimate; independence not assumed"
+        }
+      ],
+      "bytes": 385
+    }
+  ],
+  "commits": [
+    {
+      "at": "2024-10-07T05:00:00+00:00",
+      "target_id": "t066",
+      "value": 125.0,
+      "probability": 0.95,
+      "citations": [
+        "q0000"
+      ]
+    },
+    {
+      "at": "2024-10-08T12:00:00+00:00",
+      "target_id": "t066",
+      "value": 140.0,
+      "probability": 0.95,
+      "citations": [
+        "q0002"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "index": 0,
+      "at": "2024-10-05T22:00:00+00:00",
+      "kind": "start",
+      "previous_sha256": null,
+      "budget": 4,
+      "availability_mode": "controlled_replay",
+      "sha256": "403351bb32a5161f2ff56080af1bc16742afcaca22488d7192452d7a6f252b21"
+    },
+    {
+      "index": 1,
+      "at": "2024-10-07T04:58:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "403351bb32a5161f2ff56080af1bc16742afcaca22488d7192452d7a6f252b21",
+      "sha256": "ba38bf894ba7eefd01f81624a0e986d593ebdcd0676c2cd97a9767833a7aa771"
+    },
+    {
+      "index": 2,
+      "at": "2024-10-07T04:58:00+00:00",
+      "kind": "query",
+      "previous_sha256": "ba38bf894ba7eefd01f81624a0e986d593ebdcd0676c2cd97a9767833a7aa771",
+      "receipt_id": "q0000",
+      "tool_id": "forecast",
+      "cost": 1,
+      "sha256": "05b2aba2d9f95125da8793257dd23896629e6580c17f29cb0fe4045f3e1f6306"
+    },
+    {
+      "index": 3,
+      "at": "2024-10-07T04:58:00+00:00",
+      "kind": "query",
+      "previous_sha256": "05b2aba2d9f95125da8793257dd23896629e6580c17f29cb0fe4045f3e1f6306",
+      "receipt_id": "q0001",
+      "tool_id": "observation",
+      "cost": 1,
+      "sha256": "a6506a665f076edd4bb4563b24af3c0836062fb0b85778e443c90b5f387a1abe"
+    },
+    {
+      "index": 4,
+      "at": "2024-10-07T05:00:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "a6506a665f076edd4bb4563b24af3c0836062fb0b85778e443c90b5f387a1abe",
+      "receipt_id": "q0000",
+      "completed_at": "2024-10-07T04:59:00+00:00",
+      "sha256": "b4ec8488d9676c1a82ba706bf6bdb16c2245c5770965dae268edca89fdbb93f1"
+    },
+    {
+      "index": 5,
+      "at": "2024-10-07T05:00:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "b4ec8488d9676c1a82ba706bf6bdb16c2245c5770965dae268edca89fdbb93f1",
+      "receipt_id": "q0001",
+      "completed_at": "2024-10-07T04:59:00+00:00",
+      "sha256": "0574c557394f3e86a38d53b7300c26987d18d1c37ba0bf1e4a9c42a9fc0dd4f8"
+    },
+    {
+      "index": 6,
+      "at": "2024-10-07T05:00:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "0574c557394f3e86a38d53b7300c26987d18d1c37ba0bf1e4a9c42a9fc0dd4f8",
+      "sha256": "35330d4eb7243699a2702d61e3e9e768121385e7debc474edbd1de81cbfff29f"
+    },
+    {
+      "index": 7,
+      "at": "2024-10-07T05:00:00+00:00",
+      "kind": "read",
+      "previous_sha256": "35330d4eb7243699a2702d61e3e9e768121385e7debc474edbd1de81cbfff29f",
+      "receipt_id": "q0000",
+      "artifact_ids": [
+        "AL142024-a006-forecast"
+      ],
+      "bytes": 370,
+      "payload_sha256": "4e3b4663e16844a81c64b29ef6e0f6c1f01bd33f73474adaafe1b8c314b217fd",
+      "sha256": "6c225d283bef2b381272d015511c92406339035ce924a9766137bf04afe60606"
+    },
+    {
+      "index": 8,
+      "at": "2024-10-07T05:00:00+00:00",
+      "kind": "read",
+      "previous_sha256": "6c225d283bef2b381272d015511c92406339035ce924a9766137bf04afe60606",
+      "receipt_id": "q0001",
+      "artifact_ids": [
+        "AL142024-a007-observation"
+      ],
+      "bytes": 384,
+      "payload_sha256": "a59ec14bbb34d10163e9c89a1e89e0eeffa441f191933535f834981678853c20",
+      "sha256": "1ec6d8436754ef6b2249e029bc19598cc32695d423e33f6e06028e218f104ef8"
+    },
+    {
+      "index": 9,
+      "at": "2024-10-07T05:00:00+00:00",
+      "kind": "forecast",
+      "previous_sha256": "1ec6d8436754ef6b2249e029bc19598cc32695d423e33f6e06028e218f104ef8",
+      "target_id": "t066",
+      "value": 125.0,
+      "probability": 0.95,
+      "citations": [
+        "q0000"
+      ],
+      "sha256": "10dd331203049614753d5f125dc882e97be4fca664232bedfdf5ce612cd28a86"
+    },
+    {
+      "index": 10,
+      "at": "2024-10-08T11:58:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "10dd331203049614753d5f125dc882e97be4fca664232bedfdf5ce612cd28a86",
+      "sha256": "3316b673fffa33d2c6b9e13f4660933739165b4414bac611c75f531052833cad"
+    },
+    {
+      "index": 11,
+      "at": "2024-10-08T11:58:00+00:00",
+      "kind": "query",
+      "previous_sha256": "3316b673fffa33d2c6b9e13f4660933739165b4414bac611c75f531052833cad",
+      "receipt_id": "q0002",
+      "tool_id": "forecast",
+      "cost": 1,
+      "sha256": "2a16d978d3c448dac62cc4127a320d6a5848857b32239cb999ccff48c7070000"
+    },
+    {
+      "index": 12,
+      "at": "2024-10-08T11:58:00+00:00",
+      "kind": "query",
+      "previous_sha256": "2a16d978d3c448dac62cc4127a320d6a5848857b32239cb999ccff48c7070000",
+      "receipt_id": "q0003",
+      "tool_id": "observation",
+      "cost": 1,
+      "sha256": "1ade87dbd07e57f30806c6ce32c294b200495a93883785319c1a4e556ac8699b"
+    },
+    {
+      "index": 13,
+      "at": "2024-10-08T12:00:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "1ade87dbd07e57f30806c6ce32c294b200495a93883785319c1a4e556ac8699b",
+      "receipt_id": "q0002",
+      "completed_at": "2024-10-08T11:59:00+00:00",
+      "sha256": "c852833e6dff7218dd67c84bb39281ad131c192da8d74ab18ef25c9e0fe51d06"
+    },
+    {
+      "index": 14,
+      "at": "2024-10-08T12:00:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "c852833e6dff7218dd67c84bb39281ad131c192da8d74ab18ef25c9e0fe51d06",
+      "receipt_id": "q0003",
+      "completed_at": "2024-10-08T11:59:00+00:00",
+      "sha256": "e098cf91b3b5ae319a7b1cf6ad168c265a7ee42edd102d9c3b473a2cce60e0cc"
+    },
+    {
+      "index": 15,
+      "at": "2024-10-08T12:00:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "e098cf91b3b5ae319a7b1cf6ad168c265a7ee42edd102d9c3b473a2cce60e0cc",
+      "sha256": "5b9508e9f4ae714532601381904c521fbcc8e95c43e05c21c4a8a901927aa991"
+    },
+    {
+      "index": 16,
+      "at": "2024-10-08T12:00:00+00:00",
+      "kind": "read",
+      "previous_sha256": "5b9508e9f4ae714532601381904c521fbcc8e95c43e05c21c4a8a901927aa991",
+      "receipt_id": "q0002",
+      "artifact_ids": [
+        "AL142024-a013-forecast"
+      ],
+      "bytes": 370,
+      "payload_sha256": "89ddfec7bbefe5ee5b28a0d3afae90a49117e5120c4021007b0031b35edf688e",
+      "sha256": "0d4cb43592c0b936a2ad2577b4fe016abbec31b61bbc03be4eb0b4775ba4712b"
+    },
+    {
+      "index": 17,
+      "at": "2024-10-08T12:00:00+00:00",
+      "kind": "read",
+      "previous_sha256": "0d4cb43592c0b936a2ad2577b4fe016abbec31b61bbc03be4eb0b4775ba4712b",
+      "receipt_id": "q0003",
+      "artifact_ids": [
+        "AL142024-a013-observation"
+      ],
+      "bytes": 385,
+      "payload_sha256": "97cc9fbf21fdba443ef3e0b4a462b94125b6cf32799d3208327b436b980a4598",
+      "sha256": "978e8a34b657e045ed41afda34ad4a67118a71fd2715502a889dc396de750a99"
+    },
+    {
+      "index": 18,
+      "at": "2024-10-08T12:00:00+00:00",
+      "kind": "forecast",
+      "previous_sha256": "978e8a34b657e045ed41afda34ad4a67118a71fd2715502a889dc396de750a99",
+      "target_id": "t066",
+      "value": 140.0,
+      "probability": 0.95,
+      "citations": [
+        "q0002"
+      ],
+      "sha256": "ffceff9bc3a2bc6304e98598af31edac2ffc243901708202dcc1e9bc56a40ee5"
+    },
+    {
+      "index": 19,
+      "at": "2024-10-08T12:00:00+00:00",
+      "kind": "stop_acquisition",
+      "previous_sha256": "ffceff9bc3a2bc6304e98598af31edac2ffc243901708202dcc1e9bc56a40ee5",
+      "sha256": "b08e859f9a41da4e41cc44392e7a3b8155f03d7e52d3d7142d27fb91a970c9ba"
+    }
+  ],
+  "policy": "all_read",
+  "fusion": "llm",
+  "backend": "model",
+  "calls": [
+    {
+      "stage": "forecast",
+      "round": 0,
+      "input_tokens": 1306,
+      "output_tokens": 34,
+      "seconds": 0.7465826813131571,
+      "ended_with_eos": true,
+      "raw_sha256": "3eb8b1f2f44ebd9233a078b8e219160646a6f18e73fd57d482c9c429a2c008e5",
+      "capture_prefix": "forecast-0"
+    },
+    {
+      "stage": "forecast",
+      "round": 1,
+      "input_tokens": 1739,
+      "output_tokens": 34,
+      "seconds": 0.7661327384412289,
+      "ended_with_eos": true,
+      "raw_sha256": "dc4d79b94387f27e0bab846c2cb9a7341b761c844c607971767895c7b3b7168a",
+      "capture_prefix": "forecast-1"
+    }
+  ],
+  "run_id": "t066-clean-all_read",
+  "plan_sha256": "f9ecf5d91227c0cdd888c61a4ae6e53bef1ad8515d6c7235fa816dac19323a34"
+}

@@ -1,5 +1,12 @@
 # DisasterTrace：LLM 极端天气证据推理评测审查包
 
+## 最新：ActiveWarning 最小闭环与复查材料（2026-09-12）
+
+**真实数据、LLM 推理和自动评分的最小闭环已跑通；主动获取收益尚未得到支持。**
+请先读 [最新进展](LATEST_PROGRESS_20260912_CN.md) 和 [ChatGPT Pro 复查说明](publication/active_warning_review_20260912/REVIEW_FOR_CHATGPT_PRO_CN.md)。
+本次包含两轮 Qwen3-8B 的 1,120 条真实回复及完整数值复算材料，并提供 [精选阅读 ZIP](publication/active_warning_review_20260912/chatgpt_pro_active_warning_review_20260912.zip)。
+真实未来水文试点作为并行补充，发布快照中的 18 个结果尚待观测；历史多事件回放可先行验证研究问题。
+
 ## 最新：16 类灾害整体方案与真实样例验证（2026-09-11）
 
 请先读 [完善后的整体方案](plans/v6_blueprint_sample_validation_20260911/OVERALL_PLAN_REFINED_CN.md)、

@@ -1,0 +1,267 @@
+{
+  "episode_id": "aw-ab39d52a163a9639",
+  "scenario": "clean",
+  "budget": 2,
+  "spent": 2,
+  "receipts": [
+    {
+      "id": "q0000",
+      "tool_id": "forecast",
+      "requested_at": "2024-09-10T22:58:00+00:00",
+      "completed_at": "2024-09-10T22:59:00+00:00",
+      "delivered_at": "2024-09-10T23:00:00+00:00",
+      "read_at": "2024-09-10T23:00:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "AL062024-a008-forecast",
+          "product_id": "AL062024-a008",
+          "provider": "NOAA NHC",
+          "entity": "AL062024",
+          "variable": "storm_maximum_sustained_wind",
+          "unit": "kt",
+          "kind": "forecast",
+          "issued_at": "2024-09-10T15:00:00+00:00",
+          "valid_at": "2024-09-13T00:00:00+00:00",
+          "values": [
+            30.0
+          ],
+          "quality": "operational intensity forecast; not local wind exposure"
+        }
+      ],
+      "bytes": 369
+    },
+    {
+      "id": "q0001",
+      "tool_id": "forecast",
+      "requested_at": "2024-09-12T17:58:00+00:00",
+      "completed_at": "2024-09-12T17:59:00+00:00",
+      "delivered_at": "2024-09-12T18:00:00+00:00",
+      "read_at": "2024-09-12T18:00:00+00:00",
+      "status": "read",
+      "cost": 1,
+      "payload": [
+        {
+          "artifact_id": "AL062024-a016-forecast",
+          "product_id": "AL062024-a016",
+          "provider": "NOAA NHC",
+          "entity": "AL062024",
+          "variable": "storm_maximum_sustained_wind",
+          "unit": "kt",
+          "kind": "forecast",
+          "issued_at": "2024-09-12T15:00:00+00:00",
+          "valid_at": "2024-09-13T00:00:00+00:00",
+          "values": [
+            25.0
+          ],
+          "quality": "operational intensity forecast; not local wind exposure"
+        }
+      ],
+      "bytes": 369
+    }
+  ],
+  "commits": [
+    {
+      "at": "2024-09-10T23:00:00+00:00",
+      "target_id": "aw-ab39d52a163a9639",
+      "value": 30.0,
+      "probability": 0.5,
+      "citations": [
+        "q0000"
+      ]
+    },
+    {
+      "at": "2024-09-12T18:00:00+00:00",
+      "target_id": "aw-ab39d52a163a9639",
+      "value": 25.0,
+      "probability": null,
+      "citations": [
+        "q0001"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "index": 0,
+      "at": "2024-09-09T04:00:00+00:00",
+      "kind": "start",
+      "previous_sha256": null,
+      "budget": 2,
+      "availability_mode": "controlled_replay",
+      "sha256": "1f944368583418bce8f905e4c7512f719cc1b2c879951a618179f036f83f85e0"
+    },
+    {
+      "index": 1,
+      "at": "2024-09-10T22:58:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "1f944368583418bce8f905e4c7512f719cc1b2c879951a618179f036f83f85e0",
+      "sha256": "db13f1fba6d665e86588da65a34c2b11f91d32022d322249762ef85249a6d5b6"
+    },
+    {
+      "index": 2,
+      "at": "2024-09-10T22:58:00+00:00",
+      "kind": "query",
+      "previous_sha256": "db13f1fba6d665e86588da65a34c2b11f91d32022d322249762ef85249a6d5b6",
+      "receipt_id": "q0000",
+      "tool_id": "forecast",
+      "cost": 1,
+      "sha256": "6400d173c4799f5f5324d9055bdfc11e43322b10ecdfc47d874ca7ce584fc6ec"
+    },
+    {
+      "index": 3,
+      "at": "2024-09-10T23:00:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "6400d173c4799f5f5324d9055bdfc11e43322b10ecdfc47d874ca7ce584fc6ec",
+      "receipt_id": "q0000",
+      "completed_at": "2024-09-10T22:59:00+00:00",
+      "sha256": "0394281bca6dd4cade9e4cd4c270f169d27480fba6f3a25b217466f41f05177c"
+    },
+    {
+      "index": 4,
+      "at": "2024-09-10T23:00:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "0394281bca6dd4cade9e4cd4c270f169d27480fba6f3a25b217466f41f05177c",
+      "sha256": "66d22af7cdeffb48633765337e5578e755293bad6bcab18fccb06eada261005b"
+    },
+    {
+      "index": 5,
+      "at": "2024-09-10T23:00:00+00:00",
+      "kind": "read",
+      "previous_sha256": "66d22af7cdeffb48633765337e5578e755293bad6bcab18fccb06eada261005b",
+      "receipt_id": "q0000",
+      "artifact_ids": [
+        "AL062024-a008-forecast"
+      ],
+      "bytes": 369,
+      "payload_sha256": "93f75825b35e7d18654454f3eaedef17c01a9ce6921c5dd9011833acb8444a6b",
+      "sha256": "06ffae15936207e9bfc92a5b703a9f59846a5bc065e2b221830e858a022143f1"
+    },
+    {
+      "index": 6,
+      "at": "2024-09-10T23:00:00+00:00",
+      "kind": "forecast",
+      "previous_sha256": "06ffae15936207e9bfc92a5b703a9f59846a5bc065e2b221830e858a022143f1",
+      "target_id": "aw-ab39d52a163a9639",
+      "value": 30.0,
+      "probability": 0.5,
+      "citations": [
+        "q0000"
+      ],
+      "sha256": "03ccd611dc36446712b42e84fb18ecfd486b23496e1eafbc540031b997aeaec5"
+    },
+    {
+      "index": 7,
+      "at": "2024-09-12T17:58:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "03ccd611dc36446712b42e84fb18ecfd486b23496e1eafbc540031b997aeaec5",
+      "sha256": "349f8bc25d73784b5e69505b7f2cf6c9f51e8ec27f51970c449ae8d6733653c0"
+    },
+    {
+      "index": 8,
+      "at": "2024-09-12T17:58:00+00:00",
+      "kind": "query",
+      "previous_sha256": "349f8bc25d73784b5e69505b7f2cf6c9f51e8ec27f51970c449ae8d6733653c0",
+      "receipt_id": "q0001",
+      "tool_id": "forecast",
+      "cost": 1,
+      "sha256": "75dfb0bebebb4362af4119dc1d8d8eb74eeb9bd8dcd6742a7785a8b76c46b72a"
+    },
+    {
+      "index": 9,
+      "at": "2024-09-12T18:00:00+00:00",
+      "kind": "completed",
+      "previous_sha256": "75dfb0bebebb4362af4119dc1d8d8eb74eeb9bd8dcd6742a7785a8b76c46b72a",
+      "receipt_id": "q0001",
+      "completed_at": "2024-09-12T17:59:00+00:00",
+      "sha256": "497e6a1368edf889fd0839578c1190eadca47cb5167397e20b43da3ecf276f8e"
+    },
+    {
+      "index": 10,
+      "at": "2024-09-12T18:00:00+00:00",
+      "kind": "wait",
+      "previous_sha256": "497e6a1368edf889fd0839578c1190eadca47cb5167397e20b43da3ecf276f8e",
+      "sha256": "69048d05be6823c328b98b21fa8523632b7ace57b507c48dd58828ff84d3eab3"
+    },
+    {
+      "index": 11,
+      "at": "2024-09-12T18:00:00+00:00",
+      "kind": "read",
+      "previous_sha256": "69048d05be6823c328b98b21fa8523632b7ace57b507c48dd58828ff84d3eab3",
+      "receipt_id": "q0001",
+      "artifact_ids": [
+        "AL062024-a016-forecast"
+      ],
+      "bytes": 369,
+      "payload_sha256": "02f0f75b9e81091aa8bf5e9235ed1b4c8835ac74331db951f69fc9184a8d60c6",
+      "sha256": "908ceffffc0523f153d0c3691637b3e5dece4e8b5f9a7b771c33ac084e9cbd46"
+    },
+    {
+      "index": 12,
+      "at": "2024-09-12T18:00:00+00:00",
+      "kind": "forecast",
+      "previous_sha256": "908ceffffc0523f153d0c3691637b3e5dece4e8b5f9a7b771c33ac084e9cbd46",
+      "target_id": "aw-ab39d52a163a9639",
+      "value": 25.0,
+      "probability": null,
+      "citations": [
+        "q0001"
+      ],
+      "sha256": "9f0af4d67d05fc8c1b58d015f3033e5b0b1d982ff4bfd3906b91f4e9c6202f15"
+    },
+    {
+      "index": 13,
+      "at": "2024-09-12T18:00:00+00:00",
+      "kind": "stop_acquisition",
+      "previous_sha256": "9f0af4d67d05fc8c1b58d015f3033e5b0b1d982ff4bfd3906b91f4e9c6202f15",
+      "sha256": "08512f8cc8bb6af79acb0b9a927c07a4f146e74cdda004289d50815e4c582799"
+    }
+  ],
+  "policy": "active_canonical",
+  "fusion": "llm",
+  "backend": "model",
+  "calls": [
+    {
+      "stage": "acquire",
+      "round": 0,
+      "input_tokens": 916,
+      "output_tokens": 6,
+      "seconds": 0.1500170985236764,
+      "ended_with_eos": true,
+      "raw_sha256": "7299db31cad32309f709dd607f396e6825cda66fa5fbb142504ecb8de48544fc",
+      "capture_prefix": "acquire-0"
+    },
+    {
+      "stage": "forecast",
+      "round": 0,
+      "input_tokens": 970,
+      "output_tokens": 44,
+      "seconds": 1.0058407001197338,
+      "ended_with_eos": true,
+      "raw_sha256": "097d513626e379e926934ac6aa9880930eeb2812703390616f324d1ff0e07098",
+      "capture_prefix": "forecast-0"
+    },
+    {
+      "stage": "acquire",
+      "round": 1,
+      "input_tokens": 1000,
+      "output_tokens": 6,
+      "seconds": 0.15669508930295706,
+      "ended_with_eos": true,
+      "raw_sha256": "7299db31cad32309f709dd607f396e6825cda66fa5fbb142504ecb8de48544fc",
+      "capture_prefix": "acquire-1"
+    },
+    {
+      "stage": "forecast",
+      "round": 1,
+      "input_tokens": 1050,
+      "output_tokens": 42,
+      "seconds": 0.9617456207051873,
+      "ended_with_eos": true,
+      "raw_sha256": "223db71198e526425d9c469a317019915379a9c2ce3203300cbc9acd50ff9760",
+      "capture_prefix": "forecast-1"
+    }
+  ],
+  "run_id": "aw-ab39d52a163a9639-clean-active_canonical",
+  "plan_sha256": "d7db71d2520e13c4a18500f02c0ff1f9955ebf13289d9fbc3adcaab9587deea7"
+}

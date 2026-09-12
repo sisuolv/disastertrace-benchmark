@@ -1,5 +1,48 @@
 # Decisions
 
+## Hydro data admission and prospective shadow, 2026-09-12
+
+- Advance the already completed ActiveWarning minimum loop with a separate water
+  namespace and fresh prospective registration. Preserve all historical runs;
+  distinguish a working real-data LLM replay from the currently pending online trial.
+- Select nine input-risk-stratified candidates from six regional catalogs; admit
+  seven, run six with two ordinary controls and one coastal context. Do not count
+  gauges/timestamps as independent extreme events or infer population incidence.
+- Bind water-level reference and current minor threshold. Use DNLF1's documented
+  minus0.8ft NAVD88 transform; retain CHLA2's datum mismatch and the empty62614
+  query. Use strict CO-OPS QC and separate provisional from approved observations.
+- Keep HEFS QINE/CFS flow diagnostics separate where official CFS thresholds are
+  missing. Tide Height/MLLW is a distinct variable contract and is not automatically
+  weather-attributed storm surge. Source retransmission is not sensor independence.
+- Freeze18 future targets,72 method opportunities,15 polls/360 logical downloads,
+  four CPU fetch children and no retries. Require actual disk receipts before each
+  target's two-hour deadline. Preserve every poll's outcome version and failures.
+- Run four simple numerical policies first. No new LLM/GPU batch is needed to wait
+  for genuine future observations. Existing up-to-four-H100 permission persists;
+  a later model comparison needs a fresh bounded experiment and useful data.
+
+## ActiveWarning minimum loop, 2026-09-12
+
+- Use NHC/HURDAT2 as the fixed-future-target bridge and HEFS/USGS as a continuous
+  flow pilot. Exclude GEE under the current user instruction. Other authorized
+  source samples enter only after target/time/support/outcome pairing.
+- Select model targets by input-time coverage, not error or result availability.
+  Preserve unresolved targets; distinguish HURDAT2 retrospective analysis from
+  USGS provisional observations and from any future independent sensor claim.
+- Keep controlled release times explicit and separate from captured timestamps;
+  do not imply prospective online performance. No flow warning score without a
+  compatible flow threshold; point-threshold probabilities remain diagnostic.
+- Freeze the same forecasting backend for acquisition comparisons. Treat the
+  canonical view as a combined representation/state diagnostic and budget4
+  all-read as an additional-resource reference. Do not force active policies to win.
+- After17 long-ID copy failures, preserve the entire first matrix and perform
+  one fresh full matrix with short public target handles and an alias registry.
+  Keep both experiments separate; do not repair individual historical answers.
+- Report the negative acquisition result and strong persistence baseline. Further
+  research prioritizes independent extreme processes and useful additional data.
+  Current same-chain canonical reduction is not a general multi-provider lineage
+  model, a full LEAP reproduction or a standalone novelty proof.
+
 ## P6 first offline milestone and supplemental fourth plan
 
 - Choose one2-condition/2-repeat E1,2160 opportunities, from the convergent plans.

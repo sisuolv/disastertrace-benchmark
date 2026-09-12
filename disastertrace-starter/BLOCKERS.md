@@ -1,5 +1,50 @@
 # Blockers
 
+## Current: prospective hydro shadow running; future results not yet available
+
+Data admission and the first actual capture/submission cycle succeed. Seven of
+nine sampled stations pass; six enter a frozen18-target/72-result program pilot.
+At the07:15 UTC process check on2026-09-12, all18 outcomes remain pending_future.
+PID94018 is alive; collection endsSeptember13 10:00 UTC, followed by an automatic
+independent audit. No extra user authorization or GEE configuration is needed.
+Entry: `../README_HYDRO_SHADOW_PILOT_20260912_CN.md`.
+
+Pending results are a real-time dependency, not a download or implementation
+failure. First24 captures and144 initial/update predictions pass source-based
+reconstruction. This new run contains program policies; the earlier real LLM
+minimum loop has already completed. Do not claim the pending online scores or
+final audit have passed, and do not restart the consumed shadow_01 launcher.
+
+Remaining data limits: CHLA2 datum metadata differ; MLLA1 has no paired full chain;
+HEFS CFS thresholds are missing; strict coastal QC can leave exact targets
+unsettled; the observations are provisional. All18 initial forecasts are below
+minor thresholds, so a positive warning case is not guaranteed by this short run.
+The risk-enriched cohort does not establish event independence, weather attribution
+of tidal high water, calibrated warning utility, or active-acquisition novelty.
+
+## Current: ActiveWarning minimum loop complete; scientific expansion gates remain
+
+No model collection or replay blocker remains for the 2026-09-12 minimum loop.
+Two complete Qwen3-8B matrices finish on eight successful one-H100 ACP jobs,
+at most four concurrent GPUs. All1,120 replies, failures and unresolved targets
+are retained; short-ID protocol revision has400/400 valid forecast submissions.
+Both launch scopes are consumed. Entry:
+`../plans/active_warning_miniloop_20260912/README_CN.md`.
+
+The principal limits are scientific: four exposed storm groups, one quiet flow
+segment, no compatible official flow warning threshold, provisional river outcomes,
+unproved historical public availability and no independent-event confirmation.
+No active-acquisition benefit is observed; all choices query official forecasts.
+Version normalization is stable under repeated stale input but does not uniformly
+improve forecast accuracy. Probability calibration, genuine multimodal increments,
+natural latency effects and realistic early-action utility remain untested.
+
+Before extending the model scoreboard, acquire matched multi-event extreme and
+control sequences; qualify same-variable thresholds and observation QC; preserve
+prospective versions with real first-seen receipts. Multiple forecast providers
+also require explicit product-lineage keys before canonical fusion. These tasks
+can use existing non-GEE sources and do not require renewed GPU permission.
+
 ## Current: P6 offline complete; live engineering and source expansion remain
 
 P6 posthoc, full2160-slot program controls, context sweep, new tests and CPU

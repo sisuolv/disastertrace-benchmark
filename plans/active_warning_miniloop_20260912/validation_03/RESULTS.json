@@ -1,0 +1,38 @@
+{
+  "at": "2026-09-12T04:55:58.648836+00:00",
+  "checks": [
+    {
+      "argv": [
+        "disastertrace-starter/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "disastertrace-starter/tests/active_forecast",
+        "disastertrace-starter/tests/active_warning_v1"
+      ],
+      "exit_code": 0,
+      "log": "check-0.log"
+    },
+    {
+      "argv": [
+        "disastertrace-starter/.venv/bin/ruff",
+        "check",
+        "disastertrace-starter/src/disastertrace/active_warning_v1",
+        "disastertrace-starter/tests/active_warning_v1",
+        "plans/active_warning_miniloop_20260912/analyze_results.py",
+        "plans/active_warning_miniloop_20260912/build_data.py",
+        "plans/active_warning_miniloop_20260912/collect_models.py",
+        "plans/active_warning_miniloop_20260912/freeze_gpu.py",
+        "plans/active_warning_miniloop_20260912/freeze_short_ids.py",
+        "plans/active_warning_miniloop_20260912/gpu_worker.py",
+        "plans/active_warning_miniloop_20260912/launch_gpu.py",
+        "plans/active_warning_miniloop_20260912/run_programs.py",
+        "plans/active_warning_miniloop_20260912/verify_numbers.py"
+      ],
+      "exit_code": 0,
+      "log": "check-1.log"
+    }
+  ]
+}

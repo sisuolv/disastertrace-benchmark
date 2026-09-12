@@ -1,0 +1,1 @@
+"""Frozen minimal model runtime."""

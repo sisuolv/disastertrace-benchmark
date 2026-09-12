@@ -1,5 +1,156 @@
 # Implementation Status
 
+## Running: multi-station hydro prospective shadow, 2026-09-12
+
+The user approves the next step after the completed ActiveWarning minimum loop.
+New entry: `../README_HYDRO_SHADOW_PILOT_20260912_CN.md`; detailed data admission,
+download progress, protocol and research limits are in
+`../plans/hydro_shadow_pilot_20260912/README_CN.md`.
+
+Actual source discovery/admission uses 56 requests: 54 received and two national
+catalog query timeouts, all preserved, 15,788,997 response bytes. Six documented
+regional bbox catalogs contain 6,949 distinct gauges. Nine candidates receive
+station/forecast/observation checks; seven pass. CHLA2 retains a 0.03ft datum
+metadata mismatch; MLLA1 lacks a current forecast and a matched primary station ID.
+USGS/NWPS overlap validates transmission and datum compatibility, not independent
+sensors. Coastal Tide Height/MLLW is separate from river Stage/gage datum.
+
+DNLF1 needs the metadata-supported 00065 minus0.8ft conversion to NAVD88; all284
+overlap pairs then agree. Parameter62614 returned an empty sample and stays
+recorded. Strict CO-OPS four-flag QC preserves exclusions and provisional quality.
+Two new actual HEFS samples have29/35 members and1,653/2,135 numerical values;
+571 USGS instantaneous flow observations are read. Their minor CFS thresholds are
+missing, so numerical flow admission does not authorize stage-threshold scoring.
+
+A frozen six-station pilot launches at2026-09-12T06:00:47Z, PID94018, in
+`../plans/hydro_shadow_pilot_20260912/shadow_01/`. Registry SHA256:
+92af07963aa5f4d7f55acf546b7ae702443ed1c011d1ecd144bba6a2ce2d309e.
+Targets: six stations at12:00/18:00 September12 and06:00 September13 UTC;
+18 targets, four program policies,72 fixed result opportunities. Disk-receipted
+submission deadline is target minus2h. Fifteen fixed polls, at most360 logical
+downloads, four concurrent CPU HTTP children,4MiB body/95s per-call parent cap,
+no retries, no GEE, paid/model API, GPU generation, training or human item review.
+End collection atSeptember13 10:00 UTC with15min hard execution grace, then
+automatically run the separately implemented standard-library source/numeric audit.
+The initial launch is consumed: do not restart or overwrite shadow_01.
+
+First poll completes06:01:41 UTC:24/24 HTTP200 captures,4,456,991 bytes, no station
+quarantine. All72 initial and72 first-poll updates are independently reconstructed
+from48 source captures;13 frozen files agree; no late disk submissions.
+`PREFIX_AUDIT_01.json` passes. All18 targets are still pending_future at the
+07:15 UTC process check. The process is alive and next polls begin08:00 UTC.
+Future outcome scoring and final automatic audit are not yet completed.
+
+Tests:142 passed (97 existing related cases plus45 new); the45 new cases pass
+again after adding final audit invocation. Local HTTP capture, full simulated
+scheduler lifecycle, one-use claims, datum/QC changes, late persisted submissions,
+exact target support and failure denominators are covered. Ruff correctness/style
+checks pass. Independent initial-byte reconstruction passes for all seven admitted
+stations. The prior ActiveWarning manifest re-verifies3,968 files/79,987,692 bytes
+with no changes. Both old GPU launch scopes remain consumed and untouched.
+
+Executed commands, from repository root, observed exit0: `PYTHONPATH=disastertrace-starter/src
+disastertrace-starter/.venv/bin/python plans/hydro_shadow_pilot_20260912/audit_inputs.py
+--output plans/hydro_shadow_pilot_20260912/admission_01`; same environment runs
+`audit_flow.py --out plans/hydro_shadow_pilot_20260912/FLOW_ADMISSION.json` and
+`prepare_shadow.py --output plans/hydro_shadow_pilot_20260912/shadow_01 --launch`.
+The separate `shadow_01/verify_shadow.py --root .../shadow_01 --out .../PREFIX_AUDIT_01.json`
+exits0. Exact original requests and hash/time receipts are saved by source bundle;
+status and launch command are documented in the new README and VALIDATION.json.
+
+Next: let the registered future observations arrive; inspect FINAL_AUDIT and the
+last per-cycle SUMMARY/SETTLEMENTS with fixed missing/provisional denominators.
+Then expand genuinely distinct extreme processes and compare useful evidence
+under a fixed model/acquisition budget. This risk-enriched sample has no guaranteed
+future threshold-positive target, and the current new pilot has no LLM experiment.
+The original real-data/LLM/scoring minimum loop is complete, while active-acquisition
+benefit and full research novelty remain unproved.
+
+## Completed: ActiveWarning real-data minimum loop, 2026-09-12
+
+The current user requests a working minimum loop on planned existing sources,
+excluding GEE. New implementation: `src/disastertrace/active_warning_v1/`.
+Entry: `../README_ACTIVE_WARNING_MINILOOP_20260912_CN.md`; detailed results and
+data contracts: `../plans/active_warning_miniloop_20260912/README_CN.md` and
+`DATA_CONTRACT_CN.md`. Historical frozen modules, captures and launches remain
+unchanged. No paid API, training, heldout, human item review or LLM judge is used.
+
+NHC raw-source auditing re-verifies 65 files/8,652,138 bytes, 64 advisories and
+461 forecast rows. The new dataset contains 80 cyclone targets in four exposed
+2024 storm groups (74 retrospective HURDAT2 results, six unresolved), plus four
+SCOC1/USGS-11477000 instantaneous flow targets in one quiet recent segment.
+Both 45-member HEFS versions are read; 169 USGS records are actually downloaded,
+with URL/time/hash receipt. Units, station mapping and exact valid times agree.
+No compatible official flow flood threshold exists for this pilot station.
+
+`dataset_v2/` corrects the first candidate's HEFS capture-time fallback using
+the existing receipt's finished_at. Preserve the superseded `dataset/`; it was
+not GPU-evaluated. Four deterministic dataset files reproduce byte for byte.
+All historical proved-availability fields remain null. This is controlled replay
+(NHC issue+1h, HEFS creation+30min, USGS observation+30min), not prospective online
+evaluation. Tool service latency is 60s; inference time is measured separately.
+
+The outcome-free environment implements a fixed future target, two scheduled
+forecast checkpoints, request-time snapshots, completion/read separation, query
+and concurrency caps, append-only submissions, legal citations and hash-chained
+events. Model views contain no private outcomes or unread payloads. The frozen
+GPU package excludes outcome/scoring files; shared AFS is not an OS security
+sandbox for an arbitrary code-executing agent. CPU settlement keeps unresolved
+targets and applies the declared carry-forward/initial-forecast fallback.
+
+Program matrix `programs_01/`: 84 targets x4 scenarios x3 budgets x7 methods =
+7,056 reconstructed trajectories, 14,112 checkpoint opportunities. Tests cover
+59 existing active_forecast cases, 26 new environment cases and 12 capture-audit
+cases (97 passed). Ruff and actual-tokenizer context checks pass. CPU capture
+replay verifies all saved messages, raw outputs, token IDs and traces; a separate
+standard-library verifier reconstructs point errors, professional means, fallback
+and group-macro MAE for all program and both model results.
+
+Two fresh complete Qwen3-8B matrices use 4x1 H100 each, sequential batches with
+at most four active GPUs. Each has 20 input-selected targets x2 scenarios x5 arms,
+200 trajectories and 560 actual replies; greedy, thinking disabled, bfloat16,
+384 output cap, 8192 context, no retries. All eight ACP jobs finish SUCCEEDED.
+First frozen plan: d7db71d2520e13c4a18500f02c0ff1f9955ebf13289d9fbc3adcaab9587deea7.
+Second plan: f9ecf5d91227c0cdd888c61a4ae6e53bef1ad8515d6c7235fa816dac19323a34.
+The two launches are consumed; never relaunch their submissions or worker claims.
+
+The first run retains 17/400 rejected forecasts caused by copying long opaque
+target IDs incorrectly. A fresh full matrix changes only target IDs to short
+handles with an explicit alias registry; numeric data and protocol are otherwise
+unchanged. The second run has 400/400 valid forecast submissions, no missing
+responses or length finishes. Each run has three unresolved selected cyclone
+targets (60/400 checkpoint opportunities have no scientific result). Keep both
+runs separate; do not select or merge their best answers as repeated test data.
+
+Core result: all160 acquisition choices in each run query the official forecast.
+For active_raw versus fixed_forecast, all40 paired query sequences and all80
+forecast requests/raw replies are identical. No acquisition gain is observed.
+Second-run clean group-macro MAE: cyclone fixed/active raw 6.9792kt, canonical
+7.1875kt, latest professional 7.1875kt; water fixed/active raw15.3738ft3/s,
+canonical15.1763, latest professional15.1763, observation persistence1.8750.
+Stale replay changes two raw cyclone checkpoints, increasing MAE to7.3438kt;
+canonical retains identical inputs/outputs but is not universally more accurate.
+The small numerical gains do not establish significance, generalization or
+superiority over a professional forecast system.
+
+Executed from repository root (all completed with exit0):
+`PYTHONPATH=disastertrace-starter/src disastertrace-starter/.venv/bin/python
+plans/active_warning_miniloop_20260912/build_data.py`;
+the same environment runs `run_programs.py` and the97 related pytest cases.
+The existing mm-vlm Python runs `freeze_gpu.py`, `freeze_short_ids.py` and both
+`collect_models.py` calls; `launch_gpu.py` submits gpu_01 and gpu_02 separately.
+`analyze_results.py` and `verify_numbers.py` run on CPU without generation.
+Exact scopes, command arguments, job IDs, final states, captured requests and
+verification receipts are retained in the bundle's plans/submissions/validation.
+
+Next executable work: qualify multiple extreme/near-threshold water processes
+with compatible thresholds and outcome QC, establish bounded prospective version
+capture before rolling archives expire, and test whether additional real evidence
+helps simple numerical baselines. Then extend product-lineage handling and compare
+same-budget policies on new event groups. GEE is not required for those steps.
+Full novelty, multi-hazard transfer, calibrated warning value and online timing
+remain research questions; this minimum engineering loop does not prove them.
+
 ## Completed: Active Forecast v1 evidence kernel, 2026-09-10
 
 The V5 feasibility study is closed. Execute D1-D2 of its final roadmap in the new
