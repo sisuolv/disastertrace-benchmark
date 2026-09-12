@@ -1,0 +1,636 @@
+C408 Unnecessary `dict()` call (rewrite as a literal)
+  --> plans/task_chain_feasibility_20260912/build_chains.py:56:20
+   |
+54 |       # Identical bytes from different queries are separate assets, not proved independent facts.
+55 |       key = "src-" + digest(receipt["url"].encode() + b"\0" + raw)[:16]
+56 |       SOURCES[key] = dict(
+   |  ____________________^
+57 | |         id=key,
+58 | |         path=str(path.relative_to(REPO)),
+59 | |         sha256=digest(raw),
+60 | |         bytes=len(raw),
+61 | |         receipt=str(receipt_path.relative_to(REPO)),
+62 | |         receipt_sha256=digest(receipt_path.read_bytes()),
+63 | |     )
+   | |_____^
+64 |       return raw, key
+   |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:112:13
+    |
+110 |               continue
+111 |           result.append(
+112 | /             dict(
+113 | |                 time=stamp(instant(row["DATE"])),
+114 | |                 value=value,
+115 | |                 unit="degC",
+116 | |                 source=row["_source"],
+117 | |                 line=row["_line"],
+118 | |                 quality=row["TMP"].split(",")[1],
+119 | |             )
+    | |_____________^
+120 |           )
+121 |       return result
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:230:13
+    |
+228 |       ]:
+229 |           BASELINES.append(
+230 | /             dict(
+231 | |                 checkpoint_id=point["checkpoint_id"],
+232 | |                 target_id=point["target_id"],
+233 | |                 method=name,
+234 | |                 value=value,
+235 | |                 unit=reference["unit"],
+236 | |                 absolute_error=None
+237 | |                 if value is None or reference["value"] is None
+238 | |                 else abs(value - reference["value"]),
+239 | |             )
+    | |_____________^
+240 |           )
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:301:17
+    |
+299 |                   scalar(record["LATITUDE"]),
+300 |                   scalar(record["LONGITUDE"]),
+301 | /                 dict(
+302 | |                     shortName="2t", units="K", typeOfLevel="heightAboveGround", level=2
+303 | |                 ),
+    | |_________________^
+304 |               )
+305 |               if instant(model["valid"]) != target:
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:310:24
+    |
+308 |               value = model["nearest"]["value"] - 273.15
+309 |               prior = latest_observation(observations, clock)
+310 |               forecast = dict(
+    |  ________________________^
+311 | |                 value=value,
+312 | |                 unit="degC",
+313 | |                 issue=model["issue"],
+314 | |                 valid=model["valid"],
+315 | |                 available_at=stamp(clock),
+316 | |                 source=model["source"],
+317 | |                 provider="NOAA GFS",
+318 | |                 grid_point=model["nearest"],
+319 | |                 lineage="single_GFS_product",
+320 | |             )
+    | |_____________^
+321 |               point = checkpoint(
+322 |                   ident,
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:362:17
+    |
+360 |                   continue
+361 |               observations.append(
+362 | /                 dict(
+363 | |                     time=stamp(instant(row["time"])),
+364 | |                     value=value,
+365 | |                     unit="ft^3/s",
+366 | |                     source=sid,
+367 | |                     quality=row["approval_status"],
+368 | |                     series=row["time_series_id"],
+369 | |                 )
+    | |_________________^
+370 |               )
+371 |           if len({row["time"] for row in observations}) != len(observations):
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:414:17
+    |
+412 |               models.append((clock, members, model_sid))
+413 |               DECODED.append(
+414 | /                 dict(
+415 | |                     kind="HEFS",
+416 | |                     lid=lid,
+417 | |                     source=model_sid,
+418 | |                     members=len(members),
+419 | |                     issue=base["forecast_datetime"],
+420 | |                     created=base["creation_datetime"],
+421 | |                     start=base["start_datetime"],
+422 | |                     points_per_member=len(base["events"]),
+423 | |                 )
+    | |_________________^
+424 |               )
+425 |           for hour in [0, 6]:
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:459:28
+    |
+457 |                   value = statistics.fmean(values)
+458 |                   prior = latest_observation(observations, clock)
+459 |                   forecast = dict(
+    |  ____________________________^
+460 | |                     value=value,
+461 | |                     unit="ft^3/s",
+462 | |                     issue=members[0]["forecast_datetime"],
+463 | |                     created=members[0]["creation_datetime"],
+464 | |                     available_at=stamp(clock),
+465 | |                     source=model_sid,
+466 | |                     provider="NOAA HEFS",
+467 | |                     member_count=len(values),
+468 | |                     ensemble_values=values,
+469 | |                     member_ids=[m["ensemble_member_index"] for m in members],
+470 | |                 )
+    | |_________________^
+471 |                   point = checkpoint(
+472 |                       ident,
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:494:20
+    |
+492 |           bound = float(value)
+493 |           if match[1] == "P":
+494 |               return dict(
+    |  ____________________^
+495 | |                 lower_m=bound, upper_m=None, upper_inclusive=False, raw=match[0]
+496 | |             )
+    | |_____________^
+497 |           if match[1] == "M":
+498 |               return dict(lower_m=0.0, upper_m=bound, upper_inclusive=False, raw=match[0])
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:498:20
+    |
+496 |             )
+497 |         if match[1] == "M":
+498 |             return dict(lower_m=0.0, upper_m=bound, upper_inclusive=False, raw=match[0])
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+499 |         return dict(lower_m=bound, upper_m=bound, upper_inclusive=True, raw=match[0])
+500 |     if re.search(r"\bCAVOK\b", text):
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:499:16
+    |
+497 |         if match[1] == "M":
+498 |             return dict(lower_m=0.0, upper_m=bound, upper_inclusive=False, raw=match[0])
+499 |         return dict(lower_m=bound, upper_m=bound, upper_inclusive=True, raw=match[0])
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+500 |     if re.search(r"\bCAVOK\b", text):
+501 |         return dict(lower_m=10000.0, upper_m=None, upper_inclusive=False, raw="CAVOK")
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:501:16
+    |
+499 |         return dict(lower_m=bound, upper_m=bound, upper_inclusive=True, raw=match[0])
+500 |     if re.search(r"\bCAVOK\b", text):
+501 |         return dict(lower_m=10000.0, upper_m=None, upper_inclusive=False, raw="CAVOK")
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+502 |     wind = re.search(r"(?:\d{3}|VRB)\d{2,3}(?:G\d{2,3})?(?:KT|MPS)\s+", text)
+503 |     tail = text[wind.end() :] if wind else text
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:508:20
+    |
+506 |           value = int(match[1])
+507 |           if value == 9999:
+508 |               return dict(
+    |  ____________________^
+509 | |                 lower_m=10000.0, upper_m=None, upper_inclusive=False, raw=match[0]
+510 | |             )
+    | |_____________^
+511 |           if value == 0:
+512 |               return dict(lower_m=0.0, upper_m=50.0, upper_inclusive=False, raw=match[0])
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:512:20
+    |
+510 |             )
+511 |         if value == 0:
+512 |             return dict(lower_m=0.0, upper_m=50.0, upper_inclusive=False, raw=match[0])
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+513 |         return dict(
+514 |             lower_m=float(value),
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:513:16
+    |
+511 |           if value == 0:
+512 |               return dict(lower_m=0.0, upper_m=50.0, upper_inclusive=False, raw=match[0])
+513 |           return dict(
+    |  ________________^
+514 | |             lower_m=float(value),
+515 | |             upper_m=float(value),
+516 | |             upper_inclusive=True,
+517 | |             raw=match[0],
+518 | |         )
+    | |_________^
+519 |       raise ValueError("No unambiguous native visibility token")
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:586:17
+    |
+584 |               valid = start if mode == "INITIAL" else day_time(mode[2:], start, True)
+585 |               segments.append(
+586 | /                 dict(
+587 | |                     start=stamp(valid),
+588 | |                     end=stamp(end),
+589 | |                     visibility=parsed,
+590 | |                     raw=content.strip(),
+591 | |                     mode=mode,
+592 | |                 )
+    | |_________________^
+593 |               )
+594 |           elif mode.startswith("TEMPO"):
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:599:17
+    |
+597 |               cend = day_time(times[1], cstart)
+598 |               conditional.append(
+599 | /                 dict(
+600 | |                     start=stamp(cstart),
+601 | |                     end=stamp(cend),
+602 | |                     visibility=parsed,
+603 | |                     mode=mode,
+604 | |                     raw=content.strip(),
+605 | |                 )
+    | |_________________^
+606 |               )
+607 |           else:
+    |
+help: Rewrite as a literal
+
+RUF007 Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs
+   --> plans/task_chain_feasibility_20260912/build_chains.py:612:26
+    |
+610 |             )
+611 |     segments.sort(key=lambda row: row["start"])
+612 |     for first, second in zip(segments, segments[1:]):
+    |                          ^^^
+613 |         first["end"] = second["start"]
+614 |     if any(
+    |
+help: Replace `zip()` with `itertools.pairwise()`
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:618:14
+    |
+616 |       ):
+617 |           raise ValueError("Nonpositive TAF segment duration")
+618 |       result = dict(
+    |  ______________^
+619 | |         source=sid,
+620 | |         station=station,
+621 | |         issue=stamp(issue),
+622 | |         start=stamp(start),
+623 | |         end=stamp(end),
+624 | |         segments=segments,
+625 | |         conditional=conditional,
+626 | |         native_text=text,
+627 | |     )
+    | |_____^
+628 |       DECODED.append(dict(kind="TAF", **result))
+629 |       return result
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:641:13
+    |
+639 |               continue
+640 |           parsed.append(
+641 | /             dict(
+642 | |                 time=stamp(instant(row["valid"])),
+643 | |                 visibility=interval,
+644 | |                 source=row["_source"],
+645 | |                 line=row["_line"],
+646 | |                 raw=row["metar"],
+647 | |                 weather=row["wxcodes"],
+648 | |                 quality="archived_report_not_final_sensor_QC",
+649 | |             )
+    | |_____________^
+650 |           )
+651 |       return parsed
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:709:28
+    |
+707 |                       if instant(s["start"]) <= target < instant(s["end"])
+708 |                   ]
+709 |                   forecast = dict(
+    |  ____________________________^
+710 | |                     visibility=segment["visibility"],
+711 | |                     raw_segment=segment["raw"],
+712 | |                     segment_start=segment["start"],
+713 | |                     segment_end=segment["end"],
+714 | |                     conditional_segments=conditions,
+715 | |                     issue=model["issue"],
+716 | |                     available_at=stamp(instant(model["issue"]) + timedelta(minutes=15)),
+717 | |                     provider="NWS TAF via IEM",
+718 | |                     source=model["source"],
+719 | |                     projection="prevailing_only",
+720 | |                 )
+    | |_________________^
+721 |                   point = checkpoint(
+722 |                       ident,
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:736:25
+    |
+734 |                       value = below(interval) if interval else None
+735 |                       BASELINES.append(
+736 | /                         dict(
+737 | |                             checkpoint_id=point["checkpoint_id"],
+738 | |                             target_id=ident,
+739 | |                             method=method,
+740 | |                             predicted_below_1000m=value,
+741 | |                             actual_below_1000m=actual_class,
+742 | |                             correct=None
+743 | |                             if value is None or actual_class is None
+744 | |                             else value == actual_class,
+745 | |                             conditional_overlay_present=bool(conditions),
+746 | |                         )
+    | |_________________________^
+747 |                       )
+    |
+help: Rewrite as a literal
+
+RUF015 Prefer `next(...)` over single element slice
+   --> plans/task_chain_feasibility_20260912/build_chains.py:752:13
+    |
+750 | def supplementary():
+751 |     rows = csv_records(captured(4, "ncei-days-msy-rain"))
+752 |     exact = [r for r in rows if r["DATE"] == "2024-09-12T00:00:00"][0]
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+753 |     target = instant(exact["DATE"])
+754 |     period, depth, condition, quality = exact["AA1"].split(",")
+    |
+help: Replace with `next(...)`
+
+RUF059 Unpacked variable `depth` is never used
+   --> plans/task_chain_feasibility_20260912/build_chains.py:754:13
+    |
+752 |     exact = [r for r in rows if r["DATE"] == "2024-09-12T00:00:00"][0]
+753 |     target = instant(exact["DATE"])
+754 |     period, depth, condition, quality = exact["AA1"].split(",")
+    |             ^^^^^
+755 |     if period != "06" or condition != "3":
+756 |         raise ValueError("Expected the recorded accumulation-condition ambiguity")
+    |
+help: Prefix it with an underscore or any other dummy variable pattern
+
+RUF059 Unpacked variable `quality` is never used
+   --> plans/task_chain_feasibility_20260912/build_chains.py:754:31
+    |
+752 |     exact = [r for r in rows if r["DATE"] == "2024-09-12T00:00:00"][0]
+753 |     target = instant(exact["DATE"])
+754 |     period, depth, condition, quality = exact["AA1"].split(",")
+    |                               ^^^^^^^
+755 |     if period != "06" or condition != "3":
+756 |         raise ValueError("Expected the recorded accumulation-condition ambiguity")
+    |
+help: Prefix it with an underscore or any other dummy variable pattern
+
+RUF015 Prefer `next(...)` over single element slice
+   --> plans/task_chain_feasibility_20260912/build_chains.py:769:12
+    |
+767 |         window_start="2024-09-11T18:00:00Z",
+768 |     )
+769 |     near = [r for r in rows if r["DATE"] == "2024-09-11T23:53:00"][0]
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+770 |     fields = near["AA2"].split(",")
+771 |     if fields[0] != "06" or fields[2] != "9" or fields[3] not in {"1", "5"}:
+    |
+help: Replace with `next(...)`
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:786:13
+    |
+784 |               scalar(exact["LATITUDE"]),
+785 |               scalar(exact["LONGITUDE"]),
+786 | /             dict(
+787 | |                 shortName="tp",
+788 | |                 units="kg m**-2",
+789 | |                 stepType="accum",
+790 | |                 typeOfLevel="surface",
+791 | |             ),
+    | |_____________^
+792 |           )
+793 |           begin = instant(model["issue"]) + timedelta(hours=model["startStep"])
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:797:20
+    |
+795 |               raise ValueError("Wrong GFS accumulation window")
+796 |           clock = instant(model["issue"]) + timedelta(hours=5)
+797 |           forecast = dict(
+    |  ____________________^
+798 | |             value=model["nearest"]["value"],
+799 | |             unit="mm",
+800 | |             source=model["source"],
+801 | |             issue=model["issue"],
+802 | |             available_at=stamp(clock),
+803 | |             accumulation_start=stamp(begin),
+804 | |             accumulation_end=stamp(target),
+805 | |             provider="NOAA GFS",
+806 | |             grid_point=model["nearest"],
+807 | |         )
+    | |_________^
+808 |           point = checkpoint(
+809 |               "rain-msy-strict", clock, forecast, None, target, "six_hour_precipitation"
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:814:9
+    |
+812 |           forecasts.append(forecast)
+813 |       DIAGNOSTICS.append(
+814 | /         dict(
+815 | |             kind="rain_near_time_only",
+816 | |             target_station=exact["STATION"],
+817 | |             forecast_window_end=stamp(target),
+818 | |             observation_window_end=near["DATE"],
+819 | |             end_difference_seconds=420,
+820 | |             source=near["_source"],
+821 | |             source_line=near["_line"],
+822 | |             reported_mm=reported_mm,
+823 | |             raw_six_hour_group=native_group[0],
+824 | |             native_group_mm=native_mm,
+825 | |             condition_note="condition 9 not supplied; quality 1/5 required",
+826 | |             forecasts=forecasts,
+827 | |             strict_target_settled=False,
+828 | |         )
+    | |_________^
+829 |       )
+830 |       observations = metars(captured(3, "metar-serial-egkk"))
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:841:13
+    |
+839 |             51.1481,
+840 |             -0.1903,
+841 |             dict(shortName="vis", units="m", typeOfLevel="surface"),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+842 |         )
+843 |         if instant(model["valid"]) != instant("2024-12-27T12:00:00Z"):
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:847:9
+    |
+845 |           fog_models.append(model)
+846 |       DIAGNOSTICS.append(
+847 | /         dict(
+848 | |             kind="uk_visibility_near_time_only",
+849 | |             observation=actual[0],
+850 | |             forecast_models=fog_models,
+851 | |             difference_seconds=600,
+852 | |             exact_time_match=False,
+853 | |             downloaded_reports=len(observations),
+854 | |             below_1000m_reports=sum(
+855 | |                 below(r["visibility"]) is True for r in observations
+856 | |             ),
+857 | |             taf_archive_rows={
+858 | |                 tag: len(csv_records(captured(3, "taf-csv-" + tag)))
+859 | |                 for tag in ["egll", "egkk"]
+860 | |             },
+861 | |         )
+    | |_________^
+862 |       )
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/build_chains.py:898:14
+    |
+896 |       write_json(args.output / "DECODED_PRODUCTS.json", DECODED)
+897 |       write_json(args.output / "SUPPLEMENTARY.json", DIAGNOSTICS)
+898 |       report = dict(
+    |  ______________^
+899 | |         schema="disastertrace.task_chain_feasibility.v1",
+900 | |         targets=len(OUTCOMES),
+901 | |         checkpoints=len(CHECKPOINTS),
+902 | |         baseline_records=len(BASELINES),
+903 | |         families=dict(Counter(row["family"] for row in OUTCOMES)),
+904 | |         outcome_status=dict(Counter(row["status"] for row in OUTCOMES)),
+905 | |         quality_temperature_targets=[
+906 | |             r for r in OUTCOMES if r["family"] == "temperature"
+907 | |         ],
+908 | |         visibility_positive_targets=sum(r.get("below_1000m") is True for r in OUTCOMES),
+909 | |         distinct_bound_sources=len(SOURCES),
+910 | |         numeric_products=len(DECODED),
+911 | |         new_model_calls=0,
+912 | |         new_gpu_jobs=0,
+913 | |         confirmed_novelty=False,
+914 | |         limits=[
+915 | |             "Development cases, not independent-event confirmation.",
+916 | |             "Historical availability is controlled, not proved by issue time.",
+917 | |             "Raw archived METAR is not a final independent sensor-QC certificate.",
+918 | |             "No calibrated probability or complete TAF conditional-probability baseline.",
+919 | |             "Public checkpoint rows exclude future values; a live filesystem sandbox is not tested here.",
+920 | |         ],
+921 | |     )
+    | |_____^
+922 |       write_json(args.output / "REPORT.json", report)
+923 |       print(
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+  --> plans/task_chain_feasibility_20260912/fetch_round.py:58:14
+   |
+56 |       with ThreadPoolExecutor(max_workers=4) as pool:
+57 |           receipts = list(pool.map(one, rows))
+58 |       report = dict(
+   |  ______________^
+59 | |         finished_at=capture.now(),
+60 | |         requests=len(receipts),
+61 | |         bytes=sum(row["bytes"] for row in receipts),
+62 | |         rows=receipts,
+63 | |         per_host_parallelism=1,
+64 | |         total_parallelism=4,
+65 | |     )
+   | |_____^
+66 |       (args.output / "MANIFEST.json").write_text(json.dumps(report, indent=2) + "\n")
+   |
+help: Rewrite as a literal
+
+RUF015 Prefer `next(...)` over single element slice
+  --> plans/task_chain_feasibility_20260912/test_contracts.py:63:22
+   |
+61 |           self.assertEqual(condition["end"], "2024-01-13T11:00:00Z")
+62 |           self.assertTrue(build.below(condition["visibility"]))
+63 |           prevailing = [
+   |  ______________________^
+64 | |             x for x in model["segments"] if x["start"] == "2024-01-13T07:00:00Z"
+65 | |         ][0]
+   | |____________^
+66 |           self.assertFalse(build.below(prevailing["visibility"]))
+   |
+help: Replace with `next(...)`
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> plans/task_chain_feasibility_20260912/verify_chains.py:210:14
+    |
+208 |       ):
+209 |           errors.append("expected_opportunities")
+210 |       result = dict(
+    |  ______________^
+211 | |         all_passed=not errors,
+212 | |         errors=errors,
+213 | |         source_files=len(bindings),
+214 | |         grib_messages_redecoded=grib_checks,
+215 | |         reference_records=reference_checks,
+216 | |         checkpoints=len(checkpoints),
+217 | |         scores=len(scores),
+218 | |         targets=len(outcomes),
+219 | |         builder_imported=False,
+220 | |         new_model_calls=0,
+221 | |         scope="File bindings, independent values, timing, retained rejection and numerical score checks.",
+222 | |     )
+    | |_____^
+223 |       args.output.write_text(json.dumps(result, indent=2) + "\n")
+224 |       print(json.dumps(result))
+    |
+help: Rewrite as a literal
+
+Found 35 errors.
+No fixes available (35 hidden fixes can be enabled with the `--unsafe-fixes` option).

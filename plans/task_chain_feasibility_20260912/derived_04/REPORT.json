@@ -1,0 +1,73 @@
+{
+  "schema": "disastertrace.task_chain_feasibility.v1",
+  "targets": 34,
+  "checkpoints": 96,
+  "baseline_records": 192,
+  "families": {
+    "temperature": 3,
+    "river_discharge": 6,
+    "airport_visibility": 24,
+    "precipitation": 1
+  },
+  "outcome_status": {
+    "unresolved_quality": 1,
+    "quality_controlled_observation": 2,
+    "provisional_observation": 6,
+    "archived_report": 24,
+    "unresolved_accumulation_condition": 1
+  },
+  "quality_temperature_targets": [
+    {
+      "target_id": "temp-phx-original",
+      "family": "temperature",
+      "target_time": "2023-07-19T00:00:00Z",
+      "unit": "degC",
+      "value": null,
+      "status": "unresolved_quality",
+      "event_group": "phoenix-202307-heat",
+      "source": "src-302ec026cf98a8af",
+      "source_line": 65,
+      "raw_temperature": "+0478,2",
+      "reason": "temperature_quality_2"
+    },
+    {
+      "target_id": "temp-phx-daytime",
+      "family": "temperature",
+      "target_time": "2023-07-18T18:00:00Z",
+      "unit": "degC",
+      "value": 41.7,
+      "status": "quality_controlled_observation",
+      "event_group": "phoenix-202307-heat",
+      "source": "src-302ec026cf98a8af",
+      "source_line": 58,
+      "raw_temperature": "+0417,1",
+      "reason": null
+    },
+    {
+      "target_id": "temp-den",
+      "family": "temperature",
+      "target_time": "2024-01-13T18:00:00Z",
+      "unit": "degC",
+      "value": -22.8,
+      "status": "quality_controlled_observation",
+      "event_group": "denver-202401-cold-snow",
+      "source": "src-ebeee1c1e8fbc4ea",
+      "source_line": 78,
+      "raw_temperature": "-0228,1",
+      "reason": null
+    }
+  ],
+  "visibility_positive_targets": 1,
+  "distinct_bound_sources": 38,
+  "numeric_products": 27,
+  "new_model_calls": 0,
+  "new_gpu_jobs": 0,
+  "confirmed_novelty": false,
+  "limits": [
+    "Development cases, not independent-event confirmation.",
+    "Historical availability is controlled, not proved by issue time.",
+    "Raw archived METAR is not a final independent sensor-QC certificate.",
+    "No calibrated probability or complete TAF conditional-probability baseline.",
+    "Public checkpoint rows exclude future values; a live filesystem sandbox is not tested here."
+  ]
+}

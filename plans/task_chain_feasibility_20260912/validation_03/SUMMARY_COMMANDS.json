@@ -1,0 +1,40 @@
+[
+  {
+    "name": "summary_format",
+    "command": [
+      "disastertrace-starter/.venv/bin/python",
+      "-m",
+      "ruff",
+      "format",
+      "--check",
+      "plans/task_chain_feasibility_20260912/summarize_results.py"
+    ],
+    "exit_code": 0,
+    "log": "summary_format.log"
+  },
+  {
+    "name": "summary_lint",
+    "command": [
+      "disastertrace-starter/.venv/bin/python",
+      "-m",
+      "ruff",
+      "check",
+      "plans/task_chain_feasibility_20260912/summarize_results.py"
+    ],
+    "exit_code": 0,
+    "log": "summary_lint.log"
+  },
+  {
+    "name": "metrics_retry01",
+    "command": [
+      "python",
+      "plans/task_chain_feasibility_20260912/summarize_results.py",
+      "--data",
+      "plans/task_chain_feasibility_20260912/derived_04",
+      "--output",
+      "plans/task_chain_feasibility_20260912/FEASIBILITY_METRICS.json"
+    ],
+    "exit_code": 0,
+    "log": "metrics_retry01.log"
+  }
+]

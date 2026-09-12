@@ -1,5 +1,24 @@
 # Decisions
 
+## Expanded dataset use and publication, 2026-09-12
+
+- Keep all97 entries and16 hazards, assigning each source to professional forecast,
+  reference/proxy, perception diagnostic, event index or conditional extension.
+  A decoded sample is not a formally admitted prediction task.
+- Admit nine recovered sample entries while preserving all partial downloads,
+  failed requests, empty geometries and negative examples. Preserve original
+  registry snapshots and record the new inventory in a separate bundle.
+- Record GWIS/EFFIS as shared-backend delivery entries. Keep the same distinction
+  for USGS/CAMELSH, METAR/IEM, MRMS subproducts and benchmark-derived labels.
+- Exclude unknown SenForFlood label semantics from binary flood scoring. Use the
+  selected Urban positive tile only for exposed development feasibility. Record
+  CEMS EMSR842 as wildfire rather than claiming the planned flood AOI is validated.
+- Publish selected code/reports on the existing private GitHub branch, based on
+  its current remote tip and with an isolated publication index. Preserve the
+  dirty local worktree/index; omit raw large assets, environments and credentials.
+- Continue with historical matched-task qualification and falsifiable N1/N2/N3
+  comparisons; data breadth alone does not establish novelty or acquisition gain.
+
 ## Hydro data admission and prospective shadow, 2026-09-12
 
 - Advance the already completed ActiveWarning minimum loop with a separate water

@@ -1,0 +1,81 @@
+[
+  {
+    "name": "format",
+    "command": [
+      "disastertrace-starter/.venv/bin/python",
+      "-m",
+      "ruff",
+      "format",
+      "--check",
+      "plans/task_chain_feasibility_20260912/build_chains.py",
+      "plans/task_chain_feasibility_20260912/verify_chains.py",
+      "plans/task_chain_feasibility_20260912/fetch_round.py",
+      "plans/task_chain_feasibility_20260912/test_contracts.py",
+      "plans/task_chain_feasibility_20260912/summarize_results.py"
+    ],
+    "exit_code": 0,
+    "log": "format.log"
+  },
+  {
+    "name": "lint",
+    "command": [
+      "disastertrace-starter/.venv/bin/python",
+      "-m",
+      "ruff",
+      "check",
+      "plans/task_chain_feasibility_20260912/build_chains.py",
+      "plans/task_chain_feasibility_20260912/verify_chains.py",
+      "plans/task_chain_feasibility_20260912/fetch_round.py",
+      "plans/task_chain_feasibility_20260912/test_contracts.py",
+      "plans/task_chain_feasibility_20260912/summarize_results.py"
+    ],
+    "exit_code": 0,
+    "log": "lint.log"
+  },
+  {
+    "name": "build",
+    "command": [
+      "python",
+      "plans/task_chain_feasibility_20260912/build_chains.py",
+      "--output",
+      "plans/task_chain_feasibility_20260912/derived_04"
+    ],
+    "exit_code": 0,
+    "log": "build.log"
+  },
+  {
+    "name": "contracts",
+    "command": [
+      "python",
+      "plans/task_chain_feasibility_20260912/test_contracts.py"
+    ],
+    "exit_code": 0,
+    "log": "contracts.log"
+  },
+  {
+    "name": "independent",
+    "command": [
+      "python",
+      "plans/task_chain_feasibility_20260912/verify_chains.py",
+      "--data",
+      "plans/task_chain_feasibility_20260912/derived_04",
+      "--output",
+      "plans/task_chain_feasibility_20260912/validation_03/INDEPENDENT_CHECK.json"
+    ],
+    "exit_code": 0,
+    "log": "independent.log"
+  },
+  {
+    "name": "metrics",
+    "command": [
+      "python",
+      "plans/task_chain_feasibility_20260912/summarize_results.py",
+      "--data",
+      "plans/task_chain_feasibility_20260912/derived_04",
+      "--output",
+      "plans/task_chain_feasibility_20260912/FEASIBILITY_METRICS.json"
+    ],
+    "exit_code": 1,
+    "log": "metrics.log"
+  }
+]

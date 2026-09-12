@@ -1,5 +1,25 @@
 # Blockers
 
+## Current: nine source gaps recovered; seven access/content gaps remain
+
+See `../plans/all_dataset_utilization_20260912/README_CN.md`. TCIR labels,
+CAMELSH hourly observations, CEMS native vectors, FloodNet image/mask pairs,
+CrisisMMD exact pairs, Urban matched labels, complete SenForFlood components
+and numeric GWIS/EFFIS services now have actual decoded sample evidence.
+
+Remaining access/content gaps are EM-DAT, xBD, HKO-7, ESWD, M4Fog, MSETCD/MSCAR
+and CMA Best Track. The first four require their own access/licence processes;
+the next two lack downloadable author-native packages, and CMA returns468
+challenges. Public illustrations or normalization parameters do not remove these
+gaps. Core work can continue with the explicitly listed alternatives.
+
+Task qualification remains distinct: missing SenForFlood class/band/time metadata,
+GWIS/EFFIS issue/version provenance, negative FloodNet samples, postselected Urban
+tile, CEMS wildfire-versus-flood coverage, TCIR/forecast matching, and CAMELSH
+datum/QC/forecast linkage. Full16-hazard warning chains and positive novelty are
+not established. GitHub reading materials omit large local raw assets; selected
+file verification does not replace full scientific replay.
+
 ## Current: prospective hydro shadow running; future results not yet available
 
 Data admission and the first actual capture/submission cycle succeed. Seven of

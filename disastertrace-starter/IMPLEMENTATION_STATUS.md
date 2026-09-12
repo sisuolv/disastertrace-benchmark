@@ -1,5 +1,30 @@
 # Implementation Status
 
+## Completed: expanded all-candidate recovery, 2026-09-12
+
+The complete97-entry usage inventory is at
+`../plans/all_dataset_utilization_20260912/README_CN.md`:84 decoded sample entries,
+6 event/derived catalogs,4 licence/account gaps and3 missing target samples.
+Nine entries improve: TCIR, CAMELSH, CEMS, FloodNet, CrisisMMD, UrbanSARFloods,
+SenForFlood, GWIS and EFFIS. The two fire services share an ECMWF numerical
+backend; they are not independent evidence. All16 hazard families retain explicit
+forecast/reference/extra-evidence candidates and task qualification gaps.
+
+This round makes93 logical data requests and retains975,066,949 response bytes,
+including failures. Final scientific audit has12 records and no decoder failures.
+Independent verification checks1,081 files/4,732,247,209 bytes, including the857
+prior assets, and12 contract categories. CEMS null geometries, negative FloodNet
+pairs, SenForFlood's unresolved mask legend and the development-selected Urban
+positive tile are retained explicitly. TCIR contains4,580 frames and94 storm IDs;
+only six image arrays receive the recorded scientific sample checks.
+
+The user requests GitHub publication; selected code, reports and receipts are
+prepared in `../publication/dataset_review_20260912/`. Large native assets and
+environments stay local. This is a new data-readiness result, with zero new
+model/API/GPU runs or formally admitted tasks. Existing LLM no-acquisition-gain
+findings remain. Next research work is same-event historical source joining and
+predeclared acquisition/representation/deadline comparisons.
+
 ## Running: multi-station hydro prospective shadow, 2026-09-12
 
 The user approves the next step after the completed ActiveWarning minimum loop.

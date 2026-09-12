@@ -1,0 +1,38 @@
+RUF007 Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs
+   --> plans/task_chain_feasibility_20260912/build_chains.py:641:26
+    |
+639 |             )
+640 |     segments.sort(key=lambda row: row["start"])
+641 |     for first, second in zip(segments, segments[1:]):
+    |                          ^^^
+642 |         first["end"] = second["start"]
+643 |     if any(
+    |
+help: Replace `zip()` with `itertools.pairwise()`
+
+RUF059 Unpacked variable `depth` is never used
+   --> plans/task_chain_feasibility_20260912/build_chains.py:785:13
+    |
+783 |     exact = next(r for r in rows if r["DATE"] == "2024-09-12T00:00:00")
+784 |     target = instant(exact["DATE"])
+785 |     period, depth, condition, quality = exact["AA1"].split(",")
+    |             ^^^^^
+786 |     if period != "06" or condition != "3":
+787 |         raise ValueError("Expected the recorded accumulation-condition ambiguity")
+    |
+help: Prefix it with an underscore or any other dummy variable pattern
+
+RUF059 Unpacked variable `quality` is never used
+   --> plans/task_chain_feasibility_20260912/build_chains.py:785:31
+    |
+783 |     exact = next(r for r in rows if r["DATE"] == "2024-09-12T00:00:00")
+784 |     target = instant(exact["DATE"])
+785 |     period, depth, condition, quality = exact["AA1"].split(",")
+    |                               ^^^^^^^
+786 |     if period != "06" or condition != "3":
+787 |         raise ValueError("Expected the recorded accumulation-condition ambiguity")
+    |
+help: Prefix it with an underscore or any other dummy variable pattern
+
+Found 3 errors.
+No fixes available (3 hidden fixes can be enabled with the `--unsafe-fixes` option).

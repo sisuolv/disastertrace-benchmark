@@ -1,0 +1,25 @@
+{
+  "preserved_failures": [
+    {
+      "artifact": "decoded_01/AUDIT.json",
+      "reason": "CEMS GeoJSON null geometry; fixed with retained record denominator."
+    },
+    {
+      "artifact": "usage_01/",
+      "exit_code": 1,
+      "reason": "Missing D70 usage classification; added ESWD to conditional event-index group."
+    },
+    {
+      "artifact": "verification_01/",
+      "exit_code": 1,
+      "reason": "Four inherited entries have SHA256 but null expected_bytes; all hashes match. Corrected verifier to enforce size only when originally specified."
+    },
+    {
+      "command": "initial Ruff check",
+      "exit_code": 1,
+      "findings": 9,
+      "reason": "Timezone-literal handling, deliberate per-source error capture, formatting/import and subprocess checks corrected or explicitly annotated."
+    }
+  ],
+  "note": "This is a factual failure index, not reconstructed raw subprocess output. Original CEMS and regression logs remain."
+}

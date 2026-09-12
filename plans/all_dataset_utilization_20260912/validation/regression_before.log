@@ -1,0 +1,21 @@
+test_cems_null_geometry_retains_record_without_inventing_feature (__main__.SourceContracts) ... ERROR
+test_tcir_metadata_rejects_executable_pickle_global (__main__.SourceContracts) ... ok
+
+======================================================================
+ERROR: test_cems_null_geometry_retains_record_without_inventing_feature (__main__.SourceContracts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/all_dataset_utilization_20260912/test_source_contracts.py", line 11, in test_cems_null_geometry_retains_record_without_inventing_feature
+    report = audit.cems(None)
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/all_dataset_utilization_20260912/audit_recovered.py", line 162, in cems
+    geometries = [shape(f["geometry"]) for f in features]
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/all_dataset_utilization_20260912/audit_recovered.py", line 162, in <listcomp>
+    geometries = [shape(f["geometry"]) for f in features]
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/all_dataset_utilization_20260912/parser_libs/shapely/geometry/geo.py", line 91, in shape
+    geom_type = ob.get("type").lower()
+AttributeError: 'NoneType' object has no attribute 'get'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.693s
+
+FAILED (errors=1)

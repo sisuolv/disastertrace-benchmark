@@ -1,0 +1,105 @@
+{
+  "default_dependence_note_cn": "按事件、传感器、原始产品和版本登记上游；不同文件、镜像或表示不自动算独立证据。",
+  "role_groups": {
+    "professional_forecast": {
+      "ids": ["D01", "D28", "D57", "D67", "AW-HEFS", "AW-GEFS", "AW-SPC", "AW-TAF", "AW-OFS", "AW-PETSS", "AW-WPC", "AW-GWIS", "AW-EFFIS", "AW-CAMS", "AW-GLOFAS", "AW-EFAS", "AW-CPC"],
+      "description_cn": "专业预报/展望基线候选，按原产品目标窗使用"
+    },
+    "station_reference": {
+      "ids": ["D26", "D27", "D37", "D56", "D69", "D71", "AW-GHCNH", "AW-METAR", "AW-IEM"],
+      "description_cn": "站点时序证据或结果参考，需同变量/时窗/质量约定"
+    },
+    "retrospective_analysis": {
+      "ids": ["D02", "D05", "D11", "D18", "D24", "D31", "D73", "AW-HURDAT2"],
+      "description_cn": "事后分析、范围或灾害报告参考，不能直接作截止前证据"
+    },
+    "derived_grid": {
+      "ids": ["D25", "D29", "D30", "D32", "D33", "D34", "D35", "D36", "D38", "D55", "D66", "AW-EDDI", "AW-SMAPL4"],
+      "description_cn": "格点观测估计/再分析/代理指标，保持产品定义与质量限制"
+    },
+    "native_sensing": {
+      "ids": ["D08", "D09", "D10", "D23", "D42", "D43", "D58", "D59", "AW-MESH", "AW-QPE", "AW-ABI", "AW-NIMS"],
+      "description_cn": "原生观测或传感器派生证据，候选用于感知及增量信息实验"
+    },
+    "multimodal_diagnostic": {
+      "ids": ["D03", "D04", "D06", "D07", "D12", "D13", "D14", "D15", "D16", "D17", "D19", "D20", "D21", "D22", "D44", "D45", "D46", "D49", "D50", "D51", "D53", "D63", "D64", "D68", "D72"],
+      "description_cn": "时序/图像/图文感知诊断；预测用途需另接发布时点和未来参考"
+    },
+    "benchmark_and_context": {
+      "ids": ["D47", "D48", "D52", "D60"],
+      "description_cn": "案例定义、基线代码或历史背景；继承任务须核查原始切分"
+    },
+    "event_index": {
+      "ids": ["D39", "D40", "D41", "D54", "D61", "D62", "D65", "D70", "D74"],
+      "description_cn": "事件定位、灾种筛选及去重索引，不自动作独立灾害真值"
+    }
+  },
+  "additional_planned_hazards": {
+    "D09": ["H05", "H07"], "D11": ["H08"], "D16": ["H08"], "D17": ["H08"],
+    "D18": ["H16"], "D22": ["H16"], "D38": ["H01"], "D42": ["H08"],
+    "D43": ["H08", "H16"], "D44": ["H01", "H08", "H16"],
+    "D45": ["H01", "H08", "H16"], "D62": ["H10", "H13"],
+    "D63": ["H07", "H12", "H14", "H15"], "D64": ["H08"],
+    "D66": ["H02", "H07", "H10", "H11"], "D68": ["H07"],
+    "D69": ["H09"], "D71": ["H08"], "D72": ["H01"]
+  },
+  "dependence_notes": {
+    "D01": "NHC 业务预报与 HURDAT2 事后分析有机构/流程关联；公告文本和 GIS 不能算独立预测。",
+    "D02": "IBTrACS 汇编多个机构的最佳路径；与 HURDAT2/CMA 成分不能重复计票。",
+    "AW-HURDAT2": "NHC 事后分析参考，与 IBTrACS 对应分量及 NHC 流程相关。",
+    "D04": "同一气旋多帧不是独立事件；强度标签为继承分析，不是独立传感器真值。",
+    "D09": "MRMS 的父级入口；AW-MESH/AW-QPE 是其子产品，不增加独立来源数。",
+    "AW-MESH": "MRMS 雷达派生冰雹估计；与 NEXRAD/SEVIR 可能共享雷达信息。",
+    "AW-QPE": "MRMS 多传感器降水估计与上游雷达/雨量计有依赖。",
+    "D14": "SAR 与其派生洪水标签存在信息依赖；同一 AOI 的正负瓦片不能视为独立事件。",
+    "D64": "样本 EMSR339 使用 CEMS 事件/标签链；CEMS、其切片及 S1/S2 同源内容不能重复计票。",
+    "D45": "原始 TSV 与 QCRI 镜像图像是同一数据集的不同交付；社交转发不是新现场观测。",
+    "D25": "CDS 与 GEE 的 ERA5-Land 是处理/交付渠道；不得当作两套独立天气信息。",
+    "D42": "直接 GRD 和 GEE 的经处理产品来自同一 S1 观测；处理级别差异须保留。",
+    "D43": "直接 L2A 与 GEE SR Harmonized 来源相关；协调化/云掩膜与重采样不同。",
+    "D66": "WeatherBench2 的 ERA5 衍生数据，与 ERA5-Land 相关但不等同；都不是业务历史预报。",
+    "D71": "CAMELSH 美国站点流量可追溯到 USGS；与 USGS 同站同窗记录不是两份独立证据。",
+    "AW-IEM": "IEM 是 METAR 再分发渠道，不能与原 METAR 计为独立传感器。",
+    "AW-GHCNH": "整编站报可能包含同站 METAR 信息；按站点/原报文去重。",
+    "AW-GWIS": "已验证与 EFFIS 共用 ECMWF 火险指数数值后端；两个入口或两个地点不证明独立预报。",
+    "AW-EFFIS": "官方新版前端绑定与 GWIS 相同的数值接口；本次另取地点样本，仅证实服务可用。"
+  },
+  "recovered": {
+    "D04": {"summary_cn": "完整 2017 压缩包 868,340,269 字节，gzip CRC 通过；HDF5 含 4,580 帧、94 个气旋 ID，已解析全部元数据及 6 帧原生数组，连接一个 +6h 强度参考。", "gates_cn": "只对 6 帧做数组检查；已暴露开发资料；需业务预报、历史可用时点及独立事件切分，不能把 4,580 帧当独立气旋。"},
+    "D71": {"summary_cn": "官方公开版本 16729675 的 Hourly2.zip 经 9 次 Range 取得 3 个完整 NetCDF；各 394,488 个名义小时格，1980—2024，流量/水位含单位和缺测。", "gates_cn": "流量 m3/s、水位 m 分开；缺测格不是有效观测；需水位基准、质量成熟度和专业预报匹配，所取成员不含完整气象驱动。"},
+    "D18": {"summary_cn": "完整 EMSR842/AOI01 野火分级 ZIP，7 个 GeoJSON 层、604 条记录；602 有几何，2 条空几何保留，0 个无效几何。", "gates_cn": "实际取样是 Zamora 野火，不是原计划洪水 AOI；烧毁范围是事后参考；原始卫星影像与事件时点链须补齐。"},
+    "D17": {"summary_cn": "作者原始 Google Drive 取得 3 组 4000×3000 RGB—标签对，10 类编码可读。", "gates_cn": "这 3 组没有建筑受淹/道路受淹像素，保留负例；需补正例、事件拆分及拍摄时点，灾后图像不自动支持预警。"},
+    "D45": {"summary_cn": "原始完整标注 ZIP 与 QCRI 官方托管图像精确路径连接 3 组图文标签，覆盖野火/Harvey/Irma。", "gates_cn": "社交相关性与影响标签不是天气真值；需转发去重、素材使用条款与真实拍摄/发布时点，过滤非天气事件。"},
+    "D14": {"summary_cn": "8×256×256 SAR 与完整 GT 文件的同网格窗口精确配对；0 类 50,726、开阔地洪水 14,755、城市洪水 55 像素，原负瓦片保留。", "gates_cn": "GT 为经校验的窗口而非全文件下载；正瓦片按标签探查后选择，仅作开发可行性；需独立事件与任务时间链。"},
+    "D64": {"summary_cn": "官方镜像取得 EMSR339 的 7 个完整 TIFF：S1/S2 灾前与灾中、地形、LULC、掩膜；512×512 同 EPSG:3857 网格。", "gates_cn": "掩膜 0/1/2 的准确图例、波段定义及精确观测 UTC 尚未确认；不得把非零统一当洪水，暂不评分二值洪水/未来预警。"},
+    "AW-GWIS": {"summary_cn": "从官方前端定位数值接口，实取 (-4,40) 五天、八项火险指数，含 FWI/FFMC/ISI。", "gates_cn": "FWI 不是起火概率；缺原始签发版本与历史发布证明；完整原生格点导出另核。"},
+    "AW-EFFIS": {"summary_cn": "旧版停用后验证新版专属配置绑定数值接口，实取 (-7,42) 五天、八项指数。", "gates_cn": "与 GWIS 共享 ECMWF 后端，不能作为另一独立模型；缺签发版本、历史发布时间和格点导出验证。"}
+  },
+  "remaining_access": {
+    "D39": {"need_cn": "本人注册 EM-DAT 并获得相应数据库使用权限；提供已获许可的导出样例或本机路径。", "fallback_ids": ["D05", "D40", "D41", "D61", "D74"]},
+    "D44": {"need_cn": "完成 xBD/xView2 原始数据获取与许可流程；当前只有作者公开示例图，缺原始图像标签对。", "fallback_ids": ["D16", "D17", "D18"]},
+    "D68": {"need_cn": "高校/研究机构成员按作者说明签署承诺书，使用机构邮箱申请 HKO-7 原始雷达及标签。", "fallback_ids": ["D06", "D08", "D59"]},
+    "D70": {"need_cn": "取得 ESWD 研究/批量数据访问许可与交付方式。", "fallback_ids": ["D05", "AW-SPC", "D07"]},
+    "D53": {"need_cn": "M4Fog 作者网盘的可下载原生分包或已授权本地文件；公开示意图不是原生 cube。", "fallback_ids": ["AW-ABI", "AW-TAF", "AW-METAR", "D63"]},
+    "D72": {"need_cn": "MSETCD 作者网盘原生样本或可下载分包；MSCAR 是其模型/代码，已取到的归一化参数不是数据。", "fallback_ids": ["D03", "D04", "D01", "D02"]},
+    "D73": {"need_cn": "CMA 官方页面/2023及2024文件当前返回 468 挑战；可由可访问环境取得原始文件后提供本机路径。", "fallback_ids": ["D02", "AW-HURDAT2"]}
+  },
+  "hazard_chains": [
+    {"id":"H01","name_cn":"热带气旋","forecasts":["D01"],"references":["D02","AW-HURDAT2"],"extra_evidence":["D03","D04","AW-ABI","D38","D50"],"gate_cn":"已有窄气旋链；TCIR 与公告/未来强度需同气旋同窗匹配，94 ID 不等于已配齐 94 条链。"},
+    {"id":"H02","name_cn":"温带风暴/非对流大风","forecasts":["D28","D67","AW-GEFS"],"references":["AW-GHCNH","AW-METAR","D05"],"extra_evidence":["D48","AW-ABI"],"gate_cn":"区分持续风/阵风、站点代表性及对流/非对流过程；需真实强风正例。"},
+    {"id":"H03","name_cn":"雷暴大风/下击暴流","forecasts":["AW-SPC","D67"],"references":["D05","AW-GHCNH","AW-METAR"],"extra_evidence":["D06","D08","AW-ABI","D49"],"gate_cn":"SPC 区域概率与站点/报告目标支持不同；需对流归因与漏报规则。"},
+    {"id":"H04","name_cn":"龙卷风","forecasts":["AW-SPC"],"references":["D05"],"extra_evidence":["D07","D08","D06","D49"],"gate_cn":"TorNet 现有样例为负；需有事件身份的正负雷达窗口与报告时刻匹配。"},
+    {"id":"H05","name_cn":"冰雹","forecasts":["AW-SPC","D67"],"references":["D05"],"extra_evidence":["AW-MESH","D08","D06"],"gate_cn":"MESH 的局地参数表/负代码未完全准入，雷达雹径不能等同地面雹径。"},
+    {"id":"H06","name_cn":"强雷电","forecasts":[],"references":["D10"],"extra_evidence":["D06","D08","AW-ABI"],"gate_cn":"只有短 GLM 观测；缺同目标专业雷电预报及极端密度定义，先做受控感知/时序诊断。"},
+    {"id":"H07","name_cn":"极端降水","forecasts":["D28","D67","AW-GEFS","AW-WPC"],"references":["D26","AW-GHCNH","D29","D30","AW-QPE"],"extra_evidence":["D08","AW-ABI","D59"],"gate_cn":"累积起止窗、0/缺测/trace、产品单位与质量；上一轮严格雨量参考仍有未结算项。"},
+    {"id":"H08","name_cn":"洪水/山洪/城市内涝","forecasts":["AW-HEFS","D57","AW-GLOFAS","AW-EFAS"],"references":["D56","D71","D11","D18"],"extra_evidence":["D14","D64","D17","D16","D12","D13","D15","D51","AW-NIMS","D42","D43","D60"],"gate_cn":"连续流量已有窄闭环；水位与流量阈值分开。D18 新样本为野火，尚不能证明洪水 AOI；SAR 还需截止前观测。"},
+    {"id":"H09","name_cn":"风暴潮/沿岸淹没","forecasts":["AW-OFS","AW-PETSS"],"references":["D37","D69"],"extra_evidence":["D58","D01"],"gate_cn":"潮位基准、模型位置与站号未完成桥接；P-ETSS 样本明确不适用于热带风暴。"},
+    {"id":"H10","name_cn":"高温/热浪","forecasts":["D28","D67","AW-GEFS"],"references":["D26","AW-GHCNH"],"extra_evidence":["D25","D34","D47","D48","D62","D66"],"gate_cn":"温度历史窄链已配对；热浪需多年气候态/持续性，LST 不能替代 2m 气温。"},
+    {"id":"H11","name_cn":"寒潮/低温/霜冻","forecasts":["D28","D67","AW-GEFS"],"references":["D26","AW-GHCNH"],"extra_evidence":["D25","D47","D48","D66"],"gate_cn":"已有低温参考，需下降幅度/持续性定义；气温不能直接断定作物霜冻损害。"},
+    {"id":"H12","name_cn":"暴雪/积雪/冰冻降水","forecasts":["D28","D67"],"references":["D26","AW-GHCNH","AW-IEM","D55","D33"],"extra_evidence":["AW-ABI","D63"],"gate_cn":"已有 FZRA/FZDZ 历史正例；需对齐冬季预报。SWE、雪盖、新降雪及冻雨分别建任务；WPC 冬季产品尚未验证。"},
+    {"id":"H13","name_cn":"干旱/闪旱","forecasts":["AW-CPC"],"references":["D31","D32","AW-SMAPL4"],"extra_evidence":["AW-EDDI","D25","D30","D52","D62"],"gate_cn":"季节展望不能直接当下周 USDM 概率；闪旱需长期变化定义、质量与无泄漏历史窗。"},
+    {"id":"H14","name_cn":"沙尘暴","forecasts":["AW-CAMS","D28","D67"],"references":["AW-IEM","AW-METAR","AW-GHCNH"],"extra_evidence":["D35","D36","AW-ABI","D63"],"gate_cn":"已有历史 DS/BLDU 报告；AOD/AI 不直接等同沙尘暴，需同期 CAMS 与地面现象/能见度。"},
+    {"id":"H15","name_cn":"浓雾/极端低能见度","forecasts":["AW-TAF","D28","D67"],"references":["AW-METAR","AW-GHCNH","D27"],"extra_evidence":["AW-ABI","D63","D53"],"gate_cn":"美国机场低能见度窄链已配对，雪导致的低能见度不等于雾；保留 TEMPO/PROB、严格单位阈值，M4Fog 原生数据未得。"},
+    {"id":"H16","name_cn":"天气相关野火/火险","forecasts":["AW-GWIS","AW-EFFIS"],"references":["D23","D24","D18","D65"],"extra_evidence":["D19","D20","D21","D22","AW-ABI","D43","D45","D28","AW-GEFS"],"gate_cn":"数值火险入口已可用但共享上游且无历史签发版本；FWI 不等于起火概率，火因/观测缺测及未来蔓延标签须分开。"}
+  ]
+}

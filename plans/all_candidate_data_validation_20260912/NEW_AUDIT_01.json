@@ -1,0 +1,4179 @@
+{
+  "reports": [
+    {
+      "source_id": "D34",
+      "check_id": "modis-lst-full",
+      "level": "numeric_sample_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_01/modis-lst-full.body",
+          "sha256": "4ce95e5c89fa38c906ae8b4522408bf7ad1d99eedd561010c291627845659f47",
+          "bytes": 1009145
+        }
+      ],
+      "details": {
+        "variable": "LST_Day_1km",
+        "raw": {
+          "shape": [
+            1200,
+            1200
+          ],
+          "dtype": "uint16",
+          "finite_count": 1440000,
+          "minimum": 0.0,
+          "maximum": 15745.0
+        },
+        "valid_pixels": 104982,
+        "qa_selected_pixels": 23660,
+        "selected_scaled": {
+          "shape": [
+            23660
+          ],
+          "dtype": "float64",
+          "finite_count": 23660,
+          "minimum": 263.26,
+          "maximum": 313.46
+        },
+        "attributes": {
+          "long_name": "Daily daytime 1km grid Land-surface Temperature",
+          "units": "K",
+          "Number Type": "uint16",
+          "valid_range": [
+            7500,
+            65535
+          ],
+          "_FillValue": 0,
+          "LST": "LST data * scale_factor",
+          "scale_factor": 0.02,
+          "scale_factor_err": 0.0,
+          "add_offset_err": 0.0,
+          "calibrated_nt": 5
+        },
+        "qa_counts": {
+          "0": 23592,
+          "2": 1335018,
+          "8": 68,
+          "17": 479,
+          "65": 76835,
+          "73": 38,
+          "81": 3311,
+          "145": 659
+        },
+        "qa_rule": "mandatory QA bits 0-1 equal 0",
+        "limitation": "One tile/day. LST is not 2m air temperature; snow cover is not blizzard or freezing rain. Full task QC remains product-specific."
+      }
+    },
+    {
+      "source_id": "D33",
+      "check_id": "modis-snow-revised-full",
+      "level": "numeric_sample_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_01/modis-snow-revised-full.body",
+          "sha256": "1802a050e6453ac4b7200e4bde4c09f3c7e36f30b71ce331a750d9a8d83fcee6",
+          "bytes": 8757818
+        }
+      ],
+      "details": {
+        "variable": "NDSI_Snow_Cover",
+        "raw": {
+          "shape": [
+            2400,
+            2400
+          ],
+          "dtype": "uint8",
+          "finite_count": 5760000,
+          "minimum": 0.0,
+          "maximum": 255.0
+        },
+        "valid_pixels": 670165,
+        "qa_selected_pixels": 670165,
+        "selected_scaled": {
+          "shape": [
+            670165
+          ],
+          "dtype": "uint8",
+          "finite_count": 670165,
+          "minimum": 0.0,
+          "maximum": 92.0
+        },
+        "attributes": {
+          "long_name": "NDSI snow cover from best observation of the day",
+          "units": "none",
+          "valid_range": [
+            0,
+            100
+          ],
+          "_FillValue": 255,
+          "missing_value": 200,
+          "Key": " 0-100=NDSI snow, 200=missing data, 201=no decision, 211=night, 237=inland water, 239=ocean, 250=cloud, 254=detector saturated, 255=fill"
+        },
+        "qa_counts": {
+          "0": 5593359,
+          "1": 130745,
+          "255": 35896
+        },
+        "qa_rule": "basic QA 0 or 1, NDSI 0-100",
+        "limitation": "One tile/day. LST is not 2m air temperature; snow cover is not blizzard or freezing rain. Full task QC remains product-specific."
+      }
+    },
+    {
+      "source_id": "D35",
+      "check_id": "merra2-dust",
+      "level": "numeric_sample_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_01/merra2-dust-subset.body",
+          "sha256": "2ccbb71df5b2563e741f404fadf6f3bf939b45922f42bd5cd7c313fa25e62b0c",
+          "bytes": 1661
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_01/merra2-dust-attributes.body",
+          "sha256": "eb221ba1f711e022319e391e51cd85101061b25eebe9f428c7524186d46ec1c1",
+          "bytes": 29268
+        }
+      ],
+      "details": {
+        "variables": {
+          "DUEXTTAU": {
+            "values": {
+              "shape": [
+                3,
+                3,
+                3
+              ],
+              "dtype": "float64",
+              "finite_count": 27,
+              "minimum": 0.10277,
+              "maximum": 0.182672
+            }
+          },
+          "DUSMASS": {
+            "values": {
+              "shape": [
+                3,
+                3,
+                3
+              ],
+              "dtype": "float64",
+              "finite_count": 27,
+              "minimum": 6.82776e-08,
+              "maximum": 2.54135e-07
+            }
+          }
+        },
+        "attributes_file": "plans/all_candidate_data_validation_20260912/captures_01/merra2-dust-attributes.body",
+        "limitation": "Dust AOD and near-surface dust mass from reanalysis; not independently observed dust-storm occurrence."
+      }
+    },
+    {
+      "source_id": "D63",
+      "check_id": "zip_dawn_fog_02",
+      "level": "images_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/zip_dawn_fog_02/ZIP_SAMPLE.json",
+          "sha256": "4a93a89a74d52a26f683fd927f9597346e462219ec009102af7a4c7a2a346916",
+          "bytes": 934
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/zip_dawn_fog_02/member_00.jpg",
+          "sha256": "d57626e8a8cafc16510a6c79be5b3feb4278528b0a93464cfc415f66207e12ff",
+          "bytes": 103136
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/zip_dawn_fog_02/member_01.jpg",
+          "sha256": "917962204c5b2234d88a2c792b34b1455f7da16c1c50cd7b4534d2fa487ba46d",
+          "bytes": 26881
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/zip_dawn_fog_02/member_02.jpg",
+          "sha256": "dad1d0755f88fe687a4914b18d908460bf453ac4762f7b73d4c6bd4f3f429718",
+          "bytes": 46914
+        }
+      ],
+      "details": {
+        "samples": [
+          {
+            "member": "Fog/haze-030.jpg",
+            "format": "JPEG",
+            "size": [
+              1280,
+              960
+            ],
+            "mode": "RGB"
+          },
+          {
+            "member": "Fog/haze-029.jpg",
+            "format": "JPEG",
+            "size": [
+              1280,
+              720
+            ],
+            "mode": "RGB"
+          },
+          {
+            "member": "Fog/haze-028.jpg",
+            "format": "JPEG",
+            "size": [
+              1280,
+              921
+            ],
+            "mode": "RGB"
+          }
+        ],
+        "full_member_crc_checked": true,
+        "limitation": "Convenience samples, not independent events. DAWN condition folders do not establish weather severity/time; Sen2Fire temporal/positive coverage remains unproved."
+      }
+    },
+    {
+      "source_id": "D22",
+      "check_id": "zip_sen2fire_01",
+      "level": "paired_arrays_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/zip_sen2fire_01/ZIP_SAMPLE.json",
+          "sha256": "1b3b6ccbcb3069b8cae924572d28c743688594d73fe997f6d22651b74c3a4313",
+          "bytes": 925
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/zip_sen2fire_01/member_00.npz",
+          "sha256": "5c2189d8ca789a2bab748e37cde8a9f5792e540d069e86f1beb6217e5069f7da",
+          "bytes": 2675779
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/zip_sen2fire_01/member_01.npz",
+          "sha256": "aa06f1d8ceeb50c369d1627e8b03264bed62c8d49d58f847a22c16a5006bd8af",
+          "bytes": 2660621
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/zip_sen2fire_01/member_02.npz",
+          "sha256": "132ab1af6e0bb0cd9b38a106eec35c8ff62400def9fb354cf99ad1554baaaeba",
+          "bytes": 2783307
+        }
+      ],
+      "details": {
+        "samples": [
+          {
+            "member": "scene1/scene_1_patch_1_1.npz",
+            "arrays": {
+              "image": {
+                "shape": [
+                  12,
+                  512,
+                  512
+                ],
+                "dtype": "int16",
+                "finite_count": 3145728,
+                "minimum": 170.0,
+                "maximum": 6181.0
+              },
+              "aerosol": {
+                "shape": [
+                  512,
+                  512
+                ],
+                "dtype": "float32",
+                "finite_count": 262144,
+                "minimum": -1.1622482538223267,
+                "maximum": -0.2821071445941925
+              },
+              "label": {
+                "shape": [
+                  512,
+                  512
+                ],
+                "dtype": "uint8",
+                "finite_count": 262144,
+                "minimum": 0.0,
+                "maximum": 0.0
+              }
+            },
+            "label_counts": {
+              "0": 262144
+            }
+          },
+          {
+            "member": "scene1/scene_1_patch_1_10.npz",
+            "arrays": {
+              "image": {
+                "shape": [
+                  12,
+                  512,
+                  512
+                ],
+                "dtype": "int16",
+                "finite_count": 3145728,
+                "minimum": 4.0,
+                "maximum": 5777.0
+              },
+              "aerosol": {
+                "shape": [
+                  512,
+                  512
+                ],
+                "dtype": "float32",
+                "finite_count": 262144,
+                "minimum": -0.9203811287879944,
+                "maximum": -0.4597924053668976
+              },
+              "label": {
+                "shape": [
+                  512,
+                  512
+                ],
+                "dtype": "uint8",
+                "finite_count": 262144,
+                "minimum": 0.0,
+                "maximum": 0.0
+              }
+            },
+            "label_counts": {
+              "0": 262144
+            }
+          },
+          {
+            "member": "scene1/scene_1_patch_1_11.npz",
+            "arrays": {
+              "image": {
+                "shape": [
+                  12,
+                  512,
+                  512
+                ],
+                "dtype": "int16",
+                "finite_count": 3145728,
+                "minimum": 4.0,
+                "maximum": 5859.0
+              },
+              "aerosol": {
+                "shape": [
+                  512,
+                  512
+                ],
+                "dtype": "float32",
+                "finite_count": 262144,
+                "minimum": -0.9951441884040833,
+                "maximum": -0.4597924053668976
+              },
+              "label": {
+                "shape": [
+                  512,
+                  512
+                ],
+                "dtype": "uint8",
+                "finite_count": 262144,
+                "minimum": 0.0,
+                "maximum": 0.0
+              }
+            },
+            "label_counts": {
+              "0": 262144
+            }
+          }
+        ],
+        "full_member_crc_checked": true,
+        "limitation": "Convenience samples, not independent events. DAWN condition folders do not establish weather severity/time; Sen2Fire temporal/positive coverage remains unproved."
+      }
+    },
+    {
+      "source_id": "D16",
+      "check_id": "spacenet8-image-label-pair",
+      "level": "paired_content_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_03/sn8-pre.body",
+          "sha256": "17eede22b841dc0f0e61fd0ce4bc9d9c940cf5d80b4f524ddc6158c9acbf8c16",
+          "bytes": 4320872
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_03/sn8-post.body",
+          "sha256": "eb97355275d2001694beb86c7906da1c2656e491c12b10a4da9a459e74320c17",
+          "bytes": 1855338
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_03/sn8-labels.body",
+          "sha256": "a27d29217366973e87c07b975f36d22f3ab2916446495fed493e8305673195d3",
+          "bytes": 55897
+        }
+      ],
+      "details": {
+        "pre": {
+          "values": {
+            "shape": [
+              3,
+              1300,
+              1300
+            ],
+            "dtype": "uint8",
+            "finite_count": 5069765,
+            "minimum": 0.0,
+            "maximum": 254.0
+          },
+          "crs": "EPSG:4326",
+          "transform": [
+            3.74298035050102e-06,
+            0.0,
+            7.039364952783314,
+            0.0,
+            -3.74298035050102e-06,
+            50.531079014888206,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "bounds": [
+            7.039364952783314,
+            50.52621314043255,
+            7.044230827238966,
+            50.531079014888206
+          ],
+          "nodata": 255.0,
+          "band_descriptions": [
+            null,
+            null,
+            null
+          ]
+        },
+        "post": {
+          "values": {
+            "shape": [
+              3,
+              786,
+              786
+            ],
+            "dtype": "uint8",
+            "finite_count": 1853388,
+            "minimum": 0.0,
+            "maximum": 255.0
+          },
+          "crs": "EPSG:4326",
+          "transform": [
+            6.201369844702031e-06,
+            0.0,
+            7.039358846644344,
+            0.0,
+            -6.201369844702031e-06,
+            50.53108462700983,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "bounds": [
+            7.039358846644344,
+            50.5262103503119,
+            7.04423312334228,
+            50.53108462700983
+          ],
+          "nodata": null,
+          "band_descriptions": [
+            null,
+            null,
+            null
+          ]
+        },
+        "label_features": 102,
+        "label_property_examples": [
+          {
+            "id": "way/847401772",
+            "building": null,
+            "flooded": null,
+            "highway": "residential",
+            "lanes": "2",
+            "surface": "paved",
+            "oneway": null,
+            "bridge": null,
+            "layer": null,
+            "tunnel": null,
+            "type": null,
+            "image_id": "10500500C4DD7000",
+            "location": "Germany_Training_Public"
+          },
+          {
+            "id": "way/847401774",
+            "building": null,
+            "flooded": "yes",
+            "highway": "residential",
+            "lanes": "2",
+            "surface": "paved",
+            "oneway": null,
+            "bridge": null,
+            "layer": null,
+            "tunnel": null,
+            "type": null,
+            "image_id": "10500500C4DD7000",
+            "location": "Germany_Training_Public"
+          },
+          {
+            "id": "way/847401777",
+            "building": null,
+            "flooded": null,
+            "highway": "residential",
+            "lanes": "2",
+            "surface": "paved",
+            "oneway": null,
+            "bridge": null,
+            "layer": null,
+            "tunnel": null,
+            "type": null,
+            "image_id": "10500500C4DD7000",
+            "location": "Germany_Training_Public"
+          }
+        ],
+        "mapping_file": "SN8_PAIR_SELECTION.json",
+        "native_grids_equal": false,
+        "limitation": "Matched by provider mapping; image warping and annotation rasterization/coverage validation are still required."
+      }
+    },
+    {
+      "source_id": "D43",
+      "check_id": "sentinel2-native-l2a",
+      "level": "numeric_sample_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_02/s2-coastal.body",
+          "sha256": "ab00307e625b8848a123fdeca5b64acba0aee5a1439f51261d795a2e1b23e7c4",
+          "bytes": 5527870
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_02/s2-scl.body",
+          "sha256": "ca0d87b405bb7bfcffbbfd885f1cb3dd2f323b95b5b6526e57069270eac25906",
+          "bytes": 1600944
+        }
+      ],
+      "details": {
+        "assets": [
+          {
+            "values": {
+              "shape": [
+                1,
+                1830,
+                1830
+              ],
+              "dtype": "uint16",
+              "finite_count": 2762283,
+              "minimum": 1.0,
+              "maximum": 19178.0
+            },
+            "crs": "EPSG:32650",
+            "transform": [
+              60.0,
+              0.0,
+              399960.0,
+              0.0,
+              -60.0,
+              4400040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "bounds": [
+              399960.0,
+              4290240.0,
+              509760.0,
+              4400040.0
+            ],
+            "nodata": 0.0,
+            "band_descriptions": [
+              null
+            ]
+          },
+          {
+            "values": {
+              "shape": [
+                1,
+                5490,
+                5490
+              ],
+              "dtype": "uint8",
+              "finite_count": 24852180,
+              "minimum": 3.0,
+              "maximum": 11.0
+            },
+            "crs": "EPSG:32650",
+            "transform": [
+              20.0,
+              0.0,
+              399960.0,
+              0.0,
+              -20.0,
+              4400040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "bounds": [
+              399960.0,
+              4290240.0,
+              509760.0,
+              4400040.0
+            ],
+            "nodata": 0.0,
+            "band_descriptions": [
+              null
+            ]
+          }
+        ],
+        "metadata": "captures_01/s2-stac.body",
+        "limitation": "AWS L2A assets, not a GEE SR_HARMONIZED query. Preserve baseline/reflectance-offset metadata; resample SCL explicitly."
+      }
+    },
+    {
+      "source_id": "D13",
+      "check_id": "kuro-three-native-groups",
+      "level": "paired_arrays_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_04/kuro-tar-prefix.body",
+          "sha256": "88264b8c2a88a8629e09e8fcc342c3afcdc990ae5d56aae13b2acb5d2951551c",
+          "bytes": 16777216
+        }
+      ],
+      "details": {
+        "groups": {
+          "data/1111009/00/92/92dcb5bc7afe50f8a665b0205e46f553": {
+            "MK0_MNA_1111009_NA_20220911.tif": {
+              "sha256": "d8b6067cef687cedbee032df6982aea1248fe9b0b50ee2dfecd6b45e6003d521",
+              "bytes": 50593,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "uint8",
+                  "finite_count": 22560,
+                  "minimum": 1.0,
+                  "maximum": 1.0
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7517035.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7517035.0,
+                  3369825.0,
+                  7519275.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "MS1_IVH_1111009_NA_20220911.tif": {
+              "sha256": "eaa81b2ce8a34b899a06885d176535eca4c398709821869dc3a14f220cfa5e7f",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 22560,
+                  "minimum": 2.3819718990125693e-05,
+                  "maximum": 0.07645086199045181
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7517035.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7517035.0,
+                  3369825.0,
+                  7519275.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "MS1_IVV_1111009_NA_20220911.tif": {
+              "sha256": "4d8fbca4e51fcef67480e9b8aa98e8f332c90f2fb7324952fea82cc397e4682c",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 22560,
+                  "minimum": 0.006079414859414101,
+                  "maximum": 0.3403111696243286
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7517035.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7517035.0,
+                  3369825.0,
+                  7519275.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL1_IVH_1111009_NA_20220619.tif": {
+              "sha256": "c303aedd219d30eb933216084043843be64de41860850fe7daddd8359c51543a",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 22560,
+                  "minimum": 1.6255418813670985e-05,
+                  "maximum": 0.07914581894874573
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7517035.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7517035.0,
+                  3369825.0,
+                  7519275.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL1_IVV_1111009_NA_20220619.tif": {
+              "sha256": "dd573d2e9c24e49c8b4f61009c3894eddb6be545c045dcab26b920db00faa117",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 22560,
+                  "minimum": 0.002816855674609542,
+                  "maximum": 0.23355022072792053
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7517035.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7517035.0,
+                  3369825.0,
+                  7519275.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL2_IVH_1111009_NA_20220607.tif": {
+              "sha256": "33982211bc42e1d1e3e47b78a784bc0262c725e779f583043f30cd49d3ff23f5",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 22560,
+                  "minimum": 1.3596298231277615e-05,
+                  "maximum": 0.05564109981060028
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7517035.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7517035.0,
+                  3369825.0,
+                  7519275.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL2_IVV_1111009_NA_20220607.tif": {
+              "sha256": "3ddbe27779649b6fa7aab2be9f71a7bee4f124d8ce61abc081464a0a6d9f85c6",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 22560,
+                  "minimum": 0.0009974578861147165,
+                  "maximum": 0.18527734279632568
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7517035.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7517035.0,
+                  3369825.0,
+                  7519275.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "info.json": {
+              "sha256": "2cb46b496399738b163499a3116015756f1fc8d2f0be35c9efe8cfcbd7003a41",
+              "bytes": 2583,
+              "data": {
+                "sources": {
+                  "SL1": {
+                    "source_date": "2022-06-19",
+                    "s1_ids": [
+                      "8e01cdb4-8d5c-5b7d-9ea4-c1807fbacb6e"
+                    ],
+                    "master": false,
+                    "coverage": 44.96173469387755,
+                    "crank": 1
+                  },
+                  "SL2": {
+                    "source_date": "2022-06-07",
+                    "s1_ids": [
+                      "8afd742f-e234-5cae-9089-bc096b8dab14"
+                    ],
+                    "master": false,
+                    "coverage": 44.96173469387755,
+                    "crank": 2
+                  },
+                  "MS1": {
+                    "source_date": "2022-09-11",
+                    "s1_ids": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ],
+                    "master": true,
+                    "coverage": 44.96173469387755,
+                    "crank": 1
+                  }
+                },
+                "datasets": {
+                  "MS1_IVH_1111009_NA_20220911": {
+                    "name": "MS1_IVH_1111009_NA_20220911",
+                    "master": true,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "MS",
+                    "pname": "IVH",
+                    "rank": "1",
+                    "source_date": "2022-09-11",
+                    "sources": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ]
+                  },
+                  "SL1_IVH_1111009_NA_20220619": {
+                    "name": "SL1_IVH_1111009_NA_20220619",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVH",
+                    "rank": 1,
+                    "source_date": "2022-06-19",
+                    "sources": [
+                      "8e01cdb4-8d5c-5b7d-9ea4-c1807fbacb6e"
+                    ]
+                  },
+                  "SL2_IVH_1111009_NA_20220607": {
+                    "name": "SL2_IVH_1111009_NA_20220607",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVH",
+                    "rank": 2,
+                    "source_date": "2022-06-07",
+                    "sources": [
+                      "8afd742f-e234-5cae-9089-bc096b8dab14"
+                    ]
+                  },
+                  "MS1_IVV_1111009_NA_20220911": {
+                    "name": "MS1_IVV_1111009_NA_20220911",
+                    "master": true,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "MS",
+                    "pname": "IVV",
+                    "rank": "1",
+                    "source_date": "2022-09-11",
+                    "sources": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ]
+                  },
+                  "SL1_IVV_1111009_NA_20220619": {
+                    "name": "SL1_IVV_1111009_NA_20220619",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVV",
+                    "rank": 1,
+                    "source_date": "2022-06-19",
+                    "sources": [
+                      "8e01cdb4-8d5c-5b7d-9ea4-c1807fbacb6e"
+                    ]
+                  },
+                  "SL2_IVV_1111009_NA_20220607": {
+                    "name": "SL2_IVV_1111009_NA_20220607",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVV",
+                    "rank": 2,
+                    "source_date": "2022-06-07",
+                    "sources": [
+                      "8afd742f-e234-5cae-9089-bc096b8dab14"
+                    ]
+                  },
+                  "MK0_MNA_1111009_NA_20220911": {
+                    "name": "MK0_MNA_1111009_NA_20220911",
+                    "master": false,
+                    "nodata": 0,
+                    "dtype": "uint8",
+                    "ptype": "MK",
+                    "pname": "MNA",
+                    "rank": 0,
+                    "source_date": "2022-09-11",
+                    "sources": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ]
+                  }
+                },
+                "grid_id": "92dcb5bc-7afe-50f8-a665-b0205e46f553",
+                "slavecov": 2,
+                "mastercov": 1,
+                "gvalid": true,
+                "pcovered": 44.96173469387755,
+                "pwater": null,
+                "pflood": null,
+                "actid": 1111009,
+                "flood_date": "2022-09-10 08:00:00",
+                "aoiid": null,
+                "revision": null,
+                "version": null,
+                "geom": "POLYGON ((7517035 3369825, 7517035 3372065, 7519275 3372065, 7519275 3369825, 7517035 3369825))"
+              }
+            }
+          },
+          "data/1111009/00/94/9412c601b00c5e87b632631b9ce49e44": {
+            "MK0_MNA_1111009_NA_20220911.tif": {
+              "sha256": "fbd605ca1a0721e0478cff963d896b58d16229bc68737453204d955c7a5aad01",
+              "bytes": 50593,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "uint8",
+                  "finite_count": 24511,
+                  "minimum": 1.0,
+                  "maximum": 1.0
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7747755.0,
+                  0.0,
+                  -10.0,
+                  3327265.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7747755.0,
+                  3325025.0,
+                  7749995.0,
+                  3327265.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "MS1_IVH_1111009_NA_20220911.tif": {
+              "sha256": "1c10d1d075c9e3b06735649ef7d5cf214840d029667a022a0cfe82fcb437b1ee",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 24511,
+                  "minimum": 4.333451215643436e-05,
+                  "maximum": 0.11078716814517975
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7747755.0,
+                  0.0,
+                  -10.0,
+                  3327265.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7747755.0,
+                  3325025.0,
+                  7749995.0,
+                  3327265.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "MS1_IVV_1111009_NA_20220911.tif": {
+              "sha256": "961a668326e3bb912fc3e0f0d70be5fc14cd9352f62897a13d5a356a6b2d398c",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 24511,
+                  "minimum": 0.00023660631268285215,
+                  "maximum": 0.9817437529563904
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7747755.0,
+                  0.0,
+                  -10.0,
+                  3327265.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7747755.0,
+                  3325025.0,
+                  7749995.0,
+                  3327265.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL1_IVH_1111009_NA_20220619.tif": {
+              "sha256": "de2420d5413e2c8663d9922e6c6fc665fbd06383c222083ca9481bfde183b255",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 24511,
+                  "minimum": 1.2503246580308769e-05,
+                  "maximum": 0.06852072477340698
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7747755.0,
+                  0.0,
+                  -10.0,
+                  3327265.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7747755.0,
+                  3325025.0,
+                  7749995.0,
+                  3327265.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL1_IVV_1111009_NA_20220619.tif": {
+              "sha256": "dde655153710ebaf589babb4e9822cd2e1bc1421e6a641c0db291a88c5329613",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 24511,
+                  "minimum": 0.016464179381728172,
+                  "maximum": 0.7712368369102478
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7747755.0,
+                  0.0,
+                  -10.0,
+                  3327265.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7747755.0,
+                  3325025.0,
+                  7749995.0,
+                  3327265.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL2_IVH_1111009_NA_20220607.tif": {
+              "sha256": "52bb5e2742b5f36cb263e16542913109aec0dcc96c1da8704371ccb85b5f7b2a",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 24511,
+                  "minimum": 0.00021164384088478982,
+                  "maximum": 0.16908547282218933
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7747755.0,
+                  0.0,
+                  -10.0,
+                  3327265.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7747755.0,
+                  3325025.0,
+                  7749995.0,
+                  3327265.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL2_IVV_1111009_NA_20220607.tif": {
+              "sha256": "4088f0073e9e3f510579c7a2df53aab6a8be5c48ed46359fef604c15baffc97b",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 24511,
+                  "minimum": 0.018738141283392906,
+                  "maximum": 1.0990339517593384
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7747755.0,
+                  0.0,
+                  -10.0,
+                  3327265.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7747755.0,
+                  3325025.0,
+                  7749995.0,
+                  3327265.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "info.json": {
+              "sha256": "8424282bd3f5eb1d51ed914c9c57fff46c79b021e0939803756f60e79504dba1",
+              "bytes": 2583,
+              "data": {
+                "sources": {
+                  "SL1": {
+                    "source_date": "2022-06-19",
+                    "s1_ids": [
+                      "8e01cdb4-8d5c-5b7d-9ea4-c1807fbacb6e"
+                    ],
+                    "master": false,
+                    "coverage": 48.85004783163265,
+                    "crank": 1
+                  },
+                  "SL2": {
+                    "source_date": "2022-06-07",
+                    "s1_ids": [
+                      "8afd742f-e234-5cae-9089-bc096b8dab14"
+                    ],
+                    "master": false,
+                    "coverage": 48.85004783163265,
+                    "crank": 2
+                  },
+                  "MS1": {
+                    "source_date": "2022-09-11",
+                    "s1_ids": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ],
+                    "master": true,
+                    "coverage": 48.85004783163265,
+                    "crank": 1
+                  }
+                },
+                "datasets": {
+                  "MS1_IVH_1111009_NA_20220911": {
+                    "name": "MS1_IVH_1111009_NA_20220911",
+                    "master": true,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "MS",
+                    "pname": "IVH",
+                    "rank": "1",
+                    "source_date": "2022-09-11",
+                    "sources": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ]
+                  },
+                  "SL1_IVH_1111009_NA_20220619": {
+                    "name": "SL1_IVH_1111009_NA_20220619",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVH",
+                    "rank": 1,
+                    "source_date": "2022-06-19",
+                    "sources": [
+                      "8e01cdb4-8d5c-5b7d-9ea4-c1807fbacb6e"
+                    ]
+                  },
+                  "SL2_IVH_1111009_NA_20220607": {
+                    "name": "SL2_IVH_1111009_NA_20220607",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVH",
+                    "rank": 2,
+                    "source_date": "2022-06-07",
+                    "sources": [
+                      "8afd742f-e234-5cae-9089-bc096b8dab14"
+                    ]
+                  },
+                  "MS1_IVV_1111009_NA_20220911": {
+                    "name": "MS1_IVV_1111009_NA_20220911",
+                    "master": true,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "MS",
+                    "pname": "IVV",
+                    "rank": "1",
+                    "source_date": "2022-09-11",
+                    "sources": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ]
+                  },
+                  "SL1_IVV_1111009_NA_20220619": {
+                    "name": "SL1_IVV_1111009_NA_20220619",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVV",
+                    "rank": 1,
+                    "source_date": "2022-06-19",
+                    "sources": [
+                      "8e01cdb4-8d5c-5b7d-9ea4-c1807fbacb6e"
+                    ]
+                  },
+                  "SL2_IVV_1111009_NA_20220607": {
+                    "name": "SL2_IVV_1111009_NA_20220607",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVV",
+                    "rank": 2,
+                    "source_date": "2022-06-07",
+                    "sources": [
+                      "8afd742f-e234-5cae-9089-bc096b8dab14"
+                    ]
+                  },
+                  "MK0_MNA_1111009_NA_20220911": {
+                    "name": "MK0_MNA_1111009_NA_20220911",
+                    "master": false,
+                    "nodata": 0,
+                    "dtype": "uint8",
+                    "ptype": "MK",
+                    "pname": "MNA",
+                    "rank": 0,
+                    "source_date": "2022-09-11",
+                    "sources": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ]
+                  }
+                },
+                "grid_id": "9412c601-b00c-5e87-b632-631b9ce49e44",
+                "slavecov": 2,
+                "mastercov": 1,
+                "gvalid": true,
+                "pcovered": 48.85004783163265,
+                "pwater": null,
+                "pflood": null,
+                "actid": 1111009,
+                "flood_date": "2022-09-10 08:00:00",
+                "aoiid": null,
+                "revision": null,
+                "version": null,
+                "geom": "POLYGON ((7747755 3325025, 7747755 3327265, 7749995 3327265, 7749995 3325025, 7747755 3325025))"
+              }
+            }
+          },
+          "data/1111009/00/19/1902a09538f556dcb254a6a19ae27415": {
+            "MK0_MNA_1111009_NA_20220911.tif": {
+              "sha256": "52958ec75b9a9aec7b96261bff1196548a994b2a9c1769274c48ed534dfce595",
+              "bytes": 50593,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "uint8",
+                  "finite_count": 40165,
+                  "minimum": 1.0,
+                  "maximum": 1.0
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7512555.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7512555.0,
+                  3369825.0,
+                  7514795.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "MS1_IVH_1111009_NA_20220911.tif": {
+              "sha256": "db0867706792548c6a5ac61dcf3f6dc0b2a3104bbf9cdedc0b76aedfffb0d2a8",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 40165,
+                  "minimum": 0.0010295163374394178,
+                  "maximum": 0.08625221997499466
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7512555.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7512555.0,
+                  3369825.0,
+                  7514795.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "MS1_IVV_1111009_NA_20220911.tif": {
+              "sha256": "47f546088730ad55fa65848923d81f3de8c953fb85a782b46c7c92be708b6285",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 40165,
+                  "minimum": 0.010841995477676392,
+                  "maximum": 0.44104936718940735
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7512555.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7512555.0,
+                  3369825.0,
+                  7514795.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL1_IVH_1111009_NA_20220619.tif": {
+              "sha256": "2da42bcad973595c756f7e17f59c17cb64dcc9c05fc4d24393bfc95c456285db",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 40165,
+                  "minimum": 1.7572059732628986e-05,
+                  "maximum": 0.025212710723280907
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7512555.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7512555.0,
+                  3369825.0,
+                  7514795.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL1_IVV_1111009_NA_20220619.tif": {
+              "sha256": "0344b2d9d8e7014b7ef3c655dfba5d93e4203d18f37595be61b9cd2d007de3fb",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 40165,
+                  "minimum": 0.0034953674767166376,
+                  "maximum": 0.17213375866413116
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7512555.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7512555.0,
+                  3369825.0,
+                  7514795.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL2_IVH_1111009_NA_20220607.tif": {
+              "sha256": "a40fcf6da3d6209de1f6f6dab02d901d1f9aab6dac49d1da7b5116bc59c33c59",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 40165,
+                  "minimum": 1.6893800420803018e-05,
+                  "maximum": 0.024734340608119965
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7512555.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7512555.0,
+                  3369825.0,
+                  7514795.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "SL2_IVV_1111009_NA_20220607.tif": {
+              "sha256": "2b5f29f2d659ae799a210aa1394cda804059b20a6e29672b3b61f624d12b0d5f",
+              "bytes": 201229,
+              "data": {
+                "values": {
+                  "shape": [
+                    1,
+                    224,
+                    224
+                  ],
+                  "dtype": "float32",
+                  "finite_count": 40165,
+                  "minimum": 0.0034361791331321,
+                  "maximum": 0.24114064872264862
+                },
+                "crs": "EPSG:3857",
+                "transform": [
+                  10.0,
+                  0.0,
+                  7512555.0,
+                  0.0,
+                  -10.0,
+                  3372065.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "bounds": [
+                  7512555.0,
+                  3369825.0,
+                  7514795.0,
+                  3372065.0
+                ],
+                "nodata": 0.0,
+                "band_descriptions": [
+                  null
+                ]
+              }
+            },
+            "info.json": {
+              "sha256": "2841d44c5c7569c6ac4687f2e4633f41e745540bab1e613d06b0222bb9ddb57e",
+              "bytes": 2583,
+              "data": {
+                "sources": {
+                  "SL1": {
+                    "source_date": "2022-06-19",
+                    "s1_ids": [
+                      "8e01cdb4-8d5c-5b7d-9ea4-c1807fbacb6e"
+                    ],
+                    "master": false,
+                    "coverage": 80.04823022959184,
+                    "crank": 1
+                  },
+                  "SL2": {
+                    "source_date": "2022-06-07",
+                    "s1_ids": [
+                      "8afd742f-e234-5cae-9089-bc096b8dab14"
+                    ],
+                    "master": false,
+                    "coverage": 80.04823022959184,
+                    "crank": 2
+                  },
+                  "MS1": {
+                    "source_date": "2022-09-11",
+                    "s1_ids": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ],
+                    "master": true,
+                    "coverage": 80.04823022959184,
+                    "crank": 1
+                  }
+                },
+                "datasets": {
+                  "MS1_IVH_1111009_NA_20220911": {
+                    "name": "MS1_IVH_1111009_NA_20220911",
+                    "master": true,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "MS",
+                    "pname": "IVH",
+                    "rank": "1",
+                    "source_date": "2022-09-11",
+                    "sources": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ]
+                  },
+                  "SL1_IVH_1111009_NA_20220619": {
+                    "name": "SL1_IVH_1111009_NA_20220619",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVH",
+                    "rank": 1,
+                    "source_date": "2022-06-19",
+                    "sources": [
+                      "8e01cdb4-8d5c-5b7d-9ea4-c1807fbacb6e"
+                    ]
+                  },
+                  "SL2_IVH_1111009_NA_20220607": {
+                    "name": "SL2_IVH_1111009_NA_20220607",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVH",
+                    "rank": 2,
+                    "source_date": "2022-06-07",
+                    "sources": [
+                      "8afd742f-e234-5cae-9089-bc096b8dab14"
+                    ]
+                  },
+                  "MS1_IVV_1111009_NA_20220911": {
+                    "name": "MS1_IVV_1111009_NA_20220911",
+                    "master": true,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "MS",
+                    "pname": "IVV",
+                    "rank": "1",
+                    "source_date": "2022-09-11",
+                    "sources": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ]
+                  },
+                  "SL1_IVV_1111009_NA_20220619": {
+                    "name": "SL1_IVV_1111009_NA_20220619",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVV",
+                    "rank": 1,
+                    "source_date": "2022-06-19",
+                    "sources": [
+                      "8e01cdb4-8d5c-5b7d-9ea4-c1807fbacb6e"
+                    ]
+                  },
+                  "SL2_IVV_1111009_NA_20220607": {
+                    "name": "SL2_IVV_1111009_NA_20220607",
+                    "master": false,
+                    "nodata": 0.0,
+                    "dtype": "float32",
+                    "ptype": "SL",
+                    "pname": "IVV",
+                    "rank": 2,
+                    "source_date": "2022-06-07",
+                    "sources": [
+                      "8afd742f-e234-5cae-9089-bc096b8dab14"
+                    ]
+                  },
+                  "MK0_MNA_1111009_NA_20220911": {
+                    "name": "MK0_MNA_1111009_NA_20220911",
+                    "master": false,
+                    "nodata": 0,
+                    "dtype": "uint8",
+                    "ptype": "MK",
+                    "pname": "MNA",
+                    "rank": 0,
+                    "source_date": "2022-09-11",
+                    "sources": [
+                      "d316d446-bda2-5d5f-9219-d9ef9df7c2c8"
+                    ]
+                  }
+                },
+                "grid_id": "1902a095-38f5-56dc-b254-a6a19ae27415",
+                "slavecov": 2,
+                "mastercov": 1,
+                "gvalid": true,
+                "pcovered": 80.04823022959184,
+                "pwater": null,
+                "pflood": null,
+                "actid": 1111009,
+                "flood_date": "2022-09-10 08:00:00",
+                "aoiid": null,
+                "revision": null,
+                "version": null,
+                "geom": "POLYGON ((7512555 3369825, 7512555 3372065, 7514795 3372065, 7514795 3369825, 7512555 3369825))"
+              }
+            }
+          }
+        },
+        "complete_groups": 3,
+        "full_archive_downloaded": false,
+        "limitation": "Three complete groups from one archive prefix. Preserve activation/split and provider label legend; no event-independence claim."
+      }
+    },
+    {
+      "source_id": "D20",
+      "check_id": "nextday-three-tfrecords",
+      "level": "paired_arrays_decoded",
+      "files": [
+        {
+          "path": "plans/multihazard_source_validation_20260911/attempts/0227/body.bin",
+          "sha256": "d15e32e023ed4024b86750752bf2e8eadf456270f714c8bcb2f0840287cfa374",
+          "bytes": 8388608
+        }
+      ],
+      "details": {
+        "samples": [
+          {
+            "example_sha256": "5d135ada744a55fe1f1e77a9eb33893743c06678d56c8bcb0fb37568dce76cda",
+            "features": {
+              "vs": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 2.8367838859558105,
+                "maximum": 3.326791763305664
+              },
+              "th": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 160.4904327392578,
+                "maximum": 190.2576904296875
+              },
+              "population": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 741.326171875
+              },
+              "tmmx": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 292.3449401855469,
+                "maximum": 293.4912414550781
+              },
+              "PrevFireMask": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "label_counts": {
+                  "0": 4085,
+                  "1": 11
+                }
+              },
+              "elevation": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 36.0,
+                "maximum": 141.0
+              },
+              "sph": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.004417581018060446,
+                "maximum": 0.004741980228573084
+              },
+              "pr": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 0.0
+              },
+              "pdsi": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 2.4609365463256836,
+                "maximum": 4.988646984100342
+              },
+              "erc": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 18.424610137939453,
+                "maximum": 23.183353424072266
+              },
+              "FireMask": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "label_counts": {
+                  "0": 4089,
+                  "1": 7
+                }
+              },
+              "NDVI": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": -2604.0,
+                "maximum": 8548.0
+              },
+              "tmmn": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 275.18609619140625,
+                "maximum": 276.46240234375
+              }
+            },
+            "tfrecord_crc_checked": true
+          },
+          {
+            "example_sha256": "b623f0816f12087d401de7660fc3871b518f9984ec858dd1a535cddfb871fa44",
+            "features": {
+              "FireMask": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 0.0,
+                "label_counts": {
+                  "0": 4096
+                }
+              },
+              "pdsi": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 2.4609365463256836,
+                "maximum": 4.988646984100342
+              },
+              "sph": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.005066653247922659,
+                "maximum": 0.005388928111642599
+              },
+              "th": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 263.0328369140625,
+                "maximum": 321.6380310058594
+              },
+              "pr": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 0.0
+              },
+              "PrevFireMask": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "label_counts": {
+                  "0": 4091,
+                  "1": 5
+                }
+              },
+              "tmmx": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 295.90234375,
+                "maximum": 296.5835266113281
+              },
+              "NDVI": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": -2604.0,
+                "maximum": 8548.0
+              },
+              "elevation": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 36.0,
+                "maximum": 141.0
+              },
+              "erc": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 21.211904525756836,
+                "maximum": 25.5955810546875
+              },
+              "population": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 741.326171875
+              },
+              "vs": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 2.6016974449157715,
+                "maximum": 3.3524067401885986
+              },
+              "tmmn": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 276.10968017578125,
+                "maximum": 276.9031066894531
+              }
+            },
+            "tfrecord_crc_checked": true
+          },
+          {
+            "example_sha256": "aa76296bc8e792da23ca251c93406f6ee61c374faac1f276ab105af7de92d7d0",
+            "features": {
+              "PrevFireMask": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "label_counts": {
+                  "0": 4079,
+                  "1": 17
+                }
+              },
+              "th": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 51.62488555908203,
+                "maximum": 119.1728286743164
+              },
+              "NDVI": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": -684.0,
+                "maximum": 9391.0
+              },
+              "tmmx": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 305.2569885253906,
+                "maximum": 306.1678161621094
+              },
+              "FireMask": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "label_counts": {
+                  "0": 4089,
+                  "1": 7
+                }
+              },
+              "erc": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 16.751178741455078,
+                "maximum": 23.817726135253906
+              },
+              "tmmn": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 293.8416748046875,
+                "maximum": 294.9168701171875
+              },
+              "population": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.0,
+                "maximum": 741.326171875
+              },
+              "pr": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": -0.00438297912478447,
+                "maximum": 0.016351807862520218
+              },
+              "vs": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 3.281315803527832,
+                "maximum": 3.864760637283325
+              },
+              "pdsi": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": -2.1506083011627197,
+                "maximum": 0.3643817901611328
+              },
+              "sph": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 0.01595107652246952,
+                "maximum": 0.016866115853190422
+              },
+              "elevation": {
+                "shape": [
+                  64,
+                  64
+                ],
+                "dtype": "float32",
+                "finite_count": 4096,
+                "minimum": 36.0,
+                "maximum": 141.0
+              }
+            },
+            "tfrecord_crc_checked": true
+          }
+        ],
+        "source_path": "plans/multihazard_source_validation_20260911/attempts/0227/body.bin",
+        "source_sha256": "d15e32e023ed4024b86750752bf2e8eadf456270f714c8bcb2f0840287cfa374",
+        "full_zip_crc_checked": false,
+        "full_archive_downloaded": false,
+        "limitation": "Complete TFRecords from a partial ZIP; original ZIP CRC and event/time/split independence unverified."
+      }
+    },
+    {
+      "source_id": "D40",
+      "check_id": "eonet-events",
+      "level": "catalog_records_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_01/eonet-events.body",
+          "sha256": "0b1acbf88d6f3d361394a0273248ad86883e149e7ac36e6ec15e5b4aa5c11ece",
+          "bytes": 14305
+        }
+      ],
+      "details": {
+        "events": 5,
+        "examples": [
+          {
+            "id": "EONET_24184",
+            "title": "Tropical Storm Norbert",
+            "description": null,
+            "link": "https://eonet.gsfc.nasa.gov/api/v3/events/EONET_24184",
+            "closed": null,
+            "categories": [
+              {
+                "id": "severeStorms",
+                "title": "Severe Storms"
+              }
+            ],
+            "sources": [
+              {
+                "id": "JTWC",
+                "url": "https://www.metoc.navy.mil/jtwc/products/ep1426.tcw"
+              },
+              {
+                "id": "NOAA_NHC",
+                "url": "https://www.nhc.noaa.gov/archive/2026/NORBERT.shtml"
+              }
+            ],
+            "geometry": [
+              {
+                "magnitudeValue": 35.0,
+                "magnitudeUnit": "kts",
+                "date": "2026-09-10T06:00:00Z",
+                "type": "Point",
+                "coordinates": [
+                  -117.3,
+                  16.4
+                ]
+              },
+              {
+                "magnitudeValue": 35.0,
+                "magnitudeUnit": "kts",
+                "date": "2026-09-10T12:00:00Z",
+                "type": "Point",
+                "coordinates": [
+                  -118.6,
+                  16.5
+                ]
+              },
+              {
+                "magnitudeValue": 40.0,
+                "magnitudeUnit": "kts",
+                "date": "2026-09-10T18:00:00Z",
+                "type": "Point",
+                "coordinates": [
+                  -119.9,
+                  16.5
+                ]
+              },
+              {
+                "magnitudeValue": 40.0,
+                "magnitudeUnit": "kts",
+                "date": "2026-09-11T00:00:00Z",
+                "type": "Point",
+                "coordinates": [
+                  -121.3,
+                  16.4
+                ]
+              },
+              {
+                "magnitudeValue": 50.0,
+                "magnitudeUnit": "kts",
+                "date": "2026-09-11T06:00:00Z",
+                "type": "Point",
+                "coordinates": [
+                  -122.7,
+                  16.6
+                ]
+              },
+              {
+                "magnitudeValue": 55.0,
+                "magnitudeUnit": "kts",
+                "date": "2026-09-11T12:00:00Z",
+                "type": "Point",
+                "coordinates": [
+                  -124.1,
+                  16.6
+                ]
+              },
+              {
+                "magnitudeValue": 55.0,
+                "magnitudeUnit": "kts",
+                "date": "2026-09-11T18:00:00Z",
+                "type": "Point",
+                "coordinates": [
+                  -125.2,
+                  16.7
+                ]
+              },
+              {
+                "magnitudeValue": 55.0,
+                "magnitudeUnit": "kts",
+                "date": "2026-09-12T00:00:00Z",
+                "type": "Point",
+                "coordinates": [
+                  -126.1,
+                  17.1
+                ]
+              }
+            ]
+          },
+          {
+            "id": "EONET_24215",
+            "title": "Flood in France 1104149",
+            "description": null,
+            "link": "https://eonet.gsfc.nasa.gov/api/v3/events/EONET_24215",
+            "closed": "2026-09-10T00:00:00Z",
+            "categories": [
+              {
+                "id": "floods",
+                "title": "Floods"
+              }
+            ],
+            "sources": [
+              {
+                "id": "GDACS",
+                "url": "https://www.gdacs.org/report.aspx?eventtype=FL&eventid=1104149"
+              }
+            ],
+            "geometry": [
+              {
+                "magnitudeValue": null,
+                "magnitudeUnit": null,
+                "date": "2026-09-08T20:00:00Z",
+                "type": "Polygon",
+                "coordinates": [
+                  [
+                    [
+                      44.8106754,
+                      6.7478353
+                    ],
+                    [
+                      44.8093894,
+                      6.74973
+                    ],
+                    [
+                      44.8082912,
+                      6.7510885
+                    ],
+                    [
+                      44.8076026,
+                      6.7525471
+                    ],
+                    [
+                      44.8070409,
+                      6.7536128
+                    ],
+                    [
+                      44.8067553,
+                      6.7544595
+                    ],
+                    [
+                      44.8063827,
+                      6.7560423
+                    ],
+                    [
+                      44.805997,
+                      6.7569053
+                    ],
+                    [
+                      44.8059192,
+                      6.7571734
+                    ],
+                    [
+                      44.8058602,
+                      6.7577593
+                    ],
+                    [
+                      44.8050469,
+                      6.75815
+                    ],
+                    [
+                      44.8049159,
+                      6.7581695
+                    ],
+                    [
+                      44.8037073,
+                      6.7577953
+                    ],
+                    [
+                      44.8032203,
+                      6.7578525
+                    ],
+                    [
+                      44.8028154,
+                      6.7580367
+                    ],
+                    [
+                      44.8020426,
+                      6.7583883
+                    ],
+                    [
+                      44.8010026,
+                      6.7585879
+                    ],
+                    [
+                      44.8001049,
+                      6.7585744
+                    ],
+                    [
+                      44.798564,
+                      6.7583773
+                    ],
+                    [
+                      44.7979119,
+                      6.7581605
+                    ],
+                    [
+                      44.7975,
+                      6.7578434
+                    ],
+                    [
+                      44.7959488,
+                      6.756906
+                    ],
+                    [
+                      44.7932952,
+                      6.756995
+                    ],
+                    [
+                      44.79138,
+                      6.7572995
+                    ],
+                    [
+                      44.7907484,
+                      6.7572672
+                    ],
+                    [
+                      44.7892909,
+                      6.7574862
+                    ],
+                    [
+                      44.7890207,
+                      6.7575641
+                    ],
+                    [
+                      44.7886751,
+                      6.7577565
+                    ],
+                    [
+                      44.7870486,
+                      6.7575897
+                    ],
+                    [
+                      44.7867628,
+                      6.757696
+                    ],
+                    [
+                      44.7862819,
+                      6.7577329
+                    ],
+                    [
+                      44.7857682,
+                      6.7576819
+                    ],
+                    [
+                      44.7836879,
+                      6.75721
+                    ],
+                    [
+                      44.7831823,
+                      6.7572729
+                    ],
+                    [
+                      44.7820761,
+                      6.7562554
+                    ],
+                    [
+                      44.7791046,
+                      6.757035
+                    ],
+                    [
+                      44.7790273,
+                      6.7570391
+                    ],
+                    [
+                      44.7789388,
+                      6.7568051
+                    ],
+                    [
+                      44.7786434,
+                      6.7568589
+                    ],
+                    [
+                      44.7784323,
+                      6.7568233
+                    ],
+                    [
+                      44.7776474,
+                      6.7566907
+                    ],
+                    [
+                      44.7759226,
+                      6.7566975
+                    ],
+                    [
+                      44.7747747,
+                      6.7571229
+                    ],
+                    [
+                      44.7741774,
+                      6.7574512
+                    ],
+                    [
+                      44.7730942,
+                      6.7585168
+                    ],
+                    [
+                      44.7717299,
+                      6.7586684
+                    ],
+                    [
+                      44.7709413,
+                      6.7586781
+                    ],
+                    [
+                      44.7707467,
+                      6.7588852
+                    ],
+                    [
+                      44.7701679,
+                      6.7595015
+                    ],
+                    [
+                      44.7693661,
+                      6.7602247
+                    ],
+                    [
+                      44.769232,
+                      6.7603457
+                    ],
+                    [
+                      44.767884,
+                      6.76137
+                    ],
+                    [
+                      44.7667285,
+                      6.7634905
+                    ],
+                    [
+                      44.7659042,
+                      6.7646073
+                    ],
+                    [
+                      44.764849,
+                      6.7658574
+                    ],
+                    [
+                      44.7643792,
+                      6.7672396
+                    ],
+                    [
+                      44.7642179,
+                      6.7675064
+                    ],
+                    [
+                      44.7641548,
+                      6.7677073
+                    ],
+                    [
+                      44.7631028,
+                      6.7681435
+                    ],
+                    [
+                      44.7600409,
+                      6.7698921
+                    ],
+                    [
+                      44.7581207,
+                      6.7703378
+                    ],
+                    [
+                      44.7556788,
+                      6.7703769
+                    ],
+                    [
+                      44.754484,
+                      6.7705864
+                    ],
+                    [
+                      44.7528918,
+                      6.7715498
+                    ],
+                    [
+                      44.7512015,
+                      6.7707926
+                    ],
+                    [
+                      44.7478139,
+                      6.7698287
+                    ],
+                    [
+                      44.7472557,
+                      6.7698696
+                    ],
+                    [
+                      44.7473376,
+                      6.7697471
+                    ],
+                    [
+                      44.7461054,
+                      6.7683337
+                    ],
+                    [
+                      44.7458364,
+                      6.7680251
+                    ],
+                    [
+                      44.7454901,
+                      6.7674329
+                    ],
+                    [
+                      44.7450443,
+                      6.7666706
+                    ],
+                    [
+                      44.7450158,
+                      6.7666219
+                    ],
+                    [
+                      44.7443842,
+                      6.7667216
+                    ],
+                    [
+                      44.7434397,
+                      6.7666337
+                    ],
+                    [
+                      44.7430636,
+                      6.7665438
+                    ],
+                    [
+                      44.7429699,
+                      6.7665214
+                    ],
+                    [
+                      44.7425612,
+                      6.7665234
+                    ],
+                    [
+                      44.7420288,
+                      6.7664182
+                    ],
+                    [
+                      44.7412338,
+                      6.7660717
+                    ],
+                    [
+                      44.741068,
+                      6.7661066
+                    ],
+                    [
+                      44.7406655,
+                      6.7661913
+                    ],
+                    [
+                      44.7405502,
+                      6.7662187
+                    ],
+                    [
+                      44.7402693,
+                      6.7661411
+                    ],
+                    [
+                      44.7393235,
+                      6.7663753
+                    ],
+                    [
+                      44.7384607,
+                      6.7673755
+                    ],
+                    [
+                      44.7384652,
+                      6.7674823
+                    ],
+                    [
+                      44.7384267,
+                      6.7675241
+                    ],
+                    [
+                      44.7379947,
+                      6.7678099
+                    ],
+                    [
+                      44.7376907,
+                      6.7682113
+                    ],
+                    [
+                      44.7375253,
+                      6.7681975
+                    ],
+                    [
+                      44.7374434,
+                      6.7682495
+                    ],
+                    [
+                      44.7373553,
+                      6.7683598
+                    ],
+                    [
+                      44.7371392,
+                      6.7686302
+                    ],
+                    [
+                      44.736965,
+                      6.7690711
+                    ],
+                    [
+                      44.7370725,
+                      6.7692351
+                    ],
+                    [
+                      44.7368,
+                      6.7690959
+                    ],
+                    [
+                      44.7359999,
+                      6.7689365
+                    ],
+                    [
+                      44.7347604,
+                      6.7685567
+                    ],
+                    [
+                      44.7344651,
+                      6.7685722
+                    ],
+                    [
+                      44.7332498,
+                      6.7688698
+                    ],
+                    [
+                      44.7328321,
+                      6.7688403
+                    ],
+                    [
+                      44.732505,
+                      6.7685914
+                    ],
+                    [
+                      44.7322005,
+                      6.7680789
+                    ],
+                    [
+                      44.7319983,
+                      6.767587
+                    ],
+                    [
+                      44.7318736,
+                      6.7674394
+                    ],
+                    [
+                      44.7313129,
+                      6.7671595
+                    ],
+                    [
+                      44.7309939,
+                      6.7667411
+                    ],
+                    [
+                      44.730811,
+                      6.7664419
+                    ],
+                    [
+                      44.7304318,
+                      6.7655631
+                    ],
+                    [
+                      44.7295234,
+                      6.7639409
+                    ],
+                    [
+                      44.7290901,
+                      6.7637882
+                    ],
+                    [
+                      44.7280647,
+                      6.7639624
+                    ],
+                    [
+                      44.7274974,
+                      6.7638106
+                    ],
+                    [
+                      44.7265487,
+                      6.7637712
+                    ],
+                    [
+                      44.725975,
+                      6.7633829
+                    ],
+                    [
+                      44.7252216,
+                      6.7631065
+                    ],
+                    [
+                      44.7246925,
+                      6.7625036
+                    ],
+                    [
+                      44.7243675,
+                      6.762258
+                    ],
+                    [
+                      44.7238793,
+                      6.7620374
+                    ],
+                    [
+                      44.7236911,
+                      6.7619861
+                    ],
+                    [
+                      44.7229472,
+                      6.7620216
+                    ],
+                    [
+                      44.7221689,
+                      6.7619175
+                    ],
+                    [
+                      44.720901,
+                      6.7612308
+                    ],
+                    [
+                      44.720471,
+                      6.7611087
+                    ],
+                    [
+                      44.7201164,
+                      6.7610796
+                    ],
+                    [
+                      44.7198038,
+                      6.761165
+                    ],
+                    [
+                      44.7196056,
+                      6.7614519
+                    ],
+                    [
+                      44.7192249,
+                      6.761555
+                    ],
+                    [
+                      44.7186085,
+                      6.7615521
+                    ],
+                    [
+                      44.7182129,
+                      6.7615133
+                    ],
+                    [
+                      44.7178554,
+                      6.7613969
+                    ],
+                    [
+                      44.7175274,
+                      6.7612906
+                    ],
+                    [
+                      44.7167657,
+                      6.7609877
+                    ],
+                    [
+                      44.7167675,
+                      6.7605144
+                    ],
+                    [
+                      44.7160627,
+                      6.7621732
+                    ],
+                    [
+                      44.7156284,
+                      6.7637236
+                    ],
+                    [
+                      44.715297,
+                      6.7643368
+                    ],
+                    [
+                      44.7144379,
+                      6.7649458
+                    ],
+                    [
+                      44.7141764,
+                      6.7655316
+                    ],
+                    [
+                      44.713226,
+                      6.7673953
+                    ],
+                    [
+                      44.7120662,
+                      6.7688862
+                    ],
+                    [
+                      44.7114438,
+                      6.7694339
+                    ],
+                    [
+                      44.7108345,
+                      6.770242
+                    ],
+                    [
+                      44.7080004,
+                      6.7733685
+                    ],
+                    [
+                      44.7073364,
+                      6.774194
+                    ],
+                    [
+                      44.706627,
+                      6.7755999
+                    ],
+                    [
+                      44.7060742,
+                      6.7765419
+                    ],
+                    [
+                      44.7053507,
+                      6.7799142
+                    ],
+                    [
+                      44.7049279,
+                      6.7818822
+                    ],
+                    [
+                      44.7048783,
+                      6.7829704
+                    ],
+                    [
+                      44.7046331,
+                      6.7853302
+                    ],
+                    [
+                      44.7045157,
+                      6.7861753
+                    ],
+                    [
+                      44.704424,
+                      6.7883522
+                    ],
+                    [
+                      44.7041956,
+                      6.7892754
+                    ],
+                    [
+                      44.7039958,
+                      6.7940494
+                    ],
+                    [
+                      44.7029769,
+                      6.7952102
+                    ],
+                    [
+                      44.7040604,
+                      6.7988215
+                    ],
+                    [
+                      44.7042442,
+                      6.7992722
+                    ],
+                    [
+                      44.704654,
+                      6.8000377
+                    ],
+                    [
+                      44.7050658,
+                      6.8006626
+                    ],
+                    [
+                      44.7056608,
+                      6.8012975
+                    ],
+                    [
+                      44.7059473,
+                      6.8015065
+                    ],
+                    [
+                      44.7065742,
+                      6.8017582
+                    ],
+                    [
+                      44.7066443,
+                      6.8018315
+                    ],
+                    [
+                      44.7073122,
+                      6.8029234
+                    ],
+                    [
+                      44.7078933,
+                      6.8031825
+                    ],
+                    [
+                      44.7079633,
+                      6.8031922
+                    ],
+                    [
+                      44.708226,
+                      6.8030316
+                    ],
+                    [
+                      44.7088471,
+                      6.8029972
+                    ],
+                    [
+                      44.7102899,
+                      6.803061
+                    ],
+                    [
+                      44.7130169,
+                      6.8019611
+                    ],
+                    [
+                      44.7175407,
+                      6.8002454
+                    ],
+                    [
+                      44.7181366,
+                      6.8038568
+                    ],
+                    [
+                      44.7182032,
+                      6.8039456
+                    ],
+                    [
+                      44.723217,
+                      6.8055466
+                    ],
+                    [
+                      44.7235811,
+                      6.8059457
+                    ],
+                    [
+                      44.7247559,
+                      6.8068975
+                    ],
+                    [
+                      44.7275695,
+                      6.8081122
+                    ],
+                    [
+                      44.7310646,
+                      6.8100016
+                    ],
+                    [
+                      44.7352545,
+                      6.8103477
+                    ],
+                    [
+                      44.735395,
+                      6.8103997
+                    ],
+                    [
+                      44.7378404,
+                      6.8131115
+                    ],
+                    [
+                      44.7384418,
+                      6.8137784
+                    ],
+                    [
+                      44.7422954,
+                      6.8131337
+                    ],
+                    [
+                      44.7423958,
+                      6.8131169
+                    ],
+                    [
+                      44.7443079,
+                      6.816194
+                    ],
+                    [
+                      44.7445091,
+                      6.8174648
+                    ],
+                    [
+                      44.7453004,
+                      6.8215852
+                    ],
+                    [
+                      44.7453233,
+                      6.8216439
+                    ],
+                    [
+                      44.7454188,
+                      6.8214208
+                    ],
+                    [
+                      44.7454689,
+                      6.8217567
+                    ],
+                    [
+                      44.7453356,
+                      6.8219437
+                    ],
+                    [
+                      44.74521,
+                      6.8219916
+                    ],
+                    [
+                      44.7449243,
+                      6.8225572
+                    ],
+                    [
+                      44.7435969,
+                      6.8234984
+                    ],
+                    [
+                      44.7425841,
+                      6.8251445
+                    ],
+                    [
+                      44.7419302,
+                      6.8263756
+                    ],
+                    [
+                      44.7414894,
+                      6.8264469
+                    ],
+                    [
+                      44.740703,
+                      6.8271943
+                    ],
+                    [
+                      44.7403942,
+                      6.8274159
+                    ],
+                    [
+                      44.7400757,
+                      6.8278217
+                    ],
+                    [
+                      44.7397225,
+                      6.8290372
+                    ],
+                    [
+                      44.7396095,
+                      6.8293591
+                    ],
+                    [
+                      44.7394975,
+                      6.8295091
+                    ],
+                    [
+                      44.7395188,
+                      6.8296123
+                    ],
+                    [
+                      44.7396231,
+                      6.8297775
+                    ],
+                    [
+                      44.7399272,
+                      6.830063
+                    ],
+                    [
+                      44.7412566,
+                      6.8321798
+                    ],
+                    [
+                      44.7407588,
+                      6.832162
+                    ],
+                    [
+                      44.7399192,
+                      6.8324567
+                    ],
+                    [
+                      44.7410091,
+                      6.8334379
+                    ],
+                    [
+                      44.7414203,
+                      6.8348821
+                    ],
+                    [
+                      44.7427322,
+                      6.8374046
+                    ],
+                    [
+                      44.7437839,
+                      6.8394269
+                    ],
+                    [
+                      44.7440742,
+                      6.8415225
+                    ],
+                    [
+                      44.7444294,
+                      6.8459214
+                    ],
+                    [
+                      44.7461592,
+                      6.8497676
+                    ],
+                    [
+                      44.7463975,
+                      6.8554404
+                    ],
+                    [
+                      44.7465888,
+                      6.8586093
+                    ],
+                    [
+                      44.7461796,
+                      6.8611207
+                    ],
+                    [
+                      44.74704,
+                      6.8641313
+                    ],
+                    [
+                      44.7471246,
+                      6.8686852
+                    ],
+                    [
+                      44.7471135,
+                      6.8687907
+                    ],
+                    [
+                      44.7463621,
+                      6.8703466
+                    ],
+                    [
+                      44.7471819,
+                      6.873593
+                    ],
+                    [
+                      44.7488591,
+                      6.8727766
+                    ],
+                    [
+                      44.7501921,
+                      6.8722367
+                    ],
+                    [
+                      44.7518037,
+                      6.8718376
+                    ],
+                    [
+                      44.7520843,
+                      6.8713876
+                    ],
+                    [
+                      44.752486,
+                      6.8708745
+                    ],
+                    [
+                      44.7532817,
+                      6.8704902
+                    ],
+                    [
+                      44.7545334,
+                      6.8700889
+                    ],
+                    [
+                      44.7554237,
+                      6.8692239
+                    ],
+                    [
+                      44.7555834,
+                      6.8686717
+                    ],
+                    [
+                      44.7558169,
+                      6.8672707
+                    ],
+                    [
+                      44.7620665,
+                      6.8550165
+                    ],
+                    [
+                      44.7628622,
+                      6.85379
+                    ],
+                    [
+                      44.7636775,
+                      6.851644
+                    ],
+                    [
+                      44.7659928,
+                      6.8468005
+                    ],
+                    [
+                      44.7669409,
+                      6.8420779
+                    ],
+                    [
+                      44.7672234,
+                      6.8389287
+                    ],
+                    [
+                      44.7687536,
+                      6.8359228
+                    ],
+                    [
+                      44.7687332,
+                      6.8364832
+                    ],
+                    [
+                      44.7687623,
+                      6.8365539
+                    ],
+                    [
+                      44.7696992,
+                      6.8380249
+                    ],
+                    [
+                      44.770091,
+                      6.8383207
+                    ],
+                    [
+                      44.7701656,
+                      6.8384356
+                    ],
+                    [
+                      44.7714427,
+                      6.8384707
+                    ],
+                    [
+                      44.7721704,
+                      6.8382541
+                    ],
+                    [
+                      44.7722611,
+                      6.8382665
+                    ],
+                    [
+                      44.7722288,
+                      6.8383521
+                    ],
+                    [
+                      44.7723317,
+                      6.8384359
+                    ],
+                    [
+                      44.772539,
+                      6.8384383
+                    ],
+                    [
+                      44.7726797,
+                      6.8385427
+                    ],
+                    [
+                      44.7727073,
+                      6.8384533
+                    ],
+                    [
+                      44.772866,
+                      6.8383414
+                    ],
+                    [
+                      44.7735738,
+                      6.8381524
+                    ],
+                    [
+                      44.7736029,
+                      6.8380374
+                    ],
+                    [
+                      44.7739639,
+                      6.8380089
+                    ],
+                    [
+                      44.7739969,
+                      6.8381788
+                    ],
+                    [
+                      44.7743017,
+                      6.8382294
+                    ],
+                    [
+                      44.7744726,
+                      6.8380906
+                    ],
+                    [
+                      44.7745711,
+                      6.8388914
+                    ],
+                    [
+                      44.7747596,
+                      6.8390204
+                    ],
+                    [
+                      44.7754454,
+                      6.8390731
+                    ],
+                    [
+                      44.7757559,
+                      6.8391532
+                    ],
+                    [
+                      44.7757972,
+                      6.8391815
+                    ],
+                    [
+                      44.775796,
+                      6.8393136
+                    ],
+                    [
+                      44.7758754,
+                      6.8393556
+                    ],
+                    [
+                      44.7764374,
+                      6.8394422
+                    ],
+                    [
+                      44.7775275,
+                      6.8397544
+                    ],
+                    [
+                      44.7779917,
+                      6.8399515
+                    ],
+                    [
+                      44.7786767,
+                      6.8396658
+                    ],
+                    [
+                      44.7788647,
+                      6.8400911
+                    ],
+                    [
+                      44.7795429,
+                      6.8408348
+                    ],
+                    [
+                      44.7800154,
+                      6.8410643
+                    ],
+                    [
+                      44.7806286,
+                      6.8411881
+                    ],
+                    [
+                      44.7813837,
+                      6.8410122
+                    ],
+                    [
+                      44.7815337,
+                      6.84116
+                    ],
+                    [
+                      44.7821878,
+                      6.8426212
+                    ],
+                    [
+                      44.7844615,
+                      6.843584
+                    ],
+                    [
+                      44.7850215,
+                      6.8439457
+                    ],
+                    [
+                      44.7850857,
+                      6.8436591
+                    ],
+                    [
+                      44.7851095,
+                      6.8440766
+                    ],
+                    [
+                      44.7942582,
+                      6.8460629
+                    ],
+                    [
+                      44.7954045,
+                      6.8432921
+                    ],
+                    [
+                      44.795868,
+                      6.8426632
+                    ],
+                    [
+                      44.7966994,
+                      6.8417187
+                    ],
+                    [
+                      44.7970067,
+                      6.8410256
+                    ],
+                    [
+                      44.7969431,
+                      6.8402821
+                    ],
+                    [
+                      44.7972625,
+                      6.8376435
+                    ],
+                    [
+                      44.7966979,
+                      6.8366087
+                    ],
+                    [
+                      44.7966908,
+                      6.8364019
+                    ],
+                    [
+                      44.7966149,
+                      6.8353314
+                    ],
+                    [
+                      44.7966467,
+                      6.835285
+                    ],
+                    [
+                      44.7996774,
+                      6.8327142
+                    ],
+                    [
+                      44.8044951,
+                      6.8321488
+                    ],
+                    [
+                      44.8082899,
+                      6.8304072
+                    ],
+                    [
+                      44.8088918,
+                      6.8299162
+                    ],
+                    [
+                      44.8097644,
+                      6.8302029
+                    ],
+                    [
+                      44.8100884,
+                      6.8299212
+                    ],
+                    [
+                      44.8114652,
+                      6.8293757
+                    ],
+                    [
+                      44.8128182,
+                      6.8294099
+                    ],
+                    [
+                      44.8122992,
+                      6.8276587
+                    ],
+                    [
+                      44.8122029,
+                      6.8266511
+                    ],
+                    [
+                      44.8122929,
+                      6.8254632
+                    ],
+                    [
+                      44.8123897,
+                      6.8224155
+                    ],
+                    [
+                      44.8129535,
+                      6.8205902
+                    ],
+                    [
+                      44.8138234,
+                      6.8187579
+                    ],
+                    [
+                      44.8143228,
+                      6.8177661
+                    ],
+                    [
+                      44.8148447,
+                      6.8167608
+                    ],
+                    [
+                      44.8152062,
+                      6.8156934
+                    ],
+                    [
+                      44.8155397,
+                      6.8136675
+                    ],
+                    [
+                      44.8156186,
+                      6.8120062
+                    ],
+                    [
+                      44.815206,
+                      6.8087035
+                    ],
+                    [
+                      44.8148167,
+                      6.805424
+                    ],
+                    [
+                      44.8148781,
+                      6.8043305
+                    ],
+                    [
+                      44.8152243,
+                      6.8029874
+                    ],
+                    [
+                      44.8155602,
+                      6.8016265
+                    ],
+                    [
+                      44.8158586,
+                      6.8001851
+                    ],
+                    [
+                      44.8160319,
+                      6.7995253
+                    ],
+                    [
+                      44.8164376,
+                      6.7974363
+                    ],
+                    [
+                      44.8173848,
+                      6.7949496
+                    ],
+                    [
+                      44.8183934,
+                      6.7926604
+                    ],
+                    [
+                      44.8198372,
+                      6.7891116
+                    ],
+                    [
+                      44.8203296,
+                      6.7882373
+                    ],
+                    [
+                      44.8211761,
+                      6.7871728
+                    ],
+                    [
+                      44.8189133,
+                      6.7845419
+                    ],
+                    [
+                      44.818453,
+                      6.7836234
+                    ],
+                    [
+                      44.8178663,
+                      6.7816284
+                    ],
+                    [
+                      44.817592,
+                      6.7801977
+                    ],
+                    [
+                      44.8173571,
+                      6.7787371
+                    ],
+                    [
+                      44.8169985,
+                      6.7772217
+                    ],
+                    [
+                      44.8168977,
+                      6.7754911
+                    ],
+                    [
+                      44.816867,
+                      6.7752847
+                    ],
+                    [
+                      44.8164926,
+                      6.7734768
+                    ],
+                    [
+                      44.8160992,
+                      6.7720768
+                    ],
+                    [
+                      44.8156705,
+                      6.7696833
+                    ],
+                    [
+                      44.8151745,
+                      6.7679502
+                    ],
+                    [
+                      44.8150451,
+                      6.7677282
+                    ],
+                    [
+                      44.8145904,
+                      6.7673068
+                    ],
+                    [
+                      44.8144442,
+                      6.7671063
+                    ],
+                    [
+                      44.8138257,
+                      6.7660127
+                    ],
+                    [
+                      44.8130916,
+                      6.7643874
+                    ],
+                    [
+                      44.8130721,
+                      6.763789
+                    ],
+                    [
+                      44.8133311,
+                      6.7628195
+                    ],
+                    [
+                      44.8139849,
+                      6.7610154
+                    ],
+                    [
+                      44.8149312,
+                      6.7584215
+                    ],
+                    [
+                      44.8139433,
+                      6.7574302
+                    ],
+                    [
+                      44.8136282,
+                      6.7569031
+                    ],
+                    [
+                      44.8135132,
+                      6.7563558
+                    ],
+                    [
+                      44.8133158,
+                      6.7545678
+                    ],
+                    [
+                      44.8132824,
+                      6.7527854
+                    ],
+                    [
+                      44.8133471,
+                      6.7513411
+                    ],
+                    [
+                      44.8132311,
+                      6.7500836
+                    ],
+                    [
+                      44.8132361,
+                      6.7489033
+                    ],
+                    [
+                      44.8106754,
+                      6.7478353
+                    ]
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "EONET_24216",
+            "title": "Flood in Spain 1104151",
+            "description": null,
+            "link": "https://eonet.gsfc.nasa.gov/api/v3/events/EONET_24216",
+            "closed": "2026-09-10T00:00:00Z",
+            "categories": [
+              {
+                "id": "floods",
+                "title": "Floods"
+              }
+            ],
+            "sources": [
+              {
+                "id": "GDACS",
+                "url": "https://www.gdacs.org/report.aspx?eventtype=FL&eventid=1104151"
+              }
+            ],
+            "geometry": [
+              {
+                "magnitudeValue": null,
+                "magnitudeUnit": null,
+                "date": "2026-09-08T20:00:00Z",
+                "type": "Polygon",
+                "coordinates": [
+                  [
+                    [
+                      39.1147508,
+                      1.5171675
+                    ],
+                    [
+                      39.1149926,
+                      1.517837
+                    ],
+                    [
+                      39.115245,
+                      1.5182754
+                    ],
+                    [
+                      39.1154541,
+                      1.5183609
+                    ],
+                    [
+                      39.1160952,
+                      1.5180162
+                    ],
+                    [
+                      39.1162906,
+                      1.5175168
+                    ],
+                    [
+                      39.1163796,
+                      1.5171452
+                    ],
+                    [
+                      39.1161896,
+                      1.5170254
+                    ],
+                    [
+                      39.1161444,
+                      1.5167326
+                    ],
+                    [
+                      39.1164195,
+                      1.5166863
+                    ],
+                    [
+                      39.1165656,
+                      1.5162206
+                    ],
+                    [
+                      39.1164567,
+                      1.5158182
+                    ],
+                    [
+                      39.1167729,
+                      1.5154397
+                    ],
+                    [
+                      39.1167237,
+                      1.5149466
+                    ],
+                    [
+                      39.1165032,
+                      1.5147017
+                    ],
+                    [
+                      39.1166214,
+                      1.5147085
+                    ],
+                    [
+                      39.1167808,
+                      1.5143044
+                    ],
+                    [
+                      39.1165311,
+                      1.5139157
+                    ],
+                    [
+                      39.1161923,
+                      1.5147942
+                    ],
+                    [
+                      39.1163397,
+                      1.5154483
+                    ],
+                    [
+                      39.1161883,
+                      1.515914
+                    ],
+                    [
+                      39.1152211,
+                      1.5153233
+                    ],
+                    [
+                      39.1150869,
+                      1.5161709
+                    ],
+                    [
+                      39.11478,
+                      1.516712
+                    ],
+                    [
+                      39.1147508,
+                      1.5171675
+                    ]
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "limitation": "Discovery catalog, not pixel/forecast outcome truth; includes nonweather events."
+      }
+    },
+    {
+      "source_id": "D41",
+      "check_id": "gdacs-events",
+      "level": "catalog_records_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_01/gdacs-events.body",
+          "sha256": "5c77f3d97ac55a0d511d1fa26b2a339d4ea73c1f32ccea42aadedb09f2a29f36",
+          "bytes": 766381
+        }
+      ],
+      "details": {
+        "items": 250,
+        "examples": [
+          {
+            "title": "Green earthquake (Magnitude 6.6M, Depth:358.597km) in Indonesia 11/09/2026 21:23 UTC, 30 thousand in MMI IV.",
+            "pubDate": "Fri, 11 Sep 2026 21:43:40 GMT"
+          },
+          {
+            "title": "Green earthquake (Magnitude 5.9M, Depth:111.763km) in Indonesia 11/09/2026 11:56 UTC, 10 thousand in MMI IV.",
+            "pubDate": "Fri, 11 Sep 2026 12:12:21 GMT"
+          },
+          {
+            "title": "Green flood alert in Slovenia",
+            "pubDate": "Sat, 12 Sep 2026 06:26:17 GMT"
+          }
+        ],
+        "limitation": "Alert/event feed, not independent observed hazard labels; includes nonweather hazards."
+      }
+    },
+    {
+      "source_id": "D74",
+      "check_id": "billion-events",
+      "level": "catalog_records_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_01/billion-events.body",
+          "sha256": "fbe9bbcba93bd90e8e49aed9ca6f93869c5d136b1903ea00c50f8bc9ef36b976",
+          "bytes": 36490
+        }
+      ],
+      "details": {
+        "rows": 406,
+        "first_rows": [
+          [
+            "Weather and Climate Billion-Dollar Disasters to affect the U.S. from 1980-2024"
+          ],
+          [
+            "Cost values are in millions of dollars"
+          ],
+          [
+            "Name",
+            "Disaster",
+            "Begin Date",
+            "End Date",
+            "CPI-Adjusted Cost",
+            "Unadjusted Cost",
+            "Deaths"
+          ],
+          [
+            "Southern Severe Storms and Flooding (April 1980)",
+            "Flooding",
+            "19800410",
+            "19800417",
+            "2756.4",
+            "706.8",
+            "30"
+          ],
+          [
+            "Hurricane Allen (August 1980)",
+            "Tropical Cyclone",
+            "19800807",
+            "19800811",
+            "2236.2",
+            "590",
+            "13"
+          ]
+        ],
+        "limitation": "Economic impact event index; values and selection are not physical weather thresholds."
+      }
+    },
+    {
+      "source_id": "AW-WPC",
+      "check_id": "wpc-qpf-grib",
+      "level": "numeric_sample_decoded",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_04/wpc-numeric-qpf.body",
+          "sha256": "54b2968d333f13d76e1806eaf374ccaf78586a66e2da4dbc6f385d6e5d0cc72f",
+          "bytes": 203192
+        }
+      ],
+      "details": {
+        "messages": [
+          {
+            "metadata": {
+              "shortName": "tp",
+              "name": "Total Precipitation",
+              "units": "kg m**-2",
+              "dataDate": 20260912,
+              "dataTime": 600,
+              "stepType": "accum",
+              "stepRange": "168-174",
+              "validityDate": 20260919,
+              "validityTime": 1200
+            },
+            "values": {
+              "shape": [
+                3425565
+              ],
+              "dtype": "float64",
+              "finite_count": 3425565,
+              "minimum": 0.0,
+              "maximum": 34.75
+            }
+          }
+        ],
+        "limitation": "Actual numerical QPF; winter products are a separate unverified product scope."
+      }
+    }
+  ],
+  "formal_new_tasks": 0
+}

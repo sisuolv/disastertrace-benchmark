@@ -1,0 +1,35 @@
+[
+  {
+    "name": "build",
+    "command": [
+      "python",
+      "plans/task_chain_feasibility_20260912/build_chains.py",
+      "--output",
+      "plans/task_chain_feasibility_20260912/derived_03"
+    ],
+    "exit_code": 0,
+    "log": "build.log"
+  },
+  {
+    "name": "contracts",
+    "command": [
+      "python",
+      "plans/task_chain_feasibility_20260912/test_contracts.py"
+    ],
+    "exit_code": 0,
+    "log": "contracts.log"
+  },
+  {
+    "name": "independent",
+    "command": [
+      "python",
+      "plans/task_chain_feasibility_20260912/verify_chains.py",
+      "--data",
+      "plans/task_chain_feasibility_20260912/derived_03",
+      "--output",
+      "plans/task_chain_feasibility_20260912/validation_01/INDEPENDENT_CHECK.json"
+    ],
+    "exit_code": 0,
+    "log": "independent.log"
+  }
+]

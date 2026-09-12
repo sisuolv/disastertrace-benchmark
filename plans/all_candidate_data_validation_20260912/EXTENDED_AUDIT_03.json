@@ -1,0 +1,2416 @@
+{
+  "reports": [
+    {
+      "source_id": "D32",
+      "check_id": "smap-l3-coarse",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_07/smap-l3-coarse.body",
+          "bytes": 33799,
+          "sha256": "0686c454d3f18fec7d03e1c482bc0f4530cfba1276fafc1a5cc1df9a4b8da23a"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "variables": {
+          "/Soil_Moisture_Retrieval_Data_AM/longitude": {
+            "values": {
+              "shape": [
+                41,
+                97
+              ],
+              "dtype": "float32",
+              "finite_count": 3977,
+              "minimum": -9999.0,
+              "maximum": 178.5529022216797
+            },
+            "attributes": {
+              "long_name": "Longitude of the center of the Earth based grid cell.",
+              "units": "degrees_east"
+            }
+          },
+          "/Soil_Moisture_Retrieval_Data_AM/latitude": {
+            "values": {
+              "shape": [
+                41,
+                97
+              ],
+              "dtype": "float32",
+              "finite_count": 3977,
+              "minimum": -9999.0,
+              "maximum": 84.65641784667969
+            },
+            "attributes": {
+              "long_name": "Latitude of the center of the Earth based grid cell.",
+              "units": "degrees_north"
+            }
+          },
+          "/Soil_Moisture_Retrieval_Data_AM/retrieval_qual_flag": {
+            "values": {
+              "shape": [
+                41,
+                97
+              ],
+              "dtype": "uint16",
+              "finite_count": 3977,
+              "minimum": 0.0,
+              "maximum": 15.0
+            },
+            "attributes": {
+              "long_name": "Bit flags that record the conditions and the quality of the DCA retrieval algorithms that generate soil moisture for the grid cell.",
+              "coordinates": "/Soil_Moisture_Retrieval_Data_AM/latitude /Soil_Moisture_Retrieval_Data_AM/longitude",
+              "_FillValue": "65534",
+              "flag_masks": "1s, 2s, 4s, 8s",
+              "flag_meanings": "Retrieval_recommended Retrieval_attempted Retrieval_success FT_retrieval_success",
+              "HDF5_HARDLINK": "/Soil_Moisture_Retrieval_Data_AM/retrieval_qual_flag_dca"
+            }
+          },
+          "/Soil_Moisture_Retrieval_Data_AM/soil_moisture": {
+            "values": {
+              "shape": [
+                41,
+                97
+              ],
+              "dtype": "float32",
+              "finite_count": 437,
+              "minimum": 0.019999999552965164,
+              "maximum": 0.4835849106311798
+            },
+            "attributes": {
+              "long_name": "Representative DCA soil moisture measurement for the Earth based grid cell.",
+              "units": "cm**3/cm**3",
+              "coordinates": "/Soil_Moisture_Retrieval_Data_AM/latitude /Soil_Moisture_Retrieval_Data_AM/longitude",
+              "valid_min": "0.02",
+              "valid_max": "0.5",
+              "_FillValue": "-9999.0"
+            }
+          },
+          "/Soil_Moisture_Retrieval_Data_AM/surface_flag": {
+            "values": {
+              "shape": [
+                41,
+                97
+              ],
+              "dtype": "uint16",
+              "finite_count": 3977,
+              "minimum": 0.0,
+              "maximum": 2047.0
+            },
+            "attributes": {
+              "long_name": "Bit flags that record ambient surface conditions for the grid cell",
+              "coordinates": "/Soil_Moisture_Retrieval_Data_AM/latitude /Soil_Moisture_Retrieval_Data_AM/longitude",
+              "_FillValue": "65534",
+              "flag_masks": "1s, 2s, 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s",
+              "flag_meanings": "9_km_static_water_body 9_km_radar_water_body_detection 9_km_coastal_proximity 9_km_urban_area 9_km_precipitation 9_km_snow_or_ice 9_km_permanent_snow_or_ice 9_km_radiometer_frozen_ground 9_km_model_frozen_ground 9_km_mountainous_terrain 9_km_dense_vegetation 9_km_nadir_region"
+            }
+          }
+        },
+        "limitation": "Actual native product values with source metadata. Full product QC, event/time pairing and public release latency remain unvalidated."
+      }
+    },
+    {
+      "source_id": "D36",
+      "check_id": "s5p-coarse",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_07/s5p-coarse.body",
+          "bytes": 48732,
+          "sha256": "b5b25287deaac82fdc39852c35b3ea9cb953a0f691c965b698939f0a8b87e890"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "variables": {
+          "/PRODUCT/longitude": {
+            "values": {
+              "shape": [
+                1,
+                42,
+                15
+              ],
+              "dtype": "float32",
+              "finite_count": 630,
+              "minimum": -179.9905242919922,
+              "maximum": 179.9562225341797
+            },
+            "attributes": {
+              "long_name": "pixel center longitude",
+              "units": "degrees_east",
+              "standard_name": "longitude",
+              "valid_min": "-180.0",
+              "valid_max": "180.0",
+              "bounds": "/PRODUCT/SUPPORT_DATA/GEOLOCATIONS/longitude_bounds",
+              "_FillValue": "9.96921e+36"
+            }
+          },
+          "/PRODUCT/latitude": {
+            "values": {
+              "shape": [
+                1,
+                42,
+                15
+              ],
+              "dtype": "float32",
+              "finite_count": 630,
+              "minimum": -77.43195343017578,
+              "maximum": 88.04513549804688
+            },
+            "attributes": {
+              "long_name": "pixel center latitude",
+              "units": "degrees_north",
+              "standard_name": "latitude",
+              "valid_min": "-90.0",
+              "valid_max": "90.0",
+              "bounds": "/PRODUCT/SUPPORT_DATA/GEOLOCATIONS/latitude_bounds",
+              "_FillValue": "9.96921e+36"
+            }
+          },
+          "/PRODUCT/aerosol_index_354_388": {
+            "values": {
+              "shape": [
+                1,
+                42,
+                15
+              ],
+              "dtype": "float32",
+              "finite_count": 532,
+              "minimum": -2.2723536491394043,
+              "maximum": 1.8116179704666138
+            },
+            "attributes": {
+              "units": "1",
+              "proposed_standard_name": "ultraviolet_aerosol_index",
+              "comment": "Aerosol index from 354 and 388 nm",
+              "long_name": "Aerosol index from 354 and 388 nm",
+              "radiation_wavelength": "[354. 388.]",
+              "coordinates": "longitude latitude",
+              "ancillary_variables": "aerosol_index_354_388_precision",
+              "_FillValue": "9.96921e+36"
+            }
+          },
+          "/PRODUCT/qa_value": {
+            "values": {
+              "shape": [
+                1,
+                42,
+                15
+              ],
+              "dtype": "float32",
+              "finite_count": 630,
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "attributes": {
+              "units": "1",
+              "scale_factor": "0.01",
+              "add_offset": "0.0",
+              "valid_min": "0",
+              "valid_max": "100",
+              "long_name": "data quality value",
+              "comment": "A continuous quality descriptor, varying between 0 (no data) and 1 (full quality data). Recommend to ignore data with qa_value < 0.5",
+              "coordinates": "longitude latitude",
+              "_FillValue": "255"
+            }
+          }
+        },
+        "limitation": "Actual native product values with source metadata. Full product QC, event/time pairing and public release latency remain unvalidated."
+      }
+    },
+    {
+      "source_id": "D29",
+      "check_id": "imerg-E-subset",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_06/imerg-E-subset.body",
+          "bytes": 4964,
+          "sha256": "82e454314f8e17bb8e26702beb947b5d8b59b2c2651be9c990d8899327277a4c"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "variables": {
+          "//time": {
+            "values": {
+              "shape": [
+                1
+              ],
+              "dtype": "int32",
+              "finite_count": 1,
+              "minimum": 1435363200.0,
+              "maximum": 1435363200.0
+            },
+            "attributes": {
+              "DimensionNames": "time",
+              "Units": "seconds since 1980-01-06 00:00:00 UTC",
+              "units": "seconds since 1980-01-06 00:00:00 UTC",
+              "standard_name": "time",
+              "LongName": "\nRepresentative time of data in \n\t\t\tseconds since 1980-01-06 00:00:00 UTC.\n\t\t\tThe calculation of time does not add leap seconds.\n\t\t\tThe difference due to leap seconds grows with time \n\t\t\tand in 2019 is less than 30 seconds.\n",
+              "bounds": "time_bnds",
+              "axis": "T",
+              "calendar": "julian"
+            }
+          },
+          "//lon": {
+            "values": {
+              "shape": [
+                5
+              ],
+              "dtype": "float32",
+              "finite_count": 5,
+              "minimum": 100.04999542236328,
+              "maximum": 100.44999694824219
+            },
+            "attributes": {
+              "DimensionNames": "lon",
+              "Units": "degrees_east",
+              "units": "degrees_east",
+              "standard_name": "longitude",
+              "LongName": "Longitude at the center of\n\t\t\t0.10 degree grid intervals of longitude \n\t\t\tfrom -180 to 180.",
+              "bounds": "lon_bnds",
+              "axis": "X"
+            }
+          },
+          "//lat": {
+            "values": {
+              "shape": [
+                5
+              ],
+              "dtype": "float32",
+              "finite_count": 5,
+              "minimum": 30.049999237060547,
+              "maximum": 30.44999885559082
+            },
+            "attributes": {
+              "DimensionNames": "lat",
+              "Units": "degrees_north",
+              "units": "degrees_north",
+              "standard_name": "latitude",
+              "LongName": "Latitude at the center of\n\t\t\t0.10 degree grid intervals of latitude\n\t\t\tfrom -90 to 90.",
+              "bounds": "lat_bnds",
+              "axis": "Y"
+            }
+          },
+          "//precipitation": {
+            "values": {
+              "shape": [
+                1,
+                5,
+                5
+              ],
+              "dtype": "float32",
+              "finite_count": 25,
+              "minimum": 0.0,
+              "maximum": 0.0
+            },
+            "attributes": {
+              "DimensionNames": "time,lon,lat",
+              "Units": "mm/hr",
+              "units": "mm/hr",
+              "coordinates": "time lon lat",
+              "_FillValue": "-9999.9",
+              "CodeMissingValue": "-9999.9",
+              "LongName": "\nComplete merged microwave-infrared (gauge-adjusted)\n                        precipitation estimate;  formerly precipitationCal\n"
+            }
+          },
+          "//precipitationQualityIndex": {
+            "values": {
+              "shape": [
+                1,
+                5,
+                5
+              ],
+              "dtype": "float32",
+              "finite_count": 25,
+              "minimum": 0.2510000169277191,
+              "maximum": 0.2510000169277191
+            },
+            "attributes": {
+              "DimensionNames": "time,lon,lat",
+              "coordinates": "time lon lat",
+              "_FillValue": "-9999.9",
+              "CodeMissingValue": "-9999.9",
+              "LongName": "\nPrecipitation quality index; qualitative indicator\n                        of skill based on the microwave-infrared merging process\n"
+            }
+          }
+        },
+        "limitation": "Actual native product values with source metadata. Full product QC, event/time pairing and public release latency remain unvalidated."
+      }
+    },
+    {
+      "source_id": "D29",
+      "check_id": "imerg-L-subset",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_06/imerg-L-subset.body",
+          "bytes": 4964,
+          "sha256": "8427bf8a488603490595e12aac6902fec54533811a563ebc78df00e7f3961ca5"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "variables": {
+          "//time": {
+            "values": {
+              "shape": [
+                1
+              ],
+              "dtype": "int32",
+              "finite_count": 1,
+              "minimum": 1435363200.0,
+              "maximum": 1435363200.0
+            },
+            "attributes": {
+              "DimensionNames": "time",
+              "Units": "seconds since 1980-01-06 00:00:00 UTC",
+              "units": "seconds since 1980-01-06 00:00:00 UTC",
+              "standard_name": "time",
+              "LongName": "\nRepresentative time of data in \n\t\t\tseconds since 1980-01-06 00:00:00 UTC.\n\t\t\tThe calculation of time does not add leap seconds.\n\t\t\tThe difference due to leap seconds grows with time \n\t\t\tand in 2019 is less than 30 seconds.\n",
+              "bounds": "time_bnds",
+              "axis": "T",
+              "calendar": "julian"
+            }
+          },
+          "//lon": {
+            "values": {
+              "shape": [
+                5
+              ],
+              "dtype": "float32",
+              "finite_count": 5,
+              "minimum": 100.04999542236328,
+              "maximum": 100.44999694824219
+            },
+            "attributes": {
+              "DimensionNames": "lon",
+              "Units": "degrees_east",
+              "units": "degrees_east",
+              "standard_name": "longitude",
+              "LongName": "Longitude at the center of\n\t\t\t0.10 degree grid intervals of longitude \n\t\t\tfrom -180 to 180.",
+              "bounds": "lon_bnds",
+              "axis": "X"
+            }
+          },
+          "//lat": {
+            "values": {
+              "shape": [
+                5
+              ],
+              "dtype": "float32",
+              "finite_count": 5,
+              "minimum": 30.049999237060547,
+              "maximum": 30.44999885559082
+            },
+            "attributes": {
+              "DimensionNames": "lat",
+              "Units": "degrees_north",
+              "units": "degrees_north",
+              "standard_name": "latitude",
+              "LongName": "Latitude at the center of\n\t\t\t0.10 degree grid intervals of latitude\n\t\t\tfrom -90 to 90.",
+              "bounds": "lat_bnds",
+              "axis": "Y"
+            }
+          },
+          "//precipitation": {
+            "values": {
+              "shape": [
+                1,
+                5,
+                5
+              ],
+              "dtype": "float32",
+              "finite_count": 25,
+              "minimum": 0.0,
+              "maximum": 0.0
+            },
+            "attributes": {
+              "DimensionNames": "time,lon,lat",
+              "Units": "mm/hr",
+              "units": "mm/hr",
+              "coordinates": "time lon lat",
+              "_FillValue": "-9999.9",
+              "CodeMissingValue": "-9999.9",
+              "LongName": "\nComplete merged microwave-infrared (gauge-adjusted)\n                        precipitation estimate;  formerly precipitationCal\n"
+            }
+          },
+          "//precipitationQualityIndex": {
+            "values": {
+              "shape": [
+                1,
+                5,
+                5
+              ],
+              "dtype": "float32",
+              "finite_count": 25,
+              "minimum": 0.3020000159740448,
+              "maximum": 0.3020000159740448
+            },
+            "attributes": {
+              "DimensionNames": "time,lon,lat",
+              "coordinates": "time lon lat",
+              "_FillValue": "-9999.9",
+              "CodeMissingValue": "-9999.9",
+              "LongName": "\nPrecipitation quality index; qualitative indicator\n                        of skill based on the microwave-infrared merging process\n"
+            }
+          }
+        },
+        "limitation": "Actual native product values with source metadata. Full product QC, event/time pairing and public release latency remain unvalidated."
+      }
+    },
+    {
+      "source_id": "D69",
+      "check_id": "gesla-hourly-levels",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_06/gesla-bounded-day.body",
+          "bytes": 270,
+          "sha256": "e402e10f311f41a4443b93b3f445e78c9ddea17aabe5b4f77d8b1c02071f5425"
+        }
+      ],
+      "level": "station_records_decoded",
+      "details": {
+        "rows": [
+          {
+            "sea_level": "1.25",
+            "time": "1985-05-12T14:00:00Z",
+            "flag1": "1",
+            "flag2": "1",
+            "record_id": "abbot_point-59300-aus-bom"
+          },
+          {
+            "sea_level": "1.44",
+            "time": "1985-05-12T15:00:00Z",
+            "flag1": "1",
+            "flag2": "1",
+            "record_id": "abbot_point-59300-aus-bom"
+          },
+          {
+            "sea_level": "1.75",
+            "time": "1985-05-12T16:00:00Z",
+            "flag1": "1",
+            "flag2": "1",
+            "record_id": "abbot_point-59300-aus-bom"
+          },
+          {
+            "sea_level": "2.15",
+            "time": "1985-05-12T17:00:00Z",
+            "flag1": "1",
+            "flag2": "1",
+            "record_id": "abbot_point-59300-aus-bom"
+          }
+        ],
+        "limitation": "Current GESLA endpoint, not necessarily release GESLA-3. Station datum and flag1/flag2 conventions must be bound before tide/surge scoring."
+      }
+    },
+    {
+      "source_id": "D51",
+      "check_id": "worldflood-native-pair",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_07/worldflood-S2-complete.body",
+          "bytes": 10000571,
+          "sha256": "c9468dd4f43b84f11eeea9907f6f520d60240ef8634ed97f364adba33078b391"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_06/worldflood-gt.body",
+          "bytes": 25456,
+          "sha256": "669eff9799297e3ceda58fc4422e8e30e28afafe39ba8c6a1d2ec5fc39a0a042"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_06/worldflood-meta.body",
+          "bytes": 1957,
+          "sha256": "c2bb07308ce201e665cec31f3445e8428daca706d2ee0158053806cd3c9a8888"
+        }
+      ],
+      "level": "paired_arrays_decoded",
+      "details": {
+        "image": {
+          "values": {
+            "shape": [
+              15,
+              844,
+              1029
+            ],
+            "dtype": "int16",
+            "finite_count": 13027140,
+            "minimum": 0.0,
+            "maximum": 8168.0
+          },
+          "crs": "EPSG:32629",
+          "transform": [
+            10.0,
+            0.0,
+            471220.0,
+            0.0,
+            -10.0,
+            5868540.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "bounds": [
+            471220.0,
+            5860100.0,
+            481510.0,
+            5868540.0
+          ],
+          "nodata": null,
+          "band_descriptions": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "label": {
+          "values": {
+            "shape": [
+              2,
+              844,
+              1029
+            ],
+            "dtype": "int16",
+            "finite_count": 951722,
+            "minimum": 1.0,
+            "maximum": 2.0
+          },
+          "crs": "EPSG:32629",
+          "transform": [
+            10.0,
+            0.0,
+            471220.0,
+            0.0,
+            -10.0,
+            5868540.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "bounds": [
+            471220.0,
+            5860100.0,
+            481510.0,
+            5868540.0
+          ],
+          "nodata": 0.0,
+          "band_descriptions": [
+            null,
+            null
+          ]
+        },
+        "metadata": {
+          "event id": "EMSR249_15LAHINCH_DEL_v1",
+          "layer name": "EMSR249_15LAHINCH_DEL_v1_observed_event_a",
+          "event type": "Riverine flood",
+          "satellite date": "2017-10-16T18:24:00+00:00",
+          "country": "NaN",
+          "satellite": "COSMO-SkyMed",
+          "bounding box": {
+            "west": -9.349071350999964,
+            "east": -9.317642705999958,
+            "north": 52.95435165300006,
+            "south": 52.94047720300006
+          },
+          "reference system": "epsg:4326",
+          "abstract": "NaN",
+          "purpose": "NaN",
+          "source": "CopernicusEMS",
+          "area_of_interest_polygon": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  -9.275328641999977,
+                  52.89032552900005
+                ],
+                [
+                  -9.42768844799997,
+                  52.89032552900005
+                ],
+                [
+                  -9.42768844799997,
+                  52.965680975000055
+                ],
+                [
+                  -9.275328641999977,
+                  52.965680975000055
+                ],
+                [
+                  -9.275328641999977,
+                  52.89032552900005
+                ]
+              ]
+            ]
+          },
+          "observed_event_file": "EMSR249_15LAHINCH_DEL_v1_observed_event_a.shp",
+          "area_of_interest_file": "EMSR249_15LAHINCH_DEL_v1_area_of_interest_a.shp",
+          "ems_code": "EMSR249",
+          "aoi_code": "15LAHINCH",
+          "date_ems_code": "2017-10-16T00:00:00+00:00",
+          "satellite_pre_event": "ESRI World Imagery",
+          "timestamp_pre_event": "2014-03-11T00:00:00+00:00",
+          "hydrology_file": "EMSR249_15LAHINCH_DEL_v1_hydrography_a.shp",
+          "hydrology_file_l": "EMSR249_15LAHINCH_DEL_v1_hydrography_l.shp",
+          "s2_date": "2017-10-26T11:53:46.460000+00:00",
+          "names2file": "2017-10-26",
+          "cloud_probability": 0.9258347302015864,
+          "valids": 1,
+          "gtversion": "v2",
+          "encoding_values": [
+            {
+              "0": "invalid",
+              "1": "clear",
+              "2": "cloud"
+            },
+            {
+              "0": "invalid",
+              "1": "land",
+              "2": "water"
+            }
+          ],
+          "shape": [
+            844,
+            1029
+          ],
+          "s2_image_path": "2017-10-26.tif",
+          "permanent_water_image_path": "2017.tif",
+          "cloudprob_image_path": "None",
+          "method clouds": "s2cloudless",
+          "pixels invalid S2": 8203,
+          "pixels clouds S2": 835409,
+          "pixels water S2": 76932,
+          "pixels land S2": 14517,
+          "pixels flood water S2": 4312,
+          "pixels hydro water S2": 11887,
+          "pixels permanent water S2": 197833,
+          "bounds": [
+            471220.0,
+            5860100.0,
+            481510.0,
+            5868540.0
+          ],
+          "crs": "EPSG:32629",
+          "transform": [
+            10.0,
+            0.0,
+            471220.0,
+            0.0,
+            -10.0,
+            5868540.0
+          ]
+        },
+        "limitation": "One original train event image/label pair. Label semantics, mixed-source licences, event grouping and active-warning temporal use require separate admission."
+      }
+    },
+    {
+      "source_id": "D14",
+      "check_id": "urbansarfloods-native-chip",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_07/urban-sar-chip.body",
+          "bytes": 2099148,
+          "sha256": "efe6d2a3cb360f1f135fd44e260482523018516b2135d7d29de9a86dedad1b4d"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "image": {
+          "values": {
+            "shape": [
+              8,
+              256,
+              256
+            ],
+            "dtype": "float32",
+            "finite_count": 296328,
+            "minimum": 0.0,
+            "maximum": 0.0
+          },
+          "crs": "EPSG:4326",
+          "transform": [
+            0.0001666600000000002,
+            0.0,
+            113.03247852,
+            0.0,
+            -0.00016666000000000012,
+            36.69753204,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "bounds": [
+            113.03247852,
+            36.654867079999995,
+            113.07514348,
+            36.69753204
+          ],
+          "nodata": null,
+          "band_descriptions": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "limitation": "Native chip from testing_case_256/20210727_Weihui; no corresponding mask validated. Exposed original test chip is access-only, not eligible as untouched heldout."
+      }
+    },
+    {
+      "source_id": "D64",
+      "check_id": "senfor-existing-prefix-native-groups",
+      "files": [
+        {
+          "path": "plans/multihazard_source_validation_20260911/attempts/0203/body.bin",
+          "bytes": 33554432,
+          "sha256": "4938fcb529f08e0093b4330a30617f14c9848fcd7ea7db3f1d7909c836236536"
+        }
+      ],
+      "level": "paired_arrays_decoded",
+      "details": {
+        "members": {
+          "000000_LULC.tif": {
+            "archive_path": "./SenForFlood/CEMS/EMSN194/LULC/000000_LULC.tif",
+            "sha256": "e547ca425134c9e93aea8dd95d939c908ea57e50fc67f0cdb7312aab3281e8c8",
+            "raster": {
+              "values": {
+                "shape": [
+                  1,
+                  512,
+                  512
+                ],
+                "dtype": "uint8",
+                "finite_count": 262144,
+                "minimum": 10.0,
+                "maximum": 90.0
+              },
+              "crs": "EPSG:3857",
+              "transform": [
+                10.000000000007276,
+                0.0,
+                -5700831.311282238,
+                0.0,
+                -10.0,
+                -3468548.614360294,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "bounds": [
+                -5700831.311282238,
+                -3473668.614360294,
+                -5695711.311282234,
+                -3468548.614360294
+              ],
+              "nodata": null,
+              "band_descriptions": [
+                null
+              ]
+            }
+          },
+          "000001_LULC.tif": {
+            "archive_path": "./SenForFlood/CEMS/EMSN194/LULC/000001_LULC.tif",
+            "sha256": "cdd06a58f3416c94f9c038a39ae4adada051cb086487cc6c21cac1a847a54958",
+            "raster": {
+              "values": {
+                "shape": [
+                  1,
+                  512,
+                  512
+                ],
+                "dtype": "uint8",
+                "finite_count": 262144,
+                "minimum": 10.0,
+                "maximum": 90.0
+              },
+              "crs": "EPSG:3857",
+              "transform": [
+                10.000000000007276,
+                0.0,
+                -5700831.311282238,
+                0.0,
+                -10.0,
+                -3483908.6143602943,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "bounds": [
+                -5700831.311282238,
+                -3489028.6143602943,
+                -5695711.311282234,
+                -3483908.6143602943
+              ],
+              "nodata": null,
+              "band_descriptions": [
+                null
+              ]
+            }
+          },
+          "000002_LULC.tif": {
+            "archive_path": "./SenForFlood/CEMS/EMSN194/LULC/000002_LULC.tif",
+            "sha256": "d01a45c1725abc8f17d240ecc85e2878cf6eb5ed39c53d0fa255968b2fcfd945",
+            "raster": {
+              "values": {
+                "shape": [
+                  1,
+                  512,
+                  512
+                ],
+                "dtype": "uint8",
+                "finite_count": 262144,
+                "minimum": 10.0,
+                "maximum": 90.0
+              },
+              "crs": "EPSG:3857",
+              "transform": [
+                9.999999999994543,
+                0.0,
+                -5711071.311282233,
+                0.0,
+                -10.0,
+                -3509508.6143602952,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "bounds": [
+                -5711071.311282233,
+                -3514628.6143602952,
+                -5705951.311282236,
+                -3509508.6143602952
+              ],
+              "nodata": null,
+              "band_descriptions": [
+                null
+              ]
+            }
+          },
+          "000000_flood_mask.tif": {
+            "archive_path": "./SenForFlood/CEMS/EMSN194/flood_mask/000000_flood_mask.tif",
+            "sha256": "7e4ae93de1f07f9e0d29a92dbfbeded72a449c4587f088e16104b04e2d7d015f",
+            "raster": {
+              "values": {
+                "shape": [
+                  1,
+                  512,
+                  512
+                ],
+                "dtype": "uint8",
+                "finite_count": 262144,
+                "minimum": 0.0,
+                "maximum": 2.0
+              },
+              "crs": "EPSG:3857",
+              "transform": [
+                10.000000000007276,
+                0.0,
+                -5700831.311282238,
+                0.0,
+                -10.0,
+                -3468548.614360294,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "bounds": [
+                -5700831.311282238,
+                -3473668.614360294,
+                -5695711.311282234,
+                -3468548.614360294
+              ],
+              "nodata": null,
+              "band_descriptions": [
+                null
+              ]
+            }
+          },
+          "000001_flood_mask.tif": {
+            "archive_path": "./SenForFlood/CEMS/EMSN194/flood_mask/000001_flood_mask.tif",
+            "sha256": "59c726b9cdd97c2b0501153bc69973ad71b261df32539856afee4b64566a7838",
+            "raster": {
+              "values": {
+                "shape": [
+                  1,
+                  512,
+                  512
+                ],
+                "dtype": "uint8",
+                "finite_count": 262144,
+                "minimum": 0.0,
+                "maximum": 2.0
+              },
+              "crs": "EPSG:3857",
+              "transform": [
+                10.000000000007276,
+                0.0,
+                -5700831.311282238,
+                0.0,
+                -10.0,
+                -3483908.6143602943,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "bounds": [
+                -5700831.311282238,
+                -3489028.6143602943,
+                -5695711.311282234,
+                -3483908.6143602943
+              ],
+              "nodata": null,
+              "band_descriptions": [
+                null
+              ]
+            }
+          },
+          "000002_flood_mask.tif": {
+            "archive_path": "./SenForFlood/CEMS/EMSN194/flood_mask/000002_flood_mask.tif",
+            "sha256": "361b2219ab68200603f4d71b5936ee62093543029910aaff27a22a57097cdaa3",
+            "raster": {
+              "values": {
+                "shape": [
+                  1,
+                  512,
+                  512
+                ],
+                "dtype": "uint8",
+                "finite_count": 262144,
+                "minimum": 0.0,
+                "maximum": 2.0
+              },
+              "crs": "EPSG:3857",
+              "transform": [
+                9.999999999994543,
+                0.0,
+                -5711071.311282233,
+                0.0,
+                -10.0,
+                -3509508.6143602952,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "bounds": [
+                -5711071.311282233,
+                -3514628.6143602952,
+                -5705951.311282236,
+                -3509508.6143602952
+              ],
+              "nodata": null,
+              "band_descriptions": [
+                null
+              ]
+            }
+          },
+          "000000_s1_before_flood.tif": {
+            "archive_path": "./SenForFlood/CEMS/EMSN194/s1_before_flood/000000_s1_before_flood.tif",
+            "sha256": "313d8702751d5e3368b6f459431ee3b2ec11bd8e9f479887c715d585eca91bf5",
+            "raster": {
+              "values": {
+                "shape": [
+                  4,
+                  512,
+                  512
+                ],
+                "dtype": "float32",
+                "finite_count": 1048576,
+                "minimum": -174.25,
+                "maximum": 8656.0
+              },
+              "crs": "EPSG:3857",
+              "transform": [
+                10.000000000007276,
+                0.0,
+                -5700831.311282238,
+                0.0,
+                -10.0,
+                -3468548.614360294,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "bounds": [
+                -5700831.311282238,
+                -3473668.614360294,
+                -5695711.311282234,
+                -3468548.614360294
+              ],
+              "nodata": null,
+              "band_descriptions": [
+                null,
+                null,
+                null,
+                null
+              ]
+            }
+          },
+          "000001_s1_before_flood.tif": {
+            "archive_path": "./SenForFlood/CEMS/EMSN194/s1_before_flood/000001_s1_before_flood.tif",
+            "sha256": "2e1f0084439f1af40d493915385a578b42bf114c9266575b96d62927af8b7213",
+            "raster": {
+              "values": {
+                "shape": [
+                  4,
+                  512,
+                  512
+                ],
+                "dtype": "float32",
+                "finite_count": 1048576,
+                "minimum": -117.25,
+                "maximum": 8648.0
+              },
+              "crs": "EPSG:3857",
+              "transform": [
+                10.000000000007276,
+                0.0,
+                -5700831.311282238,
+                0.0,
+                -10.0,
+                -3483908.6143602943,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "bounds": [
+                -5700831.311282238,
+                -3489028.6143602943,
+                -5695711.311282234,
+                -3483908.6143602943
+              ],
+              "nodata": null,
+              "band_descriptions": [
+                null,
+                null,
+                null,
+                null
+              ]
+            }
+          },
+          "000002_s1_before_flood.tif": {
+            "archive_path": "./SenForFlood/CEMS/EMSN194/s1_before_flood/000002_s1_before_flood.tif",
+            "sha256": "d579a970005a2766778203a4f3296b2cd07e3250c64b16bda9e2cee4bf4651b4",
+            "raster": {
+              "values": {
+                "shape": [
+                  4,
+                  512,
+                  512
+                ],
+                "dtype": "float32",
+                "finite_count": 1048576,
+                "minimum": -55.9375,
+                "maximum": 8648.0
+              },
+              "crs": "EPSG:3857",
+              "transform": [
+                9.999999999994543,
+                0.0,
+                -5711071.311282233,
+                0.0,
+                -10.0,
+                -3509508.6143602952,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "bounds": [
+                -5711071.311282233,
+                -3514628.6143602952,
+                -5705951.311282236,
+                -3509508.6143602952
+              ],
+              "nodata": null,
+              "band_descriptions": [
+                null,
+                null,
+                null,
+                null
+              ]
+            }
+          }
+        },
+        "complete_members": 9,
+        "limitation": "Three pre-flood SAR/mask/background groups, not three contemporaneous post-flood pairs. Native post-event assets and issue/target times remain unverified."
+      }
+    },
+    {
+      "source_id": "D03",
+      "check_id": "digital-typhoon-native-frames",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/captures_08/digital-typhoon-three-frame-prefix.body",
+          "bytes": 1572864,
+          "sha256": "9651e2f4bfdb7d98d278311d783cde95a94ab69c38ee70654e84b8a10fc073f3"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "samples": [
+          {
+            "member": "WP/image/197830/1978120100-197830-GMS1-1.h5",
+            "member_sha256": "ec250eaacf237cade4a18733743c525a22d98a45f062506db77538612dff5459",
+            "zip_member_crc_checked": true,
+            "arrays": {
+              "Infrared": {
+                "shape": [
+                  512,
+                  512
+                ],
+                "dtype": "float64",
+                "finite_count": 262144,
+                "minimum": 215.9696717290412,
+                "maximum": 293.3805128621412
+              }
+            }
+          },
+          {
+            "member": "WP/image/197830/1978120103-197830-GMS1-1.h5",
+            "member_sha256": "230dc652afb04aa6ca8c397a4fb6560980a98ffc54a2bdb6bc75053db89cd32e",
+            "zip_member_crc_checked": true,
+            "arrays": {
+              "Infrared": {
+                "shape": [
+                  512,
+                  512
+                ],
+                "dtype": "float64",
+                "finite_count": 262144,
+                "minimum": 219.4473713366218,
+                "maximum": 292.9193737830501
+              }
+            }
+          },
+          {
+            "member": "WP/image/197830/1978120106-197830-GMS1-1.h5",
+            "member_sha256": "d8db0377d0421931d28335204e8ec72e8110b28c72c5f39893853cd48fe86911",
+            "zip_member_crc_checked": true,
+            "arrays": {
+              "Infrared": {
+                "shape": [
+                  512,
+                  512
+                ],
+                "dtype": "float64",
+                "finite_count": 262144,
+                "minimum": 214.7608560359856,
+                "maximum": 291.52504512511496
+              }
+            }
+          }
+        ],
+        "limitation": "Three consecutive native frames from one typhoon; intensity-label metadata and independent storm/split coverage are not yet joined."
+      }
+    },
+    {
+      "source_id": "D25",
+      "check_id": "gee_collections_01/era5-land",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/era5-land/RECEIPT.json",
+          "bytes": 3007,
+          "sha256": "90a7c93f7ca8da60d181309c03b2827d16884fe8edc3db76414f96213d1b2104"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/era5-land/sample.json",
+          "bytes": 1309,
+          "sha256": "23774c88b8558736f976ed35f6455327e4a336732a94792eb837e5d51522a748"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/era5-land/metadata.json",
+          "bytes": 16,
+          "sha256": "061b0029539dbc70d8d1f2acf6247e7d5a135c9e7e3443fa149a4145a0f32632"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "ECMWF/ERA5_LAND/HOURLY",
+        "image_id": "20250701T00",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.28167940437618,
+                40.058754438748636
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "temperature_2m": 297.1416320800781,
+              "total_precipitation": 0.012597003579134736
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.4613424612001,
+                40.058754438748636
+              ]
+            },
+            "id": "1",
+            "properties": {
+              "temperature_2m": 296.5908508300781,
+              "total_precipitation": 0.01567290127276877
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.55117398961204,
+                40.058754438748636
+              ]
+            },
+            "id": "2",
+            "properties": {
+              "temperature_2m": 296.6787414550781,
+              "total_precipitation": 0.017392435669894013
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "D28",
+      "check_id": "gee_collections_01/gfs",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/gfs/RECEIPT.json",
+          "bytes": 1353,
+          "sha256": "787b9ebdd69e1ee07c0d2f325b273834f275ce00d079457445d62a15b91e31ba"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/gfs/sample.json",
+          "bytes": 1460,
+          "sha256": "f42a3bacc3d6f93c6344f40a933fdd45ce1c6f4da37d8e86d358a215b367085c"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/gfs/metadata.json",
+          "bytes": 94,
+          "sha256": "e6689d305a3d899a5a2629337861303f7835799cb905b6d39bcf9b7a2f4f8e0a"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "NOAA/GFS0P25",
+        "image_id": "2026091000F000",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.37067619470658,
+                40.043741003217455
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "temperature_2m_above_ground": 19.325494384765648,
+              "u_component_of_wind_10m_above_ground": 0.061137694865465164
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.55053405105765,
+                40.043741003217455
+              ]
+            },
+            "id": "1",
+            "properties": {
+              "temperature_2m_above_ground": 18.425500488281273,
+              "u_component_of_wind_10m_above_ground": 0.4811376929283142
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.37067619470658,
+                39.8636639731655
+              ]
+            },
+            "id": "2",
+            "properties": {
+              "temperature_2m_above_ground": 19.325494384765648,
+              "u_component_of_wind_10m_above_ground": 0.061137694865465164
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "D11",
+      "check_id": "gee_collections_01/global-flood",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/global-flood/RECEIPT.json",
+          "bytes": 981,
+          "sha256": "c559ee50683efd6bfd86060e06cc841e3b185b260b2a367f0970fb38a1862480"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/global-flood/sample.json",
+          "bytes": 1196,
+          "sha256": "aedb41de1d8b84ee87435f152eb5b3bce0b8c83fe13bac39ba5c35139f5cb1c4"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/global-flood/metadata.json",
+          "bytes": 580,
+          "sha256": "bef4dfba55975f66af5bd9f3a48aa90326ece1399acd7cc1263584565226209e"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/global-flood/sample.tif",
+          "bytes": 1227,
+          "sha256": "09f963ff824f3008e6c2a83c78fb3041cbe8ec0fbc755771e98a3324d7aad922"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "GLOBAL_FLOOD_DB/MODIS_EVENTS/V1",
+        "image_id": "DFO_1587_From_20000217_to_20000311",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                49.174619247336715,
+                -17.583267326380287
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "clear_views": 16,
+              "duration": 0,
+              "flooded": 0
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                47.92891500463092,
+                -14.97527768413692
+              ]
+            },
+            "id": "4",
+            "properties": {
+              "clear_views": 16,
+              "duration": 0,
+              "flooded": 0
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                47.55500009357485,
+                -22.86105307457478
+              ]
+            },
+            "id": "5",
+            "properties": {
+              "clear_views": 16,
+              "duration": 0,
+              "flooded": 0
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source.",
+        "downloaded_raster": {
+          "values": {
+            "shape": [
+              3,
+              4,
+              4
+            ],
+            "dtype": "float32",
+            "finite_count": 48,
+            "minimum": 0.0,
+            "maximum": 16.0
+          },
+          "crs": "EPSG:4326",
+          "transform": [
+            0.008983152841195215,
+            0.0,
+            49.155812347020216,
+            0.0,
+            -0.008983152841195215,
+            -17.564309592746945,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "bounds": [
+            49.155812347020216,
+            -17.600242204111726,
+            49.191744958384994,
+            -17.564309592746945
+          ],
+          "nodata": "-inf",
+          "band_descriptions": [
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "source_id": "D24",
+      "check_id": "gee_collections_01/mtbs-severity",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/mtbs-severity/RECEIPT.json",
+          "bytes": 777,
+          "sha256": "43e406bc21cf796e9da97d25fcac1ff49bfb1c1f61d941e3431f02c758e2a7a0"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/mtbs-severity/sample.json",
+          "bytes": 682,
+          "sha256": "bece09f854f2b3d3fea8c1516b0c027f5a07641154e07f4d87b8b5f6ab259223"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/mtbs-severity/metadata.json",
+          "bytes": 380,
+          "sha256": "aa47eecf689a0737b8dbbf98d1074b48f16f41140ef835362569955f1f3336b8"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "USFS/GTAC/MTBS/annual_burn_severity_mosaics/v1",
+        "image_id": "mtbs_CONUS_2020",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -122.24724591942281,
+                38.835739612332766
+              ]
+            },
+            "id": "1",
+            "properties": {
+              "Severity": 2
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -122.66583245367484,
+                40.29953020260178
+              ]
+            },
+            "id": "8",
+            "properties": {
+              "Severity": 2
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "D38",
+      "check_id": "gee_collections_01/oisst",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/oisst/RECEIPT.json",
+          "bytes": 753,
+          "sha256": "f74b689afe37a7500b354745256cd238386ea2ee59e1574104f084ba42743ebd"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/oisst/sample.json",
+          "bytes": 993,
+          "sha256": "c3953f621dbcd96c04f0b01638106778bb39d1adc0af42b4f3233d8c81fd0e16"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/oisst/metadata.json",
+          "bytes": 92,
+          "sha256": "d0df195706dc3b51198bd1c6eab444eaf24d6967a947010bca471c15cdb78046"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "NOAA/CDR/OISST/V2_1",
+        "image_id": "20250701",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                -74.33566470544129,
+                30.823480658626522
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "sst": 2893
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                -74.11108588441141,
+                30.823480658626522
+              ]
+            },
+            "id": "1",
+            "properties": {
+              "sst": 2903
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                -74.56024352647117,
+                30.598901837596642
+              ]
+            },
+            "id": "2",
+            "properties": {
+              "sst": 2891
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "D42",
+      "check_id": "gee_collections_01/sentinel1",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/sentinel1/RECEIPT.json",
+          "bytes": 927,
+          "sha256": "3913f0ab0468b86296fb5a1307dc33b7dbda336d3cdae5ac52c2c97f067f1c98"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/sentinel1/sample.json",
+          "bytes": 1224,
+          "sha256": "b0fb383e24cda217dee4c1b391e7b8343f4cf7d120a204b17727a0bee4eb45f0"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/sentinel1/metadata.json",
+          "bytes": 2017,
+          "sha256": "3893c082fa54769de11d72740caf25b31c53db1ddcb80dd3a07b6ce68f40323f"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/sentinel1/sample.tif",
+          "bytes": 12401,
+          "sha256": "bfc4a438922d9f09b675165c17b42561263f44421cd5b0ff0f84f36d365fc2bf"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "COPERNICUS/S1_GRD",
+        "image_id": "S1A_IW_GRDH_1SDV_20240108T101409_20240108T101434_052014_06491A_A000",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                116.554811080526,
+                39.86673658287993
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "VH": -14.400409667419387,
+              "VV": -8.175708528896362,
+              "angle": 42.48582458496094
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                116.30314449904354,
+                39.81060974019898
+              ]
+            },
+            "id": "1",
+            "properties": {
+              "VH": -8.887614910707674,
+              "VV": -2.544904903942622,
+              "angle": 41.21855926513672
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                116.23013577373466,
+                39.846746291704264
+              ]
+            },
+            "id": "2",
+            "properties": {
+              "VH": -11.102424811300208,
+              "VV": 1.581651918923048,
+              "angle": 40.89704513549805
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source.",
+        "downloaded_raster": {
+          "values": {
+            "shape": [
+              3,
+              31,
+              31
+            ],
+            "dtype": "float32",
+            "finite_count": 2883,
+            "minimum": -23.933507919311523,
+            "maximum": 42.58153533935547
+          },
+          "crs": "EPSG:32650",
+          "transform": [
+            100.0,
+            0.0,
+            460336.34918405686,
+            0.0,
+            -100.0,
+            4414594.124367908,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "bounds": [
+            460336.34918405686,
+            4411494.124367908,
+            463436.34918405686,
+            4414594.124367908
+          ],
+          "nodata": "-inf",
+          "band_descriptions": [
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "source_id": "D43",
+      "check_id": "gee_collections_01/sentinel2",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/sentinel2/RECEIPT.json",
+          "bytes": 1214,
+          "sha256": "7d0c5395b1e96c9dde0dc6d57cce906b74b2ae382acab73ecbaa8127ef49d1d8"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/sentinel2/sample.json",
+          "bytes": 1113,
+          "sha256": "333541d998cf3029ee7627497ca8e3313b95ac0f4fbc8b6add86566a58ce26e0"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/sentinel2/metadata.json",
+          "bytes": 4015,
+          "sha256": "aeffa0b75cb947cc6beac2ed55f628dbd7a97e43cfa87f464939dd0de92e476e"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/sentinel2/sample.tif",
+          "bytes": 6409,
+          "sha256": "7ce13cf3852bbc779182ea8906dd9ebb1e4ff1269647695f74481dfcf458a367"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "COPERNICUS/S2_SR_HARMONIZED",
+        "image_id": "20240102T031131_20240102T031127_T50TMK",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                116.554811080526,
+                39.86673658287993
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "B4": 6131,
+              "B8": 6587,
+              "SCL": 9
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                116.30314449904354,
+                39.81060974019898
+              ]
+            },
+            "id": "1",
+            "properties": {
+              "B4": 5536,
+              "B8": 5831,
+              "SCL": 9
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                116.23013577373466,
+                39.846746291704264
+              ]
+            },
+            "id": "2",
+            "properties": {
+              "B4": 5139,
+              "B8": 5454,
+              "SCL": 9
+            }
+          }
+        ],
+        "quality_cautions": [
+          "cloud_or_cloud_shadow_pixel"
+        ],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source.",
+        "downloaded_raster": {
+          "values": {
+            "shape": [
+              3,
+              31,
+              31
+            ],
+            "dtype": "float32",
+            "finite_count": 2883,
+            "minimum": 9.0,
+            "maximum": 7074.0
+          },
+          "crs": "EPSG:32650",
+          "transform": [
+            100.0,
+            0.0,
+            460360.0,
+            0.0,
+            -100.0,
+            4414600.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "bounds": [
+            460360.0,
+            4411500.0,
+            463460.0,
+            4414600.0
+          ],
+          "nodata": "-inf",
+          "band_descriptions": [
+            null,
+            null,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "source_id": "D32",
+      "check_id": "gee_collections_01/smap-l3",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/smap-l3/RECEIPT.json",
+          "bytes": 1191,
+          "sha256": "051038c9ce2ca4c65caf0d2cf0e121101062d5fab98542cf2325639aea56c43f"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/smap-l3/sample.json",
+          "bytes": 1281,
+          "sha256": "ed68496776611ac22fcb2914741a110a3bc3ac7a694450f17c0ec3efad50fc89"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/smap-l3/metadata.json",
+          "bytes": 1905,
+          "sha256": "5bd265f1160d6d80aed006ee346be303beb7488b1d6d7b04350e65003132684c"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "NASA/SMAP/SPL3SMP_E/006",
+        "image_id": "20250701",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.43056903018027,
+                40.05238087443927
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "retrieval_qual_flag_am": 1,
+              "soil_moisture_am": 0.1492380052804947
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.51141740575105,
+                40.05238087443927
+              ]
+            },
+            "id": "1",
+            "properties": {
+              "retrieval_qual_flag_am": 1,
+              "soil_moisture_am": 0.17978230118751526
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.59226578132177,
+                40.05238087443927
+              ]
+            },
+            "id": "2",
+            "properties": {
+              "retrieval_qual_flag_am": 1,
+              "soil_moisture_am": 0.17978230118751526
+            }
+          }
+        ],
+        "quality_cautions": [
+          "SMAP_recommended_quality_bit_not_passed"
+        ],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "AW-SMAPL4",
+      "check_id": "gee_collections_01/smap-l4",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/smap-l4/RECEIPT.json",
+          "bytes": 2010,
+          "sha256": "eaf4c80033c7354ea9040e30a963d34800b5119d24765a776d7ca13a10dcd1cc"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/smap-l4/sample.json",
+          "bytes": 1251,
+          "sha256": "d228cefbd045b4e9c51ad77058df765f4a4ae43bc408de5fb75250acd324acf0"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_01/smap-l4/metadata.json",
+          "bytes": 6307,
+          "sha256": "68675b3c0d2d5b7ec3d6c922746a9c50020357ae78c60966820314b283d43af3"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "NASA/SMAP/SPL4SMGP/008",
+        "image_id": "20250701_0130",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.43224551390642,
+                40.05263532907371
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "sm_rootzone": 0.14431534707546234,
+              "sm_surface": 0.23482456803321838
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.51309434672078,
+                40.05263532907371
+              ]
+            },
+            "id": "1",
+            "properties": {
+              "sm_rootzone": 0.14431534707546234,
+              "sm_surface": 0.23482456803321838
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.59394317953519,
+                40.05263532907371
+              ]
+            },
+            "id": "2",
+            "properties": {
+              "sm_rootzone": 0.15896378457546234,
+              "sm_surface": 0.23604527115821838
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "D29",
+      "check_id": "gee_collections_02/imerg-v07",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_02/imerg-v07/RECEIPT.json",
+          "bytes": 906,
+          "sha256": "95fbab8c13076e203a876925fb428498042bc5b265a037bc47dbf960c4560ef0"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_02/imerg-v07/sample.json",
+          "bytes": 1081,
+          "sha256": "e448190c383c7c68bdd6194fce9602f495f02dfec7e099076aabe7738f44e525"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_02/imerg-v07/metadata.json",
+          "bytes": 28,
+          "sha256": "b4cd8ac3ce78bae585293bd8cb16f412bbcb87a0578cac1c02423ca6dee28895"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "NASA/GPM_L3/IMERG_V07",
+        "image_id": "20250701000000",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.3092964668241,
+                40.09858596716059
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "precipitation": 0.17999999225139618
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.57879105205996,
+                40.09858596716059
+              ]
+            },
+            "id": "1",
+            "properties": {
+              "precipitation": 0.429999977350235
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "geodesic": false,
+              "type": "Point",
+              "coordinates": [
+                116.3092964668241,
+                40.00875443874864
+              ]
+            },
+            "id": "2",
+            "properties": {
+              "precipitation": 0.17999999225139618
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "D34",
+      "check_id": "gee_collections_03/modis-lst",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_03/modis-lst/RECEIPT.json",
+          "bytes": 1014,
+          "sha256": "0f6e6e3aeb1518010bec554be9da8bb37600084f25441e9b54912b68bebfdec9"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_03/modis-lst/sample.json",
+          "bytes": 1077,
+          "sha256": "c76f005a9364e47d59cc07680b002444e2b283e84a0f5d40804ca4f24a7e35ab"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_03/modis-lst/metadata.json",
+          "bytes": 76,
+          "sha256": "214e593f5b1690b12579af76bcf00b2cd2d272a5155ad61ec8718347faf94500"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "MODIS/061/MOD11A1",
+        "image_id": "2024_07_01",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                118.81601249435252,
+                34.210076454436695
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "LST_Day_1km": 15307,
+              "QC_Day": 65
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                111.09238047006265,
+                37.69066288759305
+              ]
+            },
+            "id": "8",
+            "properties": {
+              "LST_Day_1km": 15357,
+              "QC_Day": 0
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                110.08807278053258,
+                37.30731951147638
+              ]
+            },
+            "id": "10",
+            "properties": {
+              "LST_Day_1km": 15645,
+              "QC_Day": 0
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "D33",
+      "check_id": "gee_collections_03/modis-snow",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_03/modis-snow/RECEIPT.json",
+          "bytes": 1064,
+          "sha256": "a326ed95691130f9dbdba76fb5a7138da96d0e423feb65046edd7eb41e289055"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_03/modis-snow/sample.json",
+          "bytes": 1170,
+          "sha256": "2ca705a5e283bb09be41e568404699af9db910541e16e397b378e7bde5127709"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_03/modis-snow/metadata.json",
+          "bytes": 76,
+          "sha256": "dab3539c6d4d8206d337cdb78ccd9e43cbab63ae28200806e92f99638a05fa4a"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "MODIS/061/MOD10A1",
+        "image_id": "2024_01_01",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                118.81601249435249,
+                34.21007645443661
+              ]
+            },
+            "id": "0",
+            "properties": {
+              "NDSI_Snow_Cover": 0,
+              "NDSI_Snow_Cover_Basic_QA": 0
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                111.09238047006262,
+                37.690662887593206
+              ]
+            },
+            "id": "8",
+            "properties": {
+              "NDSI_Snow_Cover": 22,
+              "NDSI_Snow_Cover_Basic_QA": 0
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                117.01118451258216,
+                33.14491050950592
+              ]
+            },
+            "id": "9",
+            "properties": {
+              "NDSI_Snow_Cover": 0,
+              "NDSI_Snow_Cover_Basic_QA": 0
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "D36",
+      "check_id": "gee_collections_03/s5p-offl",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_03/s5p-offl/RECEIPT.json",
+          "bytes": 972,
+          "sha256": "6ab555015fd99034006d59b6386c3e43ab8927c2e7b4b757db203064633574e7"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_03/s5p-offl/sample.json",
+          "bytes": 1064,
+          "sha256": "adf03d4d12910134d97020734f6e8381ceed3877d4a34bf56c887b6dbad6eb34"
+        },
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_collections_03/s5p-offl/metadata.json",
+          "bytes": 804,
+          "sha256": "f079ff45ba69f5cfae16e0800ed38517c407251b58da2e0c622afe0e56bb8f5e"
+        }
+      ],
+      "level": "numeric_sample_decoded",
+      "details": {
+        "collection": "COPERNICUS/S5P/OFFL/L3_AER_AI",
+        "image_id": "20240101T074458_20240102T213130",
+        "samples": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -179.43701902374096,
+                -69.24619051414825
+              ]
+            },
+            "id": "309",
+            "properties": {
+              "absorbing_aerosol_index": 0.1210909411311162
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                179.10999445029353,
+                -69.58575054684596
+              ]
+            },
+            "id": "465",
+            "properties": {
+              "absorbing_aerosol_index": -0.2001960966365896
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                -179.09631317535894,
+                -68.81782994187404
+              ]
+            },
+            "id": "518",
+            "properties": {
+              "absorbing_aerosol_index": -0.5015594817663303
+            }
+          }
+        ],
+        "quality_cautions": [],
+        "limitation": "Readability verified; collection scale factors, QA, task semantics and historical availability require explicit contracts. GEE is a delivery path, not an independent observation source."
+      }
+    },
+    {
+      "source_id": "D24",
+      "check_id": "mtbs-perimeter-features",
+      "files": [
+        {
+          "path": "plans/all_candidate_data_validation_20260912/gee_mtbs_boundaries_01/sample.geojson",
+          "bytes": 158218,
+          "sha256": "0e679eb352574d2522c3d6bd7b54ba8b51c234e3ae04677fbc56ef4522ecd073"
+        }
+      ],
+      "level": "vector_records_decoded",
+      "details": {
+        "features": 3,
+        "properties": [
+          {
+            "Asmnt_Type": "Extended",
+            "BurnBndAc": 69376,
+            "BurnBndLat": "65.717",
+            "BurnBndLon": "-145.566",
+            "Comment": "followed state perimeter between Preacher and Central Complex 2004",
+            "Event_ID": "AK6571714556620050612",
+            "High_T": 325,
+            "Ig_Date": 1118559600000,
+            "IncGreen_T": -250,
+            "Incid_Name": "PREACHER CREEK",
+            "Incid_Type": "Wildfire",
+            "Low_T": -50,
+            "Map_ID": 13972,
+            "Map_Prog": "MTBS",
+            "Mod_T": 127,
+            "NoData_T": -1070,
+            "Perim_ID": "",
+            "Post_ID": "706801420060904",
+            "Pre_ID": "506801420040906",
+            "dNBR_offst": -115,
+            "dNBR_stdDv": -9999,
+            "irwinID": ""
+          },
+          {
+            "Asmnt_Type": "Extended",
+            "BurnBndAc": 18326,
+            "BurnBndLat": "66.664",
+            "BurnBndLon": "-149.702",
+            "Comment": "",
+            "Event_ID": "AK6666414970220070522",
+            "High_T": 350,
+            "Ig_Date": 1179817200000,
+            "IncGreen_T": -300,
+            "Incid_Name": "HODZANA RIVER",
+            "Incid_Type": "Wildfire",
+            "Low_T": -90,
+            "Map_ID": 16292,
+            "Map_Prog": "MTBS",
+            "Mod_T": 126,
+            "NoData_T": -970,
+            "Perim_ID": "707201320070818",
+            "Post_ID": "707201320080820",
+            "Pre_ID": "507201320060908",
+            "dNBR_offst": -180,
+            "dNBR_stdDv": -9999,
+            "irwinID": ""
+          },
+          {
+            "Asmnt_Type": "Extended",
+            "BurnBndAc": 5709,
+            "BurnBndLat": "45.523",
+            "BurnBndLon": "-114.645",
+            "Comment": "",
+            "Event_ID": "ID4552311464520080801",
+            "High_T": 385,
+            "Ig_Date": 1217574000000,
+            "IncGreen_T": -150,
+            "Incid_Name": "BORDER COMPLEX (CAYUSE)",
+            "Incid_Type": "Wildfire",
+            "Low_T": 169,
+            "Map_ID": 17014,
+            "Map_Prog": "MTBS",
+            "Mod_T": 241,
+            "NoData_T": -970,
+            "Perim_ID": "",
+            "Post_ID": "504102820090822",
+            "Pre_ID": "504102820070902",
+            "dNBR_offst": -46,
+            "dNBR_stdDv": -9999,
+            "irwinID": ""
+          }
+        ],
+        "limitation": "Burned-area perimeters are retrospective impact products, not independent daily fire-spread forecasts."
+      }
+    }
+  ],
+  "formal_new_tasks": 0
+}

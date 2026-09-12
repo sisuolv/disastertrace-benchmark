@@ -1,5 +1,18 @@
 # DisasterTrace：LLM 极端天气证据推理评测审查包
 
+## 最新：全部候选数据补缺与使用清单（2026-09-12）
+
+当前 97 个来源/产品入口中，84 项有已解析样例、6 项可作事件目录，7 项仍有获取或授权缺口。
+本轮实际补齐 TCIR、CAMELSH、CEMS、FloodNet、CrisisMMD、UrbanSARFloods、SenForFlood、GWIS、EFFIS。
+完整 [数据报告](plans/all_dataset_utilization_20260912/README_CN.md)、[97 项清单](plans/all_dataset_utilization_20260912/usage_02/USAGE_REGISTRY_CN.md)
+和 [16 灾种组合](plans/all_dataset_utilization_20260912/usage_02/HAZARD_CHAINS_CN.md) 已更新。
+
+请将 [ChatGPT Pro 复查任务](publication/dataset_review_20260912/REVIEW_FOR_CHATGPT_PRO_CN.md)
+或 [精选阅读 ZIP](publication/dataset_review_20260912/chatgpt_pro_dataset_review_20260912.zip) 交给审阅者。
+93 次实际数据请求、约 975 MB 正文和 1,081 个文件的本机独立核验已有记录。
+源码、回执和审计结果随仓库提供；新原始大数组与环境保留本地。
+样本可读不代表 16 类预警链全部建成；本轮没有新模型调用，既有主动取证未显示收益的结果保留。
+
 ## 最新：ActiveWarning 最小闭环与复查材料（2026-09-12）
 
 **真实数据、LLM 推理和自动评分的最小闭环已跑通；主动获取收益尚未得到支持。**
