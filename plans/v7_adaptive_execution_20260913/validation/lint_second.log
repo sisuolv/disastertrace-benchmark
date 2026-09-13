@@ -1,0 +1,79 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> /mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_adaptive_execution_20260913/freeze_development.py:3:1
+   |
+ 1 |   """Freeze a new calendar and a bounded 252-call development diagnostic."""
+ 2 |
+ 3 | / import argparse
+ 4 | | import json
+ 5 | | import shutil
+ 6 | | import socket
+ 7 | | from collections import Counter, defaultdict
+ 8 | | from dataclasses import replace
+ 9 | | from datetime import datetime, timezone
+10 | | from pathlib import Path
+11 | |
+12 | | from disastertrace.monitoring_fixed_v1.aviation import AviationProvider
+13 | | from disastertrace.monitoring_fixed_v1.contracts import Target, fingerprint
+14 | | from disastertrace.monitoring_fixed_v1.representations import model_messages
+15 | | from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask, evaluate, messages as taf_messages
+16 | | from disastertrace.monitoring_v1.providers.aviation import parse_taf
+17 | | from transformers import AutoTokenizer
+18 | |
+19 | | from gpu.gpu_worker import digest, save
+   | |_______________________________________^
+20 |
+21 |   HERE = Path(__file__).resolve().parent
+   |
+help: Organize imports
+   |
+11 |
+12 + from gpu.gpu_worker import digest, save
+13 + from transformers import AutoTokenizer
+14 +
+15 | from disastertrace.monitoring_fixed_v1.aviation import AviationProvider
+16 | from disastertrace.monitoring_fixed_v1.contracts import Target, fingerprint
+17 | from disastertrace.monitoring_fixed_v1.representations import model_messages
+   - from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask, evaluate, messages as taf_messages
+18 + from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask, evaluate
+19 + from disastertrace.monitoring_fixed_v1.taf_tasks import messages as taf_messages
+20 | from disastertrace.monitoring_v1.providers.aviation import parse_taf
+   - from transformers import AutoTokenizer
+   -
+   - from gpu.gpu_worker import digest, save
+21 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> /mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_adaptive_execution_20260913/gpu/gpu_worker.py:55:9
+   |
+53 |                   raise ValueError("Model file changed: " + item["path"])
+54 |
+55 | /         import torch
+56 | |         from disastertrace.monitoring_fixed_v1.contracts import (
+57 | |             EvidenceBundle,
+58 | |             fingerprint,
+59 | |         )
+60 | |         from disastertrace.monitoring_fixed_v1.representations import model_messages
+61 | |         from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask, messages as taf_messages
+62 | |         from transformers import AutoModelForCausalLM, AutoTokenizer
+   | |____________________________________________________________________^
+63 |
+64 |           if torch.cuda.device_count() != 1:
+   |
+help: Organize imports
+   |
+55 |         import torch
+56 +         from transformers import AutoModelForCausalLM, AutoTokenizer
+57 +
+58 |         from disastertrace.monitoring_fixed_v1.contracts import (
+--------------------------------------------------------------------------------
+62 |         from disastertrace.monitoring_fixed_v1.representations import model_messages
+   -         from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask, messages as taf_messages
+   -         from transformers import AutoModelForCausalLM, AutoTokenizer
+63 +         from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask
+64 +         from disastertrace.monitoring_fixed_v1.taf_tasks import messages as taf_messages
+65 |
+   |
+
+Found 2 errors.
+[*] 2 fixable with the `--fix` option.

@@ -1,0 +1,91 @@
+{
+  "card": {
+    "schema": "disastertrace.preparation_scenario.v1",
+    "kind": "research_assumption",
+    "capacity": 1,
+    "budget": 20,
+    "units": "synthetic_cost_units",
+    "jobs": [
+      {
+        "job_id": "j1",
+        "target_id": "t",
+        "deadline": 95,
+        "duration": 10,
+        "expires_at": 98,
+        "cost": 3,
+        "cleanup_duration": 5,
+        "cleanup_cost": 1
+      },
+      {
+        "job_id": "j2",
+        "target_id": "u",
+        "deadline": 96,
+        "duration": 8,
+        "expires_at": 97,
+        "cost": 2,
+        "cleanup_duration": 3,
+        "cleanup_cost": 1
+      }
+    ]
+  },
+  "cases": {
+    "deadline_and_inflight": [
+      [
+        85,
+        "prepare",
+        "j1"
+      ]
+    ],
+    "cancel_and_cleanup": [
+      [
+        60,
+        "prepare",
+        "j1"
+      ],
+      [
+        65,
+        "cancel_preparation",
+        "j1"
+      ],
+      [
+        66,
+        "prepare",
+        "j2"
+      ],
+      [
+        70,
+        "prepare",
+        "j2"
+      ]
+    ],
+    "expired": [
+      [
+        60,
+        "prepare",
+        "j1"
+      ],
+      [
+        65,
+        "prepare",
+        "j1"
+      ]
+    ],
+    "budget": [
+      [
+        60,
+        "prepare",
+        "j1"
+      ],
+      [
+        94,
+        "prepare",
+        "j2"
+      ]
+    ]
+  },
+  "outcomes": {
+    "j1": 1,
+    "j2": 1
+  },
+  "miss_penalty": 10
+}

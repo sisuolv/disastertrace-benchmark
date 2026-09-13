@@ -1,5 +1,119 @@
 # Implementation Status
 
+## v7 typed adaptive next step, 2026-09-13
+
+Execution: `../plans/v7_adaptive_execution_20260913/`. The existing session loop
+now has an opt-in typed admission adapter; it binds acquired native products to
+the actual resource ledger, preserves target permissions, supports TAF withdrawal,
+and exports replayable typed clock advances. No second policy loop was added.
+The legacy probability entry remains the default, with its source baseline saved.
+
+Two real three-hour sessions (27 opportunities each) pass six policy arms and
+four cross-process continuations. Each unchanged continuation equals the full
+uninterrupted report, and each inherited acquisition is charged once. Program
+timing is an explicit 1ms computation/1ms persistence scenario in public 30s slots;
+this is not a measurement of historical compute or public release latency.
+
+313 relevant tests pass with zero failures/errors/skips, plus Ruff. Initial
+missing-module regression failures, the F-only audit denominator correction and
+initial lint logs are retained. The 108 old raw requests/responses re-audit:
+E-only exactly matches always-unknown; all 72 old F-bearing replies keep baseline.
+
+Fresh calendar frozen before acquisition: 2025-02-03, three Bay stations. All
+97 requests succeed (6 catalog/METAR requests, 91 complete native TAF bulletins).
+288 METAR records and 91 TAF products decode, producing 432 opportunities. The
+1km threshold has zero positives and the 5km threshold only two; neither supports
+a strong rare-event performance conclusion. Dedicated TAF coverage/revision E
+contracts include strict real-source inputs and separately tested synthetic edges.
+
+All 252 new calls complete on three H100s: `pt-kpg5z6z7`, `pt-jjeo0oed`,
+`pt-ttdxxo70`, all SUCCEEDED. All responses are timely and parse, without retries.
+E-only improves from 24/36 to 33/36 under the focused native view; joint E moves
+30/36 to 32/36. All 144 F-bearing replies still retain baseline probabilities.
+Native TAF coverage scores 6/18; revision scores 16/18. Preserve all failures.
+
+The relocated, network-disabled, stdlib-only review passes 1,798 bound files,
+36 typed journals, eight controller branches, 252 new and 108 prior captures.
+The account ends with zero active requested GPUs. Next: native time-window
+diagnostics, longer fixed calendars, in-flight/D recovery and full fair resource
+comparisons. No paid API, training or future-weather wait is required.
+
+
+## v7 follow-up first wave completed, 2026-09-13
+
+Entry: `../plans/v7_followup_execution_20260913/FINAL_REPORT_CN.md`.
+The new shared clock, typed journal admission, native H15 support bridge,
+quiescent controller checkpoints and synthetic preparation reducer are implemented.
+The current related suite has 289 passing tests (zero failures/skips); authored
+files pass Ruff. All initial failing tests/lint logs remain in the execution bundle.
+
+Real model execution: 108 new independent Qwen3-8B calls on one H100, ACP job
+`pt-l2on4qb3`, SUCCEEDED. No retries, parse failures or missing responses.
+All 72 F-bearing replies are timely but retain the common baseline exactly;
+E-only is 23/36 correct (all replies unknown), joint E is 26/36. Preserve this
+negative result; it is not a new independent weather-process confirmation.
+Canonical audited report: `reports/model_smoke_02/REPORT.json`. Initial report 01
+and the no-score-change prior-month-fallback amendment remain auditable.
+
+Native support reconstruction passes on 144 bundles/48 exposed opportunities;
+three real TAF version pairs and three shared-budget witness cases are checked.
+At budget two, all three targets are individually reachable but at most two can
+be resolved jointly. TAF coverage/version E has program evidence, no new model
+head or calls. Four real aviation branches recover in separate CPU processes;
+the unchanged continuation equals the uninterrupted complete report. Four
+synthetic D scenarios replay on the typed clock; this is not operational benefit.
+
+EUPP/DWD: 60 positive-lead scalar opportunities/28 valid targets and 120 CPU
+predictions pass admitted MAE reconstruction under an explicit archive-latency
+scenario. Mean/median MAE: 1.426197/1.450817 K. No historical publication time,
+heat/cold-wave task or second shared-evidence mechanism is established.
+
+Next: integrate typed inputs/admission into the full stepped adaptive controller,
+diagnose constant-unknown E, qualify new TAF heads, freeze unexposed development
+calendars, then add in-flight and D branch snapshots. Do not relaunch the consumed
+108-call batch or label all sixteen hazards qualified. No new account permission
+or waiting for future outcomes is required for these historical next steps.
+
+## v7 follow-up CP00/CP01, 2026-09-13
+
+Execution: `../plans/v7_followup_execution_20260913/`. Baseline snapshots and
+32 source/evidence bindings are preserved; the Git index is untouched.
+Shared event-clock extraction and typed durable admission are implemented.
+The new scorer replays complete hash-chained journals, seals each opportunity,
+and rejects late, unbound, invalid or stale candidates. Scalar units remain native.
+
+Baseline run: 250 related tests, exit 0. New admission regression first collected
+with exit 2 (missing module), then 37 passed/1 failed (test used the wrong score
+field), both logs retained. Corrected full run: 267 passed, exit 0; JUnit and log
+are under `validation/admission_green.*`.
+
+`execute_admission.py --output reports/admission_01` exits 0: 12 real archived
+H15 opportunities, 36 newly measured CPU program predictions, four reconstructed
+journals and 48 sealed forecast records. This is a declared archive scenario,
+not retrospective proof of actual 2024 submissions or independent confirmation.
+Next: fresh 108-call local independent E/F/joint smoke and real support bridge.
+
+## GitHub fixed-evidence publication completed, 2026-09-13 07:30 UTC
+
+Private branch `sisuolv/disastertrace-benchmark:next-phase-v1` now contains commit
+`60ebd05723f9483590611976d379da2e4edd85b0`, a fast-forward from `98f28a9`.
+The checked snapshot selects 835 files, including current code, source reports,
+two-year controls, a 2,183,323-byte reading ZIP, the 720-call CPU replay ZIP and
+87,065,178 bytes of complete evidence archives. The latter preserve 12,113 paths,
+including failures; model weights and credentials are absent.
+
+The exported 250-test suite passes without failures, errors or skips after the
+original regional fixture is expanded; the first export's 14 skips remain logged.
+An independent shallow GitHub fetch verifies 11 files, including both complete
+evidence parts, both review/replay ZIPs, reports and current contracts/heads.
+Local HEAD and the original dirty Git index remain unchanged; no force push.
+
+Receipts: `../publication/v7_execution_20260913/PUBLISH_RESULT.json`,
+`GITHUB_READBACK.json`, and `DELIVERY_COMPLETE.json`. This post-publication entry
+and the final network receipts follow the immutable published snapshot. The
+execution-time status bytes remain in its complete evidence archive. Main entry:
+`publication/v7_execution_20260913/REVIEW_FOR_CHATGPT_PRO_CN.md` in GitHub.
+
 ## Completed bounded integrated v7 execution, 2026-09-13
 
 Entry: `../plans/v7_execution_20260913/README_CN.md`; read its `FINAL_REPORT_CN.md`,

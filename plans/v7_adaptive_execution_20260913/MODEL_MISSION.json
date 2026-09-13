@@ -1,0 +1,39 @@
+{
+  "schema": "disastertrace.adaptive_development_model_mission.v1",
+  "preregistered_at": "2026-09-13T11:58:27.582025+00:00",
+  "calendar": "2025-02-03 complete UTC day; model submatrix first two hourly cutoffs, KSFO/KOAK/KSJC, leads 1h and 3h, threshold 5000m",
+  "opportunities": 12,
+  "evidence_conditions": [
+    "common_only",
+    "fixed_one",
+    "all_registered"
+  ],
+  "heads": [
+    "e_only",
+    "f_only",
+    "joint"
+  ],
+  "representations": [
+    "full_bundle",
+    "native_task_focus.v1"
+  ],
+  "EF_expected_calls": 216,
+  "TAF_native_tasks": {
+    "coverage": 18,
+    "revision": 18,
+    "source_selection": "First two active native TAF per station for coverage; first two consecutive source pairs per station for revision, sorted issuance before observing model outputs. Coverage uses source-defined validity edges, no future outcomes."
+  },
+  "expected_total_calls": 252,
+  "model": "pinned Qwen3-8B",
+  "workers": 3,
+  "max_concurrent_H100": 3,
+  "repeats": 1,
+  "retries": 0,
+  "failure_policy": "Keep invalid, late, truncated and missing responses; no answer repair or replacement. Shared sealed opportunity denominator for all F arms.",
+  "frozen_baseline": "Original Dec 2023 Bay map; explicit temporal transfer to 2025; no re-fit",
+  "independent_confirmation": false,
+  "new_paid_api_calls": 0,
+  "training": false,
+  "old_outputs_reused": false,
+  "interpretation": "Prompt/input representation development and new native E contracts; does not establish adaptive LLM gain or independent-process confirmation."
+}

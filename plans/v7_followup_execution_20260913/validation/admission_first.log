@@ -1,0 +1,25 @@
+................F.....................                                   [100%]
+=================================== FAILURES ===================================
+____ test_scoring_requires_journal_replay_and_mature_target_bound_outcomes _____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-8/test_scoring_requires_journal_0')
+
+    def test_scoring_requires_journal_replay_and_mature_target_bound_outcomes(tmp_path):
+        path = tmp_path / "events.jsonl"
+        with EventJournal(path) as journal:
+            engine, b, events = setup_engine(journal=journal)
+            engine.run(events + [complete(b)], until=90)
+        restored = AdmissionEngine.from_journal(path)
+        assert restored.snapshots == engine.snapshots
+        outcome = {"opportunity_id": "o", "target_contract_hash": Target(**b.policy_view()["target"]).contract_hash,
+                   "value": -6, "status": "mature", "source_revision": "obs-v1"}
+        report = score_admitted([outcome], {"program": path})
+        assert report["scores"]["arms"]["program"]["mean_loss"] == 1
+        outcome["status"] = "provisional"
+>       assert score_admitted([outcome], {"program": path})["scores"]["scored_opportunities"] == 0
+E       KeyError: 'scored_opportunities'
+
+tests/test_monitoring_admission.py:188: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_monitoring_admission.py::test_scoring_requires_journal_replay_and_mature_target_bound_outcomes
+1 failed, 37 passed in 1.12s

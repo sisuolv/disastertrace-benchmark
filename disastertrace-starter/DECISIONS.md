@@ -1,5 +1,46 @@
 # Decisions
 
+## v7 typed adaptive development decisions, 2026-09-13
+
+- Preserve v7/C1/C2/C3 and the 16-hazard roadmap. Add one typed adapter to the
+  existing coordinator, not a new scheduling loop. Quiescent snapshots are not
+  in-flight, preparation-state or operational-action recovery claims.
+- Native evidence bundles use actual settled session receipts and entitlements.
+  Static fixed-input bundles remain a separate representation experiment; their
+  archive acquisition assumptions do not establish dynamic acquisition benefit.
+- Keep constant-unknown and unchanged-baseline failures. Compare fresh full and
+  task-focused native input without support labels or hidden annotations. Keep
+  the full common TAF and current state in F-bearing focused inputs.
+- New TAF heads predict product coverage/current version only, with no F score.
+  Native validity-edge tasks use real text and declared target windows; they are
+  not evidence of future physical visibility forecasts. Source IDs/task IDs must
+  not encode evaluator answers. Unsupported and conflicting products stay separate.
+- The 2025-02-03 calendar is chosen before download and includes all 432 hourly
+  opportunities. Zero/rare positives are retained. Use the unchanged Dec 2023
+  bank with explicit temporal transfer; do not fit on the new outcome table.
+- Freeze the new 252-call diagnostic independently of the consumed 108-call
+  batch. Three H100 workers use fresh messages, one repeat, no retries or training.
+  Engineering admission never requires positive LLM gain.
+
+
+## v7 follow-up execution decisions, 2026-09-13
+
+- Reuse one event-clock function for legacy probability, typed admission and
+  synthetic preparation. Historical snapshots/captures retain their frozen source.
+- Formal engineering scores replay registered journals and cutoff states. Whole
+  envelopes, E questions, product revisions and target baseline context are distinct.
+- Initial H15 fallback is the frozen prior-month no-TAF/pooled frequency; never
+  expose a target's later TAF-derived value as its early fallback. The amendment
+  changes no scored cutoff or model output in the completed smoke.
+- Keep the 108-call smoke's unchanged F probabilities and constant-unknown E
+  errors. E-only is excluded from F scoring. Further development needs a new
+  input/prompt/calendar freeze, not selective replacements of these failures.
+- Current quiescent restore covers the original stepped aviation controller;
+  typed adaptive migration and in-flight/D branch snapshots remain separate gates.
+- Scalar archive-latency scenarios and synthetic preparation are engineering
+  qualifications. Neither implies proved publication, operational utility,
+  independent weather processes or sixteen-hazard completion.
+
 ## Integrated v7 final execution decisions, 2026-09-13
 
 - Keep original and local statistical maps as separately frozen controls. Local

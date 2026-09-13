@@ -1,0 +1,678 @@
+{
+  "schema": "disastertrace.v7.integrated_followup_plan.v1",
+  "status": "planned_not_executed",
+  "base_audit": "INPUT_AUDIT.json",
+  "overall_plan": "OVERALL_PLAN_CN.md",
+  "next_batch": "NEXT_BATCH_CN.md",
+  "task_count": 27,
+  "namespace": "CP00-CP14 with explicit stage suffixes; source mappings are topical, not completion equivalence",
+  "first_cpu_wave": [
+    "CP00",
+    "CP03.1",
+    "CP03.2",
+    "CP01",
+    "CP02",
+    "CP04a",
+    "CP07"
+  ],
+  "early_model_smoke": "CP06.smoke",
+  "smoke_example": {
+    "base_opportunities": 12,
+    "evidence_conditions": 3,
+    "independent_heads": 3,
+    "models": 1,
+    "repeats": 1,
+    "derived_model_calls": 108,
+    "scope": "existing_supported_aviation_predicate_only",
+    "not_confirmation_sample_size": true,
+    "already_executed": false
+  },
+  "resource_policy": {
+    "engineering_max_parallel_h100": 4,
+    "gpu_launches_this_planning_turn": 0,
+    "historical_explicit_user_authorization_is_not_cancelled_by_input_templates": true,
+    "per_batch_scope_versions_and_accounting_required": true,
+    "benchmark_budget_not_equal_engineering_gpu_count": true
+  },
+  "source_registry_ref": "../user_authorized_sources_20260912/usage_01/USAGE_REGISTRY.json",
+  "hazard_contracts_ref": "../v7_0912_overall_research/OVERALL_HAZARD_CONTRACTS.json",
+  "hazard_ids": [
+    "H01",
+    "H02",
+    "H03",
+    "H04",
+    "H05",
+    "H06",
+    "H07",
+    "H08",
+    "H09",
+    "H10",
+    "H11",
+    "H12",
+    "H13",
+    "H14",
+    "H15",
+    "H16"
+  ],
+  "preserved_experiment_ids": [
+    "X00",
+    "X01",
+    "X02",
+    "X03",
+    "X04",
+    "X05",
+    "X06",
+    "X07",
+    "X08",
+    "X09"
+  ],
+  "X09": "same-input single-target versus joint-target inference; may output marginals",
+  "CP14_is_not_a_prerequisite_for_original_X09": true,
+  "future_execution_outcomes_must_use_new_reports_not_overwrite_this_plan": true,
+  "tasks": [
+    {
+      "id": "CP00",
+      "title_cn": "当前起点与唯一协调器职责",
+      "depends_on": [],
+      "phase": "A",
+      "execution_kind": "cpu_local",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "BASELINE_STATE.json",
+        "ARCHITECTURE_DECISION_CN.md"
+      ],
+      "acceptance_cn": "实际源码与发布身份分开；旧冻结保全；同刻规则、视图和状态职责明确。",
+      "source_task_mapping": [
+        "A:C00",
+        "B:NP00",
+        "C:DS00",
+        "D:CP00"
+      ]
+    },
+    {
+      "id": "CP03.1",
+      "title_cn": "H15目标、日历、基线与暴露登记",
+      "depends_on": [
+        "CP00"
+      ],
+      "phase": "A",
+      "execution_kind": "cpu_local_then_bounded_data",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "MISSION_SPEC.json",
+        "EXPOSURE_LEDGER.json"
+      ],
+      "acceptance_cn": "数据/目标/窗口/availability/P-R/缺失完整，旧暴露材料不作确认。",
+      "source_task_mapping": [
+        "A:C01",
+        "B:NP02",
+        "D:CP03"
+      ]
+    },
+    {
+      "id": "CP03.2",
+      "title_cn": "研究准备场景和偏好身份",
+      "depends_on": [
+        "CP00"
+      ],
+      "phase": "A",
+      "execution_kind": "cpu_local",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "DECISION_SCENARIO_CARD_CN.md",
+        "DECISION_SPEC.json"
+      ],
+      "acceptance_cn": "研究规则、资源/耗时/有效期/取消/损失明确；偏好改变不改变F目标。",
+      "source_task_mapping": [
+        "A:C01",
+        "C:DS01",
+        "D:CP03"
+      ]
+    },
+    {
+      "id": "CP01",
+      "title_cn": "有效预测准入与多机会封存",
+      "depends_on": [
+        "CP00",
+        "CP03.1"
+      ],
+      "phase": "A",
+      "execution_kind": "cpu_local",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "ADMISSION_REPORT.json",
+        "COMMITTED_FORECASTS.jsonl"
+      ],
+      "acceptance_cn": "截止/日志/回执/有效状态闭合；晚控制不能回填，失败不删机会。",
+      "source_task_mapping": [
+        "A:C02",
+        "B:NP01",
+        "C:DS02",
+        "D:CP01"
+      ]
+    },
+    {
+      "id": "CP02",
+      "title_cn": "真实C2支持桥及任务版本化head合同",
+      "depends_on": [
+        "CP01",
+        "CP03.1"
+      ],
+      "phase": "A",
+      "execution_kind": "cpu_local",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "SUPPORT_BRIDGE_REPORT.json",
+        "E_FIXTURES.jsonl",
+        "JOINT_WITNESSES.json",
+        "HEAD_CONTRACTS.json"
+      ],
+      "acceptance_cn": "真实产品语义到支持图可审计，同预算同路径见证复放；新E命题必须经专属head/validator准入。",
+      "source_task_mapping": [
+        "A:C03",
+        "B:NP06",
+        "D:CP02"
+      ]
+    },
+    {
+      "id": "CP04a",
+      "title_cn": "可步进会话与无在途checkpoint分支",
+      "depends_on": [
+        "CP01",
+        "CP03.1"
+      ],
+      "phase": "A",
+      "execution_kind": "cpu_local",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "QUIESCENT_BRANCH_REPORT.json",
+        "SESSION_SNAPSHOT.json"
+      ],
+      "acceptance_cn": "提取run_session循环控制状态；显式跨进程恢复；无动作分支逐事件一致；不宣称任意时刻恢复。",
+      "source_task_mapping": [
+        "A:C04",
+        "B:NP04",
+        "B:NP05",
+        "D:CP04"
+      ]
+    },
+    {
+      "id": "CP07",
+      "title_cn": "最小准备状态机与合成验收",
+      "depends_on": [
+        "CP01",
+        "CP03.2"
+      ],
+      "phase": "A",
+      "execution_kind": "cpu_local",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "PREPARATION_SYNTHETIC_REPORT.json"
+      ],
+      "acceptance_cn": "资源/取消/清理/到期/并发/幂等通过；禁止预测回退撤销准备；仅工程合成。",
+      "source_task_mapping": [
+        "A:C08",
+        "C:DS03",
+        "C:DS04",
+        "D:CP07"
+      ]
+    },
+    {
+      "id": "CP06.smoke",
+      "title_cn": "现有航空题型独立E-F真实小试跑",
+      "depends_on": [
+        "CP01",
+        "CP03.1"
+      ],
+      "phase": "B",
+      "execution_kind": "bounded_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "HEAD_SMOKE_MANIFEST.json",
+        "HEAD_SMOKE_REPORT.json"
+      ],
+      "acceptance_cn": "先限定现有邻站存在谓词；12x3x3=108次上限示例，三个head新调用；无收益也保留。",
+      "source_task_mapping": [
+        "A:C12",
+        "B:NP03",
+        "D:CP06"
+      ]
+    },
+    {
+      "id": "CP06.development",
+      "title_cn": "新连续开发块及新E题型诊断",
+      "depends_on": [
+        "CP06.smoke",
+        "CP02"
+      ],
+      "phase": "B",
+      "execution_kind": "bounded_data_and_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "DEVELOPMENT_FREEZE.json",
+        "EF_DEVELOPMENT_REPORT.json"
+      ],
+      "acceptance_cn": "专属head/validator已过；完整日历，B/f(B)/f(B,E)分别报告，未冒称确认。",
+      "source_task_mapping": [
+        "B:NP03",
+        "D:CP06"
+      ]
+    },
+    {
+      "id": "CP04b",
+      "title_cn": "在途任务与完整状态分支",
+      "depends_on": [
+        "CP04a",
+        "CP02"
+      ],
+      "phase": "B",
+      "execution_kind": "cpu_then_bounded_model_if_inputs_change",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "FULL_STATE_BRANCH_REPORT.json"
+      ],
+      "acceptance_cn": "复制预留/并发/锁定版本/输入/剩余时间/记忆，未归档不补造；D启用另依赖CP07并复验。",
+      "source_task_mapping": [
+        "A:C04",
+        "A:C07",
+        "B:NP05",
+        "D:CP04"
+      ]
+    },
+    {
+      "id": "CP08",
+      "title_cn": "固定预测的准备对照与需求配对",
+      "depends_on": [
+        "CP07",
+        "CP04b"
+      ],
+      "phase": "B",
+      "execution_kind": "cpu_then_bounded_model_optional",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "READINESS_BASELINES.json",
+        "READINESS_PAIRED_REPORT.json"
+      ],
+      "acceptance_cn": "先程序固定F比D，强优化器不看未来；模型部分须CP06完成。准备参数变更从兼容起点开始。",
+      "source_task_mapping": [
+        "A:C09",
+        "A:C10",
+        "C:DS06",
+        "D:CP08"
+      ]
+    },
+    {
+      "id": "CP05.preflight",
+      "title_cn": "H15同期视觉和H07连续产品预检",
+      "depends_on": [
+        "CP00",
+        "CP03.1"
+      ],
+      "phase": "A-B",
+      "execution_kind": "bounded_data_then_cpu",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "MM_SOURCE_QUALIFICATION.json"
+      ],
+      "acceptance_cn": "ROI/连续时段提前固定；原生变量/率或累计/单位/网格/缺失合格，否则不进短临工具。",
+      "source_task_mapping": [
+        "A:C13",
+        "B:NP08",
+        "C:DS07R",
+        "D:CP05"
+      ]
+    },
+    {
+      "id": "CP05.compare",
+      "title_cn": "同源原生MM与专业工具对照",
+      "depends_on": [
+        "CP05.preflight",
+        "CP01",
+        "CP04a"
+      ],
+      "phase": "C",
+      "execution_kind": "cpu_tools_then_bounded_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "MM_TOOL_COMPARISON.json"
+      ],
+      "acceptance_cn": "同目标资产/权限/费用，专业预测不作Gold；原生图、同源特征、特权事实分轨。",
+      "source_task_mapping": [
+        "A:C05",
+        "C:DS08",
+        "D:CP05"
+      ]
+    },
+    {
+      "id": "CP10.numeric",
+      "title_cn": "EUPP-DWD标量会话迁移",
+      "depends_on": [
+        "CP01",
+        "CP03.1"
+      ],
+      "phase": "A-C",
+      "execution_kind": "cpu_local_then_bounded_data",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "NUMERIC_RUNTIME_REPORT.json"
+      ],
+      "acceptance_cn": "旧概率专用路径通过typed适配；点温度不冒称热浪或跨过程机制。",
+      "source_task_mapping": [
+        "A:C14",
+        "C:DS07T",
+        "D:CP10"
+      ]
+    },
+    {
+      "id": "CP10.hydro",
+      "title_cn": "历史QINE物理合同核准",
+      "depends_on": [
+        "CP00"
+      ],
+      "phase": "A-C",
+      "execution_kind": "source_document_audit_then_bounded_data",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "HYDRO_SEMANTIC_QUALIFICATION.json"
+      ],
+      "acceptance_cn": "瞬时/均值、调蓄、断面、单位和时点逐项；未过继续仅版本E，不评分。",
+      "source_task_mapping": [
+        "A:C14",
+        "C:DS07H",
+        "D:CP10"
+      ]
+    },
+    {
+      "id": "CP10.multihazard",
+      "title_cn": "第二物理过程及MM机制链",
+      "depends_on": [
+        "CP01",
+        "CP02",
+        "CP05.compare"
+      ],
+      "phase": "C",
+      "execution_kind": "bounded_data_and_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "SECOND_PROCESS_ADMISSION.json"
+      ],
+      "acceptance_cn": "H07优先按合同资格择路，不按LLM赢输；H08若选用须CP10.hydro通过。",
+      "source_task_mapping": [
+        "B:NP08",
+        "D:CP10"
+      ]
+    },
+    {
+      "id": "CP10.breadth",
+      "title_cn": "16类子目标资格增补",
+      "depends_on": [
+        "CP00"
+      ],
+      "phase": "rolling",
+      "execution_kind": "source_audit_and_versioned_addenda",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "HAZARD_ADMISSION_DELTA.json"
+      ],
+      "acceptance_cn": "引用原source_id与16类合同；每子目标E/F/MM/D/确认分别记录，不复制冲突可用性表。",
+      "source_task_mapping": [
+        "B:NP12",
+        "D:CP10"
+      ]
+    },
+    {
+      "id": "CP11.rules",
+      "title_cn": "强规则、事件触发与有限一步两步",
+      "depends_on": [
+        "CP04a",
+        "CP06.smoke"
+      ],
+      "phase": "B-D",
+      "execution_kind": "cpu_then_bounded_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "RULE_BASELINES.json"
+      ],
+      "acceptance_cn": "可部署策略只见当时合法信息；全读/工具/缓存同权限，后见最优分支不作普通基线。",
+      "source_task_mapping": [
+        "A:C11",
+        "B:NP07",
+        "C:DS09",
+        "D:CP11"
+      ]
+    },
+    {
+      "id": "CP09",
+      "title_cn": "共享预算2x2与同条件selector比较",
+      "depends_on": [
+        "CP04b",
+        "CP06.development",
+        "CP11.rules"
+      ],
+      "phase": "D",
+      "execution_kind": "bounded_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "RESOURCE_FACTORIAL_REPORT.json"
+      ],
+      "acceptance_cn": "先固定selector的分配x授权，再同global/shared比selector；实测与声明成本分轨，私有状态隔离。",
+      "source_task_mapping": [
+        "B:NP07",
+        "D:CP09"
+      ]
+    },
+    {
+      "id": "CP11.learned",
+      "title_cn": "有界风险回归等可选方法",
+      "depends_on": [
+        "CP09"
+      ],
+      "phase": "optional",
+      "execution_kind": "bounded_training",
+      "status": "planned",
+      "execution_result": null,
+      "optional": true,
+      "proposed_outputs": [
+        "LEARNED_SELECTOR_REPORT.json"
+      ],
+      "acceptance_cn": "先有开发独立组和强基线，再训练小方法；不读取测试隐藏结果，不阻塞主轨。",
+      "source_task_mapping": [
+        "A:C11",
+        "D:CP11"
+      ]
+    },
+    {
+      "id": "CP12",
+      "title_cn": "有限前瞻影子记录",
+      "depends_on": [
+        "CP01",
+        "CP03.1",
+        "CP04a"
+      ],
+      "phase": "E-independent",
+      "execution_kind": "bounded_live_observation",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "SHADOW_REPORT.json"
+      ],
+      "acceptance_cn": "CPU先行；模型仅新冻结条件就绪后加入；真实提前提交、first-seen区间、失败/pending完整。",
+      "source_task_mapping": [
+        "A:C19",
+        "B:NP11",
+        "C:DS12",
+        "D:CP12"
+      ]
+    },
+    {
+      "id": "CP13.delivery",
+      "title_cn": "持续分级交付",
+      "depends_on": [
+        "CP00"
+      ],
+      "phase": "rolling",
+      "execution_kind": "local_packaging",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "RELEASE_LEVEL_REPORT.json"
+      ],
+      "acceptance_cn": "已完成子集即可如实交付；不等待准备/前瞻/16类，权限许可与历史捕获保全。",
+      "source_task_mapping": [
+        "A:C17",
+        "B:NP12",
+        "C:DS13",
+        "D:CP13"
+      ]
+    },
+    {
+      "id": "CP13.freeze",
+      "title_cn": "核心机制独立确认冻结",
+      "depends_on": [
+        "CP02",
+        "CP04b",
+        "CP06.development",
+        "CP09"
+      ],
+      "phase": "D",
+      "execution_kind": "cpu_design",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "CONFIRMATION_PREREG.json"
+      ],
+      "acceptance_cn": "冻结方法、主比较、最小效应、独立块/purge、样本量及缺失规则；不依赖D或live。",
+      "source_task_mapping": [
+        "A:C15",
+        "B:NP10",
+        "C:DS11",
+        "D:CP13"
+      ]
+    },
+    {
+      "id": "CP13.confirmF",
+      "title_cn": "核心E-F机制独立确认",
+      "depends_on": [
+        "CP13.freeze"
+      ],
+      "phase": "E",
+      "execution_kind": "bounded_confirmatory_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "CORE_CONFIRMATION_REPORT.json"
+      ],
+      "acceptance_cn": "全新独立过程/块，结论按层报告；无正增益也可发布，不冒称跨过程。",
+      "source_task_mapping": [
+        "B:NP10",
+        "D:CP13"
+      ]
+    },
+    {
+      "id": "CP13.confirmD",
+      "title_cn": "D研究子轨独立确认",
+      "depends_on": [
+        "CP13.freeze",
+        "CP08"
+      ],
+      "phase": "E-conditional",
+      "execution_kind": "bounded_confirmatory_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "READINESS_CONFIRMATION_REPORT.json"
+      ],
+      "acceptance_cn": "另冻结D方法/profile网格与新过程；只声明研究损失下的结果。",
+      "source_task_mapping": [
+        "A:C16",
+        "C:DS11",
+        "D:CP13"
+      ]
+    },
+    {
+      "id": "CP13.confirmMM",
+      "title_cn": "多过程MM独立确认",
+      "depends_on": [
+        "CP13.freeze",
+        "CP10.multihazard"
+      ],
+      "phase": "E-conditional",
+      "execution_kind": "bounded_confirmatory_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": false,
+      "proposed_outputs": [
+        "MULTIPROCESS_CONFIRMATION_REPORT.json"
+      ],
+      "acceptance_cn": "不同物理过程的合格原生MM、同工具基线、新独立组；不以双地区代替双过程。",
+      "source_task_mapping": [
+        "B:NP10",
+        "D:CP13"
+      ]
+    },
+    {
+      "id": "CP14",
+      "title_cn": "非线性共同风险子轨",
+      "depends_on": [
+        "CP08",
+        "CP10.multihazard"
+      ],
+      "phase": "optional",
+      "execution_kind": "joint_contract_then_bounded_model",
+      "status": "planned",
+      "execution_result": null,
+      "optional": true,
+      "proposed_outputs": [
+        "JOINT_RISK_QUALIFICATION.json"
+      ],
+      "acceptance_cn": "非线性目标/联合参考/成员身份齐备才启用；不阻塞原X09联合推理或主轨。",
+      "source_task_mapping": [
+        "A:C18",
+        "D:CP14"
+      ]
+    }
+  ]
+}

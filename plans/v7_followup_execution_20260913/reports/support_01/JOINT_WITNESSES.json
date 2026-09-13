@@ -1,0 +1,328 @@
+{
+  "query_metadata": {
+    "routine-KSFO-2024-01-02T22:00:00Z": {
+      "cost": {
+        "bytes": 2048,
+        "compute_ms": 100,
+        "requests": 1,
+        "tokens": 0
+      },
+      "released_at": 1704236700000000,
+      "duration": 1000000,
+      "content_sha256": "e3e2726e37bcfc756229c8eb9171492b575e92262e9dcdcdf1abf485e0239ab0"
+    },
+    "routine-KSJC-2024-01-02T22:00:00Z": {
+      "cost": {
+        "bytes": 2048,
+        "compute_ms": 100,
+        "requests": 1,
+        "tokens": 0
+      },
+      "released_at": 1704236700000000,
+      "duration": 1000000,
+      "content_sha256": "9bbf4d628d66730b04d5f1492199be3097726c5c620ede945ded8524d50666af"
+    },
+    "routine-KOAK-2024-01-02T22:00:00Z": {
+      "cost": {
+        "bytes": 2048,
+        "compute_ms": 100,
+        "requests": 1,
+        "tokens": 0
+      },
+      "released_at": 1704236700000000,
+      "duration": 1000000,
+      "content_sha256": "4465ee74005ccc1a541ea953cd5c0d3573a2ec6d1af03acf1568b003d66b016f"
+    }
+  },
+  "goals": [
+    {
+      "target_id": "KOAK-2024-01-03T03:00:00Z-vis-lt-5000m",
+      "deadline": 1704240000000000,
+      "alternatives": [
+        [
+          "routine-KSFO-2024-01-02T22:00:00Z",
+          "routine-KSJC-2024-01-02T22:00:00Z"
+        ]
+      ]
+    },
+    {
+      "target_id": "KSFO-2024-01-03T03:00:00Z-vis-lt-5000m",
+      "deadline": 1704240000000000,
+      "alternatives": [
+        [
+          "routine-KOAK-2024-01-02T22:00:00Z"
+        ]
+      ]
+    },
+    {
+      "target_id": "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m",
+      "deadline": 1704240000000000,
+      "alternatives": [
+        [
+          "routine-KOAK-2024-01-02T22:00:00Z"
+        ]
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "limits": {
+        "requests": 1,
+        "bytes": 2048,
+        "tokens": 0,
+        "compute_ms": 100
+      },
+      "concurrency": 2,
+      "start": 1704239880000000,
+      "result": {
+        "exact": true,
+        "lower_bound": 2.0,
+        "upper_bound": 2.0,
+        "individual_status": {
+          "KOAK-2024-01-03T03:00:00Z-vis-lt-5000m": "unreachable_in_frozen_graph",
+          "KSFO-2024-01-03T03:00:00Z-vis-lt-5000m": "reachable_relaxation",
+          "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m": "reachable_relaxation"
+        },
+        "frontier": [
+          {
+            "starts": [],
+            "resolved": [],
+            "cost": {
+              "requests": 0,
+              "bytes": 0,
+              "tokens": 0,
+              "compute_ms": 0
+            },
+            "completion_time": 1704239880000000
+          },
+          {
+            "starts": [
+              [
+                "routine-KOAK-2024-01-02T22:00:00Z",
+                1704239880000000,
+                1704239881000000
+              ]
+            ],
+            "resolved": [
+              "KSFO-2024-01-03T03:00:00Z-vis-lt-5000m",
+              "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m"
+            ],
+            "cost": {
+              "requests": 1,
+              "bytes": 2048,
+              "tokens": 0,
+              "compute_ms": 100
+            },
+            "completion_time": 1704239881000000
+          }
+        ],
+        "explored_states": 11,
+        "max_states": 50000,
+        "graph_hash": "ac8ae996161fdfd43f3a1c675fc28bf7ec7843248812804822fcd33479dc91b8",
+        "scope": "finite_nonpreemptive_fixed_duration_public_recipe_graph"
+      },
+      "every_witness_independently_validated": true,
+      "individually_reachable": 2,
+      "joint_E_upper": 2.0
+    },
+    {
+      "limits": {
+        "requests": 2,
+        "bytes": 4096,
+        "tokens": 0,
+        "compute_ms": 200
+      },
+      "concurrency": 2,
+      "start": 1704239880000000,
+      "result": {
+        "exact": true,
+        "lower_bound": 2.0,
+        "upper_bound": 2.0,
+        "individual_status": {
+          "KOAK-2024-01-03T03:00:00Z-vis-lt-5000m": "reachable_relaxation",
+          "KSFO-2024-01-03T03:00:00Z-vis-lt-5000m": "reachable_relaxation",
+          "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m": "reachable_relaxation"
+        },
+        "frontier": [
+          {
+            "starts": [],
+            "resolved": [],
+            "cost": {
+              "requests": 0,
+              "bytes": 0,
+              "tokens": 0,
+              "compute_ms": 0
+            },
+            "completion_time": 1704239880000000
+          },
+          {
+            "starts": [
+              [
+                "routine-KSFO-2024-01-02T22:00:00Z",
+                1704239880000000,
+                1704239881000000
+              ],
+              [
+                "routine-KSJC-2024-01-02T22:00:00Z",
+                1704239880000000,
+                1704239881000000
+              ]
+            ],
+            "resolved": [
+              "KOAK-2024-01-03T03:00:00Z-vis-lt-5000m"
+            ],
+            "cost": {
+              "requests": 2,
+              "bytes": 4096,
+              "tokens": 0,
+              "compute_ms": 200
+            },
+            "completion_time": 1704239881000000
+          },
+          {
+            "starts": [
+              [
+                "routine-KOAK-2024-01-02T22:00:00Z",
+                1704239880000000,
+                1704239881000000
+              ]
+            ],
+            "resolved": [
+              "KSFO-2024-01-03T03:00:00Z-vis-lt-5000m",
+              "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m"
+            ],
+            "cost": {
+              "requests": 1,
+              "bytes": 2048,
+              "tokens": 0,
+              "compute_ms": 100
+            },
+            "completion_time": 1704239881000000
+          }
+        ],
+        "explored_states": 38,
+        "max_states": 50000,
+        "graph_hash": "0a24c6c6eefee66de1ff1f7bbf4830c5045c742a7e9ff2827ed12dd1dbcfe63f",
+        "scope": "finite_nonpreemptive_fixed_duration_public_recipe_graph"
+      },
+      "every_witness_independently_validated": true,
+      "individually_reachable": 3,
+      "joint_E_upper": 2.0
+    },
+    {
+      "limits": {
+        "requests": 3,
+        "bytes": 6144,
+        "tokens": 0,
+        "compute_ms": 300
+      },
+      "concurrency": 2,
+      "start": 1704239880000000,
+      "result": {
+        "exact": true,
+        "lower_bound": 3.0,
+        "upper_bound": 3.0,
+        "individual_status": {
+          "KOAK-2024-01-03T03:00:00Z-vis-lt-5000m": "reachable_relaxation",
+          "KSFO-2024-01-03T03:00:00Z-vis-lt-5000m": "reachable_relaxation",
+          "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m": "reachable_relaxation"
+        },
+        "frontier": [
+          {
+            "starts": [],
+            "resolved": [],
+            "cost": {
+              "requests": 0,
+              "bytes": 0,
+              "tokens": 0,
+              "compute_ms": 0
+            },
+            "completion_time": 1704239880000000
+          },
+          {
+            "starts": [
+              [
+                "routine-KSFO-2024-01-02T22:00:00Z",
+                1704239880000000,
+                1704239881000000
+              ],
+              [
+                "routine-KSJC-2024-01-02T22:00:00Z",
+                1704239880000000,
+                1704239881000000
+              ]
+            ],
+            "resolved": [
+              "KOAK-2024-01-03T03:00:00Z-vis-lt-5000m"
+            ],
+            "cost": {
+              "requests": 2,
+              "bytes": 4096,
+              "tokens": 0,
+              "compute_ms": 200
+            },
+            "completion_time": 1704239881000000
+          },
+          {
+            "starts": [
+              [
+                "routine-KOAK-2024-01-02T22:00:00Z",
+                1704239880000000,
+                1704239881000000
+              ],
+              [
+                "routine-KSFO-2024-01-02T22:00:00Z",
+                1704239880000000,
+                1704239881000000
+              ],
+              [
+                "routine-KSJC-2024-01-02T22:00:00Z",
+                1704239881000000,
+                1704239882000000
+              ]
+            ],
+            "resolved": [
+              "KOAK-2024-01-03T03:00:00Z-vis-lt-5000m",
+              "KSFO-2024-01-03T03:00:00Z-vis-lt-5000m",
+              "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m"
+            ],
+            "cost": {
+              "requests": 3,
+              "bytes": 6144,
+              "tokens": 0,
+              "compute_ms": 300
+            },
+            "completion_time": 1704239882000000
+          },
+          {
+            "starts": [
+              [
+                "routine-KOAK-2024-01-02T22:00:00Z",
+                1704239880000000,
+                1704239881000000
+              ]
+            ],
+            "resolved": [
+              "KSFO-2024-01-03T03:00:00Z-vis-lt-5000m",
+              "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m"
+            ],
+            "cost": {
+              "requests": 1,
+              "bytes": 2048,
+              "tokens": 0,
+              "compute_ms": 100
+            },
+            "completion_time": 1704239881000000
+          }
+        ],
+        "explored_states": 74,
+        "max_states": 50000,
+        "graph_hash": "211a2b3b4d1359371866561caef5562f28dea15e61d71b061607d8e9da2e5b02",
+        "scope": "finite_nonpreemptive_fixed_duration_public_recipe_graph"
+      },
+      "every_witness_independently_validated": true,
+      "individually_reachable": 3,
+      "joint_E_upper": 3.0
+    }
+  ]
+}

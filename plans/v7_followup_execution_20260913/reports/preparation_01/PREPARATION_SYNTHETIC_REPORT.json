@@ -1,0 +1,395 @@
+{
+  "scope": "synthetic_protocol_only",
+  "cases": {
+    "deadline_and_inflight": {
+      "preparation": {
+        "card": {
+          "budget": 20,
+          "capacity": 1,
+          "jobs": [
+            {
+              "cleanup_cost": 1,
+              "cleanup_duration": 5,
+              "cost": 3,
+              "deadline": 95,
+              "duration": 10,
+              "expires_at": 98,
+              "job_id": "j1",
+              "target_id": "t"
+            },
+            {
+              "cleanup_cost": 1,
+              "cleanup_duration": 3,
+              "cost": 2,
+              "deadline": 96,
+              "duration": 8,
+              "expires_at": 97,
+              "job_id": "j2",
+              "target_id": "u"
+            }
+          ],
+          "kind": "research_assumption",
+          "schema": "disastertrace.preparation_scenario.v1",
+          "units": "synthetic_cost_units"
+        },
+        "states": {
+          "j1": {
+            "status": "expired",
+            "spent": 3,
+            "reserved_cleanup": 0,
+            "started_at": 85,
+            "finished_at": 95
+          },
+          "j2": {
+            "status": "unstarted",
+            "spent": 0,
+            "reserved_cleanup": 0
+          }
+        },
+        "snapshots": {
+          "j1": {
+            "job_id": "j1",
+            "target_id": "t",
+            "deadline": 95,
+            "ready": true,
+            "spent_at_deadline": 3
+          },
+          "j2": {
+            "job_id": "j2",
+            "target_id": "u",
+            "deadline": 96,
+            "ready": false,
+            "spent_at_deadline": 0
+          }
+        },
+        "history": [
+          {
+            "job_id": "j1",
+            "at": 85,
+            "status": "started"
+          },
+          {
+            "job_id": "j1",
+            "at": 95,
+            "status": "ready"
+          }
+        ],
+        "clock": 99
+      },
+      "score": {
+        "unique_jobs": 2,
+        "settled_jobs": 2,
+        "missing_jobs": 0,
+        "preparation_cost": 3,
+        "settled_miss_penalty": 10,
+        "total_cost": 13,
+        "cost_lower_bound": 13,
+        "cost_upper_bound": 13,
+        "scope": "synthetic_research_assumption_not_operational_weather_benefit"
+      },
+      "F_opportunities": 3,
+      "unique_D_jobs": 2
+    },
+    "cancel_and_cleanup": {
+      "preparation": {
+        "card": {
+          "budget": 20,
+          "capacity": 1,
+          "jobs": [
+            {
+              "cleanup_cost": 1,
+              "cleanup_duration": 5,
+              "cost": 3,
+              "deadline": 95,
+              "duration": 10,
+              "expires_at": 98,
+              "job_id": "j1",
+              "target_id": "t"
+            },
+            {
+              "cleanup_cost": 1,
+              "cleanup_duration": 3,
+              "cost": 2,
+              "deadline": 96,
+              "duration": 8,
+              "expires_at": 97,
+              "job_id": "j2",
+              "target_id": "u"
+            }
+          ],
+          "kind": "research_assumption",
+          "schema": "disastertrace.preparation_scenario.v1",
+          "units": "synthetic_cost_units"
+        },
+        "states": {
+          "j1": {
+            "status": "canceled",
+            "spent": 4,
+            "reserved_cleanup": 0,
+            "started_at": 60,
+            "finished_at": 70,
+            "released_at": 70
+          },
+          "j2": {
+            "status": "expired",
+            "spent": 2,
+            "reserved_cleanup": 0,
+            "started_at": 70,
+            "finished_at": 78
+          }
+        },
+        "snapshots": {
+          "j1": {
+            "job_id": "j1",
+            "target_id": "t",
+            "deadline": 95,
+            "ready": false,
+            "spent_at_deadline": 4
+          },
+          "j2": {
+            "job_id": "j2",
+            "target_id": "u",
+            "deadline": 96,
+            "ready": true,
+            "spent_at_deadline": 2
+          }
+        },
+        "history": [
+          {
+            "job_id": "j1",
+            "at": 60,
+            "status": "started"
+          },
+          {
+            "job_id": "j1",
+            "at": 65,
+            "status": "canceled_cleanup_pending"
+          },
+          {
+            "job_id": "j2",
+            "at": 66,
+            "status": "capacity_rejected"
+          },
+          {
+            "job_id": "j1",
+            "at": 70,
+            "status": "cleanup_complete"
+          },
+          {
+            "job_id": "j2",
+            "at": 70,
+            "status": "started"
+          },
+          {
+            "job_id": "j2",
+            "at": 78,
+            "status": "ready"
+          }
+        ],
+        "clock": 99
+      },
+      "score": {
+        "unique_jobs": 2,
+        "settled_jobs": 2,
+        "missing_jobs": 0,
+        "preparation_cost": 6,
+        "settled_miss_penalty": 10,
+        "total_cost": 16,
+        "cost_lower_bound": 16,
+        "cost_upper_bound": 16,
+        "scope": "synthetic_research_assumption_not_operational_weather_benefit"
+      },
+      "F_opportunities": 3,
+      "unique_D_jobs": 2
+    },
+    "expired": {
+      "preparation": {
+        "card": {
+          "budget": 20,
+          "capacity": 1,
+          "jobs": [
+            {
+              "cleanup_cost": 1,
+              "cleanup_duration": 5,
+              "cost": 3,
+              "deadline": 95,
+              "duration": 10,
+              "expires_at": 80,
+              "job_id": "j1",
+              "target_id": "t"
+            },
+            {
+              "cleanup_cost": 1,
+              "cleanup_duration": 3,
+              "cost": 2,
+              "deadline": 96,
+              "duration": 8,
+              "expires_at": 97,
+              "job_id": "j2",
+              "target_id": "u"
+            }
+          ],
+          "kind": "research_assumption",
+          "schema": "disastertrace.preparation_scenario.v1",
+          "units": "synthetic_cost_units"
+        },
+        "states": {
+          "j1": {
+            "status": "expired",
+            "spent": 3,
+            "reserved_cleanup": 0,
+            "started_at": 60,
+            "finished_at": 70
+          },
+          "j2": {
+            "status": "unstarted",
+            "spent": 0,
+            "reserved_cleanup": 0
+          }
+        },
+        "snapshots": {
+          "j1": {
+            "job_id": "j1",
+            "target_id": "t",
+            "deadline": 95,
+            "ready": false,
+            "spent_at_deadline": 3
+          },
+          "j2": {
+            "job_id": "j2",
+            "target_id": "u",
+            "deadline": 96,
+            "ready": false,
+            "spent_at_deadline": 0
+          }
+        },
+        "history": [
+          {
+            "job_id": "j1",
+            "at": 60,
+            "status": "started"
+          },
+          {
+            "job_id": "j1",
+            "at": 65,
+            "status": "already_started"
+          },
+          {
+            "job_id": "j1",
+            "at": 70,
+            "status": "ready"
+          }
+        ],
+        "clock": 99
+      },
+      "score": {
+        "unique_jobs": 2,
+        "settled_jobs": 2,
+        "missing_jobs": 0,
+        "preparation_cost": 3,
+        "settled_miss_penalty": 20,
+        "total_cost": 23,
+        "cost_lower_bound": 23,
+        "cost_upper_bound": 23,
+        "scope": "synthetic_research_assumption_not_operational_weather_benefit"
+      },
+      "F_opportunities": 3,
+      "unique_D_jobs": 2
+    },
+    "budget": {
+      "preparation": {
+        "card": {
+          "budget": 3,
+          "capacity": 1,
+          "jobs": [
+            {
+              "cleanup_cost": 1,
+              "cleanup_duration": 5,
+              "cost": 3,
+              "deadline": 95,
+              "duration": 10,
+              "expires_at": 98,
+              "job_id": "j1",
+              "target_id": "t"
+            },
+            {
+              "cleanup_cost": 1,
+              "cleanup_duration": 3,
+              "cost": 2,
+              "deadline": 96,
+              "duration": 8,
+              "expires_at": 97,
+              "job_id": "j2",
+              "target_id": "u"
+            }
+          ],
+          "kind": "research_assumption",
+          "schema": "disastertrace.preparation_scenario.v1",
+          "units": "synthetic_cost_units"
+        },
+        "states": {
+          "j1": {
+            "status": "unstarted",
+            "spent": 0,
+            "reserved_cleanup": 0
+          },
+          "j2": {
+            "status": "unstarted",
+            "spent": 0,
+            "reserved_cleanup": 0
+          }
+        },
+        "snapshots": {
+          "j1": {
+            "job_id": "j1",
+            "target_id": "t",
+            "deadline": 95,
+            "ready": false,
+            "spent_at_deadline": 0
+          },
+          "j2": {
+            "job_id": "j2",
+            "target_id": "u",
+            "deadline": 96,
+            "ready": false,
+            "spent_at_deadline": 0
+          }
+        },
+        "history": [
+          {
+            "job_id": "j1",
+            "at": 60,
+            "status": "budget_rejected"
+          },
+          {
+            "job_id": "j2",
+            "at": 94,
+            "status": "too_late"
+          }
+        ],
+        "clock": 99
+      },
+      "score": {
+        "unique_jobs": 2,
+        "settled_jobs": 2,
+        "missing_jobs": 0,
+        "preparation_cost": 0,
+        "settled_miss_penalty": 20,
+        "total_cost": 20,
+        "cost_lower_bound": 20,
+        "cost_upper_bound": 20,
+        "scope": "synthetic_research_assumption_not_operational_weather_benefit"
+      },
+      "F_opportunities": 3,
+      "unique_D_jobs": 2
+    }
+  },
+  "same_clock_replay_verified": true,
+  "analytic_boundary": {
+    "at_equal": false,
+    "above": true
+  },
+  "actual_model_calls": 0,
+  "actual_weather_outcomes": 0,
+  "real_decision_benefit_claim": false
+}

@@ -1,5 +1,49 @@
 # Blockers
 
+## Gates after typed adaptive integration, 2026-09-13
+
+The typed quiescent coordinator is now connected: actual session acquisition
+receipts, native support, typed predictions, cutoff sealing and cross-process
+branches verify on two real 27-opportunity sessions. In-flight reservations,
+idempotent asynchronous completion and D state inside branch snapshots remain.
+
+All 97 fresh IEM source requests succeed and parse. The new 432-opportunity
+calendar has zero 1km positives and two 5km positives; download success and a
+fully scored calendar do not establish severe-fog forecasting power. Real TAF
+coverage/version inputs qualify a narrow E task; native unsupported/conflicting
+source model cases remain absent, with these edges tested synthetically only.
+
+The fresh 252-call H100 diagnostic completes and independently replays. E-only
+improves under the focused view (24/36 to 33/36), but TAF coverage remains 6/18
+and all 144 F-bearing replies retain baseline. No adaptive LLM advantage,
+independent weather-process confirmation, MM/D benefit or new full-hazard
+qualification follows. Broader H07/H08, source-availability and 16-hazard gates
+remain as recorded below. No GPU jobs remain active at the final account check.
+
+
+## Gates after follow-up first wave, 2026-09-13
+
+Independent F-only now has real evidence: 36 new calls, plus 36 E-only and
+36 joint calls. All F-bearing replies retain the baseline; E-only always answers
+unknown. This is an observed development failure mode, not an API/data-access
+blocker, and no positive model-gain gate is imposed on engineering admission.
+
+Typed cutoff admission and real native support now work. Remaining integration:
+the full stepped adaptive controller still uses the old aviation probability
+interface. Unify it with typed bundles/head receipts before claiming a fully
+typed adaptive branch system. New TAF coverage/version heads, in-flight and D
+branch snapshots, fresh process calendars and strong fair 2x2 comparisons remain.
+
+Four synthetic D cases do not establish real mitigation. Sixty scalar temperature
+records have declared-latency journal scores but no proved historical publication,
+new supplemental-evidence mechanism, heatwave/coldwave task or MM confirmation.
+H07 continuous product/window/QC and H08 historical QINE support/regulation gates
+remain as previously documented. The sixteen-hazard roadmap is unchanged.
+
+No new credentials or future-weather wait blocks the next authorized historical
+work. Current results and actionable next sequence are under
+`../plans/v7_followup_execution_20260913/`.
+
 ## Current handoff after bounded v7 execution, 2026-09-13
 
 The authorized source/interface/model diagnostic is complete: 720 new calls,

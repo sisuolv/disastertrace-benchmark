@@ -1,0 +1,14 @@
+......F                                                                  [100%]
+=================================== FAILURES ===================================
+____________ test_one_job_per_target_prevents_repeated_D_settlement ____________
+
+    def test_one_job_per_target_prevents_repeated_D_settlement():
+        scenario = card()
+        scenario["jobs"][1]["target_id"] = "t"
+>       with pytest.raises(ValueError, match="one job"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_preparation.py:99: Failed
+=========================== short test summary info ============================
+FAILED tests/test_monitoring_preparation.py::test_one_job_per_target_prevents_repeated_D_settlement
+1 failed, 6 passed in 0.84s

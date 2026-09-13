@@ -1,0 +1,32 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> publication/v7_adaptive_review_20260913/evidence_archive.py:3:1
+   |
+ 1 |   """Deduplicate accepted bytes into bounded ZIP parts and restore without overwrites."""
+ 2 |
+ 3 | / import argparse
+ 4 | | import gzip
+ 5 | | import hashlib
+ 6 | | import io
+ 7 | | import json
+ 8 | | import os
+ 9 | | from pathlib import Path, PurePosixPath
+10 | | import re
+11 | | import stat
+12 | | import zipfile
+   | |______________^
+13 |
+14 |   MAX_BLOB = 512 * 1024 * 1024
+   |
+help: Organize imports
+   |
+8  | import os
+   - from pathlib import Path, PurePosixPath
+9  | import re
+10 | import stat
+11 | import zipfile
+12 + from pathlib import Path, PurePosixPath
+13 |
+   |
+
+Found 1 error.
+[*] 1 fixable with the `--fix` option.

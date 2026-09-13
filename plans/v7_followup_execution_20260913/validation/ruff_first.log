@@ -1,0 +1,557 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:8:1
+   |
+ 6 |   """
+ 7 |
+ 8 | / from __future__ import annotations
+ 9 | |
+10 | | import hashlib
+11 | | import json
+12 | | from dataclasses import dataclass
+13 | |
+14 | | from ..monitoring_v1.event_loop import run_clock
+15 | | from ..monitoring_v1.journal import read_journal
+16 | | from ..monitoring_v1.resources import Cost
+17 | | from .contracts import (
+18 | |     EvidenceBundle,
+19 | |     Forecast,
+20 | |     ForecastState,
+21 | |     Target,
+22 | |     canonical,
+23 | |     fingerprint,
+24 | |     paired_scores,
+25 | |     require_fields,
+26 | |     timestamp,
+27 | | )
+28 | | from .heads import _unique_object, _reject_constant, parse_response
+   | |___________________________________________________________________^
+help: Organize imports
+   |
+27 | )
+   - from .heads import _unique_object, _reject_constant, parse_response
+   -
+28 + from .heads import _reject_constant, _unique_object, parse_response
+29 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> disastertrace-starter/src/disastertrace/monitoring_fixed_v1/support_bridge.py:3:1
+  |
+1 |   """Provider-qualified evidence support and evaluator-only finite E recipes."""
+2 |
+3 | / from datetime import datetime, timezone
+4 | | from itertools import combinations
+5 | | import math
+6 | |
+7 | | from ..monitoring_v1.providers.aviation import parse_metar, parse_taf
+8 | | from ..monitoring_v1.support import EvidenceFact, Interval, classify, public_support
+9 | | from .contracts import EvidenceBundle, Target, fingerprint
+  | |__________________________________________________________^
+help: Organize imports
+  |
+2 |
+3 + import math
+4 | from datetime import datetime, timezone
+5 | from itertools import combinations
+  - import math
+6 |
+  |
+
+RUF007 Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs
+   --> disastertrace-starter/src/disastertrace/monitoring_fixed_v1/support_bridge.py:209:55
+    |
+207 |             or segments[0]["start"] != target.physical_start
+208 |             or segments[-1]["end"] != target.physical_end
+209 |             or any(a["end"] != b["start"] for a, b in zip(segments, segments[1:]))
+    |                                                       ^^^
+210 |         ):
+211 |             raise ValueError("Nonunique or incomplete temporal support")
+    |
+help: Replace `zip()` with `itertools.pairwise()`
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> disastertrace-starter/tests/test_monitoring_checkpoint.py:3:1
+   |
+ 1 |   """Whole-controller recovery and counterfactual isolation at quiescent ticks."""
+ 2 |
+ 3 | / import copy
+ 4 | | import json
+ 5 | |
+ 6 | | import pytest
+ 7 | |
+ 8 | | from disastertrace.monitoring_v1.policies import run_session
+ 9 | | from disastertrace.monitoring_v1.session_checkpoint import SessionCoordinator
+10 | | from test_monitoring_policies import fixture
+   | |____________________________________________^
+help: Organize imports
+   |
+6  | import pytest
+7  + from test_monitoring_policies import fixture
+8  |
+9  | from disastertrace.monitoring_v1.policies import run_session
+10 | from disastertrace.monitoring_v1.session_checkpoint import SessionCoordinator
+   - from test_monitoring_policies import fixture
+11 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> disastertrace-starter/tests/test_monitoring_preparation.py:3:1
+   |
+ 1 |   """Preparation consumes resources independently of forecast revision/fallback."""
+ 2 |
+ 3 | / from dataclasses import replace
+ 4 | |
+ 5 | | import pytest
+ 6 | |
+ 7 | | from disastertrace.monitoring_fixed_v1.admission import (
+ 8 | |     AdmissionEvent,
+ 9 | |     AdmissionEngine,
+10 | |     TypedOpportunity,
+11 | | )
+12 | | from disastertrace.monitoring_fixed_v1.contracts import Forecast, Target
+13 | | from disastertrace.monitoring_v1.journal import EventJournal
+14 | | from disastertrace.monitoring_v1.preparation import (
+15 | |     PreparationReducer,
+16 | |     one_step_prepare,
+17 | |     score_preparation,
+18 | | )
+19 | | from test_monitoring_admission import setup_engine as single_engine, complete
+   | |_____________________________________________________________________________^
+help: Organize imports
+   |
+5  | import pytest
+6  + from test_monitoring_admission import complete
+7  + from test_monitoring_admission import setup_engine as single_engine
+8  |
+9  | from disastertrace.monitoring_fixed_v1.admission import (
+   -     AdmissionEvent,
+10 |     AdmissionEngine,
+11 +     AdmissionEvent,
+12 |     TypedOpportunity,
+--------------------------------------------------------------------------------
+20 | )
+   - from test_monitoring_admission import setup_engine as single_engine, complete
+21 |
+   |
+
+RUF059 Unpacked variable `b` is never used
+  --> disastertrace-starter/tests/test_monitoring_preparation.py:84:13
+   |
+83 | def test_cancel_is_sunk_cost_and_cleanup_blocks_reallocation():
+84 |     engine, b, events = setup_engine(preparation=card())
+   |             ^
+85 |     events += [
+86 |         AdmissionEvent("p1", 60, "prepare", {"job_id": "j1"}),
+   |
+help: Prefix it with an underscore or any other dummy variable pattern
+
+RUF059 Unpacked variable `b` is never used
+   --> disastertrace-starter/tests/test_monitoring_preparation.py:129:17
+    |
+127 |     path = tmp_path / "session.jsonl"
+128 |     with EventJournal(path) as journal:
+129 |         engine, b, events = setup_engine(preparation=card(), journal=journal)
+    |                 ^
+130 |         engine.run(events + [AdmissionEvent("p1", 85, "prepare", {"job_id": "j1"})], until=99)
+131 |     replay = AdmissionEngine.from_journal(path)
+    |
+help: Prefix it with an underscore or any other dummy variable pattern
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> disastertrace-starter/tests/test_monitoring_support_bridge.py:3:1
+   |
+ 1 |   """Source semantics and hidden-information boundaries of the fixed C2 bridge."""
+ 2 |
+ 3 | / import json
+ 4 | | from pathlib import Path
+ 5 | |
+ 6 | | import pytest
+ 7 | |
+ 8 | | from disastertrace.monitoring_fixed_v1.contracts import EvidenceBundle
+ 9 | | from disastertrace.monitoring_fixed_v1.support_bridge import (
+10 | |     certified_metadata,
+11 | |     native_slot_support,
+12 | |     taf_coverage,
+13 | |     subset_bundle,
+14 | |     compile_recipes,
+15 | | )
+16 | | from disastertrace.monitoring_fixed_v1.aviation import visible_e_status
+   | |_______________________________________________________________________^
+17 |
+18 |   MATRIX = (
+   |
+help: Organize imports
+   |
+7  |
+8  + from disastertrace.monitoring_fixed_v1.aviation import visible_e_status
+9  | from disastertrace.monitoring_fixed_v1.contracts import EvidenceBundle
+10 | from disastertrace.monitoring_fixed_v1.support_bridge import (
+11 |     certified_metadata,
+12 +     compile_recipes,
+13 |     native_slot_support,
+14 +     subset_bundle,
+15 |     taf_coverage,
+   -     subset_bundle,
+   -     compile_recipes,
+16 | )
+   - from disastertrace.monitoring_fixed_v1.aviation import visible_e_status
+17 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v7_followup_execution_20260913/execute_admission.py:3:1
+   |
+ 1 |   """Real archived H15 fixtures through durable typed admission (no model calls)."""
+ 2 |
+ 3 | / import argparse
+ 4 | | import hashlib
+ 5 | | import json
+ 6 | | import math
+ 7 | | import os
+ 8 | | import time
+ 9 | | from pathlib import Path
+10 | |
+11 | | from disastertrace.monitoring_fixed_v1.admission import (
+12 | |     AdmissionEngine,
+13 | |     AdmissionEvent,
+14 | |     TypedOpportunity,
+15 | |     score_admitted,
+16 | | )
+17 | | from disastertrace.monitoring_fixed_v1.aviation import FrozenFrequencyPredictor
+18 | | from disastertrace.monitoring_fixed_v1.contracts import (
+19 | |     EvidenceBundle,
+20 | |     Target,
+21 | |     canonical,
+22 | |     fingerprint,
+23 | | )
+24 | | from disastertrace.monitoring_v1.journal import EventJournal
+25 | | from disastertrace.monitoring_v1.calibration import predict
+   | |___________________________________________________________^
+26 |
+27 |   HERE = Path(__file__).resolve().parent
+   |
+help: Organize imports
+   |
+23 | )
+24 + from disastertrace.monitoring_v1.calibration import predict
+25 | from disastertrace.monitoring_v1.journal import EventJournal
+   - from disastertrace.monitoring_v1.calibration import predict
+26 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v7_followup_execution_20260913/execute_branch.py:3:1
+   |
+ 1 |   """Fresh-process continuation of one real archive prefix, four legal controls."""
+ 2 |
+ 3 | / import argparse
+ 4 | | import json
+ 5 | | import os
+ 6 | | from pathlib import Path
+ 7 | | import subprocess
+ 8 | | import sys
+ 9 | |
+10 | | from disastertrace.monitoring_v1.dataset import load_session
+11 | | from disastertrace.monitoring_v1.policies import run_session
+12 | | from disastertrace.monitoring_v1.session_checkpoint import SessionCoordinator
+13 | | from disastertrace.monitoring_v1.targets import canonical_hash
+14 | | from execute_admission import ROOT, MATRIX, save
+   | |________________________________________________^
+help: Organize imports
+   |
+5  | import os
+   - from pathlib import Path
+6  | import subprocess
+7  | import sys
+8  + from pathlib import Path
+9  |
+--------------------------------------------------------------------------------
+13 | from disastertrace.monitoring_v1.targets import canonical_hash
+   - from execute_admission import ROOT, MATRIX, save
+14 + from execute_admission import MATRIX, ROOT, save
+15 |
+   |
+
+PLW1510 `subprocess.run` without explicit `check` argument
+   --> plans/v7_followup_execution_20260913/execute_branch.py:102:18
+    |
+100 |             str(result_file.resolve()),
+101 |         ]
+102 |         result = subprocess.run(argv, capture_output=True, text=True, timeout=90)
+    |                  ^^^^^^^^^^^^^^
+103 |         commands.append(
+104 |             {
+    |
+help: Add explicit `check=False`
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v7_followup_execution_20260913/execute_preparation.py:3:1
+   |
+ 1 |   """Synthetic D scenarios on the typed admission clock; no real-weather claim."""
+ 2 |
+ 3 | / import argparse
+ 4 | | import hashlib
+ 5 | | import json
+ 6 | | from pathlib import Path
+ 7 | |
+ 8 | | from disastertrace.monitoring_fixed_v1.admission import (
+ 9 | |     AdmissionEngine,
+10 | |     AdmissionEvent,
+11 | |     TypedOpportunity,
+12 | | )
+13 | | from disastertrace.monitoring_fixed_v1.contracts import (
+14 | |     EvidenceBundle,
+15 | |     Target,
+16 | |     Forecast,
+17 | |     canonical,
+18 | | )
+19 | | from disastertrace.monitoring_v1.journal import EventJournal
+20 | | from disastertrace.monitoring_v1.preparation import one_step_prepare, score_preparation
+21 | | from execute_admission import save
+   | |__________________________________^
+help: Organize imports
+   |
+14 |     EvidenceBundle,
+15 +     Forecast,
+16 |     Target,
+   -     Forecast,
+17 |     canonical,
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v7_followup_execution_20260913/execute_scalar_admission.py:3:1
+   |
+ 1 |   """EUPP/DWD scalars under an explicit archive latency scenario, not online proof."""
+ 2 |
+ 3 | / import argparse
+ 4 | | import hashlib
+ 5 | | import json
+ 6 | | import math
+ 7 | | from pathlib import Path
+ 8 | | import statistics
+ 9 | | import time
+10 | | from datetime import datetime
+11 | |
+12 | | from disastertrace.monitoring_fixed_v1.admission import (
+13 | |     AdmissionEngine,
+14 | |     AdmissionEvent,
+15 | |     TypedOpportunity,
+16 | |     score_admitted,
+17 | | )
+18 | | from disastertrace.monitoring_fixed_v1.contracts import (
+19 | |     EvidenceBundle,
+20 | |     Target,
+21 | |     Forecast,
+22 | |     canonical,
+23 | |     fingerprint,
+24 | | )
+25 | | from disastertrace.monitoring_v1.journal import EventJournal
+26 | | from execute_admission import ROOT, save
+   | |________________________________________^
+help: Organize imports
+   |
+6  | import math
+   - from pathlib import Path
+7  | import statistics
+8  | import time
+9  | from datetime import datetime
+10 + from pathlib import Path
+11 |
+--------------------------------------------------------------------------------
+19 |     EvidenceBundle,
+20 +     Forecast,
+21 |     Target,
+   -     Forecast,
+22 |     canonical,
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v7_followup_execution_20260913/execute_support.py:3:1
+   |
+ 1 |   """Reparse real report/TAF fixtures and validate shared-budget E witnesses."""
+ 2 |
+ 3 | / import argparse
+ 4 | | import json
+ 5 | | from pathlib import Path
+ 6 | |
+ 7 | | from disastertrace.monitoring_fixed_v1.aviation import visible_e_status
+ 8 | | from disastertrace.monitoring_fixed_v1.contracts import (
+ 9 | |     EvidenceBundle,
+10 | |     Target,
+11 | |     fingerprint,
+12 | | )
+13 | | from disastertrace.monitoring_fixed_v1.support_bridge import (
+14 | |     native_slot_support,
+15 | |     taf_coverage,
+16 | |     taf_version_support,
+17 | |     compile_recipes,
+18 | | )
+19 | | from disastertrace.monitoring_v1.reachability import (
+20 | |     Query,
+21 | |     Goal,
+22 | |     solve_joint,
+23 | |     validate_witness,
+24 | | )
+25 | | from disastertrace.monitoring_v1.resources import Cost
+26 | | from execute_admission import MATRIX, ROOT, save
+   | |________________________________________________^
+help: Organize imports
+   |
+13 | from disastertrace.monitoring_fixed_v1.support_bridge import (
+14 +     compile_recipes,
+15 |     native_slot_support,
+16 |     taf_coverage,
+17 |     taf_version_support,
+   -     compile_recipes,
+18 | )
+19 | from disastertrace.monitoring_v1.reachability import (
+20 +     Goal,
+21 |     Query,
+   -     Goal,
+22 |     solve_joint,
+   |
+
+RUF007 Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs
+   --> plans/v7_followup_execution_20260913/execute_support.py:131:29
+    |
+129 |             (
+130 |                 (a, b)
+131 |                 for a, b in zip(ordered, ordered[1:])
+    |                             ^^^
+132 |                 if a["projection"] != b["projection"]
+133 |             ),
+    |
+help: Replace `zip()` with `itertools.pairwise()`
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v7_followup_execution_20260913/gpu/freeze_smoke.py:3:1
+   |
+ 1 |   """Freeze the preregistered exposed 108-call E/F/joint engineering smoke."""
+ 2 |
+ 3 | / import json
+ 4 | | import shutil
+ 5 | | import socket
+ 6 | | from datetime import datetime, timezone
+ 7 | | from pathlib import Path
+ 8 | |
+ 9 | | from transformers import AutoTokenizer
+10 | | from disastertrace.monitoring_fixed_v1.contracts import EvidenceBundle, fingerprint
+11 | | from disastertrace.monitoring_fixed_v1.heads import (
+12 | |     model_messages,
+13 | |     parse_response,
+14 | |     PROMPT_VERSION,
+15 | | )
+16 | | from gpu_worker import digest, save
+   | |___________________________________^
+17 |
+18 |   HERE = Path(__file__).resolve().parent
+   |
+help: Organize imports
+   |
+8  |
+   - from transformers import AutoTokenizer
+9  | from disastertrace.monitoring_fixed_v1.contracts import EvidenceBundle, fingerprint
+10 | from disastertrace.monitoring_fixed_v1.heads import (
+11 +     PROMPT_VERSION,
+12 |     model_messages,
+13 |     parse_response,
+   -     PROMPT_VERSION,
+14 | )
+15 | from gpu_worker import digest, save
+16 + from transformers import AutoTokenizer
+17 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v7_followup_execution_20260913/gpu/gpu_worker.py:55:9
+   |
+53 |                   raise ValueError("Model file changed: " + item["path"])
+54 |
+55 | /         import torch
+56 | |         from disastertrace.monitoring_fixed_v1.heads import model_messages
+57 | |         from disastertrace.monitoring_fixed_v1.contracts import (
+58 | |             EvidenceBundle,
+59 | |             fingerprint,
+60 | |         )
+61 | |         from transformers import AutoModelForCausalLM, AutoTokenizer
+   | |____________________________________________________________________^
+62 |
+63 |           if torch.cuda.device_count() != 1:
+   |
+help: Organize imports
+   |
+55 |         import torch
+   -         from disastertrace.monitoring_fixed_v1.heads import model_messages
+56 |         from disastertrace.monitoring_fixed_v1.contracts import (
+57 |             EvidenceBundle,
+58 |             fingerprint,
+59 |         )
+60 +         from disastertrace.monitoring_fixed_v1.heads import model_messages
+61 |         from transformers import AutoModelForCausalLM, AutoTokenizer
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v7_followup_execution_20260913/gpu/verify_smoke.py:3:1
+   |
+ 1 |   """Reconstruct raw tokens, persistence receipts, typed admission and E/F scores."""
+ 2 |
+ 3 | / import argparse
+ 4 | | from collections import Counter
+ 5 | | import hashlib
+ 6 | | import json
+ 7 | | import math
+ 8 | | from pathlib import Path
+ 9 | | import sys
+10 | |
+11 | | from transformers import AutoTokenizer
+12 | | from disastertrace.monitoring_fixed_v1.admission import (
+13 | |     AdmissionEngine,
+14 | |     AdmissionEvent,
+15 | |     score_admitted,
+16 | | )
+17 | | from disastertrace.monitoring_fixed_v1.aviation import visible_e_status
+18 | | from disastertrace.monitoring_fixed_v1.contracts import EvidenceBundle, fingerprint
+19 | | from disastertrace.monitoring_fixed_v1.heads import model_messages, parse_response
+20 | | from disastertrace.monitoring_v1.journal import EventJournal
+21 | | from gpu_worker import digest, save
+   | |___________________________________^
+22 |
+23 |   HERE = Path(__file__).resolve().parent
+   |
+help: Organize imports
+   |
+3  | import argparse
+   - from collections import Counter
+4  | import hashlib
+5  | import json
+6  | import math
+7  + import sys
+8  + from collections import Counter
+9  | from pathlib import Path
+   - import sys
+10 |
+   - from transformers import AutoTokenizer
+11 | from disastertrace.monitoring_fixed_v1.admission import (
+--------------------------------------------------------------------------------
+20 | from gpu_worker import digest, save
+21 + from transformers import AutoTokenizer
+22 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v7_followup_execution_20260913/gpu/verify_smoke.py:25:1
+   |
+23 | HERE = Path(__file__).resolve().parent
+24 | sys.path.insert(0, str(HERE.parent))
+25 | from execute_admission import mission_inputs, evaluator_outcomes
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Organize imports
+   |
+24 | sys.path.insert(0, str(HERE.parent))
+   - from execute_admission import mission_inputs, evaluator_outcomes
+25 + from execute_admission import evaluator_outcomes, mission_inputs
+26 |
+   |
+
+Found 19 errors.
+[*] 14 fixable with the `--fix` option (4 hidden fixes can be enabled with the `--unsafe-fixes` option).

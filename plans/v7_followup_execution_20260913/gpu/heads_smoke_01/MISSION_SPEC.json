@@ -1,0 +1,82 @@
+{
+  "schema": "disastertrace.followup_mission.v1",
+  "hazard": "H15",
+  "purpose": "exposed historical engineering smoke",
+  "track": "declared_archive_scenario",
+  "selection": "first six sorted public opportunity IDs per region; no outcome filter",
+  "opportunities": [
+    {
+      "region": "bay",
+      "opportunity_id": "KOAK-2024-01-03T03:00:00Z-vis-lt-5000m-cutoff-2024-01-03T00:00:00Z"
+    },
+    {
+      "region": "bay",
+      "opportunity_id": "KOAK-2024-01-03T15:00:00Z-vis-lt-5000m-cutoff-2024-01-03T12:00:00Z"
+    },
+    {
+      "region": "bay",
+      "opportunity_id": "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m-cutoff-2024-01-10T00:00:00Z"
+    },
+    {
+      "region": "bay",
+      "opportunity_id": "KOAK-2024-01-10T15:00:00Z-vis-lt-5000m-cutoff-2024-01-10T12:00:00Z"
+    },
+    {
+      "region": "bay",
+      "opportunity_id": "KOAK-2024-01-17T03:00:00Z-vis-lt-5000m-cutoff-2024-01-17T00:00:00Z"
+    },
+    {
+      "region": "bay",
+      "opportunity_id": "KOAK-2024-01-17T15:00:00Z-vis-lt-5000m-cutoff-2024-01-17T12:00:00Z"
+    },
+    {
+      "region": "front",
+      "opportunity_id": "KCOS-2024-01-03T03:00:00Z-vis-lt-1000m-cutoff-2024-01-03T00:00:00Z"
+    },
+    {
+      "region": "front",
+      "opportunity_id": "KCOS-2024-01-03T15:00:00Z-vis-lt-1000m-cutoff-2024-01-03T12:00:00Z"
+    },
+    {
+      "region": "front",
+      "opportunity_id": "KCOS-2024-01-10T03:00:00Z-vis-lt-1000m-cutoff-2024-01-10T00:00:00Z"
+    },
+    {
+      "region": "front",
+      "opportunity_id": "KCOS-2024-01-10T15:00:00Z-vis-lt-1000m-cutoff-2024-01-10T12:00:00Z"
+    },
+    {
+      "region": "front",
+      "opportunity_id": "KCOS-2024-01-17T03:00:00Z-vis-lt-1000m-cutoff-2024-01-17T00:00:00Z"
+    },
+    {
+      "region": "front",
+      "opportunity_id": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m-cutoff-2024-01-17T12:00:00Z"
+    }
+  ],
+  "conditions": [
+    "common_only",
+    "fixed_one",
+    "all_registered"
+  ],
+  "heads": [
+    "e_only",
+    "f_only",
+    "joint"
+  ],
+  "model": "Qwen3-8B",
+  "expected_calls": 108,
+  "repeats": 1,
+  "retries": 0,
+  "max_gpus": 4,
+  "initial_gpus": 1,
+  "logical_start_rule": "cutoff minus 60 seconds; all disclosed inputs must already be completed",
+  "duration_rule": "actual request through response fsync duration mapped to the fixed logical start",
+  "baseline_mapping": "original frozen December 2023 bank; do not select based on later scores",
+  "protocol": "base_bound_override",
+  "decision_rule": "adopt every timely valid F; E-only never enters F denominator",
+  "E_contract": "any_registered_neighbor_slot_below_threshold; new TAF coverage/version E excluded from model smoke",
+  "outcomes": "evaluator only, same mask for every F arm",
+  "independent_weather_confirmation": false,
+  "source_manifest_sha256": "9d8d79239d420a9a287cbfed83f894801081a8dc95c152f67b3523a821a6e5e1"
+}

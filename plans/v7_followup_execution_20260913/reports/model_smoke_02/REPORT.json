@@ -1,0 +1,235 @@
+{
+  "schema": "disastertrace.independent_head_smoke_report.v1",
+  "model_calls": 108,
+  "model": "Qwen3-8B",
+  "plan_sha256": "8b9b87ea7ab8468efc78d9af3ff1112ac40f5a85a905c3ee0332fd8c5b617c5b",
+  "tokens": {
+    "input_tokens": 285060,
+    "output_tokens": 2188
+  },
+  "all_raw_tokens_inputs_commits_verified": true,
+  "all_admission_journals_replayed": true,
+  "admission_statuses": {
+    "e_only.all_registered": {
+      "e_only_recorded": 12
+    },
+    "e_only.common_only": {
+      "e_only_recorded": 12
+    },
+    "e_only.fixed_one": {
+      "e_only_recorded": 12
+    },
+    "f_only.all_registered": {
+      "accepted": 12
+    },
+    "f_only.common_only": {
+      "accepted": 12
+    },
+    "f_only.fixed_one": {
+      "accepted": 12
+    },
+    "joint.all_registered": {
+      "accepted": 12
+    },
+    "joint.common_only": {
+      "accepted": 12
+    },
+    "joint.fixed_one": {
+      "accepted": 12
+    }
+  },
+  "E": {
+    "e_only.all_registered": {
+      "registered": 12,
+      "correct": 0,
+      "expected_statuses": {
+        "refuted": 11,
+        "supported": 1
+      }
+    },
+    "e_only.common_only": {
+      "registered": 12,
+      "correct": 12,
+      "expected_statuses": {
+        "undetermined": 12
+      }
+    },
+    "e_only.fixed_one": {
+      "registered": 12,
+      "correct": 11,
+      "expected_statuses": {
+        "undetermined": 11,
+        "supported": 1
+      }
+    },
+    "joint.all_registered": {
+      "registered": 12,
+      "correct": 3,
+      "expected_statuses": {
+        "refuted": 11,
+        "supported": 1
+      }
+    },
+    "joint.common_only": {
+      "registered": 12,
+      "correct": 12,
+      "expected_statuses": {
+        "undetermined": 12
+      }
+    },
+    "joint.fixed_one": {
+      "registered": 12,
+      "correct": 11,
+      "expected_statuses": {
+        "undetermined": 11,
+        "supported": 1
+      }
+    }
+  },
+  "F": {
+    "schema": "disastertrace.admitted_scores.v1",
+    "contract_sha256": "f7f8d7adc488ca76544d151432c9940224c72872d90fbbf3bf372d06a51d5b5a",
+    "time_basis": "declared_archive_scenario",
+    "outcome_sha256": "4a8320f8278d1e7e15032b1783e25f14a58b710e98553bf40be6d8407b46b78d",
+    "scores": {
+      "registered": 12,
+      "settled": 12,
+      "missing": 0,
+      "score": "brier",
+      "arms": {
+        "f_only.all_registered": {
+          "mean_loss": 0.07830752605357992,
+          "loss_sum": 0.9396903126429591,
+          "scored": 12
+        },
+        "f_only.common_only": {
+          "mean_loss": 0.07830752605357992,
+          "loss_sum": 0.9396903126429591,
+          "scored": 12
+        },
+        "f_only.fixed_one": {
+          "mean_loss": 0.07830752605357992,
+          "loss_sum": 0.9396903126429591,
+          "scored": 12
+        },
+        "joint.all_registered": {
+          "mean_loss": 0.07830752605357992,
+          "loss_sum": 0.9396903126429591,
+          "scored": 12
+        },
+        "joint.common_only": {
+          "mean_loss": 0.07830752605357992,
+          "loss_sum": 0.9396903126429591,
+          "scored": 12
+        },
+        "joint.fixed_one": {
+          "mean_loss": 0.07830752605357992,
+          "loss_sum": 0.9396903126429591,
+          "scored": 12
+        },
+        "follow": {
+          "mean_loss": 0.07830752605357992,
+          "loss_sum": 0.9396903126429591,
+          "scored": 12
+        }
+      }
+    },
+    "admission_statuses": {
+      "f_only.all_registered": [
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted"
+      ],
+      "f_only.common_only": [
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted"
+      ],
+      "f_only.fixed_one": [
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted"
+      ],
+      "joint.all_registered": [
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted"
+      ],
+      "joint.common_only": [
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted"
+      ],
+      "joint.fixed_one": [
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted",
+        "accepted"
+      ],
+      "follow": []
+    }
+  },
+  "parse_failures": 0,
+  "candidate_changes": 0,
+  "limitations": [
+    "12 previously exposed opportunities",
+    "one model, one repeat",
+    "declared archive timing, not online validation",
+    "E-only excluded from F denominator",
+    "TAF coverage/version E heads not run",
+    "no claim of independent C1/C2 benefit"
+  ]
+}

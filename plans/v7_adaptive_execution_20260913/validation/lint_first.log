@@ -1,0 +1,135 @@
+I001 [*] Import block is un-sorted or un-formatted
+   --> src/disastertrace/monitoring_fixed_v1/admission.py:497:9
+    |
+495 |       def write_journal(self, path):
+496 |           """Persist a restored branch, including its inherited prefix exactly once."""
+497 | /         from pathlib import Path
+498 | |         from ..monitoring_v1.journal import EventJournal
+    | |________________________________________________________^
+499 |
+500 |           path = Path(path)
+    |
+help: Organize imports
+    |
+497 |         from pathlib import Path
+498 +
+499 |         from ..monitoring_v1.journal import EventJournal
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> src/disastertrace/monitoring_fixed_v1/representations.py:3:1
+  |
+1 |   """Task-focused views of the same disclosed native records, without E answers."""
+2 |
+3 | / from .contracts import canonical
+4 | | from .heads import SYSTEMS, _aviation_target, _check_head, model_messages as full_messages
+  | |__________________________________________________________________________________________^
+5 |
+6 |   VERSION = "native_task_focus.v1"
+  |
+help: Organize imports
+  |
+3 | from .contracts import canonical
+  - from .heads import SYSTEMS, _aviation_target, _check_head, model_messages as full_messages
+4 + from .heads import SYSTEMS, _aviation_target, _check_head
+5 + from .heads import model_messages as full_messages
+6 |
+  |
+
+TRY004 Prefer `TypeError` exception for invalid type
+  --> src/disastertrace/monitoring_fixed_v1/taf_tasks.py:61:13
+   |
+59 |             raise ValueError("Explicit source-availability basis required")
+60 |         if not isinstance(row["products"], list):
+61 |             raise ValueError("Native products must be a list")
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+62 |         seen = set()
+63 |         for p in row["products"]:
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_monitoring_taf_tasks.py:3:1
+   |
+ 1 |   """Window/issuance counterexamples for E-only native TAF contracts."""
+ 2 |
+ 3 | / import copy
+ 4 | | import json
+ 5 | |
+ 6 | | import pytest
+ 7 | |
+ 8 | | from disastertrace.monitoring_fixed_v1.contracts import Target
+ 9 | | from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask, evaluate, messages, parse_answer, score_answer
+10 | | from disastertrace.monitoring_v1.targets import utc_us
+   | |______________________________________________________^
+help: Organize imports
+   |
+8  | from disastertrace.monitoring_fixed_v1.contracts import Target
+   - from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask, evaluate, messages, parse_answer, score_answer
+9  + from disastertrace.monitoring_fixed_v1.taf_tasks import (
+10 +     TafEvidenceTask,
+11 +     evaluate,
+12 +     messages,
+13 +     parse_answer,
+14 +     score_answer,
+15 + )
+16 | from disastertrace.monitoring_v1.targets import utc_us
+   |
+
+B023 Function definition does not bind loop variable `seen`
+   --> tests/test_monitoring_typed_session.py:130:17
+    |
+128 |             sensitive = request["target"]["entity"] == "station:KSFO"
+129 |             if not sensitive:
+130 |                 seen.append(request)
+    |                 ^^^^
+131 |             return json.dumps({"fact_truth": "unknown", "probability": 0.8 if sensitive and bit else 0.2}), {
+132 |                 "seconds": 8 if sensitive and bit else 1,
+    |
+
+B023 Function definition does not bind loop variable `bit`
+   --> tests/test_monitoring_typed_session.py:131:93
+    |
+129 |             if not sensitive:
+130 |                 seen.append(request)
+131 |             return json.dumps({"fact_truth": "unknown", "probability": 0.8 if sensitive and bit else 0.2}), {
+    |                                                                                             ^^^
+132 |                 "seconds": 8 if sensitive and bit else 1,
+133 |                 "input_tokens": 20,
+    |
+
+B023 Function definition does not bind loop variable `bit`
+   --> tests/test_monitoring_typed_session.py:132:47
+    |
+130 |                 seen.append(request)
+131 |             return json.dumps({"fact_truth": "unknown", "probability": 0.8 if sensitive and bit else 0.2}), {
+132 |                 "seconds": 8 if sensitive and bit else 1,
+    |                                               ^^^
+133 |                 "input_tokens": 20,
+134 |                 "output_tokens": 20 if sensitive and bit else 10,
+    |
+
+B023 Function definition does not bind loop variable `bit`
+   --> tests/test_monitoring_typed_session.py:134:54
+    |
+132 |                 "seconds": 8 if sensitive and bit else 1,
+133 |                 "input_tokens": 20,
+134 |                 "output_tokens": 20 if sensitive and bit else 10,
+    |                                                      ^^^
+135 |                 "ended_with_eos": True,
+136 |             }
+    |
+
+PLW1510 `subprocess.run` without explicit `check` argument
+   --> /mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_adaptive_execution_20260913/execute_typed_session.py:109:15
+    |
+107 |         save(spec, {"snapshot": snapshot, "data": data, "bank": bank, "controls": controls})
+108 |         command = [sys.executable, str(Path(__file__).resolve()), "--worker", str(spec.resolve()), "--output", str(result.resolve())]
+109 |         run = subprocess.run(command, text=True, capture_output=True, timeout=180)
+    |               ^^^^^^^^^^^^^^
+110 |         commands.append({"argv": command, "returncode": run.returncode, "stdout": run.stdout, "stderr": run.stderr})
+111 |         if run.returncode:
+    |
+help: Add explicit `check=False`
+
+Found 9 errors.
+[*] 3 fixable with the `--fix` option.
