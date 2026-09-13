@@ -1,0 +1,60 @@
+{
+  "schema": "disastertrace.monitoring.public_capture.v1",
+  "transport": "curl",
+  "limits": {
+    "requests": 6,
+    "bytes": 15728646
+  },
+  "allowed_hosts": [
+    "mesonet.agron.iastate.edu"
+  ],
+  "pause_seconds": 0.2,
+  "requests": [
+    {
+      "id": "metar-routine-KDEN",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=DEN&data=all&year1=2025&month1=12&day1=1&year2=2025&month2=12&day2=30&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 1048576,
+      "timeout": 90,
+      "purpose": "Full prior Dec2025 Front calibration acquisition, no January outcomes used"
+    },
+    {
+      "id": "taf-catalog-KDEN",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?station=KDEN&year1=2025&month1=12&day1=1&hour1=0&year2=2025&month2=12&day2=30&hour2=0&tz=Etc%2FUTC&fmt=comma",
+      "max_bytes": 4194304,
+      "timeout": 90,
+      "purpose": "Full prior Dec2025 Front calibration acquisition, no January outcomes used"
+    },
+    {
+      "id": "metar-routine-KCOS",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=COS&data=all&year1=2025&month1=12&day1=1&year2=2025&month2=12&day2=30&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 1048576,
+      "timeout": 90,
+      "purpose": "Full prior Dec2025 Front calibration acquisition, no January outcomes used"
+    },
+    {
+      "id": "taf-catalog-KCOS",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?station=KCOS&year1=2025&month1=12&day1=1&hour1=0&year2=2025&month2=12&day2=30&hour2=0&tz=Etc%2FUTC&fmt=comma",
+      "max_bytes": 4194304,
+      "timeout": 90,
+      "purpose": "Full prior Dec2025 Front calibration acquisition, no January outcomes used"
+    },
+    {
+      "id": "metar-routine-KPUB",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=PUB&data=all&year1=2025&month1=12&day1=1&year2=2025&month2=12&day2=30&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 1048576,
+      "timeout": 90,
+      "purpose": "Full prior Dec2025 Front calibration acquisition, no January outcomes used"
+    },
+    {
+      "id": "taf-catalog-KPUB",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?station=KPUB&year1=2025&month1=12&day1=1&hour1=0&year2=2025&month2=12&day2=30&hour2=0&tz=Etc%2FUTC&fmt=comma",
+      "max_bytes": 4194304,
+      "timeout": 90,
+      "purpose": "Full prior Dec2025 Front calibration acquisition, no January outcomes used"
+    }
+  ],
+  "no_fitting": true,
+  "dates_selected_before_response": "2025-12-01 through2025-12-29 inclusive; build and fit supports follow separate frozen contracts",
+  "total_cycle_safety_cap_bytes": 104857600,
+  "native_product_request_cap": 750
+}

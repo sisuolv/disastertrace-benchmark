@@ -1,0 +1,131 @@
+{
+  "bundle_hash": "f1fb5c6ef228ec141b6e44fcfe2459317559c0a96b201eb2d5bfa04259a32cc5",
+  "base_hash": "3a0c1aa1c1ddd0e0a477e7a06e324a54eafca0117d9570fc400e294263b9be18",
+  "payload": {
+    "assets": [],
+    "authorization_mode": "target_private",
+    "availability_basis": "declared_archive_scenario",
+    "baseline": {
+      "available_at": 1704843480000000,
+      "content": {
+        "E_question": {
+          "predicate": "any_registered_neighbor_slot_below_threshold",
+          "query_ids": [
+            "routine-KCOS-2024-01-09T22:00:00Z",
+            "routine-KDEN-2024-01-09T22:00:00Z"
+          ],
+          "threshold_m": 1000
+        },
+        "calibration_bank_sha256": "59e67eaef83ea46e313033d8e7308315647964eccb98d33d72ffc5512d28c3ce",
+        "legacy_target_contract": {
+          "entity": "KPUB",
+          "event_operator": "lt",
+          "outcome_kind": "archived_native_report",
+          "physical_end": 1704859200000000,
+          "physical_start": 1704855600000000,
+          "release_event_at": null,
+          "report_policy": "iem_routine_unique_hour.v1",
+          "spatial_radius_m": null,
+          "spatial_support": "station:KPUB",
+          "target_id": "KPUB-2024-01-10T03:00:00Z-vis-lt-1000m",
+          "temporal_semantics": "future_physical",
+          "threshold": 1000,
+          "units": "m",
+          "variable": "visibility"
+        },
+        "mapping_details": {
+          "cell_key": "[1000,\"3-6\",\"no_low\",\"no_low\",false]",
+          "kind": "research_calibrated_taf_projection",
+          "mapping_version": "dec2023_taf_interval_empirical.v1",
+          "n": 615,
+          "probability": 0.02593192868719611
+        },
+        "native_taf": {
+          "amendment_kind": "original",
+          "available_at": 1704843480000000,
+          "issued_at": 1704843360000000,
+          "opportunity_id": "KPUB-2024-01-10T03:00:00Z-vis-lt-1000m-cutoff-2024-01-10T00:00:00Z",
+          "probability": null,
+          "probability_status": "awaiting_separate_development_calibration",
+          "projection": {
+            "rule_version": "taf_applicable_groups.v1",
+            "segments": [
+              {
+                "conditional": [],
+                "end": 1704859200000000,
+                "prevailing": [
+                  {
+                    "auxiliary": [],
+                    "sky": [
+                      "SKC"
+                    ],
+                    "visibility": {
+                      "lower": 9656.064,
+                      "lower_closed": false,
+                      "upper": "+inf",
+                      "upper_closed": true
+                    },
+                    "weather": [],
+                    "wind": "12007KT",
+                    "wind_shear": null
+                  }
+                ],
+                "start": 1704855600000000
+              }
+            ],
+            "station": "KPUB",
+            "target_end": 1704859200000000,
+            "target_start": 1704855600000000
+          },
+          "raw": "549 FTUS45 KPUB 092336 TAFPUB TAF KPUB 092336Z 1000/1024 12007KT P6SM SKC FM100400 28012KT P6SM SCT150 BKN200 FM101800 28030G40KT P6SM SKC FM102000 28025G35KT P6SM SKC FM102100 28020G30KT P6SM FEW250 FM102300 26013KT P6SM SCT250=",
+          "source_id": "taf-202401092336-KPUB-FTUS45-TAFPUB",
+          "target_id": "KPUB-2024-01-10T03:00:00Z-vis-lt-1000m",
+          "valid_until": 1704855600000000
+        }
+      },
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "67429346c36eccbf1200fef6c481663b2e1cc9b9c98757440d7229f3b813acd7",
+        "units": "probability",
+        "value": 0.02593192868719611
+      },
+      "issued_at": 1704843360000000,
+      "kind": "research",
+      "mapping_version": "dec2023_taf_interval_empirical.v1",
+      "source_revision": "taf-202401092336-KPUB-FTUS45-TAFPUB",
+      "valid_until": 1704855600000000
+    },
+    "cutoff": 1704844800000000,
+    "opportunity_id": "KPUB-2024-01-10T03:00:00Z-vis-lt-1000m-cutoff-2024-01-10T00:00:00Z",
+    "provider_version": "native_h15_snapshot.v1",
+    "receipts": [],
+    "representation": "native_text_and_fixed_parser_product_intervals",
+    "schema": "disastertrace.frozen_evidence.v1",
+    "state": {
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "67429346c36eccbf1200fef6c481663b2e1cc9b9c98757440d7229f3b813acd7",
+        "units": "probability",
+        "value": 0.02593192868719611
+      },
+      "mode": "FOLLOW",
+      "protocol": "base_bound_override"
+    },
+    "target": {
+      "entity": "station:KPUB",
+      "event_operator": "lt",
+      "output_kind": "event_probability",
+      "physical_end": 1704859200000000,
+      "physical_start": 1704855600000000,
+      "release_event_at": null,
+      "report_policy": "iem_routine_unique_hour.v1",
+      "support_kind": "interval",
+      "target_id": "KPUB-2024-01-10T03:00:00Z-vis-lt-1000m",
+      "temporal_semantics": "future_physical",
+      "threshold": 1000,
+      "units": "m",
+      "variable": "visibility"
+    }
+  },
+  "asset_hashes": {}
+}

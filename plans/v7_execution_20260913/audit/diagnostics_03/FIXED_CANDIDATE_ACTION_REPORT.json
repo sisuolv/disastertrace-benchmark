@@ -1,0 +1,984 @@
+{
+  "protocol": {
+    "schema": "disastertrace.fixed_candidate_action_diagnostic.v1",
+    "declared_at": "2026-09-13T04:49:48.215514+00:00",
+    "post_hoc_to_existing_results": true,
+    "rule": "For each actually saved valid candidate whose probability differs from its captured call-start baseline, replace follow/no_change by override. Leave all other candidate actions and every probability/time/exogenous event unchanged.",
+    "purpose": "Identify whether the recorded probability/action interface, rather than the wrapper alone, explains unused nonbaseline proposals.",
+    "limits": "Not a new adaptive policy: the replay can alter later state but the recorded future outputs are not regenerated from that altered state. No candidate is created for an uncalled opportunity. No tuning from replay scores.",
+    "new_model_calls": 0
+  },
+  "cohorts": {
+    "bay2024": {
+      "model/qwen3_8b/round_robin/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 20,
+          "replayed_changed_sessions": 7,
+          "replay_attempt:declined_follow": 965,
+          "replay_attempt:accepted": 22,
+          "replay_attempt:declined_no_change": 21,
+          "changed_final_snapshots": 22,
+          "identical_sessions_no_replay_required": 2
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.02992252633421293,
+          "net_realized_gain": -0.00030873488308203546,
+          "g_plus": 0.0,
+          "g_minus": 0.00030873488308203546,
+          "full_population_gain_bounds": [
+            -0.00030873488308203546,
+            -0.00030873488308203546
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029914721375968834,
+          "net_realized_gain": -0.00030092992483794523,
+          "g_plus": 7.804958244090236e-06,
+          "g_minus": 0.00030873488308203546,
+          "full_population_gain_bounds": [
+            -0.00030092992483794523,
+            -0.00030092992483794523
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 7.804958244095328e-06
+      },
+      "model/qwen3_8b/risk/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 22,
+          "replayed_changed_sessions": 7,
+          "replay_attempt:declined_follow": 974,
+          "replay_attempt:accepted": 22,
+          "changed_final_snapshots": 26,
+          "replay_attempt:declined_no_change": 12,
+          "identical_sessions_no_replay_required": 2
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029613791451130893,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.02959872996742331,
+          "net_realized_gain": 1.506148370758487e-05,
+          "g_plus": 1.506148370758487e-05,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            1.506148370758487e-05,
+            1.506148370758487e-05
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 1.5061483707584644e-05
+      },
+      "model/qwen3_8b/batch_complete/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 17,
+          "replayed_changed_sessions": 7,
+          "replay_attempt:declined_no_change": 174,
+          "replay_attempt:declined_follow": 816,
+          "replay_attempt:accepted": 18,
+          "changed_final_snapshots": 20,
+          "identical_sessions_no_replay_required": 2
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.030264700583164664,
+          "net_realized_gain": -0.0006509091320337732,
+          "g_plus": 0.0,
+          "g_minus": 0.0006509091320337732,
+          "full_population_gain_bounds": [
+            -0.0006509091320337732,
+            -0.0006509091320337732
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.03025795564384757,
+          "net_realized_gain": -0.0006441641927166762,
+          "g_plus": 6.744939317096939e-06,
+          "g_minus": 0.0006509091320337732,
+          "full_population_gain_bounds": [
+            -0.0006441641927166762,
+            -0.0006441641927166762
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 6.744939317095827e-06
+      },
+      "model/qwen3_8b/llm/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 0,
+          "identical_sessions_no_replay_required": 9,
+          "changed_final_snapshots": 0
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029613791451130893,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029613791451130893,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 0.0
+      },
+      "model/qwen3_8b/round_robin/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 1,
+          "identical_sessions_no_replay_required": 8,
+          "changed_final_snapshots": 1,
+          "replayed_changed_sessions": 1,
+          "replay_attempt:declined_follow": 132,
+          "replay_attempt:declined_no_change": 11,
+          "replay_attempt:accepted": 1
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029768305898642468,
+          "net_realized_gain": -0.00015451444751157702,
+          "g_plus": 0.0,
+          "g_minus": 0.00015451444751157702,
+          "full_population_gain_bounds": [
+            -0.00015451444751157702,
+            -0.00015451444751157702
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.02976807226502854,
+          "net_realized_gain": -0.00015428081389764854,
+          "g_plus": 2.336336139284622e-07,
+          "g_minus": 0.00015451444751157702,
+          "full_population_gain_bounds": [
+            -0.00015428081389764854,
+            -0.00015428081389764854
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 2.3363361392747528e-07
+      },
+      "model/qwen3_8b/risk/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 2,
+          "identical_sessions_no_replay_required": 8,
+          "changed_final_snapshots": 2,
+          "replayed_changed_sessions": 1,
+          "replay_attempt:declined_follow": 125,
+          "replay_attempt:declined_no_change": 17,
+          "replay_attempt:accepted": 2
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029613791451130893,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.02961229909985512,
+          "net_realized_gain": 1.4923512757719802e-06,
+          "g_plus": 1.4923512757719802e-06,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            1.4923512757719802e-06,
+            1.4923512757719802e-06
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 1.4923512757746005e-06
+      },
+      "model/qwen3_8b/batch_complete/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 1,
+          "identical_sessions_no_replay_required": 8,
+          "changed_final_snapshots": 2,
+          "replayed_changed_sessions": 1,
+          "replay_attempt:declined_no_change": 59,
+          "replay_attempt:declined_follow": 84,
+          "replay_attempt:accepted": 1
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029613791451130893,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029613324183903035,
+          "net_realized_gain": 4.672672278569244e-07,
+          "g_plus": 4.672672278569244e-07,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            4.672672278569244e-07,
+            4.672672278569244e-07
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 4.6726722785842e-07
+      },
+      "model/qwen3_8b/llm/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 0,
+          "identical_sessions_no_replay_required": 9,
+          "changed_final_snapshots": 0
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029613791451130893,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5832,
+          "missing": 0,
+          "base_brier": 0.029613791451130893,
+          "system_brier": 0.029613791451130893,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 0.0
+      }
+    },
+    "front2024": {
+      "model/qwen3_8b/round_robin/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 4,
+          "replayed_changed_sessions": 4,
+          "replay_attempt:declined_follow": 557,
+          "replay_attempt:declined_no_change": 14,
+          "replay_attempt:accepted": 5,
+          "changed_final_snapshots": 4,
+          "identical_sessions_no_replay_required": 5
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007963164788619949,
+          "net_realized_gain": -0.000171073751383597,
+          "g_plus": 0.0,
+          "g_minus": 0.000171073751383597,
+          "full_population_gain_bounds": [
+            -0.00017089774958176202,
+            -0.00017089774958176202
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.00813437657723228,
+          "net_realized_gain": -0.00034228553999592835,
+          "g_plus": 3.462744209257592e-07,
+          "g_minus": 0.0003426318144168541,
+          "full_population_gain_bounds": [
+            -0.00034193339437864855,
+            -0.00034193339437864855
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": -0.00017121178861233093
+      },
+      "model/qwen3_8b/risk/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 3,
+          "identical_sessions_no_replay_required": 7,
+          "changed_final_snapshots": 3,
+          "replayed_changed_sessions": 2,
+          "replay_attempt:declined_follow": 278,
+          "replay_attempt:declined_no_change": 7,
+          "replay_attempt:accepted": 3
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007963164788619949,
+          "net_realized_gain": -0.000171073751383597,
+          "g_plus": 0.0,
+          "g_minus": 0.000171073751383597,
+          "full_population_gain_bounds": [
+            -0.00017089774958176202,
+            -0.00017089774958176202
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007960167656209324,
+          "net_realized_gain": -0.00016807661897297267,
+          "g_plus": 2.9971324106243278e-06,
+          "g_minus": 0.000171073751383597,
+          "full_population_gain_bounds": [
+            -0.00016790370064069594,
+            -0.00016790370064069594
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 2.9971324106252417e-06
+      },
+      "model/qwen3_8b/batch_complete/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 11,
+          "replayed_changed_sessions": 6,
+          "replay_attempt:declined_no_change": 185,
+          "replay_attempt:declined_follow": 667,
+          "replay_attempt:accepted": 12,
+          "changed_final_snapshots": 12,
+          "identical_sessions_no_replay_required": 3
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007963276848268717,
+          "net_realized_gain": -0.00017118581103236564,
+          "g_plus": 0.0,
+          "g_minus": 0.00017118581103236564,
+          "full_population_gain_bounds": [
+            -0.00017100969394282618,
+            -0.00017100969394282618
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.008305296996144365,
+          "net_realized_gain": -0.000513205958908013,
+          "g_plus": 1.0959781908668656e-06,
+          "g_minus": 0.0005143019370988798,
+          "full_population_gain_bounds": [
+            -0.0005126779692383545,
+            -0.0005126779692383545
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": -0.00034202014787564766
+      },
+      "model/qwen3_8b/llm/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 0,
+          "identical_sessions_no_replay_required": 9,
+          "changed_final_snapshots": 0
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007792091037236351,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007792091037236351,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 0.0
+      },
+      "model/qwen3_8b/round_robin/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 1,
+          "identical_sessions_no_replay_required": 8,
+          "changed_final_snapshots": 2,
+          "replayed_changed_sessions": 1,
+          "replay_attempt:declined_follow": 123,
+          "replay_attempt:declined_no_change": 20,
+          "replay_attempt:accepted": 1
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007792091037236351,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007791889322561843,
+          "net_realized_gain": 2.017146745076736e-07,
+          "g_plus": 2.017146745076736e-07,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            2.0150714912237764e-07,
+            2.0150714912237764e-07
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 2.0171467450796204e-07
+      },
+      "model/qwen3_8b/risk/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 1,
+          "identical_sessions_no_replay_required": 8,
+          "changed_final_snapshots": 1,
+          "replayed_changed_sessions": 1,
+          "replay_attempt:declined_follow": 117,
+          "replay_attempt:declined_no_change": 26,
+          "replay_attempt:accepted": 1
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007792091037236351,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007790754705769131,
+          "net_realized_gain": 1.3363314672206802e-06,
+          "g_plus": 1.3363314672206802e-06,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            1.3349566406083132e-06,
+            1.3349566406083132e-06
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 1.33633146722021e-06
+      },
+      "model/qwen3_8b/batch_complete/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 1,
+          "identical_sessions_no_replay_required": 8,
+          "changed_final_snapshots": 2,
+          "replayed_changed_sessions": 1,
+          "replay_attempt:declined_no_change": 56,
+          "replay_attempt:declined_follow": 87,
+          "replay_attempt:accepted": 1
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007792091037236351,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007791889322561843,
+          "net_realized_gain": 2.017146745076736e-07,
+          "g_plus": 2.017146745076736e-07,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            2.0150714912237764e-07,
+            2.0150714912237764e-07
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 2.0171467450796204e-07
+      },
+      "model/qwen3_8b/llm/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 0,
+          "identical_sessions_no_replay_required": 9,
+          "changed_final_snapshots": 0
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007792091037236351,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5826,
+          "missing": 6,
+          "base_brier": 0.007792091037236351,
+          "system_brier": 0.007792091037236351,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 0.0
+      }
+    },
+    "front2026": {
+      "model/qwen3_8b/round_robin/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 13,
+          "replayed_changed_sessions": 7,
+          "replay_attempt:declined_follow": 979,
+          "replay_attempt:declined_no_change": 16,
+          "replay_attempt:accepted": 13,
+          "changed_final_snapshots": 15,
+          "identical_sessions_no_replay_required": 2
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0071931266261248995,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.007192948358263792,
+          "net_realized_gain": 1.7826786110747293e-07,
+          "g_plus": 1.7826786110747293e-07,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            1.7716744221174778e-07,
+            1.7716744221174778e-07
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 1.7826786110741039e-07
+      },
+      "model/qwen3_8b/risk/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 7,
+          "replayed_changed_sessions": 7,
+          "replay_attempt:declined_follow": 982,
+          "replay_attempt:declined_no_change": 19,
+          "replay_attempt:accepted": 7,
+          "changed_final_snapshots": 7,
+          "identical_sessions_no_replay_required": 2
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0071931266261248995,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.007193030787150646,
+          "net_realized_gain": 9.583897425273371e-08,
+          "g_plus": 9.583897425273371e-08,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            9.524737564623536e-08,
+            9.524737564623536e-08
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 9.583897425322063e-08
+      },
+      "model/qwen3_8b/batch_complete/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 22,
+          "replayed_changed_sessions": 6,
+          "replay_attempt:declined_follow": 626,
+          "replay_attempt:declined_no_change": 216,
+          "replay_attempt:accepted": 22,
+          "changed_final_snapshots": 27,
+          "identical_sessions_no_replay_required": 3
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0071931266261248995,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.007192814756290376,
+          "net_realized_gain": 3.118698345230144e-07,
+          "g_plus": 3.118698345230144e-07,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            3.099447120876871e-07,
+            3.099447120876871e-07
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 3.118698345232207e-07
+      },
+      "model/qwen3_8b/llm/base_bound_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 4,
+          "identical_sessions_no_replay_required": 7,
+          "changed_final_snapshots": 5,
+          "replayed_changed_sessions": 2,
+          "replay_attempt:declined_follow": 117,
+          "replay_attempt:declined_no_change": 22,
+          "replay_attempt:accepted": 5
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.007365301883595871,
+          "net_realized_gain": -0.00017217525747097187,
+          "g_plus": 0.0,
+          "g_minus": 0.00017217525747097187,
+          "full_population_gain_bounds": [
+            -0.00017111244723966957,
+            -0.00017111244723966957
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0075374266181557,
+          "net_realized_gain": -0.0003442999920308002,
+          "g_plus": 5.052291114356024e-08,
+          "g_minus": 0.00034435051494194374,
+          "full_population_gain_bounds": [
+            -0.00034217468343801744,
+            -0.00034217468343801744
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": -0.00017212473455982882
+      },
+      "model/qwen3_8b/round_robin/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 1,
+          "identical_sessions_no_replay_required": 8,
+          "changed_final_snapshots": 2,
+          "replayed_changed_sessions": 1,
+          "replay_attempt:declined_follow": 131,
+          "replay_attempt:declined_no_change": 12,
+          "replay_attempt:accepted": 1
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0071931266261248995,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.007193101364669328,
+          "net_realized_gain": 2.526145557178012e-08,
+          "g_plus": 2.526145557178012e-08,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            2.5105520660843206e-08,
+            2.5105520660843206e-08
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 2.5261455571454206e-08
+      },
+      "model/qwen3_8b/risk/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 0,
+          "identical_sessions_no_replay_required": 9,
+          "changed_final_snapshots": 0
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0071931266261248995,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0071931266261248995,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 0.0
+      },
+      "model/qwen3_8b/batch_complete/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 4,
+          "identical_sessions_no_replay_required": 7,
+          "changed_final_snapshots": 8,
+          "replayed_changed_sessions": 2,
+          "replay_attempt:declined_no_change": 86,
+          "replay_attempt:declined_follow": 198,
+          "replay_attempt:accepted": 4
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0071931266261248995,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.00719303479148113,
+          "net_realized_gain": 9.183464376978965e-08,
+          "g_plus": 9.183464376978965e-08,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            9.126776325269217e-08,
+            9.126776325269217e-08
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 9.183464376970318e-08
+      },
+      "model/qwen3_8b/llm/persistent_override": {
+        "counts": {
+          "sessions": 9,
+          "changed_candidate_actions": 1,
+          "identical_sessions_no_replay_required": 8,
+          "changed_final_snapshots": 3,
+          "replayed_changed_sessions": 1,
+          "replay_attempt:declined_follow": 55,
+          "replay_attempt:declined_no_change": 16,
+          "replay_attempt:accepted": 1
+        },
+        "recorded_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0071931266261248995,
+          "net_realized_gain": 0.0,
+          "g_plus": 0.0,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "fixed_candidate_action_replay_scores": {
+          "opportunities": 5832,
+          "settled": 5796,
+          "missing": 36,
+          "base_brier": 0.0071931266261248995,
+          "system_brier": 0.0071930887339415415,
+          "net_realized_gain": 3.789218335767018e-08,
+          "g_plus": 3.789218335767018e-08,
+          "g_minus": 0.0,
+          "full_population_gain_bounds": [
+            3.765828099126481e-08,
+            3.765828099126481e-08
+          ]
+        },
+        "gain_vs_recorded_on_common_settled_mask": 3.789218335804867e-08
+      }
+    }
+  },
+  "new_model_calls": 0
+}

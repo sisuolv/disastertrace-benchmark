@@ -1,0 +1,9 @@
+{
+  "schema": "disastertrace.fixed_candidate_action_diagnostic.v1",
+  "declared_at": "2026-09-13T04:45:57.779751+00:00",
+  "post_hoc_to_existing_results": true,
+  "rule": "For each actually saved valid candidate whose probability differs from its captured call-start baseline, replace follow/no_change by override. Leave all other candidate actions and every probability/time/exogenous event unchanged.",
+  "purpose": "Identify whether the recorded probability/action interface, rather than the wrapper alone, explains unused nonbaseline proposals.",
+  "limits": "Not a new adaptive policy: the replay can alter later state but the recorded future outputs are not regenerated from that altered state. No candidate is created for an uncalled opportunity. No tuning from replay scores.",
+  "new_model_calls": 0
+}

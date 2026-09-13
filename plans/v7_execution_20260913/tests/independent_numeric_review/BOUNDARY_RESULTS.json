@@ -1,0 +1,32 @@
+{
+  "module_sha256": "ca2c2d87ebc59bfdf36b19df0695f492233c4e6f8e218be6e3472c036078dbfd",
+  "kind": "synthetic_contract_boundary_counterexamples_not_GPU_failures",
+  "finding": "ForecastState.propose does not enforce Target.check_cutoff; callers currently must do so",
+  "cases": [
+    {
+      "temporal_semantics": "future_physical",
+      "proposal_at": 100,
+      "target_check_cutoff_rejected": true,
+      "state_propose_status": "accepted",
+      "effective_value": 280,
+      "replay_preserves_late_acceptance": true
+    },
+    {
+      "temporal_semantics": "future_product_release",
+      "proposal_at": 30,
+      "target_check_cutoff_rejected": true,
+      "state_propose_status": "accepted",
+      "effective_value": 280,
+      "replay_preserves_late_acceptance": true
+    },
+    {
+      "temporal_semantics": "partial_window_nowcast",
+      "proposal_at": 20,
+      "target_check_cutoff_rejected": true,
+      "state_propose_status": "accepted",
+      "effective_value": 280,
+      "replay_preserves_late_acceptance": true
+    }
+  ],
+  "existing_frozen_inputs_mutated": false
+}

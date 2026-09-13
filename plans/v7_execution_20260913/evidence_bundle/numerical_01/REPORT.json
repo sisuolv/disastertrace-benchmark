@@ -1,0 +1,56 @@
+{
+  "schema": "disastertrace.numerical_integration.v1",
+  "source_pairs": 63,
+  "scored_positive_lead_pairs": 60,
+  "unique_valid_targets": 28,
+  "excluded_zero_lead": [
+    {
+      "record_id": "eupp_dwd_460_1483228800_lead0",
+      "reason": "zero_lead_is_not_future_forecast"
+    },
+    {
+      "record_id": "eupp_dwd_460_1483315200_lead0",
+      "reason": "zero_lead_is_not_future_forecast"
+    },
+    {
+      "record_id": "eupp_dwd_460_1483401600_lead0",
+      "reason": "zero_lead_is_not_future_forecast"
+    }
+  ],
+  "typed_state_roundtrips": 120,
+  "scores": {
+    "registered": 60,
+    "settled": 60,
+    "missing": 0,
+    "score": "mae",
+    "arms": {
+      "ensemble_mean": {
+        "mean_loss": 1.4261969931608802,
+        "loss_sum": 85.57181958965282,
+        "scored": 60
+      },
+      "ensemble_median": {
+        "mean_loss": 1.4508169555664163,
+        "loss_sum": 87.04901733398498,
+        "scored": 60
+      }
+    }
+  },
+  "independent_mae_celsius_check": {
+    "ensemble_mean": 1.4261969931608802,
+    "ensemble_median": 1.4508169555664163
+  },
+  "raw_DWD_observation_matches": 63,
+  "input_sha256": "98d6bebfecb4cd845f7580e296e9d700070747257d5c8fb8d07b77f32a40785d",
+  "numerical_point_output_and_scoring_passed": true,
+  "historical_online_availability_verified": false,
+  "active_monitoring_qualified": false,
+  "independent_weather_confirmation": false,
+  "new_model_calls": 0,
+  "limits": [
+    "One station, three init dates, correlated leads; no heatwave/cold-wave task",
+    "Initialization-clock journal only; not public release or cutoff chronology",
+    "No nontrivial acquisition E/shared-evidence mechanism yet",
+    "SEEPS not scored: physical accumulation day boundaries remain unverified"
+  ]
+}

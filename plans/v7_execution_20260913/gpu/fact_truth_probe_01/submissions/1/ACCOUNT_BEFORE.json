@@ -1,0 +1,103 @@
+{
+  "active_requested_gpus": 1,
+  "jobs": [
+    {
+      "async_checkpoint": {
+        "max_ckpt_rounds": 0
+      },
+      "create_time": "2026-09-13T05:09:38Z",
+      "display_name": "dtv7-fixed-20260913t050932z-w0",
+      "env": [],
+      "fault_tolerance": {
+        "backoff_limit": 0,
+        "rules": []
+      },
+      "fine_tuning_specs": "",
+      "framework": "PYTORCH",
+      "id": "/subscriptions/0197ee17-b6eb-7846-b2b4-a77c5f509b92/resourceGroups/default/zones/cn-sh-01z/workspaces/share-space/trainingJobs/pt-2gnv9xf8",
+      "lme": {
+        "current_retries": 0,
+        "enable_checker": false,
+        "enable_health_monitor": false,
+        "enable_warmingup": false,
+        "max_retries": 0
+      },
+      "mount": [
+        {
+          "access_mode": "VOLUME_ACCESS_MODE_UNSPECIFIED",
+          "endpoint": "",
+          "id": "01a04263-91e5-7603-bc01-c67e503da6b5",
+          "mount_options": "",
+          "mount_path": "/mnt/afs",
+          "name": "",
+          "region": "",
+          "subdir": "",
+          "type": "PV_AFS",
+          "zone": "cn-sh-01g"
+        }
+      ],
+      "name": "pt-2gnv9xf8",
+      "ownership": {
+        "requestor_id": "",
+        "tenant_id": "0197ee17-b6eb-7846-b2b4-a77c5f509b92",
+        "user_id": "01a042c9-2bfd-7169-af48-5fec08a63c8e",
+        "user_name": "260010168"
+      },
+      "resource_group_name": "default",
+      "resource_pool": {
+        "display_name": "computing_cluster_01g_02",
+        "name": "computing-cluster-01g-02",
+        "vpc_id": "0198a254-1d71-7211-9a41-d5783abfe9aa",
+        "zone": "cn-sh-01g"
+      },
+      "roles": [
+        {
+          "image_path": "registry.cn-sh-01g.sensecore.cn/lepton-trainingjob/nvidia24.04-ubuntu22.04-py3.10-cuda12.4-cudnn9.1-torch2.3.0-transformerengine1.5:v1.0.0-20241130-nvdia-base-image",
+          "name": "Worker",
+          "resource_spec": [
+            {
+              "description": "1XN6lS-80GB",
+              "limits": {
+                "cpu": "8",
+                "device": "1",
+                "memory": "128",
+                "nvidia.com/gpu": "1"
+              },
+              "name": "N6lS.Iu.I10.1.8c128g",
+              "replicas": 0,
+              "requests": {
+                "cpu": "8",
+                "device": "1",
+                "memory": "128",
+                "nvidia.com/gpu": "1"
+              }
+            }
+          ],
+          "startup_script": "bash /mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_execution_20260913/gpu/fact_truth_probe_01/submissions/0/run.sh",
+          "total_replicas": 1
+        }
+      ],
+      "root_mapping": false,
+      "scheduling": {
+        "priority": "NORMAL",
+        "quota_type": "RESERVED",
+        "scoring_strategy": {
+          "type": "LEAST_ALLOCATED"
+        }
+      },
+      "ssh": {
+        "auto_key_setup": false,
+        "config_mount_path": ""
+      },
+      "state": "QUEUEING",
+      "subscription_name": "0197ee17-b6eb-7846-b2b4-a77c5f509b92",
+      "tensorboard": {
+        "log_path": ""
+      },
+      "uid": "99912be0a33342e9b1f289dec62ffc0a",
+      "update_time": "2026-09-13T05:09:38.574494Z",
+      "workspace_name": "share-space",
+      "zone": "cn-sh-01z"
+    }
+  ]
+}

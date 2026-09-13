@@ -1,0 +1,206 @@
+{
+  "bundle_hash": "ebce3f0d1836bb78b1d9612c0640578652022beecfeb567474c239a7a87a4284",
+  "base_hash": "b36d22dd9b4c381588b179f09d7ccc465fcde7ea153c91af3eeb73ed859d60f1",
+  "payload": {
+    "assets": [
+      {
+        "asset_id": "routine-KSFO-2024-01-09T22:00:00Z",
+        "available_at": 1704841500000000,
+        "completed_at": 1704841501000000,
+        "content": {
+          "query_id": "routine-KSFO-2024-01-09T22:00:00Z",
+          "reference_kind": "product_label",
+          "reports": [
+            {
+              "archive_station": "SFO",
+              "archive_valid": "2024-01-09 22:56",
+              "decoded": true,
+              "observation_time": 1704840960000000,
+              "quality_flags": [],
+              "raw": "KSFO 092256Z 29021KT 10SM FEW031 SCT037 14/07 A3021 RMK AO2 PK WND 28028/2212 SLP229 T01390067",
+              "slot_start": 1704837600000000,
+              "source_id": "metar-routine-KSFO",
+              "source_line": 216,
+              "station": "KSFO",
+              "temperature_c": 14,
+              "visibility": {
+                "lower": 16093.44,
+                "lower_closed": true,
+                "upper": 16093.44,
+                "upper_closed": true
+              },
+              "weather": []
+            }
+          ],
+          "status": "disclosed_product_fact",
+          "support_assumption": "product_exact",
+          "support_rule_version": "native_metar_interval.v1",
+          "visible_information_scope": "policy_after_query"
+        },
+        "entitlements": [
+          "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m"
+        ],
+        "missingness": "disclosed_product_fact",
+        "observed_at": 1704840960000000,
+        "parents": [],
+        "raw": "KSFO 092256Z 29021KT 10SM FEW031 SCT037 14/07 A3021 RMK AO2 PK WND 28028/2212 SLP229 T01390067",
+        "receipt_ids": [
+          "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m-cutoff-2024-01-10T00:00:00Z:routine-KSFO-2024-01-09T22:00:00Z"
+        ],
+        "reference_kind": "product_label",
+        "source_revision": "8e52492554200ae8258ce9fb6cdb9f1e08a139787d53411514728b6784007dc6",
+        "support_assumption": "product_exact",
+        "support_rule_version": "native_metar_interval.v1",
+        "transform": {
+          "parameters": {
+            "units": "m"
+          },
+          "version": "native_metar_interval.v1"
+        },
+        "visible_information_scope": "policy_after_query"
+      }
+    ],
+    "authorization_mode": "target_private",
+    "availability_basis": "declared_archive_scenario",
+    "baseline": {
+      "available_at": 1704843300000000,
+      "content": {
+        "E_question": {
+          "predicate": "any_registered_neighbor_slot_below_threshold",
+          "query_ids": [
+            "routine-KSFO-2024-01-09T22:00:00Z",
+            "routine-KSJC-2024-01-09T22:00:00Z"
+          ],
+          "threshold_m": 5000
+        },
+        "calibration_bank_sha256": "59e67eaef83ea46e313033d8e7308315647964eccb98d33d72ffc5512d28c3ce",
+        "legacy_target_contract": {
+          "entity": "KOAK",
+          "event_operator": "lt",
+          "outcome_kind": "archived_native_report",
+          "physical_end": 1704859200000000,
+          "physical_start": 1704855600000000,
+          "release_event_at": null,
+          "report_policy": "iem_routine_unique_hour.v1",
+          "spatial_radius_m": null,
+          "spatial_support": "station:KOAK",
+          "target_id": "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m",
+          "temporal_semantics": "future_physical",
+          "threshold": 5000,
+          "units": "m",
+          "variable": "visibility"
+        },
+        "mapping_details": {
+          "cell_key": "[5000,\"3-6\",\"no_low\",\"no_low\",false]",
+          "kind": "research_calibrated_taf_projection",
+          "mapping_version": "dec2023_taf_interval_empirical.v1",
+          "n": 594,
+          "probability": 0.03691275167785235
+        },
+        "native_taf": {
+          "amendment_kind": "original",
+          "available_at": 1704843300000000,
+          "issued_at": 1704843180000000,
+          "opportunity_id": "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m-cutoff-2024-01-10T00:00:00Z",
+          "probability": null,
+          "probability_status": "awaiting_separate_development_calibration",
+          "projection": {
+            "rule_version": "taf_applicable_groups.v1",
+            "segments": [
+              {
+                "conditional": [],
+                "end": 1704859200000000,
+                "prevailing": [
+                  {
+                    "auxiliary": [],
+                    "sky": [
+                      "FEW050"
+                    ],
+                    "visibility": {
+                      "lower": 9656.064,
+                      "lower_closed": false,
+                      "upper": "+inf",
+                      "upper_closed": true
+                    },
+                    "weather": [],
+                    "wind": "31015G20KT",
+                    "wind_shear": null
+                  }
+                ],
+                "start": 1704855600000000
+              }
+            ],
+            "station": "KOAK",
+            "target_end": 1704859200000000,
+            "target_start": 1704855600000000
+          },
+          "raw": "468 FTUS46 KMTR 092333 TAFOAK TAF KOAK 092333Z 1000/1106 31015G20KT P6SM FEW050 FM100400 32008KT P6SM SCT250 FM101500 VRB05KT P6SM VCSH BKN035 FM101800 26015KT 5SM -SHRA BR OVC025 FM102300 31010KT 5SM SHRA OVC025 FM110300 29010KT 5SM SHRA OVC025=",
+          "source_id": "taf-202401092333-KMTR-FTUS46-TAFOAK",
+          "target_id": "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m",
+          "valid_until": 1704855600000000
+        }
+      },
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "f9605158cd668288c624af5afadd9b3c86129d2fb01bd9869d3b1463c65ab0f4",
+        "units": "probability",
+        "value": 0.03691275167785235
+      },
+      "issued_at": 1704843180000000,
+      "kind": "research",
+      "mapping_version": "dec2023_taf_interval_empirical.v1",
+      "source_revision": "taf-202401092333-KMTR-FTUS46-TAFOAK",
+      "valid_until": 1704855600000000
+    },
+    "cutoff": 1704844800000000,
+    "opportunity_id": "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m-cutoff-2024-01-10T00:00:00Z",
+    "provider_version": "native_h15_snapshot.v1",
+    "receipts": [
+      {
+        "asset_ids": [
+          "routine-KSFO-2024-01-09T22:00:00Z"
+        ],
+        "completed_at": 1704841501000000,
+        "cost": {
+          "bytes": 2048,
+          "compute_ms": 100,
+          "requests": 1,
+          "tokens": 0
+        },
+        "owner": "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m",
+        "receipt_id": "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m-cutoff-2024-01-10T00:00:00Z:routine-KSFO-2024-01-09T22:00:00Z",
+        "started_at": 1704841500000000
+      }
+    ],
+    "representation": "native_text_and_fixed_parser_product_intervals",
+    "schema": "disastertrace.frozen_evidence.v1",
+    "state": {
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "f9605158cd668288c624af5afadd9b3c86129d2fb01bd9869d3b1463c65ab0f4",
+        "units": "probability",
+        "value": 0.03691275167785235
+      },
+      "mode": "FOLLOW",
+      "protocol": "base_bound_override"
+    },
+    "target": {
+      "entity": "station:KOAK",
+      "event_operator": "lt",
+      "output_kind": "event_probability",
+      "physical_end": 1704859200000000,
+      "physical_start": 1704855600000000,
+      "release_event_at": null,
+      "report_policy": "iem_routine_unique_hour.v1",
+      "support_kind": "interval",
+      "target_id": "KOAK-2024-01-10T03:00:00Z-vis-lt-5000m",
+      "temporal_semantics": "future_physical",
+      "threshold": 5000,
+      "units": "m",
+      "variable": "visibility"
+    }
+  },
+  "asset_hashes": {
+    "routine-KSFO-2024-01-09T22:00:00Z": "88eb528f9c6ad374536dd3d51283193be9913b05f03ef9d5595c2f115c3dcd3b"
+  }
+}

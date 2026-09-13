@@ -1,0 +1,37 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_persistent_overrides_survive_base_update_but_not_expiry _________
+
+    def test_persistent_overrides_survive_base_update_but_not_expiry():
+        t = target()
+        f = Forecast(t.contract_hash, "scalar", "degC", -3)
+        state = ForecastState(t, "persistent_override")
+        state.update_baseline(f, "b1", 10)
+        state.propose(Forecast(t.contract_hash, "scalar", "degC", -4), "b1", 20, 40)
+        state.update_baseline(f, "b2", 30)
+        assert state.effective(39).value == -4
+>       assert state.effective(40).value == -4
+E       AssertionError: assert -3 == -4
+E        +  where -3 = Forecast(target_contract_hash='36c5edc8e26685b382ce2958ae2f975430ab520b332b0d95270a7fd95dfa1a7c', kind='scalar', units='degC', value=-3).value
+E        +    where Forecast(target_contract_hash='36c5edc8e26685b382ce2958ae2f975430ab520b332b0d95270a7fd95dfa1a7c', kind='scalar', units='degC', value=-3) = effective(40)
+E        +      where effective = <disastertrace.monitoring_fixed_v1.contracts.ForecastState object at 0x7f2e10553880>.effective
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:229: AssertionError
+__________ test_candidate_finishing_at_deadline_counts_before_expiry ___________
+
+    def test_candidate_finishing_at_deadline_counts_before_expiry():
+        t = target()
+        state = ForecastState(t, "base_bound_override")
+        state.update_baseline(Forecast(t.contract_hash, "scalar", "degC", -3), "b1", 10)
+        candidate = Forecast(t.contract_hash, "scalar", "degC", -4)
+>       assert state.propose(candidate, "b1", 40, 40) == "accepted"
+E       AssertionError: assert 'late' == 'accepted'
+E         
+E         - accepted
+E         + late
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:239: AssertionError
+=========================== short test summary info ============================
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_persistent_overrides_survive_base_update_but_not_expiry
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_candidate_finishing_at_deadline_counts_before_expiry
+2 failed, 20 deselected in 0.73s

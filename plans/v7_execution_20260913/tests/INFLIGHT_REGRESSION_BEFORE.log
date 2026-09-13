@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_persistent_inflight_candidate_can_finish_after_known_base_changes ____
+
+    def test_persistent_inflight_candidate_can_finish_after_known_base_changes():
+        t = target()
+        f = Forecast(t.contract_hash, "scalar", "degC", -3)
+        state = ForecastState(t, "persistent_override")
+        state.update_baseline(f, "b1", 10)
+        state.update_baseline(f, "b2", 20)
+        candidate = Forecast(t.contract_hash, "scalar", "degC", -4)
+>       assert state.propose(candidate, "b1", 30, 40) == "accepted"
+E       AssertionError: assert 'stale_base' == 'accepted'
+E         
+E         - accepted
+E         + stale_base
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:240: AssertionError
+=========================== short test summary info ============================
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_persistent_inflight_candidate_can_finish_after_known_base_changes
+1 failed, 20 deselected in 0.73s

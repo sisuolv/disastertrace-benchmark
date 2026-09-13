@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/tmp/disastertrace-replay-negative-1ode5m8f/package/run_replay.py", line 238, in <module>
+    replay(Path(__file__).resolve().parent, args.output.resolve(), args.full_tokens, args.guard_original_paths_and_network)
+  File "/tmp/disastertrace-replay-negative-1ode5m8f/package/run_replay.py", line 111, in replay
+    bundle = EvidenceBundle.restore(load(root / "matrix/policy" / (item["call_id"] + ".json")))
+  File "/tmp/disastertrace-replay-negative-1ode5m8f/package/batches/fixed_matrix_01/source/disastertrace/monitoring_fixed_v1/contracts.py", line 351, in restore
+    bundle = cls.freeze(envelope["payload"])
+  File "/tmp/disastertrace-replay-negative-1ode5m8f/package/batches/fixed_matrix_01/source/disastertrace/monitoring_fixed_v1/contracts.py", line 319, in freeze
+    return cls(canonical(record))
+  File "<string>", line 4, in __init__
+  File "/tmp/disastertrace-replay-negative-1ode5m8f/package/batches/fixed_matrix_01/source/disastertrace/monitoring_fixed_v1/contracts.py", line 315, in __post_init__
+    _validate_bundle(json.loads(self._payload_json))
+  File "/tmp/disastertrace-replay-negative-1ode5m8f/package/batches/fixed_matrix_01/source/disastertrace/monitoring_fixed_v1/contracts.py", line 161, in _validate_bundle
+    target.check_cutoff(cutoff)
+  File "/tmp/disastertrace-replay-negative-1ode5m8f/package/batches/fixed_matrix_01/source/disastertrace/monitoring_fixed_v1/contracts.py", line 106, in check_cutoff
+    raise ValueError("Cutoff contradicts target semantics")
+ValueError: Cutoff contradicts target semantics

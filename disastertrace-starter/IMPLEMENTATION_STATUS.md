@@ -1,5 +1,90 @@
 # Implementation Status
 
+## Completed bounded integrated v7 execution, 2026-09-13
+
+Entry: `../plans/v7_execution_20260913/README_CN.md`; read its `FINAL_REPORT_CN.md`,
+`NEXT_PLAN_CN.md`, `EXECUTION_STATUS.json` and `FINAL_VALIDATION.json` together.
+The new work completes W0 audit, bounded W1 source checks and two-year local
+controls, W2 fixed-input/scalar engineering, and W3 prompt/semantic diagnostics.
+W4/W5 and full sixteen-hazard scientific monitoring admission remain open.
+
+W0 reconciles 31,104 old calls in 216 sessions and 72 score groups. This execution
+adds 720 actual Qwen3-8B calls in 12 successful one-H100 jobs, maximum overlap four,
+1,930,215 total tokens. All three batches are consumed. The final account receipt
+records current occupancy separately; never relaunch these historical batches.
+E-only explicit-truth accuracy is 127/144; joint E/F is 114/144. Filled-example
+copying and negative/zero gains remain in the archive, with no F-only model run.
+
+Real Front prior-December downloads yield 633/657 native TAF and 2,089/2,088 METAR
+for 2023/2025. Local maps improve Jan2024 but worsen Jan2026 versus original Bay
+transfer; all-neighbor evidence has no stable benefit. Fixed training/check splits,
+all twelve static cells, missing results and low/zero positive check support remain.
+LAMP historical native minutes/current probability text, EUPP/DWD arrays, SEEPS
+arrays and CNRFC historical archives are decoded. Temperature MAE covers 60 positive
+leads/28 valid targets; hydro and daily rainfall are not scientifically scored.
+
+Current `monitoring_fixed_v1` adds typed point/scalar contracts, immutable visible
+bundles, journal replay, Brier/MAE and separate E-only/F-only/joint CPU interfaces.
+Independent review drives additional baseline/derived-time boundary fixes. Generic
+C2 provider bridging and a cutoff-to-effective-forecast scoring manifest are still
+required. All old monitoring source and preserved artifacts remain unchanged.
+
+Actual final command: `PYTHONPATH=src .venv/bin/python -m pytest
+tests/test_monitoring*.py ../plans/v7_execution_20260913/tests/test_fixed*.py -q`.
+250 related tests pass with zero failures/errors/skips; final targeted Ruff passes.
+W0 nine tests, LAMP seven tests, independent boundary/parser checks and four replay
+negative cases are reported separately. Frozen calibration helpers retain six
+style notices; there is no claim that all repository lint or hosted CI passed.
+
+The 11,352,884-byte CPU replay ZIP reconstructs all 720 captures, 576 applicable F
+scores and 1,930,215 tokens without weights or new inference. Standard-library,
+full-token, relocation and ZIP-restored replay checks agree. Python audit hooks
+block original paths/network/subprocesses; this is not OS-level sandbox isolation.
+No new Git publication, paid model API or training occurs in this execution.
+
+## Historical progress snapshot: integrated v7, 2026-09-13 05:10 UTC
+
+New bundle: `../plans/v7_execution_20260913/`, implementing the already integrated
+`../plans/v7_integrated_20260913/` plan. W0 reconciles 216 historical sessions,
+31,104 real model calls (27,216 predictors / 3,888 selectors), and 72 common-mask
+score tables. Only 10 explicit overrides changed 11 deadline snapshots; zero
+late/parse failures explain the audited main traces. These are old calls, not new
+inference. The frozen-candidate action diagnostic retains mixed/negative results.
+
+The new `monitoring_fixed_v1` lane freezes visible source records, receipts,
+permissions, current state and common baseline; it adds point/scalar contracts,
+typed journal replay and common-mask MAE alongside Brier. Existing monitoring_v1
+source bytes remain unchanged. 124 core/fixed tests and six real-input checks pass.
+Temperature integration scores 60 positive-lead EUPPBench/DWD pairs and reconstructs
+120 typed scalar states; it is not yet an active monitoring task.
+
+Two fresh four-H100 batches complete 432 verified responses. The first 144 copy
+the filled example; a 288-call same-input probe copies the alternate example or,
+without a filled example, copies the baseline. This is a retained prompt/result
+failure, not evidence that the data lack information. A final separately frozen
+288-call E-only/joint explicit-truth diagnostic is submitted; consult its live
+receipts before claiming completion. Old launch records are never reused.
+
+LAMP native historical/category and current probability text products, EUPPBench,
+DWD, SEEPS4ALL and CNRFC historical hourly/daily archives now have fresh scientific
+samples. IEM LAV runtime=00Z matches the native 00:30Z product, so native minutes
+must be retained. CNRFC historical arrays have 43 traces, not today's documented
+44. Physical flow support, historical availability, daily-rain windows and all
+formal monitoring admissions remain separate gates. Full Front prior-December
+calibration acquisition and portable CPU replay are in progress.
+
+## GitHub publication and readback completed, 2026-09-13
+
+Private branch `sisuolv/disastertrace-benchmark:next-phase-v1` now contains commit
+`98f28a9a9f33c28ec2b0236c4aaf47a9173c813e`, a fast-forward from reviewed 63c7769.
+The 1,262 selected files and 5,528,711-byte reading ZIP pass snapshot verification.
+An independent shallow GitHub fetch reads back seven files, including the ZIP,
+manifest, final report and core code; all hashes match. Local HEAD and the original
+dirty index remain unchanged. Receipts: `../publication/v7_review_execution_20260912/`
+`PUBLISH_RESULT.json`, `GITHUB_READBACK.json`, and `DELIVERY_COMPLETE.json`.
+The immutable exported snapshot predates these post-push receipts. Scientific
+limits and next steps remain those recorded in the completed development entry.
+
 ## Completed v7 development execution; publication handoff, 2026-09-13
 
 The governing bundle is `../plans/v7_review_execution_20260912/`; read its

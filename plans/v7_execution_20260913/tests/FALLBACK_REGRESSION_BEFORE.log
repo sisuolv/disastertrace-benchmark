@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_unparsed_native_baseline_retains_fallback_identity ____________
+
+    def test_unparsed_native_baseline_retains_fallback_identity():
+        row = bundles()[0].policy_view()
+        content = row["baseline"]["content"]
+        target = content["legacy_target_contract"]
+        opportunity_id = row["opportunity_id"]
+        provider = AviationProvider.__new__(AviationProvider)
+        provider.bank = json.loads((MATRIX / "BANK.json").read_text())
+        provider.targets = {target["target_id"]: target}
+        provider.opportunities = {opportunity_id: {"target_id": target["target_id"], "cutoff": row["cutoff"]}}
+        provider.pairs = {opportunity_id: {"query_ids": content["E_question"]["query_ids"],
+                                          "e_predicate": content["E_question"]["predicate"],
+                                          "threshold_m": target["threshold"]}}
+        provider.bases = {opportunity_id: {**content["native_taf"], "projection_status": "unavailable"}}
+        frozen = provider.freeze(opportunity_id, "common_only")
+>       assert frozen.policy_view()["baseline"]["kind"] == "fallback"
+E       AssertionError: assert 'research' == 'fallback'
+E         
+E         - fallback
+E         + research
+
+plans/v7_execution_20260913/tests/test_fixed_real_inputs.py:94: AssertionError
+=========================== short test summary info ============================
+FAILED plans/v7_execution_20260913/tests/test_fixed_real_inputs.py::test_unparsed_native_baseline_retains_fallback_identity
+1 failed, 6 deselected in 1.21s

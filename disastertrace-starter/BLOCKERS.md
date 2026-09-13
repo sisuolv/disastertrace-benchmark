@@ -1,5 +1,49 @@
 # Blockers
 
+## Current handoff after bounded v7 execution, 2026-09-13
+
+The authorized source/interface/model diagnostic is complete: 720 new calls,
+12 terminal H100 jobs, 250 passing related tests and the portable CPU replay.
+No missing user account permission or wait for future weather blocks the next
+historical development phase. Check the new final account receipt for occupancy.
+
+Scientific gates remain: local calibration and all-read gains are inconsistent
+across exposed calendars; several prior-month checks have zero positive events.
+Explicit E truth helps but still makes errors. Independent F-only model execution,
+new process-held-out confirmation and a useful supplemental-evidence comparison
+remain unperformed. None requires inventing a positive-LLM-gain admission rule.
+
+The new fixed lane does not yet bridge generic public_support/solve_joint to its
+provider metadata. paired_scores alone has no submission timestamp: formal scores
+must bind opportunities, cutoffs, legal replay and effective predictions. Existing
+old C2 algorithms are preserved; they are not newly validated across all providers.
+
+LAMP's native thresholds/minimum windows, historical first availability, SEEPS's
+daily support/QC, CNRFC's historical hourly support/regulation/member identity and
+sixteen-hazard/MM scientific qualification retain the source-specific gates below.
+Current source fixes do not retroactively repair frozen model captures. The next
+batch needs a fresh source/prompt/data freeze; no old GPU launch may be reused.
+
+## Integrated v7 current gates, 2026-09-13
+
+No additional account permission blocks this round. Actual LAMP probability text,
+historical LAV, EUPPBench/DWD, SEEPS4ALL and CNRFC historical files are available.
+BUFR local-table decoding fails but the verified native text alternative works.
+
+New fixed-input inference exposes a strong filled-example copying effect and E
+truth-versus-evidence confusion; formatting success alone does not qualify a useful
+predictor. Further large adaptive batches should wait for interpretable outputs
+and stronger same-target local statistical controls. No positive model-gain gate
+is imposed on task admission.
+
+Historical first-public-availability remains unproved for new static sources.
+LAMP native thresholds/windows differ from existing targets; SEEPS lacks verified
+station daily accumulation windows and complete per-record QC reasons. CNRFC
+hourly QINE timestamp joins do not yet resolve physical support or regulation mode,
+historical member identities, flood thresholds, or naturally shared evidence.
+Temperature scalar engineering works, but this is not a second qualified C1/C2
+process, heatwave task, or independent physical multimodal confirmation.
+
 ## Current: implementation verified; scientific extension gates, 2026-09-13
 
 All 50 submitted H100 jobs in this window are terminal and verified, totaling

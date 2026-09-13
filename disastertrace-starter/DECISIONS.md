@@ -1,5 +1,43 @@
 # Decisions
 
+## Integrated v7 final execution decisions, 2026-09-13
+
+- Keep original and local statistical maps as separately frozen controls. Local
+  calibration improves 2024 but worsens 2026; do not select years, banks or source
+  windows after inspecting gains. Fewer pooled fallbacks is not a quality proof.
+- Record 720 new actual calls separately from 31,104 audited historical calls.
+  Preserve all filled-example copies and failures; E-only contributes no F score.
+  New independent heads are CPU-ready, not additional F-only model evidence.
+- Reject common-baseline adoption at or beyond the target's legal update upper
+  boundary; retain the rejection journal. A partial-window task may keep an earlier
+  issued baseline. Derived availability must not precede its parent's availability.
+- Keep current code fixes and future head interfaces distinct from the source
+  copies frozen into GPU batches and CPU replay. Do not rewrite historical results.
+- Treat scalar MAE as numerical engineering until lawful submission times, provider
+  support semantics and same-session joint budget graphs are bound explicitly.
+- Use the final report and next plan in `../plans/v7_execution_20260913/` as the
+  current execution handoff; no new scientific admission follows from file counts.
+
+## Integrated v7 execution decisions, 2026-09-13
+
+- Keep v7/C1/C2/C3 and the original sixteen-hazard roadmap. Execute W0--W3 through
+  `../plans/v7_execution_20260913/`; do not replace historical freezes or results.
+- Separate an actual predictor call, selector call, candidate value, chosen action
+  and deadline-effective value. Forcing saved candidates to override is an offline
+  diagnostic, with mixed gains, not a newly executed adaptive policy.
+- Add an immutable fixed-evidence lane before changing the adaptive engine. A
+  scalar temperature target uses its native point support and units; no artificial
+  time interval or probability encoding is introduced.
+- Keep filled-output-example sensitivity and the ensuing explicit-truth head
+  probes as exposed development diagnostics. Never silently replace constant or
+  incorrect outputs, or count E-only calls as submitted F forecasts.
+- Use historical native LAMP bulletin minutes, not normalized IEM runtime, for
+  chronology checks. Native thresholds and 15-minute minimum support stay separate
+  from old 1km/5km hourly-report targets.
+- Admit EUPPBench/DWD to numerical integration only. Keep SEEPS daily-window/QC and
+  CNRFC regulated/unregulated/hourly-support questions explicit; exact timestamps
+  and successful downloads do not prove the physical targets are equivalent.
+
 ## Final v7 development decisions, 2026-09-13
 
 - Keep v7/C1/C2/C3 and all 16 hazards; publish the verified engineering and

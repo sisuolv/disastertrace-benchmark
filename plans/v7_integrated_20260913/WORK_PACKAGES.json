@@ -1,0 +1,332 @@
+{
+  "schema": "disastertrace.v7.integrated_optimization_plan.v1",
+  "created_at": "2026-09-13T04:06:58.888648+00:00",
+  "base_published_commit": "98f28a9a9f33c28ec2b0236c4aaf47a9173c813e",
+  "prior_plan": "../v7_next_cycle_20260913/PLAN_CN.md",
+  "research_framework_unchanged": true,
+  "current_turn_scope": "archive_extraction_reference_reading_and_planning",
+  "no_work_package_executed_by_this_manifest": true,
+  "preserve": [
+    "C1",
+    "C2",
+    "C3",
+    "E/F/D/MM",
+    "X00-X09",
+    "six_groups_16_hazards",
+    "old_freezes_and_negative_results"
+  ],
+  "work_packages": [
+    {
+      "id": "W0",
+      "title_cn": "既有结果与修订漏斗",
+      "depends_on": [],
+      "maps_to": [
+        "Q0",
+        "OPT00",
+        "O1"
+      ],
+      "scope": "recorded_trace_analysis",
+      "deliverables": [
+        "REVISION_FUNNEL.json",
+        "BASELINE_BACKOFF_AUDIT.json",
+        "SCORE_CROSSCHECK.json"
+      ],
+      "acceptance": [
+        "Different opportunity/call/candidate denominators reconcile to actual traces",
+        "No fabricated uncalled candidates",
+        "Original scores and snapshots preserved"
+      ],
+      "new_model_calls_required": false,
+      "status": "planned_not_executed",
+      "any_of_dependencies": []
+    },
+    {
+      "id": "W1A",
+      "title_cn": "航空基线与LAMP候选准入",
+      "depends_on": [
+        "W0"
+      ],
+      "maps_to": [
+        "Q1",
+        "OPT01",
+        "O1"
+      ],
+      "scope": "aviation_data_and_baseline",
+      "deliverables": [
+        "BASELINE_ADMISSION.json",
+        "LAMP_ADMISSION.json",
+        "CALIBRATION_SPLIT_MANIFEST.json"
+      ],
+      "acceptance": [
+        "Original visibility targets unchanged",
+        "Native threshold/window/condition/version/space/reference match",
+        "Local and transferred mappings evaluated on a common frozen cohort",
+        "LAMP failure does not block an admitted research baseline"
+      ],
+      "new_model_calls_required": false,
+      "status": "planned_not_executed",
+      "any_of_dependencies": []
+    },
+    {
+      "id": "W1B",
+      "title_cn": "水文历史合同与共享证据",
+      "depends_on": [
+        "W0"
+      ],
+      "maps_to": [
+        "Q5",
+        "O2"
+      ],
+      "scope": "hydrology_data_preflight",
+      "deliverables": [
+        "HYDRO_CONTRACT.json",
+        "HYDRO_ARCHIVE_AUDIT.json",
+        "RIVER_NETWORK_BINDINGS.json"
+      ],
+      "acceptance": [
+        "Same physical quantity and temporal support",
+        "Historical issuance and observation maturity explicitly scoped",
+        "Stage datum and warning threshold history separately admitted",
+        "Existing three remote gauges not claimed as one watershed"
+      ],
+      "new_model_calls_required": false,
+      "status": "planned_not_executed",
+      "any_of_dependencies": []
+    },
+    {
+      "id": "W1C",
+      "title_cn": "温度第二领域及日降水候选",
+      "depends_on": [
+        "W0"
+      ],
+      "maps_to": [
+        "OPT06",
+        "O2",
+        "O3"
+      ],
+      "scope": "bounded_alternative_source_preflight",
+      "deliverables": [
+        "TEMPERATURE_ROUTE_DECISION.json",
+        "EUPPBENCH_ADMISSION.json",
+        "SEEPS_DAILY_CONTRACT.json"
+      ],
+      "acceptance": [
+        "Station observations versus ERA5 and forecast versus reforecast distinct",
+        "Selection by contract and coverage, never model gain",
+        "Numerical integration separated from active-mechanism admission",
+        "Daily precipitation support never substituted for hourly outcomes"
+      ],
+      "new_model_calls_required": false,
+      "status": "planned_not_executed",
+      "any_of_dependencies": []
+    },
+    {
+      "id": "W2",
+      "title_cn": "类型化目标与冻结证据接口",
+      "depends_on": [
+        "W0"
+      ],
+      "maps_to": [
+        "Q2",
+        "Q3",
+        "OPT02",
+        "O5"
+      ],
+      "scope": "offline_interfaces_and_cpu_validation",
+      "deliverables": [
+        "TYPED_OUTPUT_CONTRACT.json",
+        "EVIDENCE_BUNDLE_SCHEMA.json",
+        "PROVIDER_ACCEPTANCE.json"
+      ],
+      "acceptance": [
+        "Start with admitted aviation fixtures; other domains gated separately",
+        "Point/interval and output types validated through full state/journal/scoring path",
+        "No hidden labels/unread contents in frozen bundles",
+        "Source representations and transformation cost recorded",
+        "Old binary implementations remain reproducible"
+      ],
+      "new_model_calls_required": false,
+      "status": "planned_not_executed",
+      "any_of_dependencies": []
+    },
+    {
+      "id": "W3",
+      "title_cn": "证据交叉响应与动作探针",
+      "depends_on": [
+        "W1A",
+        "W2"
+      ],
+      "maps_to": [
+        "Q2",
+        "Q3",
+        "OPT02",
+        "O5"
+      ],
+      "scope": "bounded_fixed_input_mechanism_experiments",
+      "deliverables": [
+        "EVIDENCE_PREDICTOR_MATRIX.json",
+        "ACTION_PROBE_PROTOCOL.json",
+        "ACTION_PROBE_RESULTS.json"
+      ],
+      "acceptance": [
+        "Initially at most three supplemental source classes and two fixed predictors",
+        "Actually missing response cells require new inference, never synthesis",
+        "Static snapshot response versus delayed session effect distinct",
+        "Hindsight action optimum evaluator-only",
+        "E status and F loss separate",
+        "Session action forks keep initial resources, exogenous archive, paired randomness and continuation-policy version fixed; future archive is never policy-visible before release"
+      ],
+      "new_model_calls_required": "only_for_unrecorded_inputs_or_backends",
+      "status": "planned_not_executed",
+      "any_of_dependencies": []
+    },
+    {
+      "id": "W4",
+      "title_cn": "共享分配与触发成本实验",
+      "depends_on": [
+        "W3"
+      ],
+      "maps_to": [
+        "Q3",
+        "OPT03",
+        "OPT04",
+        "O4"
+      ],
+      "scope": "bounded_end_to_end_policy_experiments",
+      "deliverables": [
+        "POLICY_FREEZE.json",
+        "ALLOCATION_SHARING_REPORT.json",
+        "COST_FRONTIER.json",
+        "WRAPPER_REPORT.json"
+      ],
+      "acceptance": [
+        "Fix a non-LLM selector for allocation by authorization 2x2",
+        "Compare LLM only under implemented identical global/shared permissions",
+        "Selector and predictor costs both charged",
+        "Quota dimensions genuinely implemented and binding limits reported",
+        "Strong bulk/follow/coverage/event-driven baselines retained",
+        "No more than four H100 GPUs active account-wide"
+      ],
+      "new_model_calls_required": "conditional_after_contract_and_matrix_freeze",
+      "status": "planned_not_executed",
+      "any_of_dependencies": []
+    },
+    {
+      "id": "W5",
+      "title_cn": "独立确认与分级交付",
+      "depends_on": [
+        "W4"
+      ],
+      "any_of_dependencies": [
+        [
+          "W1B",
+          "W1C"
+        ]
+      ],
+      "maps_to": [
+        "Q6",
+        "OPT07",
+        "O6"
+      ],
+      "scope": "independent_confirmation_and_release",
+      "deliverables": [
+        "CONFIRMATION_MANIFEST.json",
+        "MECHANISM_REPORT_CN.md",
+        "ADMISSION_DELTA.json",
+        "REPRODUCTION_REPORT.json"
+      ],
+      "acceptance": [
+        "Passing a data-preflight work package alone does not admit a second process",
+        "Require explicit second-process mechanism capability and grouped independent cohort",
+        "Methods/thresholds/budgets/primary comparisons frozen before confirmation",
+        "Negative/null effects, missing outcomes and failed calls retained",
+        "Release level reflects actual E/F/D/MM capabilities",
+        "Evidence-sharing claims require the separate shared_evidence_verified capability; independent-target resource studies do not satisfy it"
+      ],
+      "new_model_calls_required": "conditional_after_independent_cohort_freeze",
+      "status": "planned_not_executed"
+    }
+  ],
+  "optional_extensions": [
+    {
+      "id": "X05_active_visual",
+      "depends_on": [
+        "W2",
+        "W3"
+      ],
+      "maps_to": [
+        "Q4",
+        "X05"
+      ],
+      "gate": "Matched native imagery plus lawful ROI/time actions and processing costs; a second numerical domain does not admit second-process MM",
+      "blocks_core_W5": false,
+      "status": "conditional_planned_not_executed"
+    },
+    {
+      "id": "X07_distribution_scores",
+      "depends_on": [
+        "W2"
+      ],
+      "maps_to": [
+        "OPT05",
+        "X00",
+        "X07"
+      ],
+      "gate": "Typed scalar/quantile/ensemble output plus compatible reference; masks and nonnegative threshold weights frozen",
+      "blocks_core_W5": false,
+      "status": "conditional_planned_not_executed"
+    },
+    {
+      "id": "X08_prospective",
+      "depends_on": [
+        "W4"
+      ],
+      "maps_to": [
+        "Q6",
+        "X08"
+      ],
+      "gate": "Bounded registration, actual pre-cutoff persisted predictions, outcome tail and maturity; observer-only is insufficient",
+      "blocks_core_W5": false,
+      "status": "conditional_planned_not_executed"
+    },
+    {
+      "id": "X09_joint_compute",
+      "depends_on": [
+        "W4"
+      ],
+      "maps_to": [
+        "OPT04",
+        "X09"
+      ],
+      "gate": "Joint information/processor policies reported separately from fixed-predictor selector effects",
+      "blocks_core_W5": false,
+      "status": "conditional_planned_not_executed"
+    }
+  ],
+  "conditional_domain_guards": {
+    "hydrology_requires": [
+      "W1B",
+      "W2"
+    ],
+    "temperature_requires": [
+      "W1C",
+      "W2"
+    ],
+    "second_process_mechanism_requires": [
+      "admitted target and future reference",
+      "lawful supplemental evidence with nontrivial E",
+      "explicit multi-target session with lawful resource scope",
+      "strong baseline",
+      "measured resource comparison",
+      "independent physical-process grouping"
+    ],
+    "shared_evidence_mechanism_requires": [
+      "shared_evidence_verified: actual lawful assets naturally relevant to multiple targets",
+      "source lineage, spatial/temporal applicability and access receipts verified",
+      "joint resource witness and same-permission strong batch controls",
+      "independent-target resource sharing does not substitute for shared-evidence qualification"
+    ]
+  },
+  "planning_dependency_semantics": "Dependencies concern prerequisites, not success inferred from task completion. Scientific capability guards must pass separately. Optional extensions do not gate core confirmation.",
+  "proposed_stage_days": "Approximately 1-2 working days for bounded source triage; approximately 1-2 weeks for the first development cycle, conditional on admission."
+}

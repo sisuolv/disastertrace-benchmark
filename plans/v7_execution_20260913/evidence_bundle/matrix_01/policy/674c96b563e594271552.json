@@ -1,0 +1,213 @@
+{
+  "bundle_hash": "1e100a94737ee574344565ef41225510aef10672d7afba7416f69f292d0a4d62",
+  "base_hash": "bc17eeca0c99febdc400f05457355e6587754f9742036627f79e0b0ee0620173",
+  "payload": {
+    "assets": [
+      {
+        "asset_id": "routine-KOAK-2024-01-02T22:00:00Z",
+        "available_at": 1704236700000000,
+        "completed_at": 1704236701000000,
+        "content": {
+          "query_id": "routine-KOAK-2024-01-02T22:00:00Z",
+          "reference_kind": "product_label",
+          "reports": [
+            {
+              "archive_station": "OAK",
+              "archive_valid": "2024-01-02 22:53",
+              "decoded": true,
+              "observation_time": 1704235980000000,
+              "quality_flags": [],
+              "raw": "KOAK 022253Z 20011KT 2 1/2SM RA BR FEW008 BKN047 OVC060 13/09 A3009 RMK AO2 RAB38 SLP189 T01330094 PNO $",
+              "slot_start": 1704232800000000,
+              "source_id": "metar-routine-KOAK",
+              "source_line": 48,
+              "station": "KOAK",
+              "temperature_c": 13,
+              "visibility": {
+                "lower": 4023.36,
+                "lower_closed": true,
+                "upper": 4023.36,
+                "upper_closed": true
+              },
+              "weather": [
+                "RA",
+                "BR"
+              ]
+            }
+          ],
+          "status": "disclosed_product_fact",
+          "support_assumption": "product_exact",
+          "support_rule_version": "native_metar_interval.v1",
+          "visible_information_scope": "policy_after_query"
+        },
+        "entitlements": [
+          "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m"
+        ],
+        "missingness": "disclosed_product_fact",
+        "observed_at": 1704235980000000,
+        "parents": [],
+        "raw": "KOAK 022253Z 20011KT 2 1/2SM RA BR FEW008 BKN047 OVC060 13/09 A3009 RMK AO2 RAB38 SLP189 T01330094 PNO $",
+        "receipt_ids": [
+          "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m-cutoff-2024-01-03T00:00:00Z:routine-KOAK-2024-01-02T22:00:00Z"
+        ],
+        "reference_kind": "product_label",
+        "source_revision": "4465ee74005ccc1a541ea953cd5c0d3573a2ec6d1af03acf1568b003d66b016f",
+        "support_assumption": "product_exact",
+        "support_rule_version": "native_metar_interval.v1",
+        "transform": {
+          "parameters": {
+            "units": "m"
+          },
+          "version": "native_metar_interval.v1"
+        },
+        "visible_information_scope": "policy_after_query"
+      }
+    ],
+    "authorization_mode": "target_private",
+    "availability_basis": "declared_archive_scenario",
+    "baseline": {
+      "available_at": 1704237780000000,
+      "content": {
+        "E_question": {
+          "predicate": "any_registered_neighbor_slot_below_threshold",
+          "query_ids": [
+            "routine-KOAK-2024-01-02T22:00:00Z",
+            "routine-KSFO-2024-01-02T22:00:00Z"
+          ],
+          "threshold_m": 5000
+        },
+        "calibration_bank_sha256": "59e67eaef83ea46e313033d8e7308315647964eccb98d33d72ffc5512d28c3ce",
+        "legacy_target_contract": {
+          "entity": "KSJC",
+          "event_operator": "lt",
+          "outcome_kind": "archived_native_report",
+          "physical_end": 1704254400000000,
+          "physical_start": 1704250800000000,
+          "release_event_at": null,
+          "report_policy": "iem_routine_unique_hour.v1",
+          "spatial_radius_m": null,
+          "spatial_support": "station:KSJC",
+          "target_id": "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m",
+          "temporal_semantics": "future_physical",
+          "threshold": 5000,
+          "units": "m",
+          "variable": "visibility"
+        },
+        "mapping_details": {
+          "cell_key": "[5000,\"3-6\",\"no_low\",\"no_low\",false]",
+          "kind": "research_calibrated_taf_projection",
+          "mapping_version": "dec2023_taf_interval_empirical.v1",
+          "n": 594,
+          "probability": 0.03691275167785235
+        },
+        "native_taf": {
+          "amendment_kind": "original",
+          "available_at": 1704237780000000,
+          "issued_at": 1704237660000000,
+          "opportunity_id": "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m-cutoff-2024-01-03T00:00:00Z",
+          "probability": null,
+          "probability_status": "awaiting_separate_development_calibration",
+          "projection": {
+            "rule_version": "taf_applicable_groups.v1",
+            "segments": [
+              {
+                "conditional": [],
+                "end": 1704254400000000,
+                "prevailing": [
+                  {
+                    "auxiliary": [],
+                    "sky": [
+                      "SCT025",
+                      "OVC035"
+                    ],
+                    "visibility": {
+                      "lower": 9656.064,
+                      "lower_closed": true,
+                      "upper": 9656.064,
+                      "upper_closed": true
+                    },
+                    "weather": [
+                      "-RA",
+                      "BR"
+                    ],
+                    "wind": "19012G20KT",
+                    "wind_shear": null
+                  }
+                ],
+                "start": 1704250800000000
+              }
+            ],
+            "station": "KSJC",
+            "target_end": 1704254400000000,
+            "target_start": 1704250800000000
+          },
+          "raw": "642 FTUS46 KMTR 022321 TAFSJC TAF KSJC 022321Z 0300/0324 19012G20KT 6SM -RA BR SCT025 OVC035 FM031000 14006KT P6SM -SHRA SCT025 OVC035 FM031800 32009KT P6SM SCT025 OVC040=",
+          "source_id": "taf-202401022321-KMTR-FTUS46-TAFSJC",
+          "target_id": "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m",
+          "valid_until": 1704250800000000
+        }
+      },
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "5379c1f8983a511461b31b014fa98f622813d1eb7b6b185eac614883c6de8985",
+        "units": "probability",
+        "value": 0.03691275167785235
+      },
+      "issued_at": 1704237660000000,
+      "kind": "research",
+      "mapping_version": "dec2023_taf_interval_empirical.v1",
+      "source_revision": "taf-202401022321-KMTR-FTUS46-TAFSJC",
+      "valid_until": 1704250800000000
+    },
+    "cutoff": 1704240000000000,
+    "opportunity_id": "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m-cutoff-2024-01-03T00:00:00Z",
+    "provider_version": "native_h15_snapshot.v1",
+    "receipts": [
+      {
+        "asset_ids": [
+          "routine-KOAK-2024-01-02T22:00:00Z"
+        ],
+        "completed_at": 1704236701000000,
+        "cost": {
+          "bytes": 2048,
+          "compute_ms": 100,
+          "requests": 1,
+          "tokens": 0
+        },
+        "owner": "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m",
+        "receipt_id": "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m-cutoff-2024-01-03T00:00:00Z:routine-KOAK-2024-01-02T22:00:00Z",
+        "started_at": 1704236700000000
+      }
+    ],
+    "representation": "native_text_and_fixed_parser_product_intervals",
+    "schema": "disastertrace.frozen_evidence.v1",
+    "state": {
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "5379c1f8983a511461b31b014fa98f622813d1eb7b6b185eac614883c6de8985",
+        "units": "probability",
+        "value": 0.03691275167785235
+      },
+      "mode": "FOLLOW",
+      "protocol": "base_bound_override"
+    },
+    "target": {
+      "entity": "station:KSJC",
+      "event_operator": "lt",
+      "output_kind": "event_probability",
+      "physical_end": 1704254400000000,
+      "physical_start": 1704250800000000,
+      "release_event_at": null,
+      "report_policy": "iem_routine_unique_hour.v1",
+      "support_kind": "interval",
+      "target_id": "KSJC-2024-01-03T03:00:00Z-vis-lt-5000m",
+      "temporal_semantics": "future_physical",
+      "threshold": 5000,
+      "units": "m",
+      "variable": "visibility"
+    }
+  },
+  "asset_hashes": {
+    "routine-KOAK-2024-01-02T22:00:00Z": "5ca3c403e743fd7a90dc6b0763b8968d79545340daf829cac76abc03b5ee81f2"
+  }
+}

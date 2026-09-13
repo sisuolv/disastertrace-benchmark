@@ -1,0 +1,121 @@
+{
+  "schema": "disastertrace.research_optimization_sources.v1",
+  "project_commit": "98f28a9a9f33c28ec2b0236c4aaf47a9173c813e",
+  "claims": "定向检索，不是穷尽查新；代码未运行；外部论文结论不直接推广到DisasterTrace。",
+  "papers": [
+    {
+      "id": "R01",
+      "title": "BTF-2: Evaluating Strategic Reasoning in Forecasting Agents",
+      "url": "https://arxiv.org/html/2604.26106v1",
+      "read_scope": "论文正文定向阅读，尤其4.2；未核验其全套开源部署。",
+      "boundary": "固定研究材料比较判断能力；不继承主分中的主观评判或失败删样。"
+    },
+    {
+      "id": "R02",
+      "title": "Weighted Potential CRPS",
+      "url": "https://arxiv.org/html/2606.21170v1",
+      "read_scope": "正文3.1/3.2和附录相关部分；选择性作者源码读取。",
+      "boundary": "潜力拟合使用评估标签，必须与冻结校准/正式评分分离。"
+    },
+    {
+      "id": "R03",
+      "title": "BRiG-AFA",
+      "url": "https://arxiv.org/html/2608.02305v1",
+      "read_scope": "问题定义、Bellman训练、实验设置和局限；作者README与目录。",
+      "boundary": "原实验单位成本、固定获取次数，无STOP或异步共享已验证结论。"
+    },
+    {
+      "id": "R04",
+      "title": "AFABench",
+      "url": "https://arxiv.org/html/2508.14734",
+      "read_scope": "框架论文与single_afa_step等选定源码。",
+      "boundary": "正式策略不能收到label或完整未读特征；强制获取不能覆盖本任务STOP。"
+    },
+    {
+      "id": "R05",
+      "title": "Consistent Learning-to-Defer with Expert-Conditional Advice",
+      "url": "https://arxiv.org/html/2603.14324",
+      "read_scope": "摘要、专家/信息联合动作与分离surrogate边界；未复现代码。",
+      "boundary": "论文理论不否定为了归因而采用模块化接口；只能作为适配方法对手。"
+    },
+    {
+      "id": "R06",
+      "title": "SentinelBench",
+      "url": "https://arxiv.org/html/2606.05342",
+      "read_scope": "时间/资源监测与触发机制；未在本轮运行作者环境。",
+      "boundary": "监测/等待并非新的概念；网页服务时延不直接当气象真实延迟。"
+    },
+    {
+      "id": "R07",
+      "title": "SEEPS4ALL",
+      "url": "https://essd.copernicus.org/articles/18/713/2026/",
+      "read_scope": "发表正文、数据/代码说明、作者README。",
+      "boundary": "欧洲日降水与气候统计，不是小时结果或完整业务发行档案；单独核许可。"
+    },
+    {
+      "id": "R08",
+      "title": "RHITA",
+      "url": "https://egusphere.copernicus.org/preprints/2026/egusphere-2026-1175/",
+      "read_scope": "预印本摘要及作者回复中的范围说明；未审计源码。",
+      "boundary": "四类大尺度过程候选，算法分组不是物理独立性保证，不能泄漏给策略。"
+    },
+    {
+      "id": "R09",
+      "title": "FutureSim",
+      "url": "https://arxiv.org/html/2605.15188",
+      "read_scope": "动态预测、反馈与记忆相关章节。",
+      "boundary": "原环境允许已结算反馈；冻结确认主轨不接收评估器反馈。"
+    },
+    {
+      "id": "R10",
+      "title": "EarthVerse",
+      "url": "https://arxiv.org/html/2608.23525v1",
+      "read_scope": "任务、证据和轨迹/质量评价相关段落。",
+      "boundary": "已有主动证据与干预，不以简单标签区分。"
+    }
+  ],
+  "code_files": [
+    {
+      "id": "P03",
+      "repo": "sisuolv/disastertrace-benchmark",
+      "ref": "98f28a9a9f33c28ec2b0236c4aaf47a9173c813e",
+      "path": "disastertrace-starter/src/disastertrace/monitoring_v1/calibration.py",
+      "blob_sha": "da6b304ae35177e2fa9bbd9a4505469f166fa83c"
+    },
+    {
+      "id": "C01",
+      "repo": "JIAORONG-FENG/BRiG-AFA",
+      "path": "README.md",
+      "ref": "default branch at retrieval",
+      "blob_sha": "b31753b067d6be2cdecf0f108885470b4cb92054"
+    },
+    {
+      "id": "C02",
+      "repo": "tobiasbiegert/weighted-pcrps",
+      "path": "README.md",
+      "ref": "default branch at retrieval",
+      "blob_sha": "cfd810e0ab83dac9e2d1c840920956c732c9636d"
+    },
+    {
+      "id": "C03",
+      "repo": "tobiasbiegert/weighted-pcrps",
+      "path": "pcrps/pcrps_helper.py",
+      "ref": "default branch at retrieval",
+      "blob_sha": "18b62647583ed7cb0d7f68fb845df058f62b8118"
+    },
+    {
+      "id": "C04",
+      "repo": "Linusaronsson/AFA-Benchmark",
+      "path": "afabench/evaluation/eval.py",
+      "ref": "default branch at retrieval",
+      "blob_sha": "596d478431ba20b114ec2421655b54402169026c"
+    },
+    {
+      "id": "C05",
+      "repo": "ecmwf/rodeo-ai-static-datasets",
+      "path": "seeps4all/README.md",
+      "ref": "default branch at retrieval",
+      "blob_sha": "59bd8140397681fbb7d4e45893d1d0bf65aecf33"
+    }
+  ]
+}

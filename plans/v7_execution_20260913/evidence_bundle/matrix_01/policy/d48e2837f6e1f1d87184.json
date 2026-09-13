@@ -1,0 +1,280 @@
+{
+  "bundle_hash": "9bf454d8dc920569b9f26b58b7c657e90252ee81d66918e10da63c341ca5a8cd",
+  "base_hash": "268911c5982f3c36cb9ba7199051e5baf7d25e8158c3d6ad18ad32a7d09ef5d7",
+  "payload": {
+    "assets": [
+      {
+        "asset_id": "routine-KDEN-2024-01-24T10:00:00Z",
+        "available_at": 1706094300000000,
+        "completed_at": 1706094301000000,
+        "content": {
+          "query_id": "routine-KDEN-2024-01-24T10:00:00Z",
+          "reference_kind": "product_label",
+          "reports": [
+            {
+              "archive_station": "DEN",
+              "archive_valid": "2024-01-24 10:53",
+              "decoded": true,
+              "observation_time": 1706093580000000,
+              "quality_flags": [],
+              "raw": "KDEN 241053Z 25006KT 10SM FEW100 M02/M04 A2994 RMK AO2 SLP126 T10171039",
+              "slot_start": 1706090400000000,
+              "source_id": "metar-routine-KDEN",
+              "source_line": 563,
+              "station": "KDEN",
+              "temperature_c": -2,
+              "visibility": {
+                "lower": 16093.44,
+                "lower_closed": true,
+                "upper": 16093.44,
+                "upper_closed": true
+              },
+              "weather": []
+            }
+          ],
+          "status": "disclosed_product_fact",
+          "support_assumption": "product_exact",
+          "support_rule_version": "native_metar_interval.v1",
+          "visible_information_scope": "policy_after_query"
+        },
+        "entitlements": [
+          "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m"
+        ],
+        "missingness": "disclosed_product_fact",
+        "observed_at": 1706093580000000,
+        "parents": [],
+        "raw": "KDEN 241053Z 25006KT 10SM FEW100 M02/M04 A2994 RMK AO2 SLP126 T10171039",
+        "receipt_ids": [
+          "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m-cutoff-2024-01-24T12:00:00Z:routine-KDEN-2024-01-24T10:00:00Z"
+        ],
+        "reference_kind": "product_label",
+        "source_revision": "70a18497e991c8a9cc4155d1e1ae5b30b132c457adde59e48f7d4186845822de",
+        "support_assumption": "product_exact",
+        "support_rule_version": "native_metar_interval.v1",
+        "transform": {
+          "parameters": {
+            "units": "m"
+          },
+          "version": "native_metar_interval.v1"
+        },
+        "visible_information_scope": "policy_after_query"
+      },
+      {
+        "asset_id": "routine-KPUB-2024-01-24T10:00:00Z",
+        "available_at": 1706094300000000,
+        "completed_at": 1706094301000000,
+        "content": {
+          "query_id": "routine-KPUB-2024-01-24T10:00:00Z",
+          "reference_kind": "product_label",
+          "reports": [
+            {
+              "archive_station": "PUB",
+              "archive_valid": "2024-01-24 10:53",
+              "decoded": true,
+              "observation_time": 1706093580000000,
+              "quality_flags": [],
+              "raw": "KPUB 241053Z AUTO 00000KT 1/4SM R08R/1200V1400FT FZFG VV001 M06/M06 A2996 RMK AO2 SLP149 I1000 T10561061",
+              "slot_start": 1706090400000000,
+              "source_id": "metar-routine-KPUB",
+              "source_line": 564,
+              "station": "KPUB",
+              "temperature_c": -6,
+              "visibility": {
+                "lower": 402.336,
+                "lower_closed": true,
+                "upper": 402.336,
+                "upper_closed": true
+              },
+              "weather": [
+                "FZFG"
+              ]
+            }
+          ],
+          "status": "disclosed_product_fact",
+          "support_assumption": "product_exact",
+          "support_rule_version": "native_metar_interval.v1",
+          "visible_information_scope": "policy_after_query"
+        },
+        "entitlements": [
+          "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m"
+        ],
+        "missingness": "disclosed_product_fact",
+        "observed_at": 1706093580000000,
+        "parents": [],
+        "raw": "KPUB 241053Z AUTO 00000KT 1/4SM R08R/1200V1400FT FZFG VV001 M06/M06 A2996 RMK AO2 SLP149 I1000 T10561061",
+        "receipt_ids": [
+          "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m-cutoff-2024-01-24T12:00:00Z:routine-KPUB-2024-01-24T10:00:00Z"
+        ],
+        "reference_kind": "product_label",
+        "source_revision": "c853caf383dffc01128df2d1f82ff991eeb93ca379463cf283ddaf7e9a6534ab",
+        "support_assumption": "product_exact",
+        "support_rule_version": "native_metar_interval.v1",
+        "transform": {
+          "parameters": {
+            "units": "m"
+          },
+          "version": "native_metar_interval.v1"
+        },
+        "visible_information_scope": "policy_after_query"
+      }
+    ],
+    "authorization_mode": "target_private",
+    "availability_basis": "declared_archive_scenario",
+    "baseline": {
+      "available_at": 1706095440000000,
+      "content": {
+        "E_question": {
+          "predicate": "any_registered_neighbor_slot_below_threshold",
+          "query_ids": [
+            "routine-KDEN-2024-01-24T10:00:00Z",
+            "routine-KPUB-2024-01-24T10:00:00Z"
+          ],
+          "threshold_m": 1000
+        },
+        "calibration_bank_sha256": "59e67eaef83ea46e313033d8e7308315647964eccb98d33d72ffc5512d28c3ce",
+        "legacy_target_contract": {
+          "entity": "KCOS",
+          "event_operator": "lt",
+          "outcome_kind": "archived_native_report",
+          "physical_end": 1706112000000000,
+          "physical_start": 1706108400000000,
+          "release_event_at": null,
+          "report_policy": "iem_routine_unique_hour.v1",
+          "spatial_radius_m": null,
+          "spatial_support": "station:KCOS",
+          "target_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m",
+          "temporal_semantics": "future_physical",
+          "threshold": 1000,
+          "units": "m",
+          "variable": "visibility"
+        },
+        "mapping_details": {
+          "cell_key": "[1000,\"3-6\",\"no_low\",\"no_low\",false]",
+          "kind": "research_calibrated_taf_projection",
+          "mapping_version": "dec2023_taf_interval_empirical.v1",
+          "n": 615,
+          "probability": 0.02593192868719611
+        },
+        "native_taf": {
+          "amendment_kind": "original",
+          "available_at": 1706095440000000,
+          "issued_at": 1706095320000000,
+          "opportunity_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m-cutoff-2024-01-24T12:00:00Z",
+          "probability": null,
+          "probability_status": "awaiting_separate_development_calibration",
+          "projection": {
+            "rule_version": "taf_applicable_groups.v1",
+            "segments": [
+              {
+                "conditional": [],
+                "end": 1706112000000000,
+                "prevailing": [
+                  {
+                    "auxiliary": [],
+                    "sky": [
+                      "SCT200"
+                    ],
+                    "visibility": {
+                      "lower": 9656.064,
+                      "lower_closed": false,
+                      "upper": "+inf",
+                      "upper_closed": true
+                    },
+                    "weather": [],
+                    "wind": "35007KT",
+                    "wind_shear": null
+                  }
+                ],
+                "start": 1706108400000000
+              }
+            ],
+            "station": "KCOS",
+            "target_end": 1706112000000000,
+            "target_start": 1706108400000000
+          },
+          "raw": "104 FTUS45 KPUB 241122 TAFCOS TAF KCOS 241122Z 2412/2512 35007KT P6SM SCT200 FM242000 06008KT P6SM SCT080 BKN140 FM250200 34007KT P6SM BKN100=",
+          "source_id": "taf-202401241122-KPUB-FTUS45-TAFCOS",
+          "target_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m",
+          "valid_until": 1706108400000000
+        }
+      },
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "3355c0662070f6314ffc54c0503a646530195080a39cb74299b854ac29a894dc",
+        "units": "probability",
+        "value": 0.02593192868719611
+      },
+      "issued_at": 1706095320000000,
+      "kind": "research",
+      "mapping_version": "dec2023_taf_interval_empirical.v1",
+      "source_revision": "taf-202401241122-KPUB-FTUS45-TAFCOS",
+      "valid_until": 1706108400000000
+    },
+    "cutoff": 1706097600000000,
+    "opportunity_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m-cutoff-2024-01-24T12:00:00Z",
+    "provider_version": "native_h15_snapshot.v1",
+    "receipts": [
+      {
+        "asset_ids": [
+          "routine-KDEN-2024-01-24T10:00:00Z"
+        ],
+        "completed_at": 1706094301000000,
+        "cost": {
+          "bytes": 2048,
+          "compute_ms": 100,
+          "requests": 1,
+          "tokens": 0
+        },
+        "owner": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m",
+        "receipt_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m-cutoff-2024-01-24T12:00:00Z:routine-KDEN-2024-01-24T10:00:00Z",
+        "started_at": 1706094300000000
+      },
+      {
+        "asset_ids": [
+          "routine-KPUB-2024-01-24T10:00:00Z"
+        ],
+        "completed_at": 1706094301000000,
+        "cost": {
+          "bytes": 2048,
+          "compute_ms": 100,
+          "requests": 1,
+          "tokens": 0
+        },
+        "owner": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m",
+        "receipt_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m-cutoff-2024-01-24T12:00:00Z:routine-KPUB-2024-01-24T10:00:00Z",
+        "started_at": 1706094300000000
+      }
+    ],
+    "representation": "native_text_and_fixed_parser_product_intervals",
+    "schema": "disastertrace.frozen_evidence.v1",
+    "state": {
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "3355c0662070f6314ffc54c0503a646530195080a39cb74299b854ac29a894dc",
+        "units": "probability",
+        "value": 0.02593192868719611
+      },
+      "mode": "FOLLOW",
+      "protocol": "base_bound_override"
+    },
+    "target": {
+      "entity": "station:KCOS",
+      "event_operator": "lt",
+      "output_kind": "event_probability",
+      "physical_end": 1706112000000000,
+      "physical_start": 1706108400000000,
+      "release_event_at": null,
+      "report_policy": "iem_routine_unique_hour.v1",
+      "support_kind": "interval",
+      "target_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m",
+      "temporal_semantics": "future_physical",
+      "threshold": 1000,
+      "units": "m",
+      "variable": "visibility"
+    }
+  },
+  "asset_hashes": {
+    "routine-KDEN-2024-01-24T10:00:00Z": "994368a15e2e99a93d3b26acff8d9f1a54fc7db71c6ce2480a5dc6fbd88d175a",
+    "routine-KPUB-2024-01-24T10:00:00Z": "a408fcdb23c73b6690bd9862fec88f8f08d03c40facb9dcbb0e4910f5898d023"
+  }
+}

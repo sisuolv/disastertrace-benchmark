@@ -1,0 +1,113 @@
+..........................FFFFF                                          [100%]
+=================================== FAILURES ===================================
+________ test_derived_asset_cannot_claim_availability_before_its_parent ________
+
+    def test_derived_asset_cannot_claim_availability_before_its_parent():
+        record = bundle_record()
+        child = copy.deepcopy(record["assets"][0])
+        child.update(asset_id="derived", parents=["a"], available_at=69)
+        record["assets"].append(child)
+>       with pytest.raises(ValueError, match="availability"):
+E       Failed: DID NOT RAISE ValueError
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:342: Failed
+_ test_late_baseline_is_journaled_without_changing_effective_forecast[future_physical] _
+
+semantics = 'future_physical'
+
+    @pytest.mark.parametrize("semantics", ["future_physical", "future_product_release", "partial_window_nowcast"])
+    def test_late_baseline_is_journaled_without_changing_effective_forecast(semantics):
+        record = target().to_dict()
+        record["temporal_semantics"] = semantics
+        if semantics == "future_product_release":
+            record["release_event_at"] = 120
+        elif semantics == "partial_window_nowcast":
+            record.update(support_kind="interval", physical_end=120)
+        t = Target(**record)
+        end = 100 if semantics == "future_physical" else 120
+        state = ForecastState(t, "base_bound_override")
+        baseline = Forecast(t.contract_hash, "scalar", t.units, 1)
+        state.update_baseline(baseline, "b1", end - 2)
+        candidate = Forecast(t.contract_hash, "scalar", t.units, 2)
+        state.propose(candidate, "b1", end - 1, end + 10)
+        late = Forecast(t.contract_hash, "scalar", t.units, 99)
+>       assert state.update_baseline(late, "late", end) == "invalid_target_time"
+E       AssertionError: assert None == 'invalid_target_time'
+E        +  where None = update_baseline(Forecast(target_contract_hash='36c5edc8e26685b382ce2958ae2f975430ab520b332b0d95270a7fd95dfa1a7c', kind='scalar', units='degC', value=99), 'late', 100)
+E        +    where update_baseline = <disastertrace.monitoring_fixed_v1.contracts.ForecastState object at 0x7f271453b670>.update_baseline
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:364: AssertionError
+_ test_late_baseline_is_journaled_without_changing_effective_forecast[future_product_release] _
+
+semantics = 'future_product_release'
+
+    @pytest.mark.parametrize("semantics", ["future_physical", "future_product_release", "partial_window_nowcast"])
+    def test_late_baseline_is_journaled_without_changing_effective_forecast(semantics):
+        record = target().to_dict()
+        record["temporal_semantics"] = semantics
+        if semantics == "future_product_release":
+            record["release_event_at"] = 120
+        elif semantics == "partial_window_nowcast":
+            record.update(support_kind="interval", physical_end=120)
+        t = Target(**record)
+        end = 100 if semantics == "future_physical" else 120
+        state = ForecastState(t, "base_bound_override")
+        baseline = Forecast(t.contract_hash, "scalar", t.units, 1)
+        state.update_baseline(baseline, "b1", end - 2)
+        candidate = Forecast(t.contract_hash, "scalar", t.units, 2)
+        state.propose(candidate, "b1", end - 1, end + 10)
+        late = Forecast(t.contract_hash, "scalar", t.units, 99)
+>       assert state.update_baseline(late, "late", end) == "invalid_target_time"
+E       AssertionError: assert None == 'invalid_target_time'
+E        +  where None = update_baseline(Forecast(target_contract_hash='420d8472be639d0bf76373d5fa1419ae14456496110a605fcd86559d9b46f79e', kind='scalar', units='degC', value=99), 'late', 120)
+E        +    where update_baseline = <disastertrace.monitoring_fixed_v1.contracts.ForecastState object at 0x7f2714567c10>.update_baseline
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:364: AssertionError
+_ test_late_baseline_is_journaled_without_changing_effective_forecast[partial_window_nowcast] _
+
+semantics = 'partial_window_nowcast'
+
+    @pytest.mark.parametrize("semantics", ["future_physical", "future_product_release", "partial_window_nowcast"])
+    def test_late_baseline_is_journaled_without_changing_effective_forecast(semantics):
+        record = target().to_dict()
+        record["temporal_semantics"] = semantics
+        if semantics == "future_product_release":
+            record["release_event_at"] = 120
+        elif semantics == "partial_window_nowcast":
+            record.update(support_kind="interval", physical_end=120)
+        t = Target(**record)
+        end = 100 if semantics == "future_physical" else 120
+        state = ForecastState(t, "base_bound_override")
+        baseline = Forecast(t.contract_hash, "scalar", t.units, 1)
+        state.update_baseline(baseline, "b1", end - 2)
+        candidate = Forecast(t.contract_hash, "scalar", t.units, 2)
+        state.propose(candidate, "b1", end - 1, end + 10)
+        late = Forecast(t.contract_hash, "scalar", t.units, 99)
+>       assert state.update_baseline(late, "late", end) == "invalid_target_time"
+E       AssertionError: assert None == 'invalid_target_time'
+E        +  where None = update_baseline(Forecast(target_contract_hash='b87a115bf0bd7b9a8927a7206e5f8894fa385e1047bdadd46bb322e303a051a4', kind='scalar', units='degC', value=99), 'late', 120)
+E        +    where update_baseline = <disastertrace.monitoring_fixed_v1.contracts.ForecastState object at 0x7f271457fb20>.update_baseline
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:364: AssertionError
+______ test_partial_window_can_retain_baseline_issued_before_window_start ______
+
+    def test_partial_window_can_retain_baseline_issued_before_window_start():
+        t = Target(
+            "p", "a", "rain", "mm", "scalar", "interval", 100, 120,
+            "partial_window_nowcast", "sum.v1",
+        )
+        state = ForecastState(t, "persistent_override")
+        baseline = Forecast(t.contract_hash, "scalar", "mm", 1)
+>       assert state.update_baseline(baseline, "b1", 90) == "accepted"
+E       AssertionError: assert None == 'accepted'
+E        +  where None = update_baseline(Forecast(target_contract_hash='3662c2ef16c4a41c44957e318304649c66ee38e21db2b774d48b99be6ccc9f9f', kind='scalar', units='mm', value=1), 'b1', 90)
+E        +    where update_baseline = <disastertrace.monitoring_fixed_v1.contracts.ForecastState object at 0x7f271454e1d0>.update_baseline
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:378: AssertionError
+=========================== short test summary info ============================
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_derived_asset_cannot_claim_availability_before_its_parent
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_late_baseline_is_journaled_without_changing_effective_forecast[future_physical]
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_late_baseline_is_journaled_without_changing_effective_forecast[future_product_release]
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_late_baseline_is_journaled_without_changing_effective_forecast[partial_window_nowcast]
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_partial_window_can_retain_baseline_issued_before_window_start
+5 failed, 26 passed in 1.04s

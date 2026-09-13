@@ -1,0 +1,168 @@
+{
+  "created_at": "2026-09-13T05:10:59.257797+00:00",
+  "design": {
+    "created_at": "2026-09-13T05:06:58.720637+00:00",
+    "evaluation_dataset": "plans/v7_review_execution_20260912/extension_front_range_03",
+    "original_bay_bank": "plans/v7_review_execution_20260912/calibration_bank_01/BANK.json",
+    "threshold_m": 1000,
+    "evidence_conditions": [
+      "common_only",
+      "all_registered"
+    ],
+    "all_calendar_opportunities": 5832,
+    "fit_inputs": "Front December2023 only; matched and expanded split in FULL_CONTRACT.json",
+    "evaluation_scope": "unchanged, previously exposed Jan2024Front calendar; descriptive static comparison",
+    "bank_comparisons": [
+      "original transferredBay",
+      "localFront with same Bay fit/check dates",
+      "localFront20day fit with later heldoutDecember check"
+    ],
+    "selection_by_model_gain": false,
+    "no_january_refit_or_threshold_tuning": true,
+    "two_local_banks_declared_before_scoring": true
+  },
+  "arms": {
+    "bay_transferred_original/common_only": {
+      "scores": {
+        "opportunities": 5832,
+        "settled": 5826,
+        "missing": 6,
+        "base_brier": 0.007792091037236351,
+        "system_brier": 0.007792091037236351,
+        "net_realized_gain": 0.0,
+        "g_plus": 0.0,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          0.0,
+          0.0
+        ]
+      },
+      "mapping_levels": {
+        "taf_cell": 5745,
+        "threshold_pool": 87
+      },
+      "unique_probabilities": 7,
+      "predictions_different_from_original_bay_base": 0
+    },
+    "bay_transferred_original/all_registered": {
+      "scores": {
+        "opportunities": 5832,
+        "settled": 5826,
+        "missing": 6,
+        "base_brier": 0.007792091037236351,
+        "system_brier": 0.00799861234810904,
+        "net_realized_gain": -0.00020652131087268825,
+        "g_plus": 0.00015355978927498407,
+        "g_minus": 0.0003600811001476723,
+        "full_population_gain_bounds": [
+          -0.00021246186975695775,
+          -0.00020628152208409633
+        ]
+      },
+      "mapping_levels": {
+        "evidence_cell": 5736,
+        "threshold_pool": 87,
+        "taf_cell": 9
+      },
+      "unique_probabilities": 14,
+      "predictions_different_from_original_bay_base": 5594
+    },
+    "front_local_matched_window/common_only": {
+      "scores": {
+        "opportunities": 5832,
+        "settled": 5826,
+        "missing": 6,
+        "base_brier": 0.007792091037236351,
+        "system_brier": 0.007721543970144302,
+        "net_realized_gain": 7.054706709204997e-05,
+        "g_plus": 0.0008721653473832067,
+        "g_minus": 0.0008016182802911569,
+        "full_population_gain_bounds": [
+          7.022052000043146e-05,
+          7.934170810706892e-05
+        ]
+      },
+      "mapping_levels": {
+        "taf_cell": 5611,
+        "threshold_pool": 221
+      },
+      "unique_probabilities": 6,
+      "predictions_different_from_original_bay_base": 5832
+    },
+    "front_local_matched_window/all_registered": {
+      "scores": {
+        "opportunities": 5832,
+        "settled": 5826,
+        "missing": 6,
+        "base_brier": 0.007792091037236351,
+        "system_brier": 0.007852113331000917,
+        "net_realized_gain": -6.002229376456524e-05,
+        "g_plus": 0.001215599438846802,
+        "g_minus": 0.0012756217326113672,
+        "full_population_gain_bounds": [
+          -7.675416972403047e-05,
+          -5.9472947334742785e-05
+        ]
+      },
+      "mapping_levels": {
+        "evidence_cell": 5577,
+        "threshold_pool": 221,
+        "taf_cell": 34
+      },
+      "unique_probabilities": 13,
+      "predictions_different_from_original_bay_base": 5832
+    },
+    "front_local_expanded_window/common_only": {
+      "scores": {
+        "opportunities": 5832,
+        "settled": 5826,
+        "missing": 6,
+        "base_brier": 0.007792091037236351,
+        "system_brier": 0.007277638933850916,
+        "net_realized_gain": 0.0005144521033854355,
+        "g_plus": 0.0011421366485725708,
+        "g_minus": 0.0006276845451871354,
+        "full_population_gain_bounds": [
+          0.000502292571381848,
+          0.0005142873917876705
+        ]
+      },
+      "mapping_levels": {
+        "taf_cell": 5611,
+        "threshold_pool": 221
+      },
+      "unique_probabilities": 6,
+      "predictions_different_from_original_bay_base": 5832
+    },
+    "front_local_expanded_window/all_registered": {
+      "scores": {
+        "opportunities": 5832,
+        "settled": 5826,
+        "missing": 6,
+        "base_brier": 0.007792091037236351,
+        "system_brier": 0.0074867248830224374,
+        "net_realized_gain": 0.0003053661542139135,
+        "g_plus": 0.001459378674817574,
+        "g_minus": 0.0011540125206036605,
+        "full_population_gain_bounds": [
+          0.0002759957761434375,
+          0.0003057727308130963
+        ]
+      },
+      "mapping_levels": {
+        "evidence_cell": 5577,
+        "threshold_pool": 221,
+        "taf_cell": 34
+      },
+      "unique_probabilities": 13,
+      "predictions_different_from_original_bay_base": 5832
+    }
+  },
+  "outcomes_sha256": "c6d24a04d201c4b06135f786669dd933d3b6ab7f76c8d55c5130ca2c0a5ffdb1",
+  "common_opportunities": 5832,
+  "original_bay_baseline_reproduced": true,
+  "new_model_calls": 0,
+  "full_adaptive_policy_execution": false,
+  "interpretation": "Exposed development static forecasts from frozen prior-period banks. All-read is a fixed source-information diagnostic; no end-to-end acquisition cost/latency gain or local-calibration superiority guarantee.",
+  "implementation_sha256": "f6131be266d0419090da17c8180b2566f986a46b1d64555dd3e3aa86af280940"
+}

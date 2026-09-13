@@ -1,0 +1,131 @@
+{
+  "bundle_hash": "fa7ae24f9a5a42c260c319f55a6a7d8f8aa828dea30ec2398a69be303b62acc3",
+  "base_hash": "3bf4e78e356e9929a37a839401ea38568fc768d6d494268660f91872164ddd95",
+  "payload": {
+    "assets": [],
+    "authorization_mode": "target_private",
+    "availability_basis": "declared_archive_scenario",
+    "baseline": {
+      "available_at": 1704238260000000,
+      "content": {
+        "E_question": {
+          "predicate": "any_registered_neighbor_slot_below_threshold",
+          "query_ids": [
+            "routine-KCOS-2024-01-02T22:00:00Z",
+            "routine-KPUB-2024-01-02T22:00:00Z"
+          ],
+          "threshold_m": 1000
+        },
+        "calibration_bank_sha256": "59e67eaef83ea46e313033d8e7308315647964eccb98d33d72ffc5512d28c3ce",
+        "legacy_target_contract": {
+          "entity": "KDEN",
+          "event_operator": "lt",
+          "outcome_kind": "archived_native_report",
+          "physical_end": 1704254400000000,
+          "physical_start": 1704250800000000,
+          "release_event_at": null,
+          "report_policy": "iem_routine_unique_hour.v1",
+          "spatial_radius_m": null,
+          "spatial_support": "station:KDEN",
+          "target_id": "KDEN-2024-01-03T03:00:00Z-vis-lt-1000m",
+          "temporal_semantics": "future_physical",
+          "threshold": 1000,
+          "units": "m",
+          "variable": "visibility"
+        },
+        "mapping_details": {
+          "cell_key": "[1000,\"3-6\",\"no_low\",\"no_low\",false]",
+          "kind": "research_calibrated_taf_projection",
+          "mapping_version": "dec2023_taf_interval_empirical.v1",
+          "n": 615,
+          "probability": 0.02593192868719611
+        },
+        "native_taf": {
+          "amendment_kind": "original",
+          "available_at": 1704238260000000,
+          "issued_at": 1704238140000000,
+          "opportunity_id": "KDEN-2024-01-03T03:00:00Z-vis-lt-1000m-cutoff-2024-01-03T00:00:00Z",
+          "probability": null,
+          "probability_status": "awaiting_separate_development_calibration",
+          "projection": {
+            "rule_version": "taf_applicable_groups.v1",
+            "segments": [
+              {
+                "conditional": [],
+                "end": 1704254400000000,
+                "prevailing": [
+                  {
+                    "auxiliary": [],
+                    "sky": [
+                      "SKC"
+                    ],
+                    "visibility": {
+                      "lower": 9656.064,
+                      "lower_closed": false,
+                      "upper": "+inf",
+                      "upper_closed": true
+                    },
+                    "weather": [],
+                    "wind": "20008KT",
+                    "wind_shear": null
+                  }
+                ],
+                "start": 1704250800000000
+              }
+            ],
+            "station": "KDEN",
+            "target_end": 1704254400000000,
+            "target_start": 1704250800000000
+          },
+          "raw": "480 FTUS45 KBOU 022329 TAFDEN TAF KDEN 022329Z 0300/0406 10007KT P6SM SKC FM030130 15007KT P6SM SKC FM030300 20008KT P6SM SKC FM031600 18007KT P6SM FEW250 FM031800 13009KT P6SM SCT250=",
+          "source_id": "taf-202401022329-KBOU-FTUS45-TAFDEN",
+          "target_id": "KDEN-2024-01-03T03:00:00Z-vis-lt-1000m",
+          "valid_until": 1704250800000000
+        }
+      },
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "7c9023962ea2b6ba382b44e2dfcd3f71f0e9acb3c1f034355251c620ff1ac39f",
+        "units": "probability",
+        "value": 0.02593192868719611
+      },
+      "issued_at": 1704238140000000,
+      "kind": "research",
+      "mapping_version": "dec2023_taf_interval_empirical.v1",
+      "source_revision": "taf-202401022329-KBOU-FTUS45-TAFDEN",
+      "valid_until": 1704250800000000
+    },
+    "cutoff": 1704240000000000,
+    "opportunity_id": "KDEN-2024-01-03T03:00:00Z-vis-lt-1000m-cutoff-2024-01-03T00:00:00Z",
+    "provider_version": "native_h15_snapshot.v1",
+    "receipts": [],
+    "representation": "native_text_and_fixed_parser_product_intervals",
+    "schema": "disastertrace.frozen_evidence.v1",
+    "state": {
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "7c9023962ea2b6ba382b44e2dfcd3f71f0e9acb3c1f034355251c620ff1ac39f",
+        "units": "probability",
+        "value": 0.02593192868719611
+      },
+      "mode": "FOLLOW",
+      "protocol": "base_bound_override"
+    },
+    "target": {
+      "entity": "station:KDEN",
+      "event_operator": "lt",
+      "output_kind": "event_probability",
+      "physical_end": 1704254400000000,
+      "physical_start": 1704250800000000,
+      "release_event_at": null,
+      "report_policy": "iem_routine_unique_hour.v1",
+      "support_kind": "interval",
+      "target_id": "KDEN-2024-01-03T03:00:00Z-vis-lt-1000m",
+      "temporal_semantics": "future_physical",
+      "threshold": 1000,
+      "units": "m",
+      "variable": "visibility"
+    }
+  },
+  "asset_hashes": {}
+}

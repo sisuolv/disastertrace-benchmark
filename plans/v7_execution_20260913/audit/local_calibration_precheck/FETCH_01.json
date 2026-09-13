@@ -1,0 +1,58 @@
+{
+  "schema": "disastertrace.monitoring.public_capture.v1",
+  "transport": "curl",
+  "limits": {
+    "requests": 6,
+    "bytes": 6291462
+  },
+  "allowed_hosts": [
+    "mesonet.agron.iastate.edu"
+  ],
+  "pause_seconds": 0.2,
+  "requests": [
+    {
+      "id": "metar-routine-KDEN",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=DEN&data=all&year1=2023&month1=12&day1=1&year2=2023&month2=12&day2=4&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 1048576,
+      "timeout": 60,
+      "purpose": "three-day prior-period Front local calibration availability sample; no fitting"
+    },
+    {
+      "id": "taf-catalog-KDEN",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?station=KDEN&year1=2023&month1=12&day1=1&hour1=0&year2=2023&month2=12&day2=4&hour2=0&tz=Etc%2FUTC&fmt=comma",
+      "max_bytes": 1048576,
+      "timeout": 60,
+      "purpose": "native TAF product discovery for the same prior-period three-day sample"
+    },
+    {
+      "id": "metar-routine-KCOS",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=COS&data=all&year1=2023&month1=12&day1=1&year2=2023&month2=12&day2=4&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 1048576,
+      "timeout": 60,
+      "purpose": "three-day prior-period Front local calibration availability sample; no fitting"
+    },
+    {
+      "id": "taf-catalog-KCOS",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?station=KCOS&year1=2023&month1=12&day1=1&hour1=0&year2=2023&month2=12&day2=4&hour2=0&tz=Etc%2FUTC&fmt=comma",
+      "max_bytes": 1048576,
+      "timeout": 60,
+      "purpose": "native TAF product discovery for the same prior-period three-day sample"
+    },
+    {
+      "id": "metar-routine-KPUB",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=PUB&data=all&year1=2023&month1=12&day1=1&year2=2023&month2=12&day2=4&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 1048576,
+      "timeout": 60,
+      "purpose": "three-day prior-period Front local calibration availability sample; no fitting"
+    },
+    {
+      "id": "taf-catalog-KPUB",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?station=KPUB&year1=2023&month1=12&day1=1&hour1=0&year2=2023&month2=12&day2=4&hour2=0&tz=Etc%2FUTC&fmt=comma",
+      "max_bytes": 1048576,
+      "timeout": 60,
+      "purpose": "native TAF product discovery for the same prior-period three-day sample"
+    }
+  ],
+  "no_fitting": true,
+  "dates_selected_before_response": "2023-12-01 through 2023-12-03 inclusive; preceding original2024evaluation"
+}

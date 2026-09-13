@@ -1,0 +1,257 @@
+{
+  "schema": "disastertrace.v7.research_optimization_patch.v1",
+  "base_commit": "98f28a9a9f33c28ec2b0236c4aaf47a9173c813e",
+  "status": "proposed_not_executed",
+  "preserve": [
+    "v7",
+    "monitoring_v1",
+    "C1/C2/C3",
+    "E/F/D",
+    "six_groups_16_hazards",
+    "X00-X09",
+    "historical_artifacts_and_negative_results"
+  ],
+  "not_authorization_for": [
+    "GPU jobs",
+    "paid APIs",
+    "training",
+    "downloads",
+    "persistent capture",
+    "repository writes"
+  ],
+  "work_packages": [
+    {
+      "id": "OPT00",
+      "title_cn": "更新近邻矩阵与新增补丁合同",
+      "depends_on": [],
+      "existing_experiments": [
+        "X00"
+      ],
+      "reading_basis": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R09",
+        "R10"
+      ],
+      "deliverables_cn": [
+        "更新现有RELATED_WORK矩阵",
+        "冻结新增基线和诊断身份"
+      ],
+      "acceptance_cn": [
+        "不宣称研究/判断分离或联合信息/专家选择首次",
+        "旧代码、结果和数据范围不改变"
+      ],
+      "runtime_requirement": "none",
+      "status": "not_started"
+    },
+    {
+      "id": "OPT01",
+      "title_cn": "共同信息基线与合法校准",
+      "depends_on": [
+        "OPT00"
+      ],
+      "existing_experiments": [
+        "X00",
+        "X02"
+      ],
+      "reading_basis": [
+        "P03",
+        "R02"
+      ],
+      "deliverables_cn": [
+        "逐机会粗映射/回退报告",
+        "本地时间与跨区对照",
+        "新版本共同信息模型"
+      ],
+      "acceptance_cn": [
+        "仅训练/校准时期拟合",
+        "基线可以读完整共同信息但不能读付费未授权资产",
+        "潜力拟合不进入正式预测"
+      ],
+      "runtime_requirement": "optional_offline_fit_not_executed",
+      "status": "not_started"
+    },
+    {
+      "id": "OPT02",
+      "title_cn": "证据包×预测器交叉响应",
+      "depends_on": [
+        "OPT01"
+      ],
+      "existing_experiments": [
+        "X00",
+        "X01",
+        "X04",
+        "X05"
+      ],
+      "reading_basis": [
+        "R01",
+        "R04"
+      ],
+      "deliverables_cn": [
+        "合法EvidenceBundle manifest",
+        "固定bundle交叉表",
+        "候选-门控-协议诊断"
+      ],
+      "acceptance_cn": [
+        "同目标同截止同源内容",
+        "新预测器成本单列",
+        "完整自适应重跑不与固定输入诊断混合",
+        "所有失败/缺测保留"
+      ],
+      "runtime_requirement": "conditional_new_inference_not_executed",
+      "status": "not_started"
+    },
+    {
+      "id": "OPT03",
+      "title_cn": "非短视风险选择基线",
+      "depends_on": [
+        "OPT02"
+      ],
+      "existing_experiments": [
+        "X01",
+        "X04"
+      ],
+      "reading_basis": [
+        "R03",
+        "R04"
+      ],
+      "deliverables_cn": [
+        "一步/两步风险策略",
+        "条件合格时BRiG-style适配",
+        "推理可见性与状态覆盖测试"
+      ],
+      "acceptance_cn": [
+        "冻结同一个预测器",
+        "训练标签仅开发集",
+        "STOP/延迟/异质费用/共享为明确扩展",
+        "不要求该策略胜出"
+      ],
+      "runtime_requirement": "optional_offline_fit_and_inference_not_executed",
+      "status": "not_started"
+    },
+    {
+      "id": "OPT04",
+      "title_cn": "事件触发与计算深度分配",
+      "depends_on": [
+        "OPT02"
+      ],
+      "existing_experiments": [
+        "X01",
+        "X02",
+        "X07",
+        "X09"
+      ],
+      "reading_basis": [
+        "R05",
+        "R06"
+      ],
+      "deliverables_cn": [
+        "廉价处理/小模型/贵模型动作合同",
+        "周期与事件触发对手",
+        "同资源及匹配预测次数分表"
+      ],
+      "acceptance_cn": [
+        "selector与predictor均计费",
+        "相同廉价接口对全策略开放",
+        "不人为抬价",
+        "联合信息-处理器比较不冒充纯selector效应"
+      ],
+      "runtime_requirement": "conditional_new_inference_not_executed",
+      "status": "not_started"
+    },
+    {
+      "id": "OPT05",
+      "title_cn": "尾部proper score与阈值一致性",
+      "depends_on": [
+        "OPT01"
+      ],
+      "existing_experiments": [
+        "X00",
+        "X07"
+      ],
+      "reading_basis": [
+        "R02",
+        "R07"
+      ],
+      "deliverables_cn": [
+        "多阈值Brier与适用CRPS/twCRPS",
+        "删失与阈值支持检查",
+        "尾部及自然日历报告"
+      ],
+      "acceptance_cn": [
+        "固定阈值/权重",
+        "仍保留原极端目标",
+        "不按结果只选正例",
+        "不同单位不混加"
+      ],
+      "runtime_requirement": "none_for_recorded_predictions",
+      "status": "not_started"
+    },
+    {
+      "id": "OPT06",
+      "title_cn": "日降水与过程分组候选",
+      "depends_on": [
+        "OPT00"
+      ],
+      "existing_experiments": [
+        "X00",
+        "X06"
+      ],
+      "reading_basis": [
+        "R07",
+        "R08"
+      ],
+      "deliverables_cn": [
+        "SEEPS4ALL来源角色准入候选",
+        "相同累计窗业务配对规格",
+        "评估侧过程分组与敏感性"
+      ],
+      "acceptance_cn": [
+        "数据/代码许可分开",
+        "日降水不拆小时",
+        "没有业务发行档案不升级P轨",
+        "分组不向模型泄漏/不证明物理独立"
+      ],
+      "runtime_requirement": "conditional_data_capture_not_executed",
+      "status": "not_started"
+    },
+    {
+      "id": "OPT07",
+      "title_cn": "有限确认设计与逐灾种传播",
+      "depends_on": [
+        "OPT02",
+        "OPT03",
+        "OPT04",
+        "OPT05",
+        "OPT06"
+      ],
+      "existing_experiments": [
+        "X03",
+        "X06",
+        "X07",
+        "X08"
+      ],
+      "reading_basis": [
+        "R09",
+        "R10"
+      ],
+      "deliverables_cn": [
+        "新开发冻结与确认块",
+        "原X00-X09有限主对比",
+        "六组16类资格更新"
+      ],
+      "acceptance_cn": [
+        "不重新调已观察日历后称确认",
+        "评估器反馈隔离",
+        "完整分母",
+        "不以正收益作为数据准入门槛"
+      ],
+      "runtime_requirement": "conditional_new_runs_not_executed",
+      "status": "not_started"
+    }
+  ]
+}

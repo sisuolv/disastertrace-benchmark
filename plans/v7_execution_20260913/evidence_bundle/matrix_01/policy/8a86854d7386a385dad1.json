@@ -1,0 +1,131 @@
+{
+  "bundle_hash": "e4e52982ebbad26a40ca2611a1a50aed382192e711cd8eb259574077c8530a1b",
+  "base_hash": "6c4943a170adf1af8173a6e470883173c768cd711a1186da726d920d48c922a7",
+  "payload": {
+    "assets": [],
+    "authorization_mode": "target_private",
+    "availability_basis": "declared_archive_scenario",
+    "baseline": {
+      "available_at": 1706053140000000,
+      "content": {
+        "E_question": {
+          "predicate": "any_registered_neighbor_slot_below_threshold",
+          "query_ids": [
+            "routine-KOAK-2024-01-23T22:00:00Z",
+            "routine-KSFO-2024-01-23T22:00:00Z"
+          ],
+          "threshold_m": 5000
+        },
+        "calibration_bank_sha256": "59e67eaef83ea46e313033d8e7308315647964eccb98d33d72ffc5512d28c3ce",
+        "legacy_target_contract": {
+          "entity": "KSJC",
+          "event_operator": "lt",
+          "outcome_kind": "archived_native_report",
+          "physical_end": 1706068800000000,
+          "physical_start": 1706065200000000,
+          "release_event_at": null,
+          "report_policy": "iem_routine_unique_hour.v1",
+          "spatial_radius_m": null,
+          "spatial_support": "station:KSJC",
+          "target_id": "KSJC-2024-01-24T03:00:00Z-vis-lt-5000m",
+          "temporal_semantics": "future_physical",
+          "threshold": 5000,
+          "units": "m",
+          "variable": "visibility"
+        },
+        "mapping_details": {
+          "cell_key": "[5000,\"3-6\",\"no_low\",\"no_low\",false]",
+          "kind": "research_calibrated_taf_projection",
+          "mapping_version": "dec2023_taf_interval_empirical.v1",
+          "n": 594,
+          "probability": 0.03691275167785235
+        },
+        "native_taf": {
+          "amendment_kind": "original",
+          "available_at": 1706053140000000,
+          "issued_at": 1706053020000000,
+          "opportunity_id": "KSJC-2024-01-24T03:00:00Z-vis-lt-5000m-cutoff-2024-01-24T00:00:00Z",
+          "probability": null,
+          "probability_status": "awaiting_separate_development_calibration",
+          "projection": {
+            "rule_version": "taf_applicable_groups.v1",
+            "segments": [
+              {
+                "conditional": [],
+                "end": 1706068800000000,
+                "prevailing": [
+                  {
+                    "auxiliary": [],
+                    "sky": [
+                      "SCT030"
+                    ],
+                    "visibility": {
+                      "lower": 9656.064,
+                      "lower_closed": false,
+                      "upper": "+inf",
+                      "upper_closed": true
+                    },
+                    "weather": [],
+                    "wind": "33004KT",
+                    "wind_shear": null
+                  }
+                ],
+                "start": 1706065200000000
+              }
+            ],
+            "station": "KSJC",
+            "target_end": 1706068800000000,
+            "target_start": 1706065200000000
+          },
+          "raw": "836 FTUS46 KMTR 232337 TAFSJC TAF KSJC 232337Z 2400/2424 33004KT P6SM SCT030 FM240700 14004KT P6SM OVC015 FM241200 14006KT P6SM BKN035 FM241500 14010KT 3SM -SHRA BR OVC015 FM242200 15010KT 3SM BR VCSH BKN020=",
+          "source_id": "taf-202401232337-KMTR-FTUS46-TAFSJC",
+          "target_id": "KSJC-2024-01-24T03:00:00Z-vis-lt-5000m",
+          "valid_until": 1706065200000000
+        }
+      },
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "3ea24d2b9e9de3adf57f10be62d4a12f894514b7eea87e7248dbdb3bde6debd6",
+        "units": "probability",
+        "value": 0.03691275167785235
+      },
+      "issued_at": 1706053020000000,
+      "kind": "research",
+      "mapping_version": "dec2023_taf_interval_empirical.v1",
+      "source_revision": "taf-202401232337-KMTR-FTUS46-TAFSJC",
+      "valid_until": 1706065200000000
+    },
+    "cutoff": 1706054400000000,
+    "opportunity_id": "KSJC-2024-01-24T03:00:00Z-vis-lt-5000m-cutoff-2024-01-24T00:00:00Z",
+    "provider_version": "native_h15_snapshot.v1",
+    "receipts": [],
+    "representation": "native_text_and_fixed_parser_product_intervals",
+    "schema": "disastertrace.frozen_evidence.v1",
+    "state": {
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "3ea24d2b9e9de3adf57f10be62d4a12f894514b7eea87e7248dbdb3bde6debd6",
+        "units": "probability",
+        "value": 0.03691275167785235
+      },
+      "mode": "FOLLOW",
+      "protocol": "base_bound_override"
+    },
+    "target": {
+      "entity": "station:KSJC",
+      "event_operator": "lt",
+      "output_kind": "event_probability",
+      "physical_end": 1706068800000000,
+      "physical_start": 1706065200000000,
+      "release_event_at": null,
+      "report_policy": "iem_routine_unique_hour.v1",
+      "support_kind": "interval",
+      "target_id": "KSJC-2024-01-24T03:00:00Z-vis-lt-5000m",
+      "temporal_semantics": "future_physical",
+      "threshold": 5000,
+      "units": "m",
+      "variable": "visibility"
+    }
+  },
+  "asset_hashes": {}
+}

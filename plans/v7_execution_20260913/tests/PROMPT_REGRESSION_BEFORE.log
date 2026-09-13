@@ -1,0 +1,100 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_explicit_truth_output_maps_to_support_without_filled_defaults[true-supported] _
+
+truth = 'true', status = 'supported'
+
+    @pytest.mark.parametrize("truth,status", [("true", "supported"), ("false", "refuted"),
+                                              ("unknown", "undetermined"), ("conflict", "inconsistent")])
+    def test_explicit_truth_output_maps_to_support_without_filled_defaults(truth, status):
+        bundle = bundles()[0]
+>       forecast, support = parse_response(json.dumps({"probability": 0.2, "fact_truth": truth}), bundle)
+
+plans/v7_execution_20260913/tests/test_fixed_real_inputs.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '{"probability": 0.2, "fact_truth": "true"}'
+bundle = EvidenceBundle(_payload_json='{"assets":[{"asset_id":"routine-KSFO-2024-01-02T22:00:00Z","available_at":17042367000000...03:00:00Z-vis-lt-5000m","temporal_semantics":"future_physical","threshold":5000,"units":"m","variable":"visibility"}}')
+
+    def parse_response(raw, bundle):
+        row = json.loads(raw)
+        if not isinstance(row, dict) or set(row) != {"probability", "e_status"}:
+>           raise ValueError("Invalid fixed-predictor response schema")
+E           ValueError: Invalid fixed-predictor response schema
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/aviation.py:215: ValueError
+_ test_explicit_truth_output_maps_to_support_without_filled_defaults[false-refuted] _
+
+truth = 'false', status = 'refuted'
+
+    @pytest.mark.parametrize("truth,status", [("true", "supported"), ("false", "refuted"),
+                                              ("unknown", "undetermined"), ("conflict", "inconsistent")])
+    def test_explicit_truth_output_maps_to_support_without_filled_defaults(truth, status):
+        bundle = bundles()[0]
+>       forecast, support = parse_response(json.dumps({"probability": 0.2, "fact_truth": truth}), bundle)
+
+plans/v7_execution_20260913/tests/test_fixed_real_inputs.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '{"probability": 0.2, "fact_truth": "false"}'
+bundle = EvidenceBundle(_payload_json='{"assets":[{"asset_id":"routine-KSFO-2024-01-02T22:00:00Z","available_at":17042367000000...03:00:00Z-vis-lt-5000m","temporal_semantics":"future_physical","threshold":5000,"units":"m","variable":"visibility"}}')
+
+    def parse_response(raw, bundle):
+        row = json.loads(raw)
+        if not isinstance(row, dict) or set(row) != {"probability", "e_status"}:
+>           raise ValueError("Invalid fixed-predictor response schema")
+E           ValueError: Invalid fixed-predictor response schema
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/aviation.py:215: ValueError
+_ test_explicit_truth_output_maps_to_support_without_filled_defaults[unknown-undetermined] _
+
+truth = 'unknown', status = 'undetermined'
+
+    @pytest.mark.parametrize("truth,status", [("true", "supported"), ("false", "refuted"),
+                                              ("unknown", "undetermined"), ("conflict", "inconsistent")])
+    def test_explicit_truth_output_maps_to_support_without_filled_defaults(truth, status):
+        bundle = bundles()[0]
+>       forecast, support = parse_response(json.dumps({"probability": 0.2, "fact_truth": truth}), bundle)
+
+plans/v7_execution_20260913/tests/test_fixed_real_inputs.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '{"probability": 0.2, "fact_truth": "unknown"}'
+bundle = EvidenceBundle(_payload_json='{"assets":[{"asset_id":"routine-KSFO-2024-01-02T22:00:00Z","available_at":17042367000000...03:00:00Z-vis-lt-5000m","temporal_semantics":"future_physical","threshold":5000,"units":"m","variable":"visibility"}}')
+
+    def parse_response(raw, bundle):
+        row = json.loads(raw)
+        if not isinstance(row, dict) or set(row) != {"probability", "e_status"}:
+>           raise ValueError("Invalid fixed-predictor response schema")
+E           ValueError: Invalid fixed-predictor response schema
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/aviation.py:215: ValueError
+_ test_explicit_truth_output_maps_to_support_without_filled_defaults[conflict-inconsistent] _
+
+truth = 'conflict', status = 'inconsistent'
+
+    @pytest.mark.parametrize("truth,status", [("true", "supported"), ("false", "refuted"),
+                                              ("unknown", "undetermined"), ("conflict", "inconsistent")])
+    def test_explicit_truth_output_maps_to_support_without_filled_defaults(truth, status):
+        bundle = bundles()[0]
+>       forecast, support = parse_response(json.dumps({"probability": 0.2, "fact_truth": truth}), bundle)
+
+plans/v7_execution_20260913/tests/test_fixed_real_inputs.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '{"probability": 0.2, "fact_truth": "conflict"}'
+bundle = EvidenceBundle(_payload_json='{"assets":[{"asset_id":"routine-KSFO-2024-01-02T22:00:00Z","available_at":17042367000000...03:00:00Z-vis-lt-5000m","temporal_semantics":"future_physical","threshold":5000,"units":"m","variable":"visibility"}}')
+
+    def parse_response(raw, bundle):
+        row = json.loads(raw)
+        if not isinstance(row, dict) or set(row) != {"probability", "e_status"}:
+>           raise ValueError("Invalid fixed-predictor response schema")
+E           ValueError: Invalid fixed-predictor response schema
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/aviation.py:215: ValueError
+=========================== short test summary info ============================
+FAILED plans/v7_execution_20260913/tests/test_fixed_real_inputs.py::test_explicit_truth_output_maps_to_support_without_filled_defaults[true-supported]
+FAILED plans/v7_execution_20260913/tests/test_fixed_real_inputs.py::test_explicit_truth_output_maps_to_support_without_filled_defaults[false-refuted]
+FAILED plans/v7_execution_20260913/tests/test_fixed_real_inputs.py::test_explicit_truth_output_maps_to_support_without_filled_defaults[unknown-undetermined]
+FAILED plans/v7_execution_20260913/tests/test_fixed_real_inputs.py::test_explicit_truth_output_maps_to_support_without_filled_defaults[conflict-inconsistent]
+4 failed, 8 deselected in 1.94s

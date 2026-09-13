@@ -1,0 +1,221 @@
+{
+  "schema": "disastertrace.q0q6.research_amendment.v1",
+  "user_repo_commit": "98f28a9a9f33c28ec2b0236c4aaf47a9173c813e",
+  "preserve": [
+    "v7",
+    "monitoring_v1",
+    "C1",
+    "C2",
+    "C3",
+    "X00-X09",
+    "16_hazard_contracts",
+    "all_frozen_results"
+  ],
+  "execution_authorized": false,
+  "work_packages": [
+    {
+      "id": "Q0",
+      "dependencies": [],
+      "title": "现有日志：修订漏斗与指标独立核验",
+      "references": [
+        "R10"
+      ],
+      "outputs": [
+        "REVISION_FUNNEL.json",
+        "BUDGET_BOTTLENECKS.json",
+        "SCORE_CROSSCHECK.json"
+      ],
+      "actions": [
+        "使用已保存候选、决策、协议事件生成机会→选择→取得→候选变化→override→accepted→cutoff生效→结果变化漏斗",
+        "分开提出概率与协议生效概率，复算已执行候选上的门控/回退作用",
+        "对相同掩膜/权重交叉核验Brier，单列AP/校准、G+/G-及Flip-Flop稳定性",
+        "记录selector/predictor调用、token和实耗，不重复计回放为新推理"
+      ],
+      "acceptance": [
+        "全部总量可由原记录重建",
+        "不存在为未调用目标补造候选",
+        "稳定性与技能分表，历史结果未覆盖"
+      ],
+      "not_authorized_by_this_plan": [
+        "new_model_calls",
+        "bulk_downloads",
+        "git_push"
+      ]
+    },
+    {
+      "id": "Q1",
+      "dependencies": [
+        "Q0"
+      ],
+      "title": "更强且语义匹配的专业/研究基线",
+      "references": [
+        "R03",
+        "R05",
+        "R09",
+        "R12"
+      ],
+      "outputs": [
+        "BASELINE_ADMISSION.json",
+        "LAMP_VERSION_SUPPORT_AUDIT.json",
+        "CALIBRATION_SPLIT_MANIFEST.json"
+      ],
+      "actions": [
+        "保持原<1000m R轨，新增独立命名的LAMP原生阈值/窗口候选合同",
+        "先文档/版本/目录/小样例，再决定是否有历史可配对基线；失败不阻塞原R轨改进",
+        "分开同地区时间迁移和跨地区迁移，增加稀疏单元回退、正则化/分层廉价模型对照",
+        "校准/特征处理仅使用训练或独立开发块；保留全部TAF条件段与原始官方信息"
+      ],
+      "acceptance": [
+        "概率阈值、单位、空间、窗口、发行版本和未来参考严格相容",
+        "既有2024样例不使用2024年9月以后才出现的产品定义",
+        "当地校准与跨地区迁移不混榜，旧已看日历不称确认集"
+      ]
+    },
+    {
+      "id": "Q2",
+      "dependencies": [
+        "Q0"
+      ],
+      "title": "真实合法证据池与有限动作价值探针",
+      "references": [
+        "R04",
+        "R06",
+        "R08"
+      ],
+      "outputs": [
+        "EVIDENCE_CONTRACTS.json",
+        "ACTION_PROBE_DESIGN.json",
+        "ACTION_PROBE_RESULTS.json"
+      ],
+      "actions": [
+        "原固定邻站E诊断保持不变；未来预测池增加确有时间依据的最新同站/邻站、趋势和辅助图像",
+        "固定同一前缀/目标/基线/预测器，在预登记小开发集比较合法动作及少量两步组合",
+        "完整冻结真实候选源响应；未归档替代路径不可重放，不编造工具结果",
+        "将可认证E、原生感知参考、可达性参照、实际F损失分别记录"
+      ],
+      "acceptance": [
+        "每个探针输入均来自真实可得资产且标签未越权",
+        "动作价值是已测预测器的经验损失差，不称信息论VOI或可部署oracle",
+        "不依据模型收益筛确认事件；未知关系保留"
+      ]
+    },
+    {
+      "id": "Q3",
+      "dependencies": [
+        "Q1",
+        "Q2"
+      ],
+      "title": "固定预测器、证据锁定融合与成本公平",
+      "references": [
+        "R01",
+        "R02"
+      ],
+      "outputs": [
+        "SELECTOR_PREDICTOR_MATRIX.json",
+        "FROZEN_EVIDENCE_BUNDLES.json",
+        "COST_FRONTIER.json"
+      ],
+      "actions": [
+        "拆selector/perceptor/predictor/gate版本与输入输出，保留同预测器主获取实验",
+        "冻结证据哈希再比直接概率、廉价条件融合、可复现的LEAP式候选方法；实际LEAP后端缺失则标阻塞",
+        "比较相同端到端预算、固定预测机会诊断和token/compute曲线，所有selector消耗照记",
+        "先实现公开事件触发/一次计划多个查询的廉价和模型对照，再决定有无必要训练selector"
+      ],
+      "acceptance": [
+        "正式策略不接收AFA可选label",
+        "证据锁定后无额外检索；预测器改变不归因于获取",
+        "不假定基线和新增观测统计独立，不给selector免费预算"
+      ]
+    },
+    {
+      "id": "Q4",
+      "dependencies": [
+        "Q2",
+        "Q3"
+      ],
+      "title": "主动视觉从输入联调进入多过程实验",
+      "references": [
+        "R13",
+        "R15",
+        "R06"
+      ],
+      "outputs": [
+        "VISUAL_ACTION_CATALOG.json",
+        "VISUAL_INPUT_AUDIT.json",
+        "ACTIVE_VISUAL_COMPARISON.json"
+      ],
+      "actions": [
+        "取得多个独立过程和普通/近阈值/正例开发片段，自然队列与富集诊断分开",
+        "候选动作区分同资产重读/高分辨率裁剪/新时刻新观测，保持来源谱系与成本",
+        "比较数值文字、原生图文、合法工具产品/特征、单列特权事实；FLS只作适用的工具增强/现状产品",
+        "记录真实图像、DQF、时间、投影、ROI、像素/视觉token和处理成本，保持固定图像强对照"
+      ],
+      "acceptance": [
+        "至少一条同目标未来评分中图像可被策略选择，而不只是固定供图",
+        "不用FLS的云底高或当前态概率冒充未来纯能见度结果",
+        "不通过答案中心裁剪、隐藏mask或泄漏图例增加效果"
+      ]
+    },
+    {
+      "id": "Q5",
+      "dependencies": [
+        "Q0"
+      ],
+      "title": "H08先迁移，H07作为可选领域强对照路线",
+      "references": [
+        "R05",
+        "R11",
+        "R15"
+      ],
+      "outputs": [
+        "H08_CONTINUOUS_SESSION_AUDIT.json",
+        "H08_STAGE_WARNING_GATES.json",
+        "H07_NOWCAST_BASELINE_OPTION.json"
+      ],
+      "actions": [
+        "连续流量先进入已有监测引擎；水位越阈另核datum/epoch/阈值历史/官方站号",
+        "选择真实水网和连续日历，不将任意三个站点视为上下游",
+        "H07若有合格QPE，则用pysteps持续/平流/集合短临作专业领域R对照，复用雷达视觉资产",
+        "16类总合同维持；按数据证据放行，不因引入新库就声称新灾种完成"
+      ],
+      "acceptance": [
+        "CPU配对、结果、强程序对照先过，再运行模型",
+        "水位阈值不用在cfs/kcfs；逐时统计/累积窗口严格一致",
+        "pysteps输入不是未经转换定义的VIL，缺测不补0"
+      ]
+    },
+    {
+      "id": "Q6",
+      "dependencies": [
+        "Q3",
+        "Q4",
+        "Q5"
+      ],
+      "title": "独立确认与小规模前瞻模型结算",
+      "references": [
+        "R04",
+        "R08",
+        "R09",
+        "R10",
+        "R14"
+      ],
+      "outputs": [
+        "CONFIRMATION_MANIFEST.json",
+        "PROSPECTIVE_SUBMISSIONS.jsonl",
+        "SETTLEMENT_VERSIONS.jsonl",
+        "REPLAY_SCOPE.json"
+      ],
+      "actions": [
+        "冻结方法/阈值/费用/支持/结果规则后采样新过程，块级统计与功效设计",
+        "独立有界collector保存候选数据；模型只经当时公开代理读取，未来评分不反馈给策略",
+        "在实际截止前持久提交，按成熟度追加结果，旧实时观察器数据不反填历史时间",
+        "历史已存回复重放、替代路径新推理、前瞻成绩分别命名；所有漏交/失败/缺测保留"
+      ],
+      "acceptance": [
+        "跨年份不当独立天气过程或无预训练污染保证",
+        "无覆盖的替代动作结果保持不可评估",
+        "前瞻必须至少有真实模型提前提交和后来结果，不能只有first-seen观察"
+      ]
+    }
+  ]
+}

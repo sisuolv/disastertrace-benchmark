@@ -1,0 +1,99 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_reducer_does_not_adopt_proposals_outside_target_time_semantics[t0-100] __
+
+t = Target(target_id='t', entity='station:A', variable='temperature', units='degC', output_kind='scalar', support_kind='po...ntics='future_physical', report_policy='native_instant.v1', event_operator=None, threshold=None, release_event_at=None)
+at = 100
+
+    @pytest.mark.parametrize(
+        "t,at",
+        [
+            (target(), 100),
+            (Target("p", "a", "index", "units", "scalar", "interval", 10, 20,
+                    "future_product_release", "release.v1", release_event_at=30), 30),
+            (Target("p", "a", "rain", "mm", "scalar", "interval", 10, 20,
+                    "partial_window_nowcast", "sum.v1"), 20),
+        ],
+    )
+    def test_reducer_does_not_adopt_proposals_outside_target_time_semantics(t, at):
+        state = ForecastState(t, "persistent_override")
+        base = Forecast(t.contract_hash, "scalar", t.units, 1)
+        proposal = Forecast(t.contract_hash, "scalar", t.units, 2)
+        state.update_baseline(base, "b1", at - 1)
+>       assert state.propose(proposal, "b1", at, at + 100) == "invalid_target_time"
+E       AssertionError: assert 'accepted' == 'invalid_target_time'
+E         
+E         - invalid_target_time
+E         + accepted
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:259: AssertionError
+__ test_reducer_does_not_adopt_proposals_outside_target_time_semantics[t1-30] __
+
+t = Target(target_id='p', entity='a', variable='index', units='units', output_kind='scalar', support_kind='interval', phys...mantics='future_product_release', report_policy='release.v1', event_operator=None, threshold=None, release_event_at=30)
+at = 30
+
+    @pytest.mark.parametrize(
+        "t,at",
+        [
+            (target(), 100),
+            (Target("p", "a", "index", "units", "scalar", "interval", 10, 20,
+                    "future_product_release", "release.v1", release_event_at=30), 30),
+            (Target("p", "a", "rain", "mm", "scalar", "interval", 10, 20,
+                    "partial_window_nowcast", "sum.v1"), 20),
+        ],
+    )
+    def test_reducer_does_not_adopt_proposals_outside_target_time_semantics(t, at):
+        state = ForecastState(t, "persistent_override")
+        base = Forecast(t.contract_hash, "scalar", t.units, 1)
+        proposal = Forecast(t.contract_hash, "scalar", t.units, 2)
+        state.update_baseline(base, "b1", at - 1)
+>       assert state.propose(proposal, "b1", at, at + 100) == "invalid_target_time"
+E       AssertionError: assert 'accepted' == 'invalid_target_time'
+E         
+E         - invalid_target_time
+E         + accepted
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:259: AssertionError
+__ test_reducer_does_not_adopt_proposals_outside_target_time_semantics[t2-20] __
+
+t = Target(target_id='p', entity='a', variable='rain', units='mm', output_kind='scalar', support_kind='interval', physical...semantics='partial_window_nowcast', report_policy='sum.v1', event_operator=None, threshold=None, release_event_at=None)
+at = 20
+
+    @pytest.mark.parametrize(
+        "t,at",
+        [
+            (target(), 100),
+            (Target("p", "a", "index", "units", "scalar", "interval", 10, 20,
+                    "future_product_release", "release.v1", release_event_at=30), 30),
+            (Target("p", "a", "rain", "mm", "scalar", "interval", 10, 20,
+                    "partial_window_nowcast", "sum.v1"), 20),
+        ],
+    )
+    def test_reducer_does_not_adopt_proposals_outside_target_time_semantics(t, at):
+        state = ForecastState(t, "persistent_override")
+        base = Forecast(t.contract_hash, "scalar", t.units, 1)
+        proposal = Forecast(t.contract_hash, "scalar", t.units, 2)
+        state.update_baseline(base, "b1", at - 1)
+>       assert state.propose(proposal, "b1", at, at + 100) == "invalid_target_time"
+E       AssertionError: assert 'accepted' == 'invalid_target_time'
+E         
+E         - invalid_target_time
+E         + accepted
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:259: AssertionError
+__________ test_reused_baseline_identity_cannot_hide_changed_forecast __________
+
+    def test_reused_baseline_identity_cannot_hide_changed_forecast():
+        t = target()
+        state = ForecastState(t, "base_bound_override")
+        state.update_baseline(Forecast(t.contract_hash, "scalar", "degC", -3), "same", 10)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+plans/v7_execution_20260913/tests/test_fixed_contracts.py:268: Failed
+=========================== short test summary info ============================
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_reducer_does_not_adopt_proposals_outside_target_time_semantics[t0-100]
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_reducer_does_not_adopt_proposals_outside_target_time_semantics[t1-30]
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_reducer_does_not_adopt_proposals_outside_target_time_semantics[t2-20]
+FAILED plans/v7_execution_20260913/tests/test_fixed_contracts.py::test_reused_baseline_identity_cannot_hide_changed_forecast
+4 failed, 22 deselected in 0.86s

@@ -1,0 +1,131 @@
+{
+  "bundle_hash": "44ddb6aef336a9d1119dbd3e4065bc7a847a49f17cbc9ed7e97e5e52371e305c",
+  "base_hash": "268911c5982f3c36cb9ba7199051e5baf7d25e8158c3d6ad18ad32a7d09ef5d7",
+  "payload": {
+    "assets": [],
+    "authorization_mode": "target_private",
+    "availability_basis": "declared_archive_scenario",
+    "baseline": {
+      "available_at": 1706095440000000,
+      "content": {
+        "E_question": {
+          "predicate": "any_registered_neighbor_slot_below_threshold",
+          "query_ids": [
+            "routine-KDEN-2024-01-24T10:00:00Z",
+            "routine-KPUB-2024-01-24T10:00:00Z"
+          ],
+          "threshold_m": 1000
+        },
+        "calibration_bank_sha256": "59e67eaef83ea46e313033d8e7308315647964eccb98d33d72ffc5512d28c3ce",
+        "legacy_target_contract": {
+          "entity": "KCOS",
+          "event_operator": "lt",
+          "outcome_kind": "archived_native_report",
+          "physical_end": 1706112000000000,
+          "physical_start": 1706108400000000,
+          "release_event_at": null,
+          "report_policy": "iem_routine_unique_hour.v1",
+          "spatial_radius_m": null,
+          "spatial_support": "station:KCOS",
+          "target_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m",
+          "temporal_semantics": "future_physical",
+          "threshold": 1000,
+          "units": "m",
+          "variable": "visibility"
+        },
+        "mapping_details": {
+          "cell_key": "[1000,\"3-6\",\"no_low\",\"no_low\",false]",
+          "kind": "research_calibrated_taf_projection",
+          "mapping_version": "dec2023_taf_interval_empirical.v1",
+          "n": 615,
+          "probability": 0.02593192868719611
+        },
+        "native_taf": {
+          "amendment_kind": "original",
+          "available_at": 1706095440000000,
+          "issued_at": 1706095320000000,
+          "opportunity_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m-cutoff-2024-01-24T12:00:00Z",
+          "probability": null,
+          "probability_status": "awaiting_separate_development_calibration",
+          "projection": {
+            "rule_version": "taf_applicable_groups.v1",
+            "segments": [
+              {
+                "conditional": [],
+                "end": 1706112000000000,
+                "prevailing": [
+                  {
+                    "auxiliary": [],
+                    "sky": [
+                      "SCT200"
+                    ],
+                    "visibility": {
+                      "lower": 9656.064,
+                      "lower_closed": false,
+                      "upper": "+inf",
+                      "upper_closed": true
+                    },
+                    "weather": [],
+                    "wind": "35007KT",
+                    "wind_shear": null
+                  }
+                ],
+                "start": 1706108400000000
+              }
+            ],
+            "station": "KCOS",
+            "target_end": 1706112000000000,
+            "target_start": 1706108400000000
+          },
+          "raw": "104 FTUS45 KPUB 241122 TAFCOS TAF KCOS 241122Z 2412/2512 35007KT P6SM SCT200 FM242000 06008KT P6SM SCT080 BKN140 FM250200 34007KT P6SM BKN100=",
+          "source_id": "taf-202401241122-KPUB-FTUS45-TAFCOS",
+          "target_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m",
+          "valid_until": 1706108400000000
+        }
+      },
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "3355c0662070f6314ffc54c0503a646530195080a39cb74299b854ac29a894dc",
+        "units": "probability",
+        "value": 0.02593192868719611
+      },
+      "issued_at": 1706095320000000,
+      "kind": "research",
+      "mapping_version": "dec2023_taf_interval_empirical.v1",
+      "source_revision": "taf-202401241122-KPUB-FTUS45-TAFCOS",
+      "valid_until": 1706108400000000
+    },
+    "cutoff": 1706097600000000,
+    "opportunity_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m-cutoff-2024-01-24T12:00:00Z",
+    "provider_version": "native_h15_snapshot.v1",
+    "receipts": [],
+    "representation": "native_text_and_fixed_parser_product_intervals",
+    "schema": "disastertrace.frozen_evidence.v1",
+    "state": {
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "3355c0662070f6314ffc54c0503a646530195080a39cb74299b854ac29a894dc",
+        "units": "probability",
+        "value": 0.02593192868719611
+      },
+      "mode": "FOLLOW",
+      "protocol": "base_bound_override"
+    },
+    "target": {
+      "entity": "station:KCOS",
+      "event_operator": "lt",
+      "output_kind": "event_probability",
+      "physical_end": 1706112000000000,
+      "physical_start": 1706108400000000,
+      "release_event_at": null,
+      "report_policy": "iem_routine_unique_hour.v1",
+      "support_kind": "interval",
+      "target_id": "KCOS-2024-01-24T15:00:00Z-vis-lt-1000m",
+      "temporal_semantics": "future_physical",
+      "threshold": 1000,
+      "units": "m",
+      "variable": "visibility"
+    }
+  },
+  "asset_hashes": {}
+}

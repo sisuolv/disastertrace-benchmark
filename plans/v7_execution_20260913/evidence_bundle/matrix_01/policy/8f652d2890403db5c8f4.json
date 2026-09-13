@@ -1,0 +1,278 @@
+{
+  "bundle_hash": "82b7da11a1af95683527e63560cba93f2c649b8404361071c7f940fe0f6adfff",
+  "base_hash": "2b5fedbca058db4c88212a2c01b3518a6146833e2ce21106fa76dc2e8a561bee",
+  "payload": {
+    "assets": [
+      {
+        "asset_id": "routine-KDEN-2024-01-17T10:00:00Z",
+        "available_at": 1705489500000000,
+        "completed_at": 1705489501000000,
+        "content": {
+          "query_id": "routine-KDEN-2024-01-17T10:00:00Z",
+          "reference_kind": "product_label",
+          "reports": [
+            {
+              "archive_station": "DEN",
+              "archive_valid": "2024-01-17 10:53",
+              "decoded": true,
+              "observation_time": 1705488780000000,
+              "quality_flags": [],
+              "raw": "KDEN 171053Z 21019KT 10SM FEW200 M01/M13 A2966 RMK AO2 PK WND 23031/1031 SLP045 T10061128",
+              "slot_start": 1705485600000000,
+              "source_id": "metar-routine-KDEN",
+              "source_line": 396,
+              "station": "KDEN",
+              "temperature_c": -1,
+              "visibility": {
+                "lower": 16093.44,
+                "lower_closed": true,
+                "upper": 16093.44,
+                "upper_closed": true
+              },
+              "weather": []
+            }
+          ],
+          "status": "disclosed_product_fact",
+          "support_assumption": "product_exact",
+          "support_rule_version": "native_metar_interval.v1",
+          "visible_information_scope": "policy_after_query"
+        },
+        "entitlements": [
+          "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m"
+        ],
+        "missingness": "disclosed_product_fact",
+        "observed_at": 1705488780000000,
+        "parents": [],
+        "raw": "KDEN 171053Z 21019KT 10SM FEW200 M01/M13 A2966 RMK AO2 PK WND 23031/1031 SLP045 T10061128",
+        "receipt_ids": [
+          "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m-cutoff-2024-01-17T12:00:00Z:routine-KDEN-2024-01-17T10:00:00Z"
+        ],
+        "reference_kind": "product_label",
+        "source_revision": "33f2e54314ce5da333ab0faff53d3b07a75eaa320efef9a5ef3f3bfb7ac56572",
+        "support_assumption": "product_exact",
+        "support_rule_version": "native_metar_interval.v1",
+        "transform": {
+          "parameters": {
+            "units": "m"
+          },
+          "version": "native_metar_interval.v1"
+        },
+        "visible_information_scope": "policy_after_query"
+      },
+      {
+        "asset_id": "routine-KPUB-2024-01-17T10:00:00Z",
+        "available_at": 1705489500000000,
+        "completed_at": 1705489501000000,
+        "content": {
+          "query_id": "routine-KPUB-2024-01-17T10:00:00Z",
+          "reference_kind": "product_label",
+          "reports": [
+            {
+              "archive_station": "PUB",
+              "archive_valid": "2024-01-17 10:53",
+              "decoded": true,
+              "observation_time": 1705488780000000,
+              "quality_flags": [],
+              "raw": "KPUB 171053Z AUTO 10SM CLR M12/M15 A2977 RMK AO2 SLP122 T11171150 $",
+              "slot_start": 1705485600000000,
+              "source_id": "metar-routine-KPUB",
+              "source_line": 396,
+              "station": "KPUB",
+              "temperature_c": -12,
+              "visibility": {
+                "lower": 16093.44,
+                "lower_closed": true,
+                "upper": 16093.44,
+                "upper_closed": true
+              },
+              "weather": []
+            }
+          ],
+          "status": "disclosed_product_fact",
+          "support_assumption": "product_exact",
+          "support_rule_version": "native_metar_interval.v1",
+          "visible_information_scope": "policy_after_query"
+        },
+        "entitlements": [
+          "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m"
+        ],
+        "missingness": "disclosed_product_fact",
+        "observed_at": 1705488780000000,
+        "parents": [],
+        "raw": "KPUB 171053Z AUTO 10SM CLR M12/M15 A2977 RMK AO2 SLP122 T11171150 $",
+        "receipt_ids": [
+          "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m-cutoff-2024-01-17T12:00:00Z:routine-KPUB-2024-01-17T10:00:00Z"
+        ],
+        "reference_kind": "product_label",
+        "source_revision": "17747ef8b2a5805d428804160e53fa27f8b97fe25e458192acf5b64426d4fa59",
+        "support_assumption": "product_exact",
+        "support_rule_version": "native_metar_interval.v1",
+        "transform": {
+          "parameters": {
+            "units": "m"
+          },
+          "version": "native_metar_interval.v1"
+        },
+        "visible_information_scope": "policy_after_query"
+      }
+    ],
+    "authorization_mode": "target_private",
+    "availability_basis": "declared_archive_scenario",
+    "baseline": {
+      "available_at": 1705470120000000,
+      "content": {
+        "E_question": {
+          "predicate": "any_registered_neighbor_slot_below_threshold",
+          "query_ids": [
+            "routine-KDEN-2024-01-17T10:00:00Z",
+            "routine-KPUB-2024-01-17T10:00:00Z"
+          ],
+          "threshold_m": 1000
+        },
+        "calibration_bank_sha256": "59e67eaef83ea46e313033d8e7308315647964eccb98d33d72ffc5512d28c3ce",
+        "legacy_target_contract": {
+          "entity": "KCOS",
+          "event_operator": "lt",
+          "outcome_kind": "archived_native_report",
+          "physical_end": 1705507200000000,
+          "physical_start": 1705503600000000,
+          "release_event_at": null,
+          "report_policy": "iem_routine_unique_hour.v1",
+          "spatial_radius_m": null,
+          "spatial_support": "station:KCOS",
+          "target_id": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m",
+          "temporal_semantics": "future_physical",
+          "threshold": 1000,
+          "units": "m",
+          "variable": "visibility"
+        },
+        "mapping_details": {
+          "cell_key": "[1000,\"6-12\",\"no_low\",\"no_low\",false]",
+          "kind": "research_calibrated_taf_projection",
+          "mapping_version": "dec2023_taf_interval_empirical.v1",
+          "n": 877,
+          "probability": 0.03640500568828214
+        },
+        "native_taf": {
+          "amendment_kind": "original",
+          "available_at": 1705470120000000,
+          "issued_at": 1705470000000000,
+          "opportunity_id": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m-cutoff-2024-01-17T12:00:00Z",
+          "probability": null,
+          "probability_status": "awaiting_separate_development_calibration",
+          "projection": {
+            "rule_version": "taf_applicable_groups.v1",
+            "segments": [
+              {
+                "conditional": [],
+                "end": 1705507200000000,
+                "prevailing": [
+                  {
+                    "auxiliary": [],
+                    "sky": [
+                      "FEW250"
+                    ],
+                    "visibility": {
+                      "lower": 9656.064,
+                      "lower_closed": false,
+                      "upper": "+inf",
+                      "upper_closed": true
+                    },
+                    "weather": [],
+                    "wind": "02006KT",
+                    "wind_shear": null
+                  }
+                ],
+                "start": 1705503600000000
+              }
+            ],
+            "station": "KCOS",
+            "target_end": 1705507200000000,
+            "target_start": 1705503600000000
+          },
+          "raw": "899 FTUS45 KPUB 170540 TAFCOS TAF KCOS 170540Z 1706/1806 02006KT P6SM FEW250 FM171800 09006KT P6SM SCT250 FM172000 22008KT P6SM BKN250 FM172200 28012KT P6SM BKN250 FM180200 01006KT P6SM SCT250=",
+          "source_id": "taf-202401170540-KPUB-FTUS45-TAFCOS",
+          "target_id": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m",
+          "valid_until": 1705503600000000
+        }
+      },
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "29d30003edc55ab04340e7330d363fa8b48b3314b4b8dddaba4d1b17cea37d06",
+        "units": "probability",
+        "value": 0.03640500568828214
+      },
+      "issued_at": 1705470000000000,
+      "kind": "research",
+      "mapping_version": "dec2023_taf_interval_empirical.v1",
+      "source_revision": "taf-202401170540-KPUB-FTUS45-TAFCOS",
+      "valid_until": 1705503600000000
+    },
+    "cutoff": 1705492800000000,
+    "opportunity_id": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m-cutoff-2024-01-17T12:00:00Z",
+    "provider_version": "native_h15_snapshot.v1",
+    "receipts": [
+      {
+        "asset_ids": [
+          "routine-KDEN-2024-01-17T10:00:00Z"
+        ],
+        "completed_at": 1705489501000000,
+        "cost": {
+          "bytes": 2048,
+          "compute_ms": 100,
+          "requests": 1,
+          "tokens": 0
+        },
+        "owner": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m",
+        "receipt_id": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m-cutoff-2024-01-17T12:00:00Z:routine-KDEN-2024-01-17T10:00:00Z",
+        "started_at": 1705489500000000
+      },
+      {
+        "asset_ids": [
+          "routine-KPUB-2024-01-17T10:00:00Z"
+        ],
+        "completed_at": 1705489501000000,
+        "cost": {
+          "bytes": 2048,
+          "compute_ms": 100,
+          "requests": 1,
+          "tokens": 0
+        },
+        "owner": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m",
+        "receipt_id": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m-cutoff-2024-01-17T12:00:00Z:routine-KPUB-2024-01-17T10:00:00Z",
+        "started_at": 1705489500000000
+      }
+    ],
+    "representation": "native_text_and_fixed_parser_product_intervals",
+    "schema": "disastertrace.frozen_evidence.v1",
+    "state": {
+      "forecast": {
+        "kind": "event_probability",
+        "target_contract_hash": "29d30003edc55ab04340e7330d363fa8b48b3314b4b8dddaba4d1b17cea37d06",
+        "units": "probability",
+        "value": 0.03640500568828214
+      },
+      "mode": "FOLLOW",
+      "protocol": "base_bound_override"
+    },
+    "target": {
+      "entity": "station:KCOS",
+      "event_operator": "lt",
+      "output_kind": "event_probability",
+      "physical_end": 1705507200000000,
+      "physical_start": 1705503600000000,
+      "release_event_at": null,
+      "report_policy": "iem_routine_unique_hour.v1",
+      "support_kind": "interval",
+      "target_id": "KCOS-2024-01-17T15:00:00Z-vis-lt-1000m",
+      "temporal_semantics": "future_physical",
+      "threshold": 1000,
+      "units": "m",
+      "variable": "visibility"
+    }
+  },
+  "asset_hashes": {
+    "routine-KDEN-2024-01-17T10:00:00Z": "98fc6ffa14411478b4587e98c34c81522f85416170376c52d86c2dea74a3900f",
+    "routine-KPUB-2024-01-17T10:00:00Z": "0ab59c2f175a93c245f11e034156b3750de218a48ddaf4e869a8978be5d0c086"
+  }
+}

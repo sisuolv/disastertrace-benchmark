@@ -1,0 +1,49 @@
+{
+  "schema_version": "lamp_validation_v1",
+  "completed_at_utc": "2026-09-13T05:07:18.926750+00:00",
+  "checks": [
+    {
+      "command": [
+        "/usr/bin/python",
+        "plans/v7_execution_20260913/sources_lamp/validate.py"
+      ],
+      "returncode": 0,
+      "log": "final_check_01.log",
+      "log_sha256": "5179b56369f4b45542501a2a9344e9dffdfc1a8b84bcf13cfd71d75630e5d9e4"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "plans/v7_execution_20260913/sources_lamp",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "log": "final_check_02.log",
+      "log_sha256": "294e59d7eb1dc6de0e850c611227dfdc36fd616277bcbe696ae94e88e1002bb8"
+    },
+    {
+      "command": [
+        "disastertrace-starter/.venv/bin/ruff",
+        "check",
+        "plans/v7_execution_20260913/sources_lamp/bufr_probe.py",
+        "plans/v7_execution_20260913/sources_lamp/decode.py",
+        "plans/v7_execution_20260913/sources_lamp/fetch.py",
+        "plans/v7_execution_20260913/sources_lamp/test_decode.py",
+        "plans/v7_execution_20260913/sources_lamp/validate.py"
+      ],
+      "returncode": 0,
+      "log": "final_check_03.log",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  ],
+  "tests_passed": 7,
+  "all_checks_passed": true,
+  "model_calls": 0,
+  "gpu_jobs": 0
+}

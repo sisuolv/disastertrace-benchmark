@@ -1,0 +1,33 @@
+RUF100 [*] Unused `noqa` directive (non-enabled: `E402`)
+  --> publication/v7_execution_20260913/build_evidence.py:15:75
+   |
+13 | sys.path.insert(0, str(PREVIOUS))
+14 |
+15 | from evidence_archive import build, digest, encoded, restore, sha, write  # noqa: E402
+   |                                                                           ^^^^^^^^^^^^
+16 |
+17 | SKIP = {"__pycache__", ".pytest_cache", ".ruff_cache"}
+   |
+help: Remove unused `noqa` directive
+   |
+14 |
+   - from evidence_archive import build, digest, encoded, restore, sha, write  # noqa: E402
+15 + from evidence_archive import build, digest, encoded, restore, sha, write
+16 |
+   |
+
+SIM102 Use a single `if` statement instead of nested `if` statements
+   --> publication/v7_execution_20260913/export_snapshot.py:142:13
+    |
+140 |               raise ValueError("Reading ZIP CRC failed")
+141 |           for row in manifest["files"]:
+142 | /             if row["in_reading_zip"]:
+143 | |                 if hashlib.sha256(archive.read(row["path"])).hexdigest() != row["sha256"]:
+    | |__________________________________________________________________________________________^
+144 |                       raise ValueError("Reading ZIP content mismatch")
+145 |       print(json.dumps({"files": len(selected), "bytes": manifest["bytes"],
+    |
+help: Combine `if` statements using `and`
+
+Found 2 errors.
+[*] 1 fixable with the `--fix` option.
