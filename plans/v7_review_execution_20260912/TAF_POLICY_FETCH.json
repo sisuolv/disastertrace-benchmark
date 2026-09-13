@@ -1,0 +1,20 @@
+{
+  "schema": "disastertrace.monitoring.public_capture.v1",
+  "transport": "curl",
+  "limits": {
+    "requests": 1,
+    "bytes": 8388608
+  },
+  "allowed_hosts": [
+    "www.weather.gov"
+  ],
+  "pause_seconds": 0,
+  "requests": [
+    {
+      "id": "nws-taf-directive",
+      "url": "https://www.weather.gov/directives/sym/pd01008013curr.pdf",
+      "max_bytes": 4194304,
+      "purpose": "official amendment-scheduling and terminal forecast policy"
+    }
+  ]
+}

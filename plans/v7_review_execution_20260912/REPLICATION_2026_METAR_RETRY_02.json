@@ -1,0 +1,22 @@
+{
+  "schema": "disastertrace.monitoring.public_capture.v1",
+  "transport": "curl",
+  "limits": {
+    "requests": 1,
+    "bytes": 4194305
+  },
+  "allowed_hosts": [
+    "mesonet.agron.iastate.edu"
+  ],
+  "pause_seconds": 5,
+  "requests": [
+    {
+      "id": "metar-routine-KPUB",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=PUB&data=all&year1=2026&month1=1&day1=1&year2=2026&month2=1&day2=30&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 4194304,
+      "purpose": "full preregistered routine report calendar"
+    }
+  ],
+  "registered_at": "2026-09-12T20:17:38.725321+00:00",
+  "purpose": "Separate retry of retained initial HTTP503; no failed attempt erased."
+}

@@ -1,5 +1,77 @@
 # Blockers
 
+## Current: implementation verified; scientific extension gates, 2026-09-13
+
+All 50 submitted H100 jobs in this window are terminal and verified, totaling
+33,944 actual calls. No user authorization or future-weather waiting blocks the
+completed historical development loop. The final GPU account check is empty;
+do not restart the consumed queues. The current 109-test suite and separate
+13-check supplement pass, and three isolated packaged replay runs are recorded.
+
+C1 positive mean gain remains unsupported on all three complete calendars.
+Probability mapping uses Bay calibration data and explicit regional transfer;
+its rarity/sparsity and cross-year ranking require further checks. Current cheap
+bulk transport and unused token/compute quotas do not establish natural acquisition
+scarcity. E coverage, conditional model understanding and future F loss are
+different measurements; the fixed E order repeats add no independent processes.
+
+H08 now has real deterministic stage forecasts, paired native stage observations
+and current stage thresholds. Historical datum/threshold versions, a probability
+baseline or explicitly deterministic track, continuous independent processes and
+new monitoring-engine integration remain unverified. Missing flow thresholds
+cannot be repaired by applying stage thresholds or deriving an unofficial rating
+curve from a few observed pairs.
+
+Historical first-seen, post-acquisition calibration guarantees, a second distinct
+physical MM process, independent confirmation and all 16 formal monitoring task
+admissions remain open. These are research gates, not missing account permissions.
+Final selected GitHub push/readback receipts follow snapshot preparation in the
+publication directory; consult those receipts for actual remote delivery status.
+
+## Current: v7 full-calendar comparisons and scientific limits, 21:50 UTC
+
+There is no missing user permission or need to wait for future weather.107 tests
+and12,440 independently verified model calls are available. The four-card queue
+continues frozen dual-protocol and2026 comparisons within the authorized window.
+The Bay base-protocol calendar has no positive LLM gain over the shared full-TAF
+research map. Exact E understanding and F improvement remain separate questions.
+
+2026 retains36 unresolved opportunities and6 unparsed-TAF fallback opportunities.
+The independent TAF comparison retains67 minute-level disagreements and6 parser
+quarantines; neither full semantic agreement nor physical truth is claimed.
+Cheap real bulk access weakens a natural-source-scarcity claim for three stations.
+Token/compute caps must be reported alongside actual use and binding constraints.
+
+Independent physical processes, historical first-seen, post-acquisition calibration
+guarantees, broad MM benefits and full16-hazard task admission remain open. A
+prospective receipt observer is bounded evidence collection, not a prerequisite
+for the historical minimum loop or proof of global publication times.
+
+## Current: v7 engineering works; research acceptance remains conditional
+
+See `../plans/v7_review_execution_20260912/EXECUTION_STATUS.json` and the review
+resolution map.99 core tests and1,304 independently reconciled model calls have
+technical evidence. There is no user authorization or future-weather waiting
+blocker. Fresh27-day GPU comparisons and stronger CPU controls are underway.
+
+The first quiet January slice does not test extreme recall. The extended Front
+Range calendar has14 unique sub1km target hours, not14 independent processes;
+6 unresolved opportunities and18 strict-TAF fallback opportunities remain per
+threshold. Four unparsed native products stay visible rather than being repaired.
+
+A real hourly bulk service can remove the tiny station network's logical source
+scarcity. C1 claims must distinguish declared archive costs from actual transport
+and model compute/token constraints. Initial v1 prompts lacked explicit current
+state/action details; v2 is separately frozen. Cheap baselines and null/negative
+results remain primary comparisons. A research mapping of full TAF is not an
+official event probability or a formal post-acquisition calibration guarantee.
+
+Historical first-seen, physical visibility truth, two independent physical MM
+processes, independent confirmation and all16 formal task admissions remain open.
+Same-source thermal panels/numeric summaries are lossy representations. The new
+2026 replication reduces repeated use of2024 development; it does not itself
+prove absence of training contamination, distribution shift or weather dependence.
+
 ## Current: nine source gaps recovered; seven access/content gaps remain
 
 See `../plans/all_dataset_utilization_20260912/README_CN.md`. TCIR labels,
@@ -19,6 +91,61 @@ tile, CEMS wildfire-versus-flood coverage, TCIR/forecast matching, and CAMELSH
 datum/QC/forecast linkage. Full16-hazard warning chains and positive novelty are
 not established. GitHub reading materials omit large local raw assets; selected
 file verification does not replace full scientific replay.
+
+## Current: real-download pilot complete; formal task and novelty gates remain
+
+`../plans/task_chain_feasibility_20260912/README_CN.md` reports the completed
+72-request pilot,34 targets and96 checkpoints. Temperature, US airport visibility
+and continuous discharge have matched sample chains. Two HEFS issue versions are
+actually verified for three stations; historical TAF is actually verified for
+KSFO/KDEN. Those narrow questions are no longer blocked by missing downloads.
+
+Remaining sample-level limits are concrete: the exact Phoenix original record
+fails temperature QC; New Orleans00Z accumulation condition3 prevents settlement;
+EGLL/EGKK historical TAF queries contain no rows; UK visibility and nearby rain
+references differ from GFS targets by10/7 minutes. They remain unresolved or
+supplementary, not silently admitted. Raw METAR is an archived report and current
+USGS flow is provisional. A preliminary30 UK positives becomes19 under native
+metric parsing because11 rounded-column positives are actually exactly1000m.
+
+Formal research still needs independent extreme/ordinary/near-threshold processes,
+compatible hydrological warning thresholds, useful additional evidence, source
+lineage, full TAF conditional/probability baselines, temporal maturity policies,
+and budget/deadline experiments. Native satellite/radar added value is untested
+in this new bundle. Controlled historical clocks are not verified arrival times;
+the new checkpoint files are not a tested model filesystem sandbox.
+
+No authorization or future-event wait blocks this completed historical delivery.
+The positive N1/N2/N3 hypotheses remain unconfirmed, and the existing LLM pilot's
+no-acquisition-gain finding remains. Earlier prospective-worker status paragraphs
+are dated snapshots; this task does not restart or reschedule that worker.
+
+## Current: advisor proposal ready; remaining limits concern task qualification
+
+The requested initial overall plan and candidate selection are complete locally:
+`../plans/advisor_review_20260912/PROPOSAL_FOR_ADVISOR_CN.md` and
+`CANDIDATE_SELECTION_CN.md`. Their11 document/evidence checks pass. Advisor input
+is a planned research decision, not a missing authorization for this delivery.
+
+GEE authentication is no longer a blocker for the recorded samples. The updated
+97-entry inventory has75 decoded targets,3 partial contents,6 catalogs,8 without
+target samples,4 unresolved authorization/licence processes and1 rendered-only
+product. This does not mean all97 candidates satisfy the future-warning task or
+the novelty hypotheses. Partial/undecoded products can remain optional candidates
+without blocking the three recommended chain pilots.
+
+Important open conditions: hydro historical forecast versions and compatible
+thresholds; matched station/forecast/observation windows and QC; historical TAF;
+extreme/near-threshold independent processes; source dependence; actual useful
+additional evidence; and probability/decision baselines. Several image samples
+are negative, cloudy or fail recommended QA. Reanalysis, event reports, rendered
+maps and different physical variables cannot silently substitute for outcomes.
+
+The completed real LLM minimum loop has no demonstrated active-acquisition gain.
+The proposal retains that finding and requires strong baselines and bounded
+mechanism tests before making a contribution claim. Existing prospective worker
+records below are dated snapshots, not current status observations for this
+advisor packet. No need to wait for a future event to begin historical research.
 
 ## Current: prospective hydro shadow running; future results not yet available
 

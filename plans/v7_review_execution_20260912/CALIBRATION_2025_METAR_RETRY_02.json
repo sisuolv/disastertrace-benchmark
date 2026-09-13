@@ -1,0 +1,23 @@
+{
+  "schema": "disastertrace.monitoring.public_capture.v1",
+  "transport": "curl",
+  "limits": {
+    "requests": 1,
+    "bytes": 2097153
+  },
+  "allowed_hosts": [
+    "mesonet.agron.iastate.edu",
+    "aviationweather.gov"
+  ],
+  "pause_seconds": 5,
+  "requests": [
+    {
+      "id": "metar-routine-KSFO",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SFO&data=all&year1=2025&month1=12&day1=1&year2=2025&month2=12&day2=23&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 2097152,
+      "purpose": "separate historical development/calibration reports"
+    }
+  ],
+  "registered_at": "2026-09-12T20:50:34.691960+00:00",
+  "reason": "Fresh attempt after original 429; original failed receipt and failed build preserved"
+}

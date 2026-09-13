@@ -1,5 +1,133 @@
 # Implementation Status
 
+## Completed v7 development execution; publication handoff, 2026-09-13
+
+The governing bundle is `../plans/v7_review_execution_20260912/`; read its
+`FINAL_REPORT_CN.md`, `OVERALL_EXECUTION_ROADMAP_CN.md` and `ARTIFACT_INDEX_CN.md`.
+All planned model batches in this window are consumed and independently verified:
+33,944 actual calls, 82,231,506 tokens and 50 successful one-H100 jobs. The final
+account check finds zero active requested GPUs; saved creation-to-completion
+receipts show a maximum overlap of four. No batch may be relaunched.
+
+The combined implementation/analysis suite passes 109 tests (102 core and seven
+analysis/adapter/runtime checks), with no failures, errors or skips. Thirteen
+supplementary ranking, pairing, scanning and local Git-isolation checks remain
+separate, as do the original review packages' eight and six examples. Queue-pinned
+core/helpers remain unchanged throughout these final runs.
+
+All three fixed 27-day calendars have complete dual-protocol model/program
+comparisons: 5,832 opportunities each, with 5,832/5,826/5,796 settled. No model arm
+has positive mean gain over its shared R mapping. Both years' mappings train on
+Bay stations in the previous December; Front Range is a declared regional transfer,
+not locally calibrated native professional probabilities. Missing results, parser
+quarantines, negative gains and fixed-candidate wrapper differences are retained.
+
+The four new execution-order probes complete 768 calls. Every paired raw answer
+and E state equals its original-run counterpart; 8B E-only/fact-table correct
+counts remain 65/51 and 32B counts 81/88 out of 96. These exposed development
+cases are not independent weather samples or new F/MM evidence.
+
+Final CPU commands `analyze_warning_ranking.py`, `analyze_joint_E.py` and
+`analyze_resource_pressure.py` exit zero for the completed replication. The final
+resource report covers 216 model sessions; call limits bind while token/compute
+limits have substantial slack. Two packaged replays each rebuild 5,656 responses
+and 109 tests; a further archive-restored 2026 replay rebuilds 5,184 responses and
+13,184,119 tokens with original project reads/network blocked, no weights or
+new inference. Existing installed dependencies are reused, not freshly installed.
+
+H08 remains a source preflight: 687 provisional flow records match between two
+retrievals. Three official site mappings and current stage thresholds are verified;
+all corresponding flow thresholds are absent. Six more requests retrieve native
+deterministic stage forecasts/observations and USGS 00065 samples: 275 exact-time
+stage pairs agree, four missing NWPS slots remain, and 160 forecast points are
+retained. Historical datum/threshold validity and a new H08 engine task are open.
+
+Thirty-eight evidence units pass full archive-content checks. Selected publication
+uses an alternate index based on remote commit 63c7769, preserving local HEAD and
+the dirty real index. Final push/readback receipts are generated after the snapshot
+under `../publication/v7_review_execution_20260912/`; do not infer a completed push
+from this pre-publication entry alone. Next scientific work: stronger explicit R
+transfer checks, useful legal supplemental evidence, H08 historical contracts,
+independent processes and the original 16-hazard admission gates.
+
+## In progress: v7 review execution, 2026-09-12 21:50 UTC
+
+The amendment and execution bundle remain `../plans/v7_review_execution_20260912/`.
+The latest combined check passes107 tests (100 core and7 analysis/adapter/runtime
+checks), with zero failures or skips. Actual verified model evidence is12,440
+calls,29,226,266 tokens and30 completed GPU jobs. Four further H100 workers run
+the Bay persistent-protocol calendar; a bounded queue owns three later frozen
+four-worker batches. Never launch these again. Consult EXECUTION_STATUS.json and
+actual ACP receipts for newer counts; the queue's prelaunch account count is not
+a live GPU inventory.
+
+Both2024 full-calendar base-protocol matrices pass independent token, entitlement,
+cost and score replay. Cheap dual-protocol controls complete for Bay and Front.
+The balanced96-case E diagnostic has actual8B and32B results: E-only65/96 and81/96,
+respectively. Representation effects differ by model; this is not F gain or
+independent-weather evidence. A copied32B diagnostic replays offline with original
+project reads and network blocked, no weights and no new model calls.
+
+The fixed2026 Front calendar and prior-December2025 mapping now have real native
+inputs.2026 has5,796 settled of5,832 opportunities,42 strict positives/14 unique
+target hours,36 unresolved opportunities and6 unparsed-TAF fallback opportunities.
+The prior-December check is separate from evaluation. Failed429/503/timeouts and
+all unparsed bulletins remain.3,671 new native METAR rows match the independent
+decoder, supplementing the earlier6,120-row check.
+
+Independent AVWX TAF comparison covers2,753 unique bulletins:2,680 agree in the
+checked fields,67 retain72 FM-minute discrepancies, and6 strict-parser products
+remain quarantined. The external parser truncates those FM minutes; native text
+and NWS semantics support retaining our exact minutes. This is not complete
+TAF semantic agreement or proof of historical first-seen.
+
+Next: finish the queued dual-protocol/temporal comparisons, compare complete
+all-opportunity cheap baselines and missingness bounds, complete portable replay,
+and publish selected code/evidence while preserving local HEAD and index.
+
+## In progress: v7 review execution, 2026-09-12 20:20 UTC
+
+The governing amendment is `../plans/v7_review_execution_20260912/PLAN_AMENDMENT_CN.md`.
+The user authorizes work through2026-09-13 02:51:58 UTC, at most4 simultaneous
+H100s. Preserve v7/C1/C2/C3, the16-hazard goal, old freezes and consumed launches.
+
+The new `monitoring_v1` has99 passing regression tests (CORE_VALIDATION_07.xml).
+Support semantics, joint reachability/witnesses, full target identity, versioned
+wrappers, durable resource/event receipts, isolated views and missingness bounds
+are implemented. Actual malformed TAF envelopes now remain public and trigger a
+frozen fallback; they no longer silently leave an old probability mapping active.
+The external reviews'11 issues and5 supplementary actions map to code, tests and
+remaining scientific gates in REVIEW_RESOLUTION.json. Their8+6 examples remain
+separate from implementation tests. Five literature fulltexts have been compared.
+
+Verified GPU evidence currently comprises1,304 actual calls and20 completed jobs:
+16 pilot,576 base-wrapper,576 persistent-wrapper,72 VLM representation calls,
+and64 charged-selector pilot calls. The new selector/current-state verifier also
+passes on the existing64 calls, with no new inference. Four additional H100 jobs
+are running the complete27-day Bay secondary-threshold calendar (maximum5,184
+calls). Front Range strict-threshold inputs are frozen but not yet launched.
+Use EXECUTION_STATUS.json for subsequent receipt counts; received is not verified.
+
+January2024 extensions retain5,832 opportunities per threshold per region.
+Bay has0 strict and159 secondary positive opportunities. Front Range has42 strict
+positives/14 unique target hours,237 secondary positives, and6 unresolved slots
+per threshold;18 opportunities use unparsed-TAF fallback. These counts are not
+independent storm counts.6,120 native METAR rows match the independent open-source
+python-metar decoder at both thresholds, native station and report time.
+
+Actual IEM bulk requests retrieve three stations' hourly observations in944-958
+bytes; one daily request returns72 matching native rows. Logical per-slot prices
+therefore do not establish natural acquisition scarcity. Strong complete-update,
+all-read, persistence and revise/defer CPU controls are running on the same fixed
+calendar. E or F gains, professional-baseline superiority and full16 admission
+remain unproved. Historical first-seen remains an explicit replay assumption.
+
+A separate2026 calendar and prior-December calibration are registered before new
+captures (REPLICATION_2026_METHODS.json); native bulletin downloads are underway.
+Next: validate complete GPU results, execute fresh dual-protocol/temporal runs
+within the four-card cap, compare cheap controls, reproduce source-bound outputs,
+and publish a selected reviewable snapshot without altering the local index/HEAD.
+
 ## Completed: expanded all-candidate recovery, 2026-09-12
 
 The complete97-entry usage inventory is at
@@ -24,6 +152,140 @@ environments stay local. This is a new data-readiness result, with zero new
 model/API/GPU runs or formally admitted tasks. Existing LLM no-acquisition-gain
 findings remain. Next research work is same-event historical source joining and
 predeclared acquisition/representation/deadline comparisons.
+
+## Completed: real downloads and matched task-chain pilot, 2026-09-12
+
+The user's requested real-download feasibility check is complete at
+`../plans/task_chain_feasibility_20260912/README_CN.md`. Eight capture rounds make
+72 logical public-source requests, retaining25,961,766 response-body bytes.
+62 responses finish with HTTP200/206 and curl0; metadata and empty TAF results
+are not counted as scientific admission. All failures and partial files remain.
+Three GFS variable families, native US TAF and HEFS/USGS pairs are decoded.
+One previously downloaded full Scotia HEFS product is explicitly reused after
+this round's corresponding request times out.
+
+Final `derived_04/` contains34 targets,96 checkpoints and192 baseline records.
+Two temperature targets pass NCEI QC; six exact discharge targets have provisional
+USGS observations;24 visibility targets have archived METAR reports. One suspect
+temperature and one ambiguous accumulation remain unresolved. This gives32
+settleable targets under different reference contracts, not32 final-QC truths.
+There is one strict sub-1km airport target, related to Denver snow. Temperature
+and visibility from that process are not independent events.
+
+Native EGKK visibility resolves a preliminary count error:144 records contain19
+strict sub-1km reports and11 reports at exactly1000m. Rounded IEM mile columns
+would misclassify the latter and produce30 positives. The original addendum's30
+is corrected in the report; final native-derived data use19. UK TAF queries stay
+empty. UK GFS/observation and New Orleans rainfall comparisons remain near-time
+diagnostics, not replacements for exact-time outcomes. TAF TEMPO is retained;
+the prevailing-only baseline is not a calibrated or complete TAF forecast.
+
+Validation: `validation_03/COMMANDS.json` records exit0 for Ruff format/check,
+build, nine semantic regression tests and independent verification. The latter
+checks38 source assets,15 raw GRIB arrays,34 references,96 clocks and192 scores
+without importing the builder. The initial summary command failed on an optional
+wind-direction group; its corrected standalone summary exits0, recorded in
+`validation_03/SUMMARY_COMMANDS.json`. All72 capture body hashes pass. Earlier
+lint failures, source snapshots and outputs remain; final output bytes match
+derived_03. `FEASIBILITY_METRICS.json` reports descriptive results and failures.
+
+No new model/API/GPU run, formal release or heldout inference occurs. Historical
+availability uses explicit controlled delays; a live model filesystem sandbox
+is not validated here. The independent prospective hydro worker is untouched.
+Next executable work is an event-grouped development qualification of temperature
+and US TAF/METAR, with strong shared forecast baselines and extra-evidence arms.
+Hydro remains conditional on thresholds/extreme processes; strict rain references
+and UK TAF coverage still need repair in fresh datasets. N1/N2/N3 positive novelty
+remains unconfirmed; the full16-hazard roadmap is retained.
+
+## Completed: candidate selection and advisor discussion packet, 2026-09-12
+
+The user prioritizes selecting candidate datasets and an initial overall research
+plan from the original novelty ideas, before an advisor double check. Deliver
+`../plans/advisor_review_20260912/PROPOSAL_FOR_ADVISOR_CN.md` and
+`CANDIDATE_SELECTION_CN.md`. The proposal preserves all16 hazard definitions,
+recommends hydro, station temperature/precipitation and TAF/METAR as three chains
+to qualify before choosing the first two main families, and retains NHC as an
+implemented engineering/version control. Main hypotheses concern acquisition
+increment, source dependence/representation, and bounded deadline/failure
+diagnostics. Their positive scientific outcomes remain unconfirmed.
+
+The new all-candidate access bundle is documented at
+`../plans/all_candidate_data_validation_20260912/README_CN.md`. Its09:07 UTC
+registry contains97 source/product entries:75 decoded samples,3 partial target
+contents,6 catalogs,8 without a decoded target sample,4 pending authorization
+or licence processes, and1 rendered-only product. These are not97 independent
+datasets. The three new science reports contain16+23+2 decoding records across
+30 source IDs; no new formal task admission or model/GPU run follows from them.
+Previously recorded integrity verification passes857 files/690,671,607 bytes.
+
+GEE authentication and real numerical sampling now succeed for disastertrace-gee;
+the saved receipt is `gee_02/GEE_CHECK.json`. Earlier GEE failures and unsuccessful
+product attempts remain intact. Native NASA/Copernicus authorization results also
+supersede older failures only for the specifically verified products. The late
+captures_11 CEMS partial ZIP and CrisisMMD TAR.GZ prefix have no scientific decode
+and do not change their admission status. Sample access, QA, matched task chains,
+historical availability, independent information and redistribution stay separate.
+
+The advisor packet reports the completed84-target real-data minimum loop and its
+negative active-acquisition result, rather than claiming novelty has succeeded.
+It recommends common latest-legal-professional-forecast updates for the primary
+extra-evidence comparison, with end-to-end forecast acquisition as a separate
+experiment. Historical replay leads the research; the existing bounded shadow
+worker and frozen model launches are not restarted.
+
+Validation from repository root, observed exit0:
+`python plans/advisor_review_20260912/verify_review.py --output
+plans/advisor_review_20260912/REVIEW_VALIDATION_02.json`. All11 consistency checks
+pass, including16 hazard rows, source IDs, local document links, registry/pilot
+claims and94 actual file hashes bound by the new decode records. The packet binds
+26 input files. This is not a new scientific decoder run or novelty certificate.
+All seven packaged user-plan copies also match the original files byte-for-byte.
+The first verification output is preserved. An initial Ruff check returned1 for
+import order; the fixer/formatter and final `ruff check --select E4,E7,E9,F,I` and
+`ruff format --check` on verify_review.py all exit0. No runtime source is changed.
+
+Next research decisions are advisor feedback on the main claim, task families,
+16-hazard depth, historical-availability evidence and acceptable null-result
+contribution. Subsequent execution should qualify complete event chains before
+freezing new model comparisons. This packet is local; no new GitHub push or
+message to the advisor is performed for this documentation step.
+
+## Completed: focused ActiveWarning GitHub review publication, 2026-09-12
+
+The user questions waiting for future observations and requests a GitHub package
+for ChatGPT review. Publish the completed real-data LLM minimum loop, the first
+verified hydro shadow cycle, seven original user idea documents, necessary source
+dependencies, and a focused comparison of historical replay versus prospective
+evaluation. Recommend historical multi-event replay as the main experiment with
+limited prospective supplementation; do not block research review on future data.
+
+The existing private repository `sisuolv/disastertrace-benchmark` is updated on
+`next-phase-v1`, commit39b3e2d998e6e995f13461aae328d14426c6bcb1, based on remote
+6cc625ec6c7c363216fc567a818fefeebcd4a77e. Normal SSH push exits0; remote hash and
+private visibility are verified. Default branch remains main. An isolated sparse
+checkout preserves this working tree's unrelated staged/untracked work.
+
+Entry: `../publication/active_warning_review_20260912/REVIEW_FOR_CHATGPT_PRO_CN.md`;
+root pointer: `../LATEST_PROGRESS_20260912_CN.md`. The122-file selected reading
+ZIP is836,346 bytes, SHA256ac159bafd1f4cf128872a971b07b2138ab876a8f0813f5173adee4d26fc24c7e.
+The GitHub tree also includes complete minimum-loop traces and bound inputs;
+the reading ZIP is a smaller review selection, not a full reconstruction bundle.
+GitHub's prospective status is a first-cycle snapshot, not a live service.
+
+In the actual publishing checkout:142 tests pass, all four deterministic dataset
+files reconstruct byte-for-byte,7,056 program and400 model trajectories reverify
+numerically, and the frozen hydro auditor validates48 source captures/144
+submissions. The payload scan checks4,503 changed files/135,097,530 bytes and123
+archive members with no configured credential, path or size findings.
+The first packaging candidate omitted the frozen shadow verifier; preserve its
+failure and ZIP locally, add the file, regenerate manifests, and verify the final
+candidate successfully before commit. No scientific runtime bytes were changed.
+
+Exact commit/push/remote receipts and verification outputs are under ignored
+`../review-outputs/active-warning-publication-20260912/`. The local bounded CPU
+shadow worker continues independently; its future results and final audit are
+still pending. No new model/GPU/API run is launched for this publication.
 
 ## Running: multi-station hydro prospective shadow, 2026-09-12
 

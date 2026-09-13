@@ -1,0 +1,621 @@
+{
+  "verified_at": "2026-09-12T19:15:05.264798+00:00",
+  "validator_sha256": "cad66ddc04fd62c3723d9944cc71423f7b32452319e5be19b3800cc561373f69",
+  "batch": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/gpu_x01_persistent_01",
+  "plan_sha256": "972ebb6b3fd5476b4b12afc52bc0d71b7be1acf688e6c54419d0de01e8c22e71",
+  "actual_calls": 576,
+  "actual_tokens": 939150,
+  "verified_workers": 4,
+  "reports": {
+    "0:x01-0": {
+      "config": {
+        "seed": 20260912,
+        "request_budget": 144,
+        "forecast_call_cap": 144,
+        "per_tick_forecast_cap": 2,
+        "input_token_cap": 8192,
+        "output_token_cap": 384,
+        "call_compute_cap_ms": 120000,
+        "wakeup_seconds": 600,
+        "token_cap": 1234944,
+        "compute_ms_cap": 17294400,
+        "selector_kind": "round_robin",
+        "isolation_mode": "public_schedule",
+        "public_call_slot_ms": 120000,
+        "protocol": "persistent_override",
+        "allocation_dimensions": [
+          "requests",
+          "bytes"
+        ],
+        "allocation_mode": "fixed_quota",
+        "authorization_mode": "target_private"
+      },
+      "calls": 144,
+      "scores": {
+        "opportunities": 648,
+        "settled": 648,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0010633796684967785,
+        "system_brier": 0.0010702043115880374,
+        "net_realized_gain": -6.824643091258655e-06,
+        "g_plus": 2.812030585298464e-09,
+        "g_minus": 6.827455121843953e-06,
+        "full_population_gain_bounds": [
+          -6.824643091258655e-06,
+          -6.824643091258655e-06
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19729",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "e_correct": 139,
+      "invalid_responses": 0,
+      "citation_error_calls": 0,
+      "attempt_statuses": {
+        "declined_no_change": 139,
+        "accepted": 5
+      },
+      "e_counts": {
+        "undetermined": 648
+      },
+      "e_confusion": {
+        "undetermined -> undetermined": 139,
+        "undetermined -> supported": 5
+      },
+      "common_mapped_full_taf_opportunities": 648,
+      "positive_opportunities": 0,
+      "costs": {
+        "requests": 138,
+        "bytes": 95802,
+        "tokens": 194350,
+        "compute_ms": 208280
+      },
+      "actual_processor_visual_tokens": [],
+      "fixed_sensor_collection": null,
+      "alternate_fixed_candidate_protocol": "base_bound_override",
+      "alternate_fixed_candidate_scores": {
+        "opportunities": 648,
+        "settled": 648,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0010633796684967785,
+        "system_brier": 0.001063376856466193,
+        "net_realized_gain": 2.812030585298464e-09,
+        "g_plus": 2.812030585298464e-09,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          2.812030585298464e-09,
+          2.812030585298464e-09
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19729",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "fixed_trace_interpretation": "direct wrapper comparison; no separately adapted policy inference"
+    },
+    "1:x01-1": {
+      "config": {
+        "seed": 20260912,
+        "request_budget": 144,
+        "forecast_call_cap": 144,
+        "per_tick_forecast_cap": 2,
+        "input_token_cap": 8192,
+        "output_token_cap": 384,
+        "call_compute_cap_ms": 120000,
+        "wakeup_seconds": 600,
+        "token_cap": 1234944,
+        "compute_ms_cap": 17294400,
+        "selector_kind": "round_robin",
+        "isolation_mode": "public_schedule",
+        "public_call_slot_ms": 120000,
+        "protocol": "persistent_override",
+        "allocation_dimensions": [
+          "requests",
+          "bytes"
+        ],
+        "allocation_mode": "fixed_quota",
+        "authorization_mode": "session_shared"
+      },
+      "calls": 144,
+      "scores": {
+        "opportunities": 648,
+        "settled": 648,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0010633796684967785,
+        "system_brier": 0.001076690261695727,
+        "net_realized_gain": -1.331059319894796e-05,
+        "g_plus": 8.694936692257641e-06,
+        "g_minus": 2.2005529891205604e-05,
+        "full_population_gain_bounds": [
+          -1.331059319894796e-05,
+          -1.331059319894796e-05
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19729",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "e_correct": 101,
+      "invalid_responses": 0,
+      "citation_error_calls": 0,
+      "attempt_statuses": {
+        "declined_no_change": 111,
+        "accepted": 33
+      },
+      "e_counts": {
+        "refuted": 213,
+        "undetermined": 435
+      },
+      "e_confusion": {
+        "undetermined -> undetermined": 92,
+        "refuted -> refuted": 9,
+        "refuted -> supported": 32,
+        "undetermined -> refuted": 1,
+        "undetermined -> supported": 5,
+        "refuted -> undetermined": 5
+      },
+      "common_mapped_full_taf_opportunities": 648,
+      "positive_opportunities": 0,
+      "costs": {
+        "requests": 137,
+        "bytes": 94966,
+        "tokens": 243711,
+        "compute_ms": 254265
+      },
+      "actual_processor_visual_tokens": [],
+      "fixed_sensor_collection": null,
+      "alternate_fixed_candidate_protocol": "base_bound_override",
+      "alternate_fixed_candidate_scores": {
+        "opportunities": 648,
+        "settled": 648,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0010633796684967785,
+        "system_brier": 0.0010633567757002687,
+        "net_realized_gain": 2.2892796510041173e-08,
+        "g_plus": 2.2892796510041173e-08,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          2.2892796510041173e-08,
+          2.2892796510041173e-08
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19729",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "fixed_trace_interpretation": "direct wrapper comparison; no separately adapted policy inference"
+    },
+    "2:x01-2": {
+      "config": {
+        "seed": 20260912,
+        "request_budget": 144,
+        "forecast_call_cap": 144,
+        "per_tick_forecast_cap": 2,
+        "input_token_cap": 8192,
+        "output_token_cap": 384,
+        "call_compute_cap_ms": 120000,
+        "wakeup_seconds": 600,
+        "token_cap": 1234944,
+        "compute_ms_cap": 17294400,
+        "selector_kind": "round_robin",
+        "isolation_mode": "public_schedule",
+        "public_call_slot_ms": 120000,
+        "protocol": "persistent_override",
+        "allocation_dimensions": [
+          "requests",
+          "bytes"
+        ],
+        "allocation_mode": "global_budget",
+        "authorization_mode": "target_private"
+      },
+      "calls": 144,
+      "scores": {
+        "opportunities": 648,
+        "settled": 648,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0010633796684967785,
+        "system_brier": 0.001077041781362549,
+        "net_realized_gain": -1.3662112865769203e-05,
+        "g_plus": 1.9422276200778575e-05,
+        "g_minus": 3.308438906654782e-05,
+        "full_population_gain_bounds": [
+          -1.3662112865769203e-05,
+          -1.3662112865769203e-05
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19729",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "e_correct": 111,
+      "invalid_responses": 0,
+      "citation_error_calls": 1,
+      "attempt_statuses": {
+        "accepted": 57,
+        "declined_no_change": 87
+      },
+      "e_counts": {
+        "undetermined": 578,
+        "refuted": 70
+      },
+      "e_confusion": {
+        "refuted -> refuted": 37,
+        "undetermined -> undetermined": 74,
+        "refuted -> supported": 33
+      },
+      "common_mapped_full_taf_opportunities": 648,
+      "positive_opportunities": 0,
+      "costs": {
+        "requests": 144,
+        "bytes": 100173,
+        "tokens": 239632,
+        "compute_ms": 373740
+      },
+      "actual_processor_visual_tokens": [],
+      "fixed_sensor_collection": null,
+      "alternate_fixed_candidate_protocol": "base_bound_override",
+      "alternate_fixed_candidate_scores": {
+        "opportunities": 648,
+        "settled": 648,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0010633796684967785,
+        "system_brier": 0.001063320461568977,
+        "net_realized_gain": 5.92069278019411e-08,
+        "g_plus": 5.92069278019411e-08,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          5.92069278019411e-08,
+          5.92069278019411e-08
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19729",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "fixed_trace_interpretation": "direct wrapper comparison; no separately adapted policy inference"
+    },
+    "3:x01-3": {
+      "config": {
+        "seed": 20260912,
+        "request_budget": 144,
+        "forecast_call_cap": 144,
+        "per_tick_forecast_cap": 2,
+        "input_token_cap": 8192,
+        "output_token_cap": 384,
+        "call_compute_cap_ms": 120000,
+        "wakeup_seconds": 600,
+        "token_cap": 1234944,
+        "compute_ms_cap": 17294400,
+        "selector_kind": "round_robin",
+        "isolation_mode": "public_schedule",
+        "public_call_slot_ms": 120000,
+        "protocol": "persistent_override",
+        "allocation_dimensions": [
+          "requests",
+          "bytes"
+        ],
+        "allocation_mode": "global_budget",
+        "authorization_mode": "session_shared"
+      },
+      "calls": 144,
+      "scores": {
+        "opportunities": 648,
+        "settled": 648,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0010633796684967785,
+        "system_brier": 0.0010768468232618487,
+        "net_realized_gain": -1.3467154765069292e-05,
+        "g_plus": 1.8386640778360677e-05,
+        "g_minus": 3.185379554343e-05,
+        "full_population_gain_bounds": [
+          -1.3467154765069292e-05,
+          -1.3467154765069292e-05
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19729",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "e_correct": 81,
+      "invalid_responses": 0,
+      "citation_error_calls": 0,
+      "attempt_statuses": {
+        "accepted": 53,
+        "declined_no_change": 91
+      },
+      "e_counts": {
+        "undetermined": 438,
+        "refuted": 210
+      },
+      "e_confusion": {
+        "refuted -> refuted": 22,
+        "undetermined -> undetermined": 59,
+        "refuted -> supported": 57,
+        "refuted -> undetermined": 4,
+        "undetermined -> supported": 2
+      },
+      "common_mapped_full_taf_opportunities": 648,
+      "positive_opportunities": 0,
+      "costs": {
+        "requests": 144,
+        "bytes": 100173,
+        "tokens": 261457,
+        "compute_ms": 315397
+      },
+      "actual_processor_visual_tokens": [],
+      "fixed_sensor_collection": null,
+      "alternate_fixed_candidate_protocol": "base_bound_override",
+      "alternate_fixed_candidate_scores": {
+        "opportunities": 648,
+        "settled": 648,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0010633796684967785,
+        "system_brier": 0.001063346606250654,
+        "net_realized_gain": 3.306224612476509e-08,
+        "g_plus": 3.306224612476509e-08,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          3.306224612476509e-08,
+          3.306224612476509e-08
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          },
+          {
+            "region": "bay_area",
+            "period": "19729",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 216,
+            "settled": 216
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "fixed_trace_interpretation": "direct wrapper comparison; no separately adapted policy inference"
+    }
+  },
+  "interpretation": "Exposed development; R-track mapped TAF; public padded X01 timing control; no online or independent-event claim",
+  "checks": [
+    "source hashes",
+    "actual ACP success and H100",
+    "input/output tokenizer replay",
+    "durable events",
+    "deterministic opportunity reconstruction",
+    "native evidence entitlement",
+    "independent resource receipt reconciliation",
+    "frozen outcome binding"
+  ]
+}

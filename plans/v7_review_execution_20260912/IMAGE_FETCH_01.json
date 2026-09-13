@@ -1,0 +1,26 @@
+{
+  "schema": "disastertrace.monitoring.public_capture.v1",
+  "transport": "curl",
+  "limits": {
+    "requests": 2,
+    "bytes": 2097152
+  },
+  "allowed_hosts": [
+    "noaa-goes18.s3.amazonaws.com"
+  ],
+  "pause_seconds": 1,
+  "requests": [
+    {
+      "id": "goes18-2024005-00",
+      "url": "https://noaa-goes18.s3.amazonaws.com/?list-type=2&prefix=ABI-L2-CMIPC%2F2024%2F005%2F00%2F&max-keys=120",
+      "max_bytes": 1048576,
+      "purpose": "historically correct GOES-18 platform, Jan05 midnight CONUS C07/C13 candidate files"
+    },
+    {
+      "id": "goes18-2024006-00",
+      "url": "https://noaa-goes18.s3.amazonaws.com/?list-type=2&prefix=ABI-L2-CMIPC%2F2024%2F006%2F00%2F&max-keys=120",
+      "max_bytes": 1048570,
+      "purpose": "second fixed calendar-day image sample; no label-based scene choice"
+    }
+  ]
+}

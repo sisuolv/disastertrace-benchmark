@@ -1,0 +1,53 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_shared_selector_sees_current_explicit_states_and_remaining_hard_resources _
+
+    def test_shared_selector_sees_current_explicit_states_and_remaining_hard_resources():
+        data, bank, config = fixture()
+        config.update(
+            selector_kind="llm",
+            authorization_mode="session_shared",
+            isolation_mode="actual_cost_clock",
+            model_call_budget=4,
+            per_tick_forecast_cap=1,
+        )
+        selections = []
+    
+        def backend(system, request, call_id):
+            if call_id.startswith("select-"):
+                selections.append(request)
+                assert request["protocol"] == config["protocol"]
+                remaining = request["remaining_resources_after_selection_reserve"]
+                assert remaining["tokens"] >= 0 and remaining["compute_ms"] >= 0
+                assert request["forecast_call_upper"]["tokens"] == 8192 + 384
+                for row in request["targets"].values():
+                    state = row["current_state"]
+                    assert state["target_id"] == row["target"]["target_id"]
+                    assert state["protocol"] == config["protocol"]
+                    assert state["mode"] in {"follow", "override"}
+                raw = {"query_order": [], "forecast_handles": [next(iter(request["targets"]))]}
+            else:
+                raw = {"probability": 0.3, "e_status": "undetermined", "decision": "override", "citations": []}
+            return json.dumps(raw), {"input_tokens": 13, "output_tokens": 7, "seconds": 1, "ended_with_eos": True}
+    
+>       run_session(data, bank, config, backend=backend)
+
+disastertrace-starter/tests/test_monitoring_selection.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:276: in run_session
+    raw, details = backend(SELECTOR_SYSTEM, selection_request, select_id)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+system = 'Allocate one shared monitoring budget to improve forecasts of fixed future native visibility reports. The common comp...rn only JSON: {"query_order":["q0"],"forecast_handles":["t0"]}. Handles must be unique and registered; no extra prose.'
+request = {'clock': 1704412200000001, 'cutoff': 1704412800000000, 'remaining_ticks': 2, 'remaining_model_calls_after_this_selection': 3, ...}
+call_id = 'select-0'
+
+    def backend(system, request, call_id):
+        if call_id.startswith("select-"):
+            selections.append(request)
+>           assert request["protocol"] == config["protocol"]
+E           KeyError: 'protocol'
+
+disastertrace-starter/tests/test_monitoring_selection.py:108: KeyError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_selection.py::test_shared_selector_sees_current_explicit_states_and_remaining_hard_resources

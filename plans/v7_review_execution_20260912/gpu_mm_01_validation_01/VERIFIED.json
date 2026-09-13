@@ -1,0 +1,694 @@
+{
+  "verified_at": "2026-09-12T19:21:01.674293+00:00",
+  "validator_sha256": "09f0a0ce6d6ff5d9089586023827e8e277e5481f41ea86303e01d494bf80c84d",
+  "batch": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/gpu_mm_01",
+  "plan_sha256": "97fce74e14ed52a0e6367f3cd9e8c880d2dffebd7ae50eac29e31870d79c71ef",
+  "actual_calls": 72,
+  "actual_tokens": 180867,
+  "verified_workers": 4,
+  "reports": {
+    "0:text_only": {
+      "config": {
+        "seed": 20260912,
+        "request_budget": 6,
+        "forecast_call_cap": 18,
+        "per_tick_forecast_cap": 9,
+        "input_token_cap": 8192,
+        "output_token_cap": 384,
+        "call_compute_cap_ms": 120000,
+        "wakeup_seconds": 600,
+        "token_cap": 154368,
+        "compute_ms_cap": 2160600,
+        "selector_kind": "round_robin",
+        "isolation_mode": "actual_cost_clock",
+        "allocation_mode": "global_budget",
+        "authorization_mode": "session_shared",
+        "protocol": "base_bound_override"
+      },
+      "calls": 18,
+      "scores": {
+        "opportunities": 18,
+        "settled": 18,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0008900847633465012,
+        "system_brier": 0.0008889409864808568,
+        "net_realized_gain": 1.143776865644621e-06,
+        "g_plus": 1.143776865644621e-06,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          1.143776865644621e-06,
+          1.143776865644621e-06
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "e_correct": 17,
+      "invalid_responses": 0,
+      "citation_error_calls": 0,
+      "attempt_statuses": {
+        "accepted": 17,
+        "declined_no_change": 1
+      },
+      "e_counts": {
+        "refuted": 18
+      },
+      "e_confusion": {
+        "refuted -> refuted": 17,
+        "refuted -> undetermined": 1
+      },
+      "common_mapped_full_taf_opportunities": 18,
+      "positive_opportunities": 0,
+      "costs": {
+        "requests": 6,
+        "bytes": 4182,
+        "tokens": 36762,
+        "compute_ms": 40255
+      },
+      "actual_processor_visual_tokens": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fixed_sensor_collection": {
+        "parent_product_requests": 4,
+        "parent_product_bytes": 16217060,
+        "parent_products": [
+          {
+            "source": "image_captures_03/goes18-2024005-0041-C07.body",
+            "bytes": 4148139,
+            "sha256": "f5714cbbd97d7b831420fe996b8f4ce27b4597cfca410bd8993ddb5b377807ef"
+          },
+          {
+            "source": "image_captures_03/goes18-2024005-0041-C13.body",
+            "bytes": 4057072,
+            "sha256": "c5c2b7e4e3b284bca96954d96f17cbc5b9b13344d6c05951a0ef7dd6b5ba166b"
+          },
+          {
+            "source": "image_captures_03/goes18-2024006-0041-C07.body",
+            "bytes": 4074245,
+            "sha256": "a734f2028d3abec9f7f644f97ab83aecd4326cc3c90f0e49cdca51e58e94e316"
+          },
+          {
+            "source": "image_captures_03/goes18-2024006-0041-C13.body",
+            "bytes": 3937604,
+            "sha256": "8030e902a2e8f543bacfcb73dfde9073daa64ad6d5200fb3695cb51fdc9a5449"
+          }
+        ],
+        "rule": "Same fixed collection paid by all four representation arms, including image-withheld ablation; not a query-selection experiment",
+        "additional_numeric_preparation": "measured separately; summaries are lossy, not equal-information or privileged labels"
+      },
+      "alternate_fixed_candidate_protocol": "persistent_override",
+      "alternate_fixed_candidate_scores": {
+        "opportunities": 18,
+        "settled": 18,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0008900847633465012,
+        "system_brier": 0.0008889409864808568,
+        "net_realized_gain": 1.143776865644621e-06,
+        "g_plus": 1.143776865644621e-06,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          1.143776865644621e-06,
+          1.143776865644621e-06
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "fixed_trace_interpretation": "direct wrapper comparison; no separately adapted policy inference"
+    },
+    "1:image": {
+      "config": {
+        "seed": 20260912,
+        "request_budget": 6,
+        "forecast_call_cap": 18,
+        "per_tick_forecast_cap": 9,
+        "input_token_cap": 8192,
+        "output_token_cap": 384,
+        "call_compute_cap_ms": 120000,
+        "wakeup_seconds": 600,
+        "token_cap": 154368,
+        "compute_ms_cap": 2160600,
+        "selector_kind": "round_robin",
+        "isolation_mode": "actual_cost_clock",
+        "allocation_mode": "global_budget",
+        "authorization_mode": "session_shared",
+        "protocol": "base_bound_override"
+      },
+      "calls": 18,
+      "scores": {
+        "opportunities": 18,
+        "settled": 18,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0008900847633465012,
+        "system_brier": 0.0008898806361220845,
+        "net_realized_gain": 2.0412722441686947e-07,
+        "g_plus": 2.0412722441686947e-07,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          2.0412722441686947e-07,
+          2.0412722441686947e-07
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "e_correct": 17,
+      "invalid_responses": 0,
+      "citation_error_calls": 0,
+      "attempt_statuses": {
+        "accepted": 17,
+        "declined_no_change": 1
+      },
+      "e_counts": {
+        "refuted": 18
+      },
+      "e_confusion": {
+        "refuted -> refuted": 17,
+        "refuted -> undetermined": 1
+      },
+      "common_mapped_full_taf_opportunities": 18,
+      "positive_opportunities": 0,
+      "costs": {
+        "requests": 6,
+        "bytes": 4182,
+        "tokens": 44704,
+        "compute_ms": 47394
+      },
+      "actual_processor_visual_tokens": [
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270
+      ],
+      "fixed_sensor_collection": {
+        "parent_product_requests": 4,
+        "parent_product_bytes": 16217060,
+        "parent_products": [
+          {
+            "source": "image_captures_03/goes18-2024005-0041-C07.body",
+            "bytes": 4148139,
+            "sha256": "f5714cbbd97d7b831420fe996b8f4ce27b4597cfca410bd8993ddb5b377807ef"
+          },
+          {
+            "source": "image_captures_03/goes18-2024005-0041-C13.body",
+            "bytes": 4057072,
+            "sha256": "c5c2b7e4e3b284bca96954d96f17cbc5b9b13344d6c05951a0ef7dd6b5ba166b"
+          },
+          {
+            "source": "image_captures_03/goes18-2024006-0041-C07.body",
+            "bytes": 4074245,
+            "sha256": "a734f2028d3abec9f7f644f97ab83aecd4326cc3c90f0e49cdca51e58e94e316"
+          },
+          {
+            "source": "image_captures_03/goes18-2024006-0041-C13.body",
+            "bytes": 3937604,
+            "sha256": "8030e902a2e8f543bacfcb73dfde9073daa64ad6d5200fb3695cb51fdc9a5449"
+          }
+        ],
+        "rule": "Same fixed collection paid by all four representation arms, including image-withheld ablation; not a query-selection experiment",
+        "additional_numeric_preparation": "measured separately; summaries are lossy, not equal-information or privileged labels"
+      },
+      "alternate_fixed_candidate_protocol": "persistent_override",
+      "alternate_fixed_candidate_scores": {
+        "opportunities": 18,
+        "settled": 18,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0008900847633465012,
+        "system_brier": 0.0008898806361220845,
+        "net_realized_gain": 2.0412722441686947e-07,
+        "g_plus": 2.0412722441686947e-07,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          2.0412722441686947e-07,
+          2.0412722441686947e-07
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "fixed_trace_interpretation": "direct wrapper comparison; no separately adapted policy inference"
+    },
+    "2:numeric": {
+      "config": {
+        "seed": 20260912,
+        "request_budget": 6,
+        "forecast_call_cap": 18,
+        "per_tick_forecast_cap": 9,
+        "input_token_cap": 8192,
+        "output_token_cap": 384,
+        "call_compute_cap_ms": 120000,
+        "wakeup_seconds": 600,
+        "token_cap": 154368,
+        "compute_ms_cap": 2160600,
+        "selector_kind": "round_robin",
+        "isolation_mode": "actual_cost_clock",
+        "allocation_mode": "global_budget",
+        "authorization_mode": "session_shared",
+        "protocol": "base_bound_override"
+      },
+      "calls": 18,
+      "scores": {
+        "opportunities": 18,
+        "settled": 18,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0008900847633465012,
+        "system_brier": 0.0008900847633465012,
+        "net_realized_gain": 0.0,
+        "g_plus": 0.0,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          0.0,
+          0.0
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "e_correct": 13,
+      "invalid_responses": 0,
+      "citation_error_calls": 0,
+      "attempt_statuses": {
+        "declined_no_change": 5,
+        "accepted": 13
+      },
+      "e_counts": {
+        "refuted": 18
+      },
+      "e_confusion": {
+        "refuted -> undetermined": 5,
+        "refuted -> refuted": 13
+      },
+      "common_mapped_full_taf_opportunities": 18,
+      "positive_opportunities": 0,
+      "costs": {
+        "requests": 6,
+        "bytes": 4182,
+        "tokens": 47244,
+        "compute_ms": 51106
+      },
+      "actual_processor_visual_tokens": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fixed_sensor_collection": {
+        "parent_product_requests": 4,
+        "parent_product_bytes": 16217060,
+        "parent_products": [
+          {
+            "source": "image_captures_03/goes18-2024005-0041-C07.body",
+            "bytes": 4148139,
+            "sha256": "f5714cbbd97d7b831420fe996b8f4ce27b4597cfca410bd8993ddb5b377807ef"
+          },
+          {
+            "source": "image_captures_03/goes18-2024005-0041-C13.body",
+            "bytes": 4057072,
+            "sha256": "c5c2b7e4e3b284bca96954d96f17cbc5b9b13344d6c05951a0ef7dd6b5ba166b"
+          },
+          {
+            "source": "image_captures_03/goes18-2024006-0041-C07.body",
+            "bytes": 4074245,
+            "sha256": "a734f2028d3abec9f7f644f97ab83aecd4326cc3c90f0e49cdca51e58e94e316"
+          },
+          {
+            "source": "image_captures_03/goes18-2024006-0041-C13.body",
+            "bytes": 3937604,
+            "sha256": "8030e902a2e8f543bacfcb73dfde9073daa64ad6d5200fb3695cb51fdc9a5449"
+          }
+        ],
+        "rule": "Same fixed collection paid by all four representation arms, including image-withheld ablation; not a query-selection experiment",
+        "additional_numeric_preparation": "measured separately; summaries are lossy, not equal-information or privileged labels"
+      },
+      "alternate_fixed_candidate_protocol": "persistent_override",
+      "alternate_fixed_candidate_scores": {
+        "opportunities": 18,
+        "settled": 18,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0008900847633465012,
+        "system_brier": 0.0008900847633465012,
+        "net_realized_gain": 0.0,
+        "g_plus": 0.0,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          0.0,
+          0.0
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "fixed_trace_interpretation": "direct wrapper comparison; no separately adapted policy inference"
+    },
+    "3:image_numeric": {
+      "config": {
+        "seed": 20260912,
+        "request_budget": 6,
+        "forecast_call_cap": 18,
+        "per_tick_forecast_cap": 9,
+        "input_token_cap": 8192,
+        "output_token_cap": 384,
+        "call_compute_cap_ms": 120000,
+        "wakeup_seconds": 600,
+        "token_cap": 154368,
+        "compute_ms_cap": 2160600,
+        "selector_kind": "round_robin",
+        "isolation_mode": "actual_cost_clock",
+        "allocation_mode": "global_budget",
+        "authorization_mode": "session_shared",
+        "protocol": "base_bound_override"
+      },
+      "calls": 18,
+      "scores": {
+        "opportunities": 18,
+        "settled": 18,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0008900847633465012,
+        "system_brier": 0.0008900847633465012,
+        "net_realized_gain": 0.0,
+        "g_plus": 0.0,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          0.0,
+          0.0
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "e_correct": 14,
+      "invalid_responses": 0,
+      "citation_error_calls": 0,
+      "attempt_statuses": {
+        "accepted": 14,
+        "declined_no_change": 4
+      },
+      "e_counts": {
+        "refuted": 18
+      },
+      "e_confusion": {
+        "refuted -> refuted": 14,
+        "refuted -> undetermined": 4
+      },
+      "common_mapped_full_taf_opportunities": 18,
+      "positive_opportunities": 0,
+      "costs": {
+        "requests": 6,
+        "bytes": 4182,
+        "tokens": 52157,
+        "compute_ms": 51221
+      },
+      "actual_processor_visual_tokens": [
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270,
+        270
+      ],
+      "fixed_sensor_collection": {
+        "parent_product_requests": 4,
+        "parent_product_bytes": 16217060,
+        "parent_products": [
+          {
+            "source": "image_captures_03/goes18-2024005-0041-C07.body",
+            "bytes": 4148139,
+            "sha256": "f5714cbbd97d7b831420fe996b8f4ce27b4597cfca410bd8993ddb5b377807ef"
+          },
+          {
+            "source": "image_captures_03/goes18-2024005-0041-C13.body",
+            "bytes": 4057072,
+            "sha256": "c5c2b7e4e3b284bca96954d96f17cbc5b9b13344d6c05951a0ef7dd6b5ba166b"
+          },
+          {
+            "source": "image_captures_03/goes18-2024006-0041-C07.body",
+            "bytes": 4074245,
+            "sha256": "a734f2028d3abec9f7f644f97ab83aecd4326cc3c90f0e49cdca51e58e94e316"
+          },
+          {
+            "source": "image_captures_03/goes18-2024006-0041-C13.body",
+            "bytes": 3937604,
+            "sha256": "8030e902a2e8f543bacfcb73dfde9073daa64ad6d5200fb3695cb51fdc9a5449"
+          }
+        ],
+        "rule": "Same fixed collection paid by all four representation arms, including image-withheld ablation; not a query-selection experiment",
+        "additional_numeric_preparation": "measured separately; summaries are lossy, not equal-information or privileged labels"
+      },
+      "alternate_fixed_candidate_protocol": "persistent_override",
+      "alternate_fixed_candidate_scores": {
+        "opportunities": 18,
+        "settled": 18,
+        "missing": 0,
+        "professional_baseline_opportunities": 0,
+        "base_brier": 0.0008900847633465012,
+        "system_brier": 0.0008900847633465012,
+        "net_realized_gain": 0.0,
+        "g_plus": 0.0,
+        "g_minus": 0.0,
+        "full_population_gain_bounds": [
+          0.0,
+          0.0
+        ],
+        "strata": [
+          {
+            "region": "bay_area",
+            "period": "19727",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          },
+          {
+            "region": "bay_area",
+            "period": "19728",
+            "source": "native_metar",
+            "quality": "settled_final_archived_report",
+            "maturity": "final_archive",
+            "base_risk_decile": 0,
+            "opportunities": 9,
+            "settled": 9
+          }
+        ],
+        "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+      },
+      "fixed_trace_interpretation": "direct wrapper comparison; no separately adapted policy inference"
+    }
+  },
+  "interpretation": "Two real GOES-18 scenes, same 18 future report opportunities; exposed representation diagnostic; no fog truth or independent-process claim",
+  "checks": [
+    "source hashes",
+    "actual ACP success and H100",
+    "input/output tokenizer replay",
+    "durable events",
+    "deterministic opportunity reconstruction",
+    "native evidence entitlement",
+    "independent resource receipt reconciliation",
+    "frozen outcome binding"
+  ]
+}

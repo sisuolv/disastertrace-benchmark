@@ -1,0 +1,93 @@
+{
+  "purpose": "Source/capture pairing preflight for order-analysis on completed parents; no new inference",
+  "new_model_calls": 0,
+  "parents": [
+    {
+      "parent": "gpu_e_diagnostic_01",
+      "reports": {
+        "E_only": {
+          "cases": 96,
+          "correct": 65,
+          "invalid": 0,
+          "confusion": {
+            "refuted -> refuted": 32,
+            "undetermined -> undetermined": 30,
+            "undetermined -> refuted": 2,
+            "supported -> refuted": 18,
+            "supported -> undetermined": 11,
+            "supported -> supported": 3
+          },
+          "costs": {
+            "requests": 0,
+            "bytes": 0,
+            "tokens": 75297,
+            "compute_ms": 20523
+          }
+        },
+        "E_fact_table": {
+          "cases": 96,
+          "correct": 51,
+          "invalid": 0,
+          "confusion": {
+            "refuted -> refuted": 32,
+            "undetermined -> undetermined": 11,
+            "undetermined -> refuted": 21,
+            "supported -> undetermined": 16,
+            "supported -> supported": 8,
+            "supported -> refuted": 8
+          },
+          "costs": {
+            "requests": 0,
+            "bytes": 0,
+            "tokens": 41287,
+            "compute_ms": 19566
+          }
+        }
+      },
+      "checked_binding_files": 581
+    },
+    {
+      "parent": "gpu_e_diagnostic_32b_01",
+      "reports": {
+        "E_only": {
+          "cases": 96,
+          "correct": 81,
+          "invalid": 0,
+          "confusion": {
+            "refuted -> refuted": 30,
+            "undetermined -> undetermined": 31,
+            "refuted -> supported": 2,
+            "undetermined -> refuted": 1,
+            "supported -> supported": 20,
+            "supported -> undetermined": 11,
+            "supported -> refuted": 1
+          },
+          "costs": {
+            "requests": 0,
+            "bytes": 0,
+            "tokens": 74894,
+            "compute_ms": 38773
+          }
+        },
+        "E_fact_table": {
+          "cases": 96,
+          "correct": 88,
+          "invalid": 0,
+          "confusion": {
+            "refuted -> refuted": 32,
+            "undetermined -> undetermined": 24,
+            "undetermined -> refuted": 8,
+            "supported -> supported": 32
+          },
+          "costs": {
+            "requests": 0,
+            "bytes": 0,
+            "tokens": 40879,
+            "compute_ms": 34788
+          }
+        }
+      },
+      "checked_binding_files": 581
+    }
+  ]
+}

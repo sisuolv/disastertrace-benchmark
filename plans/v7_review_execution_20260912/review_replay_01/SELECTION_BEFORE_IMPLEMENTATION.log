@@ -1,0 +1,332 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+__ test_selector_and_forecaster_consume_the_same_model_call_and_token_budget ___
+
+    def test_selector_and_forecaster_consume_the_same_model_call_and_token_budget():
+        data, bank, config = fixture()
+        config.update(selector_kind="llm", authorization_mode="session_shared", isolation_mode="actual_cost_clock",
+                      model_call_budget=3, per_tick_forecast_cap=1)
+        calls = []
+    
+        def backend(system, request, call_id):
+            calls.append(call_id)
+            if call_id.startswith("select-"):
+                assert "outcomes" not in request and "private" not in request
+                raw = {"query_order": list(request["queries"]), "forecast_handles": [next(iter(request["targets"]))]}
+            else:
+                raw = {"probability": 0.2, "e_status": "undetermined", "decision": "override", "citations": []}
+            return json.dumps(raw), {"input_tokens": 13, "output_tokens": 7, "seconds": 1, "ended_with_eos": True}
+    
+>       trace = run_session(data, bank, config, backend=backend)
+
+disastertrace-starter/tests/test_monitoring_selection.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'schema': 'disastertrace.monitoring.policy_environment.v1', 'stations': ['KSFO', 'KOAK'], 'targets': [{'target_id': '...', 'target_id': 'KOAK-2024-01-05T06:00:00Z-vis-lt-1000m', 'cutoff': 1704412800000000, 'lead_hours': 6, ...}, ...], ...}
+bank = {'minimum_cell_n': 20, 'mapping_version': 'synthetic_protocol_test_only', 'cells': {'[1000,"pooled"]': {'n': 100, 'positive': 20}}}
+config = {'seed': 20260912, 'request_budget': 4, 'forecast_call_cap': 4, 'per_tick_forecast_cap': 1, ...}
+backend = <function test_selector_and_forecaster_consume_the_same_model_call_and_token_budget.<locals>.backend at 0x7f3f2e3d6ef0>
+journal = None, resource_journal = None
+
+    def run_session(data, bank, config, backend=None, journal=None, resource_journal=None):
+        """data contains provider archive inputs, never a future outcome table."""
+        if "outcomes" in data or "OUTCOMES" in data:
+            raise ValueError("Evaluator outcomes cannot enter a policy session")
+        if config.get("isolation_mode", "actual_cost_clock") not in {
+            "actual_cost_clock",
+            "public_schedule",
+        }:
+            raise ValueError("Unknown timing isolation mode")
+        if config.get("isolation_mode") == "public_schedule" and config.get("gate"):
+            raise ValueError(
+                "A private-value-dependent global gate is not allowed in the strict timing control"
+            )
+        opportunities = data["opportunities"]
+        targets = {r["target_id"]: r for r in data["targets"]}
+        pairs = {r["opportunity_id"]: r for r in data["e_f_pairs"]}
+        catalog = {r["query_id"]: r for r in data["query_catalog"]}
+        products = {r["query_id"]: r for r in data["query_results"]}
+        target_objects = {key: TargetSpec(**value) for key, value in targets.items()}
+        object_opportunities = [
+            Opportunity(r["opportunity_id"], target_objects[r["target_id"]], r["cutoff"])
+            for r in opportunities
+        ]
+        fallback = {key: predict(bank, value, None)["probability"] for key, value in targets.items()}
+        runtime = MonitoringEngine(
+            object_opportunities,
+            fallback_probabilities=fallback,
+            protocol=config["protocol"],
+            journal=journal,
+        )
+        source_budget = config["request_budget"]
+        total_calls_cap = config["forecast_call_cap"]
+        resource_limits = {
+            "requests": source_budget,
+            "bytes": source_budget * 2048,
+            "tokens": config.get("token_cap"),
+            "compute_ms": config.get("compute_ms_cap"),
+        }
+        quota_order = sorted(targets, key=lambda key: stable_rank(config["seed"], "quota", key))
+        quotas = {
+            target: {
+                "requests": source_budget // len(targets) + int(index < source_budget % len(targets)),
+                "bytes": 2048
+                * (source_budget // len(targets) + int(index < source_budget % len(targets))),
+            }
+            for index, target in enumerate(quota_order)
+        }
+        ledger = BudgetLedger(
+            resource_limits,
+            allocation_mode=config["allocation_mode"],
+            quotas=quotas,
+            journal=resource_journal,
+        )
+        store = EvidenceStore(config["authorization_mode"], targets)
+        events, candidates, source_receipts = [], {}, []
+        for withdrawal in data.get("baseline_withdrawals", []):
+            if withdrawal["target_id"] in targets:
+                events.append(
+                    Event(
+                        "withdraw-" + stable_rank(withdrawal["target_id"], withdrawal["source_id"]),
+                        withdrawal["available_at"],
+                        "baseline_withdrawal",
+                        {
+                            "target_id": withdrawal["target_id"],
+                            "product_revision_id": withdrawal["source_id"],
+                            "reason": withdrawal["reason"],
+                        },
+                    )
+                )
+        for candidate in data["baseline_candidates"]:
+            target_id = candidate["target_id"]
+            if target_id not in targets:
+                continue
+            identity = (target_id, candidate["source_id"])
+            if identity in candidates:
+                continue
+            mapped = predict(bank, targets[target_id], candidate)
+            baseline = Baseline(
+                target_objects[target_id],
+                candidate["source_id"],
+                candidate["projection"],
+                mapped["probability"],
+                candidate["available_at"],
+                candidate["valid_until"],
+                bank["mapping_version"],
+                "NWS_TAF_via_IEM_with_frozen_research_mapping",
+                "research",
+            )
+            candidates[identity] = candidate
+            events.append(
+                Event(
+                    "base-" + stable_rank(*identity),
+                    candidate["available_at"],
+                    "baseline",
+                    {"baseline": baseline},
+                )
+            )
+        cutoffs = sorted({o["cutoff"] for o in opportunities})
+        calls, frames, call_records = 0, [], []
+        runtime.run(events, until=cutoffs[0] - config["wakeup_seconds"] * 1_000_000 - 1)
+    
+        def authorized(target_id, query_id):
+            key = (
+                query_id
+                if config["authorization_mode"] == "session_shared"
+                else target_id + "::" + query_id
+            )
+            return key, key in store.assets
+    
+        def disclosed(target_id, query_ids):
+            visible = {r["content"]["query_id"]: r["content"] for r in store.view(target_id)}
+            return {qid: visible[qid] for qid in query_ids if qid in visible}
+    
+        for tick, cutoff in enumerate(cutoffs):
+            clock = cutoff - config["wakeup_seconds"] * 1_000_000
+            runtime.run([], until=clock)
+            clock = max(clock, (runtime._last_time or clock - 1) + 1)
+            active = [o for o in opportunities if o["cutoff"] == cutoff]
+            common = selector_view(
+                {
+                    o["target_id"]: {
+                        "baseline_probability": runtime._base(o["target_id"], clock)["probability"],
+                        "deadline": cutoff,
+                        "entity": targets[o["target_id"]]["entity"],
+                        "public_query_ids": pairs[o["opportunity_id"]]["query_ids"],
+                    }
+                    for o in active
+                }
+            )
+            selector = config["selector_kind"]
+            if selector not in {"round_robin", "risk", "coverage", "batch_complete"}:
+>               raise ValueError("Unsupported selector; do not silently replace an LLM selector")
+E               ValueError: Unsupported selector; do not silently replace an LLM selector
+
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:177: ValueError
+_________ test_invalid_selector_is_charged_and_keeps_all_opportunities _________
+
+    def test_invalid_selector_is_charged_and_keeps_all_opportunities():
+        data, bank, config = fixture()
+        config.update(selector_kind="llm", authorization_mode="session_shared", isolation_mode="actual_cost_clock",
+                      model_call_budget=2)
+>       trace = run_session(data, bank, config, backend=lambda *_: (
+            "bad selector", {"input_tokens": 10, "output_tokens": 1, "seconds": 1, "ended_with_eos": True}))
+
+disastertrace-starter/tests/test_monitoring_selection.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'schema': 'disastertrace.monitoring.policy_environment.v1', 'stations': ['KSFO', 'KOAK'], 'targets': [{'target_id': '...', 'target_id': 'KOAK-2024-01-05T06:00:00Z-vis-lt-1000m', 'cutoff': 1704412800000000, 'lead_hours': 6, ...}, ...], ...}
+bank = {'minimum_cell_n': 20, 'mapping_version': 'synthetic_protocol_test_only', 'cells': {'[1000,"pooled"]': {'n': 100, 'positive': 20}}}
+config = {'seed': 20260912, 'request_budget': 4, 'forecast_call_cap': 4, 'per_tick_forecast_cap': 2, ...}
+backend = <function test_invalid_selector_is_charged_and_keeps_all_opportunities.<locals>.<lambda> at 0x7f3f2f602200>
+journal = None, resource_journal = None
+
+    def run_session(data, bank, config, backend=None, journal=None, resource_journal=None):
+        """data contains provider archive inputs, never a future outcome table."""
+        if "outcomes" in data or "OUTCOMES" in data:
+            raise ValueError("Evaluator outcomes cannot enter a policy session")
+        if config.get("isolation_mode", "actual_cost_clock") not in {
+            "actual_cost_clock",
+            "public_schedule",
+        }:
+            raise ValueError("Unknown timing isolation mode")
+        if config.get("isolation_mode") == "public_schedule" and config.get("gate"):
+            raise ValueError(
+                "A private-value-dependent global gate is not allowed in the strict timing control"
+            )
+        opportunities = data["opportunities"]
+        targets = {r["target_id"]: r for r in data["targets"]}
+        pairs = {r["opportunity_id"]: r for r in data["e_f_pairs"]}
+        catalog = {r["query_id"]: r for r in data["query_catalog"]}
+        products = {r["query_id"]: r for r in data["query_results"]}
+        target_objects = {key: TargetSpec(**value) for key, value in targets.items()}
+        object_opportunities = [
+            Opportunity(r["opportunity_id"], target_objects[r["target_id"]], r["cutoff"])
+            for r in opportunities
+        ]
+        fallback = {key: predict(bank, value, None)["probability"] for key, value in targets.items()}
+        runtime = MonitoringEngine(
+            object_opportunities,
+            fallback_probabilities=fallback,
+            protocol=config["protocol"],
+            journal=journal,
+        )
+        source_budget = config["request_budget"]
+        total_calls_cap = config["forecast_call_cap"]
+        resource_limits = {
+            "requests": source_budget,
+            "bytes": source_budget * 2048,
+            "tokens": config.get("token_cap"),
+            "compute_ms": config.get("compute_ms_cap"),
+        }
+        quota_order = sorted(targets, key=lambda key: stable_rank(config["seed"], "quota", key))
+        quotas = {
+            target: {
+                "requests": source_budget // len(targets) + int(index < source_budget % len(targets)),
+                "bytes": 2048
+                * (source_budget // len(targets) + int(index < source_budget % len(targets))),
+            }
+            for index, target in enumerate(quota_order)
+        }
+        ledger = BudgetLedger(
+            resource_limits,
+            allocation_mode=config["allocation_mode"],
+            quotas=quotas,
+            journal=resource_journal,
+        )
+        store = EvidenceStore(config["authorization_mode"], targets)
+        events, candidates, source_receipts = [], {}, []
+        for withdrawal in data.get("baseline_withdrawals", []):
+            if withdrawal["target_id"] in targets:
+                events.append(
+                    Event(
+                        "withdraw-" + stable_rank(withdrawal["target_id"], withdrawal["source_id"]),
+                        withdrawal["available_at"],
+                        "baseline_withdrawal",
+                        {
+                            "target_id": withdrawal["target_id"],
+                            "product_revision_id": withdrawal["source_id"],
+                            "reason": withdrawal["reason"],
+                        },
+                    )
+                )
+        for candidate in data["baseline_candidates"]:
+            target_id = candidate["target_id"]
+            if target_id not in targets:
+                continue
+            identity = (target_id, candidate["source_id"])
+            if identity in candidates:
+                continue
+            mapped = predict(bank, targets[target_id], candidate)
+            baseline = Baseline(
+                target_objects[target_id],
+                candidate["source_id"],
+                candidate["projection"],
+                mapped["probability"],
+                candidate["available_at"],
+                candidate["valid_until"],
+                bank["mapping_version"],
+                "NWS_TAF_via_IEM_with_frozen_research_mapping",
+                "research",
+            )
+            candidates[identity] = candidate
+            events.append(
+                Event(
+                    "base-" + stable_rank(*identity),
+                    candidate["available_at"],
+                    "baseline",
+                    {"baseline": baseline},
+                )
+            )
+        cutoffs = sorted({o["cutoff"] for o in opportunities})
+        calls, frames, call_records = 0, [], []
+        runtime.run(events, until=cutoffs[0] - config["wakeup_seconds"] * 1_000_000 - 1)
+    
+        def authorized(target_id, query_id):
+            key = (
+                query_id
+                if config["authorization_mode"] == "session_shared"
+                else target_id + "::" + query_id
+            )
+            return key, key in store.assets
+    
+        def disclosed(target_id, query_ids):
+            visible = {r["content"]["query_id"]: r["content"] for r in store.view(target_id)}
+            return {qid: visible[qid] for qid in query_ids if qid in visible}
+    
+        for tick, cutoff in enumerate(cutoffs):
+            clock = cutoff - config["wakeup_seconds"] * 1_000_000
+            runtime.run([], until=clock)
+            clock = max(clock, (runtime._last_time or clock - 1) + 1)
+            active = [o for o in opportunities if o["cutoff"] == cutoff]
+            common = selector_view(
+                {
+                    o["target_id"]: {
+                        "baseline_probability": runtime._base(o["target_id"], clock)["probability"],
+                        "deadline": cutoff,
+                        "entity": targets[o["target_id"]]["entity"],
+                        "public_query_ids": pairs[o["opportunity_id"]]["query_ids"],
+                    }
+                    for o in active
+                }
+            )
+            selector = config["selector_kind"]
+            if selector not in {"round_robin", "risk", "coverage", "batch_complete"}:
+>               raise ValueError("Unsupported selector; do not silently replace an LLM selector")
+E               ValueError: Unsupported selector; do not silently replace an LLM selector
+
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:177: ValueError
+______ test_llm_selector_cannot_silently_open_private_global_model_state _______
+
+    def test_llm_selector_cannot_silently_open_private_global_model_state():
+        data, bank, config = fixture()
+>       with pytest.raises(ValueError, match="global/shared"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'global/shared'
+E         Actual message: 'Unsupported selector; do not silently replace an LLM selector'
+
+disastertrace-starter/tests/test_monitoring_selection.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_selection.py::test_selector_and_forecaster_consume_the_same_model_call_and_token_budget
+FAILED disastertrace-starter/tests/test_monitoring_selection.py::test_invalid_selector_is_charged_and_keeps_all_opportunities
+FAILED disastertrace-starter/tests/test_monitoring_selection.py::test_llm_selector_cannot_silently_open_private_global_model_state

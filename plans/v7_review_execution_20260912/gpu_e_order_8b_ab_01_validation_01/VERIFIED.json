@@ -1,0 +1,52 @@
+{
+  "verified_at": "2026-09-13T01:18:10.916667+00:00",
+  "batch": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/gpu_e_order_8b_ab_01",
+  "plan_sha256": "59be53031d9a375bb80368a9d9e59c991c5cbb6083789717ca4b6d0301ba0c61",
+  "actual_calls": 192,
+  "actual_tokens": 116584,
+  "verified_workers": 1,
+  "execution_kind": "current_evidence_diagnostic",
+  "model_key": "qwen3_8b",
+  "reports": {
+    "E_only": {
+      "cases": 96,
+      "correct": 65,
+      "invalid": 0,
+      "confusion": {
+        "undetermined -> undetermined": 30,
+        "refuted -> refuted": 32,
+        "supported -> refuted": 18,
+        "supported -> supported": 3,
+        "undetermined -> refuted": 2,
+        "supported -> undetermined": 11
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 75297,
+        "compute_ms": 20001
+      }
+    },
+    "E_fact_table": {
+      "cases": 96,
+      "correct": 51,
+      "invalid": 0,
+      "confusion": {
+        "undetermined -> undetermined": 11,
+        "refuted -> refuted": 32,
+        "undetermined -> refuted": 21,
+        "supported -> undetermined": 16,
+        "supported -> refuted": 8,
+        "supported -> supported": 8
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 41287,
+        "compute_ms": 17734
+      }
+    }
+  },
+  "validator_sha256": "d492fad636f6ce99783bbd1b03080d923fe10d05ade50271039d6007c3e9dba3",
+  "interpretation": "Post-hoc development execution-order audit: unchanged 96 E-only/fact-table messages and greedy generation, two case permutations and reversed condition order. No new case selection, prompt tuning, F result, independent-weather sample, stochastic-repeat CI or formal isolated-effect guarantee."
+}

@@ -1,0 +1,27 @@
+..........FF                                                             [100%]
+=================================== FAILURES ===================================
+_______________ test_witness_rejects_spliced_completion_metadata _______________
+
+    def test_witness_rejects_spliced_completion_metadata():
+        query = Query("cheap", Cost(requests=1), 0, 8)
+        goal = Goal("A", 10, (frozenset({"cheap"}),))
+        valid = Witness((("cheap", 0, 8),), ("A",), Cost(requests=1), 8)
+        assert validate_witness(valid, [query], [goal], {"requests": 1})
+        spliced = Witness(valid.starts, valid.resolved, valid.cost, 1)
+>       with pytest.raises(ValueError, match="completion"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_reachability.py:102: Failed
+_____________ test_witness_rejects_queries_outside_frozen_horizon ______________
+
+    def test_witness_rejects_queries_outside_frozen_horizon():
+        query = Query("late", Cost(requests=1), 0, 8)
+        goal = Goal("A", 3, (frozenset({"late"}),))
+        outside = Witness((("late", 0, 8),), (), Cost(requests=1), 8)
+>       with pytest.raises(ValueError, match="horizon"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_reachability.py:110: Failed
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_reachability.py::test_witness_rejects_spliced_completion_metadata
+FAILED disastertrace-starter/tests/test_monitoring_reachability.py::test_witness_rejects_queries_outside_frozen_horizon

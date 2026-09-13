@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_predictor_receives_its_current_explicit_state_and_action_semantics ____
+
+    def test_predictor_receives_its_current_explicit_state_and_action_semantics():
+        data, bank, config = fixture()
+        requests = []
+    
+        def backend(system, request, call_id):
+            assert "no_change" in system and "retains" in system and "clears" in system
+            requests.append(request)
+            return json.dumps({"probability": 0.3, "e_status": "undetermined", "decision": "override", "citations": []}), {
+                "input_tokens": 20, "output_tokens": 10, "seconds": 1, "ended_with_eos": True}
+    
+>       run_session(data, bank, config, backend=backend)
+
+disastertrace-starter/tests/test_monitoring_policies.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:490: in run_session
+    raw, details = backend(FORECAST_SYSTEM, request, call_id)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+system = "You evaluate a fixed future aviation-report target. Use only the supplied common full TAF and lawfully acquired repor...s). Always propose a probability even if choosing follow. Do not use future outcomes or other targets' private memory."
+request = {'opportunity_id': 'KSFO-2024-01-05T01:00:00Z-vis-lt-1000m-cutoff-2024-01-05T00:00:00Z', 'target': {'target_id': 'KSFO...ity': 'KSFO', 'variable': 'visibility', 'units': 'm', ...}, 'clock': 1704412202000002, 'cutoff': 1704412800000000, ...}
+call_id = 'forecast-0'
+
+    def backend(system, request, call_id):
+>       assert "no_change" in system and "retains" in system and "clears" in system
+E       assert ('no_change' in "You evaluate a fixed future aviation-report target. Use only the supplied common full TAF and lawfully acquired repor...s). Always propose a probability even if choosing follow. Do not use future outcomes or other targets' private memory." and 'retains' in "You evaluate a fixed future aviation-report target. Use only the supplied common full TAF and lawfully acquired repor...s). Always propose a probability even if choosing follow. Do not use future outcomes or other targets' private memory.")
+
+disastertrace-starter/tests/test_monitoring_policies.py:142: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_policies.py::test_predictor_receives_its_current_explicit_state_and_action_semantics

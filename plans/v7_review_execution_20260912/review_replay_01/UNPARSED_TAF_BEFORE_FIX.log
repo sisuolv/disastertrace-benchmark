@@ -1,0 +1,90 @@
+.FF............................F                                         [100%]
+=================================== FAILURES ===================================
+____ test_nil_without_a_window_does_not_crash_or_leave_an_old_product_live _____
+
+    def test_nil_without_a_window_does_not_crash_or_leave_an_old_product_live():
+        product = {"source_id": "nil", "station": "KSFO", "issued_at": 5,
+                   "valid_start": None, "valid_end": None, "status": "nil"}
+        targets = [{"target_id": "future", "entity": "KSFO", "physical_start": 10, "physical_end": 11},
+                   {"target_id": "other", "entity": "KOAK", "physical_start": 10, "physical_end": 11}]
+>       result = target_withdrawals([product], targets, 6, declared_replay_lag_us=1)
+
+disastertrace-starter/tests/test_monitoring_aviation.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+products = [{'source_id': 'nil', 'station': 'KSFO', 'issued_at': 5, 'valid_start': None, ...}]
+targets = [{'target_id': 'future', 'entity': 'KSFO', 'physical_start': 10, 'physical_end': 11}, {'target_id': 'other', 'entity': 'KOAK', 'physical_start': 10, 'physical_end': 11}]
+latest_cutoff = 6, declared_replay_lag_us = 1
+
+    def target_withdrawals(products, targets, latest_cutoff, *, declared_replay_lag_us=120_000_000):
+        withdrawals = []
+        for product in products:
+            if product["status"] not in {"active", "nil", "canceled"}:
+                raise ValueError("Unknown native TAF timeline status")
+            if product["status"] == "active":
+                continue
+            available = product["issued_at"] + declared_replay_lag_us
+            if available > latest_cutoff:
+                continue
+            for target in targets:
+                if (
+                    target["entity"] == product["station"]
+>                   and product["valid_start"] <= target["physical_start"]
+                    and target["physical_end"] <= product["valid_end"]
+                ):
+E               TypeError: '<=' not supported between instances of 'NoneType' and 'int'
+
+disastertrace-starter/src/disastertrace/monitoring_v1/providers/taf_timeline.py:19: TypeError
+_ test_unparsed_taf_keeps_verified_envelope_without_extending_native_validity __
+
+    def test_unparsed_taf_keeps_verified_envelope_without_extending_native_validity():
+>       from disastertrace.monitoring_v1.providers.taf_timeline import unavailable_product
+E       ImportError: cannot import name 'unavailable_product' from 'disastertrace.monitoring_v1.providers.taf_timeline' (/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/providers/taf_timeline.py)
+
+disastertrace-starter/tests/test_monitoring_aviation.py:54: ImportError
+___ test_new_unparsed_taf_replaces_old_mapping_and_remains_visible_to_model ____
+
+    def test_new_unparsed_taf_replaces_old_mapping_and_remains_visible_to_model():
+        data, bank, config = fixture()
+        target_id = data["opportunities"][0]["target_id"]
+        cutoff = data["opportunities"][0]["cutoff"]
+        target = next(t for t in data["targets"] if t["target_id"] == target_id)
+        data["baseline_candidates"].append({
+            "target_id": target_id, "source_id": "strict-parser-unavailable",
+            "available_at": cutoff - 1000 * 1000000, "issued_at": cutoff - 1120 * 1000000,
+            "valid_until": target["physical_start"], "raw": "UNPARSED NATIVE TAF KEPT",
+            "projection_status": "unavailable", "projection": {"status": "unparsed", "reason": "scope"},
+        })
+        config.update(forecast_call_cap=12, per_tick_forecast_cap=6, token_cap=12*(8192+384), compute_ms_cap=12*120100)
+        seen = []
+    
+        def backend(system, request, call_id):
+            if request["target"]["target_id"] == target_id:
+                seen.append(request)
+            return json.dumps({"probability": 0.2, "e_status": "undetermined", "decision": "follow", "citations": []}), {"input_tokens": 10, "output_tokens": 10, "seconds": 1, "ended_with_eos": True}
+    
+>       trace = run_session(data, bank, config, backend=backend)
+
+disastertrace-starter/tests/test_monitoring_policies.py:179: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:132: in run_session
+    mapped = predict(bank, targets[target_id], candidate)
+disastertrace-starter/src/disastertrace/monitoring_v1/calibration.py:39: in predict
+    keys.append(feature_key(target, candidate))
+disastertrace-starter/src/disastertrace/monitoring_v1/calibration.py:21: in feature_key
+    taf = taf_features(candidate["projection"], threshold)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+projection = {'status': 'unparsed', 'reason': 'scope'}, threshold = 1000
+
+    def taf_features(projection, threshold):
+        prevailing, conditional = [], []
+        operators = set()
+>       for segment in projection["segments"]:
+E       KeyError: 'segments'
+
+disastertrace-starter/src/disastertrace/monitoring_v1/evidence.py:77: KeyError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_aviation.py::test_nil_without_a_window_does_not_crash_or_leave_an_old_product_live
+FAILED disastertrace-starter/tests/test_monitoring_aviation.py::test_unparsed_taf_keeps_verified_envelope_without_extending_native_validity
+FAILED disastertrace-starter/tests/test_monitoring_policies.py::test_new_unparsed_taf_replaces_old_mapping_and_remains_visible_to_model

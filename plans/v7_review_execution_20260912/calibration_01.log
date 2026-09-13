@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/build_regional.py", line 254, in <module>
+    build(args.contract, args.metar, args.taf, args.output)
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/build_regional.py", line 79, in build
+    raw, _ = capture(metar_directory, source_id, sources)
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/build_regional.py", line 43, in capture
+    bindings[ident] = {"path": str(path.relative_to(ROOT)), "sha256": digest, "bytes": len(raw),
+  File "/usr/lib/python3.10/pathlib.py", line 818, in relative_to
+    raise ValueError("{!r} is not in the subpath of {!r}"
+ValueError: 'plans/v7_review_execution_20260912/calibration_captures_01/metar-routine-KSFO.body' is not in the subpath of '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912' OR one path is relative and the other is absolute.

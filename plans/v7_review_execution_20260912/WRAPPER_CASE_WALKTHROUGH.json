@@ -1,0 +1,69 @@
+{
+  "created_at": "2026-09-12T23:33:18.998836+00:00",
+  "changed_cutoffs": [
+    {
+      "run": "2:block01-batch_complete",
+      "opportunity_id": "KDEN-2024-01-05T05:00:00Z-vis-lt-1000m-cutoff-2024-01-05T04:00:00Z",
+      "original": {
+        "opportunity_id": "KDEN-2024-01-05T05:00:00Z-vis-lt-1000m-cutoff-2024-01-05T04:00:00Z",
+        "target_id": "KDEN-2024-01-05T05:00:00Z-vis-lt-1000m",
+        "cutoff": 1704427200000000,
+        "probability": 0.042826552462526764,
+        "base_probability": 0.042826552462526764,
+        "baseline_kind": "fallback",
+        "baseline_context_hash": "29fd7261912f5a88f3bcae12e3fe6043aa66be6ce8c69e0f883c210f1141607e",
+        "mode": "follow",
+        "override_call_id": null,
+        "protocol": "base_bound_override"
+      },
+      "alternate": {
+        "opportunity_id": "KDEN-2024-01-05T05:00:00Z-vis-lt-1000m-cutoff-2024-01-05T04:00:00Z",
+        "target_id": "KDEN-2024-01-05T05:00:00Z-vis-lt-1000m",
+        "cutoff": 1704427200000000,
+        "probability": 0.999,
+        "base_probability": 0.042826552462526764,
+        "baseline_kind": "fallback",
+        "baseline_context_hash": "29fd7261912f5a88f3bcae12e3fe6043aa66be6ce8c69e0f883c210f1141607e",
+        "mode": "override",
+        "override_call_id": "forecast-5",
+        "protocol": "persistent_override"
+      },
+      "outcome": 0,
+      "bound_loss": 0.0018341135958255571,
+      "persistent_loss": 0.998001,
+      "candidate_attempts": [
+        {
+          "event_id": "forecast-5-complete",
+          "time": 1704419407383532,
+          "call_id": "forecast-5",
+          "probability": 0.999,
+          "decision": "override",
+          "raw": "{\n  \"probability\": 0.999,\n  \"e_status\": \"supported\",\n  \"decision\": \"override\",\n  \"citations\": [\"routine-KCOS-2024-01-05T00:00:00Z\", \"routine-KPUB-2024-01-05T00:00:00Z\"]\n}",
+          "expires_at": 1704427200000000,
+          "status": "accepted",
+          "target_id": "KDEN-2024-01-05T05:00:00Z-vis-lt-1000m",
+          "began_at": 1704419405368631,
+          "snapshot_context_hash": "3022a4d592bbdb13fbfb72a3b8e996232ade7fbe0eca4d7d0d20825922bf3af7",
+          "current_context_hash": "3022a4d592bbdb13fbfb72a3b8e996232ade7fbe0eca4d7d0d20825922bf3af7"
+        }
+      ],
+      "original_end_events": [
+        {
+          "time": 1704423420000000,
+          "kind": "override_end",
+          "target_id": "KDEN-2024-01-05T05:00:00Z-vis-lt-1000m",
+          "call_id": "forecast-5",
+          "reason": "expired_base_context"
+        }
+      ]
+    }
+  ],
+  "selection": "Every changed cutoff in the Front 2024 base-run blocks with nonzero fixed-candidate Brier difference; not a representative event sample",
+  "input_bindings": {
+    "gpu_front_primary_base_01_validation_01/VERIFIED.json": "abcbe2111b6f3b9c4f77fc39c119e87056471d4eb787ec5c3e11475242956a74",
+    "extension_front_range_03/private/OUTCOMES.json": "c6d24a04d201c4b06135f786669dd933d3b6ab7f76c8d55c5130ca2c0a5ffdb1",
+    "gpu_front_primary_base_01/worker-2/block01-batch_complete/TRACE.json": "ad9e0e2ad20006a1485e4e511d6f874aec470d21c4feb3e582cda1a436b2f303"
+  },
+  "new_model_calls": 0,
+  "scope": "Same captured actions/probabilities/timings under two wrapper rules; no new adaptive policy or model reasoning claim"
+}

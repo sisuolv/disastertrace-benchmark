@@ -1,0 +1,64 @@
+{
+  "schema": "disastertrace.monitoring.public_capture.v1",
+  "registered_at": "2026-09-12T21:03:00.101136+00:00",
+  "transport": "curl",
+  "limits": {
+    "requests": 3,
+    "bytes": 393219
+  },
+  "allowed_hosts": [
+    "mesonet.agron.iastate.edu"
+  ],
+  "pause_seconds": 3,
+  "catalog_bindings": [
+    {
+      "path": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/replication_2026_captures_01/taf-catalog-KCOS.body",
+      "sha256": "141d07ec2296555f90d8951caf4fa4dfc0ac8222b83b90e433fbba311802e732"
+    },
+    {
+      "path": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/replication_2026_captures_01/taf-catalog-KDEN.body",
+      "sha256": "c70f0ba7bfe90f3f48ccd28f576609893f5407823f679e8c954fab659a90b4a4"
+    },
+    {
+      "path": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/replication_2026_captures_01/taf-catalog-KPUB.body",
+      "sha256": "27a11908d04170c9d80e2c55f3b31ab3b302e39e52d3889d6df3aa66c07a81b2"
+    }
+  ],
+  "planner_sha256": "4f93511a769faba1b26a9efdcfcfb33b31a74f25907c5803fc803feab88864a0",
+  "requests": [
+    {
+      "id": "taf-202601241248-KPUB-FTUS45-TAFCOS-AAA",
+      "url": "https://mesonet.agron.iastate.edu/api/1/nwstext/202601241248-KPUB-FTUS45-TAFCOS-AAA",
+      "max_bytes": 131072,
+      "timeout": 60,
+      "purpose": "full native bulletin from fixed temporal replication calendar",
+      "catalog_metadata": {
+        "station": "KCOS",
+        "issued_at": "2026-01-24 12:48"
+      }
+    },
+    {
+      "id": "taf-202601241732-KBOU-FTUS45-TAFDEN",
+      "url": "https://mesonet.agron.iastate.edu/api/1/nwstext/202601241732-KBOU-FTUS45-TAFDEN",
+      "max_bytes": 131072,
+      "timeout": 60,
+      "purpose": "full native bulletin from fixed temporal replication calendar",
+      "catalog_metadata": {
+        "station": "KDEN",
+        "issued_at": "2026-01-24 17:32"
+      }
+    },
+    {
+      "id": "taf-202601252326-KBOU-FTUS45-TAFDEN",
+      "url": "https://mesonet.agron.iastate.edu/api/1/nwstext/202601252326-KBOU-FTUS45-TAFDEN",
+      "max_bytes": 131072,
+      "timeout": 60,
+      "purpose": "full native bulletin from fixed temporal replication calendar",
+      "catalog_metadata": {
+        "station": "KDEN",
+        "issued_at": "2026-01-25 23:26"
+      }
+    }
+  ],
+  "reason": "Fresh bounded retries of three transport timeouts after the complete native acquisition; no forecast opportunity removed"
+}

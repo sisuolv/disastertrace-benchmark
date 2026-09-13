@@ -1,0 +1,23 @@
+...................FF                                                    [100%]
+=================================== FAILURES ===================================
+_______________ test_later_fm_supersedes_an_earlier_tempo_group ________________
+
+    def test_later_fm_supersedes_an_earlier_tempo_group():
+        product = taf("22005KT P6SM BKN020 TEMPO 0508/0512 1/2SM FG FM051000 25010KT P6SM SCT040")
+        before = product.project(utc_us("2024-01-05T09:00:00Z"), utc_us("2024-01-05T10:00:00Z"))
+        after = product.project(utc_us("2024-01-05T11:00:00Z"), utc_us("2024-01-05T12:00:00Z"))
+        assert before["segments"][0]["conditional"]
+>       assert not after["segments"][0]["conditional"]
+E       AssertionError: assert not [{'operator': 'TEMPO', 'native_probability': None, 'states': [{'visibility': {'lower': 804.672, 'upper': 804.672, 'lower_closed': True, 'upper_closed': True}, 'wind': '25010KT', 'sky': ['SCT040'], 'weather': ['FG'], ...}]}]
+
+disastertrace-starter/tests/test_monitoring_aviation.py:160: AssertionError
+______ test_nsw_cannot_replace_significant_weather_in_a_complete_fm_group ______
+
+    def test_nsw_cannot_replace_significant_weather_in_a_complete_fm_group():
+>       with pytest.raises(ValueError, match="NSW"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_aviation.py:164: Failed
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_aviation.py::test_later_fm_supersedes_an_earlier_tempo_group
+FAILED disastertrace-starter/tests/test_monitoring_aviation.py::test_nsw_cannot_replace_significant_weather_in_a_complete_fm_group

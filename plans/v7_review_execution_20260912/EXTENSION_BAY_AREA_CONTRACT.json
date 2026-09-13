@@ -1,0 +1,41 @@
+{
+  "schema": "disastertrace.monitoring.airport_regional.v1",
+  "preregistered_at": "2026-09-12T18:37:12.434809+00:00",
+  "stage": "outcome_blind_calendar_extension_development_not_confirmation",
+  "stations": [
+    "KSFO",
+    "KOAK",
+    "KSJC"
+  ],
+  "cutoff_start": "2024-01-02T00:00:00Z",
+  "cutoff_end_exclusive": "2024-01-29T00:00:00Z",
+  "cutoff_period_seconds": 3600,
+  "lead_hours": [
+    1,
+    3,
+    6
+  ],
+  "target_support": "one fixed UTC hour [cutoff+lead,cutoff+lead+1h)",
+  "routine_report_policy": "IEM report_type=3; within-slot observation timestamp; identical native duplicates deduplicated; multiple distinct times/conflicting versions unresolved; no SPECI pooling",
+  "thresholds_m": [
+    1000,
+    5000
+  ],
+  "primary_threshold_m": 1000,
+  "secondary_threshold_reason": "Adverse-visibility development sensitivity, includes rain/BR; not a new hazard or independent event. Prior source fixture contains 3SM; exposed and not confirmation.",
+  "predicate": "native routine visibility strictly less than threshold",
+  "units_rule": "native exact SM rational times 1609.344; metric native 9999/0000 censoring; no rounded IEM vsby thresholding",
+  "opportunities_per_threshold": 5832,
+  "evidence_lookback_hours": 3,
+  "neighbor_e_predicate": "Any eligible native neighbor routine report in registered last-hour slots has visibility below the same F threshold",
+  "evidence_availability": "observation time plus declared 5min replay delay; archive does not prove original first-seen; corrected inputs withheld unless issuance provenance available",
+  "professional_availability": "full native bulletin at archive issuance plus declared 2min replay delay; no archive download time masquerading as historical availability",
+  "image_admission": "matching 2024 GOES-18 ABI; public pixel/QC and hidden labels separate",
+  "outcome_policy": "archive final native routine-report reference, conditional on QC and unique-slot admission; missing/conflict/censor-straddle unresolved",
+  "E_F_relation": "E certification and fixed-predictor F change both reported; neither entails the other",
+  "forecast_baseline": "complete TAF relevant clauses and separately identified calibrated research projection; no TEMPO point probability",
+  "independent_confirmation": false,
+  "timestamp_note": "Actual contract freeze before regional outcome parsing and model input construction; initial hand-entered timestamp replaced with system UTC.",
+  "region": "bay_area",
+  "calendar_selection": "fixed 27-day January 2024 block for both registered regions; all slots retained, no outcome-based filtering; overlaps existing three-day Bay development; overlap must be labelled"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "disastertrace.monitoring.airport_regional.v1",
+  "preregistered_at": "2026-09-12T20:15:31.964702+00:00",
+  "stage": "replication_previous_December_calibration",
+  "stations": [
+    "KSFO",
+    "KOAK",
+    "KSJC"
+  ],
+  "cutoff_start": "2025-12-02T00:00:00Z",
+  "cutoff_end_exclusive": "2025-12-22T00:00:00Z",
+  "cutoff_period_seconds": 3600,
+  "lead_hours": [
+    1,
+    3,
+    6
+  ],
+  "target_support": "one fixed UTC hour [cutoff+lead,cutoff+lead+1h)",
+  "routine_report_policy": "IEM report_type=3; within-slot observation timestamp; identical native duplicates deduplicated; multiple distinct times/conflicting versions unresolved; no SPECI pooling",
+  "thresholds_m": [
+    1000,
+    5000
+  ],
+  "primary_threshold_m": 1000,
+  "secondary_threshold_reason": "Adverse-visibility development sensitivity, includes rain/BR; not a new hazard or independent event. Prior source fixture contains 3SM; exposed and not confirmation.",
+  "predicate": "native routine visibility strictly less than threshold",
+  "units_rule": "native exact SM rational times 1609.344; metric native 9999/0000 censoring; no rounded IEM vsby thresholding",
+  "opportunities_per_threshold": 4320,
+  "evidence_lookback_hours": 3,
+  "neighbor_e_predicate": "Any eligible native neighbor routine report in registered last-hour slots has visibility below the same F threshold",
+  "evidence_availability": "observation time plus declared 5min replay delay; archive does not prove original first-seen; corrected inputs withheld unless issuance provenance available",
+  "professional_availability": "full native bulletin at archive issuance plus declared 2min replay delay; no archive download time masquerading as historical availability",
+  "image_admission": "not admitted by this calendar contract",
+  "outcome_policy": "archive final native routine-report reference, conditional on QC and unique-slot admission; missing/conflict/censor-straddle unresolved",
+  "E_F_relation": "E certification and fixed-predictor F change both reported; neither entails the other",
+  "forecast_baseline": "complete TAF relevant clauses and separately identified calibrated research projection; no TEMPO point probability",
+  "independent_confirmation": false,
+  "split": {
+    "fit_start": "2025-12-02T00:00:00Z",
+    "fit_end_exclusive": "2025-12-15T00:00:00Z",
+    "purge_start": "2025-12-15T00:00:00Z",
+    "purge_end_exclusive": "2025-12-16T00:00:00Z",
+    "check_start": "2025-12-16T00:00:00Z",
+    "check_end_exclusive": "2025-12-22T00:00:00Z"
+  },
+  "calibration_rule": "Laplace-smoothed counts by threshold, native-product issuance-to-target horizon bucket, full-TAF prevailing/conditional threshold categories; sparse cells n<20 back off to no-evidence then threshold pool. Deduplicate each target within each cell.",
+  "classification_only_if_positive_class_absent": true,
+  "mapping_definition_frozen_at": "2026-09-12T20:15:31.964702+00:00",
+  "mapping_identity_reason": "Use horizon from native product issuance, so an unchanged target/product does not acquire conflicting baseline probabilities merely because its scoring opportunity has a different lead.",
+  "calendar_selection": "Same whole calendar rule frozen before new source capture; no outcome-based removal"
+}

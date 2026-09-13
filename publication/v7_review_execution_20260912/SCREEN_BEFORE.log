@@ -1,0 +1,22 @@
+F....                                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_risk_strategy_identity_is_not_an_api_key _________________
+
+    def test_risk_strategy_identity_is_not_an_api_key():
+>       screen("report.json", b'{"strategy": "risk-global_budget-session_shared-base_bound_override"}')
+
+publication/v7_review_execution_20260912/test_export_screen.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = 'report.json'
+data = b'{"strategy": "risk-global_budget-session_shared-base_bound_override"}'
+
+    def screen(path, data):
+        if any(re.search(pattern, data) for pattern in SECRET_PATTERNS):
+>           raise ValueError("Potential sensitive value in selected file: " + str(path))
+E           ValueError: Potential sensitive value in selected file: report.json
+
+publication/v7_review_execution_20260912/build_evidence.py:37: ValueError
+=========================== short test summary info ============================
+FAILED publication/v7_review_execution_20260912/test_export_screen.py::test_risk_strategy_identity_is_not_an_api_key
+1 failed, 4 passed in 0.12s

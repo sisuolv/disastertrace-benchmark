@@ -1,5 +1,79 @@
 # Decisions
 
+## Final v7 development decisions, 2026-09-13
+
+- Keep v7/C1/C2/C3 and all 16 hazards; publish the verified engineering and
+  regional development result with conditional scientific acceptance.
+- Retain all zero/negative model gains. Separate native complete TAF input from
+  the Bay-trained research probability mapping transferred to Front Range;
+  distinguish probability loss, ranking and operational warning claims.
+- Use one source-query path for joint E references, with all opportunities in
+  the denominator. Source-only E headroom is not a per-target failure penalty
+  or the objective an F policy must maximize.
+- Preserve unchanged-message E order repeats as post-hoc development probes.
+  All 768 raw answers match their originals; this does not create independent
+  weather evidence or identify a general representation effect.
+- Report actual binding call caps, unused token/compute quotas and cheap bulk
+  transport separately. Account for selector calls in the same model budget.
+- Preserve the original QINE/CFS hydrology chain. Current native Stage/ft
+  samples and official stage thresholds support the next provider preflight;
+  secondary NWPS flow is kcfs. Shared observations are not independent truth,
+  and deterministic stage forecasts are not native exceedance probabilities.
+- Keep source/model archives, local HEAD/index and historical failures intact.
+  Final GitHub publication and readback use separate repositories/indexes and
+  receipts; archive replay does not count as new inference.
+
+## v7 verification decisions, 2026-09-12 21:50 UTC
+
+- Preserve all2024/2026 opportunities, strict-parser failures and original request
+  errors. New source retries have separate receipts; old results are not replaced.
+- Use one unknown binary outcome per target when bounding paired loss across its
+  repeated lead times. Calendar block resampling is a sensitivity assumption,
+  not independent-storm confirmation.
+- Preserve both independent TAF decoder results. Normalize external PROB syntax,
+  but retain native FM minutes where the external implementation truncates them.
+- Compare the two E models on byte-identical96-case inputs. Assisted fact tables
+  and rule examples remain diagnostic conditions, not evidence of active F gain.
+- Offline relocation replays recorded ACP receipts rather than claiming fresh
+  infrastructure checks. No model weights, network or new calls are needed.
+- The bounded four-batch queue owns its one-use launches and validators. Helper
+  hashes are frozen; do not edit them or submit duplicate batches during execution.
+
+## v7 review execution, 2026-09-12
+
+- Keep v7 and C1/C2/C3 fixed. Apply the review through the separate governing
+  amendment at `../plans/v7_review_execution_20260912/PLAN_AMENDMENT_CN.md`.
+- Separate public product/measurement support from model estimates and hidden
+  evaluation labels. Use a nonempty support test, legal revision replacement,
+  unbounded missing intervals and unique weighted spatial coverage.
+- Evaluate jointly reachable target sets using one legal resource/time witness;
+  individual reachability is only a relaxation. Fixed acquisition quotas charge
+  the initiating target in full. First X01 varies request/byte allocation only.
+- Use complete TAF with a separately fitted research probability map. Neither
+  TEMPO nor a task-name match supplies an official event probability. Retain all
+  routine slots, corrections with unknown input chronology, and unresolved results.
+- Preserve negative F gains and E errors. Use fixed calendar expansion to inspect
+  positive-event coverage; do not remove quiet days or select winning tasks.
+- Freeze each GPU batch separately, reconcile actual tokens/costs/entitlements,
+  and keep original failures. User permission covers up to4 H100s concurrently;
+  old consumed GPU and paid API launch scopes remain consumed.
+
+## v7 additional execution decisions, 2026-09-12 20:20 UTC
+
+- Keep strict native TAF projection errors. A verified but unparsed new envelope
+  has its full raw text and a separately identified frozen fallback, preserving
+  target validity and preventing stale old mapping reuse. Windowless NIL/CNL
+  produces a same-station withdrawal until a later legal product arrives.
+- Treat the observed three-station hourly bulk service as a strong cost audit.
+  Preserve original logical prices and separately label physical batch sensitivity;
+  do not infer deployed C1 value from artificial source-slot scarcity.
+- Charge selector and forecaster calls together, show current legal target state
+  and remaining hard resources, and distinguish cheap program updates from model
+  inference. Current-state/action v2 runs remain separate from prior v1 results.
+- Use complete fixed2024 calendars and a separately registered2026 replication,
+  with prior-December calibration. Retain missingness, fallback and all failures;
+  never count multiple leads or neighboring hours as independent weather events.
+
 ## Expanded dataset use and publication, 2026-09-12
 
 - Keep all97 entries and16 hazards, assigning each source to professional forecast,
@@ -18,6 +92,56 @@
   dirty local worktree/index; omit raw large assets, environments and credentials.
 - Continue with historical matched-task qualification and falsifiable N1/N2/N3
   comparisons; data breadth alone does not establish novelty or acquisition gain.
+
+## Real task-chain feasibility and candidate priority, 2026-09-12
+
+- Use the advisor proposal's priority families for a bounded real-download pilot.
+  Preserve the97-entry access registry and all16 hazard definitions; matching
+  these initial chains does not qualify every source or hazard for formal release.
+- Prefer temperature and US TAF/METAR for the next development qualification.
+  Retain HEFS/USGS as a continuous-flow chain and conditional warning flagship:
+  actual short historical versions are verified, but flood thresholds and multiple
+  independently sampled extremes are not. Keep strict rainfall and UK TAF pending.
+- Retain all34 fixed targets, including suspect-temperature and accumulation
+  failures. The additional Phoenix daytime target belongs to the original heat
+  process. Do not replace exact-time results with7/10-minute near-time diagnostics.
+- Decode native METAR threshold values; do not reconstruct strict metric labels
+  from rounded mile columns. Record19 UK sub-1km reports and11 exact1000m reports,
+  correcting the preserved initial30 count. Keep censoring and conditional TAF
+  segments explicit; prevailing-only extraction is an incomplete projection.
+- Separate asset identity (query URL and bytes) from independent information.
+  Different endpoints, representations and updated products are not automatically
+  independent evidence. Common professional forecast updates remain the primary
+  baseline for later extra-evidence acquisition experiments.
+- Use source-bound public checkpoint/private outcome files for CPU qualification.
+  Controlled release delays do not prove historical availability; file separation
+  does not certify a secure live model runtime. No new model batch is needed for
+  this acquisition task, and no positive novelty follows from successful decoding.
+
+## Advisor-stage research and candidate selection, 2026-09-12
+
+- Prioritize the user's latest request for an advisor discussion packet over
+  continuing exhaustive acquisition or launching another model matrix. Keep the
+  original16-hazard scope with explicit source/target/QC requirements per family.
+- Treat acquisition value, source dependence/representation, and deadline/failure
+  interventions as testable hypotheses. A decoded sample does not prove a full
+  task chain, useful additional information or a novel empirical result.
+- Qualify hydro, station temperature/precipitation and TAF/METAR historical chains
+  before choosing two main families. Hydro is a conditional flagship because its
+  historical business versions, thresholds and extra-evidence utility remain
+  limiting. Keep NHC as an engineering and natural-version control.
+- Propose common latest-legal-professional-forecast updates to every method for
+  the primary extra-evidence comparison. Separately study acquisition of forecast
+  updates themselves. Preserve cheap all-read and strong numerical baselines.
+- GEE access is now verified for the recorded products. Keep it as an acquisition
+  and processing channel with frozen asset identities, never an extra independent
+  source or proof of historical ingestion. Preserve all old failures and QA gaps.
+- Document the97-entry registry snapshot and the retained late undecoded prefixes
+  without upgrading their states. Keep authorization, target completeness,
+  scientific semantics and redistribution conditions distinct.
+- Use historical replay as the main research route, with separate verified-time
+  and prospective conditions. Advisor review of the research design does not add
+  per-item human Gold review. Preserve old experiments and report negative results.
 
 ## Hydro data admission and prospective shadow, 2026-09-12
 

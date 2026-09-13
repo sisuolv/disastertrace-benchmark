@@ -1,0 +1,18 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_neighbor_persistence_is_a_charged_program_not_model_inference ______
+
+    def test_neighbor_persistence_is_a_charged_program_not_model_inference():
+        data, bank, config = fixture()
+        config.update(authorization_mode="session_shared", program_prediction="neighbor_persistence")
+        trace = run_session(data, bank, config)
+        assert trace["calls"] and trace["actual_model_calls"] == 0
+        assert trace["resource_spent"]["tokens"] == 0
+        for call in trace["calls"]:
+            if call["reported_e"] == "refuted":
+>               assert call["proposed_probability"] == 0.0
+E               assert 0.20588235294117646 == 0.0
+
+disastertrace-starter/tests/test_monitoring_policies.py:206: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_policies.py::test_neighbor_persistence_is_a_charged_program_not_model_inference

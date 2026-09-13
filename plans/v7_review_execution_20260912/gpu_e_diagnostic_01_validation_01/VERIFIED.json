@@ -1,0 +1,89 @@
+{
+  "verified_at": "2026-09-12T20:38:51.508204+00:00",
+  "batch": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/gpu_e_diagnostic_01",
+  "plan_sha256": "1ab8682f620d0b66b817c13a44078cc5689b012b8b290118c9759d72bda174ea",
+  "actual_calls": 384,
+  "actual_tokens": 388537,
+  "verified_workers": 1,
+  "execution_kind": "current_evidence_diagnostic",
+  "reports": {
+    "joint_F_E": {
+      "cases": 96,
+      "correct": 57,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 20,
+        "undetermined -> undetermined": 24,
+        "undetermined -> supported": 8,
+        "refuted -> supported": 12,
+        "supported -> supported": 13,
+        "supported -> refuted": 12,
+        "supported -> undetermined": 7
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 188542,
+        "compute_ms": 164539
+      }
+    },
+    "E_only": {
+      "cases": 96,
+      "correct": 65,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 32,
+        "undetermined -> undetermined": 30,
+        "undetermined -> refuted": 2,
+        "supported -> refuted": 18,
+        "supported -> undetermined": 11,
+        "supported -> supported": 3
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 75297,
+        "compute_ms": 20523
+      }
+    },
+    "E_examples": {
+      "cases": 96,
+      "correct": 75,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 32,
+        "undetermined -> undetermined": 13,
+        "undetermined -> supported": 19,
+        "supported -> supported": 30,
+        "supported -> refuted": 2
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 83411,
+        "compute_ms": 19251
+      }
+    },
+    "E_fact_table": {
+      "cases": 96,
+      "correct": 51,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 32,
+        "undetermined -> undetermined": 11,
+        "undetermined -> refuted": 21,
+        "supported -> undetermined": 16,
+        "supported -> supported": 8,
+        "supported -> refuted": 8
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 41287,
+        "compute_ms": 19566
+      }
+    }
+  },
+  "validator_sha256": "8a92f2a83ea034d6649914c78b99737c86c93dbbca416e16fcfd2f1a6a11cffb",
+  "interpretation": "Balanced fixed-disclosure real E diagnostic, separate from F gain or policy selection; rule examples and canonical fact table are declared assistance."
+}

@@ -1,0 +1,126 @@
+{
+  "verified_at": "2026-09-12T22:41:48.576902+00:00",
+  "batch": "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/results/E32/checkout/batch",
+  "plan_sha256": "768cf507d262c7f52b88d030218ed997baab0a73a4e23aa36524019a49e10f7a",
+  "actual_calls": null,
+  "actual_tokens": null,
+  "verified_workers": 1,
+  "execution_kind": "current_evidence_diagnostic",
+  "model_key": "qwen3vl_32b",
+  "reports": {
+    "joint_F_E": {
+      "cases": 96,
+      "correct": 63,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> undetermined": 28,
+        "undetermined -> undetermined": 31,
+        "undetermined -> supported": 1,
+        "refuted -> refuted": 3,
+        "refuted -> supported": 1,
+        "supported -> supported": 29,
+        "supported -> undetermined": 3
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 190036,
+        "compute_ms": 357090
+      }
+    },
+    "E_only": {
+      "cases": 96,
+      "correct": 81,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 30,
+        "undetermined -> undetermined": 31,
+        "refuted -> supported": 2,
+        "undetermined -> refuted": 1,
+        "supported -> supported": 20,
+        "supported -> undetermined": 11,
+        "supported -> refuted": 1
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 74894,
+        "compute_ms": 38773
+      }
+    },
+    "E_examples": {
+      "cases": 96,
+      "correct": 72,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 32,
+        "undetermined -> undetermined": 17,
+        "undetermined -> supported": 15,
+        "supported -> supported": 23,
+        "supported -> undetermined": 8,
+        "supported -> refuted": 1
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 83038,
+        "compute_ms": 39593
+      }
+    },
+    "E_fact_table": {
+      "cases": 96,
+      "correct": 88,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 32,
+        "undetermined -> undetermined": 24,
+        "undetermined -> refuted": 8,
+        "supported -> supported": 32
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 40879,
+        "compute_ms": 34788
+      }
+    }
+  },
+  "validator_sha256": "d492fad636f6ce99783bbd1b03080d923fe10d05ade50271039d6007c3e9dba3",
+  "interpretation": "Same 96 real E cases and four fixed representations as the 8B diagnostic, now Qwen3-VL-32B using text inputs only. No adaptive case selection, F outcome scoring, image gain claim, or active-policy result.",
+  "execution_mode": "offline_replay_with_recorded_job_receipts",
+  "new_model_calls": 0,
+  "new_api_calls": 0,
+  "weights_loaded": false,
+  "replayed_model_calls": 384,
+  "replayed_tokens": 388847,
+  "checks": [
+    "Copied frozen file hashes",
+    "Copied tokenizer input/output replay",
+    "Recorded job and hardware receipt identity, no fresh resource lookup",
+    "Original project data/code denied",
+    "Socket network blocked",
+    "Every reconstructed report equals its completed online audit"
+  ],
+  "relocation": {
+    "model_map": {
+      "/mnt/afs/260010168/models/Qwen3-VL-32B-Instruct-feasibility-20260910": "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/results/E32/checkout/tokenizers/qwen3vl_32b"
+    },
+    "evidence_original": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/E_DIAGNOSTIC_LABELS_01.json",
+    "supplied_evidence": "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/E_DIAGNOSTIC_LABELS_01.json",
+    "kind": "E",
+    "region": "bay_area",
+    "original_repository": "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01",
+    "additional_denied_projects": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next"
+    ],
+    "recorded_validation_sha256": "f7ac3d344b451b999799fdd07d02e22be7cd72451caf3e509a1facc09f3d2902",
+    "source_batch": "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/gpu_e_diagnostic_32b_01",
+    "copied_file_count": 1217,
+    "weights_copied": false,
+    "new_model_calls": 0
+  },
+  "wrapper_sha256": "141928a24e67e21ff29cc8d79b0648eac350379008a2164eb2a04429fe9352af",
+  "recorded_job_ids_replayed": [
+    "pt-5p3c4qwi"
+  ]
+}

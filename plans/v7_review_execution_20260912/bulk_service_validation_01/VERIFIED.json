@@ -1,0 +1,70 @@
+{
+  "checked_at": "2026-09-12T20:03:25.423935+00:00",
+  "checks": [
+    {
+      "id": "native-multistation-bulk",
+      "capture": "bulk_service_captures_01",
+      "rows": 72,
+      "stations": [
+        "OAK",
+        "SFO",
+        "SJC"
+      ],
+      "bytes": 17155,
+      "sha256": "f8e0cda92d353965e147e1444296da41c7198470cdac4e46e1cd37136851ef88",
+      "matches_native_single_station_rows": true
+    },
+    {
+      "id": "bulk-20240104-22",
+      "capture": "bulk_hourly_captures_01",
+      "rows": 3,
+      "stations": [
+        "OAK",
+        "SFO",
+        "SJC"
+      ],
+      "bytes": 944,
+      "sha256": "d094d9017e464cdcf0d715467046ecfbee333e8b98cd039cfa49be6e4a298835",
+      "matches_native_single_station_rows": true
+    },
+    {
+      "id": "bulk-20240105-00",
+      "capture": "bulk_hourly_captures_01",
+      "rows": 3,
+      "stations": [
+        "OAK",
+        "SFO",
+        "SJC"
+      ],
+      "bytes": 958,
+      "sha256": "4367fcfa873cb63bac544bebc55068abf3f92c240e4f4233c7041280ec70069e",
+      "matches_native_single_station_rows": true
+    },
+    {
+      "id": "bulk-20240105-12",
+      "capture": "bulk_hourly_captures_01",
+      "rows": 3,
+      "stations": [
+        "OAK",
+        "SFO",
+        "SJC"
+      ],
+      "bytes": 948,
+      "sha256": "8f2e412f9cad7696e207a4ed0fea81d3a6ac5ec8159841311eda0e0a46268b02",
+      "matches_native_single_station_rows": true
+    }
+  ],
+  "observed": "One historical HTTP request returns all three stations for one hour (3 rows), or for one day (72 rows). The source matches single-station native METAR exactly.",
+  "scope": "Observed archive API transport capability; original historical first-seen and live service latency remain unproved.",
+  "request_sensitivity": {
+    "hours": 72,
+    "logical_full_read_slot_requests": 216,
+    "one_batch_per_hour_requests": 72,
+    "current_logical_budget": 144,
+    "full_read_fits_request_cap_if_hourly_batching_is_legal": true,
+    "full_period_transport_bytes": "not independently measured for each historical replay hour"
+  },
+  "strong_comparator": "Use the all-source complete-update program's predictions as the all-read comparator. Its original 216 slot charges remain unchanged; any 72-request physical batch repricing is separately labelled a sensitivity, not an actually run online workload.",
+  "scientific_consequence": "The three-station task does not establish naturally scarce source acquisition. Preserve it for E/version/F engineering and do not attribute logical-price scheduling gains to a deployed LLM advantage.",
+  "validator_sha256": "80c980693c8caae0794fac05a58d49c6ba08e6bd702ca4e82e6f588d63388d0a"
+}

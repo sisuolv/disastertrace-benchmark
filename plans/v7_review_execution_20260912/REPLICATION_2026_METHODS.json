@@ -1,0 +1,35 @@
+{
+  "registered_at": "2026-09-12T20:15:31.964702+00:00",
+  "target_contract": "REPLICATION_2026_CONTRACT.json",
+  "calibration_contract": "CALIBRATION_2025_CONTRACT.json",
+  "primary_threshold_m": 1000,
+  "secondary_threshold_m": 5000,
+  "stations": [
+    "KDEN",
+    "KCOS",
+    "KPUB"
+  ],
+  "calibration_stations": [
+    "KSFO",
+    "KOAK",
+    "KSJC"
+  ],
+  "calibration_scope": "Same three-station Bay training region as the 2024 cross-region experiment, fit in preceding December; no future or Front Range outcomes used for mapping.",
+  "selectors": [
+    "round_robin",
+    "risk",
+    "batch_complete",
+    "llm"
+  ],
+  "protocols": [
+    "base_bound_override",
+    "persistent_override"
+  ],
+  "primary_comparison": "All registered opportunity mean Brier for LLM selector versus risk and complete-batch selectors, plus cheap full-update and all-read controls; every invalid/uncalled/missing opportunity retained.",
+  "grouping": "Use source target identity and calendar block sensitivity; do not assume leads, nearby stations or adjacent days are independent.",
+  "no_retuning_on_new_outcomes": true,
+  "model_rules_reference": "gpu_front_primary_base_01/PLAN.json",
+  "model_rules_sha256": "111d1f28f172e617089d175c46268efbab3d6a4bd84fdf51e6148d9a53237c21",
+  "release_gate": "Decode or explicitly quarantine all native inputs; preserve current raw unparsed TAF with frozen fallback; verify calibration splits and tokenizer bounds before any GPU launch.",
+  "scope_limit": "Temporal replication, not a proof of original first-seen, post-acquisition calibration, model training-data exclusion or all16 hazard novelty."
+}

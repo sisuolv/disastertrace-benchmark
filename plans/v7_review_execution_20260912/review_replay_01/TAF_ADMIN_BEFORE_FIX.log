@@ -1,0 +1,57 @@
+.....................F                                                   [100%]
+=================================== FAILURES ===================================
+_________ test_amendment_service_notice_is_preserved_in_target_context _________
+
+    def test_amendment_service_notice_is_preserved_in_target_context():
+>       product = taf("22005KT P6SM BKN020 FM051000 25010KT P6SM SCT040 AMD NOT SKED")
+
+disastertrace-starter/tests/test_monitoring_aviation.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/tests/test_monitoring_aviation.py:19: in taf
+    return parse_taf("TAF KSFO 050520Z 0506/0612 " + body, station="KSFO", archive_issue=ISSUE)
+disastertrace-starter/src/disastertrace/monitoring_v1/providers/aviation.py:354: in parse_taf
+    _fields(content, complete=operator == "FM"),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '25010KT P6SM SCT040 AMD NOT SKED', complete = True
+
+    def _fields(raw, *, complete):
+        body = " ".join(raw.strip().split())
+        if complete and "NSW" in body.split():
+            raise ValueError("NSW is not legal in a complete BASE/FM group")
+        vis, span = _visibility_match(body)
+        remaining = (
+            body if span is None else body[: span[0]] + " " * (span[1] - span[0]) + body[span[1] :]
+        )
+        fields = {}
+        if vis is not None:
+            fields["visibility"] = vis.to_dict()
+        if "CAVOK" in body.split():
+            fields.update(sky=["CAVOK"], weather=[])
+        weather, sky, auxiliary, unknown = [], [], [], []
+        explicit_weather = False
+        for token in remaining.split():
+            if WIND.fullmatch(token):
+                if "wind" in fields:
+                    raise ValueError("Conflicting winds in one TAF group")
+                fields["wind"] = token
+            elif SKY.fullmatch(token):
+                sky.append(token)
+            elif token == "NSW":
+                explicit_weather = True
+            elif WEATHER.fullmatch(token):
+                explicit_weather = True
+                weather.append(token)
+            elif re.fullmatch(r"WS\d{3}/\d{3}\d{2,3}KT", token):
+                fields["wind_shear"] = token
+            elif re.fullmatch(r"T[XN]M?\d{2}/\d{4}Z|QNH\d{4}INS", token):
+                auxiliary.append(token)
+            else:
+                unknown.append(token)
+        if unknown:
+>           raise ValueError("Unsupported native TAF tokens: " + " ".join(unknown))
+E           ValueError: Unsupported native TAF tokens: AMD NOT SKED
+
+disastertrace-starter/src/disastertrace/monitoring_v1/providers/aviation.py:184: ValueError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_aviation.py::test_amendment_service_notice_is_preserved_in_target_context

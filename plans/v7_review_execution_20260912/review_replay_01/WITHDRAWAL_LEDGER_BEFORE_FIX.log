@@ -1,0 +1,80 @@
+....FF..............FF.......                                            [100%]
+=================================== FAILURES ===================================
+_ test_withdrawn_professional_product_cannot_silently_resurrect_older_baseline _
+
+    def test_withdrawn_professional_product_cannot_silently_resurrect_older_baseline():
+        events = events_for_candidate()
+>       events.append(Event("withdraw", 10, "baseline_withdrawal", {
+            "target_id": "A", "product_revision_id": "r2-CNL", "reason": "canceled",
+        }))
+
+disastertrace-starter/tests/test_monitoring_runtime.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<string>:7: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Event(event_id='withdraw', time=10, kind='baseline_withdrawal', payload={'target_id': 'A', 'product_revision_id': 'r2-CNL', 'reason': 'canceled'})
+
+    def __post_init__(self):
+        if self.kind not in EVENT_ORDER or not self.event_id or type(self.time) is not int:
+>           raise ValueError("Invalid event identity/time/kind")
+E           ValueError: Invalid event identity/time/kind
+
+disastertrace-starter/src/disastertrace/monitoring_v1/state.py:131: ValueError
+_________ test_new_legal_product_reinstates_baseline_after_withdrawal __________
+
+    def test_new_legal_product_reinstates_baseline_after_withdrawal():
+        runtime = engine()
+        runtime.run([
+            Event("base1", 0, "baseline", {"baseline": base()}),
+>           Event("withdraw", 8, "baseline_withdrawal", {
+                "target_id": "A", "product_revision_id": "r2-NIL", "reason": "nil",
+            }),
+            Event("base3", 14, "baseline", {"baseline": base(revision="r3", released=14, p=0.3)}),
+        ])
+
+disastertrace-starter/tests/test_monitoring_runtime.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<string>:7: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Event(event_id='withdraw', time=8, kind='baseline_withdrawal', payload={'target_id': 'A', 'product_revision_id': 'r2-NIL', 'reason': 'nil'})
+
+    def __post_init__(self):
+        if self.kind not in EVENT_ORDER or not self.event_id or type(self.time) is not int:
+>           raise ValueError("Invalid event identity/time/kind")
+E           ValueError: Invalid event identity/time/kind
+
+disastertrace-starter/src/disastertrace/monitoring_v1/state.py:131: ValueError
+________ test_pending_reservation_survives_restart_and_cannot_be_reused ________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_pending_reservation_survi0')
+
+    def test_pending_reservation_survives_restart_and_cannot_be_reused(tmp_path):
+        path = tmp_path / "ledger.jsonl"
+        with EventJournal(path) as journal:
+>           ledger = BudgetLedger({"tokens": 100}, journal=journal)
+E           TypeError: BudgetLedger.__init__() got an unexpected keyword argument 'journal'
+
+disastertrace-starter/tests/test_monitoring_durable_io.py:13: TypeError
+_________ test_ledger_write_failure_prevents_in_memory_resource_commit _________
+
+    def test_ledger_write_failure_prevents_in_memory_resource_commit():
+        class BrokenJournal:
+            records = []
+    
+            def append(self, event_id, payload):
+                if event_id != "ledger:contract":
+                    raise OSError("simulated durable storage failure")
+    
+>       ledger = BudgetLedger({"requests": 1}, journal=BrokenJournal())
+E       TypeError: BudgetLedger.__init__() got an unexpected keyword argument 'journal'
+
+disastertrace-starter/tests/test_monitoring_durable_io.py:38: TypeError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_runtime.py::test_withdrawn_professional_product_cannot_silently_resurrect_older_baseline
+FAILED disastertrace-starter/tests/test_monitoring_runtime.py::test_new_legal_product_reinstates_baseline_after_withdrawal
+FAILED disastertrace-starter/tests/test_monitoring_durable_io.py::test_pending_reservation_survives_restart_and_cannot_be_reused
+FAILED disastertrace-starter/tests/test_monitoring_durable_io.py::test_ledger_write_failure_prevents_in_memory_resource_commit

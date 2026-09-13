@@ -1,0 +1,47 @@
+{
+  "started_at": "2026-09-12T21:28:14.276425+00:00",
+  "deadline": "2026-09-13T02:51:58+00:00",
+  "entries": [
+    {
+      "batch": "gpu_bay_secondary_persistent_01",
+      "dataset": "extension_bay_area_01",
+      "region": "bay_area",
+      "plan_sha256": "b7a2190d5bf8a747c27bc006ee2a9199005ef171e8f1103a26e67d4a8b432f4f",
+      "maximum_calls": 5184,
+      "max_worker_seconds": 5400
+    },
+    {
+      "batch": "gpu_front_primary_persistent_01",
+      "dataset": "extension_front_range_03",
+      "region": "front_range",
+      "plan_sha256": "89caa5a34b9810814e6e13ed82c1a6724ec7d86d59fc851daccff0f980334188",
+      "maximum_calls": 5184,
+      "max_worker_seconds": 5400
+    },
+    {
+      "batch": "gpu_replication_primary_base_01",
+      "dataset": "replication_2026_01",
+      "region": "front_range_2026",
+      "plan_sha256": "d531f171b7c8a7d4049a3b630e6d048faee546e24098782b8c5ac3f195a54028",
+      "maximum_calls": 5184,
+      "max_worker_seconds": 5400
+    },
+    {
+      "batch": "gpu_replication_primary_persistent_01",
+      "dataset": "replication_2026_01",
+      "region": "front_range_2026",
+      "plan_sha256": "7377ce5e326b2ececdafe0a81bbcb1dbfb0167e8d728b5bcd05509cbb7faebb1",
+      "maximum_calls": 5184,
+      "max_worker_seconds": 5400
+    }
+  ],
+  "helper_sha256": {
+    "launch_gpu.py": "50d3ffd6467e65c452febd5dd055adf78e79261212119119242706856c27852b",
+    "verify_gpu.py": "1ec11215c2dda0140fd4d4d35973bdcc20cc35200c96e7f160d41e3963395a51",
+    "gpu_worker.py": "2be352dd9bd2f691de1c746ab3b79b081ce60c004c4b5d7e536b2a37557748c3"
+  },
+  "max_concurrent_h100": 4,
+  "launch_rule": "Wait for zero account-wide requested active GPUs before a four-worker launch; include queued jobs; original launcher rechecks each submission. Each queue/batch intent is single use.",
+  "deadline_rule": "Do not start a batch if its entire worker timeout plus 15-minute validation margin would exceed the user window. CPU validation can overlap the following independent frozen batch.",
+  "maximum_new_model_calls": 20736
+}

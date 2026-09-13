@@ -1,0 +1,129 @@
+[
+  {
+    "name": "core_tests",
+    "argv": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/replay_packaged_evidence.py",
+      "--test-worker",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01"
+    ],
+    "started_at": "2026-09-12T22:39:33.627307+00:00",
+    "finished_at": "2026-09-12T22:39:37.706813+00:00",
+    "returncode": 0
+  },
+  {
+    "name": "data_rebuild",
+    "argv": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/offline_data_replay.py",
+      "--dataset",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/replication_2026_01",
+      "--contract",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/REPLICATION_2026_CONTRACT.json",
+      "--deny-project",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/results/data_rebuild"
+    ],
+    "started_at": "2026-09-12T22:39:37.711623+00:00",
+    "finished_at": "2026-09-12T22:40:09.529675+00:00",
+    "returncode": 0
+  },
+  {
+    "name": "pilot",
+    "argv": [
+      "/mnt/afs/260010168/.venvs/disastertrace-mm-vlm-v1/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/offline_model_replay.py",
+      "--batch",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/gpu_pilot_02",
+      "--validation",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/gpu_pilot_02_validation_01",
+      "--evidence",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/regional_02/private/OUTCOMES.json",
+      "--tokenizer-root",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/publication/v7_review_execution_20260912/review_tokenizers",
+      "--kind",
+      "F",
+      "--deny-project",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/results/pilot"
+    ],
+    "started_at": "2026-09-12T22:40:09.533857+00:00",
+    "finished_at": "2026-09-12T22:40:33.867757+00:00",
+    "returncode": 0
+  },
+  {
+    "name": "multimodal",
+    "argv": [
+      "/mnt/afs/260010168/.venvs/disastertrace-mm-vlm-v1/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/offline_model_replay.py",
+      "--batch",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/gpu_mm_01",
+      "--validation",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/gpu_mm_01_validation_01",
+      "--evidence",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/regional_02/private/OUTCOMES.json",
+      "--tokenizer-root",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/publication/v7_review_execution_20260912/review_tokenizers",
+      "--kind",
+      "F",
+      "--deny-project",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/results/multimodal"
+    ],
+    "started_at": "2026-09-12T22:40:33.872538+00:00",
+    "finished_at": "2026-09-12T22:41:16.064072+00:00",
+    "returncode": 0
+  },
+  {
+    "name": "E32",
+    "argv": [
+      "/mnt/afs/260010168/.venvs/disastertrace-mm-vlm-v1/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/offline_model_replay.py",
+      "--batch",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/gpu_e_diagnostic_32b_01",
+      "--validation",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/gpu_e_diagnostic_32b_01_validation_01",
+      "--evidence",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/E_DIAGNOSTIC_LABELS_01.json",
+      "--tokenizer-root",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/publication/v7_review_execution_20260912/review_tokenizers",
+      "--kind",
+      "E",
+      "--deny-project",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/results/E32"
+    ],
+    "started_at": "2026-09-12T22:41:16.068893+00:00",
+    "finished_at": "2026-09-12T22:41:50.270055+00:00",
+    "returncode": 0
+  },
+  {
+    "name": "Bay_full",
+    "argv": [
+      "/mnt/afs/260010168/.venvs/disastertrace-mm-vlm-v1/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/offline_model_replay.py",
+      "--batch",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/gpu_bay_secondary_base_01",
+      "--validation",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/gpu_bay_secondary_base_01_validation_01",
+      "--evidence",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/plans/v7_review_execution_20260912/extension_bay_area_01/private/OUTCOMES.json",
+      "--tokenizer-root",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/publication/v7_review_execution_20260912/review_tokenizers",
+      "--kind",
+      "F",
+      "--deny-project",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/publication/v7_packaged_replay_01/results/Bay_full"
+    ],
+    "started_at": "2026-09-12T22:41:50.274130+00:00",
+    "finished_at": "2026-09-12T22:47:54.255677+00:00",
+    "returncode": 0
+  }
+]

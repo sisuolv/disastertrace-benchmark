@@ -1,0 +1,582 @@
+{
+  "schema": "disastertrace.v7.hazard_review_overlay.v1",
+  "created_at": "2026-09-12T18:55:36.708993+00:00",
+  "source_contract": "../v7_0912_overall_research/OVERALL_HAZARD_CONTRACTS.json",
+  "source_sha256": "5be87d170a115e5b18b5d0508a604a24ac5365f1a9df3aa4374c46f6d512d9a2",
+  "usage_registry": "../user_authorized_sources_20260912/usage_01/USAGE_REGISTRY.json",
+  "source_registry_replaced": false,
+  "status": "review_contract_overlay_not_16_hazard_admission",
+  "hazards": [
+    {
+      "id": "H01",
+      "name_cn": "热带气旋",
+      "source_contract_index": 0,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "固定未来绝对时刻的同一气旋强度报告",
+      "time_support_gate_cn": "同洋盆同风速平均时长；预报发行/有效时刻/最佳路径修订分别记录",
+      "first_E_contract_cn": "当前强度产品删失和同目标发行版本；不把最终最佳路径当可见输入",
+      "remaining_admission_gate_cn": "NHC历史工程证据可复用；CMA预报配对和语义合同仍需验证",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H02",
+      "name_cn": "温带风暴/非对流大风",
+      "source_contract_index": 1,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "固定站点未来风或阵风报告窗口",
+      "time_support_gate_cn": "10m/站点高度、瞬时/平均/阵风定义相同；非对流成因另有证据",
+      "first_E_contract_cn": "原生风报质量与登记时槽；缺失方向或值不能填零",
+      "remaining_admission_gate_cn": "极端风阈值、同支持业务概率和成因分层待资格验证",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H03",
+      "name_cn": "雷暴大风/下击暴流",
+      "source_contract_index": 2,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "SPC原生区域及完整固定窗口的对流风报告事件",
+      "time_support_gate_cn": "同空间半径、阈值、起止窗才可更新同一目标；开始后进入partial_window_nowcast单轨",
+      "first_E_contract_cn": "已发布SPC条件、版本和报告覆盖；不提前暴露最终报告",
+      "remaining_admission_gate_cn": "不能将SPC长窗区域概率复制给局地短窗；历史版本窗需逐条核对",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H04",
+      "name_cn": "龙卷风",
+      "source_contract_index": 3,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "固定区域/半径和未来完整窗口的龙卷报告事件",
+      "time_support_gate_cn": "SPC新有效起点不同就不是同一目标；报告发生时间和发布/订正时间分开",
+      "first_E_contract_cn": "雷达QC/覆盖及合法报告槽位；检测输出是估计",
+      "remaining_admission_gate_cn": "报告无记录不自动等于物理未发生；独立过程与观测覆盖待建",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H05",
+      "name_cn": "冰雹",
+      "source_contract_index": 4,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "未来固定窗口的地面雹径报告越阈",
+      "time_support_gate_cn": "地面报告与MESH估计分别命名；SPC半径和时间窗一致",
+      "first_E_contract_cn": "雷达产品质量和覆盖可认证；模型冰雹mask不能累积成精确面积",
+      "remaining_admission_gate_cn": "MESH代理与地面实况误差、稀有正例及原生概率配对待验证",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H06",
+      "name_cn": "强雷电",
+      "source_contract_index": 5,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "未来有效面积/时间内的GLM检测flash密度",
+      "time_support_gate_cn": "固定flash/group/event类型、曝光时间、面积与平台；不是地面落雷真值",
+      "first_E_contract_cn": "登记扫描的曝光/缺报和唯一flash支持；未知计数无经验硬上界",
+      "remaining_admission_gate_cn": "先R轨；尚无已验证同目标专业雷电概率，不宣称超过官方雷电预报",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H07",
+      "name_cn": "极端降水",
+      "source_contract_index": 6,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "固定未来累计窗的降水报告/估计产品越阈",
+      "time_support_gate_cn": "完整累计起止、reset/trace/删失/测站QC相同；部分发生窗口单列nowcast",
+      "first_E_contract_cn": "已读非负槽位和缺槽构成[已知和,+inf)；质量上界须来自合同",
+      "remaining_admission_gate_cn": "QPF/QPE/站报统计支持、相态与原生图像未来配对待扩大",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H08",
+      "name_cn": "河洪/山洪/城市内涝",
+      "source_contract_index": 7,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "同河站未来水位/流量或独立定义的洪水面积",
+      "time_support_gate_cn": "流量/水位/基准面、时区、瞬时/平均不同不得混合；城市内涝另轨",
+      "first_E_contract_cn": "站报区间与QC先做E；公开分类产品面积用唯一cell和面积权重",
+      "remaining_admission_gate_cn": "HEFS/USGS已具匹配样例；warning阈值与独立洪水过程尚不足",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H09",
+      "name_cn": "风暴潮/沿岸淹没",
+      "source_contract_index": 8,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "未来固定潮位站总水位越阈",
+      "time_support_gate_cn": "基准面/时区/潮汐支持固定；天气残差和真实淹没是不同目标",
+      "first_E_contract_cn": "当前潮位的质量、有效基准转换及传感器覆盖",
+      "remaining_admission_gate_cn": "继承P-ETSS已验证样例的适用范围；不能把总水位均归为风暴潮",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H10",
+      "name_cn": "高温/热浪",
+      "source_contract_index": 9,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "未来固定2m温度报告；热浪另建日界/连续日合同",
+      "time_support_gate_cn": "当地日界、瞬时/日最高/日平均及温度高度不能互换",
+      "first_E_contract_cn": "合法站报温度删失与缺槽；卫星LST不等于2m气温",
+      "remaining_admission_gate_cn": "GFS/GEFS与合格站报已有样例；地域季节阈值和过程隔离待扩大",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H11",
+      "name_cn": "寒潮/极端低温/霜冻",
+      "source_contract_index": 10,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "未来固定2m低温或明确降温幅度",
+      "time_support_gate_cn": "低温、寒潮、霜冻/作物损害分别登记；降温须有两端固定支持",
+      "first_E_contract_cn": "原生温度及QC/缺槽的公开区间",
+      "remaining_admission_gate_cn": "不能凭2m温度推断地表霜冻/损害；独立冷过程链仍需建设",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H12",
+      "name_cn": "冬季灾害",
+      "source_contract_index": 11,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "未来固定窗口的降雪/雪深/SWE/冻雨报告",
+      "time_support_gate_cn": "相态及累计支持一致；雪深、SWE、新雪不得互换",
+      "first_E_contract_cn": "报告相态、质量、覆盖；SAR/光学雪判别保留感知不确定性",
+      "remaining_admission_gate_cn": "同目标专业概率与具体冬季子类的参考合同需分别准入",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H13",
+      "name_cn": "干旱/闪旱",
+      "source_contract_index": 12,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_product_release",
+      "target_semantics_cn": "指定未来发布事件的USDM等级/面积",
+      "time_support_gate_cn": "physical_support记录地图描述的周二状态；product_release记录周四实际发布；周三预测归产品发布",
+      "first_E_contract_cn": "已读已发布地图的公开等级、版本和加权面积支持",
+      "remaining_admission_gate_cn": "不能称周三提前预测已过去周二的物理干旱；土壤水分未来状态另有physical合同",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at",
+        "product_release"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H14",
+      "name_cn": "沙尘暴",
+      "source_contract_index": 13,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "未来沙尘天气码与原生低能见度联合事件",
+      "time_support_gate_cn": "CAMS dust质量浓度/AOD与沙尘站报不是同一变量；代理任务必须命名",
+      "first_E_contract_cn": "已读天气码、能见度删失和产品QC；卫星AI不是精确沙尘天气标签",
+      "remaining_admission_gate_cn": "成因标签和天气共现支持待验证；CAMS发行/有效窗口与站点配对待建",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    },
+    {
+      "id": "H15",
+      "name_cn": "浓雾/极端低能见度",
+      "source_contract_index": 14,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_physical",
+      "target_semantics_cn": "固定未来UTC小时的唯一常规METAR能见度报告",
+      "time_support_gate_cn": "完整TAF BASE/FM/BECMG/TEMPO/PROB/AMD/COR；概率映射单列R；缺失/订正历史分离",
+      "first_E_contract_cn": "完整TAF窗口与邻站登记槽位存在性；原生SM精确换算和开区间",
+      "remaining_admission_gate_cn": "2024两区域及2026整段真实数据已建；全日历模型与MM处理器已有核验。独立物理过程、雾成因、同目标专业概率和正式准入仍待完成",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "H15 native-report E/F development, complete calendars, actual VLM tensor replay; research probability mapping only, not full hazard admission",
+      "development_evidence": [
+        "extension_bay_area_01/REGIONAL_JOIN_AUDIT.json",
+        "extension_front_range_03/REGIONAL_JOIN_AUDIT.json",
+        "replication_2026_01/REGIONAL_JOIN_AUDIT.json",
+        "gpu_mm_01_validation_01/VERIFIED.json",
+        "e_diagnostic_analysis_01/REPORT.json",
+        "EXECUTION_STATUS.json"
+      ]
+    },
+    {
+      "id": "H16",
+      "name_cn": "天气相关野火/火险",
+      "source_contract_index": 15,
+      "source_ids_resolved_from_original": true,
+      "primary_temporal_semantics": "future_product_release",
+      "target_semantics_cn": "指定未来分析火险指数产品；火场活动另设future_physical子轨",
+      "time_support_gate_cn": "发行时刻和有效物理日分别记录；不可把已经共同提供的预测FWI再作为隐藏未来答案",
+      "first_E_contract_cn": "已读火点检测/QC和官方质量覆盖；真实蔓延/点火标签保持隔离",
+      "remaining_admission_gate_cn": "FWI不是点火概率；GWIS/EFFIS共享数值上游；指数、检测、蔓延分别准入",
+      "required_support_fields": [
+        "reference_kind",
+        "support_assumption",
+        "visible_information_scope",
+        "support_rule_version"
+      ],
+      "required_time_fields": [
+        "physical_start",
+        "physical_end",
+        "cutoff",
+        "source_issued_at",
+        "source_available_at",
+        "outcome_version",
+        "outcome_finalized_at",
+        "product_release"
+      ],
+      "allowed_support_modes": [
+        "E_certified",
+        "E_perception",
+        "E_oracle_facts"
+      ],
+      "empty_support_status": "inconsistent",
+      "joint_reachability_required_for_acquisition_failure_attribution": true,
+      "formal_new_monitoring_admission": false,
+      "implementation_note": "contract overlay; no admission upgraded by schema"
+    }
+  ],
+  "updated_at": "2026-09-12T22:14:27.369028+00:00"
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "disastertrace.monitoring.public_capture.v1",
+  "limits": {
+    "requests": 8,
+    "bytes": 16777216
+  },
+  "allowed_hosts": [
+    "mesonet.agron.iastate.edu"
+  ],
+  "pause_seconds": 3,
+  "requests": [
+    {
+      "id": "metar-routine-KSFO",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SFO&data=all&year1=2024&month1=1&day1=4&year2=2024&month2=1&day2=9&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 1048576,
+      "purpose": "routine report slots, official archive type 3; native token source"
+    },
+    {
+      "id": "taf-catalog-KSFO",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?station=KSFO&year1=2024&month1=1&day1=4&hour1=0&year2=2024&month2=1&day2=9&hour2=0&tz=Etc%2FUTC&fmt=comma",
+      "max_bytes": 1048576,
+      "purpose": "TAF issuance/product catalog, raw texts fetched subsequently"
+    },
+    {
+      "id": "metar-routine-KOAK",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=OAK&data=all&year1=2024&month1=1&day1=4&year2=2024&month2=1&day2=9&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 1048576,
+      "purpose": "routine report slots, official archive type 3; native token source"
+    },
+    {
+      "id": "taf-catalog-KOAK",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?station=KOAK&year1=2024&month1=1&day1=4&hour1=0&year2=2024&month2=1&day2=9&hour2=0&tz=Etc%2FUTC&fmt=comma",
+      "max_bytes": 1048576,
+      "purpose": "TAF issuance/product catalog, raw texts fetched subsequently"
+    },
+    {
+      "id": "metar-routine-KSJC",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SJC&data=all&year1=2024&month1=1&day1=4&year2=2024&month2=1&day2=9&tz=Etc%2FUTC&format=onlycomma&latlon=yes&elev=yes&missing=M&trace=T&direct=no&report_type=3",
+      "max_bytes": 1048576,
+      "purpose": "routine report slots, official archive type 3; native token source"
+    },
+    {
+      "id": "taf-catalog-KSJC",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?station=KSJC&year1=2024&month1=1&day1=4&hour1=0&year2=2024&month2=1&day2=9&hour2=0&tz=Etc%2FUTC&fmt=comma",
+      "max_bytes": 1048576,
+      "purpose": "TAF issuance/product catalog, raw texts fetched subsequently"
+    },
+    {
+      "id": "iem-asos-doc",
+      "url": "https://mesonet.agron.iastate.edu/request/download.phtml",
+      "max_bytes": 2097152,
+      "purpose": "document native report_type and archive caveats"
+    },
+    {
+      "id": "iem-taf-doc",
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/taf.py?help",
+      "max_bytes": 2097152,
+      "purpose": "TAF retrieval schema"
+    }
+  ]
+}

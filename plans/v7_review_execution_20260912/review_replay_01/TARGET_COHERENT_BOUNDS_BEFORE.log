@@ -1,0 +1,21 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+______ test_missing_bounds_keep_the_shared_outcome_across_repeated_leads _______
+
+    def test_missing_bounds_keep_the_shared_outcome_across_repeated_leads():
+        a = [row("lead1", "one", 0, 0.2, None), row("lead3", "one", 0, 0.8, None)]
+        b = [row("lead1", "one", 0, 0.8, None), row("lead3", "one", 0, 0.2, None)]
+>       assert paired_gain(a, b)["full_population_gain_bounds"] == pytest.approx([0.0, 0.0])
+E       assert [-0.600000000...0000000000001] == approx([0.0 ±....0 ± 1.0e-12])
+E         
+E         comparison failed. Mismatched elements: 2 / 2:
+E         Max absolute difference: 0.6000000000000001
+E         Max relative difference: 1.0
+E         Index | Obtained            | Expected     
+E         0     | -0.6000000000000001 | 0.0 ± 1.0e-12
+E         1     | 0.6000000000000001  | 0.0 ± 1.0e-12
+
+plans/v7_review_execution_20260912/test_calendar_analysis.py:33: AssertionError
+=========================== short test summary info ============================
+FAILED plans/v7_review_execution_20260912/test_calendar_analysis.py::test_missing_bounds_keep_the_shared_outcome_across_repeated_leads
+1 failed, 4 passed in 0.70s

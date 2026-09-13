@@ -1,0 +1,90 @@
+{
+  "verified_at": "2026-09-12T21:38:26.023810+00:00",
+  "batch": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v7_review_execution_20260912/gpu_e_diagnostic_32b_01",
+  "plan_sha256": "768cf507d262c7f52b88d030218ed997baab0a73a4e23aa36524019a49e10f7a",
+  "actual_calls": 384,
+  "actual_tokens": 388847,
+  "verified_workers": 1,
+  "execution_kind": "current_evidence_diagnostic",
+  "model_key": "qwen3vl_32b",
+  "reports": {
+    "joint_F_E": {
+      "cases": 96,
+      "correct": 63,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> undetermined": 28,
+        "undetermined -> undetermined": 31,
+        "undetermined -> supported": 1,
+        "refuted -> refuted": 3,
+        "refuted -> supported": 1,
+        "supported -> supported": 29,
+        "supported -> undetermined": 3
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 190036,
+        "compute_ms": 357090
+      }
+    },
+    "E_only": {
+      "cases": 96,
+      "correct": 81,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 30,
+        "undetermined -> undetermined": 31,
+        "refuted -> supported": 2,
+        "undetermined -> refuted": 1,
+        "supported -> supported": 20,
+        "supported -> undetermined": 11,
+        "supported -> refuted": 1
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 74894,
+        "compute_ms": 38773
+      }
+    },
+    "E_examples": {
+      "cases": 96,
+      "correct": 72,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 32,
+        "undetermined -> undetermined": 17,
+        "undetermined -> supported": 15,
+        "supported -> supported": 23,
+        "supported -> undetermined": 8,
+        "supported -> refuted": 1
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 83038,
+        "compute_ms": 39593
+      }
+    },
+    "E_fact_table": {
+      "cases": 96,
+      "correct": 88,
+      "invalid": 0,
+      "confusion": {
+        "refuted -> refuted": 32,
+        "undetermined -> undetermined": 24,
+        "undetermined -> refuted": 8,
+        "supported -> supported": 32
+      },
+      "costs": {
+        "requests": 0,
+        "bytes": 0,
+        "tokens": 40879,
+        "compute_ms": 34788
+      }
+    }
+  },
+  "validator_sha256": "d492fad636f6ce99783bbd1b03080d923fe10d05ade50271039d6007c3e9dba3",
+  "interpretation": "Same 96 real E cases and four fixed representations as the 8B diagnostic, now Qwen3-VL-32B using text inputs only. No adaptive case selection, F outcome scoring, image gain claim, or active-policy result."
+}
