@@ -1,0 +1,44 @@
+{
+  "at": "2026-09-14T10:19:11.120675+00:00",
+  "root_cause": "AFS flock returns EAGAIN even for nominally blocking LOCK_EX; local lock retry was missing",
+  "original_planned_comparisons": 1008,
+  "original_ledger_attempts": 938,
+  "original_request_receipts": 938,
+  "original_saved_responses": 876,
+  "original_attempt_statuses": {
+    "settled": 876,
+    "reserved": 49,
+    "unknown": 13
+  },
+  "original_error_types": {
+    "BlockingIOError": 103,
+    "none": 875,
+    "RuntimeError": 13,
+    "ValueError": 17
+  },
+  "actual_afs_probe": {
+    "at": "2026-09-14T10:06:31.469707+00:00",
+    "flags": "LOCK_EX, without LOCK_NB",
+    "scope": "actual AFS, no API calls",
+    "counts": {
+      "acquired": 1,
+      "BlockingIOError:11": 39
+    }
+  },
+  "actual_afs_fix_validation": {
+    "HTTP_requests": 0,
+    "actual_filesystem": "AFS",
+    "actual_model_calls": 0,
+    "no_lost_or_duplicate_ledger_entries": true,
+    "parallel_processes": 4,
+    "parallel_threads": 4,
+    "passed": true,
+    "process_ledger_calls": 128,
+    "source_sha256": "91409210422457846941a7445b5534257b376d4a60ab5aca4124496495388c41",
+    "wire_captures_verified": 64
+  },
+  "original_collection_is_primary_model_ranking": false,
+  "correction": "Separate full E02 matrix with identical tasks/prompts/references and new logical request namespace; no selective failed-item retry",
+  "new_model_calls_in_this_audit": 0,
+  "unresolved_first_attempt_reserves_remain_held": true
+}

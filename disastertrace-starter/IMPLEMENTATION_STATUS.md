@@ -1,5 +1,84 @@
 # Implementation Status
 
+## v9 follow-up execution active, 2026-09-14
+
+New work: `../plans/v9_followup_execution_20260914_01/`. Serial lifecycle timing
+and managed production spool modes pass 616 monitoring tests (0 failures/errors/skips).
+Real native H15 inputs pass four-process dispatch/two-wait/response recovery for
+predictor, selector and source; source-only corrected configuration uses a fresh
+case after the first source attempt failed before dispatch. Transport test replies
+are synthetic, not model results. Managed binding is not arbitrary Python isolation.
+
+Existing 1h calendars yield 4,176 unique target opportunities, only three sub-1km
+positives (Denver), and3 conservative components at0/24/72h gaps,2 at168h. Those
+blocks are not verified independent synoptic systems. Four-region Dec2024 native
+acquisition completes3,303 requests; purged regional banks fit9,678 and calibrate
+2,780 rows. Evaluation does not select a replacement bank; confirmation stays closed.
+DeepSeek authentication succeeds for deepseek-flash and deepseek-v4-pro. Credentials
+are external/private. Both models complete one original JSON compatibility call;
+these two calls contain no benchmark questions. The formal E/F pipeline is released
+after four real-data program preflights, two direct/step equivalence checks and
+12,084 independent E-reference agreements. Twelve static views have conflicting
+Chicago TAF baselines and remain explicit exclusions, not deleted F opportunities.
+GLM5.3 official ModelScope config and index are accessible: current FP8 weights
+total755,617,140,416bytes, exceeding four80GB H100s before runtime overhead.
+The new64-unit temperature continuous program pilot has completed and independently
+reconstructs7,008 score rows over876 opportunities/280targets. No temperature LLM.
+
+AFS LOCK_EX contention caused original E01 collection failures. Bounded local-lock
+retry and persist-before-settle fixes pass actual4-process/4-thread AFS probes and
+the616-test gate. Corrected E02 runs1,008 fresh registered calls, all settled, with
+independent input/reference/wire/fee audit. E02 peak-fee upper estimateUSD1.35081216.
+Original E01 unknown reservations remain held and its failed collection is not used
+for model ranking. A posthoc E mechanism audit makes no calls or score replacements.
+
+F program replay is moved from the2-core CCI to ACP job `pt-rky4xj1b`,64CPU/256GiB,
+zero GPUs. Original18 program units complete; the102 unlaunched units use32 workers,
+then48 model sessions use the unchanged four-request/API budget limits. Drain logs
+record actual original child exits before retiring paused dispatchers. The separate
+DenverJan9 rare-event variant remains preregistered and runs only after ordinary F.
+See `runtime/cpu_handoff_01` and `scripts/status_followup.py` for live progress.
+
+
+## v9 review integration completed, 2026-09-14
+
+Current entry: `../plans/v9_integration_execution_20260914_01/README_CN.md`.
+The final577-test monitoring matrix passes with zero failures/errors/skips;
+15 changed current source/test files pass Ruff. Frozen historical experiment
+source is preserved separately from these current-source fixes.
+
+Exported outcome/comparison values and backend declarations are copied;
+ordinary settlement cannot release unknown execution reserves; admission checks
+initial/intermediate/final configurations and actual protocol. Numeric overflow
+and observed failure timing are guarded. Explicit typed visible-value program
+predictors and configured failure-continuation modes are implemented. Complete
+cumulative pending waits and production callback/global-state binding remain.
+
+All28 new216-opportunity program trajectories independently replay and score.
+The6048 row losses reconstruct from the original snapshots. COPY_CURRENT under
+persistence improves1km and worsens5km on the exposed Bay day, without producing
+new forecast values. Acquired E is determinate for144/216 opportunities under
+the48-query batch; evidence-mapped F does not beat Follow in any of four groups.
+
+Qwen3.8-27B completes144 benchmark plus4 compatibility calls on four H10080GB
+replicas. Job `pt-xn7x9vev` SUCCEEDED, four worker exits0. Full/direct24/36,
+full/slotwise35/36, focused/direct31/36, focused/slotwise36/36; all144 responses
+are retained including one format-invalid code fence. Independent token/response
+audit and reference reconstruction pass. The12 underlying opportunities remain
+exposed development E tasks; no new F/adaptive/online result follows.
+
+Explicit native outcome policies validate87 H15 targets per threshold and3661
+DWD targets. The3641 mature DWD records are rebound in a new registry to the
+original real download completion receipt;20 missing outcomes remain missing.
+Native values and physical support do not change; historical publication is
+still unknown. Temperature continuous adaptive sessions remain unimplemented.
+
+GPU responses end05:41:43 UTC and program scores06:03:39 UTC, within the original
+04:33:23-06:33:23 window. CPU final analysis/regression/documentation occur later.
+The next phase prioritizes execution identity/wait accounting, process-grouped
+regional baselines, cost-aware E/F diagnostics and continuous native temperature.
+The reserved Feb17-23 confirmation week remains unopened.
+
 ## v8 measurement execution, 2026-09-13
 
 Entry: `../plans/v8_measurement_execution_20260913_01/README_CN.md`.

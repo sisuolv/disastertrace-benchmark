@@ -1,0 +1,47 @@
+.FF.........................                                             [100%]
+=================================== FAILURES ===================================
+____ test_pending_cumulative_delay_includes_poll_gaps_and_restore[selector] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-9/test_pending_cumulative_delay_1')
+wall = [1005000000000], role = 'selector'
+
+    @pytest.mark.parametrize("role", ["predictor", "selector", "source"])
+    def test_pending_cumulative_delay_includes_poll_gaps_and_restore(tmp_path, wall, role):
+        data, bank, session, backend, source = make_session(tmp_path, role)
+        wall[0] += 2_000_000_000
+        session.step()
+        checkpoint = session.snapshot()
+        waits = [r for r in checkpoint["payload"]["ledger"]["events"] if r["event"] == "execution_timing"]
+        assert waits[-1]["timing"]["elapsed_us"] >= 2_000_000
+        restored = SessionCoordinator.restore(checkpoint, data, bank, backend=backend, source_backend=source)
+        wall[0] += 3_000_000_000
+        if role == "predictor":
+            reply(tmp_path)
+        elif role == "selector":
+            selector_reply(tmp_path)
+        else:
+            source_reply(tmp_path, data, restored)
+        report = restored.finish()
+>       rows = report[{"predictor": "calls", "selector": "selector_records", "source": "source_receipts"}[role]]
+E       KeyError: 'selector_records'
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:63: KeyError
+_____ test_pending_cumulative_delay_includes_poll_gaps_and_restore[source] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-9/test_pending_cumulative_delay_2')
+wall = [1002000000000], role = 'source'
+
+    @pytest.mark.parametrize("role", ["predictor", "selector", "source"])
+    def test_pending_cumulative_delay_includes_poll_gaps_and_restore(tmp_path, wall, role):
+        data, bank, session, backend, source = make_session(tmp_path, role)
+        wall[0] += 2_000_000_000
+        session.step()
+        checkpoint = session.snapshot()
+        waits = [r for r in checkpoint["payload"]["ledger"]["events"] if r["event"] == "execution_timing"]
+>       assert waits[-1]["timing"]["elapsed_us"] >= 2_000_000
+E       assert 0 >= 2000000
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_lifecycle_v1.py::test_pending_cumulative_delay_includes_poll_gaps_and_restore[selector]
+FAILED disastertrace-starter/tests/test_monitoring_lifecycle_v1.py::test_pending_cumulative_delay_includes_poll_gaps_and_restore[source]

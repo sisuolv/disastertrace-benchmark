@@ -1,0 +1,676 @@
+{
+  "at": "2026-09-14T13:55:16.023656+00:00",
+  "phase": "PAUSED_FOR_USER_REVIEW",
+  "all_registered_work_verified": true,
+  "jobs": {
+    "ordinary_and_registered_rare_F": {
+      "name": "pt-rky4xj1b",
+      "state": "SUCCEEDED",
+      "start_time": "2026-09-14T10:42:55Z",
+      "roles": [
+        {
+          "image_path": "registry.cn-sh-01g.sensecore.cn/lepton-trainingjob/nvidia24.04-ubuntu22.04-py3.10-cuda12.4-cudnn9.1-torch2.3.0-transformerengine1.5:v1.0.0-20241130-nvdia-base-image",
+          "name": "Worker",
+          "resource_spec": [
+            {
+              "description": "0XN6lS-80GB",
+              "limits": {
+                "cpu": "64",
+                "memory": "256"
+              },
+              "name": "n6ls.iu.i40.64c256g",
+              "replicas": 1,
+              "requests": {
+                "cpu": "64",
+                "memory": "255"
+              }
+            }
+          ],
+          "startup_script": "timeout 21600s env PYTHONDONTWRITEBYTECODE=1 python -u /mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v9_followup_execution_20260914_01/scripts/run_cpu_handoff.py > /mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v9_followup_execution_20260914_01/runtime/cpu_handoff_01/worker.log 2>&1",
+          "total_replicas": 1
+        }
+      ]
+    },
+    "temperature_fullcalendar_program": {
+      "name": "pt-x4po0k4o",
+      "state": "SUCCEEDED",
+      "start_time": "2026-09-14T10:53:47Z",
+      "roles": [
+        {
+          "image_path": "registry.cn-sh-01g.sensecore.cn/lepton-trainingjob/nvidia24.04-ubuntu22.04-py3.10-cuda12.4-cudnn9.1-torch2.3.0-transformerengine1.5:v1.0.0-20241130-nvdia-base-image",
+          "name": "Worker",
+          "resource_spec": [
+            {
+              "description": "0XN6lS-80GB",
+              "limits": {
+                "cpu": "16",
+                "memory": "64"
+              },
+              "name": "n6ls.iu.i40.16c64g",
+              "replicas": 1,
+              "requests": {
+                "cpu": "16",
+                "memory": "63"
+              }
+            }
+          ],
+          "startup_script": "timeout 10800s env PYTHONDONTWRITEBYTECODE=1 python -u /mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v9_followup_execution_20260914_01/scripts/run_temperature_fullcalendar_job.py > /mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v9_followup_execution_20260914_01/runtime/temperature_fullcalendar_01/worker.log 2>&1",
+          "total_replicas": 1
+        }
+      ]
+    }
+  },
+  "status": {
+    "checked_at": "2026-09-14T13:55:15.212795+00:00",
+    "pipeline": {
+      "at": "2026-09-14T13:45:14.970371+00:00",
+      "phase": "REGISTERED_PIPELINE_COMPLETE",
+      "orchestration": "cpu_handoff_01",
+      "job_id": "pt-rky4xj1b",
+      "platform_state": "SUCCEEDED"
+    },
+    "audits": {
+      "at": "2026-09-14T13:53:40.201388+00:00",
+      "phase": "REGISTERED_API_AUDITS_COMPLETE",
+      "completed_audits": [
+        "E02",
+        "F"
+      ],
+      "acceleration_job": "pt-xe9lp2in",
+      "integration_receipt": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v9_followup_execution_20260914_01/runtime/audit_acceleration_01/INTEGRATED.json"
+    },
+    "rare_complete": {
+      "at": "2026-09-14T13:43:55.562783+00:00",
+      "scope": "one outcome-selected exposed weather day; not population evaluation",
+      "orchestration": "cpu_handoff_01"
+    },
+    "rare_stopped": null,
+    "cpu_handoff": {
+      "at": "2026-09-14T13:43:55.573681+00:00",
+      "phase": "REGISTERED_HANDOFF_COMPLETE"
+    },
+    "training": {
+      "bay": {
+        "bodies": 685,
+        "planned": 685,
+        "result": {
+          "region": "bay",
+          "complete": true,
+          "native_requests": 685,
+          "completed_at": "2026-09-14T09:39:54.787709+00:00"
+        }
+      },
+      "new_york": {
+        "bodies": 966,
+        "planned": 966,
+        "result": {
+          "region": "new_york",
+          "complete": true,
+          "native_requests": 966,
+          "completed_at": "2026-09-14T09:59:35.689563+00:00"
+        }
+      },
+      "chicago": {
+        "bodies": 919,
+        "planned": 919,
+        "result": {
+          "region": "chicago",
+          "complete": true,
+          "native_requests": 919,
+          "completed_at": "2026-09-14T09:55:35.066587+00:00"
+        }
+      },
+      "denver": {
+        "bodies": 733,
+        "planned": 733,
+        "result": {
+          "region": "denver",
+          "complete": true,
+          "native_requests": 733,
+          "completed_at": "2026-09-14T09:42:54.097667+00:00"
+        }
+      }
+    },
+    "api": {
+      "api_compatibility_01": {
+        "started": true,
+        "terminal_file": true,
+        "attempts": 2,
+        "status_counts": {
+          "settled": 2
+        },
+        "settled_peak_fee_usd": 8.502e-05,
+        "unresolved_reservation_usd": 0.0,
+        "cap_usd": 0.1
+      },
+      "api_evidence_01": {
+        "started": true,
+        "terminal_file": true,
+        "attempts": 938,
+        "status_counts": {
+          "settled": 876,
+          "reserved": 49,
+          "unknown": 13
+        },
+        "settled_peak_fee_usd": 1.1844981,
+        "unresolved_reservation_usd": 1.692672,
+        "cap_usd": 3.0
+      },
+      "api_evidence_02": {
+        "started": true,
+        "terminal_file": true,
+        "attempts": 1008,
+        "status_counts": {
+          "settled": 1008
+        },
+        "settled_peak_fee_usd": 1.35081216,
+        "unresolved_reservation_usd": 0.0,
+        "cap_usd": 3.0
+      },
+      "api_pilot_01": {
+        "started": true,
+        "terminal_file": true,
+        "attempts": 2304,
+        "status_counts": {
+          "settled": 2304
+        },
+        "settled_peak_fee_usd": 9.02202114,
+        "unresolved_reservation_usd": 0.0,
+        "cap_usd": 12.0,
+        "units": {
+          "program_complete": 120,
+          "model_complete": 48,
+          "failed": 0,
+          "launched": 168
+        }
+      },
+      "api_rare_pilot_01": {
+        "started": true,
+        "terminal_file": true,
+        "attempts": 384,
+        "status_counts": {
+          "settled": 384
+        },
+        "settled_peak_fee_usd": 1.51070592,
+        "unresolved_reservation_usd": 0.0,
+        "cap_usd": 3.0,
+        "units": {
+          "program_complete": 20,
+          "model_complete": 8,
+          "failed": 0,
+          "launched": 28
+        }
+      }
+    },
+    "temperature": {
+      "passed": true,
+      "windows": 8,
+      "sessions": 64,
+      "target_opportunities": 876,
+      "unique_targets": 280,
+      "model_calls": 0
+    }
+  },
+  "temperature_fullcalendar": {
+    "all_current_value_programs_match_follow_under_base_bound": true,
+    "complete_current_baseline_reproduced_independently": true,
+    "groups": {
+      "fixed_threshold_hot_spell_3d__copy_current__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 5.772395232602845,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 16,
+        "worsened": 0
+      },
+      "fixed_threshold_hot_spell_3d__copy_current__persistent_override": {
+        "delta_sum": 0.9973087274125337,
+        "different_from_follow": 26,
+        "improved": 7,
+        "loss_sum": 6.769703960015378,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 16,
+        "worsened": 19
+      },
+      "fixed_threshold_hot_spell_3d__copy_latest__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 5.772395232602845,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 16,
+        "worsened": 0
+      },
+      "fixed_threshold_hot_spell_3d__copy_latest__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 5.772395232602845,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 16,
+        "worsened": 0
+      },
+      "fixed_threshold_hot_spell_3d__first_issue_hold__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 5.772395232602845,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 16,
+        "worsened": 0
+      },
+      "fixed_threshold_hot_spell_3d__first_issue_hold__persistent_override": {
+        "delta_sum": 0.9973087274125337,
+        "different_from_follow": 26,
+        "improved": 7,
+        "loss_sum": 6.769703960015378,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 16,
+        "worsened": 19
+      },
+      "fixed_threshold_hot_spell_3d__follow__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 5.772395232602845,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 16,
+        "worsened": 0
+      },
+      "fixed_threshold_hot_spell_3d__follow__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 5.772395232602845,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 16,
+        "worsened": 0
+      },
+      "fixed_threshold_ice_spell_3d__copy_current__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 13.888504421376393,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 20,
+        "worsened": 0
+      },
+      "fixed_threshold_ice_spell_3d__copy_current__persistent_override": {
+        "delta_sum": -1.4801999231064977,
+        "different_from_follow": 15,
+        "improved": 7,
+        "loss_sum": 12.408304498269896,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 20,
+        "worsened": 8
+      },
+      "fixed_threshold_ice_spell_3d__copy_latest__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 13.888504421376393,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 20,
+        "worsened": 0
+      },
+      "fixed_threshold_ice_spell_3d__copy_latest__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 13.888504421376393,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 20,
+        "worsened": 0
+      },
+      "fixed_threshold_ice_spell_3d__first_issue_hold__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 13.888504421376393,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 20,
+        "worsened": 0
+      },
+      "fixed_threshold_ice_spell_3d__first_issue_hold__persistent_override": {
+        "delta_sum": -1.4801999231064977,
+        "different_from_follow": 15,
+        "improved": 7,
+        "loss_sum": 12.408304498269896,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 20,
+        "worsened": 8
+      },
+      "fixed_threshold_ice_spell_3d__follow__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 13.888504421376393,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 20,
+        "worsened": 0
+      },
+      "fixed_threshold_ice_spell_3d__follow__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 13.888504421376393,
+        "mature": 1453,
+        "missing": 4,
+        "n": 1457,
+        "positive": 20,
+        "worsened": 0
+      },
+      "frost_day__copy_current__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 105.27873894655872,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 446,
+        "worsened": 0
+      },
+      "frost_day__copy_current__persistent_override": {
+        "delta_sum": 13.34294502114571,
+        "different_from_follow": 608,
+        "improved": 175,
+        "loss_sum": 118.6216839677043,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 446,
+        "worsened": 433
+      },
+      "frost_day__copy_latest__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 105.27873894655872,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 446,
+        "worsened": 0
+      },
+      "frost_day__copy_latest__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 105.27873894655872,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 446,
+        "worsened": 0
+      },
+      "frost_day__first_issue_hold__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 105.27873894655872,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 446,
+        "worsened": 0
+      },
+      "frost_day__first_issue_hold__persistent_override": {
+        "delta_sum": 13.34294502114571,
+        "different_from_follow": 608,
+        "improved": 175,
+        "loss_sum": 118.6216839677043,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 446,
+        "worsened": 433
+      },
+      "frost_day__follow__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 105.27873894655872,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 446,
+        "worsened": 0
+      },
+      "frost_day__follow__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 105.27873894655872,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 446,
+        "worsened": 0
+      },
+      "hot_day__copy_current__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 24.9373317954633,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 88,
+        "worsened": 0
+      },
+      "hot_day__copy_current__persistent_override": {
+        "delta_sum": 10.687427912341404,
+        "different_from_follow": 251,
+        "improved": 46,
+        "loss_sum": 35.6247597078047,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 88,
+        "worsened": 205
+      },
+      "hot_day__copy_latest__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 24.9373317954633,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 88,
+        "worsened": 0
+      },
+      "hot_day__copy_latest__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 24.9373317954633,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 88,
+        "worsened": 0
+      },
+      "hot_day__first_issue_hold__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 24.9373317954633,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 88,
+        "worsened": 0
+      },
+      "hot_day__first_issue_hold__persistent_override": {
+        "delta_sum": 10.687427912341404,
+        "different_from_follow": 251,
+        "improved": 46,
+        "loss_sum": 35.6247597078047,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 88,
+        "worsened": 205
+      },
+      "hot_day__follow__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 24.9373317954633,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 88,
+        "worsened": 0
+      },
+      "hot_day__follow__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 24.9373317954633,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 88,
+        "worsened": 0
+      },
+      "ice_day__copy_current__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 53.13648596693581,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 103,
+        "worsened": 0
+      },
+      "ice_day__copy_current__persistent_override": {
+        "delta_sum": -3.5240292195309504,
+        "different_from_follow": 164,
+        "improved": 54,
+        "loss_sum": 49.612456747404856,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 103,
+        "worsened": 110
+      },
+      "ice_day__copy_latest__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 53.13648596693581,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 103,
+        "worsened": 0
+      },
+      "ice_day__copy_latest__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 53.13648596693581,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 103,
+        "worsened": 0
+      },
+      "ice_day__first_issue_hold__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 53.13648596693581,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 103,
+        "worsened": 0
+      },
+      "ice_day__first_issue_hold__persistent_override": {
+        "delta_sum": -3.5240292195309504,
+        "different_from_follow": 164,
+        "improved": 54,
+        "loss_sum": 49.612456747404856,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 103,
+        "worsened": 110
+      },
+      "ice_day__follow__base_bound_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 53.13648596693581,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 103,
+        "worsened": 0
+      },
+      "ice_day__follow__persistent_override": {
+        "delta_sum": 0.0,
+        "different_from_follow": 0,
+        "improved": 0,
+        "loss_sum": 53.13648596693581,
+        "mature": 2910,
+        "n": 2910,
+        "positive": 103,
+        "worsened": 0
+      }
+    },
+    "method_opportunity_rows": 93152,
+    "model_calls": 0,
+    "passed": true,
+    "scope": "24 exposed calendar months at one station; repeated targets and thresholds are dependent; no LLM temperature result",
+    "sessions": 192,
+    "target_opportunities": 11644,
+    "unique_targets": 3645,
+    "windows": 24
+  },
+  "temperature_coverage": {
+    "unique_targets": 3645,
+    "by_event": {
+      "fixed_threshold_hot_spell_3d": {
+        "targets": 729,
+        "mature": 727,
+        "positive": 8
+      },
+      "fixed_threshold_ice_spell_3d": {
+        "targets": 729,
+        "mature": 727,
+        "positive": 10
+      },
+      "frost_day": {
+        "targets": 729,
+        "mature": 729,
+        "positive": 113
+      },
+      "hot_day": {
+        "targets": 729,
+        "mature": 729,
+        "positive": 22
+      },
+      "ice_day": {
+        "targets": 729,
+        "mature": 729,
+        "positive": 27
+      }
+    }
+  },
+  "no_further_download_model_or_gpu_launch": true,
+  "confirmation_opened": false
+}

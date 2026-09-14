@@ -1,4 +1,74 @@
-# Current phase pointer: MM-4 atomic diagnostics complete and reviewed
+# Current phase: v9 follow-up data and API evaluation, 2026-09-14
+
+The user requests a pause after the currently registered work. Finish only the
+ordinary F pilot, its already registered DenverJan9 diagnostic, the24-month
+temperature program extension, and their audits. No new experiment/download/model
+matrix or GPU job follows automatically. `PAUSE_AFTER_BATCH.json` binds this stop
+boundary; the background finalizer writes `PAUSED_SUMMARY_CN.md` and
+`PAUSED_RESULT.json` after both current ACP jobs and the batch audits terminate.
+These output names are completion targets, not claims that the jobs have finished.
+
+Entry: `../plans/v9_followup_execution_20260914_01/README_CN.md`.
+The616-test gate and real-native transport/reference preflights pass. Four-region
+December2024 acquisition and regional fit/calibration are complete. Corrected E02
+completes1,008 original calls with all responses and fee receipts independently
+audited; the transport-failed E01 remains unchanged. Flash focused/slotwise is
+126/126; Pro101/126, including25 correct-slot/wrong-aggregate errors. These are
+42 underlying E problems and dependent views, not future-forecast scores.
+
+Continuous F is running on ACP CPU job `pt-rky4xj1b`:64CPU/256GiB, zero GPUs.
+The CCI has only2CPU/8GiB. Eighteen completed program units are preserved;102
+never-launched program units move to32CPU processes, followed by48 model sessions
+at the original four-request concurrency. Frozen case data/config/source and fee
+limits are unchanged. The separately registered DenverJan9 diagnostic follows.
+Orchestration and drain receipts: `runtime/cpu_handoff_01` in the batch.
+
+The temperature extension completes64 continuous program trajectories over eight
+calendar windows:876 opportunities,280 canonical targets,7,008 method rows. All
+native version replays and independently reconstructed losses pass. These are
+EUPP/DWD program forecasts, not temperature LLM calls. Both COPY and revision
+protocol controls remain necessary; some scores change through old-value retention.
+
+Use `scripts/status_followup.py` inside the batch for a read-only live summary.
+Completion/failure watchers and final reporting are background scripts; consumed
+runs are never restarted. The reserved BayFeb17-23 confirmation stays unopened.
+No independent-process generalization,16-hazard completion or model forecast
+improvement follows solely from these engineering gates.
+
+## Prior phase: v9 development experiment complete, 2026-09-14
+
+Current execution: `../plans/v9_integration_execution_20260914_01/`.
+Read `README_CN.md`, `RUN_REPORT_CN.md`, `EXECUTION_STATUS.json` and
+`NEXT_PHASE_PLAN_CN.md` there. All28 fresh full-day program trajectories and
+four canonical score groups complete at06:03:39 UTC. Qwen3.8-27B completes144
+E-only benchmark and4 compatibility calls on four independent H100 replicas;
+job `pt-xn7x9vev` succeeds at05:41:50 UTC. The original two-hour window ends
+at06:33:23 UTC; CPU analysis, final577-test regression and documentation finish
+after that window. These completed launchers are consumed.
+
+Full/direct, full/slotwise, focused/direct and focused/slotwise E correctness is
+24/36,35/36,31/36,36/36. One code-fenced reply remains format-invalid. There are
+12 underlying exposed opportunities, not144 independent weather processes.
+Copy-current persistence changes scores without generating a new probability:
+better at1km, worse at5km. No new F improvement or independent confirmation is
+claimed. Provider-specific H15 and DWD outcome policies qualify real archives;
+unknown historical publication times remain unknown.
+
+The v8 fixed and adaptive batches retain6,118 actual model calls. All52 adaptive
+controllers completed; the GPU platform job failed during its original audit,
+and a separate complete audit was later assembled with recorded provenance.
+The4,916 predictor replies copied a visible current/baseline probability.
+See `../plans/v8_measurement_execution_20260913_01/ADAPTIVE_SCORECARD_CN.md`.
+Do not infer a new probability-forecast gain from those copies.
+
+Current development fixes preserve frozen v8 source/results. New full-day
+COPY_CURRENT/COPY_BASELINE/FREQUENCY/FOLLOW controls have fresh identities,
+requests, ledgers and admission journals. The reserved Feb17-23 confirmation
+week remains unopened. Regional calibration, independent processes, continuous
+temperature sessions, physical MRMS/HEFS equivalence and full16-hazard admission
+remain gates. MM-4 and P6-P14 below are historical records, not active launchers.
+
+## Archived pointer: MM-4 atomic diagnostics complete and reviewed
 
 All 40 actual Qwen3-VL responses are structurally valid, query complete and EOS.
 Strict success: spatial 8/9, watch-list 3/9, privileged logic 9/12, metadata selection

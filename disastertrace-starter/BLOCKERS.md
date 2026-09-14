@@ -1,5 +1,51 @@
 # Blockers
 
+## v9 follow-up active gates, 2026-09-14
+
+Serial cumulative delivery timing and constrained production transport gates have
+passed; arbitrary external exactly-once and concurrent recovery remain separate.
+Regional Dec2024 native acquisition and fit/calibration gates are complete.
+Existing evaluation has3 dependence components at0/24/72h gaps and2 at168h;
+these do not establish independent weather-process generalization. Only Denver
+has strict sub-1km positives. Corrected DeepSeek E02 completes1,008 calls and its
+independent audit; continuous F model scores await the registered pilot. The original
+AFS transport-failed E01 and unknown charge reservations remain explicit.
+GLM5.3 official FP8 config/index are accessible,
+but755.6GBweights exceed four80GB H100s. No unqualified local deployment is started.
+The64-unit temperature program version-stream pilot and canonical audit complete;
+temperature model prediction and C1 remain subsequent. Its sparse positive coverage
+requires expansion using the already available full EUPP/DWD bank.
+CCI2CPU replay throughput is addressed by the64CPU ACP handoff; API concurrency
+remains4. Submission/RUNNING is not a completed F evaluation or job-success claim.
+See `../plans/v9_followup_execution_20260914_01/EXECUTION_STATUS.json`.
+
+
+## Remaining gates after v9, 2026-09-14
+
+The current v9 program/model batch is complete. No additional credential or
+future-weather wait blocks the planned historical development. All577 related
+tests,28 program replays/four score groups and144 Qwen3.8 response audits pass;
+one model reply remains format-invalid under its frozen score contract.
+
+Remaining engineering gates are production identity modes for arbitrary
+callbacks/globals, cumulative multi-poll pending-time accounting, physical
+external reconciliation and arbitrary concurrency. Existing serial recovery and
+explicit skip-failed continuation do not establish those broader properties.
+
+Remaining scientific gates are independent weather-process counts, regional
+B/f(B)/f(B,E) baselines, rare-positive coverage, system-level calibration,
+same-resource E/F value and missing-result sensitivity. TheQwen3.8 result is
+only12 underlying E opportunities on an exposed day; the36/36 focused-slotwise
+cell is not a completed C2 capability claim or a future-weather improvement.
+
+H15 and DWD native result policies pass on real data. Temperature still needs
+continuous sessions/full-common/supplementary contracts, frozen duration/extreme
+definitions and qualified availability assumptions. MRMS physical endpoints and
+HEFS target equivalence remain unresolved; free common HEFS is not paid evidence.
+X09 equal-total-budget, full-session D feedback, native MM, online model forecasts
+and16-hazard end-to-end admission remain subsequent work. Feb17-23 confirmation
+is unopened. Detailed exits: `../plans/v9_integration_execution_20260914_01/NEXT_PHASE_PLAN_CN.md`.
+
 ## v8 remaining gates, 2026-09-13
 
 No additional user authorization is needed for this twelve-hour execution.

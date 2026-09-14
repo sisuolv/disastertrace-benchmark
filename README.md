@@ -1,3 +1,11 @@
+# Latest: v9 follow-up paused for review
+
+The current computation and audits have ended; scientific failures, if any, remain explicit. Start with [the final Chinese results](LATEST_PROGRESS_20260914_CN.md), [publication scope](publication/v9_followup_20260914/README_CN.md), and [review questions](publication/v9_followup_20260914/REVIEW_FOR_CHATGPT_PRO_CN.md).
+
+Older progress notes below are historical and do not supersede the final pause record.
+
+---
+
 # 最新进展：v8 大模型开发实验（2026-09-14）
 
 本次更新包含最新测量代码、独立审计、实际实验结果及后续计划。

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="28" time="15.595" timestamp="2026-09-14T08:41:58.392947+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-j6ghc"><testcase classname="tests.test_monitoring_lifecycle_v1" name="test_pending_cumulative_delay_includes_poll_gaps_and_restore[predictor]" time="0.783" /><testcase classname="tests.test_monitoring_lifecycle_v1" name="test_pending_cumulative_delay_includes_poll_gaps_and_restore[selector]" time="0.732"><failure message="KeyError: 'selector_records'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-9/test_pending_cumulative_delay_1')
+wall = [1005000000000], role = 'selector'
+
+    @pytest.mark.parametrize("role", ["predictor", "selector", "source"])
+    def test_pending_cumulative_delay_includes_poll_gaps_and_restore(tmp_path, wall, role):
+        data, bank, session, backend, source = make_session(tmp_path, role)
+        wall[0] += 2_000_000_000
+        session.step()
+        checkpoint = session.snapshot()
+        waits = [r for r in checkpoint["payload"]["ledger"]["events"] if r["event"] == "execution_timing"]
+        assert waits[-1]["timing"]["elapsed_us"] &gt;= 2_000_000
+        restored = SessionCoordinator.restore(checkpoint, data, bank, backend=backend, source_backend=source)
+        wall[0] += 3_000_000_000
+        if role == "predictor":
+            reply(tmp_path)
+        elif role == "selector":
+            selector_reply(tmp_path)
+        else:
+            source_reply(tmp_path, data, restored)
+        report = restored.finish()
+&gt;       rows = report[{"predictor": "calls", "selector": "selector_records", "source": "source_receipts"}[role]]
+E       KeyError: 'selector_records'
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:63: KeyError</failure></testcase><testcase classname="tests.test_monitoring_lifecycle_v1" name="test_pending_cumulative_delay_includes_poll_gaps_and_restore[source]" time="0.411"><failure message="assert 0 &gt;= 2000000">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-9/test_pending_cumulative_delay_2')
+wall = [1002000000000], role = 'source'
+
+    @pytest.mark.parametrize("role", ["predictor", "selector", "source"])
+    def test_pending_cumulative_delay_includes_poll_gaps_and_restore(tmp_path, wall, role):
+        data, bank, session, backend, source = make_session(tmp_path, role)
+        wall[0] += 2_000_000_000
+        session.step()
+        checkpoint = session.snapshot()
+        waits = [r for r in checkpoint["payload"]["ledger"]["events"] if r["event"] == "execution_timing"]
+&gt;       assert waits[-1]["timing"]["elapsed_us"] &gt;= 2_000_000
+E       assert 0 &gt;= 2000000
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:53: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_lifecycle_v1" name="test_late_pending_answer_cannot_enter_old_cutoff" time="0.582" /><testcase classname="tests.test_monitoring_lifecycle_v1" name="test_failed_poll_retains_elapsed_time_and_unknown_reserve" time="0.508" /><testcase classname="tests.test_monitoring_lifecycle_v1" name="test_production_rejects_arbitrary_callback_and_unknown_mode" time="0.002" /><testcase classname="tests.test_monitoring_lifecycle_v1" name="test_checkpoint_timing_cannot_move_backwards" time="0.650" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_unresolved_poll_is_idempotent_and_never_redispatches" time="0.513" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_fresh_process_continues_original_pending_invocation" time="1.755" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_pending_frame_cannot_change_selection_after_dispatch" time="0.336" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_pending_second_call_preserves_completed_frame_prefix" time="0.514" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_late_pending_response_keeps_actual_charge_and_cutoff_fallback" time="0.511" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_changing_resolver_implementation_is_a_new_executor" time="0.276" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_delivery_latency_is_not_billed_as_model_compute" time="0.524" /><testcase classname="tests.test_monitoring_pending_selector" name="test_pending_selector_polls_original_request_without_advancing_or_charging" time="0.484" /><testcase classname="tests.test_monitoring_pending_selector" name="test_selector_then_predictor_has_one_shared_budget_after_process_restore" time="1.689" /><testcase classname="tests.test_monitoring_pending_selector" name="test_selector_delivery_wait_is_not_charged_as_compute_and_cannot_backdate" time="0.535" /><testcase classname="tests.test_monitoring_pending_selector" name="test_pending_selector_blocks_control_change_and_detects_rehashed_cursor" time="0.335" /><testcase classname="tests.test_monitoring_pending_selector" name="test_received_unfinished_selection_is_charged_without_executing_its_choices" time="0.419" /><testcase classname="tests.test_monitoring_pending_selector" name="test_late_selector_can_legally_start_a_new_tick_without_reissuing_the_old_one" time="0.521" /><testcase classname="tests.test_monitoring_pending_selector" name="test_direct_resume_cannot_change_controls_of_a_pending_selector" time="0.278" /><testcase classname="tests.test_monitoring_pending_source" name="test_source_pending_poll_has_no_free_evidence_or_repeated_request" time="0.311" /><testcase classname="tests.test_monitoring_pending_source" name="test_restored_source_settles_original_once_before_granting_evidence" time="0.368" /><testcase classname="tests.test_monitoring_pending_source" name="test_late_source_does_not_supply_evidence_or_forecasts_at_previous_cutoff" time="0.244" /><testcase classname="tests.test_monitoring_pending_source" name="test_changed_native_response_is_charged_but_never_authorized" time="0.275" /><testcase classname="tests.test_monitoring_pending_source" name="test_pending_source_rejects_control_or_executor_changes" time="0.197" /><testcase classname="tests.test_monitoring_pending_source" name="test_second_pending_source_preserves_first_settled_asset_and_charge" time="0.499" /><testcase classname="tests.test_monitoring_pending_source" name="test_untrustworthy_source_receipt_keeps_original_reservation" time="0.260" /></testsuite></testsuites>

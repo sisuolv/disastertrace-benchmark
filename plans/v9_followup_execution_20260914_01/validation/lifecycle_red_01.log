@@ -1,0 +1,81 @@
+EEEEEFE                                                                  [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_pending_cumulative_delay_includes_poll_gaps_and_restore[predictor] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa9d1007ac0>
+
+    @pytest.fixture
+    def wall(monkeypatch):
+>       from disastertrace.monitoring_v1 import lifecycle
+E       ImportError: cannot import name 'lifecycle' from 'disastertrace.monitoring_v1' (/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/__init__.py)
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:17: ImportError
+_ ERROR at setup of test_pending_cumulative_delay_includes_poll_gaps_and_restore[selector] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa9d1022a70>
+
+    @pytest.fixture
+    def wall(monkeypatch):
+>       from disastertrace.monitoring_v1 import lifecycle
+E       ImportError: cannot import name 'lifecycle' from 'disastertrace.monitoring_v1' (/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/__init__.py)
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:17: ImportError
+_ ERROR at setup of test_pending_cumulative_delay_includes_poll_gaps_and_restore[source] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa9d1007310>
+
+    @pytest.fixture
+    def wall(monkeypatch):
+>       from disastertrace.monitoring_v1 import lifecycle
+E       ImportError: cannot import name 'lifecycle' from 'disastertrace.monitoring_v1' (/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/__init__.py)
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:17: ImportError
+______ ERROR at setup of test_late_pending_answer_cannot_enter_old_cutoff ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa9d1022110>
+
+    @pytest.fixture
+    def wall(monkeypatch):
+>       from disastertrace.monitoring_v1 import lifecycle
+E       ImportError: cannot import name 'lifecycle' from 'disastertrace.monitoring_v1' (/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/__init__.py)
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:17: ImportError
+_ ERROR at setup of test_failed_poll_retains_elapsed_time_and_unknown_reserve __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa9d1007700>
+
+    @pytest.fixture
+    def wall(monkeypatch):
+>       from disastertrace.monitoring_v1 import lifecycle
+E       ImportError: cannot import name 'lifecycle' from 'disastertrace.monitoring_v1' (/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/__init__.py)
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:17: ImportError
+________ ERROR at setup of test_checkpoint_timing_cannot_move_backwards ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa9d1057a00>
+
+    @pytest.fixture
+    def wall(monkeypatch):
+>       from disastertrace.monitoring_v1 import lifecycle
+E       ImportError: cannot import name 'lifecycle' from 'disastertrace.monitoring_v1' (/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/__init__.py)
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:17: ImportError
+=================================== FAILURES ===================================
+_________ test_production_rejects_arbitrary_callback_and_unknown_mode __________
+
+    def test_production_rejects_arbitrary_callback_and_unknown_mode():
+        def callback(*args):
+            return "{}", {}
+    
+>       with pytest.raises(ValueError, match="production"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_lifecycle_v1.py:95: Failed
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_lifecycle_v1.py::test_production_rejects_arbitrary_callback_and_unknown_mode
+ERROR disastertrace-starter/tests/test_monitoring_lifecycle_v1.py::test_pending_cumulative_delay_includes_poll_gaps_and_restore[predictor]
+ERROR disastertrace-starter/tests/test_monitoring_lifecycle_v1.py::test_pending_cumulative_delay_includes_poll_gaps_and_restore[selector]
+ERROR disastertrace-starter/tests/test_monitoring_lifecycle_v1.py::test_pending_cumulative_delay_includes_poll_gaps_and_restore[source]
+ERROR disastertrace-starter/tests/test_monitoring_lifecycle_v1.py::test_late_pending_answer_cannot_enter_old_cutoff
+ERROR disastertrace-starter/tests/test_monitoring_lifecycle_v1.py::test_failed_poll_retains_elapsed_time_and_unknown_reserve
+ERROR disastertrace-starter/tests/test_monitoring_lifecycle_v1.py::test_checkpoint_timing_cannot_move_backwards

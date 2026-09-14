@@ -1,0 +1,97 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_repeated_pending_checkpoints_keep_original_worker_release ________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-12/test_repeated_pending_checkpoi0')
+
+    def test_repeated_pending_checkpoints_keep_original_worker_release(tmp_path):
+        from test_monitoring_typed_session import typed_fixture
+        from disastertrace.monitoring_v1.session_checkpoint import SessionCoordinator
+    
+        backend, mode, _ = fixture(tmp_path)
+        data, bank, config = typed_fixture(forecast_call_cap=1, model_call_budget=1)
+        config.update(mode)
+        session = SessionCoordinator(data, bank, config, backend=backend)
+        session.step()
+        session.persist(tmp_path / 'checkpoint0.json')
+        ready = next(tmp_path.glob('*.ready.json'))
+        original = ready.read_bytes()
+        session.step()
+>       session.persist(tmp_path / 'checkpoint1.json')
+
+disastertrace-starter/tests/test_monitoring_production_v1.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/session_checkpoint.py:504: in persist
+    committer(path)
+disastertrace-starter/src/disastertrace/monitoring_v1/production.py:49: in commit_checkpoint
+    return super().commit_checkpoint(path)
+disastertrace-starter/src/disastertrace/monitoring_v1/spool_backend.py:169: in commit_checkpoint
+    return self._commit_original_checkpoint(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <disastertrace.monitoring_v1.production.ProductionSpoolBackend object at 0x7fd0f2e2d060>
+path = PosixPath('/tmp/pytest-of-root/pytest-12/test_repeated_pending_checkpoi0/checkpoint1.json')
+pending_field = 'pending_predictor'
+identity = {'kind': 'declared_model', 'implementation_sha256': '617d1ae12d242ca8c2b1fb7562234cb1ac319d4d1e12e156554f291a4c0c5f07'...a4fdbf855', 'committer_implementation_sha256': '92f56a35c6d3e7b712fd73a912e7725f080fe4e3566441e688f8cce5f5ac8f8b', ...}
+config_field = 'execution_contract', request_encoding = 'messages'
+call_field = 'call_id'
+
+    def _commit_original_checkpoint(
+        self, path, *, pending_field, identity, config_field, request_encoding, call_field
+    ):
+        path = Path(path).resolve()
+        checkpoint = read(path)
+        payload = checkpoint["payload"]
+        if canonical_hash(payload) != checkpoint["sha256"]:
+            raise ValueError("Controller checkpoint integrity mismatch")
+        pending = payload.get(pending_field)
+        if pending is None:
+            raise ValueError("Only an original pending invocation can release a worker")
+        if payload["config"].get(config_field) != identity:
+            raise ValueError("Controller and worker execution identity differ")
+        call_id = pending[call_field]
+        key = self._key(call_id)
+        request_path = self.directory / (key + ".request.json")
+        request = read(request_path)
+        bound_request = (
+            request["messages"]
+            if request_encoding == "messages"
+            else {"system": request["system"], "request": request["request"]}
+            if request_encoding == "system_request"
+            else request["request"]
+        )
+        expected = {
+            "request_sha256": canonical_hash(bound_request),
+            "execution_sha256": canonical_hash(identity),
+        }
+        if (
+            pending["binding"] != expected
+            or pending["ticket"] != {"remote_id": key, "request_sha256": digest(request_path)}
+            or request["execution_sha256"] != canonical_hash(self.execution_contract)
+        ):
+            raise ValueError("Checkpoint does not bind the staged request")
+        ready = {
+            "schema": "disastertrace.spool_ready.v2",
+            "call_id": call_id,
+            "request_sha256": digest(request_path),
+            "execution_sha256": request["execution_sha256"],
+            "checkpoint_path": str(path),
+            "checkpoint_file_sha256": digest(path),
+            "checkpoint_payload_sha256": checkpoint["sha256"],
+        }
+        with path.open("rb") as handle:
+            os.fsync(handle.fileno())
+        directory = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+        ready_path = self.directory / (key + ".ready.json")
+        if ready_path.exists():
+            if read(ready_path) != ready:
+>               raise ValueError("Staged request already binds another committed checkpoint")
+E               ValueError: Staged request already binds another committed checkpoint
+
+disastertrace-starter/src/disastertrace/monitoring_v1/spool_backend.py:231: ValueError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_production_v1.py::test_repeated_pending_checkpoints_keep_original_worker_release

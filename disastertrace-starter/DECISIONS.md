@@ -1,5 +1,69 @@
 # Decisions
 
+## v9 follow-up decisions, 2026-09-14
+
+New execution records live in `../plans/v9_followup_execution_20260914_01/`.
+CPU handoff01 preserves18 completed original units and launches only102 remaining
+program units on ACP64CPU/256GiB, zero GPUs; model concurrency and fees stay frozen.
+The original dispatchers are paused and retired only after real child exit status
+is recorded. Frozen model/source/data/config bytes and one-use claims are retained.
+RareJan9 keeps its separate outcome-selected registration and cannot be pooled as
+natural-calendar performance. Corrected E02 is primary; original AFS-failed E01
+remains a transport experiment, including its unresolved fee reservations.
+Posthoc slot/aggregate attribution never replaces the model's original E answer.
+
+Use explicit production_bound_v1 for managed model spools and test_callback_v1
+for transport fixtures. lifecycle_wall_v1 includes all polling/recovery wall gaps
+in delivery delay, never as fabricated provider compute. Legacy receipt timing
+remains explicitly distinct. Unknown executions keep reservations.
+Regional fitting: Dec1-19 2024; calibration: Dec23-29; admit only complete input
+and outcome footprints within each interval, with no cross-role native revision.
+Use conservative global time/asset components and disclose their limitations.
+User authorizes a new bounded DeepSeek trial and optional GLM5.3 exploration;
+this does not reopen consumed experiment launchers. Key remains outside Git.
+
+Formal follow-up API budgets: two compatibility calls/USD0.10, up to1200 E calls/
+USD3, and up to2304 base-bound continuous pilot calls/USD12; no model retries.
+Fees reserve peak tariffs and cache-miss input, retain unknown charges, and are
+conservative upper estimates, not invoices. Use DeepSeek API for this batch;
+official GLM5.3 FP8 weights exceed the authorized four-card memory configuration.
+Static E baseline conflicts are retained as eligibility exclusions. Continuous F
+keeps all72 hourly/site opportunities per registered case. The independent watcher
+starts audits once per completed stage; no model dispatch occurs in analysis.
+Temperature source/control failure01 is preserved; continuation02 reuses16 verified
+FOLLOW trajectories and only reruns48 originally failed COPY trajectories.
+
+
+## v9 results-informed decisions, 2026-09-14
+
+- Preserve C1/C2/C3 and the16-hazard roadmap; v9 integrates reviews and supplies
+  new evidence rather than adding a research concept.
+- Typed COPY_CURRENT and COPY_BASELINE submit fresh OVERRIDE calls with their
+  own identities and costs. They refresh normal expiry and are not KEEP.
+  All future F comparisons retain both controls and Follow.
+- Keep the28 fresh program trajectories separate from historical measured-clock
+  LLM trajectories. Their1ms program/persistence values are declared scenarios.
+  Gains from retaining an older visible probability are not new forecast values.
+- Freeze failure continuation as fail_session_v1 or skip_failed_call_continue_v1.
+  Unknown reservations remain held, and a failed logical request is not retried.
+  Explicit provider result policies do not invent unknown publication times.
+- Qwen3.8-27B uses four independent BF16 H100 replicas,144 E-only development
+  requests plus4 compatibility calls. The independent E diagnostic runs after
+  core/reference qualification while full-day program scoring finishes in
+  parallel; it is not a new F or C1 model comparison.
+- Retain one code-fenced invalid reply and all17 other incorrect final E answers.
+  Slotwise output improves this slice while using more tokens and time. Report
+  all-field accuracy separately and do not infer same-total-budget benefit.
+- Dispatch qualification omits evaluator reference hashes; the final audit
+  reconstructs all144 from bound visible inputs/reducer and records that limit.
+  Future launch freezes must include evaluator-side reference hashes as well.
+- DWD fetched_at comes only from its original real receipt in a new registry.
+  This does not establish historical first-seen or promote archive timing to
+  online evidence. Mature and missing result denominators remain explicit.
+- Finish CPU scoring/documentation after the original window with actual times;
+  do not reopen consumed GPU jobs. Preserve the unopened confirmation week and
+  run process grouping/regional strong baselines before independent confirmation.
+
 ## v8 measurement decisions, 2026-09-13
 
 - Keep v8 C1/C2/C3, E/F/D/MM and W00-W19. Measure lawful evidence, reachable

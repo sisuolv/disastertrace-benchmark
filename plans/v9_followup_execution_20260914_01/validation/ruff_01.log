@@ -1,0 +1,92 @@
+TRY004 Prefer `TypeError` exception for invalid type
+   --> disastertrace-starter/src/disastertrace/monitoring_v1/api_capture.py:100:13
+    |
+ 98 |         raw = choice['message']['content']
+ 99 |         if not isinstance(raw, str):
+100 |             raise ValueError('API response has no final text')
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+101 |         cost = input_tokens * input_rate + output_tokens * output_rate
+102 |         budget.transact(call_id, actual=cost)
+    |
+
+BLE001 Do not catch blind exception: `Exception`
+   --> disastertrace-starter/src/disastertrace/monitoring_v1/api_capture.py:114:12
+    |
+112 |             'model_returned': decoded.get('model'), 'usage': usage,
+113 |             'fee_upper_nanodollars': cost, 'response_sha256': hashlib.sha256(response_bytes).hexdigest()}
+114 |     except Exception as exc:
+    |            ^^^^^^^^^
+115 |         if isinstance(exc, HTTPError):
+116 |             status = exc.code
+    |
+
+RUF007 Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs
+  --> disastertrace-starter/src/disastertrace/monitoring_v1/process_split.py:53:77
+   |
+51 |     """Require the entire footprint, including future reference, inside one role."""
+52 |     bounds = sorted((lo, hi, name) for name, (lo, hi) in intervals.items())
+53 |     if any(lo >= hi for lo, hi, _ in bounds) or any(a[1] > b[0] for a, b in zip(bounds, bounds[1:])):
+   |                                                                             ^^^
+54 |         raise ValueError("Overlapping or invalid chronological role intervals")
+55 |     assignments = {}
+   |
+help: Replace `zip()` with `itertools.pairwise()`
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+ --> disastertrace-starter/tests/test_monitoring_process_split.py:7:12
+  |
+6 | def row(key, lo, hi, *versions):
+7 |     return dict(opportunity_id=key, footprint_start=lo, footprint_end=hi, native_versions=list(versions))
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Rewrite as a literal
+
+Found 8 errors (4 fixed, 4 remaining).
+No fixes available (2 hidden fixes can be enabled with the `--unsafe-fixes` option).
+16 files reformatted, 1 file left unchanged
+TRY004 Prefer `TypeError` exception for invalid type
+   --> disastertrace-starter/src/disastertrace/monitoring_v1/api_capture.py:125:13
+    |
+123 |         raw = choice["message"]["content"]
+124 |         if not isinstance(raw, str):
+125 |             raise ValueError("API response has no final text")
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+126 |         cost = input_tokens * input_rate + output_tokens * output_rate
+127 |         budget.transact(call_id, actual=cost)
+    |
+
+BLE001 Do not catch blind exception: `Exception`
+   --> disastertrace-starter/src/disastertrace/monitoring_v1/api_capture.py:154:12
+    |
+152 |             "response_sha256": hashlib.sha256(response_bytes).hexdigest(),
+153 |         }
+154 |     except Exception as exc:
+    |            ^^^^^^^^^
+155 |         if isinstance(exc, HTTPError):
+156 |             status = exc.code
+    |
+
+RUF007 Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs
+  --> disastertrace-starter/src/disastertrace/monitoring_v1/process_split.py:54:33
+   |
+52 |     bounds = sorted((lo, hi, name) for name, (lo, hi) in intervals.items())
+53 |     if any(lo >= hi for lo, hi, _ in bounds) or any(
+54 |         a[1] > b[0] for a, b in zip(bounds, bounds[1:])
+   |                                 ^^^
+55 |     ):
+56 |         raise ValueError("Overlapping or invalid chronological role intervals")
+   |
+help: Replace `zip()` with `itertools.pairwise()`
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+ --> disastertrace-starter/tests/test_monitoring_process_split.py:7:12
+  |
+6 |   def row(key, lo, hi, *versions):
+7 |       return dict(
+  |  ____________^
+8 | |         opportunity_id=key, footprint_start=lo, footprint_end=hi, native_versions=list(versions)
+9 | |     )
+  | |_____^
+help: Rewrite as a literal
+
+Found 4 errors.
+No fixes available (2 hidden fixes can be enabled with the `--unsafe-fixes` option).
