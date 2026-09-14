@@ -1,0 +1,1105 @@
+[
+  {
+    "kind": "bundle",
+    "selection_key": [
+      "qwen235b_fp8",
+      "unwarranted_determination",
+      "fixed_one"
+    ],
+    "call_id": "02c124ccac96f2b20362d2fb",
+    "head": "joint",
+    "opportunity_id": "KOAK-2025-02-03T21:00:00Z-vis-lt-5000m-cutoff-2025-02-03T18:00:00Z",
+    "witness": {
+      "threshold_m": 5000,
+      "registered_query_ids": [
+        "routine-KSFO-2025-02-03T16:00:00Z",
+        "routine-KSJC-2025-02-03T16:00:00Z"
+      ],
+      "disclosed_reports": [
+        {
+          "query_id": "routine-KSFO-2025-02-03T16:00:00Z",
+          "raw": "KSFO 031656Z 19012KT 10SM SCT030 OVC048 14/11 A2990 RMK AO2 SLP124 T01440106",
+          "reported_at_utc": "2025-02-03T16:56:00+00:00",
+          "visibility_m": {
+            "lower": 16093.44,
+            "lower_closed": true,
+            "upper": 16093.44,
+            "upper_closed": true
+          },
+          "slot_truth": "false"
+        }
+      ],
+      "missing_query_ids": [
+        "routine-KSJC-2025-02-03T16:00:00Z"
+      ],
+      "independent_expected_E": "undetermined",
+      "basis": "Visible exact-product intervals only; no hidden report or outcome read."
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"fact_truth\":\"false\",\"probability\":0.07494646680942184}",
+        "E_answer": "refuted",
+        "correct": false,
+        "input_tokens": 3185,
+        "output_tokens": 29,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/02c124ccac96f2b20362d2fb-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/02c124ccac96f2b20362d2fb-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\"fact_truth\":\"unknown\",\"probability\":0.07494646680942184}",
+        "E_answer": "undetermined",
+        "correct": true,
+        "input_tokens": 3189,
+        "output_tokens": 29,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/02c124ccac96f2b20362d2fb-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/02c124ccac96f2b20362d2fb-response.json"
+      }
+    }
+  },
+  {
+    "kind": "bundle",
+    "selection_key": [
+      "qwen8b_control",
+      "unnecessary_unknown",
+      "all_registered"
+    ],
+    "call_id": "095e66b6f2b2a0891b1ee102",
+    "head": "e_only",
+    "opportunity_id": "KOAK-2025-02-03T21:00:00Z-vis-lt-1000m-cutoff-2025-02-03T18:00:00Z",
+    "witness": {
+      "threshold_m": 1000,
+      "registered_query_ids": [
+        "routine-KSFO-2025-02-03T16:00:00Z",
+        "routine-KSJC-2025-02-03T16:00:00Z"
+      ],
+      "disclosed_reports": [
+        {
+          "query_id": "routine-KSFO-2025-02-03T16:00:00Z",
+          "raw": "KSFO 031656Z 19012KT 10SM SCT030 OVC048 14/11 A2990 RMK AO2 SLP124 T01440106",
+          "reported_at_utc": "2025-02-03T16:56:00+00:00",
+          "visibility_m": {
+            "lower": 16093.44,
+            "lower_closed": true,
+            "upper": 16093.44,
+            "upper_closed": true
+          },
+          "slot_truth": "false"
+        },
+        {
+          "query_id": "routine-KSJC-2025-02-03T16:00:00Z",
+          "raw": "KSJC 031653Z 17007KT 10SM FEW010 BKN028 OVC048 14/08 A2992 RMK AO2 SLP132 T01440083",
+          "reported_at_utc": "2025-02-03T16:53:00+00:00",
+          "visibility_m": {
+            "lower": 16093.44,
+            "lower_closed": true,
+            "upper": 16093.44,
+            "upper_closed": true
+          },
+          "slot_truth": "false"
+        }
+      ],
+      "missing_query_ids": [],
+      "independent_expected_E": "refuted",
+      "basis": "Visible exact-product intervals only; no hidden report or outcome read."
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"fact_truth\":\"false\"}",
+        "E_answer": "refuted",
+        "correct": true,
+        "input_tokens": 3975,
+        "output_tokens": 7,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/095e66b6f2b2a0891b1ee102-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/095e66b6f2b2a0891b1ee102-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\"fact_truth\":\"unknown\"}",
+        "E_answer": "undetermined",
+        "correct": false,
+        "input_tokens": 3979,
+        "output_tokens": 7,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/095e66b6f2b2a0891b1ee102-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/095e66b6f2b2a0891b1ee102-response.json"
+      }
+    }
+  },
+  {
+    "kind": "taf_task",
+    "selection_key": [
+      "qwen8b_control",
+      "taf_coverage",
+      "epoch_us"
+    ],
+    "call_id": "0c7ad5f91fa96f1db5dc0486",
+    "original_input": {
+      "as_of": 1738368960000000,
+      "availability_basis": "declared_archive_scenario",
+      "kind": "coverage",
+      "products": [
+        {
+          "available_at": 1738368960000000,
+          "completed_at": 1738368960000000,
+          "issued_at": 1738368840000000,
+          "raw": "546 \nFTUS46 KMTR 010014 AAA\nTAFSFO\nTAF AMD\nKSFO 010014Z 0100/0206 12012G21KT 4SM -RA OVC017\n     FM010700 17008G18KT 6SM -SHRA OVC014\n     FM011800 19012G20KT 3SM -RA BR OVC009\n     FM012200 21015G23KT 6SM BR VCSH OVC014\n     FM020400 19010KT 5SM -SHRA BR OVC009=\n",
+          "source_id": "taf-202502010014-KMTR-FTUS46-TAFSFO-AAA",
+          "station": "KSFO"
+        }
+      ],
+      "schema": "disastertrace.taf_E_task.v1",
+      "target": {
+        "entity": "station:KSFO",
+        "event_operator": "lt",
+        "output_kind": "event_probability",
+        "physical_end": 1738472400000000,
+        "physical_start": 1738468800000000,
+        "release_event_at": null,
+        "report_policy": "iem_routine_unique_hour.v1",
+        "support_kind": "interval",
+        "target_id": "taf-window-bf24890a47bb0b0d64805c5c",
+        "temporal_semantics": "future_physical",
+        "threshold": 5000,
+        "units": "m",
+        "variable": "visibility"
+      },
+      "task_id": "taf-window-bf24890a47bb0b0d64805c5c"
+    },
+    "evaluator_reference": {
+      "task_hash": "d92dda6fb54461512906a9a015c3c46fe00afe01f8b8ff62a808fc76afecd9e1",
+      "rule_version": "taf_current_product_E.v1",
+      "answer": {
+        "status": "resolved",
+        "current_source_ids": [
+          "taf-202502010014-KMTR-FTUS46-TAFSFO-AAA"
+        ],
+        "coverage": "full"
+      },
+      "diagnostics": {
+        "parser_errors": {},
+        "superseded_source_ids": [],
+        "coverage_fraction": 1.0,
+        "native_status": "active",
+        "projection": {
+          "station": "KSFO",
+          "target_start": 1738468800000000,
+          "target_end": 1738472400000000,
+          "segments": [
+            {
+              "start": 1738468800000000,
+              "end": 1738472400000000,
+              "prevailing": [
+                {
+                  "visibility": {
+                    "lower": 8046.72,
+                    "upper": 8046.72,
+                    "lower_closed": true,
+                    "upper_closed": true
+                  },
+                  "wind": "19010KT",
+                  "sky": [
+                    "OVC009"
+                  ],
+                  "weather": [
+                    "-SHRA",
+                    "BR"
+                  ],
+                  "wind_shear": null,
+                  "auxiliary": []
+                }
+              ],
+              "conditional": []
+            }
+          ],
+          "rule_version": "taf_applicable_groups.v1"
+        }
+      },
+      "reference_kind": "product_label",
+      "support_assumption": "product_exact",
+      "visible_information_scope": "provided_common_native_products",
+      "future_forecast_submitted": false
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"status\":\"resolved\",\"coverage\":\"full\",\"current_source_ids\":[\"taf-202502010014-KMTR-FTUS46-TAFSFO-AAA\"]}",
+        "E_answer": {
+          "status": "resolved",
+          "coverage": "full",
+          "current_source_ids": [
+            "taf-202502010014-KMTR-FTUS46-TAFSFO-AAA"
+          ]
+        },
+        "correct": true,
+        "input_tokens": 753,
+        "output_tokens": 44,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/0c7ad5f91fa96f1db5dc0486-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/0c7ad5f91fa96f1db5dc0486-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\n  \"status\": \"resolved\",\n  \"coverage\": \"partial\",\n  \"current_source_ids\": [\n    \"taf-202502010014-KMTR-FTUS46-TAFSFO-AAA\"\n  ]\n}",
+        "E_answer": {
+          "status": "resolved",
+          "coverage": "partial",
+          "current_source_ids": [
+            "taf-202502010014-KMTR-FTUS46-TAFSFO-AAA"
+          ]
+        },
+        "correct": false,
+        "input_tokens": 757,
+        "output_tokens": 58,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/0c7ad5f91fa96f1db5dc0486-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/0c7ad5f91fa96f1db5dc0486-response.json"
+      }
+    },
+    "reference_scope": "Original native parser reference; not an additional independent TAF parser."
+  },
+  {
+    "kind": "taf_task",
+    "selection_key": [
+      "qwen235b_fp8",
+      "taf_coverage",
+      "epoch_us"
+    ],
+    "call_id": "0ed6e7085a3f141923ff3243",
+    "original_input": {
+      "as_of": 1738389000000000,
+      "availability_basis": "declared_archive_scenario",
+      "kind": "coverage",
+      "products": [
+        {
+          "available_at": 1738389000000000,
+          "completed_at": 1738389000000000,
+          "issued_at": 1738388880000000,
+          "raw": "335 \nFTUS46 KMTR 010548 CCA\nTAFSJC\nTAF COR\nKSJC 010548Z 0106/0206 15010G19KT 6SM -SHRA BR OVC035\n     FM011500 20010G18KT 6SM BR VCSH OVC015\n     FM011800 18012G20KT 6SM -SHRA FEW008 OVC015\n     FM012100 19011KT P6SM VCSH OVC015=\n",
+          "source_id": "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA",
+          "station": "KSJC"
+        }
+      ],
+      "schema": "disastertrace.taf_E_task.v1",
+      "target": {
+        "entity": "station:KSJC",
+        "event_operator": "lt",
+        "output_kind": "event_probability",
+        "physical_end": 1738479600000000,
+        "physical_start": 1738476000000000,
+        "release_event_at": null,
+        "report_policy": "iem_routine_unique_hour.v1",
+        "support_kind": "interval",
+        "target_id": "taf-window-5b138ffebfeb9dc0c70d91e3",
+        "temporal_semantics": "future_physical",
+        "threshold": 5000,
+        "units": "m",
+        "variable": "visibility"
+      },
+      "task_id": "taf-window-5b138ffebfeb9dc0c70d91e3"
+    },
+    "evaluator_reference": {
+      "task_hash": "7e9110da95f86528f4d3088291b7b61a7c721dc1a6222bcb1683a0fff00b23ae",
+      "rule_version": "taf_current_product_E.v1",
+      "answer": {
+        "status": "resolved",
+        "current_source_ids": [
+          "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+        ],
+        "coverage": "none"
+      },
+      "diagnostics": {
+        "parser_errors": {},
+        "superseded_source_ids": [],
+        "coverage_fraction": 0.0,
+        "native_status": "active"
+      },
+      "reference_kind": "product_label",
+      "support_assumption": "product_exact",
+      "visible_information_scope": "provided_common_native_products",
+      "future_forecast_submitted": false
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"status\":\"resolved\",\"coverage\":\"full\",\"current_source_ids\":[\"taf-202502010548-KMTR-FTUS46-TAFSJC-CCA\"]}",
+        "E_answer": {
+          "status": "resolved",
+          "coverage": "full",
+          "current_source_ids": [
+            "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+          ]
+        },
+        "correct": false,
+        "input_tokens": 724,
+        "output_tokens": 44,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/0ed6e7085a3f141923ff3243-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/0ed6e7085a3f141923ff3243-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\n  \"status\": \"resolved\",\n  \"coverage\": \"full\",\n  \"current_source_ids\": [\n    \"taf-202502010548-KMTR-FTUS46-TAFSJC-CCA\"\n  ]\n}",
+        "E_answer": {
+          "status": "resolved",
+          "coverage": "full",
+          "current_source_ids": [
+            "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+          ]
+        },
+        "correct": false,
+        "input_tokens": 728,
+        "output_tokens": 58,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/0ed6e7085a3f141923ff3243-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/0ed6e7085a3f141923ff3243-response.json"
+      }
+    },
+    "reference_scope": "Original native parser reference; not an additional independent TAF parser."
+  },
+  {
+    "kind": "bundle",
+    "selection_key": [
+      "qwen235b_fp8",
+      "unwarranted_determination",
+      "common_only"
+    ],
+    "call_id": "18ad74df7b356b16ef98b305",
+    "head": "joint",
+    "opportunity_id": "KOAK-2025-02-03T15:00:00Z-vis-lt-1000m-cutoff-2025-02-03T12:00:00Z",
+    "witness": {
+      "threshold_m": 1000,
+      "registered_query_ids": [
+        "routine-KSFO-2025-02-03T10:00:00Z",
+        "routine-KSJC-2025-02-03T10:00:00Z"
+      ],
+      "disclosed_reports": [],
+      "missing_query_ids": [
+        "routine-KSFO-2025-02-03T10:00:00Z",
+        "routine-KSJC-2025-02-03T10:00:00Z"
+      ],
+      "independent_expected_E": "undetermined",
+      "basis": "Visible exact-product intervals only; no hidden report or outcome read."
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"fact_truth\":\"false\",\"probability\":0.02593192868719611}",
+        "E_answer": "refuted",
+        "correct": false,
+        "input_tokens": 2224,
+        "output_tokens": 29,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/18ad74df7b356b16ef98b305-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/18ad74df7b356b16ef98b305-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\"fact_truth\":\"unknown\",\"probability\":0.02593192868719611}",
+        "E_answer": "undetermined",
+        "correct": true,
+        "input_tokens": 2228,
+        "output_tokens": 29,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/18ad74df7b356b16ef98b305-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/18ad74df7b356b16ef98b305-response.json"
+      }
+    }
+  },
+  {
+    "kind": "taf_task",
+    "selection_key": [
+      "qwen235b_fp8",
+      "taf_coverage",
+      "iso_utc"
+    ],
+    "call_id": "2296c8e2ddbfb438567346a7",
+    "original_input": {
+      "as_of": 1738389000000000,
+      "availability_basis": "declared_archive_scenario",
+      "kind": "coverage",
+      "products": [
+        {
+          "available_at": 1738389000000000,
+          "completed_at": 1738389000000000,
+          "issued_at": 1738388880000000,
+          "raw": "335 \nFTUS46 KMTR 010548 CCA\nTAFSJC\nTAF COR\nKSJC 010548Z 0106/0206 15010G19KT 6SM -SHRA BR OVC035\n     FM011500 20010G18KT 6SM BR VCSH OVC015\n     FM011800 18012G20KT 6SM -SHRA FEW008 OVC015\n     FM012100 19011KT P6SM VCSH OVC015=\n",
+          "source_id": "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA",
+          "station": "KSJC"
+        }
+      ],
+      "schema": "disastertrace.taf_E_task.v1",
+      "target": {
+        "entity": "station:KSJC",
+        "event_operator": "lt",
+        "output_kind": "event_probability",
+        "physical_end": 1738479600000000,
+        "physical_start": 1738476000000000,
+        "release_event_at": null,
+        "report_policy": "iem_routine_unique_hour.v1",
+        "support_kind": "interval",
+        "target_id": "taf-window-5b138ffebfeb9dc0c70d91e3",
+        "temporal_semantics": "future_physical",
+        "threshold": 5000,
+        "units": "m",
+        "variable": "visibility"
+      },
+      "task_id": "taf-window-5b138ffebfeb9dc0c70d91e3"
+    },
+    "evaluator_reference": {
+      "task_hash": "7e9110da95f86528f4d3088291b7b61a7c721dc1a6222bcb1683a0fff00b23ae",
+      "rule_version": "taf_current_product_E.v1",
+      "answer": {
+        "status": "resolved",
+        "current_source_ids": [
+          "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+        ],
+        "coverage": "none"
+      },
+      "diagnostics": {
+        "parser_errors": {},
+        "superseded_source_ids": [],
+        "coverage_fraction": 0.0,
+        "native_status": "active"
+      },
+      "reference_kind": "product_label",
+      "support_assumption": "product_exact",
+      "visible_information_scope": "provided_common_native_products",
+      "future_forecast_submitted": false
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"status\":\"resolved\",\"coverage\":\"partial\",\"current_source_ids\":[\"taf-202502010548-KMTR-FTUS46-TAFSJC-CCA\"]}",
+        "E_answer": {
+          "status": "resolved",
+          "coverage": "partial",
+          "current_source_ids": [
+            "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+          ]
+        },
+        "correct": false,
+        "input_tokens": 796,
+        "output_tokens": 44,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/2296c8e2ddbfb438567346a7-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/2296c8e2ddbfb438567346a7-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\n  \"status\": \"resolved\",\n  \"coverage\": \"partial\",\n  \"current_source_ids\": [\n    \"taf-202502010548-KMTR-FTUS46-TAFSJC-CCA\"\n  ]\n}",
+        "E_answer": {
+          "status": "resolved",
+          "coverage": "partial",
+          "current_source_ids": [
+            "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+          ]
+        },
+        "correct": false,
+        "input_tokens": 800,
+        "output_tokens": 58,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/2296c8e2ddbfb438567346a7-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/2296c8e2ddbfb438567346a7-response.json"
+      }
+    },
+    "reference_scope": "Original native parser reference; not an additional independent TAF parser."
+  },
+  {
+    "kind": "taf_task",
+    "selection_key": [
+      "qwen8b_control",
+      "taf_coverage",
+      "iso_utc"
+    ],
+    "call_id": "2296c8e2ddbfb438567346a7",
+    "original_input": {
+      "as_of": 1738389000000000,
+      "availability_basis": "declared_archive_scenario",
+      "kind": "coverage",
+      "products": [
+        {
+          "available_at": 1738389000000000,
+          "completed_at": 1738389000000000,
+          "issued_at": 1738388880000000,
+          "raw": "335 \nFTUS46 KMTR 010548 CCA\nTAFSJC\nTAF COR\nKSJC 010548Z 0106/0206 15010G19KT 6SM -SHRA BR OVC035\n     FM011500 20010G18KT 6SM BR VCSH OVC015\n     FM011800 18012G20KT 6SM -SHRA FEW008 OVC015\n     FM012100 19011KT P6SM VCSH OVC015=\n",
+          "source_id": "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA",
+          "station": "KSJC"
+        }
+      ],
+      "schema": "disastertrace.taf_E_task.v1",
+      "target": {
+        "entity": "station:KSJC",
+        "event_operator": "lt",
+        "output_kind": "event_probability",
+        "physical_end": 1738479600000000,
+        "physical_start": 1738476000000000,
+        "release_event_at": null,
+        "report_policy": "iem_routine_unique_hour.v1",
+        "support_kind": "interval",
+        "target_id": "taf-window-5b138ffebfeb9dc0c70d91e3",
+        "temporal_semantics": "future_physical",
+        "threshold": 5000,
+        "units": "m",
+        "variable": "visibility"
+      },
+      "task_id": "taf-window-5b138ffebfeb9dc0c70d91e3"
+    },
+    "evaluator_reference": {
+      "task_hash": "7e9110da95f86528f4d3088291b7b61a7c721dc1a6222bcb1683a0fff00b23ae",
+      "rule_version": "taf_current_product_E.v1",
+      "answer": {
+        "status": "resolved",
+        "current_source_ids": [
+          "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+        ],
+        "coverage": "none"
+      },
+      "diagnostics": {
+        "parser_errors": {},
+        "superseded_source_ids": [],
+        "coverage_fraction": 0.0,
+        "native_status": "active"
+      },
+      "reference_kind": "product_label",
+      "support_assumption": "product_exact",
+      "visible_information_scope": "provided_common_native_products",
+      "future_forecast_submitted": false
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"status\":\"resolved\",\"coverage\":\"partial\",\"current_source_ids\":[\"taf-202502010548-KMTR-FTUS46-TAFSJC-CCA\"]}",
+        "E_answer": {
+          "status": "resolved",
+          "coverage": "partial",
+          "current_source_ids": [
+            "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+          ]
+        },
+        "correct": false,
+        "input_tokens": 796,
+        "output_tokens": 44,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/2296c8e2ddbfb438567346a7-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/2296c8e2ddbfb438567346a7-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\n  \"status\": \"resolved\",\n  \"coverage\": \"partial\",\n  \"current_source_ids\": [\n    \"taf-202502010548-KMTR-FTUS46-TAFSJC-CCA\"\n  ]\n}",
+        "E_answer": {
+          "status": "resolved",
+          "coverage": "partial",
+          "current_source_ids": [
+            "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+          ]
+        },
+        "correct": false,
+        "input_tokens": 800,
+        "output_tokens": 58,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/2296c8e2ddbfb438567346a7-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/2296c8e2ddbfb438567346a7-response.json"
+      }
+    },
+    "reference_scope": "Original native parser reference; not an additional independent TAF parser."
+  },
+  {
+    "kind": "bundle",
+    "selection_key": [
+      "qwen235b_fp8",
+      "contrary_or_other_error",
+      "all_registered"
+    ],
+    "call_id": "3836b5bb9a3e05f46e17879a",
+    "head": "joint",
+    "opportunity_id": "KSJC-2025-02-03T01:00:00Z-vis-lt-1000m-cutoff-2025-02-03T00:00:00Z",
+    "witness": {
+      "threshold_m": 1000,
+      "registered_query_ids": [
+        "routine-KOAK-2025-02-02T22:00:00Z",
+        "routine-KSFO-2025-02-02T22:00:00Z"
+      ],
+      "disclosed_reports": [
+        {
+          "query_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "raw": "KOAK 022253Z 18009KT 8SM FEW010 BKN017 OVC023 17/13 A3002 RMK AO2 SLP167 T01720133",
+          "reported_at_utc": "2025-02-02T22:53:00+00:00",
+          "visibility_m": {
+            "lower": 12874.752,
+            "lower_closed": true,
+            "upper": 12874.752,
+            "upper_closed": true
+          },
+          "slot_truth": "false"
+        },
+        {
+          "query_id": "routine-KSFO-2025-02-02T22:00:00Z",
+          "raw": "KSFO 022256Z 17012KT 2 1/2SM -RA BR FEW006 BKN011 OVC017 16/16 A3001 RMK AO2 SLP163 P0001 T01560156",
+          "reported_at_utc": "2025-02-02T22:56:00+00:00",
+          "visibility_m": {
+            "lower": 4023.36,
+            "lower_closed": true,
+            "upper": 4023.36,
+            "upper_closed": true
+          },
+          "slot_truth": "false"
+        }
+      ],
+      "missing_query_ids": [],
+      "independent_expected_E": "refuted",
+      "basis": "Visible exact-product intervals only; no hidden report or outcome read."
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"fact_truth\":\"true\",\"probability\":0.02242152466367713}",
+        "E_answer": "supported",
+        "correct": false,
+        "input_tokens": 4002,
+        "output_tokens": 29,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/3836b5bb9a3e05f46e17879a-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/3836b5bb9a3e05f46e17879a-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\"fact_truth\":\"true\",\"probability\":0.02242152466367713}",
+        "E_answer": "supported",
+        "correct": false,
+        "input_tokens": 4006,
+        "output_tokens": 29,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/3836b5bb9a3e05f46e17879a-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/3836b5bb9a3e05f46e17879a-response.json"
+      }
+    }
+  },
+  {
+    "kind": "bundle",
+    "selection_key": [
+      "qwen8b_control",
+      "contrary_or_other_error",
+      "all_registered"
+    ],
+    "call_id": "3836b5bb9a3e05f46e17879a",
+    "head": "joint",
+    "opportunity_id": "KSJC-2025-02-03T01:00:00Z-vis-lt-1000m-cutoff-2025-02-03T00:00:00Z",
+    "witness": {
+      "threshold_m": 1000,
+      "registered_query_ids": [
+        "routine-KOAK-2025-02-02T22:00:00Z",
+        "routine-KSFO-2025-02-02T22:00:00Z"
+      ],
+      "disclosed_reports": [
+        {
+          "query_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "raw": "KOAK 022253Z 18009KT 8SM FEW010 BKN017 OVC023 17/13 A3002 RMK AO2 SLP167 T01720133",
+          "reported_at_utc": "2025-02-02T22:53:00+00:00",
+          "visibility_m": {
+            "lower": 12874.752,
+            "lower_closed": true,
+            "upper": 12874.752,
+            "upper_closed": true
+          },
+          "slot_truth": "false"
+        },
+        {
+          "query_id": "routine-KSFO-2025-02-02T22:00:00Z",
+          "raw": "KSFO 022256Z 17012KT 2 1/2SM -RA BR FEW006 BKN011 OVC017 16/16 A3001 RMK AO2 SLP163 P0001 T01560156",
+          "reported_at_utc": "2025-02-02T22:56:00+00:00",
+          "visibility_m": {
+            "lower": 4023.36,
+            "lower_closed": true,
+            "upper": 4023.36,
+            "upper_closed": true
+          },
+          "slot_truth": "false"
+        }
+      ],
+      "missing_query_ids": [],
+      "independent_expected_E": "refuted",
+      "basis": "Visible exact-product intervals only; no hidden report or outcome read."
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"fact_truth\":\"true\",\"probability\":0.02242152466367713}",
+        "E_answer": "supported",
+        "correct": false,
+        "input_tokens": 4002,
+        "output_tokens": 29,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/3836b5bb9a3e05f46e17879a-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/3836b5bb9a3e05f46e17879a-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\"fact_truth\":\"true\",\"probability\":0.02242152466367713}",
+        "E_answer": "supported",
+        "correct": false,
+        "input_tokens": 4006,
+        "output_tokens": 29,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/3836b5bb9a3e05f46e17879a-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/3836b5bb9a3e05f46e17879a-response.json"
+      }
+    }
+  },
+  {
+    "kind": "bundle",
+    "selection_key": [
+      "qwen8b_control",
+      "unnecessary_unknown",
+      "fixed_one"
+    ],
+    "call_id": "47aba489952d540bc45ec91a",
+    "head": "e_only",
+    "opportunity_id": "KOAK-2025-02-03T01:00:00Z-vis-lt-5000m-cutoff-2025-02-03T00:00:00Z",
+    "witness": {
+      "threshold_m": 5000,
+      "registered_query_ids": [
+        "routine-KSFO-2025-02-02T22:00:00Z",
+        "routine-KSJC-2025-02-02T22:00:00Z"
+      ],
+      "disclosed_reports": [
+        {
+          "query_id": "routine-KSFO-2025-02-02T22:00:00Z",
+          "raw": "KSFO 022256Z 17012KT 2 1/2SM -RA BR FEW006 BKN011 OVC017 16/16 A3001 RMK AO2 SLP163 P0001 T01560156",
+          "reported_at_utc": "2025-02-02T22:56:00+00:00",
+          "visibility_m": {
+            "lower": 4023.36,
+            "lower_closed": true,
+            "upper": 4023.36,
+            "upper_closed": true
+          },
+          "slot_truth": "true"
+        }
+      ],
+      "missing_query_ids": [
+        "routine-KSJC-2025-02-02T22:00:00Z"
+      ],
+      "independent_expected_E": "supported",
+      "basis": "Visible exact-product intervals only; no hidden report or outcome read."
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"fact_truth\":\"true\"}",
+        "E_answer": "supported",
+        "correct": true,
+        "input_tokens": 3023,
+        "output_tokens": 7,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/47aba489952d540bc45ec91a-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/47aba489952d540bc45ec91a-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\"fact_truth\":\"unknown\"}",
+        "E_answer": "undetermined",
+        "correct": false,
+        "input_tokens": 3027,
+        "output_tokens": 7,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/47aba489952d540bc45ec91a-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/47aba489952d540bc45ec91a-response.json"
+      }
+    }
+  },
+  {
+    "kind": "taf_task",
+    "selection_key": [
+      "qwen8b_control",
+      "taf_revision",
+      "epoch_us"
+    ],
+    "call_id": "4982689ab70217814713bbac",
+    "original_input": {
+      "as_of": 1738379160000000,
+      "availability_basis": "declared_archive_scenario",
+      "kind": "revision",
+      "products": [
+        {
+          "available_at": 1738368960000000,
+          "completed_at": 1738368960000000,
+          "issued_at": 1738368840000000,
+          "raw": "546 \nFTUS46 KMTR 010014 AAA\nTAFSFO\nTAF AMD\nKSFO 010014Z 0100/0206 12012G21KT 4SM -RA OVC017\n     FM010700 17008G18KT 6SM -SHRA OVC014\n     FM011800 19012G20KT 3SM -RA BR OVC009\n     FM012200 21015G23KT 6SM BR VCSH OVC014\n     FM020400 19010KT 5SM -SHRA BR OVC009=\n",
+          "source_id": "taf-202502010014-KMTR-FTUS46-TAFSFO-AAA",
+          "station": "KSFO"
+        }
+      ],
+      "schema": "disastertrace.taf_E_task.v1",
+      "target": {
+        "entity": "station:KSFO",
+        "event_operator": "lt",
+        "output_kind": "event_probability",
+        "physical_end": 1738386360000000,
+        "physical_start": 1738382760000000,
+        "release_event_at": null,
+        "report_policy": "iem_routine_unique_hour.v1",
+        "support_kind": "interval",
+        "target_id": "taf-revision-3ad442d4cbba39c6f3aeb5c3",
+        "temporal_semantics": "future_physical",
+        "threshold": 5000,
+        "units": "m",
+        "variable": "visibility"
+      },
+      "task_id": "taf-revision-3ad442d4cbba39c6f3aeb5c3"
+    },
+    "evaluator_reference": {
+      "task_hash": "24c153f5a6971a173fc09fd3e08ccaaa1fff6267803259795206b4f801a1246c",
+      "rule_version": "taf_current_product_E.v1",
+      "answer": {
+        "status": "resolved",
+        "current_source_ids": [
+          "taf-202502010014-KMTR-FTUS46-TAFSFO-AAA"
+        ],
+        "superseded_source_ids": []
+      },
+      "diagnostics": {
+        "parser_errors": {},
+        "superseded_source_ids": []
+      },
+      "reference_kind": "product_label",
+      "support_assumption": "product_exact",
+      "visible_information_scope": "provided_common_native_products",
+      "future_forecast_submitted": false
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"status\":\"resolved\",\"current_source_ids\":[\"taf-202502010014-KMTR-FTUS46-TAFSFO-AAA\"],\"superseded_source_ids\":[]}",
+        "E_answer": {
+          "status": "resolved",
+          "current_source_ids": [
+            "taf-202502010014-KMTR-FTUS46-TAFSFO-AAA"
+          ],
+          "superseded_source_ids": []
+        },
+        "correct": true,
+        "input_tokens": 742,
+        "output_tokens": 47,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/4982689ab70217814713bbac-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/4982689ab70217814713bbac-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\n  \"status\": \"unknown\",\n  \"current_source_ids\": [],\n  \"superseded_source_ids\": []\n}",
+        "E_answer": {
+          "status": "unknown",
+          "current_source_ids": [],
+          "superseded_source_ids": []
+        },
+        "correct": false,
+        "input_tokens": 746,
+        "output_tokens": 26,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/4982689ab70217814713bbac-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/4982689ab70217814713bbac-response.json"
+      }
+    },
+    "reference_scope": "Original native parser reference; not an additional independent TAF parser."
+  },
+  {
+    "kind": "taf_task",
+    "selection_key": [
+      "qwen235b_fp8",
+      "taf_revision",
+      "iso_utc"
+    ],
+    "call_id": "8a7f6826d61c702a04eebeef",
+    "original_input": {
+      "as_of": 1738395840000000,
+      "availability_basis": "declared_archive_scenario",
+      "kind": "revision",
+      "products": [
+        {
+          "available_at": 1738389000000000,
+          "completed_at": 1738389000000000,
+          "issued_at": 1738388880000000,
+          "raw": "335 \nFTUS46 KMTR 010548 CCA\nTAFSJC\nTAF COR\nKSJC 010548Z 0106/0206 15010G19KT 6SM -SHRA BR OVC035\n     FM011500 20010G18KT 6SM BR VCSH OVC015\n     FM011800 18012G20KT 6SM -SHRA FEW008 OVC015\n     FM012100 19011KT P6SM VCSH OVC015=\n",
+          "source_id": "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA",
+          "station": "KSJC"
+        }
+      ],
+      "schema": "disastertrace.taf_E_task.v1",
+      "target": {
+        "entity": "station:KSJC",
+        "event_operator": "lt",
+        "output_kind": "event_probability",
+        "physical_end": 1738404000000000,
+        "physical_start": 1738400400000000,
+        "release_event_at": null,
+        "report_policy": "iem_routine_unique_hour.v1",
+        "support_kind": "interval",
+        "target_id": "taf-revision-e6ae6f6a7f1016ae35ab91b7",
+        "temporal_semantics": "future_physical",
+        "threshold": 5000,
+        "units": "m",
+        "variable": "visibility"
+      },
+      "task_id": "taf-revision-e6ae6f6a7f1016ae35ab91b7"
+    },
+    "evaluator_reference": {
+      "task_hash": "6d0dcbf375d1522a0a7aa30d53989f08d3346885815f36ce91a3468b7805262e",
+      "rule_version": "taf_current_product_E.v1",
+      "answer": {
+        "status": "resolved",
+        "current_source_ids": [
+          "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+        ],
+        "superseded_source_ids": []
+      },
+      "diagnostics": {
+        "parser_errors": {},
+        "superseded_source_ids": []
+      },
+      "reference_kind": "product_label",
+      "support_assumption": "product_exact",
+      "visible_information_scope": "provided_common_native_products",
+      "future_forecast_submitted": false
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"status\": \"unknown\", \"current_source_ids\": [], \"superseded_source_ids\": []}",
+        "E_answer": {
+          "status": "unknown",
+          "current_source_ids": [],
+          "superseded_source_ids": []
+        },
+        "correct": false,
+        "input_tokens": 791,
+        "output_tokens": 22,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/8a7f6826d61c702a04eebeef-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/8a7f6826d61c702a04eebeef-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\n  \"status\": \"resolved\",\n  \"current_source_ids\": [\n    \"taf-202502010548-KMTR-FTUS46-TAFSJC-CCA\"\n  ],\n  \"superseded_source_ids\": []\n}",
+        "E_answer": {
+          "status": "resolved",
+          "current_source_ids": [
+            "taf-202502010548-KMTR-FTUS46-TAFSJC-CCA"
+          ],
+          "superseded_source_ids": []
+        },
+        "correct": true,
+        "input_tokens": 795,
+        "output_tokens": 60,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/8a7f6826d61c702a04eebeef-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/8a7f6826d61c702a04eebeef-response.json"
+      }
+    },
+    "reference_scope": "Original native parser reference; not an additional independent TAF parser."
+  },
+  {
+    "kind": "bundle",
+    "selection_key": [
+      "qwen8b_control",
+      "unwarranted_determination",
+      "fixed_one"
+    ],
+    "call_id": "8eda455408eb4dc063f01235",
+    "head": "e_only",
+    "opportunity_id": "KSFO-2025-02-03T19:00:00Z-vis-lt-5000m-cutoff-2025-02-03T18:00:00Z",
+    "witness": {
+      "threshold_m": 5000,
+      "registered_query_ids": [
+        "routine-KOAK-2025-02-03T16:00:00Z",
+        "routine-KSJC-2025-02-03T16:00:00Z"
+      ],
+      "disclosed_reports": [
+        {
+          "query_id": "routine-KOAK-2025-02-03T16:00:00Z",
+          "raw": "KOAK 031653Z 16010KT 10SM SCT038 OVC048 13/11 A2991 RMK AO2 SLP127 T01330106",
+          "reported_at_utc": "2025-02-03T16:53:00+00:00",
+          "visibility_m": {
+            "lower": 16093.44,
+            "lower_closed": true,
+            "upper": 16093.44,
+            "upper_closed": true
+          },
+          "slot_truth": "false"
+        }
+      ],
+      "missing_query_ids": [
+        "routine-KSJC-2025-02-03T16:00:00Z"
+      ],
+      "independent_expected_E": "undetermined",
+      "basis": "Visible exact-product intervals only; no hidden report or outcome read."
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"fact_truth\":\"false\"}",
+        "E_answer": "refuted",
+        "correct": false,
+        "input_tokens": 3033,
+        "output_tokens": 7,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/8eda455408eb4dc063f01235-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/8eda455408eb4dc063f01235-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\"fact_truth\":\"false\"}",
+        "E_answer": "refuted",
+        "correct": false,
+        "input_tokens": 3037,
+        "output_tokens": 7,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/8eda455408eb4dc063f01235-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/8eda455408eb4dc063f01235-response.json"
+      }
+    }
+  },
+  {
+    "kind": "taf_task",
+    "selection_key": [
+      "qwen235b_fp8",
+      "taf_revision",
+      "epoch_us"
+    ],
+    "call_id": "c7d5348598937306487a24df",
+    "original_input": {
+      "as_of": 1738409580000000,
+      "availability_basis": "declared_archive_scenario",
+      "kind": "revision",
+      "products": [
+        {
+          "available_at": 1738395780000000,
+          "completed_at": 1738395780000000,
+          "issued_at": 1738395660000000,
+          "raw": "779 \nFTUS46 KMTR 010741 AAA\nTAFOAK\nTAF AMD\nKOAK 010741Z 0108/0212 16010KT 4SM -RA OVC014\n     FM011800 17012G20KT 2SM -RA BR OVC007\n     FM012200 20015G23KT 5SM BR VCSH OVC014\n     FM020400 19010KT 5SM -SHRA BR OVC009=\n",
+          "source_id": "taf-202502010741-KMTR-FTUS46-TAFOAK-AAA",
+          "station": "KOAK"
+        }
+      ],
+      "schema": "disastertrace.taf_E_task.v1",
+      "target": {
+        "entity": "station:KOAK",
+        "event_operator": "lt",
+        "output_kind": "event_probability",
+        "physical_end": 1738418400000000,
+        "physical_start": 1738414800000000,
+        "release_event_at": null,
+        "report_policy": "iem_routine_unique_hour.v1",
+        "support_kind": "interval",
+        "target_id": "taf-revision-ffd1b61bcc0820d4ce54b80b",
+        "temporal_semantics": "future_physical",
+        "threshold": 5000,
+        "units": "m",
+        "variable": "visibility"
+      },
+      "task_id": "taf-revision-ffd1b61bcc0820d4ce54b80b"
+    },
+    "evaluator_reference": {
+      "task_hash": "7ab161c948a061540b8830576b05666256dd2273786fc42fa389562b03746d06",
+      "rule_version": "taf_current_product_E.v1",
+      "answer": {
+        "status": "resolved",
+        "current_source_ids": [
+          "taf-202502010741-KMTR-FTUS46-TAFOAK-AAA"
+        ],
+        "superseded_source_ids": []
+      },
+      "diagnostics": {
+        "parser_errors": {},
+        "superseded_source_ids": []
+      },
+      "reference_kind": "product_label",
+      "support_assumption": "product_exact",
+      "visible_information_scope": "provided_common_native_products",
+      "future_forecast_submitted": false
+    },
+    "paired_original_answers": {
+      "qwen235b_fp8": {
+        "raw": "{\"status\": \"unknown\", \"current_source_ids\": [], \"superseded_source_ids\": []}",
+        "E_answer": {
+          "status": "unknown",
+          "current_source_ids": [],
+          "superseded_source_ids": []
+        },
+        "correct": false,
+        "input_tokens": 706,
+        "output_tokens": 22,
+        "original_request": "gpu/large_diagnostic_02/qwen235b_fp8/c7d5348598937306487a24df-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen235b_fp8/c7d5348598937306487a24df-response.json"
+      },
+      "qwen8b_control": {
+        "raw": "{\n  \"status\": \"resolved\",\n  \"current_source_ids\": [\n    \"taf-202502010741-KMTR-FTUS46-TAFOAK-AAA\"\n  ],\n  \"superseded_source_ids\": []\n}",
+        "E_answer": {
+          "status": "resolved",
+          "current_source_ids": [
+            "taf-202502010741-KMTR-FTUS46-TAFOAK-AAA"
+          ],
+          "superseded_source_ids": []
+        },
+        "correct": true,
+        "input_tokens": 710,
+        "output_tokens": 60,
+        "original_request": "gpu/large_diagnostic_02/qwen8b_control/c7d5348598937306487a24df-request.json",
+        "original_response": "gpu/large_diagnostic_02/qwen8b_control/c7d5348598937306487a24df-response.json"
+      }
+    },
+    "reference_scope": "Original native parser reference; not an additional independent TAF parser."
+  }
+]

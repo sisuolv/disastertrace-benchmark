@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="2.542" timestamp="2026-09-13T17:25:00.237725+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_pending_predictor" name="test_delivery_latency_is_not_billed_as_model_compute" time="1.607"><failure message="assert (1704412322000002 - 1704412202000002) &gt;= 4000000000">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-31/test_delivery_latency_is_not_b0')
+
+    def test_delivery_latency_is_not_billed_as_model_compute(tmp_path):
+        _, _, session = pending_session(tmp_path)
+        reply(tmp_path)
+        path = tmp_path / 'forecast-0-reply.json'
+        row = json.loads(path.read_text())
+        row['details']['elapsed_seconds'] = 4000
+        path.write_text(json.dumps(row))
+        report = session.finish()
+        call = report['calls'][0]
+        assert call['receipt']['cost']['compute_ms'] == 20
+&gt;       assert call['persisted_at'] - call['started_at'] &gt;= 4_000_000_000
+E       assert (1704412322000002 - 1704412202000002) &gt;= 4000000000
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:171: AssertionError</failure></testcase></testsuite></testsuites>

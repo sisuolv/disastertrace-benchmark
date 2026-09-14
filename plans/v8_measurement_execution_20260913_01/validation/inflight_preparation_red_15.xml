@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="9" skipped="0" tests="10" time="4.093" timestamp="2026-09-13T21:46:45.551053+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_session_preparation" name="test_pending_preparation_is_idempotent_and_restores_in_another_process[selector]" time="0.345"><failure message="assert None is not None">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-57/test_pending_preparation_is_id0')
+role = 'selector'
+
+    @pytest.mark.parametrize("role", ["selector", "predictor", "source"])
+    def test_pending_preparation_is_idempotent_and_restores_in_another_process(tmp_path, role):
+        data, bank, session = make_pending(tmp_path, role)
+        original = session.snapshot()
+        assert "pending_" + role in original["payload"]
+        reducer = preparation(original)
+&gt;       assert reducer is not None
+E       assert None is not None
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:85: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_session_preparation" name="test_pending_preparation_is_idempotent_and_restores_in_another_process[predictor]" time="0.333"><failure message="assert None is not None">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-57/test_pending_preparation_is_id1')
+role = 'predictor'
+
+    @pytest.mark.parametrize("role", ["selector", "predictor", "source"])
+    def test_pending_preparation_is_idempotent_and_restores_in_another_process(tmp_path, role):
+        data, bank, session = make_pending(tmp_path, role)
+        original = session.snapshot()
+        assert "pending_" + role in original["payload"]
+        reducer = preparation(original)
+&gt;       assert reducer is not None
+E       assert None is not None
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:85: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_session_preparation" name="test_pending_preparation_is_idempotent_and_restores_in_another_process[source]" time="0.249"><failure message="AssertionError: assert ('pending_' + 'source') in {'bank_sha256': 'bf6ebe185b6f4720ce4d422c5d794d7b682438147e8b184d84be65d0d47497c6', 'clock': 1704412800000000, 'config...dline': 1704412800000000, 'entity': 'KSFO', 'public_query_ids': [...]}, ...}, ...}], 'selector_records': [], ...}, ...}">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-57/test_pending_preparation_is_id2')
+role = 'source'
+
+    @pytest.mark.parametrize("role", ["selector", "predictor", "source"])
+    def test_pending_preparation_is_idempotent_and_restores_in_another_process(tmp_path, role):
+        data, bank, session = make_pending(tmp_path, role)
+        original = session.snapshot()
+&gt;       assert "pending_" + role in original["payload"]
+E       AssertionError: assert ('pending_' + 'source') in {'bank_sha256': 'bf6ebe185b6f4720ce4d422c5d794d7b682438147e8b184d84be65d0d47497c6', 'clock': 1704412800000000, 'config...dline': 1704412800000000, 'entity': 'KSFO', 'public_query_ids': [...]}, ...}, ...}], 'selector_records': [], ...}, ...}
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:83: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_session_preparation" name="test_preparation_changes_no_f_predictions_or_source_costs" time="0.598"><failure message="AttributeError: 'NoneType' object has no attribute 'spent'">def test_preparation_changes_no_f_predictions_or_source_costs():
+        data, bank, config = typed_fixture()
+        plain = run_session(data, bank, config)
+        config["preparation_schedule"] = preparation_config(data, config)
+        prepared = run_session(data, bank, config)
+        assert prepared["resource_spent"] == plain["resource_spent"]
+        for a, b in zip(plain["snapshots"], prepared["snapshots"], strict=True):
+            assert a["forecast"] == b["forecast"] and a["base_forecast"] == b["base_forecast"]
+&gt;       assert AdmissionEngine.restore(prepared["event_replay"]).preparation.spent == 4
+E       AttributeError: 'NoneType' object has no attribute 'spent'
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:140: AttributeError</failure></testcase><testcase classname="tests.test_monitoring_session_preparation" name="test_preparation_schedule_rejects_unregistered_controls[kind]" time="0.327"><failure message="Failed: DID NOT RAISE ValueError">damage = 'kind'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+&gt;       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed</failure></testcase><testcase classname="tests.test_monitoring_session_preparation" name="test_preparation_schedule_rejects_unregistered_controls[job]" time="0.319"><failure message="Failed: DID NOT RAISE ValueError">damage = 'job'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+&gt;       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed</failure></testcase><testcase classname="tests.test_monitoring_session_preparation" name="test_preparation_schedule_rejects_unregistered_controls[duplicate]" time="0.321"><failure message="Failed: DID NOT RAISE ValueError">damage = 'duplicate'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+&gt;       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed</failure></testcase><testcase classname="tests.test_monitoring_session_preparation" name="test_preparation_schedule_rejects_unregistered_controls[decision_basis]" time="0.335"><failure message="Failed: DID NOT RAISE ValueError">damage = 'decision_basis'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+&gt;       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed</failure></testcase><testcase classname="tests.test_monitoring_session_preparation" name="test_preparation_schedule_rejects_unregistered_controls[legacy]" time="0.152"><failure message="Failed: DID NOT RAISE ValueError">damage = 'legacy'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+&gt;       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed</failure></testcase><testcase classname="tests.test_monitoring_session_preparation" name="test_rehashed_checkpoint_cannot_change_preparation_contract" time="0.334" /></testsuite></testsuites>

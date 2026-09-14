@@ -1,0 +1,573 @@
+{
+  "case": "remaining_3",
+  "checkpoint_sha256": "4d0beba3a9ec4f76926d738651e9d74710a8a8a4c2ecf27faf9eeb74bf409176",
+  "clock": 1738543800000000,
+  "deadline": 1738544400000000,
+  "total_source_budget": 4,
+  "already_spent": {
+    "requests": 1,
+    "bytes": 705,
+    "tokens": 0,
+    "compute_ms": 100
+  },
+  "remaining_source_budget": 3,
+  "paid_assets_inherited": [
+    "routine-KOAK-2025-02-02T22:00:00Z"
+  ],
+  "graph_queries": [
+    {
+      "query_id": "routine-KOAK-2025-02-02T23:00:00Z",
+      "cost": {
+        "requests": 1,
+        "bytes": 2048,
+        "tokens": 0,
+        "compute_ms": 100
+      },
+      "released_at": 1738541100000000,
+      "duration": 1000000,
+      "dependencies": [],
+      "valid_until": null
+    },
+    {
+      "query_id": "routine-KSFO-2025-02-02T23:00:00Z",
+      "cost": {
+        "requests": 1,
+        "bytes": 2048,
+        "tokens": 0,
+        "compute_ms": 100
+      },
+      "released_at": 1738541100000000,
+      "duration": 1000000,
+      "dependencies": [],
+      "valid_until": null
+    },
+    {
+      "query_id": "routine-KSJC-2025-02-02T23:00:00Z",
+      "cost": {
+        "requests": 1,
+        "bytes": 2048,
+        "tokens": 0,
+        "compute_ms": 100
+      },
+      "released_at": 1738541100000000,
+      "duration": 1000000,
+      "dependencies": [],
+      "valid_until": null
+    }
+  ],
+  "original_recipes_evaluator_only": {
+    "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": [
+      [
+        "routine-KSFO-2025-02-02T23:00:00Z",
+        "routine-KSJC-2025-02-02T23:00:00Z"
+      ]
+    ],
+    "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": [
+      [
+        "routine-KOAK-2025-02-02T23:00:00Z",
+        "routine-KSJC-2025-02-02T23:00:00Z"
+      ]
+    ],
+    "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": [
+      [
+        "routine-KOAK-2025-02-02T23:00:00Z",
+        "routine-KSFO-2025-02-02T23:00:00Z"
+      ]
+    ]
+  },
+  "individual_reachability": {
+    "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": 1.0,
+    "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": 1.0,
+    "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": 1.0
+  },
+  "joint_result": {
+    "exact": true,
+    "lower_bound": 3.0,
+    "upper_bound": 3.0,
+    "individual_status": {
+      "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": "reachable_relaxation",
+      "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": "reachable_relaxation",
+      "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": "reachable_relaxation"
+    },
+    "frontier": [
+      {
+        "starts": [],
+        "resolved": [],
+        "cost": {
+          "requests": 0,
+          "bytes": 0,
+          "tokens": 0,
+          "compute_ms": 0
+        },
+        "completion_time": 1738543800000000
+      },
+      {
+        "starts": [
+          [
+            "routine-KSFO-2025-02-02T23:00:00Z",
+            1738543800000000,
+            1738543801000000
+          ],
+          [
+            "routine-KSJC-2025-02-02T23:00:00Z",
+            1738543801000000,
+            1738543802000000
+          ]
+        ],
+        "resolved": [
+          "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m"
+        ],
+        "cost": {
+          "requests": 2,
+          "bytes": 4096,
+          "tokens": 0,
+          "compute_ms": 200
+        },
+        "completion_time": 1738543802000000
+      },
+      {
+        "starts": [
+          [
+            "routine-KOAK-2025-02-02T23:00:00Z",
+            1738543800000000,
+            1738543801000000
+          ],
+          [
+            "routine-KSFO-2025-02-02T23:00:00Z",
+            1738543801000000,
+            1738543802000000
+          ],
+          [
+            "routine-KSJC-2025-02-02T23:00:00Z",
+            1738543802000000,
+            1738543803000000
+          ]
+        ],
+        "resolved": [
+          "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m"
+        ],
+        "cost": {
+          "requests": 3,
+          "bytes": 6144,
+          "tokens": 0,
+          "compute_ms": 300
+        },
+        "completion_time": 1738543803000000
+      },
+      {
+        "starts": [
+          [
+            "routine-KOAK-2025-02-02T23:00:00Z",
+            1738543800000000,
+            1738543801000000
+          ],
+          [
+            "routine-KSJC-2025-02-02T23:00:00Z",
+            1738543801000000,
+            1738543802000000
+          ]
+        ],
+        "resolved": [
+          "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m"
+        ],
+        "cost": {
+          "requests": 2,
+          "bytes": 4096,
+          "tokens": 0,
+          "compute_ms": 200
+        },
+        "completion_time": 1738543802000000
+      },
+      {
+        "starts": [
+          [
+            "routine-KOAK-2025-02-02T23:00:00Z",
+            1738543800000000,
+            1738543801000000
+          ],
+          [
+            "routine-KSFO-2025-02-02T23:00:00Z",
+            1738543801000000,
+            1738543802000000
+          ]
+        ],
+        "resolved": [
+          "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m"
+        ],
+        "cost": {
+          "requests": 2,
+          "bytes": 4096,
+          "tokens": 0,
+          "compute_ms": 200
+        },
+        "completion_time": 1738543802000000
+      }
+    ],
+    "explored_states": 47,
+    "max_states": 50000,
+    "graph_hash": "5f8b0e7c9cdcc7d8a9ef405ba9206a67643c7a1eec888eb87deafcb1ec876099",
+    "scope": "finite_nonpreemptive_fixed_duration_public_recipe_graph"
+  },
+  "witness_replays": [
+    {
+      "witness": {
+        "starts": [],
+        "resolved": [],
+        "cost": {
+          "requests": 0,
+          "bytes": 0,
+          "tokens": 0,
+          "compute_ms": 0
+        },
+        "completion_time": 1738543800000000
+      },
+      "E_from_native_paid_inputs": {
+        "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined",
+        "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined",
+        "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined"
+      },
+      "journal": "witness_0.jsonl",
+      "source_receipts": [
+        {
+          "asset_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "bytes": 705,
+          "completed_at": 1738540201000001,
+          "payer": "KSFO-2025-02-03T03:00:00Z-vis-lt-1000m",
+          "query_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "receipt_id": "query-216a024e6e08010de2d48ea03595f1d6507852c129e68f042b722e8531791c68",
+          "source_status": "disclosed_product_fact",
+          "started_at": 1738540200000001,
+          "timing_basis": "declared_archive_query_latency"
+        }
+      ],
+      "final_actual_cost": {
+        "requests": 1,
+        "bytes": 705,
+        "tokens": 0,
+        "compute_ms": 100
+      },
+      "engine_replay_equal": true
+    },
+    {
+      "witness": {
+        "starts": [
+          [
+            "routine-KSFO-2025-02-02T23:00:00Z",
+            1738543800000000,
+            1738543801000000
+          ],
+          [
+            "routine-KSJC-2025-02-02T23:00:00Z",
+            1738543801000000,
+            1738543802000000
+          ]
+        ],
+        "resolved": [
+          "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m"
+        ],
+        "cost": {
+          "requests": 2,
+          "bytes": 4096,
+          "tokens": 0,
+          "compute_ms": 200
+        },
+        "completion_time": 1738543802000000
+      },
+      "E_from_native_paid_inputs": {
+        "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": "refuted",
+        "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined",
+        "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined"
+      },
+      "journal": "witness_1.jsonl",
+      "source_receipts": [
+        {
+          "asset_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "bytes": 705,
+          "completed_at": 1738540201000001,
+          "payer": "KSFO-2025-02-03T03:00:00Z-vis-lt-1000m",
+          "query_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "receipt_id": "query-216a024e6e08010de2d48ea03595f1d6507852c129e68f042b722e8531791c68",
+          "source_status": "disclosed_product_fact",
+          "started_at": 1738540200000001,
+          "timing_basis": "declared_archive_query_latency"
+        },
+        {
+          "query_id": "routine-KSFO-2025-02-02T23:00:00Z",
+          "asset_id": "routine-KSFO-2025-02-02T23:00:00Z",
+          "payer": "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "receipt_id": "residual-source-c6dd6a133feb8ed6d52b47a7",
+          "started_at": 1738543800000000,
+          "completed_at": 1738543801000000,
+          "source_status": "disclosed_product_fact",
+          "bytes": 755,
+          "timing_basis": "declared_archive_query_latency"
+        },
+        {
+          "query_id": "routine-KSJC-2025-02-02T23:00:00Z",
+          "asset_id": "routine-KSJC-2025-02-02T23:00:00Z",
+          "payer": "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "receipt_id": "residual-source-b43338216ab44f6cf8e2f5e7",
+          "started_at": 1738543801000000,
+          "completed_at": 1738543802000000,
+          "source_status": "disclosed_product_fact",
+          "bytes": 725,
+          "timing_basis": "declared_archive_query_latency"
+        }
+      ],
+      "final_actual_cost": {
+        "requests": 3,
+        "bytes": 2185,
+        "tokens": 0,
+        "compute_ms": 300
+      },
+      "engine_replay_equal": true
+    },
+    {
+      "witness": {
+        "starts": [
+          [
+            "routine-KOAK-2025-02-02T23:00:00Z",
+            1738543800000000,
+            1738543801000000
+          ],
+          [
+            "routine-KSFO-2025-02-02T23:00:00Z",
+            1738543801000000,
+            1738543802000000
+          ],
+          [
+            "routine-KSJC-2025-02-02T23:00:00Z",
+            1738543802000000,
+            1738543803000000
+          ]
+        ],
+        "resolved": [
+          "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m"
+        ],
+        "cost": {
+          "requests": 3,
+          "bytes": 6144,
+          "tokens": 0,
+          "compute_ms": 300
+        },
+        "completion_time": 1738543803000000
+      },
+      "E_from_native_paid_inputs": {
+        "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": "refuted",
+        "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": "refuted",
+        "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": "refuted"
+      },
+      "journal": "witness_2.jsonl",
+      "source_receipts": [
+        {
+          "asset_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "bytes": 705,
+          "completed_at": 1738540201000001,
+          "payer": "KSFO-2025-02-03T03:00:00Z-vis-lt-1000m",
+          "query_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "receipt_id": "query-216a024e6e08010de2d48ea03595f1d6507852c129e68f042b722e8531791c68",
+          "source_status": "disclosed_product_fact",
+          "started_at": 1738540200000001,
+          "timing_basis": "declared_archive_query_latency"
+        },
+        {
+          "query_id": "routine-KOAK-2025-02-02T23:00:00Z",
+          "asset_id": "routine-KOAK-2025-02-02T23:00:00Z",
+          "payer": "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "receipt_id": "residual-source-f78c4f57689c2dab30bcaf41",
+          "started_at": 1738543800000000,
+          "completed_at": 1738543801000000,
+          "source_status": "disclosed_product_fact",
+          "bytes": 723,
+          "timing_basis": "declared_archive_query_latency"
+        },
+        {
+          "query_id": "routine-KSFO-2025-02-02T23:00:00Z",
+          "asset_id": "routine-KSFO-2025-02-02T23:00:00Z",
+          "payer": "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "receipt_id": "residual-source-3e4eb0edcffede3047328a51",
+          "started_at": 1738543801000000,
+          "completed_at": 1738543802000000,
+          "source_status": "disclosed_product_fact",
+          "bytes": 755,
+          "timing_basis": "declared_archive_query_latency"
+        },
+        {
+          "query_id": "routine-KSJC-2025-02-02T23:00:00Z",
+          "asset_id": "routine-KSJC-2025-02-02T23:00:00Z",
+          "payer": "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "receipt_id": "residual-source-13077b2a06d3dce3ede5a908",
+          "started_at": 1738543802000000,
+          "completed_at": 1738543803000000,
+          "source_status": "disclosed_product_fact",
+          "bytes": 725,
+          "timing_basis": "declared_archive_query_latency"
+        }
+      ],
+      "final_actual_cost": {
+        "requests": 4,
+        "bytes": 2908,
+        "tokens": 0,
+        "compute_ms": 400
+      },
+      "engine_replay_equal": true
+    },
+    {
+      "witness": {
+        "starts": [
+          [
+            "routine-KOAK-2025-02-02T23:00:00Z",
+            1738543800000000,
+            1738543801000000
+          ],
+          [
+            "routine-KSJC-2025-02-02T23:00:00Z",
+            1738543801000000,
+            1738543802000000
+          ]
+        ],
+        "resolved": [
+          "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m"
+        ],
+        "cost": {
+          "requests": 2,
+          "bytes": 4096,
+          "tokens": 0,
+          "compute_ms": 200
+        },
+        "completion_time": 1738543802000000
+      },
+      "E_from_native_paid_inputs": {
+        "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined",
+        "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": "refuted",
+        "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined"
+      },
+      "journal": "witness_3.jsonl",
+      "source_receipts": [
+        {
+          "asset_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "bytes": 705,
+          "completed_at": 1738540201000001,
+          "payer": "KSFO-2025-02-03T03:00:00Z-vis-lt-1000m",
+          "query_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "receipt_id": "query-216a024e6e08010de2d48ea03595f1d6507852c129e68f042b722e8531791c68",
+          "source_status": "disclosed_product_fact",
+          "started_at": 1738540200000001,
+          "timing_basis": "declared_archive_query_latency"
+        },
+        {
+          "query_id": "routine-KOAK-2025-02-02T23:00:00Z",
+          "asset_id": "routine-KOAK-2025-02-02T23:00:00Z",
+          "payer": "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "receipt_id": "residual-source-f78c4f57689c2dab30bcaf41",
+          "started_at": 1738543800000000,
+          "completed_at": 1738543801000000,
+          "source_status": "disclosed_product_fact",
+          "bytes": 723,
+          "timing_basis": "declared_archive_query_latency"
+        },
+        {
+          "query_id": "routine-KSJC-2025-02-02T23:00:00Z",
+          "asset_id": "routine-KSJC-2025-02-02T23:00:00Z",
+          "payer": "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "receipt_id": "residual-source-b43338216ab44f6cf8e2f5e7",
+          "started_at": 1738543801000000,
+          "completed_at": 1738543802000000,
+          "source_status": "disclosed_product_fact",
+          "bytes": 725,
+          "timing_basis": "declared_archive_query_latency"
+        }
+      ],
+      "final_actual_cost": {
+        "requests": 3,
+        "bytes": 2153,
+        "tokens": 0,
+        "compute_ms": 300
+      },
+      "engine_replay_equal": true
+    },
+    {
+      "witness": {
+        "starts": [
+          [
+            "routine-KOAK-2025-02-02T23:00:00Z",
+            1738543800000000,
+            1738543801000000
+          ],
+          [
+            "routine-KSFO-2025-02-02T23:00:00Z",
+            1738543801000000,
+            1738543802000000
+          ]
+        ],
+        "resolved": [
+          "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m"
+        ],
+        "cost": {
+          "requests": 2,
+          "bytes": 4096,
+          "tokens": 0,
+          "compute_ms": 200
+        },
+        "completion_time": 1738543802000000
+      },
+      "E_from_native_paid_inputs": {
+        "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined",
+        "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined",
+        "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": "refuted"
+      },
+      "journal": "witness_4.jsonl",
+      "source_receipts": [
+        {
+          "asset_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "bytes": 705,
+          "completed_at": 1738540201000001,
+          "payer": "KSFO-2025-02-03T03:00:00Z-vis-lt-1000m",
+          "query_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "receipt_id": "query-216a024e6e08010de2d48ea03595f1d6507852c129e68f042b722e8531791c68",
+          "source_status": "disclosed_product_fact",
+          "started_at": 1738540200000001,
+          "timing_basis": "declared_archive_query_latency"
+        },
+        {
+          "query_id": "routine-KOAK-2025-02-02T23:00:00Z",
+          "asset_id": "routine-KOAK-2025-02-02T23:00:00Z",
+          "payer": "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "receipt_id": "residual-source-f78c4f57689c2dab30bcaf41",
+          "started_at": 1738543800000000,
+          "completed_at": 1738543801000000,
+          "source_status": "disclosed_product_fact",
+          "bytes": 723,
+          "timing_basis": "declared_archive_query_latency"
+        },
+        {
+          "query_id": "routine-KSFO-2025-02-02T23:00:00Z",
+          "asset_id": "routine-KSFO-2025-02-02T23:00:00Z",
+          "payer": "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m",
+          "receipt_id": "residual-source-3e4eb0edcffede3047328a51",
+          "started_at": 1738543801000000,
+          "completed_at": 1738543802000000,
+          "source_status": "disclosed_product_fact",
+          "bytes": 755,
+          "timing_basis": "declared_archive_query_latency"
+        }
+      ],
+      "final_actual_cost": {
+        "requests": 3,
+        "bytes": 2183,
+        "tokens": 0,
+        "compute_ms": 300
+      },
+      "engine_replay_equal": true
+    }
+  ],
+  "private_scope": false,
+  "concurrency": 1,
+  "scope": "real quiescent H15 report graph; query-count bottleneck, all other remaining resources verified feasible",
+  "inflight_recovery_qualified": false,
+  "new_model_calls": 0
+}

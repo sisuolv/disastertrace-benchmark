@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_delivery_latency_is_not_billed_as_model_compute _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-31/test_delivery_latency_is_not_b0')
+
+    def test_delivery_latency_is_not_billed_as_model_compute(tmp_path):
+        _, _, session = pending_session(tmp_path)
+        reply(tmp_path)
+        path = tmp_path / 'forecast-0-reply.json'
+        row = json.loads(path.read_text())
+        row['details']['elapsed_seconds'] = 4000
+        path.write_text(json.dumps(row))
+        report = session.finish()
+        call = report['calls'][0]
+        assert call['receipt']['cost']['compute_ms'] == 20
+>       assert call['persisted_at'] - call['started_at'] >= 4_000_000_000
+E       assert (1704412322000002 - 1704412202000002) >= 4000000000
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:171: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_pending_predictor.py::test_delivery_latency_is_not_billed_as_model_compute

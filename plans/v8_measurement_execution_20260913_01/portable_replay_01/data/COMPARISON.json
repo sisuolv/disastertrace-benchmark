@@ -1,0 +1,70 @@
+{
+  "payload": {
+    "schema": "disastertrace.comparison_contract.v1",
+    "invariants": {
+      "availability_basis": "declared_archive_scenario",
+      "bank_sha256": "a0225e0f7797bc825098e7a1db576dd99a4392bada1305fa227544d10b3773bd",
+      "data_universe_sha256": "bc9b533cc6c03b1f66af657e013c628b00386c0c21b3c1cb500c45553029dfa8",
+      "other_frozen_config": {
+        "seed": 20260913,
+        "session_runtime": "typed_admission_v1",
+        "typed_head": "joint"
+      },
+      "resource_and_time_contract": {
+        "call_compute_cap_ms": 120000,
+        "compute_ms_cap": 25941600,
+        "forecast_call_cap": 216,
+        "input_token_cap": 8192,
+        "isolation_mode": "public_schedule",
+        "model_call_budget": 216,
+        "output_token_cap": 384,
+        "persistence_latency_ms": 1,
+        "public_call_slot_ms": 30000,
+        "request_budget": 72,
+        "token_cap": 1852416,
+        "wakeup_seconds": 600
+      }
+    },
+    "allowed_interventions": {
+      "acquire": [
+        false,
+        true
+      ],
+      "allocation_mode": [
+        "global_budget",
+        "fixed_quota"
+      ],
+      "authorization_mode": [
+        "session_shared",
+        "target_private"
+      ],
+      "execution_contract": [
+        {
+          "implementation": "frozen_frequency.v1",
+          "kind": "program"
+        }
+      ],
+      "per_tick_forecast_cap": [
+        9
+      ],
+      "predict": [
+        false,
+        true
+      ],
+      "protocol": [
+        "base_bound_override"
+      ],
+      "query_limit_per_tick": [
+        null,
+        1
+      ],
+      "selector_kind": [
+        "round_robin",
+        "batch_complete",
+        "risk",
+        "coverage"
+      ]
+    }
+  },
+  "sha256": "be13a3137787a8802f02b14933a15d89e49b368b78ed8a94016c0126977cc758"
+}

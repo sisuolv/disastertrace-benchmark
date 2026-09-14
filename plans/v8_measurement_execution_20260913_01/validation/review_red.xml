@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="22" time="0.681" timestamp="2026-09-13T15:12:19.708439+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_late_older_baseline_must_not_replace_newer_issuance" time="0.003"><failure message="AssertionError: late old issuance replaced new: 0.2&#10;assert 0.2 == 0.8&#10; +  where 0.2 = sealed(&lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7f8f17e023e0&gt;)">def test_late_older_baseline_must_not_replace_newer_issuance():
+        e=engine()
+        e.run([base_event(bundle('new',20,20,0.8),'new'),
+               base_event(bundle('old',10,40,0.2),'late-old')],until=900)
+&gt;       assert sealed(e)==0.8, f'late old issuance replaced new: {sealed(e)}'
+E       AssertionError: late old issuance replaced new: 0.2
+E       assert 0.2 == 0.8
+E        +  where 0.2 = sealed(&lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7f8f17e023e0&gt;)
+
+plans/v8_integrated_20260913/input_extracted/B/DisasterTrace_Audit_Codex_6c7c7e8_20260913/audit_probes/test_review_regressions.py:72: AssertionError</failure></testcase><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_stale_withdrawal_must_not_remove_newer_product" time="0.002"><failure message="AssertionError: stale cancellation changed newer state to 0.05&#10;assert 0.05 == 0.8&#10; +  where 0.05 = sealed(&lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7f8f17f9f820&gt;)">def test_stale_withdrawal_must_not_remove_newer_product():
+        e=engine()
+        e.run([base_event(bundle('new',20,20,0.8),'new'),
+          A.AdmissionEvent('old-withdrawal',40,'baseline_withdrawal',{
+           'target_id':'t','product_revision_id':'old-cnl', 'issued_at':10,
+           'reason':'synthetic late delivery of an older cancellation'})],until=900)
+&gt;       assert sealed(e)==0.8, f'stale cancellation changed newer state to {sealed(e)}'
+E       AssertionError: stale cancellation changed newer state to 0.05
+E       assert 0.05 == 0.8
+E        +  where 0.05 = sealed(&lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7f8f17f9f820&gt;)
+
+plans/v8_integrated_20260913/input_extracted/B/DisasterTrace_Audit_Codex_6c7c7e8_20260913/audit_probes/test_review_regressions.py:80: AssertionError</failure></testcase><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_same_issuance_conflict_must_not_depend_on_event_id" time="0.004"><failure message="AssertionError: event IDs select conflicting baseline: [0.8, 0.2]&#10;assert 0.8 == 0.2">def test_same_issuance_conflict_must_not_depend_on_event_id():
+        observed=[]
+        for aid,bid in [('a','z'),('z','a')]:
+            e=engine()
+            e.run([base_event(bundle('same-issue-A',10,20,0.2),aid),
+                   base_event(bundle('same-issue-B',10,20,0.8),bid)],until=900)
+            observed.append(sealed(e))
+&gt;       assert observed[0]==observed[1], f'event IDs select conflicting baseline: {observed}'
+E       AssertionError: event IDs select conflicting baseline: [0.8, 0.2]
+E       assert 0.8 == 0.2
+
+plans/v8_integrated_20260913/input_extracted/B/DisasterTrace_Audit_Codex_6c7c7e8_20260913/audit_probes/test_review_regressions.py:89: AssertionError</failure></testcase><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_same_time_cancel_completion_needs_semantic_not_id_order" time="0.004"><failure message="AssertionError: cancel/complete result depends on event ID: [0.2, 0.9]&#10;assert 0.2 == 0.9">def test_same_time_cancel_completion_needs_semantic_not_id_order():
+        observed=[]
+        for cancel_id in ['a-cancel','z-cancel']:
+            b=bundle(); e=engine()
+            e.run([base_event(b),begin(b),completion(b,name='m-complete'),
+                   A.AdmissionEvent(cancel_id,60,'cancel',{'call_id':'call'})],until=900)
+            observed.append(sealed(e))
+&gt;       assert observed[0]==observed[1], f'cancel/complete result depends on event ID: {observed}'
+E       AssertionError: cancel/complete result depends on event ID: [0.2, 0.9]
+E       assert 0.2 == 0.9
+
+plans/v8_integrated_20260913/input_extracted/B/DisasterTrace_Audit_Codex_6c7c7e8_20260913/audit_probes/test_review_regressions.py:98: AssertionError</failure></testcase><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_scored_strategy_arms_must_share_common_baseline_trace" time="0.008"><failure message="Failed: DID NOT RAISE ValueError">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_scored_strategy_arms_must0')
+
+    def test_scored_strategy_arms_must_share_common_baseline_trace(tmp_path):
+        paths={}
+        for name,p in [('A',0.2),('B',0.8)]:
+            path=tmp_path/(name+'.jsonl'); paths[name]=path
+            with J.EventJournal(path) as j:
+                e=engine(j);e.run([base_event(bundle('base-'+name,10,10,p))],until=900)
+        outcomes=[{'opportunity_id':'o','target_contract_hash':target().contract_hash,
+                   'value':1,'status':'mature','source_revision':'observed'}]
+&gt;       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+plans/v8_integrated_20260913/input_extracted/B/DisasterTrace_Audit_Codex_6c7c7e8_20260913/audit_probes/test_review_regressions.py:108: Failed</failure></testcase><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_latest_monotone_baseline_is_adopted" time="0.002" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_missing_baseline_uses_registered_fallback" time="0.001" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_completion_exactly_at_cutoff_is_sealed" time="0.002" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_completion_after_cutoff_cannot_rewrite_snapshot" time="0.002" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_new_baseline_invalidates_old_inflight_candidate" time="0.003" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_unfinished_response_retains_fallback_prediction" time="0.002" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_duplicate_completion_does_not_admit_twice" time="0.002" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_duplicate_event_conflict_rejected" time="0.001" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_backdated_event_rejected" time="0.001" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_restore_preserves_queued_future_baseline_and_cutoffs" time="0.006" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_checkpoint_tamper_rejected" time="0.001" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_missing_method_prediction_cannot_reduce_denominator" time="0.000" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_missing_outcome_mask_common_to_arms" time="0.001" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_illegal_future_target_cutoff_rejected" time="0.000" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_idempotent_resource_settlement" time="0.000" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_resource_overrun_retains_reservation" time="0.000" /><testcase classname="plans.v8_integrated_20260913.input_extracted.B.DisasterTrace_Audit_Codex_6c7c7e8_20260913.audit_probes.test_review_regressions" name="test_scalar_units_not_pooled" time="0.000" /></testsuite></testsuites>

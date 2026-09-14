@@ -1,0 +1,128 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+______ test_source_pending_poll_has_no_free_evidence_or_repeated_request _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-46/test_source_pending_poll_has_n0')
+
+    def test_source_pending_poll_has_no_free_evidence_or_repeated_request(tmp_path):
+>       _, _, session = pending_source(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-46/test_source_pending_poll_has_n0')
+changes = {}
+
+    def pending_source(directory, **changes):
+        data, bank, config = typed_fixture(authorization_mode="session_shared",
+                                          isolation_mode="actual_cost_clock", predict=False,
+                                          request_budget=1, **changes)
+        cutoff = min(o["cutoff"] for o in data["opportunities"])
+        data["opportunities"] = [o for o in data["opportunities"] if o["cutoff"] == cutoff]
+        backend = PendingSource(directory, data["query_results"])
+>       session = SessionCoordinator(data, bank, config, source_backend=backend)
+E       TypeError: SessionCoordinator.__init__() got an unexpected keyword argument 'source_backend'
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:43: TypeError
+_____ test_restored_source_settles_original_once_before_granting_evidence ______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-46/test_restored_source_settles_o0')
+
+    def test_restored_source_settles_original_once_before_granting_evidence(tmp_path):
+>       data, bank, session = pending_source(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-46/test_restored_source_settles_o0')
+changes = {}
+
+    def pending_source(directory, **changes):
+        data, bank, config = typed_fixture(authorization_mode="session_shared",
+                                          isolation_mode="actual_cost_clock", predict=False,
+                                          request_budget=1, **changes)
+        cutoff = min(o["cutoff"] for o in data["opportunities"])
+        data["opportunities"] = [o for o in data["opportunities"] if o["cutoff"] == cutoff]
+        backend = PendingSource(directory, data["query_results"])
+>       session = SessionCoordinator(data, bank, config, source_backend=backend)
+E       TypeError: SessionCoordinator.__init__() got an unexpected keyword argument 'source_backend'
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:43: TypeError
+__ test_late_source_does_not_supply_evidence_or_forecasts_at_previous_cutoff ___
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-46/test_late_source_does_not_supp0')
+
+    def test_late_source_does_not_supply_evidence_or_forecasts_at_previous_cutoff(tmp_path):
+>       data, _, session = pending_source(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-46/test_late_source_does_not_supp0')
+changes = {}
+
+    def pending_source(directory, **changes):
+        data, bank, config = typed_fixture(authorization_mode="session_shared",
+                                          isolation_mode="actual_cost_clock", predict=False,
+                                          request_budget=1, **changes)
+        cutoff = min(o["cutoff"] for o in data["opportunities"])
+        data["opportunities"] = [o for o in data["opportunities"] if o["cutoff"] == cutoff]
+        backend = PendingSource(directory, data["query_results"])
+>       session = SessionCoordinator(data, bank, config, source_backend=backend)
+E       TypeError: SessionCoordinator.__init__() got an unexpected keyword argument 'source_backend'
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:43: TypeError
+_________ test_changed_native_response_is_charged_but_never_authorized _________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-46/test_changed_native_response_i0')
+
+    def test_changed_native_response_is_charged_but_never_authorized(tmp_path):
+>       data, _, session = pending_source(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-46/test_changed_native_response_i0')
+changes = {}
+
+    def pending_source(directory, **changes):
+        data, bank, config = typed_fixture(authorization_mode="session_shared",
+                                          isolation_mode="actual_cost_clock", predict=False,
+                                          request_budget=1, **changes)
+        cutoff = min(o["cutoff"] for o in data["opportunities"])
+        data["opportunities"] = [o for o in data["opportunities"] if o["cutoff"] == cutoff]
+        backend = PendingSource(directory, data["query_results"])
+>       session = SessionCoordinator(data, bank, config, source_backend=backend)
+E       TypeError: SessionCoordinator.__init__() got an unexpected keyword argument 'source_backend'
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:43: TypeError
+___________ test_pending_source_rejects_control_or_executor_changes ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-46/test_pending_source_rejects_co0')
+
+    def test_pending_source_rejects_control_or_executor_changes(tmp_path):
+>       data, bank, session = pending_source(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-46/test_pending_source_rejects_co0')
+changes = {}
+
+    def pending_source(directory, **changes):
+        data, bank, config = typed_fixture(authorization_mode="session_shared",
+                                          isolation_mode="actual_cost_clock", predict=False,
+                                          request_budget=1, **changes)
+        cutoff = min(o["cutoff"] for o in data["opportunities"])
+        data["opportunities"] = [o for o in data["opportunities"] if o["cutoff"] == cutoff]
+        backend = PendingSource(directory, data["query_results"])
+>       session = SessionCoordinator(data, bank, config, source_backend=backend)
+E       TypeError: SessionCoordinator.__init__() got an unexpected keyword argument 'source_backend'
+
+disastertrace-starter/tests/test_monitoring_pending_source.py:43: TypeError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_pending_source.py::test_source_pending_poll_has_no_free_evidence_or_repeated_request
+FAILED disastertrace-starter/tests/test_monitoring_pending_source.py::test_restored_source_settles_original_once_before_granting_evidence
+FAILED disastertrace-starter/tests/test_monitoring_pending_source.py::test_late_source_does_not_supply_evidence_or_forecasts_at_previous_cutoff
+FAILED disastertrace-starter/tests/test_monitoring_pending_source.py::test_changed_native_response_is_charged_but_never_authorized
+FAILED disastertrace-starter/tests/test_monitoring_pending_source.py::test_pending_source_rejects_control_or_executor_changes

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="13" time="2.956" timestamp="2026-09-13T15:22:46.156971+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_measurement_v2" name="test_old_arrival_and_withdrawal_do_not_replace_current" time="0.003" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_equal_issue_conflict_has_no_id_selected_winner" time="0.006" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_invalid_batch_leaves_no_registered_events_or_journal[duplicate]" time="0.005" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_invalid_batch_leaves_no_registered_events_or_journal[invalid_target]" time="0.004" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_invalid_batch_leaves_no_registered_events_or_journal[backdated]" time="0.003" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_same_time_cancel_wins_before_uncommitted_completion" time="0.004" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_cancel_after_committed_completion_is_not_retroactive" time="0.002" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_override_cannot_outlive_target_semantics" time="0.002" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_comparison_rejects_different_baseline_histories" time="0.010" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_acquire_only_does_not_require_predictor_quota" time="0.745" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_backend_exception_has_full_denominator_and_unknown_reservation" time="0.326"><failure message="RuntimeError: synthetic transport failure">def test_backend_exception_has_full_denominator_and_unknown_reservation():
+        data, bank, config = typed_fixture()
+        def broken(*args):
+            raise RuntimeError('synthetic transport failure')
+&gt;       report = run_session(data, bank, config, backend=broken)
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:517: in run_session
+    call_record, clock = runtime.execute(
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/adaptive.py:314: in execute
+    raw, details = backend(messages[0]["content"], bundle.policy_view(), call_id)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('Use only the information disclosed in this frozen snapshot. Timestamps are UTC microseconds. Native product facts an...c5c53', 'units': 'probability', 'value': 0.20588235294117646}, 'issued_at': 1704410400000000, ...}, ...}, 'forecast-0')
+
+    def broken(*args):
+&gt;       raise RuntimeError('synthetic transport failure')
+E       RuntimeError: synthetic transport failure
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:114: RuntimeError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_overslot_preserves_response_and_records_real_usage" time="0.316"><failure message="ValueError: Actual call and persistence exceed the public isolation slot">def test_overslot_preserves_response_and_records_real_usage():
+        data, bank, config = typed_fixture()
+        def slow(*args):
+            raw, details = backend(*args)
+            return raw, dict(details, seconds=121)
+&gt;       report = run_session(data, bank, config, backend=slow)
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:517: in run_session
+    call_record, clock = runtime.execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_fixed_v1.adaptive.TypedAviationRuntime object at 0x7fd0b6ec24a0&gt;
+opportunity = {'opportunity_id': 'KSFO-2024-01-05T01:00:00Z-vis-lt-1000m-cutoff-2024-01-05T00:00:00Z', 'target_id': 'KSFO-2024-01-05T01:00:00Z-vis-lt-1000m', 'cutoff': 1704412800000000, 'lead_hours': 1, ...}
+call_id = 'forecast-0', started = 1704412202000002
+store = &lt;disastertrace.monitoring_v1.views.EvidenceStore object at 0x7fd0b6ec1030&gt;
+ledger = &lt;disastertrace.monitoring_v1.resources.BudgetLedger object at 0x7fd0b6ec2e00&gt;
+source_receipts = [{'query_id': 'routine-KOAK-2024-01-04T22:00:00Z', 'asset_id': 'KSFO-2024-01-05T01:00:00Z-vis-lt-1000m::routine-KOAK-2...T03:00:00Z-vis-lt-1000m', 'receipt_id': 'query-22948dc385d46d34b96b17a0c6a334fb1dc6efc7de6c5d2b253cf15b66f5aaaf', ...}]
+backend = &lt;function test_overslot_preserves_response_and_records_real_usage.&lt;locals&gt;.slow at 0x7fd0b70b3be0&gt;
+
+    def execute(self, opportunity, call_id, started, store, ledger, source_receipts, backend):
+        bundle = self.freeze_acquired(opportunity, started, store, ledger, source_receipts)
+        head = "program" if backend is None else self.config.get("typed_head", "joint")
+        executor = (
+            "frozen_frequency.v1"
+            if backend is None
+            else self.config.get("executor_id", "typed_backend.v1")
+        )
+        self.run(
+            [
+                AdmissionEvent(
+                    call_id + "-begin",
+                    started,
+                    "begin",
+                    {
+                        "call_id": call_id,
+                        "bundle": bundle.to_dict(),
+                        "head": head,
+                        "executor": executor,
+                    },
+                )
+            ],
+            until=started,
+        )
+        if call_id not in self.calls:
+            raise ValueError("Controller produced an inadmissible typed begin")
+        if backend is None:
+            raw = canonical(FrozenFrequencyPredictor(self.bank).predict(bundle).to_dict())
+            details = {
+                "input_tokens": 0,
+                "output_tokens": 0,
+                "seconds": 0.001,
+                "ended_with_eos": True,
+                "backend": executor,
+                "timing_basis": "declared_program_latency_scenario",
+            }
+        else:
+            messages = model_messages(bundle, head)
+            raw, details = backend(messages[0]["content"], bundle.policy_view(), call_id)
+        duration = max(1, math.ceil(details["seconds"] * 1_000_000))
+        persistence = self.config.get("persistence_latency_ms", 1) * 1000
+        elapsed = duration + persistence
+        if self.config.get("isolation_mode") == "public_schedule":
+            elapsed = self.config["public_call_slot_ms"] * 1000
+            if duration + persistence &gt; elapsed:
+&gt;               raise ValueError("Actual call and persistence exceed the public isolation slot")
+E               ValueError: Actual call and persistence exceed the public isolation slot
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/adaptive.py:321: ValueError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_restore_rejects_unregistered_backend_implementation_change" time="0.719"><failure message="Failed: DID NOT RAISE ValueError">def test_restore_rejects_unregistered_backend_implementation_change():
+        data, bank, config = typed_fixture()
+        session = SessionCoordinator(data, bank, config, backend=backend)
+        session.step()
+        def different(*args):
+            return backend(*args)
+&gt;       with pytest.raises(ValueError, match='execution|backend'):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:142: Failed</failure></testcase></testsuite></testsuites>

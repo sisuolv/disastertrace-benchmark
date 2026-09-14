@@ -1,0 +1,80 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_llm_selector_can_use_the_original_program_predictor_without_extra_model_calls _
+
+    def test_llm_selector_can_use_the_original_program_predictor_without_extra_model_calls():
+        data, bank, config = typed_fixture(
+            selector_kind="llm",
+            predictor_kind="program",
+            authorization_mode="session_shared",
+            isolation_mode="actual_cost_clock",
+            model_call_budget=1,
+        )
+        invoked = []
+    
+        def backend(system, request, call_id):
+            invoked.append(call_id)
+            assert call_id.startswith("select-")
+            assert request["forecast_executor_kind"] == "program"
+            assert request["forecast_model_call_cost"] == 0
+            assert request["forecast_call_upper"]["tokens"] == 0
+            raw = json.dumps(
+                {
+                    "query_order": list(request["queries"]),
+                    "forecast_handles": list(request["targets"])[:2],
+                }
+            )
+            return raw, {
+                "input_tokens": 11,
+                "output_tokens": 9,
+                "seconds": 0.01,
+                "ended_with_eos": True,
+            }
+    
+        report = run_session(data, bank, config, backend=backend)
+        assert invoked == ["select-0"]
+>       assert len(report["calls"]) == 2 and all(r["head"] == "program" for r in report["calls"])
+E       assert (0 == 2)
+E        +  where 0 = len([])
+
+disastertrace-starter/tests/test_monitoring_predictor_roles.py:43: AssertionError
+________ test_explicit_model_predictor_still_pays_for_both_model_roles _________
+
+    def test_explicit_model_predictor_still_pays_for_both_model_roles():
+        data, bank, config = typed_fixture(
+            selector_kind="llm",
+            predictor_kind="llm",
+            authorization_mode="session_shared",
+            isolation_mode="actual_cost_clock",
+            model_call_budget=2,
+        )
+        invoked = []
+    
+        def backend(system, request, call_id):
+            invoked.append(call_id)
+            if call_id.startswith("select-"):
+                assert request["forecast_executor_kind"] == "llm"
+                assert request["forecast_model_call_cost"] == 1
+            value = (
+                {"query_order": [], "forecast_handles": list(request["targets"])[:2]}
+                if call_id.startswith("select-")
+                else {"fact_truth": "unknown", "probability": 0.3}
+            )
+            return json.dumps(value), {
+                "input_tokens": 11,
+                "output_tokens": 9,
+                "seconds": 0.01,
+                "ended_with_eos": True,
+            }
+    
+        report = run_session(data, bank, config, backend=backend)
+>       assert invoked == ["select-0", "forecast-0"]
+E       AssertionError: assert ['select-0'] == ['select-0', 'forecast-0']
+E         
+E         Right contains one more item: 'forecast-0'
+E         Use -v to get more diff
+
+disastertrace-starter/tests/test_monitoring_predictor_roles.py:83: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_predictor_roles.py::test_llm_selector_can_use_the_original_program_predictor_without_extra_model_calls
+FAILED disastertrace-starter/tests/test_monitoring_predictor_roles.py::test_explicit_model_predictor_still_pays_for_both_model_roles

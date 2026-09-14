@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="18" time="4.498" timestamp="2026-09-13T15:46:22.936613+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_measurement_v2" name="test_old_arrival_and_withdrawal_do_not_replace_current" time="0.005" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_equal_issue_conflict_has_no_id_selected_winner" time="0.008" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_invalid_batch_leaves_no_registered_events_or_journal[duplicate]" time="0.007" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_invalid_batch_leaves_no_registered_events_or_journal[invalid_target]" time="0.005" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_invalid_batch_leaves_no_registered_events_or_journal[backdated]" time="0.006" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_same_time_cancel_wins_before_uncommitted_completion" time="0.006" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_cancel_after_committed_completion_is_not_retroactive" time="0.004" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_override_cannot_outlive_target_semantics" time="0.004" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_comparison_rejects_different_baseline_histories" time="0.012" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_acquire_only_does_not_require_predictor_quota" time="0.939" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_backend_exception_has_full_denominator_and_unknown_reservation" time="0.494" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_overslot_preserves_response_and_records_real_usage" time="0.502" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_restore_rejects_unregistered_backend_implementation_change" time="0.521" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_new_noncovering_taf_invalidates_older_covering_product" time="0.002" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_selector_exception_keeps_full_denominator_and_unknown_cost" time="0.171"><failure message="ValueError: The LLM selector currently requires global/shared scope">def test_selector_exception_keeps_full_denominator_and_unknown_cost():
+        data, bank, config = typed_fixture(selector_kind='llm', isolation_mode='actual_cost_clock')
+        def failed_selector(*args):
+            raise ConnectionError('synthetic selector disconnect')
+&gt;       report = run_session(data, bank, config, backend=failed_selector)
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'schema': 'disastertrace.monitoring.policy_environment.v1', 'native_version_policy': 'latest_before_coverage.v2', 'st...': 'KOAK-2024-01-05T07:00:00Z-vis-lt-1000m', 'entity': 'KOAK', 'variable': 'visibility', 'units': 'm', ...}, ...], ...}
+bank = {'minimum_cell_n': 20, 'mapping_version': 'synthetic_protocol_test_only', 'cells': {'[1000,"pooled"]': {'n': 100, 'positive': 20}}}
+config = {'seed': 20260912, 'request_budget': 4, 'forecast_call_cap': 4, 'per_tick_forecast_cap': 2, ...}
+backend = &lt;function test_selector_exception_keeps_full_denominator_and_unknown_cost.&lt;locals&gt;.failed_selector at 0x7fb19a877910&gt;
+journal = None, resource_journal = None, _resume = None, _max_ticks = None
+
+    def run_session(
+        data,
+        bank,
+        config,
+        backend=None,
+        journal=None,
+        resource_journal=None,
+        *,
+        _resume=None,
+        _max_ticks=None,
+    ):
+        """data contains provider archive inputs, never a future outcome table."""
+        from .execution import bind_execution
+    
+        config = bind_execution(config, backend)
+        if _resume is not None and (journal is not None or resource_journal is not None):
+            raise ValueError(
+                "Restored branches use a fresh explicit checkpoint, not an old open journal"
+            )
+        if _max_ticks is not None and (type(_max_ticks) is not int or _max_ticks &lt; 0):
+            raise ValueError("Invalid tick bound")
+        if config.get("query_limit_per_tick") is not None and (
+            type(config["query_limit_per_tick"]) is not int or config["query_limit_per_tick"] &lt; 0
+        ):
+            raise ValueError("Invalid branch query limit")
+        if "outcomes" in data or "OUTCOMES" in data:
+            raise ValueError("Evaluator outcomes cannot enter a policy session")
+        session_runtime = config.get("session_runtime", "legacy_probability_v1")
+        if session_runtime not in {"legacy_probability_v1", "typed_admission_v1"}:
+            raise ValueError("Unknown session runtime")
+        typed = session_runtime == "typed_admission_v1"
+        if typed and (
+            config.get("typed_head", "joint") not in {"e_only", "f_only", "joint"}
+            or type(config.get("persistence_latency_ms", 1)) is not int
+            or config.get("persistence_latency_ms", 1) &lt; 0
+        ):
+            raise ValueError("Invalid typed head or persistence latency")
+        program_prediction = config.get("program_prediction", "frequency_mapping")
+        if program_prediction not in {"frequency_mapping", "neighbor_persistence"}:
+            raise ValueError("Unknown registered cheap prediction program")
+        if typed and program_prediction != "frequency_mapping":
+            raise ValueError("Typed program only qualifies the frozen frequency predictor")
+        if config["selector_kind"] == "llm":
+            if (
+                config["allocation_mode"] != "global_budget"
+                or config["authorization_mode"] != "session_shared"
+            ):
+&gt;               raise ValueError("The LLM selector currently requires global/shared scope")
+E               ValueError: The LLM selector currently requires global/shared scope
+
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:94: ValueError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_selector_overrun_preserves_raw_and_measured_cost" time="0.155"><failure message="ValueError: The LLM selector currently requires global/shared scope">def test_selector_overrun_preserves_raw_and_measured_cost():
+        data, bank, config = typed_fixture(selector_kind='llm', isolation_mode='actual_cost_clock')
+        def overrun(*args):
+            return '{"query_order":[],"forecast_handles":[]}', {
+                'seconds': 0.01, 'input_tokens': 900000, 'output_tokens': 10, 'ended_with_eos': True}
+&gt;       report = run_session(data, bank, config, backend=overrun)
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'schema': 'disastertrace.monitoring.policy_environment.v1', 'native_version_policy': 'latest_before_coverage.v2', 'st...': 'KOAK-2024-01-05T07:00:00Z-vis-lt-1000m', 'entity': 'KOAK', 'variable': 'visibility', 'units': 'm', ...}, ...], ...}
+bank = {'minimum_cell_n': 20, 'mapping_version': 'synthetic_protocol_test_only', 'cells': {'[1000,"pooled"]': {'n': 100, 'positive': 20}}}
+config = {'seed': 20260912, 'request_budget': 4, 'forecast_call_cap': 4, 'per_tick_forecast_cap': 2, ...}
+backend = &lt;function test_selector_overrun_preserves_raw_and_measured_cost.&lt;locals&gt;.overrun at 0x7fb19b2dcee0&gt;
+journal = None, resource_journal = None, _resume = None, _max_ticks = None
+
+    def run_session(
+        data,
+        bank,
+        config,
+        backend=None,
+        journal=None,
+        resource_journal=None,
+        *,
+        _resume=None,
+        _max_ticks=None,
+    ):
+        """data contains provider archive inputs, never a future outcome table."""
+        from .execution import bind_execution
+    
+        config = bind_execution(config, backend)
+        if _resume is not None and (journal is not None or resource_journal is not None):
+            raise ValueError(
+                "Restored branches use a fresh explicit checkpoint, not an old open journal"
+            )
+        if _max_ticks is not None and (type(_max_ticks) is not int or _max_ticks &lt; 0):
+            raise ValueError("Invalid tick bound")
+        if config.get("query_limit_per_tick") is not None and (
+            type(config["query_limit_per_tick"]) is not int or config["query_limit_per_tick"] &lt; 0
+        ):
+            raise ValueError("Invalid branch query limit")
+        if "outcomes" in data or "OUTCOMES" in data:
+            raise ValueError("Evaluator outcomes cannot enter a policy session")
+        session_runtime = config.get("session_runtime", "legacy_probability_v1")
+        if session_runtime not in {"legacy_probability_v1", "typed_admission_v1"}:
+            raise ValueError("Unknown session runtime")
+        typed = session_runtime == "typed_admission_v1"
+        if typed and (
+            config.get("typed_head", "joint") not in {"e_only", "f_only", "joint"}
+            or type(config.get("persistence_latency_ms", 1)) is not int
+            or config.get("persistence_latency_ms", 1) &lt; 0
+        ):
+            raise ValueError("Invalid typed head or persistence latency")
+        program_prediction = config.get("program_prediction", "frequency_mapping")
+        if program_prediction not in {"frequency_mapping", "neighbor_persistence"}:
+            raise ValueError("Unknown registered cheap prediction program")
+        if typed and program_prediction != "frequency_mapping":
+            raise ValueError("Typed program only qualifies the frozen frequency predictor")
+        if config["selector_kind"] == "llm":
+            if (
+                config["allocation_mode"] != "global_budget"
+                or config["authorization_mode"] != "session_shared"
+            ):
+&gt;               raise ValueError("The LLM selector currently requires global/shared scope")
+E               ValueError: The LLM selector currently requires global/shared scope
+
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:94: ValueError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_source_overrun_is_charged_once_and_not_authorized" time="0.257"><failure message="ValueError: Disclosed product exceeds frozen per-query byte reservation">def test_source_overrun_is_charged_once_and_not_authorized():
+        data, bank, config = typed_fixture(predict=False)
+        for product in data['query_results']:
+            product['oversized_test_payload'] = 'x' * 4096
+&gt;       report = run_session(data, bank, config)
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'schema': 'disastertrace.monitoring.policy_environment.v1', 'native_version_policy': 'latest_before_coverage.v2', 'st...': 'KOAK-2024-01-05T07:00:00Z-vis-lt-1000m', 'entity': 'KOAK', 'variable': 'visibility', 'units': 'm', ...}, ...], ...}
+bank = {'minimum_cell_n': 20, 'mapping_version': 'synthetic_protocol_test_only', 'cells': {'[1000,"pooled"]': {'n': 100, 'positive': 20}}}
+config = {'seed': 20260912, 'request_budget': 4, 'forecast_call_cap': 4, 'per_tick_forecast_cap': 2, ...}
+backend = None, journal = None, resource_journal = None, _resume = None
+_max_ticks = None
+
+    def run_session(
+        data,
+        bank,
+        config,
+        backend=None,
+        journal=None,
+        resource_journal=None,
+        *,
+        _resume=None,
+        _max_ticks=None,
+    ):
+        """data contains provider archive inputs, never a future outcome table."""
+        from .execution import bind_execution
+    
+        config = bind_execution(config, backend)
+        if _resume is not None and (journal is not None or resource_journal is not None):
+            raise ValueError(
+                "Restored branches use a fresh explicit checkpoint, not an old open journal"
+            )
+        if _max_ticks is not None and (type(_max_ticks) is not int or _max_ticks &lt; 0):
+            raise ValueError("Invalid tick bound")
+        if config.get("query_limit_per_tick") is not None and (
+            type(config["query_limit_per_tick"]) is not int or config["query_limit_per_tick"] &lt; 0
+        ):
+            raise ValueError("Invalid branch query limit")
+        if "outcomes" in data or "OUTCOMES" in data:
+            raise ValueError("Evaluator outcomes cannot enter a policy session")
+        session_runtime = config.get("session_runtime", "legacy_probability_v1")
+        if session_runtime not in {"legacy_probability_v1", "typed_admission_v1"}:
+            raise ValueError("Unknown session runtime")
+        typed = session_runtime == "typed_admission_v1"
+        if typed and (
+            config.get("typed_head", "joint") not in {"e_only", "f_only", "joint"}
+            or type(config.get("persistence_latency_ms", 1)) is not int
+            or config.get("persistence_latency_ms", 1) &lt; 0
+        ):
+            raise ValueError("Invalid typed head or persistence latency")
+        program_prediction = config.get("program_prediction", "frequency_mapping")
+        if program_prediction not in {"frequency_mapping", "neighbor_persistence"}:
+            raise ValueError("Unknown registered cheap prediction program")
+        if typed and program_prediction != "frequency_mapping":
+            raise ValueError("Typed program only qualifies the frozen frequency predictor")
+        if config["selector_kind"] == "llm":
+            if (
+                config["allocation_mode"] != "global_budget"
+                or config["authorization_mode"] != "session_shared"
+            ):
+                raise ValueError("The LLM selector currently requires global/shared scope")
+            if backend is None or config.get("isolation_mode") != "actual_cost_clock":
+                raise ValueError("LLM selection requires a charged backend and actual cost clock")
+        if config.get("isolation_mode", "actual_cost_clock") not in {
+            "actual_cost_clock",
+            "public_schedule",
+        }:
+            raise ValueError("Unknown timing isolation mode")
+        if config.get("isolation_mode") == "public_schedule" and config.get("gate"):
+            raise ValueError(
+                "A private-value-dependent global gate is not allowed in the strict timing control"
+            )
+        opportunities = data["opportunities"]
+        targets = {r["target_id"]: r for r in data["targets"]}
+        pairs = {r["opportunity_id"]: r for r in data["e_f_pairs"]}
+        catalog = {r["query_id"]: r for r in data["query_catalog"]}
+        products = {r["query_id"]: r for r in data["query_results"]}
+        target_objects = {key: TargetSpec(**value) for key, value in targets.items()}
+        object_opportunities = [
+            Opportunity(r["opportunity_id"], target_objects[r["target_id"]], r["cutoff"])
+            for r in opportunities
+        ]
+        fallback = {key: predict(bank, value, None)["probability"] for key, value in targets.items()}
+        if typed:
+            from ..monitoring_fixed_v1.adaptive import TypedAviationRuntime
+    
+            runtime = TypedAviationRuntime(data, bank, config, journal=journal)
+        else:
+            runtime = MonitoringEngine(
+                object_opportunities,
+                fallback_probabilities=fallback,
+                protocol=config["protocol"],
+                journal=journal,
+            )
+        source_budget = config["request_budget"]
+        total_calls_cap = config["forecast_call_cap"]
+        model_call_budget = config.get("model_call_budget", total_calls_cap)
+        resource_limits = {
+            "requests": source_budget,
+            "bytes": source_budget * 2048,
+            "tokens": config.get("token_cap"),
+            "compute_ms": config.get("compute_ms_cap"),
+        }
+        quota_order = sorted(targets, key=lambda key: stable_rank(config["seed"], "quota", key))
+        quotas = {
+            target: {
+                "requests": source_budget // len(targets) + int(index &lt; source_budget % len(targets)),
+                "bytes": 2048
+                * (source_budget // len(targets) + int(index &lt; source_budget % len(targets))),
+            }
+            for index, target in enumerate(quota_order)
+        }
+        ledger = BudgetLedger(
+            resource_limits,
+            allocation_mode=config["allocation_mode"],
+            quotas=quotas,
+            journal=resource_journal,
+        )
+        store = EvidenceStore(config["authorization_mode"], targets)
+        events, candidates, source_receipts = [], {}, []
+        for withdrawal in data.get("baseline_withdrawals", []):
+            if withdrawal["target_id"] in targets:
+                events.append(
+                    Event(
+                        "withdraw-" + stable_rank(withdrawal["target_id"], withdrawal["source_id"]),
+                        withdrawal["available_at"],
+                        "baseline_withdrawal",
+                        {
+                            "target_id": withdrawal["target_id"],
+                            "product_revision_id": withdrawal["source_id"],
+                            "reason": withdrawal["reason"],
+                            **({"issued_at": withdrawal["issued_at"]} if "issued_at" in withdrawal else {}),
+                        },
+                    )
+                )
+        for candidate in data["baseline_candidates"]:
+            target_id = candidate["target_id"]
+            if target_id not in targets:
+                continue
+            identity = (target_id, candidate["source_id"])
+            if identity in candidates:
+                continue
+            mapped = predict(bank, targets[target_id], candidate)
+            baseline = Baseline(
+                target_objects[target_id],
+                candidate["source_id"],
+                candidate["projection"],
+                mapped["probability"],
+                candidate["available_at"],
+                candidate["valid_until"],
+                bank["mapping_version"],
+                "NWS_TAF_via_IEM_with_frozen_research_mapping",
+                "fallback" if candidate.get("projection_status") == "unavailable" else "research",
+            )
+            candidates[identity] = candidate
+            events.append(
+                Event(
+                    "base-" + stable_rank(*identity),
+                    candidate["available_at"],
+                    "baseline",
+                    {"baseline": baseline},
+                )
+            )
+        cutoffs = sorted({o["cutoff"] for o in opportunities})
+        calls, frames, call_records, selector_records = 0, [], [], []
+        start_tick = 0
+        if _resume is None:
+            runtime.run(events, until=cutoffs[0] - config["wakeup_seconds"] * 1_000_000 - 1)
+        else:
+            from .session_checkpoint import restore_session
+    
+            restored = restore_session(_resume, data, bank, config)
+            runtime, ledger, store = (restored[k] for k in ("runtime", "ledger", "store"))
+            start_tick = restored["next_tick"]
+            calls, frames, call_records, selector_records, source_receipts = (
+                restored[k]
+                for k in ("calls", "frames", "call_records", "selector_records", "source_receipts")
+            )
+    
+        def authorized(target_id, query_id):
+            key = (
+                query_id
+                if config["authorization_mode"] == "session_shared"
+                else target_id + "::" + query_id
+            )
+            return key, key in store.assets
+    
+        def disclosed(target_id, query_ids):
+            visible = {r["content"]["query_id"]: r["content"] for r in store.view(target_id)}
+            return {qid: visible[qid] for qid in query_ids if qid in visible}
+    
+        next_tick = start_tick
+        for tick, cutoff in enumerate(cutoffs):
+            if tick &lt; start_tick:
+                continue
+            if _max_ticks is not None and tick &gt;= start_tick + _max_ticks:
+                break
+            clock = cutoff - config["wakeup_seconds"] * 1_000_000
+            runtime.run([], until=clock)
+            clock = max(clock, (runtime._last_time or clock - 1) + 1)
+            active = [o for o in opportunities if o["cutoff"] == cutoff]
+            common = selector_view(
+                {
+                    o["target_id"]: {
+                        "baseline_probability": runtime._base(o["target_id"], clock)["probability"],
+                        "deadline": cutoff,
+                        "entity": targets[o["target_id"]]["entity"],
+                        "public_query_ids": pairs[o["opportunity_id"]]["query_ids"],
+                    }
+                    for o in active
+                }
+            )
+            selector = config["selector_kind"]
+            if selector not in {"round_robin", "risk", "coverage", "batch_complete", "llm"}:
+                raise ValueError("Unsupported selector; do not silently replace an LLM selector")
+            if selector == "batch_complete" and (
+                config["allocation_mode"] != "global_budget"
+                or config["authorization_mode"] != "session_shared"
+            ):
+                raise ValueError("Complete-batch control requires global shared acquisition")
+            ordered = sorted(
+                active,
+                key=lambda o: (
+                    -common[o["target_id"]]["baseline_probability"] if selector == "risk" else 0,
+                    stable_rank(config["seed"], tick, o["opportunity_id"]),
+                ),
+            )
+            # Public calendar pacing carries unused credits forward; it does not use
+            # future archive values or force identical per-target budgets.
+            released_credit = source_budget * (tick + 1) // len(cutoffs)
+            source_steps = []
+            forecast_order = ordered[: config["per_tick_forecast_cap"]]
+            selected_query_rank = None
+            if selector == "llm":
+                forecast_order, selected_query_rank = [], {}
+                if calls + len(selector_records) &lt; model_call_budget and clock &lt; cutoff:
+                    select_id = "select-" + str(tick)
+                    upper = Cost(
+                        tokens=config["input_token_cap"] + config["output_token_cap"],
+                        compute_ms=config["call_compute_cap_ms"],
+                    )
+                    try:
+                        ledger.reserve(select_id, upper, "session_selector")
+                    except ValueError:
+                        pass
+                    else:
+                        handles = {"t" + str(i): o for i, o in enumerate(ordered)}
+                        query_ids = sorted(
+                            {
+                                q
+                                for o in active
+                                for q in pairs[o["opportunity_id"]]["query_ids"]
+                                if q not in store.assets and catalog[q]["available_at"] &lt;= clock
+                            }
+                        )
+                        query_handles = {"q" + str(i): q for i, q in enumerate(query_ids)}
+                        public_products = {}
+                        for o in active:
+                            view = runtime._base(o["target_id"], clock)
+                            candidate = candidates.get((o["target_id"], view["product_revision_id"]))
+                            if candidate is not None:
+                                public_products[candidate["source_id"]] = candidate["raw"]
+                        selection_request = {
+                            "clock": clock,
+                            "cutoff": cutoff,
+                            "protocol": config["protocol"],
+                            "forecast_call_upper": asdict(upper),
+                            "remaining_resources_after_selection_reserve": {
+                                dimension: None
+                                if limit is None
+                                else limit
+                                - getattr(ledger.spent, dimension)
+                                - getattr(ledger.reserved, dimension)
+                                for dimension, limit in resource_limits.items()
+                            },
+                            "remaining_ticks": len(cutoffs) - tick,
+                            "remaining_model_calls_after_this_selection": model_call_budget
+                            - calls
+                            - len(selector_records)
+                            - 1,
+                            "available_source_credit": released_credit
+                            - ledger.spent.requests
+                            - ledger.reserved.requests,
+                            "remaining_total_source_budget": source_budget - ledger.spent.requests,
+                            "per_tick_forecast_cap": config["per_tick_forecast_cap"],
+                            "targets": {
+                                h: {
+                                    "target": targets[o["target_id"]],
+                                    "opportunity_id": o["opportunity_id"],
+                                    "common": common[o["target_id"]],
+                                    "current_state": runtime.policy_state(o["target_id"], clock),
+                                }
+                                for h, o in handles.items()
+                            },
+                            "queries": {
+                                h: {
+                                    "query_id": q,
+                                    "metadata": catalog[q],
+                                    "serves_target_handles": [
+                                        t
+                                        for t, o in handles.items()
+                                        if q in pairs[o["opportunity_id"]]["query_ids"]
+                                    ],
+                                }
+                                for h, q in query_handles.items()
+                            },
+                            "common_full_taf_products": public_products,
+                            "shared_recent_products": [
+                                a
+                                for a in store.view(active[0]["target_id"])
+                                if catalog[a["content"]["query_id"]]["slot_end"]
+                                &gt;= cutoff - 4 * 3600 * 1_000_000
+                            ],
+                        }
+                        raw, details = backend(SELECTOR_SYSTEM, selection_request, select_id)
+                        error = None
+                        try:
+                            answer = parse_selection(
+                                raw,
+                                query_handles=query_handles,
+                                target_handles=handles,
+                                forecast_cap=config["per_tick_forecast_cap"],
+                            )
+                            if not details.get("ended_with_eos", True):
+                                raise ValueError("Selector generation did not finish with EOS")
+                        except (ValueError, TypeError, json.JSONDecodeError) as exc:
+                            answer = {"query_order": [], "forecast_handles": []}
+                            error = str(exc)
+                        duration = max(1, math.ceil(details["seconds"] * 1_000_000))
+                        ledger.settle(
+                            select_id,
+                            Cost(
+                                tokens=details["input_tokens"] + details["output_tokens"],
+                                compute_ms=math.ceil(duration / 1000),
+                            ),
+                            outcome="completed" if error is None else "invalid_response",
+                        )
+                        selector_records.append(
+                            {
+                                "call_id": select_id,
+                                "started_at": clock,
+                                "completed_at": clock + duration,
+                                "request_sha256": canonical_hash(selection_request),
+                                "raw": raw,
+                                "response_error": error,
+                                "selection": answer,
+                                "details": details,
+                            }
+                        )
+                        clock += duration
+                        runtime.run([], until=clock)
+                        selected_query_rank = {
+                            query_handles[h]: i for i, h in enumerate(answer["query_order"])
+                        }
+                        forecast_order = [handles[h] for h in answer["forecast_handles"]]
+            acquire_this_tick = config.get("acquire", True)
+            if selector == "batch_complete":
+                pending = {
+                    q
+                    for o in active
+                    for q in pairs[o["opportunity_id"]]["query_ids"]
+                    if q not in store.assets and catalog[q]["available_at"] &lt;= clock
+                }
+                # Batching uses public query topology, not the undisclosed values or
+                # the evaluator's sufficient-recipe oracle. Unused credit carries.
+                acquire_this_tick = acquire_this_tick and (
+                    released_credit - ledger.spent.requests - ledger.reserved.requests &gt;= len(pending)
+                )
+            if acquire_this_tick:
+                while (
+                    ledger.spent.requests + ledger.reserved.requests &lt; released_credit
+                    and clock &lt; cutoff
+                    and (
+                        config.get("query_limit_per_tick") is None
+                        or len(source_steps) &lt; config["query_limit_per_tick"]
+                    )
+                ):
+                    options = []
+                    for order_index, opportunity in enumerate(ordered):
+                        target_id = opportunity["target_id"]
+                        for qid in pairs[opportunity["opportunity_id"]]["query_ids"]:
+                            key, cached = authorized(target_id, qid)
+                            if cached or catalog[qid]["available_at"] &gt; clock:
+                                continue
+                            if selected_query_rank is not None and qid not in selected_query_rank:
+                                continue
+                            if clock + catalog[qid]["latency_ms"] * 1000 &gt; cutoff:
+                                continue
+                            coverage = sum(
+                                qid in pairs[o["opportunity_id"]]["query_ids"] for o in active
+                            )
+                            options.append(
+                                (
+                                    -coverage
+                                    if selector == "coverage"
+                                    else selected_query_rank[qid]
+                                    if selector == "llm"
+                                    else 0,
+                                    order_index,
+                                    stable_rank(config["seed"], tick, qid),
+                                    target_id,
+                                    qid,
+                                    key,
+                                )
+                            )
+                    acquired = False
+                    for _, _, _, target_id, qid, key in sorted(options):
+                        receipt_id = "query-" + stable_rank(key)
+                        upper = Cost(requests=1, bytes=2048, compute_ms=100)
+                        try:
+                            ledger.reserve(receipt_id, upper, target_id)
+                        except ValueError:
+                            continue
+                        result = json.loads(json.dumps(products[qid], allow_nan=False))
+                        size = len(json.dumps(result, separators=(",", ":")).encode())
+                        if size &gt; 2048:
+&gt;                           raise ValueError(
+                                "Disclosed product exceeds frozen per-query byte reservation"
+                            )
+E                           ValueError: Disclosed product exceeds frozen per-query byte reservation
+
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:450: ValueError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_extreme_predictor_overrun_does_not_reverse_later_clock" time="0.415"><failure message="ValueError: Cannot reverse admission clock">def test_extreme_predictor_overrun_does_not_reverse_later_clock():
+        data, bank, config = typed_fixture()
+        def very_slow(*args):
+            raw, details = backend(*args)
+            return raw, dict(details, seconds=100000)
+&gt;       report = run_session(data, bank, config, backend=very_slow)
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:200: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:232: in run_session
+    runtime.run([], until=clock)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/adaptive.py:208: in run
+    return self.engine.run(converted, until=until)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:527: in run
+    trial._run_once(list(events), until=until)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7fb19a733fa0&gt;
+events = [], until = 1704415800000000
+
+    def _run_once(self, events, *, until=None):
+        events = list(events)
+        fresh = [e.to_dict() for e in events if e.event_id not in self._events]
+        if until is not None:
+            timestamp(until)
+            if self._last_time is not None and until &lt; self._last_time:
+&gt;               raise ValueError("Cannot reverse admission clock")
+E               ValueError: Cannot reverse admission clock
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:556: ValueError</failure></testcase></testsuite></testsuites>

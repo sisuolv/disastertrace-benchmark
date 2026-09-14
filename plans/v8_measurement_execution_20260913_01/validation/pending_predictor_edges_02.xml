@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="21" time="30.309" timestamp="2026-09-13T17:21:44.603987+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_pending_predictor" name="test_unresolved_poll_is_idempotent_and_never_redispatches" time="1.141" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_fresh_process_continues_original_pending_invocation" time="2.521"><failure message="subprocess.CalledProcessError: Command '['/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python', '-c', &quot;\nimport json,sys\nfrom pathlib import Path\nfrom test_monitoring_pending_predictor import PendingFixtureBackend\nfrom disastertrace.monitoring_v1.session_checkpoint import SessionCoordinator\nspec=json.loads(Path(sys.argv[1]).read_text())\nbackend=PendingFixtureBackend(sys.argv[3])\nsession=SessionCoordinator.restore(spec['checkpoint'],spec['data'],spec['bank'],backend=backend)\nreport=session.finish()\nassert session.done\nPath(sys.argv[2]).write_text(json.dumps(report))\n&quot;, '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0/spec.json', '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0/continued.json', '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0']' returned non-zero exit status 1.">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0')
+
+    def test_fresh_process_continues_original_pending_invocation(tmp_path):
+        data, bank, session = pending_session(tmp_path)
+        spec = tmp_path / 'spec.json'
+        spec.write_text(json.dumps({'data': data, 'bank': bank, 'checkpoint': session.snapshot()}))
+        reply(tmp_path)
+        expected = session.finish()
+        result = tmp_path / 'continued.json'
+        code = '''
+    import json,sys
+    from pathlib import Path
+    from test_monitoring_pending_predictor import PendingFixtureBackend
+    from disastertrace.monitoring_v1.session_checkpoint import SessionCoordinator
+    spec=json.loads(Path(sys.argv[1]).read_text())
+    backend=PendingFixtureBackend(sys.argv[3])
+    session=SessionCoordinator.restore(spec['checkpoint'],spec['data'],spec['bank'],backend=backend)
+    report=session.finish()
+    assert session.done
+    Path(sys.argv[2]).write_text(json.dumps(report))
+    '''
+        env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONPATH=os.pathsep.join([
+            str(Path(__file__).parent), str(Path(__file__).parents[1] / 'src')]))
+&gt;       subprocess.run([sys.executable, '-c', code, str(spec), str(result), str(tmp_path)], check=True, env=env)
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python'...-29/test_fresh_process_continues_o0/continued.json', '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0'],)
+kwargs = {'env': {'PYTHONDONTWRITEBYTECODE': '1', 'SCO_HOME': '/mnt/afs/260010168/.sco', 'SHELL': '/bin/bash', 'CODEX_MANAGED_PACKAGE_ROOT': '/mnt/afs/260010168/.npm-global/lib/node_modules/@openai/codex', ...}}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output &amp; stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+&gt;               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python', '-c', "\nimport json,sys\nfrom pathlib import Path\nfrom test_monitoring_pending_predictor import PendingFixtureBackend\nfrom disastertrace.monitoring_v1.session_checkpoint import SessionCoordinator\nspec=json.loads(Path(sys.argv[1]).read_text())\nbackend=PendingFixtureBackend(sys.argv[3])\nsession=SessionCoordinator.restore(spec['checkpoint'],spec['data'],spec['bank'],backend=backend)\nreport=session.finish()\nassert session.done\nPath(sys.argv[2]).write_text(json.dumps(report))\n", '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0/spec.json', '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0/continued.json', '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0']' returned non-zero exit status 1.
+
+/usr/lib/python3.10/subprocess.py:526: CalledProcessError</failure></testcase><testcase classname="tests.test_monitoring_pending_predictor" name="test_pending_frame_cannot_change_selection_after_dispatch" time="0.771" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_pending_second_call_preserves_completed_frame_prefix" time="1.608" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_late_pending_response_keeps_actual_charge_and_cutoff_fallback" time="1.328"><failure message="assert 4000200 == 4000000">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-29/test_late_pending_response_kee0')
+
+    def test_late_pending_response_keeps_actual_charge_and_cutoff_fallback(tmp_path):
+        _, _, session = pending_session(tmp_path)
+        reply(tmp_path)
+        path = tmp_path / 'forecast-0-reply.json'
+        row = json.loads(path.read_text())
+        row['details']['seconds'] = 4000
+        path.write_text(json.dumps(row))
+        report = session.finish()
+        assert session.done
+        assert report['resource_spent']['tokens'] == 31
+&gt;       assert report['resource_spent']['compute_ms'] == 4_000_000
+E       assert 4000200 == 4000000
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:141: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_pending_predictor" name="test_changing_resolver_implementation_is_a_new_executor" time="0.530" /><testcase classname="tests.test_monitoring_unresolved_checkpoint" name="test_unknown_predictor_checkpoint_restores_in_another_process" time="2.482" /><testcase classname="tests.test_monitoring_unresolved_checkpoint" name="test_unknown_selector_restores_without_redispatch" time="1.215" /><testcase classname="tests.test_monitoring_unresolved_checkpoint" name="test_original_receipt_reconciles_cost_without_reopening_old_decision" time="2.291" /><testcase classname="tests.test_monitoring_unresolved_checkpoint" name="test_reconciled_overrun_is_measured_and_durable" time="0.004" /><testcase classname="tests.test_monitoring_unresolved_checkpoint" name="test_unknown_source_is_not_downloaded_again_after_restore" time="1.190" /><testcase classname="tests.test_monitoring_typed_session" name="test_typed_step_and_restore_equal_direct_program_session" time="3.093" /><testcase classname="tests.test_monitoring_typed_session" name="test_bundles_bind_actual_paid_cache_receipts_and_native_support[target_private]" time="1.159" /><testcase classname="tests.test_monitoring_typed_session" name="test_bundles_bind_actual_paid_cache_receipts_and_native_support[session_shared]" time="1.045" /><testcase classname="tests.test_monitoring_typed_session" name="test_captured_prefix_calls_are_not_reissued_by_typed_branch" time="3.039" /><testcase classname="tests.test_monitoring_typed_session" name="test_typed_invalid_outputs_keep_denominator_and_charges" time="1.230" /><testcase classname="tests.test_monitoring_typed_session" name="test_typed_E_only_never_installs_probability" time="1.103" /><testcase classname="tests.test_monitoring_typed_session" name="test_private_typed_inputs_do_not_leak_other_target_answers_or_duration" time="1.965" /><testcase classname="tests.test_monitoring_typed_session" name="test_admission_export_preserves_advance_boundaries_and_can_make_scoring_journal" time="0.014" /><testcase classname="tests.test_monitoring_typed_session" name="test_typed_withdrawal_invalidates_prior_context_without_using_an_older_product" time="0.004" /><testcase classname="tests.test_monitoring_typed_session" name="test_typed_adapter_rejects_cache_without_a_settled_resource_receipt" time="1.402" /></testsuite></testsuites>

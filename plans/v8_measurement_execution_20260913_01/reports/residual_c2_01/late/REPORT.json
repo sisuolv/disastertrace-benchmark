@@ -1,0 +1,156 @@
+{
+  "case": "late",
+  "checkpoint_sha256": "4d0beba3a9ec4f76926d738651e9d74710a8a8a4c2ecf27faf9eeb74bf409176",
+  "clock": 1738544399999999,
+  "deadline": 1738544400000000,
+  "total_source_budget": 4,
+  "already_spent": {
+    "requests": 1,
+    "bytes": 705,
+    "tokens": 0,
+    "compute_ms": 100
+  },
+  "remaining_source_budget": 3,
+  "paid_assets_inherited": [
+    "routine-KOAK-2025-02-02T22:00:00Z"
+  ],
+  "graph_queries": [
+    {
+      "query_id": "routine-KOAK-2025-02-02T23:00:00Z",
+      "cost": {
+        "requests": 1,
+        "bytes": 2048,
+        "tokens": 0,
+        "compute_ms": 100
+      },
+      "released_at": 1738541100000000,
+      "duration": 1000000,
+      "dependencies": [],
+      "valid_until": null
+    },
+    {
+      "query_id": "routine-KSFO-2025-02-02T23:00:00Z",
+      "cost": {
+        "requests": 1,
+        "bytes": 2048,
+        "tokens": 0,
+        "compute_ms": 100
+      },
+      "released_at": 1738541100000000,
+      "duration": 1000000,
+      "dependencies": [],
+      "valid_until": null
+    },
+    {
+      "query_id": "routine-KSJC-2025-02-02T23:00:00Z",
+      "cost": {
+        "requests": 1,
+        "bytes": 2048,
+        "tokens": 0,
+        "compute_ms": 100
+      },
+      "released_at": 1738541100000000,
+      "duration": 1000000,
+      "dependencies": [],
+      "valid_until": null
+    }
+  ],
+  "original_recipes_evaluator_only": {
+    "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": [
+      [
+        "routine-KSFO-2025-02-02T23:00:00Z",
+        "routine-KSJC-2025-02-02T23:00:00Z"
+      ]
+    ],
+    "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": [
+      [
+        "routine-KOAK-2025-02-02T23:00:00Z",
+        "routine-KSJC-2025-02-02T23:00:00Z"
+      ]
+    ],
+    "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": [
+      [
+        "routine-KOAK-2025-02-02T23:00:00Z",
+        "routine-KSFO-2025-02-02T23:00:00Z"
+      ]
+    ]
+  },
+  "individual_reachability": {
+    "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": 0.0,
+    "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": 0.0,
+    "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": 0.0
+  },
+  "joint_result": {
+    "exact": true,
+    "lower_bound": 0.0,
+    "upper_bound": 0.0,
+    "individual_status": {
+      "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": "unreachable_in_frozen_graph",
+      "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": "unreachable_in_frozen_graph",
+      "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": "unreachable_in_frozen_graph"
+    },
+    "frontier": [
+      {
+        "starts": [],
+        "resolved": [],
+        "cost": {
+          "requests": 0,
+          "bytes": 0,
+          "tokens": 0,
+          "compute_ms": 0
+        },
+        "completion_time": 1738544399999999
+      }
+    ],
+    "explored_states": 2,
+    "max_states": 50000,
+    "graph_hash": "67c6c6431a0b6b31ee3ffee19b724d8b3e5c2f45a69e2cc6a8945c7500948f3e",
+    "scope": "finite_nonpreemptive_fixed_duration_public_recipe_graph"
+  },
+  "witness_replays": [
+    {
+      "witness": {
+        "starts": [],
+        "resolved": [],
+        "cost": {
+          "requests": 0,
+          "bytes": 0,
+          "tokens": 0,
+          "compute_ms": 0
+        },
+        "completion_time": 1738544399999999
+      },
+      "E_from_native_paid_inputs": {
+        "KOAK-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined",
+        "KSFO-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined",
+        "KSJC-2025-02-03T02:00:00Z-vis-lt-1000m": "undetermined"
+      },
+      "journal": "witness_0.jsonl",
+      "source_receipts": [
+        {
+          "asset_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "bytes": 705,
+          "completed_at": 1738540201000001,
+          "payer": "KSFO-2025-02-03T03:00:00Z-vis-lt-1000m",
+          "query_id": "routine-KOAK-2025-02-02T22:00:00Z",
+          "receipt_id": "query-216a024e6e08010de2d48ea03595f1d6507852c129e68f042b722e8531791c68",
+          "source_status": "disclosed_product_fact",
+          "started_at": 1738540200000001,
+          "timing_basis": "declared_archive_query_latency"
+        }
+      ],
+      "final_actual_cost": {
+        "requests": 1,
+        "bytes": 705,
+        "tokens": 0,
+        "compute_ms": 100
+      },
+      "engine_replay_equal": true
+    }
+  ],
+  "private_scope": false,
+  "concurrency": 1,
+  "scope": "real quiescent H15 report graph; query-count bottleneck, all other remaining resources verified feasible",
+  "inflight_recovery_qualified": false,
+  "new_model_calls": 0
+}

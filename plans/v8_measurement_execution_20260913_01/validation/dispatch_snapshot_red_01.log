@@ -1,0 +1,45 @@
+FF...F                                                                   [100%]
+=================================== FAILURES ===================================
+______ test_dispatch_uses_earlier_real_version_and_retains_cutoff_update _______
+
+provider = <disastertrace.monitoring_fixed_v1.aviation.AviationProvider object at 0x7fad5df01ea0>
+
+    def test_dispatch_uses_earlier_real_version_and_retains_cutoff_update(provider):
+        oid = "KSJC-2025-02-03T13:00:00Z-vis-lt-5000m-cutoff-2025-02-03T12:00:00Z"
+        cutoff = provider.opportunities[oid]["cutoff"]
+        at_cutoff = provider.freeze(oid, "common_only").policy_view()
+        assert at_cutoff["baseline"]["available_at"] == cutoff
+>       dispatched = provider.freeze(oid, "all_registered", as_of=cutoff - 60_000_000)
+E       TypeError: AviationProvider.freeze() got an unexpected keyword argument 'as_of'
+
+disastertrace-starter/tests/test_monitoring_dispatch_snapshot.py:26: TypeError
+___________ test_dispatch_does_not_resurrect_a_covering_old_product ____________
+
+provider = <disastertrace.monitoring_fixed_v1.aviation.AviationProvider object at 0x7fad5e9691e0>
+
+    def test_dispatch_does_not_resurrect_a_covering_old_product(provider):
+        oid = "KSJC-2025-02-03T13:00:00Z-vis-lt-5000m-cutoff-2025-02-03T12:00:00Z"
+        cutoff = provider.opportunities[oid]["cutoff"]
+        latest = provider.bases[oid]["source_id"]
+>       for row in provider.native_products:
+E       AttributeError: 'AviationProvider' object has no attribute 'native_products'
+
+disastertrace-starter/tests/test_monitoring_dispatch_snapshot.py:42: AttributeError
+______________ test_dispatched_asset_cannot_finish_after_dispatch ______________
+
+provider = <disastertrace.monitoring_fixed_v1.aviation.AviationProvider object at 0x7fad5df03910>
+
+    def test_dispatched_asset_cannot_finish_after_dispatch(provider):
+        oid = "KSJC-2025-02-03T13:00:00Z-vis-lt-5000m-cutoff-2025-02-03T12:00:00Z"
+        cutoff = provider.opportunities[oid]["cutoff"]
+        query = sorted(provider.pairs[oid]["query_ids"])[0]
+        provider.catalog[query]["available_at"] = cutoff
+        with pytest.raises(ValueError, match="not complete at snapshot"):
+>           provider.freeze(oid, "fixed_one", as_of=cutoff - 60_000_000)
+E           TypeError: AviationProvider.freeze() got an unexpected keyword argument 'as_of'
+
+disastertrace-starter/tests/test_monitoring_dispatch_snapshot.py:65: TypeError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_dispatch_snapshot.py::test_dispatch_uses_earlier_real_version_and_retains_cutoff_update
+FAILED disastertrace-starter/tests/test_monitoring_dispatch_snapshot.py::test_dispatch_does_not_resurrect_a_covering_old_product
+FAILED disastertrace-starter/tests/test_monitoring_dispatch_snapshot.py::test_dispatched_asset_cannot_finish_after_dispatch

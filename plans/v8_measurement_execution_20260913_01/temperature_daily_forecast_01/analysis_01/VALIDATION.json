@@ -1,0 +1,42 @@
+{
+  "at": "2026-09-14T00:34:41.535775+00:00",
+  "passed": true,
+  "native_six_hour_values": 1489200,
+  "native_init_coordinates": 730,
+  "native_valid_time_coordinates": 14600,
+  "all_native_inits_at_00UTC": true,
+  "native_init_plus_step_equals_valid_time": true,
+  "native_units_contract": "ECMWF121/122Kelvin plus official EUPPprocessed-last6hdefinition",
+  "daily_member_extrema_independent_scalar_checks": 372300,
+  "future_daily_forecast_rows": 2920,
+  "daily_reference_status": {
+    "mature_product": 2910,
+    "outside_reference_period": 10
+  },
+  "future_duration_event_rows": 2920,
+  "duration_rows_with_reference": 2906,
+  "unique_positive_target_dates_by_event": {
+    "frost_day": 113,
+    "ice_day": 27,
+    "fixed_threshold_ice_spell_3d": 10,
+    "hot_day": 22,
+    "fixed_threshold_hot_spell_3d": 8
+  },
+  "day0_excluded_partial_window_rows": 730,
+  "new_model_calls": 0,
+  "new_source_requests_in_analysis": 0,
+  "independent_confirmation": false,
+  "session_runtime_replays": 0,
+  "operational_availability_proved": false,
+  "documentation_conflict": "Official prose says noon runs;all730native time/valid_time coordinates say00UTC. One original gridded native GRIB sample also hasdataTime0. Use native coordinates,retain this discrepancy;no12hshift or hidden repair.",
+  "qualification": "offline_native_product_coordinate_forecast_diagnostic_with_declared_availability",
+  "limitations": [
+    "Nearest model gridpoint forecasts versus station daily references;representativeness and instrument error remain.",
+    "Raw member frequencies are not calibrated probabilities;no parameters were fitted.",
+    "Six-hour extrema aggregation uses native product temporal semantics,not four instantaneous samples.",
+    "Same-member three-day events preserve within-forecast dependence;overlapping dates/inits are not independent processes.",
+    "Daily reference status mature_product refers to acquired archival versions,not historical first publication.",
+    "Scalar bounds for missing outcomes are conservative and need not be jointly sharp across shared targets.",
+    "This establishes a forecast/data diagnostic,not LLM/adaptive-acquisition/operational heatwave gain or final universal heatwave definition."
+  ]
+}

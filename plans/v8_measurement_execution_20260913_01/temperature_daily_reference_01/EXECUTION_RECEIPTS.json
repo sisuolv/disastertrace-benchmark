@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-09-13T23:32:00.941485+00:00",
+  "acquisition": {
+    "command": [
+      "python3",
+      "scripts/acquire_daily_temperature_reference.py"
+    ],
+    "exit_code": 0,
+    "executed_source_sha256": "a908d5b40031964e06ac1121b8cd330963b6c94fb8ebf2db08477ce43ed3d078"
+  },
+  "qualification": {
+    "command": [
+      "python3",
+      "scripts/qualify_daily_temperature_reference.py"
+    ],
+    "exit_code": 0
+  },
+  "sampling_comparison": {
+    "command": [
+      "nice",
+      "-n",
+      "10",
+      "python3",
+      "scripts/compare_daily_temperature_support.py"
+    ],
+    "exit_code": 0
+  },
+  "notes": [
+    "Observed successful command exits; original404 product-description attempts remain in individual receipts.",
+    "Current acquisition source will receive only a narrower exception clause and equivalent deterministic min selection; this completed download is never restarted."
+  ]
+}

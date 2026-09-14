@@ -1,0 +1,72 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_llm_selector_can_use_the_original_program_predictor_without_extra_model_calls _
+
+    def test_llm_selector_can_use_the_original_program_predictor_without_extra_model_calls():
+        data, bank, config = typed_fixture(selector_kind="llm", predictor_kind="program",
+            authorization_mode="session_shared", isolation_mode="actual_cost_clock", model_call_budget=1)
+        invoked = []
+    
+        def backend(system, request, call_id):
+            invoked.append(call_id)
+            assert call_id.startswith("select-")
+            assert request["forecast_call_upper"]["tokens"] == 0
+            raw = json.dumps({"query_order": list(request["queries"]),
+                              "forecast_handles": list(request["targets"])[:2]})
+            return raw, {"input_tokens": 11, "output_tokens": 9, "seconds": 0.01, "ended_with_eos": True}
+    
+        report = run_session(data, bank, config, backend=backend)
+        assert invoked == ["select-0"]
+>       assert len(report["calls"]) == 2 and all(r["head"] == "program" for r in report["calls"])
+E       assert (0 == 2)
+E        +  where 0 = len([])
+
+disastertrace-starter/tests/test_monitoring_predictor_roles.py:27: AssertionError
+________ test_explicit_model_predictor_still_pays_for_both_model_roles _________
+
+    def test_explicit_model_predictor_still_pays_for_both_model_roles():
+        data, bank, config = typed_fixture(selector_kind="llm", predictor_kind="llm",
+            authorization_mode="session_shared", isolation_mode="actual_cost_clock", model_call_budget=2)
+        invoked = []
+    
+        def backend(system, request, call_id):
+            invoked.append(call_id)
+            value = {"query_order": [], "forecast_handles": list(request["targets"])[:2]} if call_id.startswith("select-") else {
+                "fact_truth": "unknown", "probability": 0.3}
+            return json.dumps(value), {"input_tokens": 11, "output_tokens": 9, "seconds": 0.01, "ended_with_eos": True}
+    
+        report = run_session(data, bank, config, backend=backend)
+        assert invoked == ["select-0", "forecast-0"]
+        assert len(report["calls"]) == 1 and report["actual_model_calls"] == 2
+>       assert report["actual_program_forecast_calls"] == 0
+E       KeyError: 'actual_program_forecast_calls'
+
+disastertrace-starter/tests/test_monitoring_predictor_roles.py:50: KeyError
+_ test_predictor_kind_is_a_declared_comparison_factor_with_unchanged_invariants _
+
+    def test_predictor_kind_is_a_declared_comparison_factor_with_unchanged_invariants():
+        data, bank, config = typed_fixture()
+        program = experiment_spec(data, bank, dict(config, predictor_kind="program"))
+        model = experiment_spec(data, bank, dict(config, predictor_kind="llm"))
+>       assert program["invariants"] == model["invariants"]
+E       AssertionError: assert {'data_univer...rogram'}, ...} == {'data_univer...: 'llm'}, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'other_frozen_config': {'seed': 20260912, 'session_runtime': 'typed_admission_v1', 'typed_head': 'joint', 'predictor_kind': 'program'}} != {'other_frozen_config': {'seed': 20260912, 'session_runtime': 'typed_admission_v1', 'typed_head': 'joint', 'predictor_kind': 'llm'}}
+E         Use -v to get more diff
+
+disastertrace-starter/tests/test_monitoring_predictor_roles.py:58: AssertionError
+____________ test_model_role_cannot_silently_fall_back_to_a_program ____________
+
+    def test_model_role_cannot_silently_fall_back_to_a_program():
+        data, bank, config = typed_fixture(predictor_kind="llm")
+>       with pytest.raises(ValueError, match="predictor"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_predictor_roles.py:65: Failed
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_predictor_roles.py::test_llm_selector_can_use_the_original_program_predictor_without_extra_model_calls
+FAILED disastertrace-starter/tests/test_monitoring_predictor_roles.py::test_explicit_model_predictor_still_pays_for_both_model_roles
+FAILED disastertrace-starter/tests/test_monitoring_predictor_roles.py::test_predictor_kind_is_a_declared_comparison_factor_with_unchanged_invariants
+FAILED disastertrace-starter/tests/test_monitoring_predictor_roles.py::test_model_role_cannot_silently_fall_back_to_a_program

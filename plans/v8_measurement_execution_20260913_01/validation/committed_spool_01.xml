@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="24" time="17.242" timestamp="2026-09-13T18:17:27.831689+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_committed_spool" name="test_worker_cannot_claim_before_checkpoint_is_durable" time="0.905"><failure message="ValueError: Checkpoint does not bind the staged request">staged = (&lt;disastertrace.monitoring_v1.session_checkpoint.SessionCoordinator object at 0x7ffbdd66ff10&gt;, &lt;disastertrace.monitori...l_n': 20, 'mapping_version': 'synthetic_protocol_test_only', 'cells': {'[1000,"pooled"]': {'n': 100, 'positive': 20}}})
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-37/test_worker_cannot_claim_befor0')
+
+    def test_worker_cannot_claim_before_checkpoint_is_durable(staged, tmp_path):
+        session, backend, pending, _, _ = staged
+        with pytest.raises(PendingExecution):
+            backend.claim_ready(pending["call_id"], worker_id="worker")
+        assert not list(backend.directory.glob("*.claim.json"))
+        original = session.snapshot()
+        session.step()
+        assert session.snapshot() == original
+        path = tmp_path / "checkpoint.json"
+&gt;       session.persist(path)
+
+tests/test_monitoring_committed_spool.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/monitoring_v1/session_checkpoint.py:335: in persist
+    committer(path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_v1.spool_backend.CommittedSpoolBackend object at 0x7ffbdd66f8b0&gt;
+path = PosixPath('/tmp/pytest-of-root/pytest-37/test_worker_cannot_claim_befor0/checkpoint.json')
+
+    def commit_checkpoint(self, path):
+        from .execution import execution_identity
+    
+        path = Path(path).resolve()
+        checkpoint = read(path)
+        payload = checkpoint["payload"]
+        if canonical_hash(payload) != checkpoint["sha256"]:
+            raise ValueError("Controller checkpoint integrity mismatch")
+        pending = payload.get("pending_predictor")
+        if pending is None:
+            raise ValueError("Only an original pending predictor can release a worker")
+        identity = execution_identity(self)
+        if payload["config"]["execution_contract"] != identity:
+            raise ValueError("Controller and worker execution identity differ")
+        key = self._key(pending["call_id"])
+        request_path = self.directory / (key + ".request.json")
+        request = read(request_path)
+        expected = {
+            "request_sha256": canonical_hash({"system": request["system"], "request": request["request"]}),
+            "execution_sha256": canonical_hash(identity),
+        }
+        if (
+            pending["binding"] != expected
+            or pending["ticket"] != {"remote_id": key, "request_sha256": digest(request_path)}
+            or request["execution_sha256"] != canonical_hash(self.execution_contract)
+        ):
+&gt;           raise ValueError("Checkpoint does not bind the staged request")
+E           ValueError: Checkpoint does not bind the staged request
+
+src/disastertrace/monitoring_v1/spool_backend.py:191: ValueError</failure></testcase><testcase classname="tests.test_monitoring_committed_spool" name="test_repeated_commit_is_idempotent_but_worker_claim_is_once" time="0.588"><failure message="ValueError: Checkpoint does not bind the staged request">staged = (&lt;disastertrace.monitoring_v1.session_checkpoint.SessionCoordinator object at 0x7ffbdcc71450&gt;, &lt;disastertrace.monitori...l_n': 20, 'mapping_version': 'synthetic_protocol_test_only', 'cells': {'[1000,"pooled"]': {'n': 100, 'positive': 20}}})
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-37/test_repeated_commit_is_idempo0')
+
+    def test_repeated_commit_is_idempotent_but_worker_claim_is_once(staged, tmp_path):
+        session, backend, pending, _, _ = staged
+&gt;       session.persist(tmp_path / "checkpoint.json")
+
+tests/test_monitoring_committed_spool.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/monitoring_v1/session_checkpoint.py:335: in persist
+    committer(path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_v1.spool_backend.CommittedSpoolBackend object at 0x7ffbdcc719f0&gt;
+path = PosixPath('/tmp/pytest-of-root/pytest-37/test_repeated_commit_is_idempo0/checkpoint.json')
+
+    def commit_checkpoint(self, path):
+        from .execution import execution_identity
+    
+        path = Path(path).resolve()
+        checkpoint = read(path)
+        payload = checkpoint["payload"]
+        if canonical_hash(payload) != checkpoint["sha256"]:
+            raise ValueError("Controller checkpoint integrity mismatch")
+        pending = payload.get("pending_predictor")
+        if pending is None:
+            raise ValueError("Only an original pending predictor can release a worker")
+        identity = execution_identity(self)
+        if payload["config"]["execution_contract"] != identity:
+            raise ValueError("Controller and worker execution identity differ")
+        key = self._key(pending["call_id"])
+        request_path = self.directory / (key + ".request.json")
+        request = read(request_path)
+        expected = {
+            "request_sha256": canonical_hash({"system": request["system"], "request": request["request"]}),
+            "execution_sha256": canonical_hash(identity),
+        }
+        if (
+            pending["binding"] != expected
+            or pending["ticket"] != {"remote_id": key, "request_sha256": digest(request_path)}
+            or request["execution_sha256"] != canonical_hash(self.execution_contract)
+        ):
+&gt;           raise ValueError("Checkpoint does not bind the staged request")
+E           ValueError: Checkpoint does not bind the staged request
+
+src/disastertrace/monitoring_v1/spool_backend.py:191: ValueError</failure></testcase><testcase classname="tests.test_monitoring_committed_spool" name="test_wrong_request_binding_cannot_release_worker" time="0.600" /><testcase classname="tests.test_monitoring_committed_spool" name="test_changed_checkpoint_after_ready_blocks_worker" time="0.669"><failure message="ValueError: Checkpoint does not bind the staged request">staged = (&lt;disastertrace.monitoring_v1.session_checkpoint.SessionCoordinator object at 0x7ffbdcbcf760&gt;, &lt;disastertrace.monitori...l_n': 20, 'mapping_version': 'synthetic_protocol_test_only', 'cells': {'[1000,"pooled"]': {'n': 100, 'positive': 20}}})
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-37/test_changed_checkpoint_after_0')
+
+    def test_changed_checkpoint_after_ready_blocks_worker(staged, tmp_path):
+        session, backend, pending, _, _ = staged
+        path = tmp_path / "checkpoint.json"
+&gt;       session.persist(path)
+
+tests/test_monitoring_committed_spool.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/monitoring_v1/session_checkpoint.py:335: in persist
+    committer(path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_v1.spool_backend.CommittedSpoolBackend object at 0x7ffbdcc52530&gt;
+path = PosixPath('/tmp/pytest-of-root/pytest-37/test_changed_checkpoint_after_0/checkpoint.json')
+
+    def commit_checkpoint(self, path):
+        from .execution import execution_identity
+    
+        path = Path(path).resolve()
+        checkpoint = read(path)
+        payload = checkpoint["payload"]
+        if canonical_hash(payload) != checkpoint["sha256"]:
+            raise ValueError("Controller checkpoint integrity mismatch")
+        pending = payload.get("pending_predictor")
+        if pending is None:
+            raise ValueError("Only an original pending predictor can release a worker")
+        identity = execution_identity(self)
+        if payload["config"]["execution_contract"] != identity:
+            raise ValueError("Controller and worker execution identity differ")
+        key = self._key(pending["call_id"])
+        request_path = self.directory / (key + ".request.json")
+        request = read(request_path)
+        expected = {
+            "request_sha256": canonical_hash({"system": request["system"], "request": request["request"]}),
+            "execution_sha256": canonical_hash(identity),
+        }
+        if (
+            pending["binding"] != expected
+            or pending["ticket"] != {"remote_id": key, "request_sha256": digest(request_path)}
+            or request["execution_sha256"] != canonical_hash(self.execution_contract)
+        ):
+&gt;           raise ValueError("Checkpoint does not bind the staged request")
+E           ValueError: Checkpoint does not bind the staged request
+
+src/disastertrace/monitoring_v1/spool_backend.py:191: ValueError</failure></testcase><testcase classname="tests.test_monitoring_committed_spool" name="test_committed_response_resumes_same_original_call" time="0.596"><failure message="ValueError: Checkpoint does not bind the staged request">staged = (&lt;disastertrace.monitoring_v1.session_checkpoint.SessionCoordinator object at 0x7ffbdd6bc6a0&gt;, &lt;disastertrace.monitori...l_n': 20, 'mapping_version': 'synthetic_protocol_test_only', 'cells': {'[1000,"pooled"]': {'n': 100, 'positive': 20}}})
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-37/test_committed_response_resume0')
+
+    def test_committed_response_resumes_same_original_call(staged, tmp_path):
+        session, backend, pending, data, bank = staged
+&gt;       record = session.persist(tmp_path / "checkpoint.json")
+
+tests/test_monitoring_committed_spool.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/disastertrace/monitoring_v1/session_checkpoint.py:335: in persist
+    committer(path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_v1.spool_backend.CommittedSpoolBackend object at 0x7ffbdd570370&gt;
+path = PosixPath('/tmp/pytest-of-root/pytest-37/test_committed_response_resume0/checkpoint.json')
+
+    def commit_checkpoint(self, path):
+        from .execution import execution_identity
+    
+        path = Path(path).resolve()
+        checkpoint = read(path)
+        payload = checkpoint["payload"]
+        if canonical_hash(payload) != checkpoint["sha256"]:
+            raise ValueError("Controller checkpoint integrity mismatch")
+        pending = payload.get("pending_predictor")
+        if pending is None:
+            raise ValueError("Only an original pending predictor can release a worker")
+        identity = execution_identity(self)
+        if payload["config"]["execution_contract"] != identity:
+            raise ValueError("Controller and worker execution identity differ")
+        key = self._key(pending["call_id"])
+        request_path = self.directory / (key + ".request.json")
+        request = read(request_path)
+        expected = {
+            "request_sha256": canonical_hash({"system": request["system"], "request": request["request"]}),
+            "execution_sha256": canonical_hash(identity),
+        }
+        if (
+            pending["binding"] != expected
+            or pending["ticket"] != {"remote_id": key, "request_sha256": digest(request_path)}
+            or request["execution_sha256"] != canonical_hash(self.execution_contract)
+        ):
+&gt;           raise ValueError("Checkpoint does not bind the staged request")
+E           ValueError: Checkpoint does not bind the staged request
+
+src/disastertrace/monitoring_v1/spool_backend.py:191: ValueError</failure></testcase><testcase classname="tests.test_monitoring_committed_spool" name="test_response_without_committed_worker_remains_pending" time="0.599" /><testcase classname="tests.test_monitoring_committed_spool" name="test_altered_pending_ticket_rejected_before_any_worker_claim" time="0.507" /><testcase classname="tests.test_monitoring_spool_backend" name="test_original_dispatch_and_resolution_are_idempotent" time="0.005" /><testcase classname="tests.test_monitoring_spool_backend" name="test_call_id_cannot_be_rebound_to_new_input" time="0.003" /><testcase classname="tests.test_monitoring_spool_backend" name="test_other_request_response_rejected" time="0.004" /><testcase classname="tests.test_monitoring_spool_backend" name="test_changed_worker_receipt_cannot_be_delivered" time="0.004" /><testcase classname="tests.test_monitoring_spool_backend" name="test_atomic_publication_does_not_replace_an_existing_response" time="0.003" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_unresolved_poll_is_idempotent_and_never_redispatches" time="1.079" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_fresh_process_continues_original_pending_invocation" time="3.428" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_pending_frame_cannot_change_selection_after_dispatch" time="0.572" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_pending_second_call_preserves_completed_frame_prefix" time="1.493" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_late_pending_response_keeps_actual_charge_and_cutoff_fallback" time="1.146" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_changing_resolver_implementation_is_a_new_executor" time="0.568" /><testcase classname="tests.test_monitoring_pending_predictor" name="test_delivery_latency_is_not_billed_as_model_compute" time="1.180" /><testcase classname="tests.test_monitoring_checkpoint" name="test_step_restore_matches_uninterrupted_calls_costs_and_events" time="0.393" /><testcase classname="tests.test_monitoring_checkpoint" name="test_branches_do_not_mutate_prefix_or_repay_spent_cost" time="0.511" /><testcase classname="tests.test_monitoring_checkpoint" name="test_snapshot_integrity_and_environment_binding_are_strict" time="0.304" /><testcase classname="tests.test_monitoring_checkpoint" name="test_no_step_reexecutes_a_captured_backend_call" time="0.322" /><testcase classname="tests.test_monitoring_checkpoint" name="test_future_archive_values_do_not_change_public_prefix_and_private_views" time="0.307" /></testsuite></testsuites>

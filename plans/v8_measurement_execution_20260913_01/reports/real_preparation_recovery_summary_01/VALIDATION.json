@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "receipt": "reports/real_preparation_recovery_02/predictor/VALIDATION.json",
+      "sha256": "3a611f84025b2038831809ecdf1cc9b625f2a47d39401001ebd374806e85bb02",
+      "D_cleanup_completions": 1,
+      "D_final_reserved_cleanup": 0,
+      "D_final_spent": 4,
+      "D_initial_reserved_cleanup": 1,
+      "D_initial_running_spent": 3,
+      "D_starts": 1,
+      "committed_native_transport_invocations": 1,
+      "new_model_calls": 0,
+      "opportunities": 27,
+      "passed": true,
+      "role": "predictor",
+      "separate_process_recoveries": 1,
+      "snapshot_and_journal_replay_equal": true,
+      "source_queries": 0,
+      "source_report_sha256": "f0a301d642641cb1eb2f9b1e22b64cf8e20a7d39f95441e317bf443d9829b9ff"
+    },
+    {
+      "receipt": "reports/real_preparation_recovery_02/selector/VALIDATION.json",
+      "sha256": "ffbf60ac7841ad13af1383dc8a2c2fcbf215651a11f1f0a881a9f9d95671776f",
+      "D_cleanup_completions": 1,
+      "D_final_reserved_cleanup": 0,
+      "D_final_spent": 4,
+      "D_initial_reserved_cleanup": 1,
+      "D_initial_running_spent": 3,
+      "D_starts": 1,
+      "committed_native_transport_invocations": 1,
+      "new_model_calls": 0,
+      "opportunities": 27,
+      "passed": true,
+      "role": "selector",
+      "separate_process_recoveries": 1,
+      "snapshot_and_journal_replay_equal": true,
+      "source_queries": 3,
+      "source_report_sha256": "7a89db9e005abd1f535822fc54b6d087a56fe152cc991bab9ab937a9b669ad1d"
+    },
+    {
+      "receipt": "reports/real_preparation_recovery_03/cases/source/VALIDATION.json",
+      "sha256": "23fcef0218698c3188356352b83cab40d2a14e3d764899e01fd0f5ffeba6b47d",
+      "D_cleanup_completions": 1,
+      "D_final_reserved_cleanup": 0,
+      "D_final_spent": 4,
+      "D_initial_reserved_cleanup": 1,
+      "D_initial_running_spent": 3,
+      "D_starts": 1,
+      "committed_native_transport_invocations": 3,
+      "new_model_calls": 0,
+      "opportunities": 27,
+      "passed": true,
+      "role": "source",
+      "separate_process_recoveries": 3,
+      "snapshot_and_journal_replay_equal": true,
+      "source_queries": 3,
+      "source_report_sha256": "469dd47952953081a98ea9c74ad93d523f790f7228e18f600270d6f1bcdc0976"
+    }
+  ],
+  "unique_native_opportunities": 27,
+  "repeated_role_opportunity_rows": 81,
+  "independent_weather_processes": null,
+  "new_model_calls": 0,
+  "actual_program_transport_workers": 5,
+  "separate_process_continuations": 5,
+  "timing": "Original transport dispatch-to-delivery measured; each CPU worker adds actual2s delivery wait. Synthetic D start/cancel times frozen before execution.",
+  "remaining": [
+    "forecast-dependent preparation selection",
+    "general concurrent pending requests",
+    "external exactly-once",
+    "real-world mitigation value"
+  ],
+  "preserved_failures": [
+    "../real_preparation_recovery_01/FAILED.json",
+    "../real_preparation_recovery_02/FAILED.json"
+  ]
+}

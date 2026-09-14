@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="0.741" timestamp="2026-09-13T17:56:09.488946+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_seal_index" name="test_noncutoff_does_not_sort_or_hash_event_prefix" time="0.005"><failure message="AssertionError: assert ['base', 'begin'] == []&#10;  &#10;  Left contains 2 more items, first extra item: 'base'&#10;  Use -v to get more diff">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f274229cf40&gt;
+
+    def test_noncutoff_does_not_sort_or_hash_event_prefix(monkeypatch):
+        engine, _bundle, events = setup_engine()
+        engine.run(events, until=60)
+        calls = []
+        original = engine._event_key
+    
+        def key(event):
+            calls.append(event.event_id)
+            return original(event)
+    
+        monkeypatch.setattr(engine, "_event_key", key)
+        engine._seal(61)
+        assert engine.snapshots == {}
+&gt;       assert calls == []
+E       AssertionError: assert ['base', 'begin'] == []
+E         
+E         Left contains 2 more items, first extra item: 'base'
+E         Use -v to get more diff
+
+tests/test_monitoring_seal_index.py:22: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_seal_index" name="test_one_shared_prefix_hash_preserves_every_cutoff_snapshot" time="0.005"><failure message="AssertionError: assert 4 == 1&#10; +  where 4 = len([{'contract': '0914cfd619fe25629490435c6c4ff5a7942496285d696a033304444eeaccd35a', 'events': [{'event_id': 'base', 'tim...991', 'call_id': 'c', 'completed_at': 89, 'cost': {'bytes': 140, 'compute_ms': 1, 'requests': 0, 'tokens': 0}, ...}}]}])">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f27422a0460&gt;
+
+    def test_one_shared_prefix_hash_preserves_every_cutoff_snapshot(monkeypatch):
+        visible = bundle()
+        target = Target(**visible.policy_view()["target"])
+        extras = [admission.TypedOpportunity("other-" + str(i), target, 90) for i in range(3)]
+        engine, visible, events = setup_engine(visible, extras)
+        events.append(complete(visible, at=90))
+        calls = []
+        original = admission.fingerprint
+    
+        def fingerprint(value):
+            if isinstance(value, dict) and set(value) == {"contract", "events"}:
+                calls.append(value)
+            return original(value)
+    
+        monkeypatch.setattr(admission, "fingerprint", fingerprint)
+        engine.run(events, until=90)
+        assert len(engine.snapshots) == 4
+        expected = original({"contract": engine.contract_hash, "events": [e.to_dict() for e in events]})
+        assert {s["prefix_sha256"] for s in engine.snapshots.values()} == {expected}
+        assert {s["forecast"]["value"] for s in engine.snapshots.values()} == {-5}
+        assert {s["override_call_id"] for s in engine.snapshots.values()} == {"c"}
+&gt;       assert len(calls) == 1
+E       AssertionError: assert 4 == 1
+E        +  where 4 = len([{'contract': '0914cfd619fe25629490435c6c4ff5a7942496285d696a033304444eeaccd35a', 'events': [{'event_id': 'base', 'tim...991', 'call_id': 'c', 'completed_at': 89, 'cost': {'bytes': 140, 'compute_ms': 1, 'requests': 0, 'tokens': 0}, ...}}]}])
+
+tests/test_monitoring_seal_index.py:46: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,27 @@
+{
+  "status": "design_only_not_independence_proof",
+  "development_blocks": [
+    {
+      "id": "us_2025_jan06_12",
+      "calendars": [
+        "new_york",
+        "chicago",
+        "denver"
+      ],
+      "reason": "Treat concurrent regions conservatively together until synoptic-process identity is established."
+    },
+    {
+      "id": "us_west_2025_feb03_10",
+      "calendars": [
+        "bay_initial",
+        "bay_extension"
+      ],
+      "reason": "Contiguous regional dates and shared target windows cannot be separate confirmation groups."
+    }
+  ],
+  "future_split_rule": "Freeze new process/calendar blocks before labels or model outputs, keep all nearby stations, thresholds, source versions, leads and parent event together. Use full evidence/target window overlap plus at least24h purge; increase purge if process provenance shows longer dependence.",
+  "uncertainty_rule": "Compute paired block-level differences and resample whole blocks only after enough independently justified blocks exist; provide72h/7-day grouping sensitivity. Do not attach independent confidence intervals to this two-period development set.",
+  "population_rule": "Natural calendars and externally defined enriched extremes are separate estimands; never substitute enriched prevalence into operational Brier/calibration claims.",
+  "missingness_rule": "Use common outcome mask plus per-stratum missingness and existing prediction-conditional Brier bounds, reported on full opportunity denominator. A common mask alone is not population unbiasedness.",
+  "confirmation_gate": "Freeze prompts, models, costs, policies, main contrasts, minimum independent-block design, outcomes and resolution/maturity before opening reserved data; do not require positive LLM gain."
+}

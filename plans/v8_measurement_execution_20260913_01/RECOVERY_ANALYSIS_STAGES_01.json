@@ -1,0 +1,84 @@
+[
+  {
+    "stage": "analysis",
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/scripts/analyze_adaptive_results.py",
+      "--batch",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/gpu/adaptive_large_02",
+      "--audit",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/gpu/adaptive_large_02/audit_parallel_merged_01",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/adaptive_consolidated_analysis_01"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"registered_sessions\": 52, \"qualified_sessions\": 52, \"registered_opportunity_rows\": 11232, \"actual_model_calls_in_qualified_sessions\": 5108, \"issued_model_calls_all_sessions\": 5108, \"unique_generation_batch_seconds\": 13126.161705048755, \"all_metrics_match_independent_scores\": true, \"original_audit_sha256\": \"39958b4c077647e981f7c3f7453489b4ad185fcd58db0a511231255f05ee8fd7\", \"engineering_rehearsal\": false, \"new_model_calls\": 0, \"independent_confirmation\": false, \"interpretation\": [\"Posthoc exposed development descriptions; thresholds and protocols stay separate.\", \"Program time is a declared scenario and model delivery is measured; this is not deployment cost-effectiveness or a pure reasoning-only intervention.\", \"Changing selector or predictor can change subsequent evidence and timing. These are policy-level comparisons, not identical-input predictor effects.\", \"E availability is at cutoff; model E correctness is on its actual dispatch bundle, not evaluator-only later evidence.\", \"No-submission uses distinct registered opportunity IDs; repeated calls never enlarge the opportunity denominator.\", \"Per-call batch compute can count the same physical generation batch for multiple independent sessions; unique batch seconds are reported separately.\", \"Elapsed time outside measured model compute includes durable checkpoints, scheduling, transfer and controller observation; it is not an identified CPU-only or network-only bottleneck.\", \"Latency quantiles use nearest rank. No independent weather-process confidence interval is inferred from one day.\", \"Unknown is the benchmark undetermined status. Always-unknown is evaluated only on the same dispatched E bundles.\"]}\n",
+    "stderr": ""
+  },
+  {
+    "stage": "attribution",
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/scripts/explain_forecast_changes.py",
+      "--batch",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/gpu/adaptive_large_02",
+      "--analysis",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/adaptive_consolidated_analysis_01",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/forecast_attribution_consolidated_01"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"registered_sessions\": 52, \"qualified_sessions\": 52, \"qualified_cutoff_positions\": 11232, \"all_gains_sum_to_independent_scores\": true, \"engineering_rehearsal\": false, \"new_model_calls\": 0, \"source_hashes\": {\"VALIDATION.json\": \"8f5c2e04caaa198c5aecd0c299e4477d57d5ccaab709356da8101d1446b8af08\", \"ARMS.json\": \"61ef2dddc3e4dc1d5b101abbb46d0ad08ddcbcecb07f0ba27d1d363ee5c3ac3b\", \"OPPORTUNITIES.json\": \"180f21bf2e8e417bfbc5177e0222ba06a263f9b897b4975faaa162602ed59fb7\"}, \"interpretation\": [\"Descriptions use the admitted proposal and the baseline visible at dispatch versus cutoff; this is not causal source-version attribution.\", \"An unchanged numeric proposal may later differ from the current common baseline under a persistent override. It is not evidence that the model generated a new probability.\", \"Numeric differences may be rounding or another behavior; no deliberateness or extra information use is inferred.\", \"Same-value accepted overrides remain overrides. Failed or incomplete sessions are never filled in as model results.\"]}\n",
+    "stderr": ""
+  },
+  {
+    "stage": "visible",
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/scripts/analyze_visible_forecast_values.py",
+      "--batch",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/gpu/adaptive_large_02",
+      "--analysis",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/adaptive_consolidated_analysis_01",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/visible_forecast_values_consolidated_01"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"registered_sessions\": 52, \"qualified_sessions\": 52, \"model_predictor_calls\": 4916, \"model_proposals_equal_visible_state\": 4915, \"model_proposals_differ_from_dispatch_baseline\": 1054, \"model_proposals_differ_from_both_visible_probabilities\": 0, \"qualified_cutoff_positions\": 11232, \"all_gain_contributions_match_independent_scores\": true, \"new_model_calls\": 0, \"source_hashes\": {\"VALIDATION.json\": \"8f5c2e04caaa198c5aecd0c299e4477d57d5ccaab709356da8101d1446b8af08\", \"ARMS.json\": \"61ef2dddc3e4dc1d5b101abbb46d0ad08ddcbcecb07f0ba27d1d363ee5c3ac3b\", \"OPPORTUNITIES.json\": \"180f21bf2e8e417bfbc5177e0222ba06a263f9b897b4975faaa162602ed59fb7\"}, \"interpretation\": [\"Exact numeric equality to two visible fields, not causal evidence of copying or of evidence use.\", \"Matching the current state may differ from the latest common baseline under persistent overrides.\", \"Reading state.forecast.value reproduces matching numeric F proposals on these captured inputs; it does not reproduce E, selector choices or a new closed-loop experiment.\", \"A value different from both fields may be rounding or other behavior; it does not establish useful forecasting.\", \"Dispatch calls and cutoff positions have separate denominators; selector-only calls are not forecast answers.\", \"No source, response, model, scorer or frozen execution was changed by this posthoc report.\"]}\n",
+    "stderr": ""
+  },
+  {
+    "stage": "plot",
+    "command": [
+      "python3",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/scripts/plot_adaptive_results.py",
+      "--analysis",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/adaptive_consolidated_analysis_01",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/adaptive_consolidated_analysis_01/figures_01"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"groups\": 4, \"qualified_arms_plotted\": 52, \"engineering_rehearsal\": false}\n",
+    "stderr": ""
+  },
+  {
+    "stage": "scorecard",
+    "command": [
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/scripts/render_adaptive_scorecard.py",
+      "--analysis",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/adaptive_consolidated_analysis_01",
+      "--visible",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/visible_forecast_values_consolidated_01",
+      "--audit",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/gpu/adaptive_large_02/audit_parallel_merged_01",
+      "--attribution",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/reports/forecast_attribution_consolidated_01",
+      "--output",
+      "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/ADAPTIVE_SCORECARD_CN.md"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"output\": \"/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v8_measurement_execution_20260913_01/ADAPTIVE_SCORECARD_CN.md\", \"registered_methods\": 52}\n",
+    "stderr": ""
+  }
+]

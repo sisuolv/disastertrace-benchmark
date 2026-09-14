@@ -1,0 +1,135 @@
+.F..F................                                                    [100%]
+=================================== FAILURES ===================================
+___________ test_fresh_process_continues_original_pending_invocation ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0')
+
+    def test_fresh_process_continues_original_pending_invocation(tmp_path):
+        data, bank, session = pending_session(tmp_path)
+        spec = tmp_path / 'spec.json'
+        spec.write_text(json.dumps({'data': data, 'bank': bank, 'checkpoint': session.snapshot()}))
+        reply(tmp_path)
+        expected = session.finish()
+        result = tmp_path / 'continued.json'
+        code = '''
+    import json,sys
+    from pathlib import Path
+    from test_monitoring_pending_predictor import PendingFixtureBackend
+    from disastertrace.monitoring_v1.session_checkpoint import SessionCoordinator
+    spec=json.loads(Path(sys.argv[1]).read_text())
+    backend=PendingFixtureBackend(sys.argv[3])
+    session=SessionCoordinator.restore(spec['checkpoint'],spec['data'],spec['bank'],backend=backend)
+    report=session.finish()
+    assert session.done
+    Path(sys.argv[2]).write_text(json.dumps(report))
+    '''
+        env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONPATH=os.pathsep.join([
+            str(Path(__file__).parent), str(Path(__file__).parents[1] / 'src')]))
+>       subprocess.run([sys.executable, '-c', code, str(spec), str(result), str(tmp_path)], check=True, env=env)
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python'...-29/test_fresh_process_continues_o0/continued.json', '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0'],)
+kwargs = {'env': {'PYTHONDONTWRITEBYTECODE': '1', 'SCO_HOME': '/mnt/afs/260010168/.sco', 'SHELL': '/bin/bash', 'CODEX_MANAGED_PACKAGE_ROOT': '/mnt/afs/260010168/.npm-global/lib/node_modules/@openai/codex', ...}}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/.venv/bin/python', '-c', "\nimport json,sys\nfrom pathlib import Path\nfrom test_monitoring_pending_predictor import PendingFixtureBackend\nfrom disastertrace.monitoring_v1.session_checkpoint import SessionCoordinator\nspec=json.loads(Path(sys.argv[1]).read_text())\nbackend=PendingFixtureBackend(sys.argv[3])\nsession=SessionCoordinator.restore(spec['checkpoint'],spec['data'],spec['bank'],backend=backend)\nreport=session.finish()\nassert session.done\nPath(sys.argv[2]).write_text(json.dumps(report))\n", '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0/spec.json', '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0/continued.json', '/tmp/pytest-of-root/pytest-29/test_fresh_process_continues_o0']' returned non-zero exit status 1.
+
+/usr/lib/python3.10/subprocess.py:526: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "<string>", line 8, in <module>
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/session_checkpoint.py", line 250, in restore
+    bind_execution(config, backend)
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/execution.py", line 100, in bind_execution
+    raise ValueError("Backend execution contract differs from frozen identity")
+ValueError: Backend execution contract differs from frozen identity
+______ test_late_pending_response_keeps_actual_charge_and_cutoff_fallback ______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-29/test_late_pending_response_kee0')
+
+    def test_late_pending_response_keeps_actual_charge_and_cutoff_fallback(tmp_path):
+        _, _, session = pending_session(tmp_path)
+        reply(tmp_path)
+        path = tmp_path / 'forecast-0-reply.json'
+        row = json.loads(path.read_text())
+        row['details']['seconds'] = 4000
+        path.write_text(json.dumps(row))
+        report = session.finish()
+        assert session.done
+        assert report['resource_spent']['tokens'] == 31
+>       assert report['resource_spent']['compute_ms'] == 4_000_000
+E       assert 4000200 == 4000000
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:141: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_pending_predictor.py::test_fresh_process_continues_original_pending_invocation
+FAILED disastertrace-starter/tests/test_monitoring_pending_predictor.py::test_late_pending_response_keeps_actual_charge_and_cutoff_fallback

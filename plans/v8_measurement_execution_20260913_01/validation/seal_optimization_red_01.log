@@ -1,0 +1,59 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_noncutoff_does_not_sort_or_hash_event_prefix _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f274229cf40>
+
+    def test_noncutoff_does_not_sort_or_hash_event_prefix(monkeypatch):
+        engine, _bundle, events = setup_engine()
+        engine.run(events, until=60)
+        calls = []
+        original = engine._event_key
+    
+        def key(event):
+            calls.append(event.event_id)
+            return original(event)
+    
+        monkeypatch.setattr(engine, "_event_key", key)
+        engine._seal(61)
+        assert engine.snapshots == {}
+>       assert calls == []
+E       AssertionError: assert ['base', 'begin'] == []
+E         
+E         Left contains 2 more items, first extra item: 'base'
+E         Use -v to get more diff
+
+tests/test_monitoring_seal_index.py:22: AssertionError
+_________ test_one_shared_prefix_hash_preserves_every_cutoff_snapshot __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f27422a0460>
+
+    def test_one_shared_prefix_hash_preserves_every_cutoff_snapshot(monkeypatch):
+        visible = bundle()
+        target = Target(**visible.policy_view()["target"])
+        extras = [admission.TypedOpportunity("other-" + str(i), target, 90) for i in range(3)]
+        engine, visible, events = setup_engine(visible, extras)
+        events.append(complete(visible, at=90))
+        calls = []
+        original = admission.fingerprint
+    
+        def fingerprint(value):
+            if isinstance(value, dict) and set(value) == {"contract", "events"}:
+                calls.append(value)
+            return original(value)
+    
+        monkeypatch.setattr(admission, "fingerprint", fingerprint)
+        engine.run(events, until=90)
+        assert len(engine.snapshots) == 4
+        expected = original({"contract": engine.contract_hash, "events": [e.to_dict() for e in events]})
+        assert {s["prefix_sha256"] for s in engine.snapshots.values()} == {expected}
+        assert {s["forecast"]["value"] for s in engine.snapshots.values()} == {-5}
+        assert {s["override_call_id"] for s in engine.snapshots.values()} == {"c"}
+>       assert len(calls) == 1
+E       AssertionError: assert 4 == 1
+E        +  where 4 = len([{'contract': '0914cfd619fe25629490435c6c4ff5a7942496285d696a033304444eeaccd35a', 'events': [{'event_id': 'base', 'tim...991', 'call_id': 'c', 'completed_at': 89, 'cost': {'bytes': 140, 'compute_ms': 1, 'requests': 0, 'tokens': 0}, ...}}]}])
+
+tests/test_monitoring_seal_index.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_monitoring_seal_index.py::test_noncutoff_does_not_sort_or_hash_event_prefix
+FAILED tests/test_monitoring_seal_index.py::test_one_shared_prefix_hash_preserves_every_cutoff_snapshot

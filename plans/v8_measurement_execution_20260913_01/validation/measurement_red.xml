@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="9" time="0.648" timestamp="2026-09-13T15:14:57.794595+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_measurement_v2" name="test_old_arrival_and_withdrawal_do_not_replace_current" time="0.002" /><testcase classname="tests.test_monitoring_measurement_v2" name="test_equal_issue_conflict_has_no_id_selected_winner" time="0.005"><failure message="assert [-9, -1] == [-3.5, -3.5]&#10;  &#10;  At index 0 diff: -9 != -3.5&#10;  Use -v to get more diff">def test_equal_issue_conflict_has_no_id_selected_winner():
+        results = []
+        for names in [('a', 'z'), ('z', 'a')]:
+            engine, bundle, events = setup_engine()
+            one = revision(bundle, issue=50, value=-1, source='new1')
+            two = revision(bundle, issue=50, value=-9, source='new2')
+            engine.run(events[:1] + [AdmissionEvent(names[0], 70, 'baseline', {'bundle': one.to_dict()}),
+                                    AdmissionEvent(names[1], 70, 'baseline', {'bundle': two.to_dict()})], until=90)
+            results.append(engine.snapshots['o']['forecast']['value'])
+&gt;       assert results == [-3.5, -3.5]
+E       assert [-9, -1] == [-3.5, -3.5]
+E         
+E         At index 0 diff: -9 != -3.5
+E         Use -v to get more diff
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:40: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_invalid_batch_leaves_no_registered_events_or_journal[duplicate]" time="0.005"><failure message="AssertionError: assert [{'sequence':...d0aa5c', ...}] == [{'sequence':...028616', ...}]&#10;  &#10;  Left contains one more item: {'sequence': 3, 'event_id': 'good', 'payload': {'event_id': 'good', 'kind': 'follow', 'payload': {'target_id': 't'}, 'time': 65}, 'previous_sha256': 'bb163ad4e39a6a2817ae6b60be9f8b286924d7a9c3a5c4e857e21df816d0aa5c', ...}&#10;  Use -v to get more diff">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_invalid_batch_leaves_no_r0')
+bad_kind = 'duplicate'
+
+    @pytest.mark.parametrize('bad_kind', ['duplicate', 'invalid_target', 'backdated'])
+    def test_invalid_batch_leaves_no_registered_events_or_journal(tmp_path, bad_kind):
+        with EventJournal(tmp_path / 'transaction.jsonl') as journal:
+            engine, bundle, events = setup_engine(journal=journal)
+            engine.run(events[:1], until=55)
+            before = engine.export()
+            journal_before = copy.deepcopy(journal.records)
+            good = AdmissionEvent('good', 65, 'follow', {'target_id': 't'})
+            bad = {'duplicate': AdmissionEvent('good', 66, 'follow', {'target_id': 't'}),
+                   'invalid_target': AdmissionEvent('bad', 66, 'follow', {'target_id': 'missing'}),
+                   'backdated': AdmissionEvent('bad', 54, 'follow', {'target_id': 't'})}[bad_kind]
+            with pytest.raises(ValueError):
+                engine.run([good, bad], until=80)
+            assert engine.export() == before
+&gt;           assert journal.records == journal_before
+E           AssertionError: assert [{'sequence':...d0aa5c', ...}] == [{'sequence':...028616', ...}]
+E             
+E             Left contains one more item: {'sequence': 3, 'event_id': 'good', 'payload': {'event_id': 'good', 'kind': 'follow', 'payload': {'target_id': 't'}, 'time': 65}, 'previous_sha256': 'bb163ad4e39a6a2817ae6b60be9f8b286924d7a9c3a5c4e857e21df816d0aa5c', ...}
+E             Use -v to get more diff
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:57: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_invalid_batch_leaves_no_registered_events_or_journal[invalid_target]" time="0.004"><failure message="AssertionError: assert {'payload': {...e48b3db19785'} == {'payload': {...32a8a6b029e9'}&#10;  &#10;  Differing items:&#10;  {'sha256': '92af0eefc89c04efaad91289ae58854dbe23ba74a408f58933b5e48b3db19785'} != {'sha256': 'bf1294fa53b4fdaa098465d278b9bd2b77a02a288dd345cbbb6232a8a6b029e9'}&#10;  {'payload': {'attempts_sha256': '5af396cb72f4a49b0421d50e99eddf3dfd5d34dfd569d0072799b2726fac6c9e', 'calls_sha256': '4...hysical_end': 100, ...}}], 'protocol': 'base_bound_override', 'schema': 'disastertrace.typed_admission.v1', ...}, ...}} != {'payload': {'attempts_sha256': '4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945', 'calls_sha256': '4...hysical_end': 100, ...}}], 'protoco...&#10;  &#10;  ...Full output truncated (2 lines hidden), use '-vv' to show">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_invalid_batch_leaves_no_r1')
+bad_kind = 'invalid_target'
+
+    @pytest.mark.parametrize('bad_kind', ['duplicate', 'invalid_target', 'backdated'])
+    def test_invalid_batch_leaves_no_registered_events_or_journal(tmp_path, bad_kind):
+        with EventJournal(tmp_path / 'transaction.jsonl') as journal:
+            engine, bundle, events = setup_engine(journal=journal)
+            engine.run(events[:1], until=55)
+            before = engine.export()
+            journal_before = copy.deepcopy(journal.records)
+            good = AdmissionEvent('good', 65, 'follow', {'target_id': 't'})
+            bad = {'duplicate': AdmissionEvent('good', 66, 'follow', {'target_id': 't'}),
+                   'invalid_target': AdmissionEvent('bad', 66, 'follow', {'target_id': 'missing'}),
+                   'backdated': AdmissionEvent('bad', 54, 'follow', {'target_id': 't'})}[bad_kind]
+            with pytest.raises(ValueError):
+                engine.run([good, bad], until=80)
+&gt;           assert engine.export() == before
+E           AssertionError: assert {'payload': {...e48b3db19785'} == {'payload': {...32a8a6b029e9'}
+E             
+E             Differing items:
+E             {'sha256': '92af0eefc89c04efaad91289ae58854dbe23ba74a408f58933b5e48b3db19785'} != {'sha256': 'bf1294fa53b4fdaa098465d278b9bd2b77a02a288dd345cbbb6232a8a6b029e9'}
+E             {'payload': {'attempts_sha256': '5af396cb72f4a49b0421d50e99eddf3dfd5d34dfd569d0072799b2726fac6c9e', 'calls_sha256': '4...hysical_end': 100, ...}}], 'protocol': 'base_bound_override', 'schema': 'disastertrace.typed_admission.v1', ...}, ...}} != {'payload': {'attempts_sha256': '4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945', 'calls_sha256': '4...hysical_end': 100, ...}}], 'protoco...
+E             
+E             ...Full output truncated (2 lines hidden), use '-vv' to show
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:56: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_invalid_batch_leaves_no_registered_events_or_journal[backdated]" time="0.004"><failure message="AssertionError: assert [{'sequence':...d0aa5c', ...}] == [{'sequence':...028616', ...}]&#10;  &#10;  Left contains one more item: {'sequence': 3, 'event_id': 'good', 'payload': {'event_id': 'good', 'kind': 'follow', 'payload': {'target_id': 't'}, 'time': 65}, 'previous_sha256': 'bb163ad4e39a6a2817ae6b60be9f8b286924d7a9c3a5c4e857e21df816d0aa5c', ...}&#10;  Use -v to get more diff">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_invalid_batch_leaves_no_r2')
+bad_kind = 'backdated'
+
+    @pytest.mark.parametrize('bad_kind', ['duplicate', 'invalid_target', 'backdated'])
+    def test_invalid_batch_leaves_no_registered_events_or_journal(tmp_path, bad_kind):
+        with EventJournal(tmp_path / 'transaction.jsonl') as journal:
+            engine, bundle, events = setup_engine(journal=journal)
+            engine.run(events[:1], until=55)
+            before = engine.export()
+            journal_before = copy.deepcopy(journal.records)
+            good = AdmissionEvent('good', 65, 'follow', {'target_id': 't'})
+            bad = {'duplicate': AdmissionEvent('good', 66, 'follow', {'target_id': 't'}),
+                   'invalid_target': AdmissionEvent('bad', 66, 'follow', {'target_id': 'missing'}),
+                   'backdated': AdmissionEvent('bad', 54, 'follow', {'target_id': 't'})}[bad_kind]
+            with pytest.raises(ValueError):
+                engine.run([good, bad], until=80)
+            assert engine.export() == before
+&gt;           assert journal.records == journal_before
+E           AssertionError: assert [{'sequence':...d0aa5c', ...}] == [{'sequence':...028616', ...}]
+E             
+E             Left contains one more item: {'sequence': 3, 'event_id': 'good', 'payload': {'event_id': 'good', 'kind': 'follow', 'payload': {'target_id': 't'}, 'time': 65}, 'previous_sha256': 'bb163ad4e39a6a2817ae6b60be9f8b286924d7a9c3a5c4e857e21df816d0aa5c', ...}
+E             Use -v to get more diff
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:57: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_same_time_cancel_wins_before_uncommitted_completion" time="0.004"><failure message="assert -5 == -3.5">def test_same_time_cancel_wins_before_uncommitted_completion():
+        for identity in ('a-cancel', 'z-cancel'):
+            engine, bundle, events = setup_engine()
+            engine.run(events + [complete(bundle), AdmissionEvent(identity, 80, 'cancel', {'call_id': 'c'})], until=90)
+&gt;           assert engine.snapshots['o']['forecast']['value'] == -3.5
+E           assert -5 == -3.5
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:65: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_cancel_after_committed_completion_is_not_retroactive" time="0.002"><failure message="assert True is False">def test_cancel_after_committed_completion_is_not_retroactive():
+        engine, bundle, events = setup_engine()
+        engine.run(events + [complete(bundle), AdmissionEvent('cancel', 85, 'cancel', {'call_id': 'c'})], until=90)
+        assert engine.snapshots['o']['forecast']['value'] == -5
+&gt;       assert engine.calls['c']['canceled'] is False
+E       assert True is False
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:72: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_override_cannot_outlive_target_semantics" time="0.002"><failure message="AssertionError: assert 'accepted' == 'invalid_receipt'&#10;  &#10;  - invalid_receipt&#10;  + accepted">def test_override_cannot_outlive_target_semantics():
+        engine, bundle, events = setup_engine()
+        engine.run(events + [complete(bundle, expires_at=10000)], until=90)
+&gt;       assert engine.attempts[-1]['status'] == 'invalid_receipt'
+E       AssertionError: assert 'accepted' == 'invalid_receipt'
+E         
+E         - invalid_receipt
+E         + accepted
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:78: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_measurement_v2" name="test_comparison_rejects_different_baseline_histories" time="0.009"><failure message="Failed: DID NOT RAISE ValueError">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_comparison_rejects_differ0')
+
+    def test_comparison_rejects_different_baseline_histories(tmp_path):
+        paths = {}
+        target_hash = None
+        for name, value in [('left', -2), ('right', -9)]:
+            paths[name] = tmp_path / (name + '.jsonl')
+            with EventJournal(paths[name]) as journal:
+                engine, bundle, events = setup_engine(journal=journal)
+                target_hash = bundle.policy_view()['target']['target_id']
+                row = revision(bundle, issue=45, available=70, value=value)
+                engine.run(events[:1] + [AdmissionEvent('new', 70, 'baseline', {'bundle': row.to_dict()})], until=90)
+                target_hash = engine.targets[target_hash].contract_hash
+        outcomes = [{'opportunity_id': 'o', 'target_contract_hash': target_hash,
+                     'value': -4, 'status': 'mature', 'source_revision': 'obs'}]
+&gt;       with pytest.raises(ValueError, match='baseline'):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_measurement_v2.py:95: Failed</failure></testcase></testsuite></testsuites>

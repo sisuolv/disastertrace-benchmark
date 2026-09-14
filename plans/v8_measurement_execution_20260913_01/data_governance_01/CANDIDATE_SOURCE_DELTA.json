@@ -1,0 +1,914 @@
+{
+  "prior_registry": {
+    "path": "plans/user_authorized_sources_20260912/usage_01/USAGE_REGISTRY.json",
+    "sha256": "317f18b8289bd61f2262076c40309f532916370f236a22c7d3a3d06de6d5f067"
+  },
+  "inherited_source_count": 97,
+  "inherited_state_counts": {
+    "decoded_sample": 86,
+    "catalog_records_only": 7,
+    "no_decoded_target_sample": 2,
+    "authorization_pending": 2
+  },
+  "sources": [
+    {
+      "source_id": "D01",
+      "name": "NHC forecast advisories / GIS",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "96 个匹配目标不是 96 场独立气旋；历史公开可用时间仍未证实。"
+    },
+    {
+      "source_id": "D02",
+      "name": "IBTrACS v4r01",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D03",
+      "name": "Digital Typhoon V2",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "同一台风的连续帧；强度标签、版本和原始切分待连接。"
+    },
+    {
+      "source_id": "D04",
+      "name": "TCIR",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "只对 6 帧做数组检查；已暴露开发资料；需业务预报、历史可用时点及独立事件切分，不能把 4,580 帧当独立气旋。"
+    },
+    {
+      "source_id": "D05",
+      "name": "NOAA Storm Events Database",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D06",
+      "name": "SEVIR",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D07",
+      "name": "TorNet / v1.1 check",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "新增前缀不是成功 NetCDF 样本；仍缺实际正例及其与预警窗口的桥接。"
+    },
+    {
+      "source_id": "D08",
+      "name": "NOAA NEXRAD Level II",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "MetPy 报 unknown message 32；并非所有报文或科学 QC 都已验证。"
+    },
+    {
+      "source_id": "D09",
+      "name": "NOAA MRMS",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {
+        "h07_extension_01/decoded_01/REPORT.json": "b7b7a99fcd95b7862fa7ec313e9639572938da27301f9b1af9163be6ea9e99b9",
+        "h07_extension_01/semantic_contract_01/QUALIFICATION.json": "b724e9de784d508dfe447340a1bfcbae933f6c45eff3eb199c75a4828d8ce384"
+      },
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "产品别名不增加独立来源数；局地 GRIB 参数、负代码和时间支持待严格绑定。"
+    },
+    {
+      "source_id": "D10",
+      "name": "GOES GLM (inherited sampled product)",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "本项实际继承 3 个 20 秒 GLM 产品；新 ABI 样例单列 AW-ABI，避免重复统计。"
+    },
+    {
+      "source_id": "D11",
+      "name": "Global Flood Database v1",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "当前 3 点均非洪水；需事件内正例与质量有效区。回顾性洪水范围不等于未来流量真值。"
+    },
+    {
+      "source_id": "D12",
+      "name": "GEOID-Flood",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D13",
+      "name": "KuroSiwo",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "同一激活中的 3 组瓦片；标签图例、原始 train/test 身份、事件独立性需连接。"
+    },
+    {
+      "source_id": "D14",
+      "name": "UrbanSARFloods",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "GT 为经校验的窗口而非全文件下载；正瓦片按标签探查后选择，仅作开发可行性；需独立事件与任务时间链。"
+    },
+    {
+      "source_id": "D15",
+      "name": "Sen1Floods11 v1.1",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "已有真实配对样例；数据再分发条款歧义未解，先保留配方和引用。"
+    },
+    {
+      "source_id": "D16",
+      "name": "SpaceNet 8",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "原生网格不同；重投影配准、标签栅格化、覆盖和道路/建筑语义需单独核验。"
+    },
+    {
+      "source_id": "D17",
+      "name": "FloodNet",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "这 3 组没有建筑受淹/道路受淹像素，保留负例；需补正例、事件拆分及拍摄时点，灾后图像不自动支持预警。"
+    },
+    {
+      "source_id": "D18",
+      "name": "CEMS Rapid Mapping",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "实际取样是 Zamora 野火，不是原计划洪水 AOI；烧毁范围是事后参考；原始卫星影像与事件时点链须补齐。"
+    },
+    {
+      "source_id": "D19",
+      "name": "WildfireSpreadTS",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D20",
+      "name": "Next Day Wildfire Spread",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "整个 ZIP 未下载，未校验全包 CRC；原始时空事件身份和切分仍需核验。"
+    },
+    {
+      "source_id": "D21",
+      "name": "TS-SatFire",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "真实 19 波段数组可读；未来目标通道和有效掩膜语义未完成准入。"
+    },
+    {
+      "source_id": "D22",
+      "name": "Sen2Fire",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "当前 3 个掩膜全为负例；还需火灾正例、时序标签和独立火场身份。"
+    },
+    {
+      "source_id": "D23",
+      "name": "NASA FIRMS",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D24",
+      "name": "MTBS burned-area boundaries",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "历史周界/严重度属于事后产品；不提供原生次日火势或起火归因真值。"
+    },
+    {
+      "source_id": "D25",
+      "name": "ERA5-Land Hourly",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "再分析不能冒充当时预报；小时总降水与累积变量的定义需按各产品单独绑定。"
+    },
+    {
+      "source_id": "D26",
+      "name": "GHCN-Daily",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D27",
+      "name": "ISD / Global Hourly",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "ISD 已被 GHCNh 替代；保留旧冻结资产兼容，不用于持续获取当前站点数据。"
+    },
+    {
+      "source_id": "D28",
+      "name": "NOAA GFS 0.25 degree operational forecasts",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "同一次起报不构成修订序列；690 个冻雨非零格点属于预报，不是冻雨实测。"
+    },
+    {
+      "source_id": "D29",
+      "name": "IMERG V07 Early / Late",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "当前 E/L 样例降水均为 0；需要降水正例、累计时窗换算和版本延迟。GEE IMERG 接口不是 E/L 身份的替代证明。"
+    },
+    {
+      "source_id": "D30",
+      "name": "CHIRPS v3 DAILY_SAT",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D31",
+      "name": "US Drought Monitor",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D32",
+      "name": "SMAP Enhanced L3 Soil Moisture",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "最初小窗全缺测，保留失败；GEE 3 点推荐质量位未通过。必须联合冻土/植被/质量位，不能直接作骤旱标签。"
+    },
+    {
+      "source_id": "D33",
+      "name": "MODIS Snow MOD10A1.061",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "区分 0–100 雪盖值与云/水体/缺测代码；雪盖不等于新降雪、暴雪或冻雨。"
+    },
+    {
+      "source_id": "D34",
+      "name": "MODIS LST MOD11A1.061",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "地表温度不能替代 2m 气温；完整 QC、日夜条件与热浪持续性待规定。"
+    },
+    {
+      "source_id": "D35",
+      "name": "MERRA-2 aerosol diagnostics",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "再分析尘 AOD/近地面质量浓度不能单独作观测沙尘暴标签；需天气现象码等外部结果。"
+    },
+    {
+      "source_id": "D36",
+      "name": "Sentinel-5P OFFL Aerosol Index",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "低纬/极夜窗口可全缺测；L2 原生与 GEE L3 栅格身份不同，气溶胶指数不能单独区分烟尘或确定沙尘暴。"
+    },
+    {
+      "source_id": "D37",
+      "name": "NOAA CO-OPS water levels",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D38",
+      "name": "NOAA OISST v2.1",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D39",
+      "name": "EM-DAT",
+      "inherited_access_state": "catalog_records_only",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "User-authorized acquisition/use in this workspace; raw data and signed links remain local; redistribution terms not independently approved.",
+      "remaining_gates_cn": "只作事件目录；7,463 条核心记录缺经纬度，日期粒度不一；灾害报告阈值与漏报偏差、2026 年未完结、事件归并和再分发条件需遵循。缺记录不能作负例。"
+    },
+    {
+      "source_id": "D40",
+      "name": "NASA EONET v3",
+      "inherited_access_state": "catalog_records_only",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "仅事件检索；含非天气灾害，不能当像元或未来预警真值。"
+    },
+    {
+      "source_id": "D41",
+      "name": "GDACS",
+      "inherited_access_state": "catalog_records_only",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "目录/告警条目不等同独立观测结果；需灾种过滤与版本/时间保存。"
+    },
+    {
+      "source_id": "D42",
+      "name": "Sentinel-1 GRD",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "GEE 是经处理的 GRD 产品；不等于原始 SAFE 全处理链已验证，也不增加独立 SAR 来源数。"
+    },
+    {
+      "source_id": "D43",
+      "name": "Sentinel-2 SR Harmonized",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "当前 GEE 3 点为高概率云，不能纳入清晰地表任务；缩放/offset/重采样和云质量需严格处理。"
+    },
+    {
+      "source_id": "D44",
+      "name": "xBD",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "User-authorized acquisition/use in this workspace; raw data and signed links remain local; redistribution terms not independently approved.",
+      "remaining_gates_cn": "三组来自同一 Florence 过程、原 hold split，现为开发样例。像素/经纬度标签转换与 native affine 不一致，空间评分阻断；样例无损伤正类；完整分卷未下载校验，原始 PNG 与 TIFF 像素配准未证实。"
+    },
+    {
+      "source_id": "D45",
+      "name": "CrisisMMD v2.0",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "社交相关性与影响标签不是天气真值；需转发去重、素材使用条款与真实拍摄/发布时点，过滤非天气事件。"
+    },
+    {
+      "source_id": "D46",
+      "name": "Landslide4Sense",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D47",
+      "name": "ExEBench / EarthExtreme-Bench",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D48",
+      "name": "ExtremeWeatherBench",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D49",
+      "name": "WeatherQA",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "这里只验证官方图文内容；图为不同天气变量，不能按时刻计数；预报讨论文字不是独立灾害结果真值。"
+    },
+    {
+      "source_id": "D50",
+      "name": "CyPortQA",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "3 组图文可读；公告精确时间和港口影响标签待核，不能自动作未来结果。"
+    },
+    {
+      "source_id": "D51",
+      "name": "WorldFloods v2 / ml4floods",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "一组图像不是独立事件覆盖；混合来源许可和标签/时序定义需核验。"
+    },
+    {
+      "source_id": "D52",
+      "name": "DroughtED",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D53",
+      "name": "M4Fog",
+      "inherited_access_state": "no_decoded_target_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "尚未取得原生多模态 cube；需要可直接下载的作者分包或已登录网盘访问。"
+    },
+    {
+      "source_id": "D54",
+      "name": "CLLMate",
+      "inherited_access_state": "catalog_records_only",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D55",
+      "name": "SNODAS SWE",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D56",
+      "name": "USGS continuous observations",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "当前样例均为 Provisional；地点、变量、基准及冻结质量政策逐任务绑定。"
+    },
+    {
+      "source_id": "D57",
+      "name": "NWPS stage forecasts",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "普通 API 的滚动服务不证明历史业务版本；当前阈值不自动适用于历史。"
+    },
+    {
+      "source_id": "D58",
+      "name": "NDBC Buoys",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D59",
+      "name": "MeteoNet",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D60",
+      "name": "Caravan",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D61",
+      "name": "HANZE v2.1",
+      "inherited_access_state": "catalog_records_only",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D62",
+      "name": "Dheed",
+      "inherited_access_state": "catalog_records_only",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D63",
+      "name": "DAWN",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "视觉条件数据缺乏可验证时空/天气严重度，Fog 样例文件名含 haze；只能先作视觉辅助集。"
+    },
+    {
+      "source_id": "D64",
+      "name": "SenForFlood",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "掩膜 0/1/2 的准确图例、波段定义及精确观测 UTC 尚未确认；不得把非零统一当洪水，暂不评分二值洪水/未来预警。"
+    },
+    {
+      "source_id": "D65",
+      "name": "FPA-FOD6",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D66",
+      "name": "WeatherBench2 ERA5",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "继承既有解析结论；本轮复核原文件哈希，未重跑所有旧解码器。"
+    },
+    {
+      "source_id": "D67",
+      "name": "NOAA HRRR operational forecasts",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "冻雨样例全零；仅确认数值字段可读，尚无实际冬季正例链。"
+    },
+    {
+      "source_id": "D68",
+      "name": "HKO-7",
+      "inherited_access_state": "authorization_pending",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "雷达影像和掩膜须由高校/研究机构成员签署承诺书，并用机构邮箱申请；本机没有这部分样本。"
+    },
+    {
+      "source_id": "D69",
+      "name": "GESLA current / GESLA-3 candidate",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "不是已锁定的 GESLA-3 版本；站点基准、flag1/flag2和天文潮/风暴潮区分仍需核验。"
+    },
+    {
+      "source_id": "D70",
+      "name": "ESWD",
+      "inherited_access_state": "authorization_pending",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "需要确认研究用途的数据访问许可和批量提供方式。"
+    },
+    {
+      "source_id": "D71",
+      "name": "CAMELSH",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "流量 m3/s、水位 m 分开；缺测格不是有效观测；需水位基准、质量成熟度和专业预报匹配，所取成员不含完整气象驱动。"
+    },
+    {
+      "source_id": "D72",
+      "name": "MSETCD / MSCAR",
+      "inherited_access_state": "no_decoded_target_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "MSCAR 是代码/模型而非另一独立数据集；原生 MSETCD 影像尚未取回。"
+    },
+    {
+      "source_id": "D73",
+      "name": "CMA Best Track",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "User-authorized acquisition/use in this workspace; raw data and signed links remain local; redistribution terms not independently approved.",
+      "remaining_gates_cn": "官方格式页仍返回 468。经纬度比例、风速单位/平均时段、缺失码及 UTC 定义待原始文档绑定；最佳路径是事后分析，历史预报配对和发布时间另验。"
+    },
+    {
+      "source_id": "D74",
+      "name": "NOAA Billion-Dollar Disasters",
+      "inherited_access_state": "catalog_records_only",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "经济损失阈值决定入选，地区偏差明显；只作影响事件索引。"
+    },
+    {
+      "source_id": "AW-HURDAT2",
+      "name": "NHC HURDAT2 Atlantic",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "同机构事后分析 P；不用作独立原始传感器 O。"
+    },
+    {
+      "source_id": "AW-HEFS",
+      "name": "NOAA HEFS QINE ensemble",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {
+        "hydro_e_extension_01/FREE_COMMON_BASELINE_CONTROL.json": "ebffcf33edfed93df404a0bde70c7b2d43bc8eb5f79c46a353ffe0132fd6e1c4"
+      },
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "流量 CFS 不能直接套用水位洪水阈值；成员权重、flag 与概率合同待冻结。"
+    },
+    {
+      "source_id": "AW-NIMS",
+      "name": "USGS NIMS cameras",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "仅作条件性原生视觉证据；不把像素直接反演为精确水位 Gold。"
+    },
+    {
+      "source_id": "AW-GHCNH",
+      "name": "NOAA GHCNh current hourly archive",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "不是整年下载；9 月气温 QC 为空不能当作通过 QC。温度已为摄氏度，能见度为 km，现象码含 TS:17 等字符串。"
+    },
+    {
+      "source_id": "AW-GEFS",
+      "name": "NOAA GEFS ensemble",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "仅抽样两个成员；不能用此宣称完整集合、官方概率或已校准概率。"
+    },
+    {
+      "source_id": "AW-SPC",
+      "name": "SPC Day 1 convective outlook",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "28 层不是 28 个独立预报或灾害；DN、CIG 与区域/时间支持需按版本解释。"
+    },
+    {
+      "source_id": "AW-MESH",
+      "name": "MRMS MESH",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "本地 ecCodes 名称/单位为 unknown，含负代码；先补官方局地表/有效掩膜再设阈值，不能等同地面雹径。"
+    },
+    {
+      "source_id": "AW-QPE",
+      "name": "MRMS MultiSensor QPE 01H Pass2",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {
+        "h07_extension_01/decoded_01/REPORT.json": "b7b7a99fcd95b7862fa7ec313e9639572938da27301f9b1af9163be6ea9e99b9",
+        "h07_extension_01/semantic_contract_01/QUALIFICATION.json": "b724e9de784d508dfe447340a1bfcbae933f6c45eff3eb199c75a4828d8ce384"
+      },
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "文件名为 1h QPE，但通用 GRIB 解码显示 instant/unknown units；产品累计窗、单位、Pass2 延迟与代码表须以产品规范绑定。"
+    },
+    {
+      "source_id": "AW-ABI",
+      "name": "GOES-19 ABI C01 / C13",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "两个通道/同一上游不是独立事件；原始变量、投影及 DQF 必须保留。"
+    },
+    {
+      "source_id": "AW-METAR",
+      "name": "AWC METAR observations",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {
+        "shadow_capture_01/poll_00/metar.receipt.json": "714b202e897766f1faf983d0b72636215bf61533fb356947fbcfd0ad091293b1"
+      },
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "滚动接口不是长期历史档案；SM/kt 等原始单位及能见度上下界要解析。"
+    },
+    {
+      "source_id": "AW-TAF",
+      "name": "AWC TAF forecasts",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {
+        "development_dataset_v2/BUILD.json": "f5c7723ee133aaf8b5dd16b07a1bf24e8a9c08ede3f1f059be5877a63d6732ec",
+        "shadow_capture_01/poll_00/taf.receipt.json": "db253329ca8dcd22c6a8d56b3722ffcf51f89ef3bf2466c99c0c50f56b701da9"
+      },
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "FM/TEMPO/PROB 语义与机场范围必须保留；TAF 预报雾不能作未来观测标签。"
+    },
+    {
+      "source_id": "AW-IEM",
+      "name": "IEM historical METAR archive",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {
+        "development_dataset_v2/BUILD.json": "f5c7723ee133aaf8b5dd16b07a1bf24e8a9c08ede3f1f059be5877a63d6732ec",
+        "regional_calendar_extension_01/BATCH_COMPLETE.json": "9809addce541235bf63c9cb8925aab8b9f1c0371f601b3354e75941fe85445ef",
+        "reports/large_model_diagnostic_01/VALIDATION.json": "8a4c9a3f31f6574b42d2e7bd26a844ffa6276c23afcffec186b17e82b52b9f92"
+      },
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "IEM 是历史站报再分发端，不是独立传感器；两次选择性历史过程均已暴露，仅作开发/可行性材料。"
+    },
+    {
+      "source_id": "AW-EDDI",
+      "name": "NOAA EDDI 01-month",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "文件没有显式 CRS；EDDI 不直接等于土壤水分、闪旱或已发布预报。"
+    },
+    {
+      "source_id": "AW-CPC",
+      "name": "CPC Seasonal Drought Outlook",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "季节性分类展望不对应下一周 USDM 概率；类别及空间范围保持原产品定义。"
+    },
+    {
+      "source_id": "AW-OFS",
+      "name": "NOAA CBOFS station forecast",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "模型位置尚无正式 CO-OPS 站号/垂直基准桥；不能直接和潮位站阈值比较。"
+    },
+    {
+      "source_id": "AW-PETSS",
+      "name": "NOAA P-ETSS tide/surge station bulletins",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "明确 NOT VALID FOR TROPICAL STORM；e10 概率含义、时间对齐、基准及 -400 代码未准入。"
+    },
+    {
+      "source_id": "AW-WPC",
+      "name": "WPC QPF / winter products",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "当前只验证 QPF；冬季雪/冰概率及厚度产品仍须独立抽样。"
+    },
+    {
+      "source_id": "AW-GWIS",
+      "name": "GWIS FWI map service",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "FWI 不是起火概率；缺原始签发版本与历史发布证明；完整原生格点导出另核。"
+    },
+    {
+      "source_id": "AW-EFFIS",
+      "name": "EFFIS fire danger service",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "与 GWIS 共享 ECMWF 后端，不能作为另一独立模型；缺签发版本、历史发布时间和格点导出验证。"
+    },
+    {
+      "source_id": "AW-CAMS",
+      "name": "CAMS dust/composition forecast",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "光学厚度不等于地面沙尘暴；未来有效窗、现象观测和延迟需配对。"
+    },
+    {
+      "source_id": "AW-GLOFAS",
+      "name": "GloFAS operational forecast",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "网格与河网/站点匹配、平均时窗及阈值不能默认兼容。"
+    },
+    {
+      "source_id": "AW-EFAS",
+      "name": "EFAS operational forecast",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "公共下载约有 30 天延迟；实时合作伙伴权限未验证，不宣称实时 EFAS 可用。"
+    },
+    {
+      "source_id": "AW-SMAPL4",
+      "name": "SMAP L4 SPL4SMGP v008",
+      "inherited_access_state": "decoded_sample",
+      "new_evidence": {},
+      "current_all_versions_downloadability_retested": false,
+      "inherited_licence_status": "See inherited source-specific licence evidence; this access audit is not blanket redistribution approval",
+      "remaining_gates_cn": "同化产品不是独立实测真值；时制、冻结/积雪和质量支持仍需细化。"
+    }
+  ],
+  "separately_qualified_extension": {
+    "name": "EUPPBench forecast / DWD Berus station460 native reference pair",
+    "evidence": {
+      "temperature_extension_01/THERMAL_TARGET_CARD.json": "9e3d616beedba503613b1d746eb352838ba4b5712b08e642c1cbdc346305d153",
+      "temperature_extension_01/admission_01/REPORT.json": "392cd527649e3b82a003089725c7062d4c290c48ea4bea356f6b6727f2832d10"
+    },
+    "registry_note": "Separate v7/v8 point-temperature extension; not silently counted as one of the inherited97 or a complete extreme-temperature chain."
+  },
+  "counting_rule": "Registered products, mirrors and benchmark wrappers are not independent weather sources, tasks, hazards or events. Historical decoded_sample means a particular sample was parsed, not every current endpoint/version was retested."
+}

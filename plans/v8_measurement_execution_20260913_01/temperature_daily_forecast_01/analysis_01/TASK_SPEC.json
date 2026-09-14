@@ -1,0 +1,58 @@
+{
+  "schema": "disastertrace.native_daily_extreme_candidate.v1",
+  "created_at": "2026-09-14T00:34:36.352310+00:00",
+  "station_id": 460,
+  "member_count": 51,
+  "initialization_selection": "All730acquired native coordinate indices, no event filtering.",
+  "forecast_available_at_scenario": "native initialization plus3h;not historically proved first publication",
+  "forecast_cutoff": "native initialization plus4h",
+  "daily_target_indices": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "daily_target_window": "UTC00:00to24:00;day0retained as an excluded partial-window case",
+  "daily_maximum": "max of four complete consecutive native mx2t6 intervals",
+  "daily_minimum": "min of four complete consecutive native mn2t6 intervals",
+  "daily_predicates": {
+    "hot_day": {
+      "field": "TXK",
+      "operator": ">=",
+      "threshold_C": 30
+    },
+    "frost_day": {
+      "field": "TNK",
+      "operator": "<",
+      "threshold_C": 0
+    },
+    "ice_day": {
+      "field": "TXK",
+      "operator": "<",
+      "threshold_C": 0
+    }
+  },
+  "duration_candidates": {
+    "fixed_threshold_hot_spell_3d": {
+      "daily_predicate": "hot_day",
+      "consecutive_days": 3
+    },
+    "fixed_threshold_ice_spell_3d": {
+      "daily_predicate": "ice_day",
+      "consecutive_days": 3
+    }
+  },
+  "duration_start_day_indices": [
+    1,
+    2
+  ],
+  "duration_probability": "fraction of same-initialization ensemble members satisfying all3daily predicates;never a product of marginal probabilities",
+  "outcome_reference_period": [
+    "2017-01-01",
+    "2018-12-31"
+  ],
+  "out_of_reference_period": "retained as unscored, never imputed or selectively dropped",
+  "forecast_track": "raw operational-ensemble product coordinate diagnostic under declared archive availability",
+  "independent_confirmation": false,
+  "new_model_calls": 0
+}

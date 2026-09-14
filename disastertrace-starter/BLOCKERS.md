@@ -1,5 +1,55 @@
 # Blockers
 
+## v8 remaining gates, 2026-09-13
+
+No additional user authorization is needed for this twelve-hour execution.
+The235B/8B fixed-input run and40 full-day program canonical comparisons pass.
+Adaptive235B job `pt-ug2dg5ln` uses four H100s;52 sessions and at most5,376 model
+calls are registered. Actual model execution and independent adaptive scoring
+are pending; submission/RUNNING status alone is not qualification.
+
+The initial adaptive qualifier stopped on a changed raw Git index hash.
+Read-only comparison proves all13,521 staged entries and flags unchanged; the
+original snapshot remains preserved. INDEX_EQUIVALENCE_01.json records this
+non-content change; source/data hashes are still checked without relaxation.
+
+Remaining research gates: severe-event positives, independent weather-process
+counts/grouping, regional training/calibration, fair adaptive results, X09
+same-input joint-target reasoning, MM/D value, and full16-hazard qualification.
+X09 now has a qualified fixed-input protocol and independent evaluator; actual
+inference remains conditional on the original52-session batch/audit finishing
+before the declared latest start. No extra permission is needed for that scope.
+No LLM forecast gain or independent novelty confirmation is claimed. Program
+shared evidence increases E determination but does not improve aggregate F
+on this one development day. Correct E is not a future-forecast upper bound.
+
+W08 qualifies committed source/selector/predictor recovery across local serial
+processes, now also with an exogenous synthetic D schedule on the shared clock.
+Five real local worker/restore boundaries pass on the same27 native opportunities.
+The new current-F adapter passes12 conditional D trajectories and new-process
+continuations on a fixed captured native forecast stream. Arbitrary concurrent
+requests, physical external reconciliation, full-session D/acquisition/model
+feedback and real mitigation value remain; the D scenario is still synthetic.
+
+New regional calendars have actual native downloads but no qualified regional
+probability map. Feb17-23 reserved confirmation is unopened. Point temperatures
+need final multi-day extreme definitions. New Berus daily TXK/TNK and their00-24UTC
+support qualify730 native reference days; existing instant EUPP t2m is not a matched
+daily-extreme forecast. A later EUPP mx2t6/mn2t6 product now supports a real two-year
+daily/duration candidate, independently verified probabilities and480typed snapshot
+replays. Continuous sessions,full common forecasts/supplementary-evidence contracts,
+real publication times,final extreme definitions and independent processes remain.
+Controlled native C2 subsets remain separate from C1/model claims.
+MRMS needs physical endpoints and matched F/MM.
+HEFS QINE/member/regulated-flow/reference-station equivalence is not established;
+its full common forecast E is already freely known. Remaining97-source access
+states are86 decoded samples,7 catalogs,2 without decoded targets,2 authorization
+pending; this execution does not reassert universal current endpoint availability.
+
+Bounded current AWC capture completes34requests and25unique parsed products.
+It is source-only and records actual collector receipts,
+not global first-publication time, and has no submitted live model probabilities.
+
 ## Gates after typed adaptive integration, 2026-09-13
 
 The typed quiescent coordinator is now connected: actual session acquisition

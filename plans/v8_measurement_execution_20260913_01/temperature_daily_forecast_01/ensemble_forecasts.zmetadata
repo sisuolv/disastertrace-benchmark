@@ -1,0 +1,856 @@
+{
+    "metadata": {
+        ".zattrs": {
+            "Conventions": "CF-1.7",
+            "GRIB_centre": "ecmf",
+            "GRIB_centreDescription": "European Centre for Medium-Range Weather Forecasts",
+            "GRIB_edition": 1,
+            "GRIB_subCentre": 0,
+            "coordinates": "model_altitude station_latitude model_orography station_longitude station_name station_land_usage model_latitude model_longitude model_land_usage station_altitude",
+            "history": "2022-04-22T15:56 GRIB to CDM+CF via cfgrib-0.9.10.1/ecCodes-2.24.2 with {\"source\": \"N/A\", \"filter_by_keys\": {}, \"encode_cf\": [\"parameter\", \"time\", \"geography\", \"vertical\"]}\nGrid point values extracted with xarray by Jonathan Demaeyer, August 2022",
+            "institution": "European Centre for Medium-Range Weather Forecasts",
+            "land usage history": "Retrieved from https://land.copernicus.eu/pan-european/corine-land-cover, July 2022",
+            "land usage legend": "{1: {'label': '111 - Continuous urban fabric', 'numeric_label': 111, 'color': '#e6004d'}, 2: {'label': '112 - Discontinuous urban fabric', 'numeric_label': 112, 'color': '#ff0000'}, 3: {'label': '121 - Industrial or commercial units', 'numeric_label': 121, 'color': '#cc4df2'}, 4: {'label': '122 - Road and rail networks and associated land', 'numeric_label': 122, 'color': '#cc0000'}, 5: {'label': '123 - Port areas', 'numeric_label': 123, 'color': '#e6cccc'}, 6: {'label': '124 - Airports', 'numeric_label': 124, 'color': '#e6cce6'}, 7: {'label': '131 - Mineral extraction sites', 'numeric_label': 131, 'color': '#a600cc'}, 8: {'label': '132 - Dump sites', 'numeric_label': 132, 'color': '#a64d00'}, 9: {'label': '133 - Construction sites', 'numeric_label': 133, 'color': '#ff4dff'}, 10: {'label': '141 - Green urban areas', 'numeric_label': 141, 'color': '#ffa6ff'}, 11: {'label': '142 - Sport and leisure facilities', 'numeric_label': 142, 'color': '#ffe6ff'}, 12: {'label': '211 - Non-irrigated arable land', 'numeric_label': 211, 'color': '#ffffa8'}, 13: {'label': '212 - Permanently irrigated land', 'numeric_label': 212, 'color': '#ffff00'}, 14: {'label': '213 - Rice fields', 'numeric_label': 213, 'color': '#e6e600'}, 15: {'label': '221 - Vineyards', 'numeric_label': 221, 'color': '#e68000'}, 16: {'label': '222 - Fruit trees and berry plantations', 'numeric_label': 222, 'color': '#f2a64d'}, 17: {'label': '223 - Olive groves', 'numeric_label': 223, 'color': '#e6a600'}, 18: {'label': '231 - Pastures', 'numeric_label': 231, 'color': '#e6e64d'}, 19: {'label': '241 - Annual crops associated with permanent crops', 'numeric_label': 241, 'color': '#ffe6a6'}, 20: {'label': '242 - Complex cultivation patterns', 'numeric_label': 242, 'color': '#ffe64d'}, 21: {'label': '243 - Land principally occupied by agriculture with significant areas of natural vegetation', 'numeric_label': 243, 'color': '#e6cc4d'}, 22: {'label': '244 - Agro-forestry areas', 'numeric_label': 244, 'color': '#f2cca6'}, 23: {'label': '311 - Broad-leaved forest', 'numeric_label': 311, 'color': '#80ff00'}, 24: {'label': '312 - Coniferous forest', 'numeric_label': 312, 'color': '#00a600'}, 25: {'label': '313 - Mixed forest', 'numeric_label': 313, 'color': '#4dff00'}, 26: {'label': '321 - Natural grasslands', 'numeric_label': 321, 'color': '#ccf24d'}, 27: {'label': '322 - Moors and heathland', 'numeric_label': 322, 'color': '#a6ff80'}, 28: {'label': '323 - Sclerophyllous vegetation', 'numeric_label': 323, 'color': '#a6e64d'}, 29: {'label': '324 - Transitional woodland-shrub', 'numeric_label': 324, 'color': '#a6f200'}, 30: {'label': '331 - Beaches - dunes - sands', 'numeric_label': 331, 'color': '#e6e6e6'}, 31: {'label': '332 - Bare rocks', 'numeric_label': 332, 'color': '#cccccc'}, 32: {'label': '333 - Sparsely vegetated areas', 'numeric_label': 333, 'color': '#ccffcc'}, 33: {'label': '334 - Burnt areas', 'numeric_label': 334, 'color': '#000000'}, 34: {'label': '335 - Glaciers and perpetual snow', 'numeric_label': 335, 'color': '#a6e6cc'}, 35: {'label': '411 - Inland marshes', 'numeric_label': 411, 'color': '#a6a6ff'}, 36: {'label': '412 - Peat bogs', 'numeric_label': 412, 'color': '#4d4dff'}, 37: {'label': '421 - Salt marshes', 'numeric_label': 421, 'color': '#ccccff'}, 38: {'label': '422 - Salines', 'numeric_label': 422, 'color': '#e6e6ff'}, 39: {'label': '423 - Intertidal flats', 'numeric_label': 423, 'color': '#a6a6e6'}, 40: {'label': '511 - Water courses', 'numeric_label': 511, 'color': '#00ccf2'}, 41: {'label': '512 - Water bodies', 'numeric_label': 512, 'color': '#80f2e6'}, 42: {'label': '521 - Coastal lagoons', 'numeric_label': 521, 'color': '#00ffa6'}, 43: {'label': '522 - Estuaries', 'numeric_label': 522, 'color': '#a6ffe6'}, 44: {'label': '523 - Sea and ocean', 'numeric_label': 523, 'color': '#e6f2ff'}, 48: {'label': '999 - NODATA', 'numeric_label': 999, 'color': '#ffffff'}}",
+            "land usage source": "European Union, Copernicus Land Monitoring Service 2022, European Environment Agency (EEA)",
+            "model altitude history": "Retrieved from https://land.copernicus.eu/imagery-in-situ/eu-dem/eu-dem-v1.1, July 2022",
+            "model altitude source": "European Union, Copernicus Land Monitoring Service 2022, European Environment Agency (EEA)"
+        },
+        ".zgroup": {
+            "zarr_format": 2
+        },
+        "cp6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "cp6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "mn2t6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "mn2t6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "model_altitude/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "model_altitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "model_land_usage/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "model_land_usage/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "model_latitude/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "model_latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "model_longitude/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "model_longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "model_orography/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "model_orography/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "mx2t6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "mx2t6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "number/.zarray": {
+            "chunks": [
+                51
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i8",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "number/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "number"
+            ],
+            "long_name": "ensemble member numerical id",
+            "standard_name": "realization",
+            "units": "1"
+        },
+        "p10fg6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "p10fg6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "slhf6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "slhf6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "sshf6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "sshf6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "ssr6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "ssr6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "ssrd6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "ssrd6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "station_altitude/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "station_altitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "station_id/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i4",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "station_id/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "station_land_usage/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "station_land_usage/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "station_latitude/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "station_latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "station_longitude/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "station_longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "station_name/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<U20",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51
+            ],
+            "zarr_format": 2
+        },
+        "station_name/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id"
+            ]
+        },
+        "step/.zarray": {
+            "chunks": [
+                20
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i8",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                20
+            ],
+            "zarr_format": 2
+        },
+        "step/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "step"
+            ],
+            "units": "hours"
+        },
+        "str6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "str6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "strd6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "strd6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "surface/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "surface/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "surface"
+            ],
+            "long_name": "original GRIB coordinate for key: level(surface)",
+            "units": "1"
+        },
+        "time/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i8",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                730
+            ],
+            "zarr_format": 2
+        },
+        "time/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "time"
+            ],
+            "calendar": "proleptic_gregorian",
+            "long_name": "initial time of forecast",
+            "standard_name": "forecast_reference_time",
+            "units": "seconds since 1970-01-01"
+        },
+        "tp6/.zarray": {
+            "chunks": [
+                1,
+                51,
+                730,
+                20,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                51,
+                51,
+                730,
+                20,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "tp6/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "station_id",
+                "number",
+                "time",
+                "step",
+                "surface"
+            ],
+            "coordinates": "valid_time"
+        },
+        "valid_time/.zarray": {
+            "chunks": [
+                1,
+                20
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i8",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                730,
+                20
+            ],
+            "zarr_format": 2
+        },
+        "valid_time/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "step"
+            ],
+            "calendar": "proleptic_gregorian",
+            "units": "hours since 2017-01-01T06:00:00"
+        }
+    },
+    "zarr_consolidated_format": 1
+}

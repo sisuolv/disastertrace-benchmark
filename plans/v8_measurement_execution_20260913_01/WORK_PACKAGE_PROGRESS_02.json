@@ -1,0 +1,325 @@
+{
+  "at": "2026-09-14T02:45:50.703946+00:00",
+  "plan_ref": "../v8_integrated_20260913/WORK_PACKAGES.json",
+  "updates_original_plan_in_place": false,
+  "tasks": [
+    {
+      "id": "W00",
+      "title_cn": "保全现状与建立新执行目录",
+      "status": "completed_for_registered_scope",
+      "current_scope": "complete",
+      "original_acceptance": [
+        "绑定当前源码、发布提交、Git索引及原数据/结果清单；不重置脏工作区。",
+        "新执行目录不覆盖旧冻结、捕获、失败记录或已消费launch。"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "W01",
+      "title_cn": "将已确认边界转为生产入口回归与合同ADR",
+      "status": "completed_for_registered_scope",
+      "current_scope": "502 distinct tests:485 current core+5 launch-bound+6 joint-analysis+6 visible-value attribution;no failures/errors/skips. Adaptive source retains439-test freeze.",
+      "original_acceptance": [
+        "保留本轮17/5及8组探针的原始回执，新的red运行另建目录。",
+        "区分有效入口实错、扩展风险及已有保护；同刻规则、截止和版本优先级先明确。",
+        "测试直接使用生产入口和真实journal编码/解码，不只检验复制片段。"
+      ],
+      "depends_on": [
+        "W00"
+      ]
+    },
+    {
+      "id": "W02",
+      "title_cn": "统一原生版本、覆盖和基线语义",
+      "status": "completed_for_registered_scope",
+      "current_scope": "complete_for_current_H15_native_series",
+      "original_acceptance": [
+        "先按逻辑产品系列裁决当前版本，再检查固定目标覆盖；旧到达/旧撤回不能抹掉新版。",
+        "同刻冲突与ID重命名无关；不可证优先级标明冲突，不按下载顺序猜测。",
+        "F构建、独立E、support bridge及runtime共用语义；空候选不制造证据身份。",
+        "银行描述绑定真实训练期；修正构建输出使用新版本，不覆盖旧数据。"
+      ],
+      "depends_on": [
+        "W01"
+      ]
+    },
+    {
+      "id": "W03",
+      "title_cn": "事件原子性与失败持久化终态",
+      "status": "partial",
+      "current_scope": "synchronous_dispositions_complete; inflight_is_W08",
+      "original_acceptance": [
+        "在现有单时钟中先校验后提交，非法批次与重入不留下重复或半注册状态。",
+        "source/selector/predictor的发送、返回、持久化、失败、取消、未知均有幂等状态。",
+        "超公共时隙保留回答和违约；是否超目标截止独立判定，费用不截断为免费。",
+        "发送后未知保守预留并自动查询原回执；无强制人工补判、无免费隐式重试。"
+      ],
+      "depends_on": [
+        "W01"
+      ]
+    },
+    {
+      "id": "W04",
+      "title_cn": "规范结果注册与公平比较合同",
+      "status": "completed_for_registered_scope",
+      "current_scope": "canonical_real_outcomes_frozen_for_432_opportunities",
+      "original_acceptance": [
+        "同target_contract_hash与resolution_version有唯一结果，跨提前量引用一致。",
+        "结果来源、物理支持、单位、时间、质量与成熟度绑定，未来标签不进入模型可见信息。",
+        "共同基线流/银行、机会、结果、资料/工具宇宙、时间/成本相同；显式允许预登记干预。",
+        "不同基线/结果的非法比较拒绝，X01合法分配与授权差异可以比较；缺失保留原因。"
+      ],
+      "depends_on": [
+        "W01"
+      ]
+    },
+    {
+      "id": "W05",
+      "title_cn": "资源、请求、动作与执行后端身份",
+      "status": "completed_for_registered_scope",
+      "current_scope": "typed_auto_propose_and_execution_contract_qualified",
+      "original_acceptance": [
+        "离散费用严格类型化；source/selector/predictor计数独立并受声明总资源约束。",
+        "predict=False下合法获取不受predictor调用上限错误封锁；query slot绑定输入与授权。",
+        "候选有效期上界与任务合同一致；proposed/admitted/effective动作可区分。",
+        "同值OVERRIDE不改写成FOLLOW；恢复绑定真实backend合同，变更须显式intervention。"
+      ],
+      "depends_on": [
+        "W01"
+      ]
+    },
+    {
+      "id": "W06",
+      "title_cn": "历史影响审计及旧模型回答分解",
+      "status": "completed_for_registered_scope",
+      "current_scope": "94_captures_432_selections_360_model_responses_reaudited",
+      "original_acceptance": [
+        "从432机会元数据筛查继续核原文、版本系列及同目标结果，逐机会列unchanged/affected/not_evaluated。",
+        "核旧108及新252捕获的输入、收费、完成/持久化/截止与采纳；不抹除失败或同值override。",
+        "覆盖/版本E错误分为原生日期、版本选择、数值时间和区间关系；不能由旧捕获识别的因素单列。",
+        "派生修正分数另存并并列原分数，不能计为新调用或独立确认。"
+      ],
+      "depends_on": [
+        "W00",
+        "W01"
+      ]
+    },
+    {
+      "id": "W07",
+      "title_cn": "432机会全日历程序对照",
+      "status": "completed_for_registered_scope",
+      "current_scope": "All40 full-day trajectories,4 optimized independent groups and4 original slow scorer groups finish. All shared canonical fields exactly match; original_scorer_comparison_03/VALIDATION.json.",
+      "original_acceptance": [
+        "按NEXT_BATCH第7节冻结唯一臂及alias，统一基线/预测器/动作/资源条件。",
+        "432机会保留全分母与两个阈值分层，包含强batch、risk/coverage和固定selector的2x2。",
+        "报告候选与有效预测、成本、缺失、回退及help/harm/no-change；一天只作描述性分析。",
+        "同步/静止点程序路径无需等W08；全读不是F上界，超预算全读不进等预算主比较。"
+      ],
+      "depends_on": [
+        "W02",
+        "W03",
+        "W04",
+        "W05",
+        "W06"
+      ]
+    },
+    {
+      "id": "W08",
+      "title_cn": "CP04b真实在途及持久化跨进程恢复",
+      "status": "partial",
+      "current_scope": "Serial original source/selector/predictor recovery also carries a synthetic exogenous D schedule on the same clock;5 actual worker/restore boundaries on27 native opportunities pass. General concurrency and external exactly-once remain.",
+      "original_acceptance": [
+        "复原pending源请求/模型/持久化、预留与并发、输入、权限、版本、控制状态及模型身份。",
+        "同策略恢复与显式干预分开；真实未知请求自动对账，不能声称远端物理调用exactly-once。",
+        "CPU捕获重放验证精确相等；新GPU采样不以相同seed保证逐token相等。",
+        "D完整状态仅在其场景资格成立后接入，不阻塞本包source/model主恢复。"
+      ],
+      "depends_on": [
+        "W02",
+        "W03",
+        "W04",
+        "W05"
+      ]
+    },
+    {
+      "id": "W09",
+      "title_cn": "真实残余资源图与联合C2见证",
+      "status": "partial",
+      "current_scope": "real_quiescent_3_target_graph_10_engine_witnesses_pass",
+      "original_acceptance": [
+        "静止点图绑定实际已花/预留、缓存授权、版本、处理依赖、合法完成时间及每目标截止。",
+        "验证单目标可达但联合不可达、共享一次覆盖多目标、低费路径来不及三类情况。",
+        "小图精确、大图可行见证与界，每条见证经实际engine状态副本复放。",
+        "gold/隐藏mask不作为已见信息，E充分和最优值不能替代F/D最优。"
+      ],
+      "depends_on": [
+        "W02",
+        "W04",
+        "W05"
+      ]
+    },
+    {
+      "id": "W10",
+      "title_cn": "单一时间表示因素的原生E诊断",
+      "status": "completed_for_registered_scope",
+      "current_scope": "Both models finish504 benchmark+1 compatibility each; frozen independent scorer passes1008 benchmark captures; epoch/ISO and evidence conditions diagnostic only.",
+      "original_acceptance": [
+        "同任务/完整原文/信息/输出和分母，唯一变化为已给绝对时间的可逆表示。",
+        "替模型解析原生DDHH端点属额外处理条件，不能冒称纯epoch转ISO。",
+        "拟36任务x2表示=72新调用；先绑定实际任务数、模型、源代码与单用freeze，未冻结不派发。",
+        "记录全部失败与成本，旧回答保留；固定输入诊断不要求全W08。"
+      ],
+      "depends_on": [
+        "W02",
+        "W03",
+        "W04",
+        "W06"
+      ]
+    },
+    {
+      "id": "W11",
+      "title_cn": "更长自然日历、极端诊断集与强基线",
+      "status": "partial",
+      "current_scope": "7-day full information-control evaluation complete:3024 opportunities,9072 engine replays; severe threshold zero positives; 5km17 unique positive targets",
+      "original_acceptance": [
+        "日历设计可早做，实际扩展按数据/测量门槛，不以补证正收益为前置。",
+        "自然连续集与按外部定义的事件富集集分开，普通/零正例日不选择性删除。",
+        "P/R基线与训练/校准时段明确；B、f(B)、f(B,E)及合法一步/两步和强批量同条件。",
+        "独立天气过程/保守时空块定义、purge及样本量估计预登记，不按模型胜负选日或停止。"
+      ],
+      "depends_on": [
+        "W06",
+        "W07"
+      ]
+    },
+    {
+      "id": "W12",
+      "title_cn": "公平自适应LLM开发与联合推理",
+      "status": "partial",
+      "current_scope": "52 full24h sessions and4 canonical comparison groups qualified;5108 real calls. Separate supplemental audit completes scoring; original automatic audit incomplete at shell deadline. X09 not launched; full W12 remains partial.",
+      "original_acceptance": [
+        "固定selector测分配x授权，再同global/shared比selector；再以selector x predictor拆贡献。",
+        "强批量/风险/覆盖对照、B/f(B)/f(B,E)、真实调用成本及两种修订协议齐全。",
+        "私有上下文/记忆与跨目标摘要边界被冻结，无免费泄漏或后见oracle当普通策略。",
+        "X09保持同输入的单目标与联合推理；可输出边际，不强制新增非线性风险任务。",
+        "无收益或负收益是合法结果，不强迫模型改概率。"
+      ],
+      "depends_on": [
+        "W07",
+        "W08",
+        "W09",
+        "W11"
+      ]
+    },
+    {
+      "id": "W13",
+      "title_cn": "温度类型迁移与极端定义准入",
+      "status": "partial",
+      "current_scope": "Native point-temperature and daily-reference results preserved. New EUPP mx2t6/mn2t6:all730native coordinates,1489200six-hour values;2920future-day pairs and2920three-day event rows. Independent8760daily/2920duration probability positions and16scores match. Registry11680opportunities/3661targets;480snapshot engine replays pass. Continuous adaptive session,real publication and final independent extreme definitions remain.",
+      "original_acceptance": [
+        "沿用EUPP/DWD点温度真实配对，单位、正时效和availability情景绑定新会话。",
+        "现有120程序提交不是自适应机制确认；先验证类型迁移再定义日/多日极端。",
+        "热浪/寒潮需连续阈值及独立过程，不把一般点温度MAE当灾害验证。"
+      ],
+      "depends_on": [
+        "W02",
+        "W03",
+        "W04",
+        "W05"
+      ]
+    },
+    {
+      "id": "W14",
+      "title_cn": "H07连续物理过程与原生MM",
+      "status": "partial",
+      "current_scope": "12 MRMS grids decoded; official NOAA/NSSL table qualifies mm,1-hour duration,-1 missing,-3 no coverage. Exact physical endpoint and first-seen remain gated.",
+      "original_acceptance": [
+        "先核已有MRMS/雷达/站点窗口、量纲、网格、QC、合法可用时间及连续性。",
+        "VIL/累计不直接替代雨率；专业nowcast仅在匹配目标/输入门槛后绑定版本。",
+        "同源原生图/合法特征/计费工具与特权感知诊断分轨，新增传感器单列。",
+        "选择第二过程依据预登记数据门槛，H01候补不由模型胜负决定。"
+      ],
+      "depends_on": [
+        "W00"
+      ]
+    },
+    {
+      "id": "W15",
+      "title_cn": "H08物理语义与版本E资格",
+      "status": "partial",
+      "current_scope": "Native HEFS product-content E pilot complete with 2788 states. FREE_COMMON_BASELINE_CONTROL resolves all697 predicates at zero query cost; charged archive frontiers are standalone transport diagnostics and ineligible for C1 main-track acquisition gain. Physical F unqualified.",
+      "original_acceptance": [
+        "核历史43列QINE成员/调蓄与USGS同断面、瞬时或平均、量纲及物理支持。",
+        "版本E可先做；数值或洪水F未通过物理等价不得评分。",
+        "flow/stage/空间淹没分别准入，不因一个站点配对就称河洪、山洪、内涝全通。"
+      ],
+      "depends_on": [
+        "W00"
+      ]
+    },
+    {
+      "id": "W16",
+      "title_cn": "D-sim场景及固定F准备对照",
+      "status": "partial",
+      "current_scope": "12 conditional D trajectories read current admitted F on9 native targets/27 opportunities; all108 repeated F rows unchanged;12 journal and12 process continuations pass. Original24 synthetic controls and integrated exogenous recovery retained. Full session feedback, model D and operational benefit remain.",
+      "original_acceptance": [
+        "复用PreparationReducer与同一时钟；保留旧ready容量/闭区间，新crew/protection语义另版本。",
+        "定义准备/取消/清理/容量/有效期与真实耗费，不要求人工补判。",
+        "先固定F比阈值/EDF/滚动优化器，信息依赖合法，无未来结果供可部署策略使用。",
+        "D的研究损失和核心天气预测分表；不同DecisionSpec获取可不同，同证据固定F的配对才要求F不变。"
+      ],
+      "depends_on": [
+        "W03",
+        "W05"
+      ]
+    },
+    {
+      "id": "W17",
+      "title_cn": "独立核心机制确认与条件扩展确认",
+      "status": "design_only",
+      "current_scope": "Exposed-calendar overlap audit confirms30shared Bay threshold targets/68shared catalogTAFversions;12528opportunities reduce to4296targets/2148station windows. Independent process count unknown;reserved week unopened.",
+      "original_acceptance": [
+        "开发暴露材料不作确认；冻结提示/方法/成本/采纳/结果/主指标及过程分组。",
+        "采用独立过程或保守时空块，块级不确定性、缺失分层/敏感性及暂定/成熟分表。",
+        "核心E/F确认不以D/MM/前瞻/16类完成或LLM正收益为前置。",
+        "MM及D结论须各自新独立任务和冻结确认，不能借核心成绩过关。"
+      ],
+      "depends_on": [
+        "W12"
+      ]
+    },
+    {
+      "id": "W18",
+      "title_cn": "有限前瞻影子采集与后续结算",
+      "status": "partial",
+      "current_scope": "Completed4h source-only capture:17polls/34successfulrequests/25uniqueproducts(18METAR,7TAF),native parsing passes. No submitted forecasts or prospective skill claim.",
+      "original_acceptance": [
+        "本采集器first_seen、实际提交、物理目标/产品发布和后续结算分别记录。",
+        "历史回放足以推进核心；前瞻真实未成熟保留pending，不要求等待未来作为核心前置。",
+        "不把collector首次见到当全网首发，也不将再分析/未来产品结果泄漏给模型。"
+      ],
+      "depends_on": [
+        "W02",
+        "W03",
+        "W04",
+        "W05"
+      ]
+    },
+    {
+      "id": "W19",
+      "title_cn": "持续分级发布及完整16类治理",
+      "status": "partial",
+      "current_scope": "97-source/16-hazard governance,502 distinct tests, portable replay and final local review package; full16-hazard release incomplete.",
+      "original_acceptance": [
+        "继承97登记项和16类合同，逐子目标列获取/解码/语义/配对/可用时间/E/F/MM/D/确认。",
+        "工程、H15开发、独立机制、多过程MM、D、完整16类分级，已合格子集可独立交付。",
+        "单样本解码或E合格不计完整F链，镜像不增加来源独立数。",
+        "许可、敏感信息和捕获绑定到发布范围；版本变化不覆盖旧结果，GPU/网络不作为本计划验收需求。"
+      ],
+      "depends_on": [
+        "W00"
+      ]
+    }
+  ],
+  "status_rule": "Completed means the registered current scope, not every future extension or16-hazard admission. Runtime progress may supersede this snapshot in EXECUTION_STATUS.json."
+}

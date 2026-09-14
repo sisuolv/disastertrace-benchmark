@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="3.142" timestamp="2026-09-13T17:16:46.486875+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_pending_predictor" name="test_unresolved_poll_is_idempotent_and_never_redispatches" time="0.763"><failure message="AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac..._predictor.v3'&#10;  &#10;  - disastertrace.session_inflight_predictor.v3&#10;  + disastertrace.session_unresolved.v2">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-27/test_unresolved_poll_is_idempo0')
+
+    def test_unresolved_poll_is_idempotent_and_never_redispatches(tmp_path):
+&gt;       _, _, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-27/test_unresolved_poll_is_idempo0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(forecast_call_cap=1, model_call_budget=1)
+        session = SessionCoordinator(data, bank, config, backend=PendingFixtureBackend(directory))
+        session.step()
+        checkpoint = session.snapshot()
+&gt;       assert checkpoint['payload']['schema'] == 'disastertrace.session_inflight_predictor.v3'
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac..._predictor.v3'
+E         
+E         - disastertrace.session_inflight_predictor.v3
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:51: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_pending_predictor" name="test_fresh_process_continues_original_pending_invocation" time="0.859"><failure message="AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac..._predictor.v3'&#10;  &#10;  - disastertrace.session_inflight_predictor.v3&#10;  + disastertrace.session_unresolved.v2">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-27/test_fresh_process_continues_o0')
+
+    def test_fresh_process_continues_original_pending_invocation(tmp_path):
+&gt;       data, bank, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-27/test_fresh_process_continues_o0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(forecast_call_cap=1, model_call_budget=1)
+        session = SessionCoordinator(data, bank, config, backend=PendingFixtureBackend(directory))
+        session.step()
+        checkpoint = session.snapshot()
+&gt;       assert checkpoint['payload']['schema'] == 'disastertrace.session_inflight_predictor.v3'
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac..._predictor.v3'
+E         
+E         - disastertrace.session_inflight_predictor.v3
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:51: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_pending_predictor" name="test_pending_frame_cannot_change_selection_after_dispatch" time="0.605"><failure message="AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac..._predictor.v3'&#10;  &#10;  - disastertrace.session_inflight_predictor.v3&#10;  + disastertrace.session_unresolved.v2">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-27/test_pending_frame_cannot_chan0')
+
+    def test_pending_frame_cannot_change_selection_after_dispatch(tmp_path):
+&gt;       _, _, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-27/test_pending_frame_cannot_chan0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(forecast_call_cap=1, model_call_budget=1)
+        session = SessionCoordinator(data, bank, config, backend=PendingFixtureBackend(directory))
+        session.step()
+        checkpoint = session.snapshot()
+&gt;       assert checkpoint['payload']['schema'] == 'disastertrace.session_inflight_predictor.v3'
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac..._predictor.v3'
+E         
+E         - disastertrace.session_inflight_predictor.v3
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:51: AssertionError</failure></testcase></testsuite></testsuites>

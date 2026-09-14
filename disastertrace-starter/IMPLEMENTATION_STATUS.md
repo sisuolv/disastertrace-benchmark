@@ -1,5 +1,122 @@
 # Implementation Status
 
+## v8 measurement execution, 2026-09-13
+
+Entry: `../plans/v8_measurement_execution_20260913_01/README_CN.md`.
+The user authorizes twelve hours and at most four simultaneous H100s. This
+execution preserves original captures/frozen source and the original Git index
+snapshot. A raw-index byte change is identified as non-staged-content state:
+all13,521 staged paths, object IDs, modes, stages and flags match exactly.
+`INDEX_EQUIVALENCE_01.json` records the read-only check. No stage/commit/push.
+
+485 current related core regressions,5 launch-bound,6 joint-analysis and6 visible-value attribution tests pass
+with zero failures/errors/skips; see `REGRESSION_MATRIX_07.json` and
+`validation/full_joint_targets_24.xml`. The adaptive model batch retains its frozen
+439-test version. Earlier red/failure records remain.
+Native current-version-before-coverage, atomic transactions, canonical outcomes,
+resource/request/backend identities and explicit program/model predictor roles
+are qualified for the registered H15 scope. The selector now explicitly sees
+program forecasts cost zero model calls/tokens and model forecasts cost one call.
+
+All40 original full-day program trajectories and all four independent canonical
+comparison groups pass. The posthoc decomposition matches every original score.
+All four original slow scorer groups also finish and exactly match the optimized
+canonical fields; `reports/original_scorer_comparison_03/VALIDATION.json` records
+the comparison without rerunning the original trajectories.
+At5km/base-bound, fixed-selector private/shared evidence contrasts increase
+E determination from8 to174 under fixed quota and27 to213 under global budget,
+but their future Brier scores are worse than Follow on this one development day.
+W07 has72 source queries and public30s call slots; the new W12 has48 queries
+and measured model delivery. Never pool the batches to infer an LLM effect.
+
+Qwen3-235B-A22B-Instruct-2507-FP8 and fresh8B control each complete504 benchmark
+calls plus1 compatibility call. Four-H100 job `pt-kb7tiwn5` succeeds; all1,008
+benchmark responses independently validate and score. The235B E-only scores are
+43/48 common-only,2/48 one-read,47/48 all-registered;8B scores are48/48,45/48,3/48.
+All288 large-model F proposals keep dispatch baseline;8B changes three. Preserve
+negative results. This is neither adaptive nor independent confirmation.
+
+Fresh adaptive batch `gpu/adaptive_large_02` has52 full-day sessions and a5,376
+model-call ceiling on four H100s; job `pt-ug2dg5ln` is submitted and running.
+No model-result claim follows until its independent auditor finishes. Earlier
+large01 is rejected before inference for the selector-role fee contradiction.
+Two52-session engineering rehearsals and the latest8 affected role/protocol/
+threshold cases independently pass at18 opportunities per session; the actual
+full-day model batch has216 per session. Separately, all240 full-day requests and24 selector
+shape variants fit with max9,782 tokens. Rehearsals make zero model calls.
+
+Source/selector/predictor each pass real-native-data, separate-local-process
+committed-response recovery with27 opportunities. This does not establish
+physical external exactly-once or arbitrary concurrency. Real C2 includes10
+engine-replayed witnesses on3 targets: individually reachable but joint optimum1
+at2 queries, joint3 at3 queries, and0 after a late start. No F-optimality claim.
+
+Five exposed H15 calendars contain12,528 unique cutoff opportunities,4,296
+threshold targets and2,148 station-time windows; independent weather-process
+count is unknown. New York/Chicago/Denver each have3 stations x7 days acquired
+and decoded, but no regional bank fit or model score. Reserved Feb17-23 Bay
+confirmation remains unopened. Missingness and dependence design are written.
+
+Two-year EUPP/DWD point validation has14,600 future opportunities,14,430 settled,
+170 missing and960 scalar admission replays. It is not a heatwave/cold-wave task.
+MRMS12-hour grids have official unit/QC/duration mapping; exact physical endpoints,
+first-seen and matched F/MM remain. HEFS697 common times and2,788 version-E states
+are qualified as native product tasks: a complete common HEFS resolves all697
+for zero extra queries, so charged transport is not a C1 main-track gain.
+The native DWD daily reference additionally qualifies730 days of TXK/TNK with
+official Celsius and00-24UTC support. There are22 hot,114 frost and28 ice days.
+On720 complete paired days, six-hour observations miss8 hot and18 frost days.
+Existing EUPP instant t2m is not a matched daily-extreme forecast; full heatwave
+and cold-wave F remains gated. See TEMPERATURE_DAILY_REFERENCE_CN.md.
+
+The later native-extrema extension resolves the acquisition part of that gap:
+EUPP mx2t6/mn2t6 supplies1,489,200 values and all730init/14,600valid-time coordinates.
+It yields2,920future-day pairs(2,910with reference),2,920three-day event positions
+(2,906with reference),11,680canonical opportunities/3,661targets. Independent
+probability/native-label scoring and480monthly typed snapshot replays pass.
+Availability remains a declared3h scenario; raw member frequencies are uncalibrated.
+The prose noon-run discrepancy is retained against actual00UTC coordinates and
+one native GRIB header sample. This is not a continuous adaptive session or an
+independent confirmation. See TEMPERATURE_DAILY_FORECAST_CN.md and its receipts.
+
+The4h AWC source collector completes17polls/34successfulrequests. All25unique
+products(18METAR,7TAF) parse; no model forecasts were submitted. A separate
+read-only dependence audit finds30shared target contracts and68catalogTAFversions
+between the Bay daily calendars; source-period splitting alone is not independence.
+
+D-sim has6 synthetic scenarios x4 fixed-F policies,24 trajectories and192 demand
+settlements;24 journal replays and24 new-process continuations match. An optional
+exogenous preparation schedule now uses the same typed session clock. Real-native
+source/selector/predictor transport cases pass5 separate-process continuations on
+the same27 opportunities, with one D start and cleanup each, no duplicate costs.
+See `reports/real_preparation_recovery_summary_01/VALIDATION.json`. The two driver
+failures are preserved; successful predictor/selector cases were not repeated.
+The admitted-F decision adapter also passes12 conditional native-F trajectories
+on9 unique targets/27 opportunities, preserving all108 repeated F rows. Each
+journal and new-process continuation matches. It rereads current effective
+forecasts, but uses a captured fixed F stream, not full-session D/acquisition/model
+feedback. General concurrency, model-chosen D and real mitigation remain.
+A bounded4h AWC source-only capture
+is running; its actual TAF/METAR receipts decode, with no live model forecast.
+
+A12.9MB portable subset replays Follow/shared-batch original journals with216
+opportunities each after relocation, Python networking disabled, identical to
+original scores. It is not a raw-acquisition rebuild or a model-token audit.
+See RUN_REPORT_CN.md, NEXT_PHASE_PLAN_CN.md and the current EXECUTION_STATUS.json.
+`EVIDENCE_CASEBOOK_CN.md` adds576 independently calculated disclosed-interval
+witnesses matching the original E scorer,144 bound TAF results and14 deterministic
+posthoc examples. It neither resubmits model calls nor changes the original score.
+
+X09 fixed-information single/three-target output has384 registered requests and
+576 repeated target-answer positions on48 exposed opportunities. The offline
+qualification and independent empty-capture audit pass; the latter has no model
+metrics. A separate one-use four-H100 freeze can launch only after the adaptive
+job succeeds and all52 sessions audit, before01:15UTC. See X09_PROTOCOL_CN.md.
+Both scopes see the same context;512 output tokens per request gives unequal
+group-level output budgets (three single requests versus one multi request).
+Report quality, output limits and input amortization separately. General typed
+session multi-target admission and private/shared causal effects are not claimed.
+
 ## v7 typed adaptive next step, 2026-09-13
 
 Execution: `../plans/v7_adaptive_execution_20260913/`. The existing session loop

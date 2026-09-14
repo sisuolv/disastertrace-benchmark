@@ -1,0 +1,1542 @@
+[
+  {
+    "case": "1000__base_bound_override__A06_llm_program",
+    "group": "1000__base_bound_override",
+    "arm": "A06_llm_program",
+    "threshold_m": 1000,
+    "protocol": "base_bound_override",
+    "status": "qualified",
+    "registered_opportunities": 18,
+    "config": {
+      "allocation_mode": "global_budget",
+      "authorization_mode": "session_shared",
+      "selector_kind": "llm",
+      "predictor_kind": "program",
+      "request_budget": 4,
+      "model_call_budget": 20
+    },
+    "formal_score": 0.0008072324677129099,
+    "F_metrics": {
+      "opportunities": 18,
+      "settled": 18,
+      "missing": 0,
+      "professional_baseline_opportunities": 0,
+      "base_brier": 0.0008335047109485203,
+      "system_brier": 0.0008072324677129099,
+      "net_realized_gain": 2.6272243235610424e-05,
+      "g_plus": 6.876179849165381e-05,
+      "g_minus": 4.248955525604339e-05,
+      "full_population_gain_bounds": [
+        2.6272243235610424e-05,
+        2.6272243235610424e-05
+      ],
+      "strata": [
+        {
+          "region": "station:KOAK",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSJC",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        }
+      ],
+      "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+    },
+    "positive_opportunities": 0,
+    "unique_positive_targets": 0,
+    "F_change_counts": {
+      "harm": 14,
+      "effective_probability_changed": 18,
+      "effective_override": 18,
+      "same_value_override": 0,
+      "help": 4
+    },
+    "E_availability_at_cutoff": {
+      "refuted": 6,
+      "undetermined": 12
+    },
+    "E_determined_at_cutoff": 6,
+    "E_model_calls": 0,
+    "E_opportunities_with_model_submission": 0,
+    "E_opportunities_without_model_submission": 18,
+    "E_call_counts": {},
+    "E_confusion": [],
+    "actual_model_calls": 0,
+    "program_forecasts": 18,
+    "source_queries": 4,
+    "resource_spent": {
+      "bytes": 2911,
+      "compute_ms": 420,
+      "requests": 4,
+      "tokens": 0
+    },
+    "resource_reserved": {
+      "bytes": 0,
+      "compute_ms": 0,
+      "requests": 0,
+      "tokens": 0
+    },
+    "role_costs": {
+      "selector": {
+        "callbacks": 2,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 2,
+          "sum": 8.408818393945694e-05,
+          "mean": 4.204409196972847e-05,
+          "p50": 3.717653453350067e-05,
+          "p95": 4.691164940595627e-05,
+          "max": 4.691164940595627e-05
+        },
+        "delivery_elapsed_seconds": {
+          "n": 2,
+          "sum": 2.2454002949999996,
+          "mean": 1.1227001474999998,
+          "p50": 1.032905351,
+          "p95": 1.212494944,
+          "max": 1.212494944
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 2,
+          "sum": 2.24531620681606,
+          "mean": 1.12265810340803,
+          "p50": 1.032858439350594,
+          "p95": 1.2124577674654664,
+          "max": 1.2124577674654664
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      },
+      "predictor": {
+        "callbacks": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "delivery_elapsed_seconds": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      }
+    },
+    "attempt_statuses": {
+      "baseline_withdrawn": 136,
+      "accepted": 18
+    },
+    "forecast_admission_statuses": {
+      "accepted": 18
+    },
+    "source_report_sha256": "61f2c1f4cbf188019acd16dee020c0f97f5bff3afd2e798b3501814cfa865bda"
+  },
+  {
+    "case": "1000__base_bound_override__A12_llm_llm",
+    "group": "1000__base_bound_override",
+    "arm": "A12_llm_llm",
+    "threshold_m": 1000,
+    "protocol": "base_bound_override",
+    "status": "qualified",
+    "registered_opportunities": 18,
+    "config": {
+      "allocation_mode": "global_budget",
+      "authorization_mode": "session_shared",
+      "selector_kind": "llm",
+      "predictor_kind": "llm",
+      "request_budget": 4,
+      "model_call_budget": 20
+    },
+    "formal_score": 0.0008072324677129099,
+    "F_metrics": {
+      "opportunities": 18,
+      "settled": 18,
+      "missing": 0,
+      "professional_baseline_opportunities": 0,
+      "base_brier": 0.0008335047109485203,
+      "system_brier": 0.0008072324677129099,
+      "net_realized_gain": 2.6272243235610424e-05,
+      "g_plus": 6.876179849165381e-05,
+      "g_minus": 4.248955525604339e-05,
+      "full_population_gain_bounds": [
+        2.6272243235610424e-05,
+        2.6272243235610424e-05
+      ],
+      "strata": [
+        {
+          "region": "station:KOAK",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSJC",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        }
+      ],
+      "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+    },
+    "positive_opportunities": 0,
+    "unique_positive_targets": 0,
+    "F_change_counts": {
+      "harm": 14,
+      "effective_probability_changed": 18,
+      "effective_override": 18,
+      "same_value_override": 0,
+      "help": 4
+    },
+    "E_availability_at_cutoff": {
+      "refuted": 6,
+      "undetermined": 12
+    },
+    "E_determined_at_cutoff": 6,
+    "E_model_calls": 18,
+    "E_opportunities_with_model_submission": 18,
+    "E_opportunities_without_model_submission": 0,
+    "E_call_counts": {
+      "parsed_answers": 18,
+      "correct_parsed_answers": 18,
+      "correct_accepted_answers": 18,
+      "unsupported_determination": 0,
+      "unsupported_determination_accepted": 0,
+      "contrary_determination": 0,
+      "always_unknown_correct_on_same_dispatched_bundles": 12,
+      "changed_F_from_dispatch_base": 18
+    },
+    "E_confusion": [
+      {
+        "expected_E_at_dispatch": "refuted",
+        "reported_E": "refuted",
+        "count": 6
+      },
+      {
+        "expected_E_at_dispatch": "undetermined",
+        "reported_E": "undetermined",
+        "count": 12
+      }
+    ],
+    "actual_model_calls": 0,
+    "program_forecasts": 0,
+    "source_queries": 4,
+    "resource_spent": {
+      "bytes": 2911,
+      "compute_ms": 630,
+      "requests": 4,
+      "tokens": 0
+    },
+    "resource_reserved": {
+      "bytes": 0,
+      "compute_ms": 0,
+      "requests": 0,
+      "tokens": 0
+    },
+    "role_costs": {
+      "selector": {
+        "callbacks": 2,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 2,
+          "sum": 0.0001023048534989357,
+          "mean": 5.115242674946785e-05,
+          "p50": 4.996452480554581e-05,
+          "p95": 5.234032869338989e-05,
+          "max": 5.234032869338989e-05
+        },
+        "delivery_elapsed_seconds": {
+          "n": 2,
+          "sum": 2.251765732,
+          "mean": 1.125882866,
+          "p50": 1.009589982,
+          "p95": 1.24217575,
+          "max": 1.24217575
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 2,
+          "sum": 2.251663427146501,
+          "mean": 1.1258317135732505,
+          "p50": 1.0095400174751945,
+          "p95": 1.2421234096713065,
+          "max": 1.2421234096713065
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      },
+      "predictor": {
+        "callbacks": 18,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 18,
+          "sum": 0.2207395751029253,
+          "mean": 0.012263309727940295,
+          "p50": 0.004515925422310829,
+          "p95": 0.04497210402041674,
+          "max": 0.04497210402041674
+        },
+        "delivery_elapsed_seconds": {
+          "n": 18,
+          "sum": 23.173139485000004,
+          "mean": 1.2873966380555557,
+          "p50": 1.286419546,
+          "p95": 1.480813219,
+          "max": 1.480813219
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 18,
+          "sum": 22.95239990989708,
+          "mean": 1.2751333283276154,
+          "p50": 1.2456687123197423,
+          "p95": 1.4760386196639124,
+          "max": 1.4760386196639124
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      }
+    },
+    "attempt_statuses": {
+      "baseline_withdrawn": 136,
+      "accepted": 18
+    },
+    "forecast_admission_statuses": {
+      "accepted": 18
+    },
+    "source_report_sha256": "5306f18c92d78010d857ba2cbe9ac57e38343773b310d9e6e5dfc540ed2f0486"
+  },
+  {
+    "case": "1000__persistent_override__A06_llm_program",
+    "group": "1000__persistent_override",
+    "arm": "A06_llm_program",
+    "threshold_m": 1000,
+    "protocol": "persistent_override",
+    "status": "qualified",
+    "registered_opportunities": 18,
+    "config": {
+      "allocation_mode": "global_budget",
+      "authorization_mode": "session_shared",
+      "selector_kind": "llm",
+      "predictor_kind": "program",
+      "request_budget": 4,
+      "model_call_budget": 20
+    },
+    "formal_score": 0.0008072324677129099,
+    "F_metrics": {
+      "opportunities": 18,
+      "settled": 18,
+      "missing": 0,
+      "professional_baseline_opportunities": 0,
+      "base_brier": 0.0008335047109485203,
+      "system_brier": 0.0008072324677129099,
+      "net_realized_gain": 2.6272243235610424e-05,
+      "g_plus": 6.876179849165381e-05,
+      "g_minus": 4.248955525604339e-05,
+      "full_population_gain_bounds": [
+        2.6272243235610424e-05,
+        2.6272243235610424e-05
+      ],
+      "strata": [
+        {
+          "region": "station:KOAK",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSJC",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        }
+      ],
+      "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+    },
+    "positive_opportunities": 0,
+    "unique_positive_targets": 0,
+    "F_change_counts": {
+      "harm": 14,
+      "effective_probability_changed": 18,
+      "effective_override": 18,
+      "same_value_override": 0,
+      "help": 4
+    },
+    "E_availability_at_cutoff": {
+      "refuted": 6,
+      "undetermined": 12
+    },
+    "E_determined_at_cutoff": 6,
+    "E_model_calls": 0,
+    "E_opportunities_with_model_submission": 0,
+    "E_opportunities_without_model_submission": 18,
+    "E_call_counts": {},
+    "E_confusion": [],
+    "actual_model_calls": 0,
+    "program_forecasts": 18,
+    "source_queries": 4,
+    "resource_spent": {
+      "bytes": 2911,
+      "compute_ms": 420,
+      "requests": 4,
+      "tokens": 0
+    },
+    "resource_reserved": {
+      "bytes": 0,
+      "compute_ms": 0,
+      "requests": 0,
+      "tokens": 0
+    },
+    "role_costs": {
+      "selector": {
+        "callbacks": 2,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 2,
+          "sum": 8.624047040939331e-05,
+          "mean": 4.3120235204696655e-05,
+          "p50": 3.932882100343704e-05,
+          "p95": 4.691164940595627e-05,
+          "max": 4.691164940595627e-05
+        },
+        "delivery_elapsed_seconds": {
+          "n": 2,
+          "sum": 2.146127091,
+          "mean": 1.0730635455,
+          "p50": 0.908759596,
+          "p95": 1.237367495,
+          "max": 1.237367495
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 2,
+          "sum": 2.1460408505295905,
+          "mean": 1.0730204252647952,
+          "p50": 0.908712684350594,
+          "p95": 1.2373281661789965,
+          "max": 1.2373281661789965
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      },
+      "predictor": {
+        "callbacks": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "delivery_elapsed_seconds": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      }
+    },
+    "attempt_statuses": {
+      "baseline_withdrawn": 136,
+      "accepted": 18
+    },
+    "forecast_admission_statuses": {
+      "accepted": 18
+    },
+    "source_report_sha256": "a8853e85d68907c4bd8374ddfd57cc4862877be6e316b5f95af97d57492d3fd5"
+  },
+  {
+    "case": "1000__persistent_override__A12_llm_llm",
+    "group": "1000__persistent_override",
+    "arm": "A12_llm_llm",
+    "threshold_m": 1000,
+    "protocol": "persistent_override",
+    "status": "qualified",
+    "registered_opportunities": 18,
+    "config": {
+      "allocation_mode": "global_budget",
+      "authorization_mode": "session_shared",
+      "selector_kind": "llm",
+      "predictor_kind": "llm",
+      "request_budget": 4,
+      "model_call_budget": 20
+    },
+    "formal_score": 0.0008072324677129099,
+    "F_metrics": {
+      "opportunities": 18,
+      "settled": 18,
+      "missing": 0,
+      "professional_baseline_opportunities": 0,
+      "base_brier": 0.0008335047109485203,
+      "system_brier": 0.0008072324677129099,
+      "net_realized_gain": 2.6272243235610424e-05,
+      "g_plus": 6.876179849165381e-05,
+      "g_minus": 4.248955525604339e-05,
+      "full_population_gain_bounds": [
+        2.6272243235610424e-05,
+        2.6272243235610424e-05
+      ],
+      "strata": [
+        {
+          "region": "station:KOAK",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSJC",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        }
+      ],
+      "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+    },
+    "positive_opportunities": 0,
+    "unique_positive_targets": 0,
+    "F_change_counts": {
+      "harm": 14,
+      "effective_probability_changed": 18,
+      "effective_override": 18,
+      "same_value_override": 0,
+      "help": 4
+    },
+    "E_availability_at_cutoff": {
+      "refuted": 6,
+      "undetermined": 12
+    },
+    "E_determined_at_cutoff": 6,
+    "E_model_calls": 18,
+    "E_opportunities_with_model_submission": 18,
+    "E_opportunities_without_model_submission": 0,
+    "E_call_counts": {
+      "parsed_answers": 18,
+      "correct_parsed_answers": 18,
+      "correct_accepted_answers": 18,
+      "unsupported_determination": 0,
+      "unsupported_determination_accepted": 0,
+      "contrary_determination": 0,
+      "always_unknown_correct_on_same_dispatched_bundles": 12,
+      "changed_F_from_dispatch_base": 18
+    },
+    "E_confusion": [
+      {
+        "expected_E_at_dispatch": "refuted",
+        "reported_E": "refuted",
+        "count": 6
+      },
+      {
+        "expected_E_at_dispatch": "undetermined",
+        "reported_E": "undetermined",
+        "count": 12
+      }
+    ],
+    "actual_model_calls": 0,
+    "program_forecasts": 0,
+    "source_queries": 4,
+    "resource_spent": {
+      "bytes": 2911,
+      "compute_ms": 581,
+      "requests": 4,
+      "tokens": 0
+    },
+    "resource_reserved": {
+      "bytes": 0,
+      "compute_ms": 0,
+      "requests": 0,
+      "tokens": 0
+    },
+    "role_costs": {
+      "selector": {
+        "callbacks": 2,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 2,
+          "sum": 0.00011827517300844193,
+          "mean": 5.913758650422096e-05,
+          "p50": 4.689861088991165e-05,
+          "p95": 7.137656211853027e-05,
+          "max": 7.137656211853027e-05
+        },
+        "delivery_elapsed_seconds": {
+          "n": 2,
+          "sum": 2.236023175,
+          "mean": 1.1180115875,
+          "p50": 1.091896538,
+          "p95": 1.144126637,
+          "max": 1.144126637
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 2,
+          "sum": 2.2359048998269917,
+          "mean": 1.1179524499134958,
+          "p50": 1.0918251614378816,
+          "p95": 1.1440797383891101,
+          "max": 1.1440797383891101
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      },
+      "predictor": {
+        "callbacks": 18,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 18,
+          "sum": 0.17089524399489164,
+          "mean": 0.009494180221938424,
+          "p50": 0.004510262981057167,
+          "p95": 0.05069983471184969,
+          "max": 0.05069983471184969
+        },
+        "delivery_elapsed_seconds": {
+          "n": 18,
+          "sum": 22.268349607,
+          "mean": 1.2371305337222223,
+          "p50": 1.211735003,
+          "p95": 1.496281966,
+          "max": 1.496281966
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 18,
+          "sum": 22.09745436300511,
+          "mean": 1.2276363535002839,
+          "p50": 1.207442384516695,
+          "p95": 1.4918418791062626,
+          "max": 1.4918418791062626
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      }
+    },
+    "attempt_statuses": {
+      "baseline_withdrawn": 136,
+      "accepted": 18
+    },
+    "forecast_admission_statuses": {
+      "accepted": 18
+    },
+    "source_report_sha256": "d8652fa3bb529c62d9f40849a5f0abb41f9c604b1a4cca8ad2fe463889484779"
+  },
+  {
+    "case": "5000__base_bound_override__A06_llm_program",
+    "group": "5000__base_bound_override",
+    "arm": "A06_llm_program",
+    "threshold_m": 5000,
+    "protocol": "base_bound_override",
+    "status": "qualified",
+    "registered_opportunities": 18,
+    "config": {
+      "allocation_mode": "global_budget",
+      "authorization_mode": "session_shared",
+      "selector_kind": "llm",
+      "predictor_kind": "program",
+      "request_budget": 4,
+      "model_call_budget": 20
+    },
+    "formal_score": 0.06287013213313732,
+    "F_metrics": {
+      "opportunities": 18,
+      "settled": 18,
+      "missing": 0,
+      "professional_baseline_opportunities": 0,
+      "base_brier": 0.057568276718805315,
+      "system_brier": 0.06287013213313732,
+      "net_realized_gain": -0.005301855414331997,
+      "g_plus": 0.0051697317844931956,
+      "g_minus": 0.010471587198825195,
+      "full_population_gain_bounds": [
+        -0.005301855414331997,
+        -0.005301855414331997
+      ],
+      "strata": [
+        {
+          "region": "station:KOAK",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 5,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 6,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSJC",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        }
+      ],
+      "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+    },
+    "positive_opportunities": 2,
+    "unique_positive_targets": 2,
+    "F_change_counts": {
+      "harm": 14,
+      "effective_probability_changed": 16,
+      "effective_override": 18,
+      "same_value_override": 2,
+      "help": 2,
+      "no_loss_change": 2
+    },
+    "E_availability_at_cutoff": {
+      "supported": 12,
+      "undetermined": 6
+    },
+    "E_determined_at_cutoff": 12,
+    "E_model_calls": 0,
+    "E_opportunities_with_model_submission": 0,
+    "E_opportunities_without_model_submission": 18,
+    "E_call_counts": {},
+    "E_confusion": [],
+    "actual_model_calls": 0,
+    "program_forecasts": 18,
+    "source_queries": 4,
+    "resource_spent": {
+      "bytes": 2911,
+      "compute_ms": 420,
+      "requests": 4,
+      "tokens": 0
+    },
+    "resource_reserved": {
+      "bytes": 0,
+      "compute_ms": 0,
+      "requests": 0,
+      "tokens": 0
+    },
+    "role_costs": {
+      "selector": {
+        "callbacks": 2,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 2,
+          "sum": 0.0001501385122537613,
+          "mean": 7.506925612688065e-05,
+          "p50": 5.333404988050461e-05,
+          "p95": 9.680446237325668e-05,
+          "max": 9.680446237325668e-05
+        },
+        "delivery_elapsed_seconds": {
+          "n": 2,
+          "sum": 2.470063475,
+          "mean": 1.2350317375,
+          "p50": 1.080420551,
+          "p95": 1.389642924,
+          "max": 1.389642924
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 2,
+          "sum": 2.469913336487746,
+          "mean": 1.234956668243873,
+          "p50": 1.0803237465376268,
+          "p95": 1.3895895899501194,
+          "max": 1.3895895899501194
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      },
+      "predictor": {
+        "callbacks": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "delivery_elapsed_seconds": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      }
+    },
+    "attempt_statuses": {
+      "baseline_withdrawn": 136,
+      "accepted": 18
+    },
+    "forecast_admission_statuses": {
+      "accepted": 18
+    },
+    "source_report_sha256": "a507e5ace6b5a7f64a134114126de761d44ae842f2dd5de42a4334c5ba9bee19"
+  },
+  {
+    "case": "5000__base_bound_override__A12_llm_llm",
+    "group": "5000__base_bound_override",
+    "arm": "A12_llm_llm",
+    "threshold_m": 5000,
+    "protocol": "base_bound_override",
+    "status": "qualified",
+    "registered_opportunities": 18,
+    "config": {
+      "allocation_mode": "global_budget",
+      "authorization_mode": "session_shared",
+      "selector_kind": "llm",
+      "predictor_kind": "llm",
+      "request_budget": 4,
+      "model_call_budget": 20
+    },
+    "formal_score": 0.06287013213313732,
+    "F_metrics": {
+      "opportunities": 18,
+      "settled": 18,
+      "missing": 0,
+      "professional_baseline_opportunities": 0,
+      "base_brier": 0.057568276718805315,
+      "system_brier": 0.06287013213313732,
+      "net_realized_gain": -0.005301855414331997,
+      "g_plus": 0.0051697317844931956,
+      "g_minus": 0.010471587198825195,
+      "full_population_gain_bounds": [
+        -0.005301855414331997,
+        -0.005301855414331997
+      ],
+      "strata": [
+        {
+          "region": "station:KOAK",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 5,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 6,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSJC",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        }
+      ],
+      "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+    },
+    "positive_opportunities": 2,
+    "unique_positive_targets": 2,
+    "F_change_counts": {
+      "harm": 14,
+      "effective_probability_changed": 16,
+      "effective_override": 18,
+      "same_value_override": 2,
+      "help": 2,
+      "no_loss_change": 2
+    },
+    "E_availability_at_cutoff": {
+      "supported": 12,
+      "undetermined": 6
+    },
+    "E_determined_at_cutoff": 12,
+    "E_model_calls": 18,
+    "E_opportunities_with_model_submission": 18,
+    "E_opportunities_without_model_submission": 0,
+    "E_call_counts": {
+      "parsed_answers": 18,
+      "correct_parsed_answers": 18,
+      "correct_accepted_answers": 18,
+      "unsupported_determination": 0,
+      "unsupported_determination_accepted": 0,
+      "contrary_determination": 0,
+      "always_unknown_correct_on_same_dispatched_bundles": 6,
+      "changed_F_from_dispatch_base": 16
+    },
+    "E_confusion": [
+      {
+        "expected_E_at_dispatch": "supported",
+        "reported_E": "supported",
+        "count": 12
+      },
+      {
+        "expected_E_at_dispatch": "undetermined",
+        "reported_E": "undetermined",
+        "count": 6
+      }
+    ],
+    "actual_model_calls": 0,
+    "program_forecasts": 0,
+    "source_queries": 4,
+    "resource_spent": {
+      "bytes": 2911,
+      "compute_ms": 584,
+      "requests": 4,
+      "tokens": 0
+    },
+    "resource_reserved": {
+      "bytes": 0,
+      "compute_ms": 0,
+      "requests": 0,
+      "tokens": 0
+    },
+    "role_costs": {
+      "selector": {
+        "callbacks": 2,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 2,
+          "sum": 0.00011827517300844193,
+          "mean": 5.913758650422096e-05,
+          "p50": 4.689861088991165e-05,
+          "p95": 7.137656211853027e-05,
+          "max": 7.137656211853027e-05
+        },
+        "delivery_elapsed_seconds": {
+          "n": 2,
+          "sum": 2.22822297,
+          "mean": 1.114111485,
+          "p50": 1.010497268,
+          "p95": 1.217725702,
+          "max": 1.217725702
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 2,
+          "sum": 2.2281046948269916,
+          "mean": 1.1140523474134958,
+          "p50": 1.0104258914378814,
+          "p95": 1.2176788033891102,
+          "max": 1.2176788033891102
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      },
+      "predictor": {
+        "callbacks": 18,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 18,
+          "sum": 0.1729088006541133,
+          "mean": 0.009606044480784072,
+          "p50": 0.004510262981057167,
+          "p95": 0.054185823537409306,
+          "max": 0.054185823537409306
+        },
+        "delivery_elapsed_seconds": {
+          "n": 18,
+          "sum": 22.320239646000005,
+          "mean": 1.240013313666667,
+          "p50": 1.214923261,
+          "p95": 1.495555801,
+          "max": 1.495555801
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 18,
+          "sum": 22.14733084534589,
+          "mean": 1.230407269185883,
+          "p50": 1.2103760179934726,
+          "p95": 1.4911157141062628,
+          "max": 1.4911157141062628
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      }
+    },
+    "attempt_statuses": {
+      "baseline_withdrawn": 136,
+      "accepted": 18
+    },
+    "forecast_admission_statuses": {
+      "accepted": 18
+    },
+    "source_report_sha256": "4077828ee24311c66ef4b218f9df87a6e0b999f77f1e7770cdb5a90f3441d7fe"
+  },
+  {
+    "case": "5000__persistent_override__A06_llm_program",
+    "group": "5000__persistent_override",
+    "arm": "A06_llm_program",
+    "threshold_m": 5000,
+    "protocol": "persistent_override",
+    "status": "qualified",
+    "registered_opportunities": 18,
+    "config": {
+      "allocation_mode": "global_budget",
+      "authorization_mode": "session_shared",
+      "selector_kind": "llm",
+      "predictor_kind": "program",
+      "request_budget": 4,
+      "model_call_budget": 20
+    },
+    "formal_score": 0.06287013213313732,
+    "F_metrics": {
+      "opportunities": 18,
+      "settled": 18,
+      "missing": 0,
+      "professional_baseline_opportunities": 0,
+      "base_brier": 0.057568276718805315,
+      "system_brier": 0.06287013213313732,
+      "net_realized_gain": -0.005301855414331997,
+      "g_plus": 0.0051697317844931956,
+      "g_minus": 0.010471587198825195,
+      "full_population_gain_bounds": [
+        -0.005301855414331997,
+        -0.005301855414331997
+      ],
+      "strata": [
+        {
+          "region": "station:KOAK",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 5,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 6,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSJC",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        }
+      ],
+      "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+    },
+    "positive_opportunities": 2,
+    "unique_positive_targets": 2,
+    "F_change_counts": {
+      "harm": 14,
+      "effective_probability_changed": 16,
+      "effective_override": 18,
+      "same_value_override": 2,
+      "help": 2,
+      "no_loss_change": 2
+    },
+    "E_availability_at_cutoff": {
+      "supported": 12,
+      "undetermined": 6
+    },
+    "E_determined_at_cutoff": 12,
+    "E_model_calls": 0,
+    "E_opportunities_with_model_submission": 0,
+    "E_opportunities_without_model_submission": 18,
+    "E_call_counts": {},
+    "E_confusion": [],
+    "actual_model_calls": 0,
+    "program_forecasts": 18,
+    "source_queries": 4,
+    "resource_spent": {
+      "bytes": 2911,
+      "compute_ms": 420,
+      "requests": 4,
+      "tokens": 0
+    },
+    "resource_reserved": {
+      "bytes": 0,
+      "compute_ms": 0,
+      "requests": 0,
+      "tokens": 0
+    },
+    "role_costs": {
+      "selector": {
+        "callbacks": 2,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 2,
+          "sum": 0.0001501385122537613,
+          "mean": 7.506925612688065e-05,
+          "p50": 5.333404988050461e-05,
+          "p95": 9.680446237325668e-05,
+          "max": 9.680446237325668e-05
+        },
+        "delivery_elapsed_seconds": {
+          "n": 2,
+          "sum": 2.497404064,
+          "mean": 1.248702032,
+          "p50": 1.090602176,
+          "p95": 1.406801888,
+          "max": 1.406801888
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 2,
+          "sum": 2.497253925487746,
+          "mean": 1.248626962743873,
+          "p50": 1.0905053715376267,
+          "p95": 1.4067485539501194,
+          "max": 1.4067485539501194
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      },
+      "predictor": {
+        "callbacks": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "delivery_elapsed_seconds": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 0,
+          "sum": 0,
+          "mean": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      }
+    },
+    "attempt_statuses": {
+      "baseline_withdrawn": 136,
+      "accepted": 18
+    },
+    "forecast_admission_statuses": {
+      "accepted": 18
+    },
+    "source_report_sha256": "eefe772bee383a98296a8761d351d6be9c0e2faa01ec592d4087d749fdf7d3ba"
+  },
+  {
+    "case": "5000__persistent_override__A12_llm_llm",
+    "group": "5000__persistent_override",
+    "arm": "A12_llm_llm",
+    "threshold_m": 5000,
+    "protocol": "persistent_override",
+    "status": "qualified",
+    "registered_opportunities": 18,
+    "config": {
+      "allocation_mode": "global_budget",
+      "authorization_mode": "session_shared",
+      "selector_kind": "llm",
+      "predictor_kind": "llm",
+      "request_budget": 4,
+      "model_call_budget": 20
+    },
+    "formal_score": 0.06287013213313732,
+    "F_metrics": {
+      "opportunities": 18,
+      "settled": 18,
+      "missing": 0,
+      "professional_baseline_opportunities": 0,
+      "base_brier": 0.057568276718805315,
+      "system_brier": 0.06287013213313732,
+      "net_realized_gain": -0.005301855414331997,
+      "g_plus": 0.0051697317844931956,
+      "g_minus": 0.010471587198825195,
+      "full_population_gain_bounds": [
+        -0.005301855414331997,
+        -0.005301855414331997
+      ],
+      "strata": [
+        {
+          "region": "station:KOAK",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 5,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSFO",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 6,
+          "opportunities": 2,
+          "settled": 2
+        },
+        {
+          "region": "station:KSJC",
+          "period": "2025-02-03_development",
+          "source": "native_routine_METAR",
+          "quality": "settled_final_archived_report",
+          "maturity": "mature",
+          "base_risk_decile": 0,
+          "opportunities": 6,
+          "settled": 6
+        }
+      ],
+      "interpretation": "realized losses on common settled mask; bounds do not impute outcomes; no per-action no-harm guarantee"
+    },
+    "positive_opportunities": 2,
+    "unique_positive_targets": 2,
+    "F_change_counts": {
+      "harm": 14,
+      "effective_probability_changed": 16,
+      "effective_override": 18,
+      "same_value_override": 2,
+      "help": 2,
+      "no_loss_change": 2
+    },
+    "E_availability_at_cutoff": {
+      "supported": 12,
+      "undetermined": 6
+    },
+    "E_determined_at_cutoff": 12,
+    "E_model_calls": 18,
+    "E_opportunities_with_model_submission": 18,
+    "E_opportunities_without_model_submission": 0,
+    "E_call_counts": {
+      "parsed_answers": 18,
+      "correct_parsed_answers": 18,
+      "correct_accepted_answers": 18,
+      "unsupported_determination": 0,
+      "unsupported_determination_accepted": 0,
+      "contrary_determination": 0,
+      "always_unknown_correct_on_same_dispatched_bundles": 6,
+      "changed_F_from_dispatch_base": 16
+    },
+    "E_confusion": [
+      {
+        "expected_E_at_dispatch": "supported",
+        "reported_E": "supported",
+        "count": 12
+      },
+      {
+        "expected_E_at_dispatch": "undetermined",
+        "reported_E": "undetermined",
+        "count": 6
+      }
+    ],
+    "actual_model_calls": 0,
+    "program_forecasts": 0,
+    "source_queries": 4,
+    "resource_spent": {
+      "bytes": 2911,
+      "compute_ms": 649,
+      "requests": 4,
+      "tokens": 0
+    },
+    "resource_reserved": {
+      "bytes": 0,
+      "compute_ms": 0,
+      "requests": 0,
+      "tokens": 0
+    },
+    "role_costs": {
+      "selector": {
+        "callbacks": 2,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 2,
+          "sum": 9.167753159999847e-05,
+          "mean": 4.583876579999924e-05,
+          "p50": 3.933720290660858e-05,
+          "p95": 5.234032869338989e-05,
+          "max": 5.234032869338989e-05
+        },
+        "delivery_elapsed_seconds": {
+          "n": 2,
+          "sum": 2.390591821,
+          "mean": 1.1952959105,
+          "p50": 1.085454936,
+          "p95": 1.305136885,
+          "max": 1.305136885
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 2,
+          "sum": 2.3905001434684,
+          "mean": 1.1952500717342,
+          "p50": 1.0854155987970935,
+          "p95": 1.3050845446713066,
+          "max": 1.3050845446713066
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      },
+      "predictor": {
+        "callbacks": 18,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "compute_seconds_charged_per_call": {
+          "n": 18,
+          "sum": 0.2388623058795929,
+          "mean": 0.013270128104421828,
+          "p50": 0.004515925422310829,
+          "p95": 0.04970975685864687,
+          "max": 0.04970975685864687
+        },
+        "delivery_elapsed_seconds": {
+          "n": 18,
+          "sum": 22.574641239000005,
+          "mean": 1.2541467355000002,
+          "p50": 1.237343571,
+          "p95": 1.50699703,
+          "max": 1.50699703
+        },
+        "elapsed_seconds_outside_measured_model_compute": {
+          "n": 18,
+          "sum": 22.335778933120412,
+          "mean": 1.2408766073955784,
+          "p50": 1.232835175320705,
+          "p95": 1.5049586368303585,
+          "max": 1.5049586368303585
+        },
+        "unfinished": 0,
+        "response_errors": 0
+      }
+    },
+    "attempt_statuses": {
+      "baseline_withdrawn": 136,
+      "accepted": 18
+    },
+    "forecast_admission_statuses": {
+      "accepted": 18
+    },
+    "source_report_sha256": "81afb39df733fb7754b201a3dfe2f8594ea07ab4925f30f73ce7ca1518ae75db"
+  }
+]

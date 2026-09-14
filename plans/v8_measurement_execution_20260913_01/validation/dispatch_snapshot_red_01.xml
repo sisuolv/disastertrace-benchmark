@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="6" time="0.914" timestamp="2026-09-13T16:53:27.966273+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_dispatch_snapshot" name="test_dispatch_uses_earlier_real_version_and_retains_cutoff_update" time="0.077"><failure message="TypeError: AviationProvider.freeze() got an unexpected keyword argument 'as_of'">provider = &lt;disastertrace.monitoring_fixed_v1.aviation.AviationProvider object at 0x7fad5df01ea0&gt;
+
+    def test_dispatch_uses_earlier_real_version_and_retains_cutoff_update(provider):
+        oid = "KSJC-2025-02-03T13:00:00Z-vis-lt-5000m-cutoff-2025-02-03T12:00:00Z"
+        cutoff = provider.opportunities[oid]["cutoff"]
+        at_cutoff = provider.freeze(oid, "common_only").policy_view()
+        assert at_cutoff["baseline"]["available_at"] == cutoff
+&gt;       dispatched = provider.freeze(oid, "all_registered", as_of=cutoff - 60_000_000)
+E       TypeError: AviationProvider.freeze() got an unexpected keyword argument 'as_of'
+
+disastertrace-starter/tests/test_monitoring_dispatch_snapshot.py:26: TypeError</failure></testcase><testcase classname="tests.test_monitoring_dispatch_snapshot" name="test_dispatch_does_not_resurrect_a_covering_old_product" time="0.022"><failure message="AttributeError: 'AviationProvider' object has no attribute 'native_products'">provider = &lt;disastertrace.monitoring_fixed_v1.aviation.AviationProvider object at 0x7fad5e9691e0&gt;
+
+    def test_dispatch_does_not_resurrect_a_covering_old_product(provider):
+        oid = "KSJC-2025-02-03T13:00:00Z-vis-lt-5000m-cutoff-2025-02-03T12:00:00Z"
+        cutoff = provider.opportunities[oid]["cutoff"]
+        latest = provider.bases[oid]["source_id"]
+&gt;       for row in provider.native_products:
+E       AttributeError: 'AviationProvider' object has no attribute 'native_products'
+
+disastertrace-starter/tests/test_monitoring_dispatch_snapshot.py:42: AttributeError</failure></testcase><testcase classname="tests.test_monitoring_dispatch_snapshot" name="test_dispatch_rejects_invalid_or_future_timestamp[1]" time="0.021" /><testcase classname="tests.test_monitoring_dispatch_snapshot" name="test_dispatch_rejects_invalid_or_future_timestamp[0.5]" time="0.019" /><testcase classname="tests.test_monitoring_dispatch_snapshot" name="test_dispatch_rejects_invalid_or_future_timestamp[True]" time="0.020" /><testcase classname="tests.test_monitoring_dispatch_snapshot" name="test_dispatched_asset_cannot_finish_after_dispatch" time="0.045"><failure message="TypeError: AviationProvider.freeze() got an unexpected keyword argument 'as_of'">provider = &lt;disastertrace.monitoring_fixed_v1.aviation.AviationProvider object at 0x7fad5df03910&gt;
+
+    def test_dispatched_asset_cannot_finish_after_dispatch(provider):
+        oid = "KSJC-2025-02-03T13:00:00Z-vis-lt-5000m-cutoff-2025-02-03T12:00:00Z"
+        cutoff = provider.opportunities[oid]["cutoff"]
+        query = sorted(provider.pairs[oid]["query_ids"])[0]
+        provider.catalog[query]["available_at"] = cutoff
+        with pytest.raises(ValueError, match="not complete at snapshot"):
+&gt;           provider.freeze(oid, "fixed_one", as_of=cutoff - 60_000_000)
+E           TypeError: AviationProvider.freeze() got an unexpected keyword argument 'as_of'
+
+disastertrace-starter/tests/test_monitoring_dispatch_snapshot.py:65: TypeError</failure></testcase></testsuite></testsuites>

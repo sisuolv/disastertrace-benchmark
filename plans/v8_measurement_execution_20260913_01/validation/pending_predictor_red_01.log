@@ -1,0 +1,78 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________ test_unresolved_poll_is_idempotent_and_never_redispatches ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-27/test_unresolved_poll_is_idempo0')
+
+    def test_unresolved_poll_is_idempotent_and_never_redispatches(tmp_path):
+>       _, _, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-27/test_unresolved_poll_is_idempo0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(forecast_call_cap=1, model_call_budget=1)
+        session = SessionCoordinator(data, bank, config, backend=PendingFixtureBackend(directory))
+        session.step()
+        checkpoint = session.snapshot()
+>       assert checkpoint['payload']['schema'] == 'disastertrace.session_inflight_predictor.v3'
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac..._predictor.v3'
+E         
+E         - disastertrace.session_inflight_predictor.v3
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:51: AssertionError
+___________ test_fresh_process_continues_original_pending_invocation ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-27/test_fresh_process_continues_o0')
+
+    def test_fresh_process_continues_original_pending_invocation(tmp_path):
+>       data, bank, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-27/test_fresh_process_continues_o0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(forecast_call_cap=1, model_call_budget=1)
+        session = SessionCoordinator(data, bank, config, backend=PendingFixtureBackend(directory))
+        session.step()
+        checkpoint = session.snapshot()
+>       assert checkpoint['payload']['schema'] == 'disastertrace.session_inflight_predictor.v3'
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac..._predictor.v3'
+E         
+E         - disastertrace.session_inflight_predictor.v3
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:51: AssertionError
+__________ test_pending_frame_cannot_change_selection_after_dispatch ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-27/test_pending_frame_cannot_chan0')
+
+    def test_pending_frame_cannot_change_selection_after_dispatch(tmp_path):
+>       _, _, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-27/test_pending_frame_cannot_chan0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(forecast_call_cap=1, model_call_budget=1)
+        session = SessionCoordinator(data, bank, config, backend=PendingFixtureBackend(directory))
+        session.step()
+        checkpoint = session.snapshot()
+>       assert checkpoint['payload']['schema'] == 'disastertrace.session_inflight_predictor.v3'
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac..._predictor.v3'
+E         
+E         - disastertrace.session_inflight_predictor.v3
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_predictor.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_pending_predictor.py::test_unresolved_poll_is_idempotent_and_never_redispatches
+FAILED disastertrace-starter/tests/test_monitoring_pending_predictor.py::test_fresh_process_continues_original_pending_invocation
+FAILED disastertrace-starter/tests/test_monitoring_pending_predictor.py::test_pending_frame_cannot_change_selection_after_dispatch

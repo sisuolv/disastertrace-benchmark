@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="17" time="0.799" timestamp="2026-09-13T20:11:58.135251+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-2c8l7"><testcase classname="tests.test_monitoring_decision_baselines" name="test_planning_keeps_live_engine_and_forecasts_unchanged" time="0.006"><failure message="ValueError: No backdated events after a processed clock boundary">def test_planning_keeps_live_engine_and_forecasts_unchanged():
+        engine = fixture()
+        before = copy.deepcopy(engine.export())
+        preparation = copy.deepcopy(engine.preparation.to_dict())
+&gt;       choice = choose_preparation(engine, {"j1": 0.1, "j2": 0.9}, method="rolling_two_step",
+                                    at=60, next_at=65, miss_penalty=10)
+
+disastertrace-starter/tests/test_monitoring_decision_baselines.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/decision_baselines.py:88: in choose_preparation
+    if act(second, following, next_at, event_id="decision-trial-" + str(len(second._events))):
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/decision_baselines.py:43: in act
+    engine.run([AdmissionEvent(event_id, at, kind, {"job_id": job})], until=at)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:578: in run
+    trial._run_once(list(events), until=until)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:643: in _run_once
+    result = run_clock(
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:11: in run_clock
+    return _advance_clock(owner, events, until=until, event_order=event_order, decode=decode)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = &lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7f79c0b95300&gt;
+events = [AdmissionEvent(event_id='decision-trial-2', time=65, kind='prepare', payload={'job_id': 'j1'})]
+until = 65
+event_order = {'baseline': 0, 'baseline_withdrawal': 0, 'completion': 1, 'cancel': 1, ...}
+decode = &lt;function AdmissionEngine._run_once.&lt;locals&gt;.&lt;lambda&gt; at 0x7f79c0baf880&gt;
+
+    def _advance_clock(owner, events, *, until, event_order, decode):
+        if until is not None and (
+            type(until) is not int or (owner._last_time is not None and until &lt; owner._last_time)
+        ):
+            raise ValueError("Invalid or reversed event clock boundary")
+        pending = {}
+        for event in events:
+            encoded = event.to_dict()
+            decode(encoded)
+            if event.kind not in event_order:
+                raise ValueError("Unknown event phase")
+            old = pending.get(event.event_id, owner._events.get(event.event_id))
+            if old is not None:
+                if old != encoded:
+                    raise ValueError("Conflicting idempotent event")
+                continue
+            if owner._last_time is not None and event.time &lt;= owner._last_time:
+&gt;               raise ValueError("No backdated events after a processed clock boundary")
+E               ValueError: No backdated events after a processed clock boundary
+
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:33: ValueError</failure></testcase><testcase classname="tests.test_monitoring_decision_baselines" name="test_threshold_boundary_and_capacity_are_enforced" time="0.004"><failure message="ValueError: No backdated events after a processed clock boundary">def test_threshold_boundary_and_capacity_are_enforced():
+        engine = fixture()
+        choice = choose_preparation(engine, {"j1": 0.3, "j2": 0.2}, method="threshold",
+                                    at=60, next_at=65, miss_penalty=10)
+        assert choice == ("wait", None)
+&gt;       assert act(engine, ("prepare", "j1"), 60, event_id="actual")
+
+disastertrace-starter/tests/test_monitoring_decision_baselines.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/decision_baselines.py:43: in act
+    engine.run([AdmissionEvent(event_id, at, kind, {"job_id": job})], until=at)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:578: in run
+    trial._run_once(list(events), until=until)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:643: in _run_once
+    result = run_clock(
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:11: in run_clock
+    return _advance_clock(owner, events, until=until, event_order=event_order, decode=decode)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = &lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7f79c0bfc400&gt;
+events = [AdmissionEvent(event_id='actual', time=60, kind='prepare', payload={'job_id': 'j1'})]
+until = 60
+event_order = {'baseline': 0, 'baseline_withdrawal': 0, 'completion': 1, 'cancel': 1, ...}
+decode = &lt;function AdmissionEngine._run_once.&lt;locals&gt;.&lt;lambda&gt; at 0x7f79c0ae8550&gt;
+
+    def _advance_clock(owner, events, *, until, event_order, decode):
+        if until is not None and (
+            type(until) is not int or (owner._last_time is not None and until &lt; owner._last_time)
+        ):
+            raise ValueError("Invalid or reversed event clock boundary")
+        pending = {}
+        for event in events:
+            encoded = event.to_dict()
+            decode(encoded)
+            if event.kind not in event_order:
+                raise ValueError("Unknown event phase")
+            old = pending.get(event.event_id, owner._events.get(event.event_id))
+            if old is not None:
+                if old != encoded:
+                    raise ValueError("Conflicting idempotent event")
+                continue
+            if owner._last_time is not None and event.time &lt;= owner._last_time:
+&gt;               raise ValueError("No backdated events after a processed clock boundary")
+E               ValueError: No backdated events after a processed clock boundary
+
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:33: ValueError</failure></testcase><testcase classname="tests.test_monitoring_decision_baselines" name="test_expired_protection_is_not_projected_as_coverage" time="0.004"><failure message="ValueError: No backdated events after a processed clock boundary">def test_expired_protection_is_not_projected_as_coverage():
+        scenario = card()
+        scenario["jobs"][0]["expires_at"] = 80
+        engine, _, events = setup_engine(preparation=scenario)
+        engine.run(events, until=60)
+&gt;       assert act(engine, ("prepare", "j1"), 60, event_id="early")
+
+disastertrace-starter/tests/test_monitoring_decision_baselines.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/decision_baselines.py:43: in act
+    engine.run([AdmissionEvent(event_id, at, kind, {"job_id": job})], until=at)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:578: in run
+    trial._run_once(list(events), until=until)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:643: in _run_once
+    result = run_clock(
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:11: in run_clock
+    return _advance_clock(owner, events, until=until, event_order=event_order, decode=decode)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = &lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7f79c0bc2b30&gt;
+events = [AdmissionEvent(event_id='early', time=60, kind='prepare', payload={'job_id': 'j1'})]
+until = 60
+event_order = {'baseline': 0, 'baseline_withdrawal': 0, 'completion': 1, 'cancel': 1, ...}
+decode = &lt;function AdmissionEngine._run_once.&lt;locals&gt;.&lt;lambda&gt; at 0x7f79c0ae9870&gt;
+
+    def _advance_clock(owner, events, *, until, event_order, decode):
+        if until is not None and (
+            type(until) is not int or (owner._last_time is not None and until &lt; owner._last_time)
+        ):
+            raise ValueError("Invalid or reversed event clock boundary")
+        pending = {}
+        for event in events:
+            encoded = event.to_dict()
+            decode(encoded)
+            if event.kind not in event_order:
+                raise ValueError("Unknown event phase")
+            old = pending.get(event.event_id, owner._events.get(event.event_id))
+            if old is not None:
+                if old != encoded:
+                    raise ValueError("Conflicting idempotent event")
+                continue
+            if owner._last_time is not None and event.time &lt;= owner._last_time:
+&gt;               raise ValueError("No backdated events after a processed clock boundary")
+E               ValueError: No backdated events after a processed clock boundary
+
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:33: ValueError</failure></testcase><testcase classname="tests.test_monitoring_decision_baselines" name="test_completed_demand_can_release_capacity_without_rewriting_past_readiness" time="0.005"><failure message="ValueError: No backdated events after a processed clock boundary">def test_completed_demand_can_release_capacity_without_rewriting_past_readiness():
+        engine = fixture()
+        assert act(engine, ("prepare", "j1"), 85, event_id="on-time")
+        engine.run([], until=96)
+        assert engine.preparation.snapshots["j1"]["ready"]
+        assert ("cancel_preparation", "j1") in possible_actions(engine)
+&gt;       assert act(engine, ("cancel_preparation", "j1"), 96, event_id="release-later")
+
+disastertrace-starter/tests/test_monitoring_decision_baselines.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/decision_baselines.py:43: in act
+    engine.run([AdmissionEvent(event_id, at, kind, {"job_id": job})], until=at)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:578: in run
+    trial._run_once(list(events), until=until)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:643: in _run_once
+    result = run_clock(
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:11: in run_clock
+    return _advance_clock(owner, events, until=until, event_order=event_order, decode=decode)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = &lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7f79c0b970a0&gt;
+events = [AdmissionEvent(event_id='release-later', time=96, kind='cancel_preparation', payload={'job_id': 'j1'})]
+until = 96
+event_order = {'baseline': 0, 'baseline_withdrawal': 0, 'completion': 1, 'cancel': 1, ...}
+decode = &lt;function AdmissionEngine._run_once.&lt;locals&gt;.&lt;lambda&gt; at 0x7f79c0aeab00&gt;
+
+    def _advance_clock(owner, events, *, until, event_order, decode):
+        if until is not None and (
+            type(until) is not int or (owner._last_time is not None and until &lt; owner._last_time)
+        ):
+            raise ValueError("Invalid or reversed event clock boundary")
+        pending = {}
+        for event in events:
+            encoded = event.to_dict()
+            decode(encoded)
+            if event.kind not in event_order:
+                raise ValueError("Unknown event phase")
+            old = pending.get(event.event_id, owner._events.get(event.event_id))
+            if old is not None:
+                if old != encoded:
+                    raise ValueError("Conflicting idempotent event")
+                continue
+            if owner._last_time is not None and event.time &lt;= owner._last_time:
+&gt;               raise ValueError("No backdated events after a processed clock boundary")
+E               ValueError: No backdated events after a processed clock boundary
+
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:33: ValueError</failure></testcase><testcase classname="tests.test_monitoring_decision_baselines" name="test_invalid_forecast_cannot_enter_decision_comparison[None]" time="0.004" /><testcase classname="tests.test_monitoring_decision_baselines" name="test_invalid_forecast_cannot_enter_decision_comparison[True]" time="0.004" /><testcase classname="tests.test_monitoring_decision_baselines" name="test_invalid_forecast_cannot_enter_decision_comparison[nan]" time="0.004" /><testcase classname="tests.test_monitoring_decision_baselines" name="test_invalid_forecast_cannot_enter_decision_comparison[-0.1]" time="0.004" /><testcase classname="tests.test_monitoring_decision_baselines" name="test_invalid_forecast_cannot_enter_decision_comparison[1.1]" time="0.004" /><testcase classname="tests.test_monitoring_decision_baselines" name="test_current_state_and_forward_time_are_required" time="0.003" /><testcase classname="tests.test_monitoring_preparation" name="test_inference_and_follow_do_not_stop_preparation_exact_deadline_counts" time="0.004" /><testcase classname="tests.test_monitoring_preparation" name="test_cancel_is_sunk_cost_and_cleanup_blocks_reallocation" time="0.004" /><testcase classname="tests.test_monitoring_preparation" name="test_expired_coverage_is_not_ready_and_repeated_start_does_not_pay_twice" time="0.004" /><testcase classname="tests.test_monitoring_preparation" name="test_late_start_and_budget_rejection_preserve_cost" time="0.004" /><testcase classname="tests.test_monitoring_preparation" name="test_replay_restores_preparation_under_the_same_clock" time="0.009" /><testcase classname="tests.test_monitoring_preparation" name="test_single_step_analytic_boundary_is_strict" time="0.002" /><testcase classname="tests.test_monitoring_preparation" name="test_one_job_per_target_prevents_repeated_D_settlement" time="0.002" /></testsuite></testsuites>

@@ -1,0 +1,184 @@
+FFFFFFFFF.                                                               [100%]
+=================================== FAILURES ===================================
+_ test_pending_preparation_is_idempotent_and_restores_in_another_process[selector] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-57/test_pending_preparation_is_id0')
+role = 'selector'
+
+    @pytest.mark.parametrize("role", ["selector", "predictor", "source"])
+    def test_pending_preparation_is_idempotent_and_restores_in_another_process(tmp_path, role):
+        data, bank, session = make_pending(tmp_path, role)
+        original = session.snapshot()
+        assert "pending_" + role in original["payload"]
+        reducer = preparation(original)
+>       assert reducer is not None
+E       assert None is not None
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:85: AssertionError
+_ test_pending_preparation_is_idempotent_and_restores_in_another_process[predictor] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-57/test_pending_preparation_is_id1')
+role = 'predictor'
+
+    @pytest.mark.parametrize("role", ["selector", "predictor", "source"])
+    def test_pending_preparation_is_idempotent_and_restores_in_another_process(tmp_path, role):
+        data, bank, session = make_pending(tmp_path, role)
+        original = session.snapshot()
+        assert "pending_" + role in original["payload"]
+        reducer = preparation(original)
+>       assert reducer is not None
+E       assert None is not None
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:85: AssertionError
+_ test_pending_preparation_is_idempotent_and_restores_in_another_process[source] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-57/test_pending_preparation_is_id2')
+role = 'source'
+
+    @pytest.mark.parametrize("role", ["selector", "predictor", "source"])
+    def test_pending_preparation_is_idempotent_and_restores_in_another_process(tmp_path, role):
+        data, bank, session = make_pending(tmp_path, role)
+        original = session.snapshot()
+>       assert "pending_" + role in original["payload"]
+E       AssertionError: assert ('pending_' + 'source') in {'bank_sha256': 'bf6ebe185b6f4720ce4d422c5d794d7b682438147e8b184d84be65d0d47497c6', 'clock': 1704412800000000, 'config...dline': 1704412800000000, 'entity': 'KSFO', 'public_query_ids': [...]}, ...}, ...}], 'selector_records': [], ...}, ...}
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:83: AssertionError
+__________ test_preparation_changes_no_f_predictions_or_source_costs ___________
+
+    def test_preparation_changes_no_f_predictions_or_source_costs():
+        data, bank, config = typed_fixture()
+        plain = run_session(data, bank, config)
+        config["preparation_schedule"] = preparation_config(data, config)
+        prepared = run_session(data, bank, config)
+        assert prepared["resource_spent"] == plain["resource_spent"]
+        for a, b in zip(plain["snapshots"], prepared["snapshots"], strict=True):
+            assert a["forecast"] == b["forecast"] and a["base_forecast"] == b["base_forecast"]
+>       assert AdmissionEngine.restore(prepared["event_replay"]).preparation.spent == 4
+E       AttributeError: 'NoneType' object has no attribute 'spent'
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:140: AttributeError
+________ test_preparation_schedule_rejects_unregistered_controls[kind] _________
+
+damage = 'kind'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+>       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed
+_________ test_preparation_schedule_rejects_unregistered_controls[job] _________
+
+damage = 'job'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+>       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed
+______ test_preparation_schedule_rejects_unregistered_controls[duplicate] ______
+
+damage = 'duplicate'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+>       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed
+___ test_preparation_schedule_rejects_unregistered_controls[decision_basis] ____
+
+damage = 'decision_basis'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+>       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed
+_______ test_preparation_schedule_rejects_unregistered_controls[legacy] ________
+
+damage = 'legacy'
+
+    @pytest.mark.parametrize("damage", ["kind", "job", "duplicate", "decision_basis", "legacy"])
+    def test_preparation_schedule_rejects_unregistered_controls(damage):
+        data, bank, config = typed_fixture()
+        schedule = preparation_config(data, config)
+        if damage == "kind":
+            schedule["events"][0]["kind"] = "baseline"
+        elif damage == "job":
+            schedule["events"][0]["payload"]["job_id"] = "unknown-job"
+        elif damage == "duplicate":
+            schedule["events"].append(copy.deepcopy(schedule["events"][0]))
+        elif damage == "decision_basis":
+            schedule["decision_basis"] = "future_label_oracle"
+        else:
+            config["session_runtime"] = "legacy_probability_v1"
+        config["preparation_schedule"] = schedule
+>       with pytest.raises(ValueError, match="preparation|Preparation"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_session_preparation.py:158: Failed
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_session_preparation.py::test_pending_preparation_is_idempotent_and_restores_in_another_process[selector]
+FAILED disastertrace-starter/tests/test_monitoring_session_preparation.py::test_pending_preparation_is_idempotent_and_restores_in_another_process[predictor]
+FAILED disastertrace-starter/tests/test_monitoring_session_preparation.py::test_pending_preparation_is_idempotent_and_restores_in_another_process[source]
+FAILED disastertrace-starter/tests/test_monitoring_session_preparation.py::test_preparation_changes_no_f_predictions_or_source_costs
+FAILED disastertrace-starter/tests/test_monitoring_session_preparation.py::test_preparation_schedule_rejects_unregistered_controls[kind]
+FAILED disastertrace-starter/tests/test_monitoring_session_preparation.py::test_preparation_schedule_rejects_unregistered_controls[job]
+FAILED disastertrace-starter/tests/test_monitoring_session_preparation.py::test_preparation_schedule_rejects_unregistered_controls[duplicate]
+FAILED disastertrace-starter/tests/test_monitoring_session_preparation.py::test_preparation_schedule_rejects_unregistered_controls[decision_basis]
+FAILED disastertrace-starter/tests/test_monitoring_session_preparation.py::test_preparation_schedule_rejects_unregistered_controls[legacy]

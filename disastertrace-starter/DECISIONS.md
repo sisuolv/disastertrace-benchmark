@@ -1,5 +1,64 @@
 # Decisions
 
+## v8 measurement decisions, 2026-09-13
+
+- Keep v8 C1/C2/C3, E/F/D/MM and W00-W19. Measure lawful evidence, reachable
+  acquisition and realized future skill separately; no positive-gain release gate.
+- Retain all1,008 large/small-model benchmark responses and all failures. A235B
+  complete-evidence advantage and partial-evidence regression coexist; architecture,
+  training and quantization differ, so this is not a pure model-size causal effect.
+- Keep the40 original72-query public-schedule program runs separate from the new
+ 52-session48-query actual-model-clock adaptive matrix. Every live method has its
+ own new matched program controls, original requests and shared-budget ledger.
+- Disclose selector/predictor roles and per-forecast model-call fees explicitly.
+  Preserve adaptive_large_01 as zero-inference rejection; only large02 is launched.
+- Keep declared1ms program/source timing distinct from measured model compute and
+  delivery. Do not claim operational speedup or end-to-end cost-efficiency.
+- Source/selector/predictor have separate request identities; worker claim follows
+  durable checkpoint commit. Serial recovery is not physical remote exactly-once.
+- Full professional forecasts designated common information are free; HEFS697
+  product E predicates are therefore not a charged-acquisition main-track gain.
+- All five new H15 calendars are development exposed. Do not count stations,
+  thresholds, leads or adjacent days as independent processes. New regional
+  probability maps require independent training/calibration data before scoring.
+- Keep the Dec2023 Bay frequency bank and disclose temporal transfer. No refit
+  follows from negative2025 scores and no whole-system calibration is asserted.
+- Native MRMS unit/QC/duration qualification does not identify its exact physical
+  time endpoint. Point-temperature tests do not establish multi-day extremes.
+- Official Berus daily TXK/TNK qualify00-24UTC daily references for2017-2018.
+  Actual hourly/six-hour observations miss some native extreme days, so never
+  replace continuous daily extrema with sampled maxima/minima. Native EUPP
+  mx2t6/mn2t6 now supplies a matched daily/multi-day candidate under explicit
+  archival availability; raw member fractions are a research mapping, not a
+  calibration guarantee. The whole1951-2025
+  archive is development-accessible; unanalysed years are not untouched holdout.
+- Daily temperature duration probabilities follow each original member through
+  all three days; do not multiply marginal probabilities. Exclude partially
+  elapsed day0 from full-future scoring and retain outside-reference outcomes.
+  Monthly typed snapshots are not continuous adaptive or full-context comparisons.
+- D-sim is explicitly synthetic, with fixed F and separate research losses.
+  Two-step planning assumes current probabilities constant; it is not globally
+  optimal. The current typed session supports a frozen exogenous D schedule;
+  serial pending source/selector/predictor recovery carries its state and costs.
+  A separate conditional replay now chooses D actions from current admitted F;
+  it preserves a captured program F stream across all D methods. Full-session
+  acquisition/model/D feedback and general concurrency remain unqualified.
+  Original adaptive GPU source remains frozen before this optional D extension.
+- Current AWC capture records collector first-seen and actual native time/version.
+  It is source-only, with a fixed4h/34-request bound; it is not live model scoring.
+- Preserve the original raw Git index snapshot. Verify current staged contents
+  and flags exactly rather than blocking on cache/extension byte refresh alone;
+  frozen experiment files must still match every source/data hash independently.
+- Posthoc evidence witnesses use only the disclosed exact-product intervals;
+  they reproduce576 original E labels. TAF examples retain the original parser
+  reference and are not advertised as a second independent native decoder.
+- X09 uses an explicit shared fixed-information union for both output scopes.
+  Single-target requests also see the whole group; no private-context sharing
+  gain is inferred. Per-call512-token caps imply unequal total output budgets
+  per three-target group. Invalid multi-target replies retain every target and
+  fail all their E answers while F falls back. Count physical batch time once;
+  empty-capture rehearsals have no model metrics. Preserve the frozen protocol.
+
 ## v7 typed adaptive development decisions, 2026-09-13
 
 - Preserve v7/C1/C2/C3 and the 16-hazard roadmap. Add one typed adapter to the

@@ -1,0 +1,148 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__ test_pending_selector_polls_original_request_without_advancing_or_charging __
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-42/test_pending_selector_polls_or0')
+
+    def test_pending_selector_polls_original_request_without_advancing_or_charging(tmp_path):
+>       _, _, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-42/test_pending_selector_polls_or0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(
+            selector_kind="llm", authorization_mode="session_shared",
+            isolation_mode="actual_cost_clock", model_call_budget=2,
+            forecast_call_cap=1, per_tick_forecast_cap=1,
+        )
+        session = SessionCoordinator(data, bank, config, backend=SelectorFixtureBackend(directory))
+        report = session.step()
+        checkpoint = session.snapshot()
+>       assert checkpoint["payload"]["schema"] == "disastertrace.session_inflight_selector.v4"
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac...t_selector.v4'
+E         
+E         - disastertrace.session_inflight_selector.v4
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:39: AssertionError
+___ test_selector_then_predictor_has_one_shared_budget_after_process_restore ___
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-42/test_selector_then_predictor_h0')
+
+    def test_selector_then_predictor_has_one_shared_budget_after_process_restore(tmp_path):
+>       data, bank, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-42/test_selector_then_predictor_h0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(
+            selector_kind="llm", authorization_mode="session_shared",
+            isolation_mode="actual_cost_clock", model_call_budget=2,
+            forecast_call_cap=1, per_tick_forecast_cap=1,
+        )
+        session = SessionCoordinator(data, bank, config, backend=SelectorFixtureBackend(directory))
+        report = session.step()
+        checkpoint = session.snapshot()
+>       assert checkpoint["payload"]["schema"] == "disastertrace.session_inflight_selector.v4"
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac...t_selector.v4'
+E         
+E         - disastertrace.session_inflight_selector.v4
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:39: AssertionError
+__ test_selector_delivery_wait_is_not_charged_as_compute_and_cannot_backdate ___
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-42/test_selector_delivery_wait_is0')
+
+    def test_selector_delivery_wait_is_not_charged_as_compute_and_cannot_backdate(tmp_path):
+>       data, _, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-42/test_selector_delivery_wait_is0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(
+            selector_kind="llm", authorization_mode="session_shared",
+            isolation_mode="actual_cost_clock", model_call_budget=2,
+            forecast_call_cap=1, per_tick_forecast_cap=1,
+        )
+        session = SessionCoordinator(data, bank, config, backend=SelectorFixtureBackend(directory))
+        report = session.step()
+        checkpoint = session.snapshot()
+>       assert checkpoint["payload"]["schema"] == "disastertrace.session_inflight_selector.v4"
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac...t_selector.v4'
+E         
+E         - disastertrace.session_inflight_selector.v4
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:39: AssertionError
+___ test_pending_selector_blocks_control_change_and_detects_rehashed_cursor ____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-42/test_pending_selector_blocks_c0')
+
+    def test_pending_selector_blocks_control_change_and_detects_rehashed_cursor(tmp_path):
+>       data, bank, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:117: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-42/test_pending_selector_blocks_c0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(
+            selector_kind="llm", authorization_mode="session_shared",
+            isolation_mode="actual_cost_clock", model_call_budget=2,
+            forecast_call_cap=1, per_tick_forecast_cap=1,
+        )
+        session = SessionCoordinator(data, bank, config, backend=SelectorFixtureBackend(directory))
+        report = session.step()
+        checkpoint = session.snapshot()
+>       assert checkpoint["payload"]["schema"] == "disastertrace.session_inflight_selector.v4"
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac...t_selector.v4'
+E         
+E         - disastertrace.session_inflight_selector.v4
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:39: AssertionError
+_ test_received_unfinished_selection_is_charged_without_executing_its_choices __
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-42/test_received_unfinished_selec0')
+
+    def test_received_unfinished_selection_is_charged_without_executing_its_choices(tmp_path):
+>       data, _, session = pending_session(tmp_path)
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/pytest-of-root/pytest-42/test_received_unfinished_selec0')
+
+    def pending_session(directory):
+        data, bank, config = typed_fixture(
+            selector_kind="llm", authorization_mode="session_shared",
+            isolation_mode="actual_cost_clock", model_call_budget=2,
+            forecast_call_cap=1, per_tick_forecast_cap=1,
+        )
+        session = SessionCoordinator(data, bank, config, backend=SelectorFixtureBackend(directory))
+        report = session.step()
+        checkpoint = session.snapshot()
+>       assert checkpoint["payload"]["schema"] == "disastertrace.session_inflight_selector.v4"
+E       AssertionError: assert 'disastertrac...unresolved.v2' == 'disastertrac...t_selector.v4'
+E         
+E         - disastertrace.session_inflight_selector.v4
+E         + disastertrace.session_unresolved.v2
+
+disastertrace-starter/tests/test_monitoring_pending_selector.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_pending_selector.py::test_pending_selector_polls_original_request_without_advancing_or_charging
+FAILED disastertrace-starter/tests/test_monitoring_pending_selector.py::test_selector_then_predictor_has_one_shared_budget_after_process_restore
+FAILED disastertrace-starter/tests/test_monitoring_pending_selector.py::test_selector_delivery_wait_is_not_charged_as_compute_and_cannot_backdate
+FAILED disastertrace-starter/tests/test_monitoring_pending_selector.py::test_pending_selector_blocks_control_change_and_detects_rehashed_cursor
+FAILED disastertrace-starter/tests/test_monitoring_pending_selector.py::test_received_unfinished_selection_is_charged_without_executing_its_choices

@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-09-13T17:39:34.094662+00:00",
+  "primary_target": "Native instantaneous 2m temperature at DWD Berus station 460, UTC, Kelvin.",
+  "secondary_diagnostics": {
+    "cold_point": "DWD native TT_TU < 273.15 K",
+    "hot_point": "DWD native TT_TU >= 303.15 K"
+  },
+  "not_claimed": [
+    "physical daily maximum or minimum",
+    "heatwave/cold-wave duration",
+    "frost damage",
+    "independent process confirmation"
+  ],
+  "predictors": [
+    "full51_member_mean",
+    "full51_member_median"
+  ],
+  "outcome_policy": "DWD native hourly report with unchanged raw QN_9; point support and units independently verified; missing native values remain missing. EUPP packaged observation comparison remains a separate diagnostic, never silently overwrites either source.",
+  "forecast_availability": "initialization +3h declared scenario",
+  "cutoff": "initialization +4h; omit lead0 from future forecast score; retain its records",
+  "publication_time_proved": false,
+  "primary_units": "K",
+  "no_refit": true
+}
