@@ -1,0 +1,29 @@
+DTZ007 Naive datetime constructed using `datetime.datetime.strptime()` without %z
+  --> plans/v10_execution_20260914_01/scripts/audit_temperature_evidence_gate.py:27:15
+   |
+25 |     for row in csv.DictReader(io.StringIO(raw), delimiter=";"):
+26 |         row = {k.strip(): v.strip() for k, v in row.items()}
+27 |         day = dt.datetime.strptime(row["MESS_DATUM"], "%Y%m%d").date().isoformat()
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28 |         records[day] = row
+29 |     archive_sha = digest(archive)
+   |
+help: Call `.replace(tzinfo=<timezone>)` or `.astimezone()` to convert to an aware datetime
+
+F401 [*] `disastertrace.monitoring_v1.spool_backend.read` imported but unused
+ --> plans/v10_execution_20260914_01/scripts/summarize_model_components.py:8:72
+  |
+6 | from pathlib import Path
+7 |
+8 | from disastertrace.monitoring_v1.spool_backend import digest, publish, read
+  |                                                                        ^^^^
+help: Remove unused import: `disastertrace.monitoring_v1.spool_backend.read`
+  |
+7 |
+  - from disastertrace.monitoring_v1.spool_backend import digest, publish, read
+8 + from disastertrace.monitoring_v1.spool_backend import digest, publish
+9 |
+  |
+
+Found 2 errors.
+[*] 1 fixable with the `--fix` option.

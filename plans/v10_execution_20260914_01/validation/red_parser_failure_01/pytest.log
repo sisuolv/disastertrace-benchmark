@@ -1,0 +1,275 @@
+FFF.F.F.F.FFFF                                                           [100%]
+=================================== FAILURES ===================================
+___________ test_selector_duplicate_fields_are_rejected[query_order] ___________
+
+field = 'query_order'
+
+    @pytest.mark.parametrize("field", ["query_order", "forecast_handles"])
+    def test_selector_duplicate_fields_are_rejected(field):
+        raw = '{"query_order":[],"forecast_handles":[],"' + field + '":[]}'
+>       with pytest.raises(ValueError, match="duplicate"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_review_v10.py:15: Failed
+________ test_selector_duplicate_fields_are_rejected[forecast_handles] _________
+
+field = 'forecast_handles'
+
+    @pytest.mark.parametrize("field", ["query_order", "forecast_handles"])
+    def test_selector_duplicate_fields_are_rejected(field):
+        raw = '{"query_order":[],"forecast_handles":[],"' + field + '":[]}'
+>       with pytest.raises(ValueError, match="duplicate"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_review_v10.py:15: Failed
+_ test_both_process_entrypoints_reject_invalid_footprints[8-2-chronological_roles] _
+
+fn = <function chronological_roles at 0x7f2aa0894dc0>, lo = 8, hi = 2
+
+    @pytest.mark.parametrize("fn", [chronological_roles, process_components])
+    @pytest.mark.parametrize("lo,hi", [(8, 2), (2, 2), (True, 2), (0, float("inf"))])
+    def test_both_process_entrypoints_reject_invalid_footprints(fn, lo, hi):
+        rows = [{"opportunity_id": "a", "footprint_start": lo, "footprint_end": hi}]
+>       with pytest.raises(ValueError, match="footprint"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_review_v10.py:23: Failed
+_ test_both_process_entrypoints_reject_invalid_footprints[2-2-chronological_roles] _
+
+fn = <function chronological_roles at 0x7f2aa0894dc0>, lo = 2, hi = 2
+
+    @pytest.mark.parametrize("fn", [chronological_roles, process_components])
+    @pytest.mark.parametrize("lo,hi", [(8, 2), (2, 2), (True, 2), (0, float("inf"))])
+    def test_both_process_entrypoints_reject_invalid_footprints(fn, lo, hi):
+        rows = [{"opportunity_id": "a", "footprint_start": lo, "footprint_end": hi}]
+>       with pytest.raises(ValueError, match="footprint"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_review_v10.py:23: Failed
+_ test_both_process_entrypoints_reject_invalid_footprints[True-2-chronological_roles] _
+
+fn = <function chronological_roles at 0x7f2aa0894dc0>, lo = True, hi = 2
+
+    @pytest.mark.parametrize("fn", [chronological_roles, process_components])
+    @pytest.mark.parametrize("lo,hi", [(8, 2), (2, 2), (True, 2), (0, float("inf"))])
+    def test_both_process_entrypoints_reject_invalid_footprints(fn, lo, hi):
+        rows = [{"opportunity_id": "a", "footprint_start": lo, "footprint_end": hi}]
+>       with pytest.raises(ValueError, match="footprint"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_review_v10.py:23: Failed
+_ test_both_process_entrypoints_reject_invalid_footprints[0-inf-chronological_roles] _
+
+fn = <function chronological_roles at 0x7f2aa0894dc0>, lo = 0, hi = inf
+
+    @pytest.mark.parametrize("fn", [chronological_roles, process_components])
+    @pytest.mark.parametrize("lo,hi", [(8, 2), (2, 2), (True, 2), (0, float("inf"))])
+    def test_both_process_entrypoints_reject_invalid_footprints(fn, lo, hi):
+        rows = [{"opportunity_id": "a", "footprint_start": lo, "footprint_end": hi}]
+>       with pytest.raises(ValueError, match="footprint"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_review_v10.py:23: Failed
+___________ test_chronological_roles_reject_duplicate_opportunities ____________
+
+    def test_chronological_roles_reject_duplicate_opportunities():
+        row = {"opportunity_id": "a", "footprint_start": 0, "footprint_end": 2}
+>       with pytest.raises(ValueError, match="Duplicate"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_review_v10.py:29: Failed
+______ test_capture_failure_receipt_survives_both_ledger_updates_failing _______
+
+call_id = 'original', reserve = None, kwargs = {'actual': 12000}
+
+    def blocked(call_id, reserve=None, **kwargs):
+        if reserve is not None:
+            return original(call_id, reserve)
+>       raise TimeoutError("fixture: both ledger mutations unavailable")
+E       TimeoutError: fixture: both ledger mutations unavailable
+
+tests/test_monitoring_review_v10.py:42: TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_capture_failure_receipt_s0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f2aa06df790>
+
+    def test_capture_failure_receipt_survives_both_ledger_updates_failing(tmp_path, monkeypatch):
+        response = {"usage": {"prompt_tokens": 20, "completion_tokens": 5}, "model": "fixture",
+                    "choices": [{"finish_reason": "stop", "message": {"content": "{}"}}]}
+        budget, directory = setup_capture(tmp_path, monkeypatch, response)
+        original = budget.transact
+    
+        def blocked(call_id, reserve=None, **kwargs):
+            if reserve is not None:
+                return original(call_id, reserve)
+            raise TimeoutError("fixture: both ledger mutations unavailable")
+    
+        monkeypatch.setattr(budget, "transact", blocked)
+        with pytest.raises(RuntimeError, match="Original API attempt"):
+>           invoke(budget, directory)
+
+tests/test_monitoring_review_v10.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_monitoring_api_capture.py:41: in invoke
+    return api_capture.capture([{"role": "user", "content": "Return JSON"}],
+src/disastertrace/monitoring_v1/api_capture.py:187: in capture
+    budget.transact(call_id, outcome="unknown")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+call_id = 'original', reserve = None, kwargs = {'outcome': 'unknown'}
+
+    def blocked(call_id, reserve=None, **kwargs):
+        if reserve is not None:
+            return original(call_id, reserve)
+>       raise TimeoutError("fixture: both ledger mutations unavailable")
+E       TimeoutError: fixture: both ledger mutations unavailable
+
+tests/test_monitoring_review_v10.py:42: TimeoutError
+___________ test_capture_http_body_read_failure_has_terminal_receipt ___________
+
+messages = [{'role': 'user', 'content': 'Return JSON'}]
+model = 'deepseek-flash', call_id = 'original'
+directory = PosixPath('/tmp/pytest-of-root/pytest-1/test_capture_http_body_read_fa0/capture')
+budget = <disastertrace.monitoring_v1.api_capture.ApiBudget object at 0x7f2aa07477f0>
+max_tokens = 512, input_cap = 32768
+
+    def capture(messages, model, call_id, directory, budget, *, max_tokens=512, input_cap=32768):
+        """The key is an HTTP header only; original messages and strict outputs persist."""
+        directory = Path(directory)
+        directory.mkdir(exist_ok=False)
+        if model not in RATES or type(max_tokens) is not int or max_tokens <= 0:
+            raise ValueError("Model/settings outside the registered API adapter")
+        input_upper = sum(len(m["content"].encode()) for m in messages) + 4096
+        if input_upper > input_cap:
+            raise ValueError("Conservative UTF-8 input allowance exceeds the frozen cap")
+        input_rate, output_rate = RATES[model]
+        budget.transact(call_id, input_cap * input_rate + max_tokens * output_rate)
+        payload = {
+            "model": model,
+            "messages": messages,
+            "stream": False,
+            "temperature": 0,
+            "max_tokens": max_tokens,
+            "thinking": {"type": "disabled"},
+            "response_format": {"type": "json_object"},
+        }
+        publish(
+            directory / "REQUEST.json",
+            {
+                "call_id": call_id,
+                "payload": payload,
+                "fee_reservation_nanodollars": input_cap * input_rate + max_tokens * output_rate,
+                "input_upper_basis": "UTF-8 bytes plus 4096 framing allowance; validated against returned usage",
+                "started_wall_ns": time.time_ns(),
+            },
+        )
+        key_path = Path(
+            os.environ.get(
+                "DISASTERTRACE_DEEPSEEK_KEY_FILE",
+                "/mnt/afs/260010168/.config/disastertrace/deepseek_followup_20260914.key",
+            )
+        )
+        started, response_bytes, status = time.perf_counter(), b"", None
+        try:
+            key = key_path.read_text().strip()
+            request = Request(
+                "https://api.deepseek.com/chat/completions",
+                data=json.dumps(payload, allow_nan=False).encode(),
+                headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"},
+                method="POST",
+            )
+>           with build_opener(ProxyHandler({})).open(request, timeout=120) as response:
+
+src/disastertrace/monitoring_v1/api_capture.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_monitoring_api_capture.setup_capture.<locals>.Opener object at 0x7f2aa0746e90>
+request = <urllib.request.Request object at 0x7f2aa0747610>, timeout = 120
+
+    def open(self, request, timeout):
+        assert request.headers["Authorization"] == "Bearer test-credential"
+        assert "test-credential" not in request.data.decode()
+        if isinstance(response, Exception):
+>           raise response
+E           test_monitoring_review_v10.test_capture_http_body_read_failure_has_terminal_receipt.<locals>.BrokenError: HTTP Error 503: Unavailable
+
+tests/test_monitoring_api_capture.py:33: BrokenError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_capture_http_body_read_fa0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f2aa0747b80>
+
+    def test_capture_http_body_read_failure_has_terminal_receipt(tmp_path, monkeypatch):
+        class BrokenError(HTTPError):
+            def read(self, limit):
+                raise OSError("fixture: broken error stream")
+    
+        error = BrokenError("https://api.deepseek.com", 503, "Unavailable", {}, BytesIO())
+        budget, directory = setup_capture(tmp_path, monkeypatch, error)
+        with pytest.raises(RuntimeError, match="Original API attempt"):
+>           invoke(budget, directory)
+
+tests/test_monitoring_review_v10.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_monitoring_api_capture.py:41: in invoke
+    return api_capture.capture([{"role": "user", "content": "Return JSON"}],
+src/disastertrace/monitoring_v1/api_capture.py:184: in capture
+    response_bytes = exc.read(20000)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <HTTPError 503: 'Unavailable'>, limit = 20000
+
+    def read(self, limit):
+>       raise OSError("fixture: broken error stream")
+E       OSError: fixture: broken error stream
+
+tests/test_monitoring_review_v10.py:56: OSError
+________________ test_capture_retains_sanitized_http_error_body ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_capture_retains_sanitized0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f2aa071c550>
+
+    def test_capture_retains_sanitized_http_error_body(tmp_path, monkeypatch):
+        error = HTTPError("https://api.deepseek.com", 429, "Limit", {},
+                          BytesIO(b"limit test-credential"))
+        budget, directory = setup_capture(tmp_path, monkeypatch, error)
+        with pytest.raises(RuntimeError):
+            invoke(budget, directory)
+>       assert (directory / "ERROR.body").read_bytes() == b"limit [REDACTED]"
+
+tests/test_monitoring_review_v10.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.10/pathlib.py:1126: in read_bytes
+    with self.open(mode='rb') as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-root/pytest-1/test_capture_retains_sanitized0/capture/ERROR.body')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return self._accessor.open(self, mode, buffering, encoding, errors,
+                                   newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-root/pytest-1/test_capture_retains_sanitized0/capture/ERROR.body'
+
+/usr/lib/python3.10/pathlib.py:1119: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_monitoring_review_v10.py::test_selector_duplicate_fields_are_rejected[query_order]
+FAILED tests/test_monitoring_review_v10.py::test_selector_duplicate_fields_are_rejected[forecast_handles]
+FAILED tests/test_monitoring_review_v10.py::test_both_process_entrypoints_reject_invalid_footprints[8-2-chronological_roles]
+FAILED tests/test_monitoring_review_v10.py::test_both_process_entrypoints_reject_invalid_footprints[2-2-chronological_roles]
+FAILED tests/test_monitoring_review_v10.py::test_both_process_entrypoints_reject_invalid_footprints[True-2-chronological_roles]
+FAILED tests/test_monitoring_review_v10.py::test_both_process_entrypoints_reject_invalid_footprints[0-inf-chronological_roles]
+FAILED tests/test_monitoring_review_v10.py::test_chronological_roles_reject_duplicate_opportunities
+FAILED tests/test_monitoring_review_v10.py::test_capture_failure_receipt_survives_both_ledger_updates_failing
+FAILED tests/test_monitoring_review_v10.py::test_capture_http_body_read_failure_has_terminal_receipt
+FAILED tests/test_monitoring_review_v10.py::test_capture_retains_sanitized_http_error_body

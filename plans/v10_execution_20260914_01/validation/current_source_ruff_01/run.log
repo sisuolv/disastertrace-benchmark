@@ -1,0 +1,103 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> disastertrace-starter/tests/test_monitoring_adoption.py:72:5
+   |
+71 |   def test_stale_base_failure_precedes_optional_keep_gate():
+72 | /     from disastertrace.monitoring_fixed_v1.admission import AdmissionEngine, AdmissionEvent, TypedOpportunity
+73 | |     from disastertrace.monitoring_fixed_v1.contracts import EvidenceBundle, Target
+   | |__________________________________________________________________________________^
+74 |
+75 |       data, bank, config = typed_fixture()
+   |
+help: Organize imports
+   |
+71 | def test_stale_base_failure_precedes_optional_keep_gate():
+   -     from disastertrace.monitoring_fixed_v1.admission import AdmissionEngine, AdmissionEvent, TypedOpportunity
+72 +     from disastertrace.monitoring_fixed_v1.admission import (
+73 +         AdmissionEngine,
+74 +         AdmissionEvent,
+75 +         TypedOpportunity,
+76 +     )
+77 |     from disastertrace.monitoring_fixed_v1.contracts import EvidenceBundle, Target
+   |
+
+FURB192 Prefer `min` over `sorted()` to compute the minimum value in a sequence
+  --> disastertrace-starter/tests/test_monitoring_feature_scoring.py:33:13
+   |
+31 |     claims = native_claims(bundle["query_ids"], bundle["disclosed"], at=bundle["at"])
+32 |     changed = copy.deepcopy(claims)
+33 |     changed[sorted(changed)[0]]["temperature_c"] = 99
+   |             ^^^^^^^^^^^^^^^^^^
+34 |     original = forecast_controls(bundle, banks, claims)
+35 |     result = forecast_controls(bundle, banks, changed)
+   |
+help: Replace with `min`
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> disastertrace-starter/tests/test_monitoring_feature_tasks.py:3:1
+  |
+1 |   """Native extraction is typed; temperature durations use whole member paths."""
+2 |
+3 | / import json
+4 | |
+5 | | import pytest
+6 | |
+7 | | from disastertrace.monitoring_v1.feature_tasks import parse_features, parse_temperature, temperature_ensemble_probability
+  | |_________________________________________________________________________________________________________________________^
+help: Organize imports
+   |
+6  |
+   - from disastertrace.monitoring_v1.feature_tasks import parse_features, parse_temperature, temperature_ensemble_probability
+7  + from disastertrace.monitoring_v1.feature_tasks import (
+8  +     parse_features,
+9  +     parse_temperature,
+10 +     temperature_ensemble_probability,
+11 + )
+12 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> disastertrace-starter/tests/test_monitoring_native_feature_forecast.py:3:1
+  |
+1 |   """Evidence content remains usable without TAF and cannot leak future records."""
+2 |
+3 | / import copy
+4 | |
+5 | | import pytest
+6 | | from test_monitoring_typed_session import typed_fixture
+7 | |
+8 | | from disastertrace.monitoring_v1.native_feature_forecast import feature_vector, native_claims, predict_features
+  | |_______________________________________________________________________________________________________________^
+help: Organize imports
+   |
+7  |
+   - from disastertrace.monitoring_v1.native_feature_forecast import feature_vector, native_claims, predict_features
+8  + from disastertrace.monitoring_v1.native_feature_forecast import (
+9  +     feature_vector,
+10 +     native_claims,
+11 +     predict_features,
+12 + )
+13 |
+   |
+
+PIE810 Call `endswith` once with a `tuple`
+  --> disastertrace-starter/tests/test_monitoring_native_feature_forecast.py:29:20
+   |
+27 |     assert original != changed and original["taf_present"] == changed["taf_present"] == 0
+28 |     mask = feature_vector(target, None, ids, products, at=at, mode="mask_age", claims=claims)
+29 |     assert not any(k.endswith("dewpoint_depression_c") or k.endswith("temperature_c") for k in mask)
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Merge into a single `endswith` call
+
+RUF059 Unpacked variable `target` is never used
+  --> disastertrace-starter/tests/test_monitoring_native_feature_forecast.py:50:5
+   |
+49 | def test_report_temperature_sign_and_censoring_are_retained_from_native_text():
+50 |     target, ids, products, at = source()
+   |     ^^^^^^
+51 |     altered = copy.deepcopy(products)
+52 |     product = next(p for p in altered.values() if p["reports"])
+   |
+help: Prefix it with an underscore or any other dummy variable pattern
+
+Found 6 errors.
+[*] 3 fixable with the `--fix` option (3 hidden fixes can be enabled with the `--unsafe-fixes` option).

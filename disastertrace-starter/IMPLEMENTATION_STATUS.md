@@ -1,5 +1,51 @@
 # Implementation Status
 
+## v10 closed execution, 2026-09-14
+
+Current entry: `../plans/v10_execution_20260914_01/README_CN.md` and its
+`CANONICAL_STATUS.json`. The current user authorizes a fresh ten-hour run ending
+2026-09-15 01:56 UTC, CPU jobs and at most four simultaneous H100s.
+All v9 launches and terminal records remain consumed and unchanged.
+
+The complete monitoring scope passes720 tests without failures/errors/skips;
+37 overlapping changed-file checks also pass.187 current Python files pass Ruff.
+Strict duplicate-key rejection, immutable per-call API escrow, nested failure
+capture, provider-bound formal entry and measurement.v3 ordering are implemented.
+Four fresh processes verify serial pending recovery on one native query, with a
+formal marker before worker visibility and a STOP boundary. General distributed
+recovery remains outside this qualification.
+
+Historical coverage/arithmetic rechecks24 temperature months/192 trajectories/
+11644 opportunities/3645 targets and14 aviation cases/196 trajectories. The new
+feature bank audits50112 probability rows. Finite residual-E witnesses cover19
+real prefixes and8 resource configurations. Multicutoff and allocation/sharing
+controls, including COPY/KEEP and strong batch baselines, have actual replays.
+
+All2812 new benchmark responses are captured. Fixed-input valid predictions
+almost entirely copy the baseline.27B and235B temperature predictions do not
+improve this exposed sample. The288-call235B selector completes with no invalid
+selectors but worse5km Brier than FOLLOW. Uniform clarification of all84 native
+extraction tasks improves ordinary visibility agreement25/144 to140/144 while
+the fixed-backend forecast does not improve. All original failures remain.
+
+All12 seasonal region-weeks provide12096 opportunities. Dropping annual sine/
+cosine on originalDec2024 fitting roles is a registered development ablation;
+new seasonal labels never enter its optimizer.216 budgeted seasonal trajectories
+and their final journal audit are complete.70 paired summaries check missing-
+outcome bounds by exhaustive binary completions. In the first-day5km subset,
+all16 positives occur in December, where coverage loses to FOLLOW and batch;
+the slight average gain is not severe-weather improvement.2017/2018 EMOS/ECC
+arithmetic passes, including same-member3day events and the worsened hot-day result.
+
+Two relocated CPU capsules verify818 and1162 manifest members respectively;
+the second contains all212 original235B tasks and reproduces every score file.
+These are scoped rescoring/replay packages, not full training reconstruction or
+new model generation. Current H15 data-card semantics and source equivalence are
+documented under the run's contracts directory. Bay confirmation stays unopened.
+All23 cloud jobs are SUCCEEDED, no owned local experiment watcher remains, and
+peak H100 allocation is four. FINAL_RESULT.json binds the closed audits/calls;
+FINAL_REPORT_CN.md and NEXT_PHASE_PLAN_CN.md are the result and next-step entries.
+
 ## v9 follow-up execution active, 2026-09-14
 
 New work: `../plans/v9_followup_execution_20260914_01/`. Serial lifecycle timing

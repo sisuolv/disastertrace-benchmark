@@ -1,0 +1,106 @@
+FFF.FFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_______ test_public_schedule_is_identical_under_distinct_query_policies ________
+
+    def test_public_schedule_is_identical_under_distinct_query_policies():
+        data, bank, config = scheduled(authorization_mode="session_shared")
+        for selector in ("round_robin", "risk", "coverage", "batch_complete"):
+            report = run_session(data, bank, dict(config, selector_kind=selector))
+>           assert [(c["opportunity_id"], c["started_at"]) for c in report["calls"]] == expected_schedule(data, config)
+E           AssertionError: assert [('KSFO-2024-...415802002003)] == [('KOAK-2024-...416320000000)]
+E             
+E             At index 0 diff: ('KSFO-2024-01-05T01:00:00Z-vis-lt-1000m-cutoff-2024-01-05T00:00:00Z', 1704412202000002) != ('KOAK-2024-01-05T06:00:00Z-vis-lt-1000m-cutoff-2024-01-05T00:00:00Z', 1704412700000000)
+E             Use -v to get more diff
+
+tests/test_monitoring_forecast_schedule.py:37: AssertionError
+_________ test_acquisition_cannot_use_time_reserved_for_forecast_slots _________
+
+    def test_acquisition_cannot_use_time_reserved_for_forecast_slots():
+        data, bank, config = scheduled()
+        for q in data["query_catalog"]:
+            q["latency_ms"] = 550000
+        report = run_session(data, bank, config)
+>       assert report["resource_spent"]["requests"] == 0
+E       assert 2 == 0
+
+tests/test_monitoring_forecast_schedule.py:46: AssertionError
+__ test_overrunning_a_slot_keeps_costs_and_skips_the_next_without_backdating ___
+
+    def test_overrunning_a_slot_keeps_costs_and_skips_the_next_without_backdating():
+        data, bank, config = scheduled()
+        config["predictor_kind"] = "llm"
+    
+        def slow(*args):
+            return '{"fact_truth":"unknown","probability":0.3}', {
+                "seconds": 30, "input_tokens": 10, "output_tokens": 10, "ended_with_eos": True}
+    
+        report = run_session(data, bank, config, backend=slow)
+>       assert len(report["calls"]) == 2
+E       AssertionError: assert 4 == 2
+E        +  where 4 = len([{'call_id': 'forecast-0', 'opportunity_id': 'KSFO-2024-01-05T01:00:00Z-vis-lt-1000m-cutoff-2024-01-05T00:00:00Z', 'he...-2024-01-05T07:00:00Z-vis-lt-1000m-cutoff-2024-01-05T01:00:00Z', 'head': 'joint', 'started_at': 1704415832001003, ...}])
+
+tests/test_monitoring_forecast_schedule.py:59: AssertionError
+_________ test_invalid_slot_contract_is_not_silently_ignored[change0] __________
+
+change = {'lead_seconds': True}
+
+    @pytest.mark.parametrize("change", [{"lead_seconds": True}, {"lead_seconds": 600},
+                                        {"spacing_seconds": 100}, {"unexpected": 1}])
+    def test_invalid_slot_contract_is_not_silently_ignored(change):
+        data, bank, config = scheduled()
+        config = copy.deepcopy(config)
+        config["forecast_schedule"].update(change)
+>       with pytest.raises(ValueError, match="schedule|slot"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_forecast_schedule.py:79: Failed
+_________ test_invalid_slot_contract_is_not_silently_ignored[change1] __________
+
+change = {'lead_seconds': 600}
+
+    @pytest.mark.parametrize("change", [{"lead_seconds": True}, {"lead_seconds": 600},
+                                        {"spacing_seconds": 100}, {"unexpected": 1}])
+    def test_invalid_slot_contract_is_not_silently_ignored(change):
+        data, bank, config = scheduled()
+        config = copy.deepcopy(config)
+        config["forecast_schedule"].update(change)
+>       with pytest.raises(ValueError, match="schedule|slot"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_forecast_schedule.py:79: Failed
+_________ test_invalid_slot_contract_is_not_silently_ignored[change2] __________
+
+change = {'spacing_seconds': 100}
+
+    @pytest.mark.parametrize("change", [{"lead_seconds": True}, {"lead_seconds": 600},
+                                        {"spacing_seconds": 100}, {"unexpected": 1}])
+    def test_invalid_slot_contract_is_not_silently_ignored(change):
+        data, bank, config = scheduled()
+        config = copy.deepcopy(config)
+        config["forecast_schedule"].update(change)
+>       with pytest.raises(ValueError, match="schedule|slot"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_forecast_schedule.py:79: Failed
+_________ test_invalid_slot_contract_is_not_silently_ignored[change3] __________
+
+change = {'unexpected': 1}
+
+    @pytest.mark.parametrize("change", [{"lead_seconds": True}, {"lead_seconds": 600},
+                                        {"spacing_seconds": 100}, {"unexpected": 1}])
+    def test_invalid_slot_contract_is_not_silently_ignored(change):
+        data, bank, config = scheduled()
+        config = copy.deepcopy(config)
+        config["forecast_schedule"].update(change)
+>       with pytest.raises(ValueError, match="schedule|slot"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_monitoring_forecast_schedule.py:79: Failed
+=========================== short test summary info ============================
+FAILED tests/test_monitoring_forecast_schedule.py::test_public_schedule_is_identical_under_distinct_query_policies
+FAILED tests/test_monitoring_forecast_schedule.py::test_acquisition_cannot_use_time_reserved_for_forecast_slots
+FAILED tests/test_monitoring_forecast_schedule.py::test_overrunning_a_slot_keeps_costs_and_skips_the_next_without_backdating
+FAILED tests/test_monitoring_forecast_schedule.py::test_invalid_slot_contract_is_not_silently_ignored[change0]
+FAILED tests/test_monitoring_forecast_schedule.py::test_invalid_slot_contract_is_not_silently_ignored[change1]
+FAILED tests/test_monitoring_forecast_schedule.py::test_invalid_slot_contract_is_not_silently_ignored[change2]
+FAILED tests/test_monitoring_forecast_schedule.py::test_invalid_slot_contract_is_not_silently_ignored[change3]

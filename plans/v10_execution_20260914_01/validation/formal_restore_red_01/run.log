@@ -1,0 +1,73 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_formal_serial_restore_keeps_production_qualification_and_original_contract _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-14/test_formal_serial_restore_kee0')
+
+    def test_formal_serial_restore_keeps_production_qualification_and_original_contract(tmp_path):
+        run,data,bank,path=initial(tmp_path)
+>       restored=FormalSession.restore(path,data,bank,directory=run.directory)
+E       AttributeError: type object 'FormalSession' has no attribute 'restore'
+
+tests/test_monitoring_formal_restore.py:22: AttributeError
+_______ test_stopped_formal_run_cannot_be_reopened_by_a_valid_checkpoint _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-14/test_stopped_formal_run_cannot0')
+
+    def test_stopped_formal_run_cannot_be_reopened_by_a_valid_checkpoint(tmp_path):
+        run,data,bank,path=initial(tmp_path)
+        run.stop("predeclared_stop")
+        with pytest.raises(ValueError,match="stopped"):
+>           FormalSession.restore(path,data,bank,directory=run.directory)
+E           AttributeError: type object 'FormalSession' has no attribute 'restore'
+
+tests/test_monitoring_formal_restore.py:33: AttributeError
+____ test_formal_recovery_rejects_changed_binding_and_cross_run_checkpoint _____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-14/test_formal_recovery_rejects_c0')
+
+    def test_formal_recovery_rejects_changed_binding_and_cross_run_checkpoint(tmp_path):
+        run,data,bank,path=initial(tmp_path)
+        marker=path.with_name(path.name+".formal.json")
+>       value=json.loads(marker.read_text())
+
+tests/test_monitoring_formal_restore.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.10/pathlib.py:1134: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-root/pytest-14/test_formal_recovery_rejects_c0/checkpoint.json.formal.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return self._accessor.open(self, mode, buffering, encoding, errors,
+                                   newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-root/pytest-14/test_formal_recovery_rejects_c0/checkpoint.json.formal.json'
+
+/usr/lib/python3.10/pathlib.py:1119: FileNotFoundError
+_ test_an_ordinary_unbound_coordinator_checkpoint_cannot_bypass_formal_restore _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-14/test_an_ordinary_unbound_coord0')
+
+    def test_an_ordinary_unbound_coordinator_checkpoint_cannot_bypass_formal_restore(tmp_path):
+        run,data,bank,path=initial(tmp_path)
+        unbound=tmp_path/"ordinary.json"
+        unbound.write_bytes(path.read_bytes())
+        with pytest.raises(ValueError,match="binding"):
+>           FormalSession.restore(unbound,data,bank,directory=run.directory)
+E           AttributeError: type object 'FormalSession' has no attribute 'restore'
+
+tests/test_monitoring_formal_restore.py:51: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_monitoring_formal_restore.py::test_formal_serial_restore_keeps_production_qualification_and_original_contract
+FAILED tests/test_monitoring_formal_restore.py::test_stopped_formal_run_cannot_be_reopened_by_a_valid_checkpoint
+FAILED tests/test_monitoring_formal_restore.py::test_formal_recovery_rejects_changed_binding_and_cross_run_checkpoint
+FAILED tests/test_monitoring_formal_restore.py::test_an_ordinary_unbound_coordinator_checkpoint_cannot_bypass_formal_restore

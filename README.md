@@ -1,3 +1,11 @@
+# Latest: v10 experiments and review materials
+
+Start with [the final Chinese report](LATEST_PROGRESS_V10_CN.md), [the overall plan](plans/v10_execution_20260914_01/OVERALL_PLAN_UPDATED_CN.md), and [review instructions](publication/v10_execution_20260914/REVIEW_FOR_CHATGPT_PRO_CN.md). Completed engineering checks, negative model results and remaining data gates are reported separately.
+
+The two scoped CPU replay capsules are documented in [publication scope](publication/v10_execution_20260914/README_CN.md). Earlier entries below remain historical.
+
+---
+
 # Latest: v9 follow-up paused for review
 
 The current computation and audits have ended; scientific failures, if any, remain explicit. Start with [the final Chinese results](LATEST_PROGRESS_20260914_CN.md), [publication scope](publication/v9_followup_20260914/README_CN.md), and [review questions](publication/v9_followup_20260914/REVIEW_FOR_CHATGPT_PRO_CN.md).

@@ -1,0 +1,83 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_stale_base_failure_precedes_optional_keep_gate ______________
+
+    def test_stale_base_failure_precedes_optional_keep_gate():
+        from disastertrace.monitoring_fixed_v1.admission import AdmissionEngine, AdmissionEvent, TypedOpportunity
+        from disastertrace.monitoring_fixed_v1.contracts import EvidenceBundle, Target
+    
+        data, bank, config = typed_fixture()
+        call = run_session(data, bank, config)["calls"][0]
+        view = call["bundle"]["payload"]
+        target = Target(**view["target"])
+        engine = AdmissionEngine([TypedOpportunity(view["opportunity_id"], target, view["cutoff"])],
+            fallbacks={target.target_id: view["baseline"]["forecast"]}, semantics_version="measurement.v3",
+            experiment={"invariants": {"fixture": True}, "interventions": {"adoption_policy": {"kind": "never"}}})
+        started = call["started_at"]
+        changed = copy.deepcopy(view)
+        changed["baseline"].update(issued_at=started+1, available_at=started+1, source_revision="fixture-new-issuance")
+        changed["baseline"]["forecast"]["value"] = .9
+        events = [AdmissionEvent("base", started-1, "baseline", {"bundle": call["bundle"]}),
+            AdmissionEvent("begin", started, "begin", {"call_id": call["call_id"], "bundle": call["bundle"],
+                "head": call["head"], "executor": call["receipt"]["executor"]}),
+>           AdmissionEvent("new-base", started+1, "baseline", {"bundle": EvidenceBundle.freeze(changed).to_dict()}),
+            AdmissionEvent("complete", call["persisted_at"], "completion", call["receipt"])]
+
+disastertrace-starter/tests/test_monitoring_adoption.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/contracts.py:324: in freeze
+    return cls(canonical(record))
+<string>:4: in __init__
+    ???
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/contracts.py:320: in __post_init__
+    _validate_bundle(json.loads(self._payload_json))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+row = {'assets': [{'asset_id': 'KSFO-2024-01-05T01:00:00Z-vis-lt-1000m::routine-KOAK-2024-01-04T22:00:00Z', 'available_at': ...67880a4bd95ae637d353cc50a834ea3c5c53', 'units': 'probability', 'value': 0.9}, 'issued_at': 1704412202000003, ...}, ...}
+
+    def _validate_bundle(row):
+        require_fields(row, BUNDLE_FIELDS, "visible bundle")
+        if row["schema"] != "disastertrace.frozen_evidence.v1":
+            raise ValueError("Unknown evidence schema")
+        target = Target(**row["target"])
+        cutoff = row["cutoff"]
+        target.check_cutoff(cutoff)
+        if row["authorization_mode"] not in {"target_private", "session_shared"}:
+            raise ValueError("Unknown authorization mode")
+        if row["availability_basis"] not in {
+            "observed_first_seen",
+            "documented_historical_release",
+            "declared_archive_scenario",
+        }:
+            raise ValueError("Availability evidence must be explicitly qualified")
+        if not all(row[k] for k in ("opportunity_id", "representation", "provider_version")):
+            raise ValueError("Incomplete provider identity")
+        base = row["baseline"]
+        require_fields(
+            base,
+            "forecast source_revision issued_at available_at valid_until kind mapping_version content",
+            "base",
+        )
+        target.check_forecast(Forecast(**base["forecast"]))
+        for name in ("issued_at", "available_at", "valid_until"):
+            timestamp(base[name])
+        if not base["issued_at"] <= base["available_at"] <= cutoff < base["valid_until"]:
+            raise ValueError("Common baseline unavailable or expired")
+        if base["kind"] not in {"professional", "research", "fallback"} or not all(
+            base[k] for k in ("source_revision", "mapping_version")
+        ):
+            raise ValueError("Incomplete baseline identity")
+        require_fields(row["state"], "forecast mode protocol", "current state")
+        target.check_forecast(Forecast(**row["state"]["forecast"]))
+        if row["state"]["mode"] not in {"FOLLOW", "OVERRIDE"} or row["state"]["protocol"] not in {
+            "base_bound_override",
+            "persistent_override",
+        }:
+            raise ValueError("Invalid current-state protocol")
+        if row["state"]["mode"] == "FOLLOW" and row["state"]["forecast"] != base["forecast"]:
+>           raise ValueError("FOLLOW state must use the common baseline")
+E           ValueError: FOLLOW state must use the common baseline
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/contracts.py:198: ValueError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_adoption.py::test_stale_base_failure_precedes_optional_keep_gate

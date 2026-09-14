@@ -1,0 +1,56 @@
+........FFF                                                              [100%]
+=================================== FAILURES ===================================
+______ test_reducer_rejects_receipts_from_a_different_call[reserve.json] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_reducer_rejects_receipts_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f44fdbd1c00>
+receipt = 'reserve.json'
+
+    @pytest.mark.parametrize("receipt", ["reserve.json", "dispatch.json"])
+    def test_reducer_rejects_receipts_from_a_different_call(tmp_path, monkeypatch, receipt):
+        api, ledger, messages = setup(tmp_path, monkeypatch, valid_response())
+        api.capture(ledger, "0", messages)
+        path = ledger.attempt("0") / receipt
+        record = json.loads(path.read_text())
+        record["call_id"] = "another-call"
+        path.write_text(json.dumps(record))
+>       with pytest.raises(ValueError, match="identity"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_api_ledger_v2.py:113: Failed
+______ test_reducer_rejects_receipts_from_a_different_call[dispatch.json] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_reducer_rejects_receipts_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f44fda17160>
+receipt = 'dispatch.json'
+
+    @pytest.mark.parametrize("receipt", ["reserve.json", "dispatch.json"])
+    def test_reducer_rejects_receipts_from_a_different_call(tmp_path, monkeypatch, receipt):
+        api, ledger, messages = setup(tmp_path, monkeypatch, valid_response())
+        api.capture(ledger, "0", messages)
+        path = ledger.attempt("0") / receipt
+        record = json.loads(path.read_text())
+        record["call_id"] = "another-call"
+        path.write_text(json.dumps(record))
+>       with pytest.raises(ValueError, match="identity"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_api_ledger_v2.py:113: Failed
+_________ test_reduction_checks_bound_contract_before_accepting_bills __________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_reduction_checks_bound_co0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f44fda22290>
+
+    def test_reduction_checks_bound_contract_before_accepting_bills(tmp_path, monkeypatch):
+        api, ledger, messages = setup(tmp_path, monkeypatch, valid_response())
+        api.capture(ledger, "0", messages)
+        with (ledger.path / "contract.json").open("a") as stream:
+            stream.write(" ")
+>       with pytest.raises(ValueError, match="contract"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_api_ledger_v2.py:122: Failed
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_api_ledger_v2.py::test_reducer_rejects_receipts_from_a_different_call[reserve.json]
+FAILED disastertrace-starter/tests/test_monitoring_api_ledger_v2.py::test_reducer_rejects_receipts_from_a_different_call[dispatch.json]
+FAILED disastertrace-starter/tests/test_monitoring_api_ledger_v2.py::test_reduction_checks_bound_contract_before_accepting_bills

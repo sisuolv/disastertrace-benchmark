@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="8" time="0.526" timestamp="2026-09-14T16:11:01.122707+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-447cj"><testcase classname="tests.test_monitoring_v10_contracts" name="test_formal_registry_rejects_omitted_policy" time="0.003"><failure message="TypeError: OutcomeRegistry.__init__() got an unexpected keyword argument 'mode'">def test_formal_registry_rejects_omitted_policy():
+        target, record = fixture()
+        del record["resolution_policy"]
+        with pytest.raises(ValueError, match="policy"):
+&gt;           OutcomeRegistry([target], mode="formal_provider_bound").register(record)
+E           TypeError: OutcomeRegistry.__init__() got an unexpected keyword argument 'mode'
+
+tests/test_monitoring_v10_contracts.py:15: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v10_contracts" name="test_formal_provider_binding_is_roundtrippable_and_not_legacy" time="0.002"><failure message="TypeError: OutcomeRegistry.__init__() got an unexpected keyword argument 'mode'">def test_formal_provider_binding_is_roundtrippable_and_not_legacy():
+        target, record = fixture()
+        record.update(provider="IEM", provider_version="native_h15_snapshot.v1")
+&gt;       registry = OutcomeRegistry([target], mode="formal_provider_bound")
+E       TypeError: OutcomeRegistry.__init__() got an unexpected keyword argument 'mode'
+
+tests/test_monitoring_v10_contracts.py:21: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v10_contracts" name="test_v3_intervention_precedes_same_time_begin_and_survives_replay[a-policy]" time="0.004"><failure message="ValueError: Unknown admission semantics">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-3/test_v3_intervention_precedes_0')
+identity = 'a-policy'
+
+    @pytest.mark.parametrize("identity", ["a-policy", "z-policy"])
+    def test_v3_intervention_precedes_same_time_begin_and_survives_replay(tmp_path, identity):
+        experiment = {"invariants": {"scope": "fixture"}, "interventions": {"predict": True}}
+&gt;       engine, _bundle, events = setup_engine(semantics_version="measurement.v3", experiment=experiment)
+
+tests/test_monitoring_v10_contracts.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_monitoring_admission.py:68: in setup_engine
+    engine = AdmissionEngine(opportunities, fallbacks={"t": row["baseline"]["forecast"]}, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7faa355720b0&gt;
+opportunities = [TypedOpportunity(opportunity_id='o', target=Target(target_id='t', entity='station:A', variable='temperature', units='...='future_physical', report_policy='native.v1', event_operator=None, threshold=None, release_event_at=None), cutoff=90)]
+fallbacks = {'t': {'kind': 'scalar', 'target_contract_hash': '30978dad1c2b39fd11e3711c67b2ec9857a833abdf9b2f20e93fb5f54eb10295', 'units': 'degC', 'value': -3.5}}
+protocol = 'base_bound_override', time_basis = 'declared_archive_scenario'
+journal = None, preparation = None, semantics_version = 'measurement.v3'
+experiment = {'invariants': {'scope': 'fixture'}, 'interventions': {'predict': True}}
+
+    def __init__(
+        self,
+        opportunities,
+        *,
+        fallbacks,
+        protocol="base_bound_override",
+        time_basis="declared_archive_scenario",
+        journal=None,
+        preparation=None,
+        semantics_version="measurement.v2",
+        experiment=None,
+    ):
+        opportunities = list(opportunities)
+        self.opportunities = {o.opportunity_id: o for o in opportunities}
+        if not opportunities or len(self.opportunities) != len(opportunities):
+            raise ValueError("Nonempty unique opportunity registry required")
+        self.targets = {}
+        for o in opportunities:
+            if o.target.target_id in self.targets and self.targets[o.target.target_id] != o.target:
+                raise ValueError("Target ID collision")
+            self.targets[o.target.target_id] = o.target
+        if time_basis not in {
+            "declared_archive_scenario",
+            "observed_first_seen",
+            "documented_historical_release",
+        }:
+            raise ValueError("Explicit clock basis required")
+        if semantics_version not in {"legacy.v1", "measurement.v2"}:
+&gt;           raise ValueError("Unknown admission semantics")
+E           ValueError: Unknown admission semantics
+
+src/disastertrace/monitoring_fixed_v1/admission.py:145: ValueError</failure></testcase><testcase classname="tests.test_monitoring_v10_contracts" name="test_v3_intervention_precedes_same_time_begin_and_survives_replay[z-policy]" time="0.003"><failure message="ValueError: Unknown admission semantics">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-3/test_v3_intervention_precedes_1')
+identity = 'z-policy'
+
+    @pytest.mark.parametrize("identity", ["a-policy", "z-policy"])
+    def test_v3_intervention_precedes_same_time_begin_and_survives_replay(tmp_path, identity):
+        experiment = {"invariants": {"scope": "fixture"}, "interventions": {"predict": True}}
+&gt;       engine, _bundle, events = setup_engine(semantics_version="measurement.v3", experiment=experiment)
+
+tests/test_monitoring_v10_contracts.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_monitoring_admission.py:68: in setup_engine
+    engine = AdmissionEngine(opportunities, fallbacks={"t": row["baseline"]["forecast"]}, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7faa35f576d0&gt;
+opportunities = [TypedOpportunity(opportunity_id='o', target=Target(target_id='t', entity='station:A', variable='temperature', units='...='future_physical', report_policy='native.v1', event_operator=None, threshold=None, release_event_at=None), cutoff=90)]
+fallbacks = {'t': {'kind': 'scalar', 'target_contract_hash': '30978dad1c2b39fd11e3711c67b2ec9857a833abdf9b2f20e93fb5f54eb10295', 'units': 'degC', 'value': -3.5}}
+protocol = 'base_bound_override', time_basis = 'declared_archive_scenario'
+journal = None, preparation = None, semantics_version = 'measurement.v3'
+experiment = {'invariants': {'scope': 'fixture'}, 'interventions': {'predict': True}}
+
+    def __init__(
+        self,
+        opportunities,
+        *,
+        fallbacks,
+        protocol="base_bound_override",
+        time_basis="declared_archive_scenario",
+        journal=None,
+        preparation=None,
+        semantics_version="measurement.v2",
+        experiment=None,
+    ):
+        opportunities = list(opportunities)
+        self.opportunities = {o.opportunity_id: o for o in opportunities}
+        if not opportunities or len(self.opportunities) != len(opportunities):
+            raise ValueError("Nonempty unique opportunity registry required")
+        self.targets = {}
+        for o in opportunities:
+            if o.target.target_id in self.targets and self.targets[o.target.target_id] != o.target:
+                raise ValueError("Target ID collision")
+            self.targets[o.target.target_id] = o.target
+        if time_basis not in {
+            "declared_archive_scenario",
+            "observed_first_seen",
+            "documented_historical_release",
+        }:
+            raise ValueError("Explicit clock basis required")
+        if semantics_version not in {"legacy.v1", "measurement.v2"}:
+&gt;           raise ValueError("Unknown admission semantics")
+E           ValueError: Unknown admission semantics
+
+src/disastertrace/monitoring_fixed_v1/admission.py:145: ValueError</failure></testcase><testcase classname="tests.test_monitoring_v10_contracts" name="test_v2_event_order_is_not_redefined_for_historical_replay" time="0.002" /><testcase classname="tests.test_monitoring_v10_contracts" name="test_exact_coverage_rejects_missing_extra_and_duplicate_ids" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.audit_contracts'">def test_exact_coverage_rejects_missing_extra_and_duplicate_ids():
+&gt;       from disastertrace.monitoring_v1.audit_contracts import require_exact_ids
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.audit_contracts'
+
+tests/test_monitoring_v10_contracts.py:63: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v10_contracts" name="test_composition_only_uses_model_slots_and_rejects_invalid_output" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.e_composition'">def test_composition_only_uses_model_slots_and_rejects_invalid_output():
+&gt;       from disastertrace.monitoring_v1.e_composition import compose
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.e_composition'
+
+tests/test_monitoring_v10_contracts.py:72: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v10_contracts" name="test_calibration_trace_preserves_original_and_identifies_mapping_only_effect" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.calibration_diagnostics'">def test_calibration_trace_preserves_original_and_identifies_mapping_only_effect():
+&gt;       from disastertrace.monitoring_v1.calibration_diagnostics import trace_prediction
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.calibration_diagnostics'
+
+tests/test_monitoring_v10_contracts.py:86: ModuleNotFoundError</failure></testcase></testsuite></testsuites>

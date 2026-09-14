@@ -1,0 +1,40 @@
+{
+  "at": "2026-09-14T22:55:21.687507+00:00",
+  "scope": "read-only source inspection and one remote ps observation; no new experiment or timing benchmark",
+  "source_files": {
+    "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py": "4c9292150ecf2291012c110750defb13b9067c2e283caf722f338be0a2e4c423",
+    "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py": "d27d7ef563809d031093797e961ce1cb6d831b04fd63a09355430f7143b0a354"
+  },
+  "score_formal_direct_replays": "1+N",
+  "delegated_score_admitted_replays": "N",
+  "normal_nine_arm_call_replays": 19,
+  "measured_speedup": null,
+  "worker_observation": {
+    "job": "pt-b6gglpte",
+    "command": "ps -eo pid,ppid,state,pcpu,time,comm,wchan:28",
+    "python_worker_pids": [
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79
+    ],
+    "all_worker_state": "R",
+    "reported_cpu_percent_range": [
+      99.3,
+      99.4
+    ],
+    "reported_cpu_time_approximately_minutes": 25.35,
+    "source": "captured SCO interactive terminal response; no kernel-stack sample"
+  },
+  "detailed_followup_probe": "SCO websocket write failed with broken pipe; no PROCESS_PROBE_01.json created",
+  "proposed_followup": "One verified journal replay per arm within one score call, preserving all admission, provider, baseline and comparison checks; profile and verify exact output equivalence before deployment",
+  "frozen_execution_sources_modified": false
+}

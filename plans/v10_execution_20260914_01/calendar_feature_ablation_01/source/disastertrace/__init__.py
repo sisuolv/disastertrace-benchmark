@@ -1,0 +1,1 @@
+"""Frozen native feature model."""

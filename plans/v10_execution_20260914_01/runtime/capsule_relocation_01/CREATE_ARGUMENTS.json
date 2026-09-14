@@ -1,0 +1,18 @@
+[
+  "/mnt/afs/260010168/bin/sco",
+  "acp",
+  "jobs",
+  "create",
+  "--workspace-name=share-space",
+  "--aec2-name=share-cluster",
+  "--job-name=dt-v10-capsule-replay-01",
+  "--container-image-url=registry.cn-sh-01g.sensecore.cn/lepton-trainingjob/nvidia24.04-ubuntu22.04-py3.10-cuda12.4-cudnn9.1-torch2.3.0-transformerengine1.5:v1.0.0-20241130-nvdia-base-image",
+  "--training-framework=pytorch",
+  "--worker-nodes=1",
+  "--worker-spec=n6ls.iu.i40.16c64g",
+  "--storage-mount=01a04263-91e5-7603-bc01-c67e503da6b5:/mnt/afs",
+  "--quota-type=reserved",
+  "--priority=NORMAL",
+  "--retry-times=0",
+  "--command=bash /mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v10_execution_20260914_01/runtime/capsule_relocation_01/bounded.sh"
+]

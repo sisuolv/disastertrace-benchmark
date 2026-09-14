@@ -1,0 +1,80 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_stale_base_failure_precedes_optional_keep_gate ______________
+
+    def test_stale_base_failure_precedes_optional_keep_gate():
+        from disastertrace.monitoring_fixed_v1.admission import AdmissionEngine, AdmissionEvent, TypedOpportunity
+        from disastertrace.monitoring_fixed_v1.contracts import EvidenceBundle, Target
+    
+        data, bank, config = typed_fixture()
+        call = run_session(data, bank, config)["calls"][0]
+        view = call["bundle"]["payload"]
+        target = Target(**view["target"])
+        engine = AdmissionEngine([TypedOpportunity(view["opportunity_id"], target, view["cutoff"])],
+            fallbacks={target.target_id: view["baseline"]["forecast"]}, semantics_version="measurement.v3",
+            experiment={"invariants": {"fixture": True}, "interventions": {"adoption_policy": {"kind": "never"}}})
+        started = call["started_at"]
+        changed = copy.deepcopy(view)
+        changed["baseline"].update(issued_at=started+1, available_at=started+1, source_revision="fixture-new-issuance")
+        changed["baseline"]["forecast"]["value"] = .9
+        changed["state"]["forecast"]["value"] = .9
+        events = [AdmissionEvent("base", started-1, "baseline", {"bundle": call["bundle"]}),
+            AdmissionEvent("begin", started, "begin", {"call_id": call["call_id"], "bundle": call["bundle"],
+                "head": call["head"], "executor": call["receipt"]["executor"]}),
+            AdmissionEvent("new-base", started+1, "baseline", {"bundle": EvidenceBundle.freeze(changed).to_dict()}),
+            AdmissionEvent("complete", call["persisted_at"], "completion", call["receipt"])]
+>       engine.run(events, until=call["persisted_at"])
+
+disastertrace-starter/tests/test_monitoring_adoption.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:595: in run
+    trial._run_once(list(events), until=until)
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:660: in _run_once
+    result = run_clock(
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:11: in run_clock
+    return _advance_clock(owner, events, until=until, event_order=event_order, decode=decode)
+disastertrace-starter/src/disastertrace/monitoring_v1/event_loop.py:62: in _advance_clock
+    owner._process(event)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <disastertrace.monitoring_fixed_v1.admission.AdmissionEngine object at 0x7f51022e7be0>
+event = AdmissionEvent(event_id='base', time=1704412202000001, kind='baseline', payload={'bundle': {'asset_hashes': {'KSFO-202...-vis-lt-1000m', 'temporal_semantics': 'future_physical', 'threshold': 1000, 'units': 'm', 'variable': 'visibility'}}}})
+
+    def _process(self, event):
+        p, at = event.payload, event.time
+        if event.kind == "policy_intervention":
+            allowed = {
+                "acquire",
+                "predict",
+                "selector_kind",
+                "query_limit_per_tick",
+                "per_tick_forecast_cap",
+            }
+            if not p.get("parent_checkpoint_sha256") or not set(p.get("changes", {})) <= allowed:
+                raise ValueError("Unregistered policy branch intervention")
+            self.active_interventions.update(p["changes"])
+            self.attempts.append(
+                {"event_id": event.event_id, "time": at, "status": "policy_intervention", **p}
+            )
+            return
+        if event.kind in {"prepare", "cancel_preparation"}:
+            if self.preparation is None:
+                raise ValueError("Preparation scenario not enabled")
+            action = (
+                self.preparation.request if event.kind == "prepare" else self.preparation.cancel
+            )
+            action(p["job_id"], at)
+            return
+        if event.kind == "baseline":
+            bundle = EvidenceBundle.restore(p["bundle"])
+            row, base = bundle.policy_view(), bundle.policy_view()["baseline"]
+            tid = row["target"]["target_id"]
+            if tid not in self.targets or Target(**row["target"]) != self.targets[tid]:
+                raise ValueError("Unknown baseline target")
+            if base["available_at"] != at or row["availability_basis"] != self.time_basis:
+>               raise ValueError("Baseline availability/clock mismatch")
+E               ValueError: Baseline availability/clock mismatch
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py:299: ValueError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_adoption.py::test_stale_base_failure_precedes_optional_keep_gate

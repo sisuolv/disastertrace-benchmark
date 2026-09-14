@@ -1,0 +1,1 @@
+"""Frozen seasonal query controls."""

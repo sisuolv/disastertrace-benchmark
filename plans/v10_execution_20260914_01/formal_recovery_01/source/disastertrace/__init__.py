@@ -1,0 +1,1 @@
+"""Frozen formal recovery qualification."""

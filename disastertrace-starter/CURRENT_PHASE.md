@@ -1,4 +1,28 @@
-# Current phase: v9 follow-up data and API evaluation, 2026-09-14
+# Current phase: v10 experiments closed, 2026-09-14
+
+The current authorization runs from 2026-09-14 15:56 UTC to 2026-09-15 01:56 UTC.
+Canonical status: `../plans/v10_execution_20260914_01/CANONICAL_STATUS.json`.
+The v9 batch below has completed and paused; its consumed launchers remain closed.
+All registered local model batches are complete: 2,812 benchmark responses across
+fixed E/F, 27B/235B feature/temperature tasks, 288 selector calls and 84 uniformly
+clarified extraction tasks. Later API compatibility returned402; 424 benchmark
+tasks remain explicitly unattempted. The last four-H100 job is SUCCEEDED.
+The final216-trajectory seasonal CPU journal audit and70 paired missing-outcome
+analyses pass. All23 cloud jobs are SUCCEEDED; peak simultaneous H100 allocation
+is four. Final experimental reconciliation completed2026-09-14 23:13UTC.
+New experiments are closed by CLOSURE_BOUNDARY.json; FINAL_RESULT.json is the
+canonical completion receipt and FINAL_REPORT_CN.md explains the results.
+
+The complete monitoring suite passes720 tests;37 overlapping changed-file checks
+also pass, with187 current Python files linted. All12 seasonal region-weeks are
+collected and evaluated. The calendar-feature ablation and clarified prompt are
+error-informed development diagnostics. Selector5km Brier0.103349 is worse than
+FOLLOW0.064305; improved feature extraction does not imply improved forecasts.
+The reserved Bay confirmation week remains unopened. Read the final report and
+OVERALL_PLAN_UPDATED_CN.md / NEXT_PHASE_PLAN_CN.md in the v10 run. GitHub push
+verification is recorded separately in the local GITHUB_UPLOAD.json receipt.
+
+## Historical v9 entry (preserved; running statements are not current status)
 
 The user requests a pause after the currently registered work. Finish only the
 ordinary F pilot, its already registered DenverJan9 diagnostic, the24-month

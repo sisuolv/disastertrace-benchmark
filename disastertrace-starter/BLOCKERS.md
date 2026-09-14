@@ -1,5 +1,27 @@
 # Blockers
 
+## Current v10 gates, 2026-09-14
+
+Canonical progress is `../plans/v10_execution_20260914_01/CANONICAL_STATUS.json`.
+The ordinary and Denver v9 F pilots and all 24 temperature months are complete.
+The original E01 retains62 unresolved reservations (USD1.692672 upper allowance).
+Two later API compatibility attempts return402 Insufficient Balance, preserving
+USD0.058368 new unresolved allowance;424 registered benchmark tasks are unattempted
+and are not ranked as model performance. Local27B/235B work can proceed without
+that API balance. The final216-trajectory CPU audit passes; all23 cloud jobs are
+SUCCEEDED, with a four-H100 peak. Local GITHUB_UPLOAD.json records the separate
+publication readback; scientific gates below are not experimental runtime jobs.
+There are 231 probability crossings among 2,084 identical-information nested-
+threshold pairs in the development calibration review. Preserve binary results;
+joint risk/action qualification requires its separately declared coherence control.
+Model temperature and selector experiments now exist; positive model benefits
+and independent confirmation remain unproved. Cross-season fitting/calibration,
+independent natural-process grouping, severe-positive support, qualified historical
+temperature supplements, MRMS/HEFS physical contracts, native multimodal, full D
+feedback and complete16-hazard E/F/D/MM chains remain scientific gates. Current
+seasonal ablation and prompt clarification are error-informed development results.
+The following v9 running/queued statements are historical, not current blockers.
+
 ## v9 follow-up active gates, 2026-09-14
 
 Serial cumulative delivery timing and constrained production transport gates have

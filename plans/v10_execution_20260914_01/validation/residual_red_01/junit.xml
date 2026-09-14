@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="8" time="0.481" timestamp="2026-09-14T17:53:07.523404+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-447cj"><testcase classname="tests.test_monitoring_residual_reachability" name="test_spent_and_unresolved_reservations_cannot_be_spent_again" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'">def test_spent_and_unresolved_reservations_cannot_be_spent_again():
+        ledger = BudgetLedger({"requests": 3})
+        ledger.reserve("paid", Cost(requests=1), "A")
+        ledger.settle("paid", Cost(requests=1))
+        ledger.reserve("remote", Cost(requests=1), "B")
+        ledger.mark_unknown("remote", {"original_response_missing": True})
+        store = EvidenceStore("session_shared", ["A", "B"])
+        goals = [Goal("A", 5, (frozenset({"x"}),)), Goal("B", 5, (frozenset({"y"}),))]
+&gt;       result = solve(ledger, store, [query("x"), query("y", "B")], goals)
+
+tests/test_monitoring_residual_reachability.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+key = 'x', owner = 'A', upper = 1, actual = 1, duration = 1
+
+    def query(key, owner="A", *, upper=1, actual=1, duration=1):
+&gt;       from disastertrace.monitoring_v1.residual_reachability import ResidualQuery
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'
+
+tests/test_monitoring_residual_reachability.py:11: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_residual_reachability" name="test_cached_shared_asset_is_free_but_private_cache_does_not_grant_others" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'">def test_cached_shared_asset_is_free_but_private_cache_does_not_grant_others():
+        for mode, expected in [("session_shared", 2), ("target_private", 1)]:
+            ledger = BudgetLedger({"requests": 1})
+            ledger.reserve("paid", Cost(requests=1), "A")
+            ledger.settle("paid", Cost(requests=1))
+            store = EvidenceStore(mode, ["A", "B"])
+            store.register("cached", {"query_id": "cached"}, owner="A", receipt_id="paid")
+            goals = [Goal(t, 5, (frozenset({"cached"}),)) for t in ("A", "B")]
+&gt;           result = solve(ledger, store, [], goals, cached_completed={"cached": 0})
+
+tests/test_monitoring_residual_reachability.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ledger = &lt;disastertrace.monitoring_v1.resources.BudgetLedger object at 0x7f8644f87c70&gt;
+store = &lt;disastertrace.monitoring_v1.views.EvidenceStore object at 0x7f8644f87bb0&gt;
+queries = []
+goals = [Goal(target_id='A', deadline=5, alternatives=(frozenset({'cached'}),), weight=1.0), Goal(target_id='B', deadline=5, alternatives=(frozenset({'cached'}),), weight=1.0)]
+kw = {'cached_completed': {'cached': 0}}
+
+    def solve(ledger, store, queries, goals, **kw):
+&gt;       from disastertrace.monitoring_v1.residual_reachability import solve_residual
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'
+
+tests/test_monitoring_residual_reachability.py:18: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_residual_reachability" name="test_shared_asset_has_one_payer_and_must_fit_that_payers_quota" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'">def test_shared_asset_has_one_payer_and_must_fit_that_payers_quota():
+        ledger = BudgetLedger({"requests": 2}, allocation_mode="fixed_quota",
+                              quotas={"A": {"requests": 0}, "B": {"requests": 2}})
+        store = EvidenceStore("session_shared", ["A", "B"])
+        goals = [Goal(t, 5, (frozenset({"shared"}),)) for t in ("A", "B")]
+&gt;       denied = solve(ledger, store, [query("shared")], goals)
+
+tests/test_monitoring_residual_reachability.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+key = 'shared', owner = 'A', upper = 1, actual = 1, duration = 1
+
+    def query(key, owner="A", *, upper=1, actual=1, duration=1):
+&gt;       from disastertrace.monitoring_v1.residual_reachability import ResidualQuery
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'
+
+tests/test_monitoring_residual_reachability.py:11: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_residual_reachability" name="test_reservation_upper_must_fit_even_when_known_actual_is_cheaper" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'">def test_reservation_upper_must_fit_even_when_known_actual_is_cheaper():
+        ledger = BudgetLedger({"requests": 2})
+        store = EvidenceStore("session_shared", ["A", "B"])
+&gt;       qs = [query("x", upper=2), query("y", "B", upper=2)]
+
+tests/test_monitoring_residual_reachability.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+key = 'x', owner = 'A', upper = 2, actual = 1, duration = 1
+
+    def query(key, owner="A", *, upper=1, actual=1, duration=1):
+&gt;       from disastertrace.monitoring_v1.residual_reachability import ResidualQuery
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'
+
+tests/test_monitoring_residual_reachability.py:11: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_residual_reachability" name="test_serial_completion_cannot_splice_fast_time_and_cheap_path" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'">def test_serial_completion_cannot_splice_fast_time_and_cheap_path():
+        ledger = BudgetLedger({"requests": 1})
+        store = EvidenceStore("session_shared", ["A"])
+&gt;       qs = [query("slow", duration=8), query("fast", upper=2, actual=2)]
+
+tests/test_monitoring_residual_reachability.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+key = 'slow', owner = 'A', upper = 1, actual = 1, duration = 8
+
+    def query(key, owner="A", *, upper=1, actual=1, duration=1):
+&gt;       from disastertrace.monitoring_v1.residual_reachability import ResidualQuery
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'
+
+tests/test_monitoring_residual_reachability.py:11: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_residual_reachability" name="test_actual_ledger_independently_replays_every_returned_witness" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'">def test_actual_ledger_independently_replays_every_returned_witness():
+&gt;       from disastertrace.monitoring_v1.residual_reachability import replay_residual_witness
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'
+
+tests/test_monitoring_residual_reachability.py:78: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_residual_reachability" name="test_search_truncation_keeps_a_bound_and_does_not_declare_unreachable" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'">def test_search_truncation_keeps_a_bound_and_does_not_declare_unreachable():
+        ledger = BudgetLedger({"requests": 2})
+        store = EvidenceStore("session_shared", ["A"])
+&gt;       result = solve(ledger, store, [query("x")], [Goal("A", 5, (frozenset({"x"}),))], max_states=1)
+
+tests/test_monitoring_residual_reachability.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+key = 'x', owner = 'A', upper = 1, actual = 1, duration = 1
+
+    def query(key, owner="A", *, upper=1, actual=1, duration=1):
+&gt;       from disastertrace.monitoring_v1.residual_reachability import ResidualQuery
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'
+
+tests/test_monitoring_residual_reachability.py:11: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_residual_reachability" name="test_a_cache_without_an_actual_paid_receipt_is_rejected" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'">def test_a_cache_without_an_actual_paid_receipt_is_rejected():
+        ledger = BudgetLedger({"requests": 2})
+        store = EvidenceStore("session_shared", ["A"])
+        store.register("x", {}, owner="A", receipt_id="invented")
+        with pytest.raises(ValueError, match="receipt|settled"):
+&gt;           solve(ledger, store, [], [Goal("A", 5, (frozenset({"x"}),))], cached_completed={"x": 0})
+
+tests/test_monitoring_residual_reachability.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ledger = &lt;disastertrace.monitoring_v1.resources.BudgetLedger object at 0x7f8644f868f0&gt;
+store = &lt;disastertrace.monitoring_v1.views.EvidenceStore object at 0x7f8644f86800&gt;
+queries = []
+goals = [Goal(target_id='A', deadline=5, alternatives=(frozenset({'x'}),), weight=1.0)]
+kw = {'cached_completed': {'x': 0}}
+
+    def solve(ledger, store, queries, goals, **kw):
+&gt;       from disastertrace.monitoring_v1.residual_reachability import solve_residual
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.residual_reachability'
+
+tests/test_monitoring_residual_reachability.py:18: ModuleNotFoundError</failure></testcase></testsuite></testsuites>

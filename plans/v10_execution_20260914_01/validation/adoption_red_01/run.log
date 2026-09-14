@@ -1,0 +1,72 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+________ test_keep_gate_preserves_every_computed_proposal_and_its_cost _________
+
+    def test_keep_gate_preserves_every_computed_proposal_and_its_cost():
+        data, bank, config = typed_fixture(admission_semantics="measurement.v3",
+            adoption_policy={"kind": "never"})
+        kept = run_session(data, bank, config)
+        assert kept["calls"]
+>       assert all(c["admission_status"] == "adoption_kept" for c in kept["calls"])
+E       assert False
+E        +  where False = all(<generator object test_keep_gate_preserves_every_computed_proposal_and_its_cost.<locals>.<genexpr> at 0x7f8f427b9b60>)
+
+disastertrace-starter/tests/test_monitoring_adoption.py:14: AssertionError
+______ test_equal_copy_is_not_adopted_by_change_gate_and_restores_exactly ______
+
+    def test_equal_copy_is_not_adopted_by_change_gate_and_restores_exactly():
+        data, bank, config = typed_fixture(admission_semantics="measurement.v3", predictor_kind="program",
+            program_prediction="copy_current_state", adoption_policy={"kind": "change_epsilon", "epsilon": .01})
+        expected = run_session(data, bank, config)
+        session = SessionCoordinator(data, bank, config)
+        session.step()
+        restored = SessionCoordinator.restore(session.snapshot(), data, bank).finish()
+        assert restored == expected
+>       assert all(c["admission_status"] == "adoption_kept" for c in expected["calls"])
+E       assert False
+E        +  where False = all(<generator object test_equal_copy_is_not_adopted_by_change_gate_and_restores_exactly.<locals>.<genexpr> at 0x7f8f427b9700>)
+
+disastertrace-starter/tests/test_monitoring_adoption.py:29: AssertionError
+________________ test_adoption_is_registered_comparison_factor _________________
+
+    def test_adoption_is_registered_comparison_factor():
+        data, bank, config = typed_fixture(admission_semantics="measurement.v3")
+        a, b = [experiment_spec(data, bank, dict(config, adoption_policy={"kind": k})) for k in ("always", "never")]
+>       assert a["invariants"] == b["invariants"]
+E       AssertionError: assert {'data_univer...3', ...}, ...} == {'data_univer...3', ...}, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'other_frozen_config': {'seed': 20260912, 'session_runtime': 'typed_admission_v1', 'typed_head': 'joint', 'admission_semantics': 'measurement.v3', ...}} != {'other_frozen_config': {'seed': 20260912, 'session_runtime': 'typed_admission_v1', 'typed_head': 'joint', 'admission_semantics': 'measurement.v3', ...}}
+E         Use -v to get more diff
+
+disastertrace-starter/tests/test_monitoring_adoption.py:35: AssertionError
+__ test_loss_limit_bounds_both_binary_outcomes_but_does_not_claim_calibration __
+
+    def test_loss_limit_bounds_both_binary_outcomes_but_does_not_claim_calibration():
+>       from disastertrace.monitoring_fixed_v1.adoption import decide
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_fixed_v1.adoption'
+
+disastertrace-starter/tests/test_monitoring_adoption.py:40: ModuleNotFoundError
+_____ test_first_hold_uses_admission_history_not_current_override_presence _____
+
+    def test_first_hold_uses_admission_history_not_current_override_presence():
+>       from disastertrace.monitoring_fixed_v1.adoption import decide
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_fixed_v1.adoption'
+
+disastertrace-starter/tests/test_monitoring_adoption.py:53: ModuleNotFoundError
+_______ test_adoption_requires_new_semantics_and_rejects_bad_thresholds ________
+
+    def test_adoption_requires_new_semantics_and_rejects_bad_thresholds():
+        data, bank, config = typed_fixture(adoption_policy={"kind": "never"})
+>       with pytest.raises(ValueError, match="v3"):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_adoption.py:62: Failed
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_adoption.py::test_keep_gate_preserves_every_computed_proposal_and_its_cost
+FAILED disastertrace-starter/tests/test_monitoring_adoption.py::test_equal_copy_is_not_adopted_by_change_gate_and_restores_exactly
+FAILED disastertrace-starter/tests/test_monitoring_adoption.py::test_adoption_is_registered_comparison_factor
+FAILED disastertrace-starter/tests/test_monitoring_adoption.py::test_loss_limit_bounds_both_binary_outcomes_but_does_not_claim_calibration
+FAILED disastertrace-starter/tests/test_monitoring_adoption.py::test_first_hold_uses_admission_history_not_current_override_presence
+FAILED disastertrace-starter/tests/test_monitoring_adoption.py::test_adoption_requires_new_semantics_and_rejects_bad_thresholds

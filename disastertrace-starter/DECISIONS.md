@@ -1,5 +1,52 @@
 # Decisions
 
+## v10 review decisions, 2026-09-14
+
+The new10h authorization resumes work in `../plans/v10_execution_20260914_01/`;
+historical pause records are not reopened or edited. Keep C1/C2/C3 and16 hazards.
+Core scientific priorities are source support, shared resource attribution,
+strong fixed-information predictors, revision/adoption controls and independent
+process confirmation. Increasing model count is not a contribution by itself.
+
+Preserve old banks and scores. Report raw-cell changes and calibration-family
+changes separately. New fixed total-prior calibration and equal-weight monotone
+threshold projection do not read evaluation labels to select parameters.
+Cross-threshold consistency only applies to identical information and support.
+The existing count fuser does not consume final E aggregate; correcting that
+aggregate alone must not be presented as improved F.
+
+New API trials use fixed per-call escrow so concurrent workers do not update a
+global AFS budget JSON. Retain dispatch intents, raw responses, usage, terminal
+failures and append-only reconciliation separately. A pre-HTTP intent is not
+proof that a server processed a request. Unknown charges never become zero.
+Formal new H15 execution requires provider-bound results, production identity,
+lifecycle timing, a complete source manifest and comparison contract. The new
+measurement.v3 order puts policy intervention after sealing but before begin;
+v2 ordering remains unchanged for old journals. The reserved confirmation week
+stays unopened while these development controls are qualified.
+
+The v10 development evidence now includes all12 seasonal region-weeks, matched
+27B/235B feature/temperature tasks, a fixed-backend235B selector and a uniformly
+clarified84-task extraction diagnostic. Preserve all original banks, answers and
+failures. The year-feature ablation uses only originalDec2024 fit/calibration
+roles; seasonal labels do not enter its optimizer. Both ablation and clarification
+are informed by exposed errors, not independent confirmation.
+
+Use a descriptive H15 report-label data card with explicit main-body semantics,
+censoring, visible scope and comparison tolerance. Formatting-only differences
+between current and frozen parser/scorer modules are verified by full AST equality;
+this is not permission to replace experiment source. Full-week positive counts
+cannot be borrowed as the denominator of first-day budget controls.
+
+Separate method gains from backend gains, field accuracy from future skill, and
+source-query equality from total compute equality. The235B selector does not beat
+FOLLOW on the exposed5km winter sample. Future fitting/calibration should each
+cover complete seasons before new fixed-backend active comparisons and confirmation.
+Keep the current registered scope closed; finish audit, reporting and private
+publication. The next performance candidate is reuse within one fully verified
+score call, since nine-arm formal scoring currently invokes19 full journal replays;
+the speedup has not yet been measured or applied to frozen runs.
+
 ## v9 follow-up decisions, 2026-09-14
 
 New execution records live in `../plans/v9_followup_execution_20260914_01/`.
