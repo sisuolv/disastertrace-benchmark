@@ -1,0 +1,127 @@
+{
+  "commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "findings": [
+    {
+      "id": "F01",
+      "severity": "P1 before calibrated-bank admission",
+      "kind": "reproduced validation gap",
+      "path": "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/native_feature.py",
+      "symbol": "validate_feature_bank",
+      "trigger": "post_calibration value=-0.2; or increasing output values in reversed source-domain blocks",
+      "observed": "Both pass the bank validator in synthetic CPU probes B03/B04",
+      "consequence": "Malformed calibration can pass early admission; later probability checks may reject it or domain lookup may be mis-specified. Not proof of invalid final scores.",
+      "historical_impact": "Not scanned. Current primary fullweek is raw; do not declare it affected.",
+      "minimal_fix": "Require 0<=value<=1 and validate domain order/overlap using frozen apply_monotone semantics; keep gap and endpoint rules explicit.",
+      "acceptance": [
+        "Production caller regression, not only isolated function",
+        "Scan actual frozen maps and caller mode",
+        "No changes to valid old banks; keep any revised artifact separate"
+      ]
+    },
+    {
+      "id": "F02",
+      "severity": "P1 at temperature task/transform boundary",
+      "kind": "reproduced contract-scope mismatch",
+      "path": "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+      "symbol": "event_probability / validate_products versus event_values",
+      "trigger": "Valid daily maximum-only target with missing or invalid unrelated minimum field",
+      "observed": "feature_tasks probability=0.5; postprocess entry rejects (KeyError for absent min, ValueError for NaN min)",
+      "consequence": "Raw target eligibility may accidentally depend on irrelevant fields; complete EMOS/ECC product transform legitimately needs both.",
+      "historical_impact": "No evidence published full products were affected; scoped existing scan reported unchanged.",
+      "minimal_fix": "Separate target-required validation from full transform product validation. ECC keeps strict whole-product checks.",
+      "acceptance": [
+        "Valid max-only raw probability supported by both raw scoring entry points or explicit distinct qualifications",
+        "Malformed relevant values rejected",
+        "ECC missing minimum still rejected",
+        "Independent probability arithmetic retained"
+      ]
+    },
+    {
+      "id": "F03",
+      "severity": "P0 before C2 causal claims",
+      "kind": "experimental identification gap",
+      "path": "plans/v11_execution_20260915_01/c2_design_01/DESIGN.json",
+      "symbol": "TAF E tasks versus neighbor-query branch_rules",
+      "trigger": "Interpret neighbor query branch as a repair of shared-TAF coverage/version status",
+      "observed": "144 E tasks are TAF-based; four branch choices change paid neighbor access; all72 coverage examples full; no branches run yet.",
+      "consequence": "Manipulated variable may not reach the E predicate, and final E label is not consumed by current F.",
+      "historical_impact": "No C2 F result claimed in snapshot.",
+      "minimal_fix": "Split TAF processing repair and METAR acquisition/field experiments, bind each change to actual feature/probability hooks; keep null controls.",
+      "acceptance": [
+        "Manifest names manipulated field, lawful asset, consumer and outcome",
+        "No E->F claim if no computational path",
+        "Keep allfull/null and nontrivial samples under fixed census"
+      ]
+    },
+    {
+      "id": "F04",
+      "severity": "P0 before shared-branch value claims",
+      "kind": "design completion requirement",
+      "path": "plans/v11_execution_20260915_01/c2_design_01/DESIGN.json",
+      "symbol": "same_state_fields / pending_rule / branch evaluation horizon",
+      "trigger": "Sum per-target hindsight best branch or only score selected target",
+      "observed": "72 target prefixes refer to24 parent daily conditions; exact unique states and full-session branch effects not yet measured.",
+      "consequence": "Shared budget opportunity cost and correlations can be omitted; draining a pending request changes decision time.",
+      "historical_impact": "Unexecuted design, not demonstrated implementation bug.",
+      "minimal_fix": "Fork from a verified common parent, log drain transition, score all remaining registered targets plus target-specific effect; compare one feasible path.",
+      "acceptance": [
+        "No-op continuation equals original",
+        "No free budget/cache or duplicated pending execution",
+        "Explicit lost-deadline/infeasible states",
+        "Deduplicated parent-state accounting"
+      ]
+    },
+    {
+      "id": "F05",
+      "severity": "P0 before new scientific ranking",
+      "kind": "in-progress evidence limitation",
+      "path": "publication/v11_inprogress_20260915/PROGRESS_SNAPSHOT.json",
+      "symbol": "fullweek_audit_complete / native_sample / annual_catalog",
+      "trigger": "Treat launched840 trajectories or71 catalog months as final science/data",
+      "observed": "Fullweek audit false; annual native and fit false at snapshot; one catalog failure.",
+      "consequence": "Premature or selective results and duplicated running work.",
+      "historical_impact": "Root snapshot honestly discloses limitation.",
+      "minimal_fix": "Read actual terminal receipts before further execution; retain fixed roster and failures; source stages separately.",
+      "acceptance": [
+        "All registered methods accounted for",
+        "No automatic relaunch of successful/unknown work",
+        "Timestamped status and version-specific qualification"
+      ]
+    },
+    {
+      "id": "F06",
+      "severity": "P1 before fitting/confirmation",
+      "kind": "statistical and data-role limitation",
+      "path": "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md",
+      "symbol": "2023 fit /2024 final calibration /2025 exposed development",
+      "trigger": "Use2024 both repeatedly select features and declare untouched final calibration, or count augmented masks/leads as independent",
+      "observed": "Annual fitting not yet done; prior v10 four-block results already exposed.",
+      "consequence": "Biased calibrated ranking, sparse tail evidence or pseudoreplication.",
+      "historical_impact": "Prospective requirement, not evidence current optimizer leaked labels.",
+      "minimal_fix": "Internal blocked selection in2023, freeze representation before2024 calibration; dedup footprints, weight view families; uncertainty by process blocks.",
+      "acceptance": [
+        "Role/footprint manifests",
+        "No test-loss-based collection or positive stopping",
+        "Full calendar and event strata both reported",
+        "Calibration and data-support limitations disclosed"
+      ]
+    },
+    {
+      "id": "F07",
+      "severity": "maintenance, not new defect",
+      "kind": "verified code structure plus reported test evidence",
+      "path": "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+      "symbol": "score_formal -> _score_replayed",
+      "trigger": "Optimize replay or update running frozen source",
+      "observed": "Current entry replays each arm once and retains comparison/outcome trace checks; reported19->9 same-score profile.",
+      "consequence": "Do not redo optimization or hotpatch live bound sources; performance result is one uncontrolled-cache case.",
+      "historical_impact": "No new failure established.",
+      "minimal_fix": "Preserve current implementation, add only targeted regressions in isolated patch worktree; profile new bottlenecks only when measured.",
+      "acceptance": [
+        "Scientific outputs equivalent on fixed input",
+        "Tampered source/log/contract still rejected",
+        "No claim general2.26x speedup"
+      ]
+    }
+  ]
+}

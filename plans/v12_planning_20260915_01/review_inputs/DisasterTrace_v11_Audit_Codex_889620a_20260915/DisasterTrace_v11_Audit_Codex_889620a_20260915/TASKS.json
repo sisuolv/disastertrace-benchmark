@@ -1,0 +1,344 @@
+[
+  {
+    "id": "W00.reconcile_snapshot",
+    "parent": "W00",
+    "title": "先核当前运行，不重复派发",
+    "priority": "P0",
+    "status": "proposed_not_executed",
+    "depends_on": [],
+    "deliverables": [
+      "CURRENT_STATE.json",
+      "ACTIVE_RUN_BINDINGS.json",
+      "STATUS_DELTA_CN.md"
+    ],
+    "acceptance": [
+      "记录真实HEAD、脏工作区、快照时间与本地未发布状态，不reset或强行对齐隔离发布HEAD。",
+      "核fullweek_02、annual_catalog_01、annual_native_sample_01的注册ID、作业ID、退出码与终态产物；无法查询平台记unknown。",
+      "列出活跃任务绑定的源/输入路径；任何修复不得修改这些冻结文件或重复启动同ID。"
+    ],
+    "instructions": "优先消费现有任务产物。GitHub running只是快照；本包没有观察实时ACP。已有有效授权覆盖的任务按原范围继续，不继承过期授权。"
+  },
+  {
+    "id": "W01.target_scope",
+    "parent": "W01",
+    "title": "分离温度事件与整体后处理资格",
+    "priority": "P1-before-temperature",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W00.reconcile_snapshot"
+    ],
+    "deliverables": [
+      "temperature_scope_patch.diff",
+      "temperature_scope_regression.xml",
+      "TEMPERATURE_IMPACT.json"
+    ],
+    "acceptance": [
+      "原39项及新增max-only/min-only/未消费变量缺失生产入口通过；必要变量缺失、错误UTC窗口仍拒绝。",
+      "ecc_products仍要求完整min/max，不能以修辅助入口为由降低实际后处理资格。",
+      "按真实任务名单扫描，逐项保存旧新资格/概率/分母及未核范围；无命中不重做模型调用。"
+    ],
+    "instructions": "最小改动由event_values复用；保留两个独立数值归约。源数据没有成员身份时不造ID。"
+  },
+  {
+    "id": "W06.sample_failure_roster",
+    "parent": "W06",
+    "title": "修正年度样例失败统计",
+    "priority": "P2",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W00.reconcile_snapshot"
+    ],
+    "deliverables": [
+      "annual_sample_patch.diff",
+      "annual_failure_regression.xml",
+      "ANNUAL_ID_RECONCILIATION.json"
+    ],
+    "acceptance": [
+      "2成功1失败样例只输出3结果、2完成、1失败、69未尝试，退出仍为失败。",
+      "全成功72唯一终态；后续单位失败保留72终态71成功；重试attempt与logical unit分离。",
+      "保留旧失败，不重跑通过的71单位；摘要按ID计算，注册分区相加为72。"
+    ],
+    "instructions": "当前发布样例已通过，该缺口不能用来解释KORD失败；修改下一generation汇总逻辑，不改活跃冻结脚本。"
+  },
+  {
+    "id": "W07.finish_registered_fullweek",
+    "parent": "W07",
+    "title": "收口已启动840条轨迹",
+    "priority": "P0",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W00.reconcile_snapshot"
+    ],
+    "deliverables": [
+      "FULLWEEK_COMPLETION.json",
+      "fullweek_analysis/ROWS.jsonl",
+      "FULLWEEK_REPORT_CN.md"
+    ],
+    "acceptance": [
+      "168日会话条件×5臂=840轨迹；12096方法无关机会、60480方法行，全部注册失败与缺失有位置。",
+      "正式来源与比较合同通过；同values四臂与F_COMMON跨银行差异分开；共同基线、结果掩膜和非FOLLOW预测日程一致。",
+      "总体、季节周、地区周、每日、事件/平静块和正负损失贡献齐全；缺失界不当置信区间，部分完成不称整体获胜。"
+    ],
+    "instructions": "沿用旧无year银行、本协议、48/day与每日清缓存。补任务仅针对登记缺失并保留前次失败；不可在运行中换银行。"
+  },
+  {
+    "id": "W06.finish_catalog_gap",
+    "parent": "W06",
+    "title": "只补确切目录缺片",
+    "priority": "P0",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W00.reconcile_snapshot"
+    ],
+    "deliverables": [
+      "EXACT_MISSING_SLICES.json",
+      "CATALOG_STATUS.json",
+      "attempt_receipts/"
+    ],
+    "acceptance": [
+      "精确到region/month/station/product/URL与已消耗attempt，保留KORD429和超时。",
+      "成功片hash复用；新的重试必须在有效范围内独立登记，不无限重试、不重下整个地区年。",
+      "目录、原生body、解析、task join、role admission、fit为分开状态；不足时冻结明确合格子集，不按预测输赢剔除。"
+    ],
+    "instructions": "432是逻辑分片数，不是HTTP总量。源级并发限额应覆盖所有采集进程；不得为抢吞吐改变数据范围。"
+  },
+  {
+    "id": "W06.native_join_expand",
+    "parent": "W06",
+    "title": "完成三个原生月，再冻结全年原文",
+    "priority": "P1",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W00.reconcile_snapshot"
+    ],
+    "deliverables": [
+      "MONTH_JOIN_VALIDATION.json",
+      "NATIVE_PRODUCT_DEDUP.json",
+      "ANNUAL_NATIVE_PLAN.json"
+    ],
+    "acceptance": [
+      "2470个样例TAF实际原文、解析失败、版本以及源hash齐全；三个闰月连接预期12528双阈值机会需用ID验证。",
+      "全年从完整目录生成唯一product_id/body hash清单，重复月份padding不重复当独立来源；不改写矛盾同ID。",
+      "每条目标保留无产品、不可解析和不可结算原因，原文取得不等于历史first-seen证明。"
+    ],
+    "instructions": "IEM官方区分处理后的TAF输出与raw NWS text；目录不能替代原文。该阶段不训练、不打开确认数据。"
+  },
+  {
+    "id": "W08.role_admission",
+    "parent": "W08",
+    "title": "冻结拟合/内选/校准角色",
+    "priority": "P1",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W06.finish_catalog_gap",
+      "W06.native_join_expand"
+    ],
+    "deliverables": [
+      "ROLE_MANIFEST.json",
+      "FOOTPRINT_PURGE.json",
+      "SEASONAL_SUPPORT_CN.md"
+    ],
+    "acceptance": [
+      "2023拟合及内部选择有明确分块，2024作为最终校准，不重复承担无限方法选择；2025已暴露资料标development。",
+      "按原生版本、输入回看、目标支持、共享资料与状态足迹处理跨月跨年，不把padding直接纳入对应角色。",
+      "报告季节/地区/阈值正负例、缺失和过程支持；获取阶段不承诺训练样本数或基线必改善。"
+    ],
+    "instructions": "目标/阈值/提前量身份去重；相依视图总目标权重为1。部分角色未合格时不强行拼齐全年。"
+  },
+  {
+    "id": "W08.frozen_backend",
+    "parent": "W08",
+    "title": "完成全年强共同信息和补证后端",
+    "priority": "P1",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W08.role_admission"
+    ],
+    "deliverables": [
+      "BANK_REGISTRY.json",
+      "BACKEND_AUDIT.json",
+      "BACKEND_RESULTS_CN.md"
+    ],
+    "acceptance": [
+      "common/mask_age/values使用相同合格目标与角色；保留空证据及合法子集，权重和缺证分布预登记。",
+      "冻结特征版本、fit/cal IDs、优化与原始概率；后校准及CDF一致性单列，无证据时基础后端差异不归给信息。",
+      "同银行空证据/全读与强common分开比较；全年/季节/事件块均报告，不以必须正收益为放行条件。"
+    ],
+    "instructions": "保留所有冬季/无year银行和旧结果。可选common锚定残差必须训练内交叉拟合并作为独立消融，不替换整个计划。"
+  },
+  {
+    "id": "W09.process_design",
+    "parent": "W09",
+    "title": "明确未暴露过程与统计单位",
+    "priority": "P1",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W00.reconcile_snapshot"
+    ],
+    "deliverables": [
+      "EXPOSURE_LEDGER.json",
+      "PROCESS_GROUPS.json",
+      "CONFIRMATION_DRAFT.json"
+    ],
+    "acceptance": [
+      "四个全局周、12地区周、每日、阈值和天气过程分别计数，不将小时bootstrap当独立过程。",
+      "保留自然日历与外部规则事件诊断两轨；普查/富集结果不对外声称自然发生率。",
+      "只读取未暴露资料的必要元数据，不打开Bay确认载荷；主次指标、精度目标、缺失规则及停止规则先登记。"
+    ],
+    "instructions": "规则分组需保守且可审计，必要时给不同块长敏感性；过少独立块时区间不可估，不声称统计显著。"
+  },
+  {
+    "id": "W11.e_census",
+    "parent": "W11",
+    "title": "普查真正非平凡的E状态",
+    "priority": "P1",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W00.reconcile_snapshot"
+    ],
+    "deliverables": [
+      "E_CENSUS.json",
+      "E_TASK_CARD.json",
+      "TRIVIAL_CONTROLS.json"
+    ],
+    "acceptance": [
+      "保留原72前缀和144TAF任务，明确72覆盖全full；在固定完整日历普查partial/absent/version-change/censoring/missing。",
+      "恒full、恒unknown及原生程序对手同分母；按底层问题/过程计数，合成冲突仅工程轨。",
+      "标出哪些字段进入当前F特征、哪些E仅事实诊断；共同TAF内容不伪装成收费补证。"
+    ],
+    "instructions": "可与全年下载并行。不得只筛选预计模型获益/低分的状态；不存在的自然冲突如实留空。"
+  },
+  {
+    "id": "W11.same_state_branches",
+    "parent": "W11",
+    "title": "把四分支做成真实可重放对照",
+    "priority": "P1",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W11.e_census",
+      "W07.finish_registered_fullweek"
+    ],
+    "deliverables": [
+      "BRANCH_CHECKPOINTS.json",
+      "BRANCH_FEASIBILITY.json",
+      "FIELD_TO_LOSS.jsonl"
+    ],
+    "acceptance": [
+      "共同父checkpoint绑定时钟、spent/reserved、cache/权限、pending、基线与修订、失败规则及预测日程。",
+      "STOP_ACQUIRE仅停止新增查询而非整系统STOP；邻站已缓存可形成no-op，等待和继承成本不能重收费；不可行分支保留原因。",
+      "记录字段→特征→概率→提出/采用/失效→最终损失；固定单目标分支不能组成不可实现的多目标联合oracle。"
+    ],
+    "instructions": "先用当前冻结旧银行做工程资格小试，不等全年拟合；科学比较在新银行W10里重新冻结。pending无法精确恢复时先用静止点，不编造远端exactly-once。"
+  },
+  {
+    "id": "W10.mechanism_controls",
+    "parent": "W10",
+    "title": "新后端下分层验证C1/C2",
+    "priority": "P1",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W08.frozen_backend",
+      "W07.finish_registered_fullweek",
+      "W11.same_state_branches"
+    ],
+    "deliverables": [
+      "MECHANISM_REGISTRATION.json",
+      "C1_FACTOR_RESULTS.json",
+      "COMPONENT_RESULTS_CN.md"
+    ],
+    "acceptance": [
+      "首先固定selector/predictor做分额×授权四格；然后同B11比较选择器，再比较提取/预测/采用，避免同时改多个因素。",
+      "固定原生信息、原生提取、模型提取与invalid/missingmask对照分开；不能靠修正Gold槽位冒充模型成功。",
+      "两种修订协议和同目标多cutoff单列；来源查询相同不当总成本相同；声明时延反事实与实测运行分表。"
+    ],
+    "instructions": "先五臂收口再按问题选择扩展，不默认把全部矩阵相乘。无预算全读只作信息诊断，不当等预算主动策略。"
+  },
+  {
+    "id": "W02.lineage_input_roles",
+    "parent": "W02",
+    "title": "补成员lineage、部分DWD及prompt角色合同",
+    "priority": "P1-before-new-lane",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W01.target_scope"
+    ],
+    "deliverables": [
+      "TEMPERATURE_LINEAGE.json",
+      "INPUT_ROLE_CONTRACT.json",
+      "PROVIDER_POLICY_TESTS.xml"
+    ],
+    "acceptance": [
+      "从原坐标绑定origin/target_date/day_index/member IDs及所有转换；等长数组不作为身份依据，同成员一致排列和逐日错序有测试。",
+      "目标级部分变量合法性与ECC联合产品要求分开；DWD缺历史发布时间的结果参考不改成付费合法补证。",
+      "新运行绑定初始数据卡、prompt、解析、银行、结果政策且hash依赖无循环；旧格式明确legacy，不事后改源拿新资格。"
+    ],
+    "instructions": "正式目录来源验证不是恶意代码沙箱。字段身份扩展只约束新运行，不破坏现有活跃冻结源。"
+  },
+  {
+    "id": "W05.current_source_replay",
+    "parent": "W05",
+    "title": "在当前源码验证限定复算与回归",
+    "priority": "P1",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W01.target_scope",
+      "W06.sample_failure_roster"
+    ],
+    "deliverables": [
+      "CURRENT_REGRESSION.xml",
+      "REPLAY_EQUIVALENCE.json",
+      "REVIEW_SCOPE.json"
+    ],
+    "acceptance": [
+      "本包58项在完整package重现；修复后新行为测试通过，旧冻结失败记录原样保留。",
+      "受影响模块局部测试、一次合并后的完整相关测试；报告真实nodeid/缺fixture，不填固定750。",
+      "先按旧capsule源复算其限定范围，再用当前源跑适用样例；科学字段等价和schema字节兼容分开。"
+    ],
+    "instructions": "网络/原始数据不可达只标对应范围不可核，不默默跳过后宣称全绿；不每改一行重建全年度或全部模型成绩。"
+  },
+  {
+    "id": "W12.one_model_batch",
+    "parent": "W12",
+    "title": "一次有界模型选择器/提取实验",
+    "priority": "P1-after-gates",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W10.mechanism_controls",
+      "W02.lineage_input_roles",
+      "W05.current_source_replay"
+    ],
+    "deliverables": [
+      "MODEL_BATCH_REGISTRATION.json",
+      "MODEL_COMPONENT_RESULTS.json",
+      "RESOURCE_REPORT.json"
+    ],
+    "acceptance": [
+      "冻结一个明确模型设置、完整合同、可用数据和exact task IDs；无新信息收益也允许正常交付，不强迫改概率。",
+      "来源、selector、提取、predictor调用与总token/卡时/等待/失败分开；同信息质量与同总成本效率两条比较。",
+      "新API任务检查当前有效授权及费用，已消耗启动器/旧402/未尝试424/未知预留均保留，不把兼容性失败当能力得分。"
+    ],
+    "instructions": "复用已验证27B/235B或一个合格后端，先小而明确，不再扩模型规模矩阵。API门槛本轮是模拟测试资格，不等于已实际服务验证。"
+  },
+  {
+    "id": "W13.confirm_and_release",
+    "parent": "W13",
+    "title": "独立确认与分级交付",
+    "priority": "P1-final",
+    "status": "proposed_not_executed",
+    "depends_on": [
+      "W12.one_model_batch",
+      "W09.process_design"
+    ],
+    "deliverables": [
+      "FROZEN_CONFIRMATION.json",
+      "CLAIM_EVIDENCE_MATRIX.json",
+      "RELEASE_MANIFEST.json"
+    ],
+    "acceptance": [
+      "方法/数据/过程/主要指标/停止规则全冻结后，才一次性进入未暴露确认；一个保留周不自动足够跨季节结论。",
+      "报告C1/C2/C3各自成立/不成立/样本不足；保留负结果，不调到显著，不混淆缺失敏感性界和置信区间。",
+      "16类按来源/目标/E/F/D/MM/在线资格维护；H15、温度F-only、D模拟、原生图和在线提前提交各用自身证据。"
+    ],
+    "instructions": "核心论文不等全部16类；MRMS/HEFS、X09、D、MM可独立并行准入。只取得来源first-seen不等于已提交预测。"
+  }
+]

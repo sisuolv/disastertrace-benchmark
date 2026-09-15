@@ -1,0 +1,375 @@
+{
+  "schema": "disastertrace.review_incremental_backlog.v1",
+  "reviewed_commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "not_repository_implementation": true,
+  "default_execution": "read existing artifacts and bounded local CPU only",
+  "do_not_restart_existing_jobs": true,
+  "do_not_hotpatch_running_bound_sources": true,
+  "confirmation_closed": "Bay 2025-02-17 through 2025-02-23",
+  "first_batch": [
+    "NX00",
+    "NX01",
+    "NX02",
+    "NX05"
+  ],
+  "tasks": [
+    {
+      "id": "NX00",
+      "title": "接管进行中快照，不重复启动",
+      "depends_on": [],
+      "execution_class": "read_only_local",
+      "existing_paths": [
+        "LATEST_PROGRESS_V11_CN.md",
+        "publication/v11_inprogress_20260915/PROGRESS_SNAPSHOT.json",
+        "plans/v11_execution_20260915_01/README_CN.md"
+      ],
+      "actions": [
+        "核对本地HEAD、实际工作树、隔离发布提交和当前任务身份，保存差异；不reset/clean",
+        "读取fullweek四分片、年度目录、原文样例和审计真实终态；没有终态标unknown，不能依快照猜完成",
+        "检查有效授权、仍在运行的冻结来源，新增修复放隔离工作树，不热改正在运行的绑定文件",
+        "列出已完成、运行中、阻塞和本计划建议，区分完成输出与最后一次进度"
+      ],
+      "proposed_outputs": [
+        "CURRENT_EXECUTION_RECONCILIATION.json",
+        "BASELINE_DIFF_CN.md"
+      ],
+      "acceptance": [
+        "每个已登记任务有唯一身份及来源时间",
+        "成功、失败和未知任务不被自动重发",
+        "Bay2025-02-17..23保持封闭"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX01",
+      "title": "小范围输入合同修复与历史影响扫描",
+      "depends_on": [
+        "NX00"
+      ],
+      "execution_class": "local_cpu",
+      "existing_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_contract.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/native_feature.py"
+      ],
+      "actions": [
+        "将附带B03/B04迁为生产调用测试，拒绝负校准概率和无声明的乱序/重叠域",
+        "分开目标所需量与整个EMOS/ECC产品要求，保留独立概率计算和变换严格检查",
+        "只读扫描相关真实银行、raw/calibrated调用和冻结温度输入；记录unchanged/affected/unavailable",
+        "不重生成旧回答；若确有科学数值影响，新增修订评分和差异清单"
+      ],
+      "proposed_outputs": [
+        "BOUNDARY_REGRESSION.json",
+        "SCOPED_IMPACT.json"
+      ],
+      "acceptance": [
+        "合法旧输入不变或完整说明版本差异",
+        "非法相关字段拒绝；合法max-only原生任务不因无关min被无声剔除",
+        "ECC必要的min/max检查保留",
+        "没有原始数据时不写历史影响为零"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX02",
+      "title": "收尾完整周五组对照并发布全分层结果",
+      "depends_on": [
+        "NX00"
+      ],
+      "execution_class": "existing_jobs_read_and_authorized_cpu_audit",
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/fullweek.py",
+        "plans/v11_execution_20260915_01/fullweek_02",
+        "plans/v11_execution_20260915_01/finish_batch_02.py"
+      ],
+      "actions": [
+        "复用原840轨迹登记和已完成分片；正式审计、完整roster和共同基线/日程必须全部核对",
+        "有失败保留所有机会；明确不完整比较而不是只汇总成功臂",
+        "分别比较FOLLOW/common后端差异、同values无/有补证、同B11批量/coverage",
+        "按全日历、地区、日期、过程、正负例贡献、时效、缺失及成本报告；不可只突出总体小幅增益",
+        "明确7个独立日会话的48/day缓存重置，不改称连续一周预算或余额结转"
+      ],
+      "proposed_outputs": [
+        "FULLWEEK_COMPLETION_MATRIX.json",
+        "FULLWEEK_ATTRIBUTION_CN.md",
+        "PAIRWISE_PROCESS_RESULTS.json"
+      ],
+      "acceptance": [
+        "840/12096/60480是预期量与实际量分别核对",
+        "只有完整合法结果才声明全比较完成",
+        "缺失敏感性界与抽样不确定性分开",
+        "不按结果删掉平静或恶劣天气日"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX03",
+      "title": "年度目录精确补缺与原文生产验收",
+      "depends_on": [
+        "NX00"
+      ],
+      "execution_class": "bounded_scientific_acquisition_requires_valid_authorization",
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/annual_catalogs.py",
+        "plans/v11_execution_20260915_01/annual_native_sample.py"
+      ],
+      "actions": [
+        "先查71成功和1失败是否已有后续终态；失败月保留原五片成功及全部失败回执",
+        "只对确认缺失片制订有界重试，新回执引用旧逻辑片身份，不覆盖RESULT或整月重抓",
+        "等待/核验已启动2470原文和三个闰月任务，不重复下载已消费请求",
+        "全年的原文请求先按产品身份与字节去重，保留跨站、跨月的查询映射和父产品关系",
+        "分别验目录、原文、解析、版本完整性、时间场景、任务连接、结果覆盖和可拟合角色"
+      ],
+      "proposed_outputs": [
+        "ANNUAL_LAYERED_COVERAGE.json",
+        "BOUNDED_NATIVE_FETCH_PLAN.json",
+        "ROLE_INPUT_FOOTPRINTS.json"
+      ],
+      "acceptance": [
+        "目录成功不能计原文/任务完成",
+        "跨年padding和跨split共享依赖在拟合前剔除",
+        "不支持语法、缺测、429/timeout全部有分母",
+        "没有新采集授权时只交付清单，不调用端点"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX04",
+      "title": "冻结全年训练/校准角色与强后端",
+      "depends_on": [
+        "NX03",
+        "NX01"
+      ],
+      "execution_class": "cpu_fit_requires_valid_authorization",
+      "existing_paths": [
+        "plans/v10_execution_20260914_01/scripts/fit_native_feature_bank.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md"
+      ],
+      "actions": [
+        "2023内部按过程/时间块选择有限特征、正则与结构；2024仅在模型确定后做最终校准，若用于选择则重新命名并另留校准",
+        "统一目标、训练权重与合法缺证模式；同目标多阈值/多mask不扩大独立N",
+        "保留旧FOLLOW、冬季、no-year银行；新增B*共同信息基线，raw和后校准分开",
+        "估计B*、f(B,empty)、f(B,partial)、f(B,all)；common与values训练差异不算纯信息效应",
+        "分别报校准、区分、极端事件支持、缺失及分布外状态；不因平均变好就忽略事件过程退化"
+      ],
+      "proposed_outputs": [
+        "BACKEND_PREREGISTRATION.json",
+        "FROZEN_BACKEND_MANIFEST.json",
+        "BACKEND_EVIDENCE_RESPONSE_CN.md"
+      ],
+      "acceptance": [
+        "角色与原始依赖可重算",
+        "选择完成前不读确认载荷",
+        "不以正增益为放行条件",
+        "实际策略缺证分布与训练mask分布另审计"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX05",
+      "title": "C2非平凡条件普查与可干预路径图",
+      "depends_on": [
+        "NX00"
+      ],
+      "execution_class": "local_cpu_on_existing_exposed_data",
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/c2_design_01/DESIGN.json",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/taf_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py"
+      ],
+      "actions": [
+        "保留72全覆盖样例为基准/null，按固定完整日历普查partial/cancel/old-version/missing/censored/ambiguous条件",
+        "分开共同TAF处理修复和付费METAR查询/字段修复；明确哪个动作能改变哪个E命题",
+        "每个实验绑定原始资料、处理层、被改字段、F实际消费的特征、允许的采纳和评价范围",
+        "E最终标签未被F消费时，改变它应作为null而不是要求预测提高",
+        "不按模型错误大小或F收益筛案例；富集语义诊断与自然日历分表"
+      ],
+      "proposed_outputs": [
+        "C2_CONDITION_CENSUS.json",
+        "C2_INTERVENTION_MAP.json",
+        "C2_MINIMAL_PREREGISTRATION.md"
+      ],
+      "acceptance": [
+        "每个修复有真实合法材料或显式特权身份",
+        "TAF不变的邻站查询不会被解释为TAF覆盖修复",
+        "all-full/null样例不被删除",
+        "不能证明某类自然条件时标缺口，不编造事件"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX06",
+      "title": "同状态分支执行及全会话机会成本",
+      "depends_on": [
+        "NX05",
+        "NX01"
+      ],
+      "execution_class": "local_cpu_existing_sources",
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/c2_design_01/DESIGN.json",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/session_checkpoint.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py"
+      ],
+      "actions": [
+        "按parent_session/checkpoint/cutoff去重前缀；72目标引用不是72独立过程",
+        "继承clock、spent/reserved、授权、cache、pending、基线与override；不重开原STOP目录",
+        "当前串行边界需等待pending时，先所有分支共同完成原调用与期间事件，记录新的分支起点与错过机会",
+        "若没有共同合法时点则不可行；不得把完成后的结果倒填到旧分支时间",
+        "分支报告目标级效应和整个剩余注册会话效应、未来机会与费用；不能拼接各目标后验最优",
+        "先工程运行旧冻结后端，再在NX04固定后端上新注册科学对照"
+      ],
+      "proposed_outputs": [
+        "C2_BRANCH_MANIFEST.json",
+        "C2_STATE_EQUALITY_REPORT.json",
+        "C2_SESSION_LEVEL_EFFECTS.json"
+      ],
+      "acceptance": [
+        "no-op继续与父运行一致",
+        "原pending不重复执行或计成免费信息",
+        "预算与缓存不跨分支串用",
+        "字段->特征->概率->及时生效->全范围F记录完整"
+      ],
+      "scientific_gate": "Pipeline qualification can precede NX04. Scientific backend comparison requires NX04 and a new run registration.",
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX07",
+      "title": "固定后端的预算、取证和采纳强对照",
+      "depends_on": [
+        "NX02",
+        "NX04",
+        "NX06"
+      ],
+      "execution_class": "cpu_experiment_then_conditional_model",
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/fullweek.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/policies.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/adoption.py"
+      ],
+      "actions": [
+        "同日程、同values后端先复用四格分配/共享，再在同B11比较批量/轮询/risk/coverage",
+        "对查询相同而处理不同、候选相同而采纳不同分别注册，避免把所有差异归给selector",
+        "先保留48/day做可比主对照；随后少量预登记资源/期限曲线，廉价接口不虚构高费用",
+        "引入有限的一步/两步风险选择或保守收缩基线，仅在历史训练拟合；不为强行制造收益改变目标",
+        "端到端实际开销和匹配查询计划的声明时延诊断分开"
+      ],
+      "proposed_outputs": [
+        "FACTORIAL_CONTROL_REGISTRATION.json",
+        "BUDGET_TIMELINESS_SCORECARD.json"
+      ],
+      "acceptance": [
+        "所有策略同工具、权限、实际收费规则",
+        "来源查询等额不称总成本等额",
+        "全读/FOLLOW获胜允许发布",
+        "累计结果不代替独立过程区间"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX08",
+      "title": "第二过程资格与温度F-only持续推进",
+      "depends_on": [
+        "NX00",
+        "NX01"
+      ],
+      "execution_class": "local_cpu_and_bounded_source_work",
+      "existing_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_contract.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/outcome_policies.py"
+      ],
+      "actions": [
+        "保留温度已有连续日/三日和EMOS/ECC，不重复跑旧COPY作新成果",
+        "成员形状与成员身份分开，从原数组坐标/产品来源核准lineage；min/max修复诊断继续保留",
+        "DWD最终档案继续作相应结果或明确受控资料；未知历史公开时间不编造成verified-as-of",
+        "H07/H08各限一个现有候选链，物理支持优先；哪条先合格推进哪条，不相互阻塞",
+        "对每类分别记录A层级和E/F/D/MM/confirmation；保持16类总路线"
+      ],
+      "proposed_outputs": [
+        "SECOND_PROCESS_QUALIFICATION.json",
+        "MEMBER_LINEAGE_AUDIT.json",
+        "HAZARD_STATUS_DELTA.md"
+      ],
+      "acceptance": [
+        "同成员多日运算不以相乘边际替代",
+        "无补证不能声称温度C1",
+        "声明场景与严格历史资格不同",
+        "D/MM不阻塞已合格F发布"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX09",
+      "title": "一次有明确归因目标的有限模型试验",
+      "depends_on": [
+        "NX07"
+      ],
+      "execution_class": "model_calls_only_with_fresh_valid_authorization",
+      "existing_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/selection.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py"
+      ],
+      "actions": [
+        "锁一个稳定后端/selector配置及一个已声明诊断配置；不泛化扩大模型矩阵",
+        "数据卡和提示从首次运行即一致，程序解析工具同等提供",
+        "指定模型只选查询、只提取或只预测；分别收取selector与predictor成本",
+        "预检只验接口/回执/数值，不要求模型偏离基线或获胜",
+        "不同消息或源版本用新运行身份；无效/超时/未尝试分开；不重发已消费旧任务"
+      ],
+      "proposed_outputs": [
+        "MODEL_RUN_REGISTRATION.json",
+        "COMPONENT_SCORECARD.json"
+      ],
+      "acceptance": [
+        "固定共同后端和完整机会",
+        "运行响应、请求、返回模型身份、参数和用量保存",
+        "原始F和程序归约成绩不混写",
+        "确认周不参与提示修改"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    },
+    {
+      "id": "NX10",
+      "title": "方法冻结、独立确认与分级发布",
+      "depends_on": [
+        "NX09"
+      ],
+      "execution_class": "confirmation_requires_explicit_gate_and_authorization",
+      "existing_paths": [
+        "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md",
+        "publication/v11_inprogress_20260915/README_CN.md"
+      ],
+      "actions": [
+        "登记独立过程/保守块、原始依赖、效应精度、主次指标与停止规则；不把相关窗口当独立N",
+        "确认资料在所有方法、提示、bank、预算、采纳、结果和分析冻结后方可打开",
+        "Bay保留周只是有限子集，不自动支撑全年全球主张；必要扩日历按事先规则而非正例或胜负",
+        "对每条实际发布路径构建小型完整复放包；复放捕获答案不冒充重生成模型",
+        "合法负结果、失败、不足精度与未完成灾种同表保留"
+      ],
+      "proposed_outputs": [
+        "CONFIRMATION_GATE.json",
+        "QUALIFIED_RELEASE_MANIFEST.json",
+        "PAPER_CLAIM_EVIDENCE_TABLE.md"
+      ],
+      "acceptance": [
+        "不存在结果驱动挑日期/阈值/重试",
+        "独立精度不足就限制结论，不伪造保证",
+        "历史回放不能保证无预训练污染",
+        "执行版本更新不重新命名科学问题"
+      ],
+      "scientific_gate": null,
+      "positive_gain_required": false
+    }
+  ]
+}

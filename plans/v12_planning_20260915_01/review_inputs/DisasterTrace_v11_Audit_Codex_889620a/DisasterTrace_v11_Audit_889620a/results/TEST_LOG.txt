@@ -1,0 +1,70 @@
+test_all_negative (__main__.ExistingEvidenceAndAudit.test_all_negative) ... ok
+test_annual_all_samples_pass (__main__.ExistingEvidenceAndAudit.test_annual_all_samples_pass) ... ok
+test_annual_later_failure_is_not_duplicate (__main__.ExistingEvidenceAndAudit.test_annual_later_failure_is_not_duplicate) ... ok
+test_conflict (__main__.ExistingEvidenceAndAudit.test_conflict) ... ok
+test_failed_arm_not_declared_complete (__main__.ExistingEvidenceAndAudit.test_failed_arm_not_declared_complete) ... ok
+test_fullweek_brier_control_unchanged (__main__.ExistingEvidenceAndAudit.test_fullweek_brier_control_unchanged) ... ok
+test_negative_with_unread_not_refuted (__main__.ExistingEvidenceAndAudit.test_negative_with_unread_not_refuted) ... ok
+test_true_witness_with_unknown (__main__.ExistingEvidenceAndAudit.test_true_witness_with_unknown) ... ok
+test_failed_sample_roster_is_unique (__main__.NewRegressionSpecifications.test_failed_sample_roster_is_unique) ... FAIL
+test_fullweek_positive_support_is_counted (__main__.NewRegressionSpecifications.test_fullweek_positive_support_is_counted) ... FAIL
+test_raw_max_only_probability_entrypoints_agree (__main__.NewRegressionSpecifications.test_raw_max_only_probability_entrypoints_agree) ... FAIL
+test_duplicate_response_key_rejected (__main__.StrictResponses.test_duplicate_response_key_rejected) ... ok
+test_huge_probability_rejected (__main__.StrictResponses.test_huge_probability_rejected) ... ok
+test_nan_probability_rejected (__main__.StrictResponses.test_nan_probability_rejected) ... ok
+test_valid_probability_fence (__main__.StrictResponses.test_valid_probability_fence) ... ok
+test_bool_member_rejected (__main__.ValidTemperature.test_bool_member_rejected) ... ok
+test_bool_threshold_rejected (__main__.ValidTemperature.test_bool_threshold_rejected) ... ok
+test_cutoff_equal_start_rejected (__main__.ValidTemperature.test_cutoff_equal_start_rejected) ... ok
+test_daily_max_match (__main__.ValidTemperature.test_daily_max_match) ... ok
+test_daily_min_match (__main__.ValidTemperature.test_daily_min_match) ... ok
+test_day0_rejected (__main__.ValidTemperature.test_day0_rejected) ... ok
+test_duplicate_day_rejected (__main__.ValidTemperature.test_duplicate_day_rejected) ... ok
+test_ecc_full_product_still_requires_min (__main__.ValidTemperature.test_ecc_full_product_still_requires_min) ... ok
+test_empty_required_array_rejected (__main__.ValidTemperature.test_empty_required_array_rejected) ... ok
+test_huge_threshold_rejected (__main__.ValidTemperature.test_huge_threshold_rejected) ... ok
+test_infinite_member_rejected (__main__.ValidTemperature.test_infinite_member_rejected) ... ok
+test_nan_threshold_rejected (__main__.ValidTemperature.test_nan_threshold_rejected) ... ok
+test_nonmidnight_rejected (__main__.ValidTemperature.test_nonmidnight_rejected) ... ok
+test_required_dimension_mismatch_rejected (__main__.ValidTemperature.test_required_dimension_mismatch_rejected) ... ok
+test_same_common_member_permutation_invariance (__main__.ValidTemperature.test_same_common_member_permutation_invariance) ... ok
+test_three_day_ice_match (__main__.ValidTemperature.test_three_day_ice_match) ... ok
+test_three_day_member_path (__main__.ValidTemperature.test_three_day_member_path) ... ok
+
+======================================================================
+FAIL: test_failed_sample_roster_is_unique (__main__.NewRegressionSpecifications.test_failed_sample_roster_is_unique)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/dt_v11_audit_889620a/tests/test_review.py", line 206, in test_failed_sample_roster_is_unique
+    self.assertEqual(len(o['summary']['results']),len(set(r['unit'] for r in o['summary']['results'])),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'sample+sample duplicates three receipts when the sample gate fails')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 6 != 3 : sample+sample duplicates three receipts when the sample gate fails
+
+======================================================================
+FAIL: test_fullweek_positive_support_is_counted (__main__.NewRegressionSpecifications.test_fullweek_positive_support_is_counted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/dt_v11_audit_889620a/tests/test_review.py", line 203, in test_fullweek_positive_support_is_counted
+    self.assertEqual(observed['e_determined'],2,'supported is omitted by entailed/refuted test')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 2 : supported is omitted by entailed/refuted test
+
+======================================================================
+FAIL: test_raw_max_only_probability_entrypoints_agree (__main__.NewRegressionSpecifications.test_raw_max_only_probability_entrypoints_agree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/dt_v11_audit_889620a/tests/test_review.py", line 212, in test_raw_max_only_probability_entrypoints_agree
+    self.assertEqual(a,b,'raw max event should not inconsistently depend on unused minimum field')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'accepted': True, 'probability': 0.75} != {'accepted': False, 'exception': 'KeyError', 'message'[24 chars]_C'"}
+- {'accepted': True, 'probability': 0.75}
++ {'accepted': False,
++  'exception': 'KeyError',
++  'message': "'forecast_min_members_C'"} : raw max event should not inconsistently depend on unused minimum field
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.007s
+
+FAILED (failures=3)

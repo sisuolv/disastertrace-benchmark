@@ -1,0 +1,472 @@
+{
+  "schema": "disastertrace.external_incremental_review_plan.v1",
+  "commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "status": "proposed_not_executed",
+  "framework": "v11 planning W00-W13; C1/C2/C3, E/F/D/MM and X00-X09 retained",
+  "snapshot_not_live": "2026-09-15T12:06:47.602706+00:00",
+  "task_count": 14,
+  "acceptance_count": 61,
+  "tasks": [
+    {
+      "id": "W00.refresh",
+      "title": "先对账当前工作机和正在运行的批次",
+      "depends_on": [],
+      "existing_paths": [
+        "LATEST_PROGRESS_V11_CN.md",
+        "publication/v11_inprogress_20260915/PROGRESS_SNAPSHOT.json",
+        "plans/v11_execution_20260915_01/README_CN.md",
+        "plans/v11_execution_20260915_01/finish_batch_02.py"
+      ],
+      "actions": [
+        "核实际远端提交、开发工作树、未提交修改和冻结源；隔离发布导致HEAD不同不等于代码回退。",
+        "只读检查fullweek_02、annual_catalog_01、annual_native_sample_01、STATUS/DASHBOARD/分片回执和作业ID。将过时README状态与新回执分开。",
+        "每个任务记录owner、注册范围、心跳、已完成ID、进程与平台终态；无法访问平台就标unknown，不据空目录推断尚未运行。",
+        "建立每项改动影响的运行、源版本和派生报告清单；当前已授权作业不重复启动，不因本报告强制终止。"
+      ],
+      "outputs": [
+        "CURRENT_STATE_DELTA.json",
+        "ACTIVE_RUN_OWNERSHIP.json",
+        "CHANGE_SCOPE.json"
+      ],
+      "acceptance": [
+        "840轨迹是注册数还是已完成数明确分开；没有使用部分结果写整批胜出。",
+        "年度目录、TAF原文、解析、任务、角色和拟合至少六个状态分别表示。",
+        "旧模型实验、失败、未尝试任务和未知费用保留；新增benchmark调用0不解释为Codex token0。",
+        "未修改运行中的冻结源码或已消费launcher；未打开Bay确认载荷。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W07.E_count",
+      "title": "修正完整周E汇总，不重跑预测",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/fullweek.py",
+        "plans/v11_execution_20260915_01/fullweek_02/source/fullweek.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/policies.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/evidence.py"
+      ],
+      "actions": [
+        "先将本包E反例移到实际模块测试：两个可判定状态supported/refuted都应计入；undetermined/inconsistent不计入。",
+        "对frame E字段使用明确schema/枚举映射；遇未知拼写报错，不做全仓库entailed替换。",
+        "修开发审计器；已经冻结的执行/原审计保留。新增只读派生审计，对原ROWS和journal作状态直方图与逐组对账。",
+        "输出原E计数、修订E计数、差值、受影响机会ID与引用源哈希；Brier及原概率文件不得改变。"
+      ],
+      "outputs": [
+        "reports/fullweek_E_audit_v2/RESULT.json",
+        "reports/fullweek_E_audit_v2/IMPACT.json",
+        "tests/test_fullweek_e_status_contract.py"
+      ],
+      "acceptance": [
+        "supported/refuted/undetermined/inconsistent四状态反例得到2而非1。",
+        "真实各组修订值等于supported_count+refuted_count；原所有状态数之和等于相应完整E分母。",
+        "E截止时统计与模型dispatch时E正确率分开；F结果缺失不自动删除可观测E机会。",
+        "源概率、loss、机会/结果掩膜和Brier哈希或数值完全不变；仅E汇总及派生版本变化。",
+        "完整ROWS尚未取得时只交付代码回归和pending影响清单，不伪造真实修订数量。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W06.sample_summary",
+      "title": "修复样例失败摘要并登记精确缺片",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/annual_catalogs.py",
+        "plans/v11_execution_20260915_01/annual_catalog_01/"
+      ],
+      "actions": [
+        "失败分支改为sample+[]；按注册unit拒绝重复、未知ID、样例与后续重叠。",
+        "保留3样例全成功、样例失败、后续月失败三个实际入口测试；分清实际调用数和结果条数。",
+        "对Chicago2023-01失败的KORD切片记录原429、后续超时、已消耗重试和同月5个可复用切片。",
+        "仅生成一份有次数/字节/限速/终止条件的缺片修复计划。无新下载授权时不执行额外HTTP。"
+      ],
+      "outputs": [
+        "tests/test_annual_sample_gate.py",
+        "ANNUAL_MISSING_SLICES.json",
+        "CATALOG_REPAIR_SCOPE.json"
+      ],
+      "acceptance": [
+        "2成功1失败只输出3条结果、completed_units2；没有执行其余69月。",
+        "样例全成功后某月失败保留72条唯一结果、71成功；证明该反例不否定当前71月记录。",
+        "logical_slice、HTTP_attempt、retry、region_month各自计数，失败不变成缺测天气。",
+        "不覆盖原RESULT，不清理claim或重新下载全部成功月份。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W01.temperature_scope",
+      "title": "区分原始目标概率与完整ECC产品资格",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "existing_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_contract.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py"
+      ],
+      "actions": [
+        "为原始事件概率只验证目标所需字段和UTC支持，统一两个入口的资格；保留两种独立概率计算。",
+        "为EMOS/ECC保留完整min/max产品校验，给出稳定的ValueError及原因码而不是无上下文KeyError。",
+        "member_id、initialization、日期与day_index按上游提供方合同绑定；不得仅以等长数组宣称真实lineage。",
+        "对旧已登记POLICY和模型输入做只读对账；修复影响仅另表列出，不重新生成旧回答。"
+      ],
+      "outputs": [
+        "TEMPERATURE_INPUT_SCOPE.json",
+        "tests/test_temperature_scope_v2.py",
+        "TEMPERATURE_IMPACT.json"
+      ],
+      "acceptance": [
+        "max-only完整UTC日的合法原始事件在两个入口都得到0.75；ECC仍拒绝缺少其所需min数组。",
+        "非午夜、重复日期、NaN/bool/巨大整数、day0及所需成员维度错配继续被拒绝。",
+        "完整旧EUPP输入的原始概率不变；例外列出具体ID和前后理由。",
+        "lineage缺失属于资格未知，不把同一排列不变性单测当成历史成员身份验证。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W07.closeout",
+      "title": "收口完整周并补齐关键配对",
+      "depends_on": [
+        "W07.E_count"
+      ],
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/fullweek.py",
+        "plans/v11_execution_20260915_01/analyze_fullweek.py",
+        "plans/v11_execution_20260915_01/fullweek_02/"
+      ],
+      "actions": [
+        "完成当前注册840臂终态对账；没有可信完整日志的臂保留incomplete，不静默删掉也不伪造回退。",
+        "以原PLAN、输入/评估资产哈希和源码快照核验全量roster；优先复用原已完成日志，不重跑成功臂。",
+        "保留同后端四组正式合同与F_COMMON单独合同，再用同目标/同结果掩膜的配对算术比较五组。",
+        "现有PAIRS之外补F_BASE_ONLY→B11_BATCH，以及F_COMMON→B11_BATCH/COVERAGE；跨银行者明确标总系统比较。",
+        "按全年开发周、地区、地区周、日、正负标签贡献、缺失与费用展开。累计/每日重置、1ms情景均原样保留。"
+      ],
+      "outputs": [
+        "FULLWEEK_FINAL_ROSTER.json",
+        "FULLWEEK_PAIRED_EFFECTS.json",
+        "FULLWEEK_EVENT_BACKGROUND_REPORT_CN.md"
+      ],
+      "acceptance": [
+        "168日条件、840臂、12096方法无关机会、60480方法行分别核验，不把注册数当完成数。",
+        "普通预检360行不与全量60480行相加；没有新LLM分数。",
+        "F_COMMON不是与values同银行的纯取证对照；共同TAF和结算掩膜相同。",
+        "含事件块和背景块对总损失的贡献可相加复算；不只突出平均收益。",
+        "四个全局周的描述性结果不配逐小时bootstrap；缺失敏感性界不写成置信区间。",
+        "E计数使用修订审计并保留原版；所有合法失败都能在注册清单中找到。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W06.native_inventory",
+      "title": "从年度目录走到可用原文与角色",
+      "depends_on": [
+        "W06.sample_summary"
+      ],
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/annual_catalogs.py",
+        "plans/v11_execution_20260915_01/annual_native_sample.py",
+        "plans/v11_execution_20260915_01/annual_catalog_01/",
+        "plans/v11_execution_20260915_01/annual_native_sample_01/"
+      ],
+      "actions": [
+        "先接续已登记三个闰月样例的原文与构建审计；0完成地区不能写成样例已通过。",
+        "根据实际目录按原生product_id/版本/内容去重全年TAF下载清单，保留站点、多月padding及源请求关联；不要用月份数估算已下载原文数。",
+        "新下载前固定逻辑清单、次数、字节、提供方共享限速与重试终止；已有相同哈希原文复用，403/429/超时和语法不支持分开。",
+        "构建后按字段、时间支持、站点、版本、结果政策及完整依赖足迹准入。源码可解析不等于所有天气目标可结算。",
+        "2023用于拟合和训练内选择，2024保留为冻结后最终校准，2025已暴露数据继续标开发。按角色边界剔除捕获padding跨界依赖。"
+      ],
+      "outputs": [
+        "ANNUAL_PRODUCT_OBJECTS.json",
+        "ANNUAL_TASK_QUALIFICATION.json",
+        "ANNUAL_ROLE_MANIFEST.json",
+        "ANNUAL_DATA_STATUS_CN.md"
+      ],
+      "acceptance": [
+        "catalog/native_bytes/decoded/task_join/role_admitted/fit六级证据分别有ID和哈希。",
+        "完整月4176双阈值机会×3是预期，实际缺测和不支持案例仍完整登记。",
+        "同一原生文件跨站点/月份复用不重复算独立样本；原生版本与来源脚印不跨训练/确认用途。",
+        "2024尚未做模型选择；若已经使用，改登记用途并另设最终校准，不隐瞒暴露。",
+        "最终参考可用于评分不自动可作历史输入；情景时延与真实first-seen资格分开。"
+      ],
+      "execution_scope": "inventory_cpu_now; network_only_under_new_or_still_valid_exact_authorization",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W08.year_backend",
+      "title": "以完整季节训练建立强同信息后端",
+      "depends_on": [
+        "W06.native_inventory"
+      ],
+      "existing_paths": [
+        "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/native_feature.py",
+        "plans/v10_execution_20260914_01/scripts/fit_native_feature_bank.py"
+      ],
+      "actions": [
+        "只用已通过资格的冻结资料拟合，保留common/mask_age/values、原始概率及单独校准/CDF结果。",
+        "2023训练内按时间/过程选择有限配置，2024只按预先固定方式校准；均值缩放、先验、缺证模式、阈值和特征版本一并锁定。",
+        "报告每季节/站点的样本和正例、回退、缺测模式、分布外特征、校准变化；不得因为极端值远离均值就删除。",
+        "旧冬季和去year消融全部保留；新银行跑新注册。必要时只加一个训练内折外common锚定残差参照，不把零补证回退优化包装成novelty。"
+      ],
+      "outputs": [
+        "BACKEND_REGISTRATION.json",
+        "YEAR_BANKS/",
+        "BACKEND_GENERALIZATION_CN.md"
+      ],
+      "acceptance": [
+        "拟合、内部选择、最终校准、开发、确认角色明示；没有使用新评价标签重新选银行。",
+        "合法空证据和子集训练已有实现被复用；每个物理单元的视图总权重保持合同。",
+        "同信息下1km概率不超过5km；不同信息包不能强行做同CDF投影。",
+        "主要报告不要求新方法优于旧方法；失败优化器、支持不足和不可结算均保留。"
+      ],
+      "execution_scope": "CPU_fit_after_input_role_and_compute_scope_admission",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W11.census",
+      "title": "先确认C2题目不是筛选过程中的恒真题",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/c2_design_01/DESIGN.json",
+        "plans/v11_execution_20260915_01/c2_design_01/public/TASKS.json",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/taf_tasks.py"
+      ],
+      "actions": [
+        "保留现有72前缀/144题，明确覆盖全full；加入always_full和合法程序解析对照。",
+        "按固定完整日历普查full/partial/none/unavailable/冲突/订正/删失/未读等各自合同允许的状态；检查构建器是否先过滤完整投影才问覆盖。",
+        "自然分布和状态分层诊断分表。只按公开产品状态分层而非模型输赢；看过结果后形成的规则进入新开发版本。",
+        "标注TAF是共同免费产品：理解其适用性是C2，不把再次读取免费TAF记成C1补证。"
+      ],
+      "outputs": [
+        "C2_STATE_CENSUS.json",
+        "C2_TASK_ROUTING.json",
+        "C2_BASELINE_REPORT_CN.md"
+      ],
+      "acceptance": [
+        "72个full的旧样本保留，不用新困难集重命名旧分母。",
+        "各任务答案空间、常数预测准确率、不可用数量、源版本和分层规则可以复核。",
+        "评估参考和未来结果不进入模型view；全状态普查结果不当成在线获知的未来事件边界。",
+        "缺少真实冲突时明确0个，不把合成冲突算成真实灾害。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W11.branch_runtime",
+      "title": "真正执行同状态四分支",
+      "depends_on": [
+        "W11.census"
+      ],
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/c2_design_01/DESIGN.json",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/session_checkpoint.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/residual_reachability.py"
+      ],
+      "actions": [
+        "复用同一session checkpoint；先以工程输入检验分支恢复，再以已完成真实前缀检验。",
+        "沿用登记四分支：停止新增付费查询、第一/第二合法邻站、其余全部；第一/第二以同一前缀冻结排序，不能按未来值排序。",
+        "继承时钟、spent/reserved、来源额度释放、授权、缓存及完成时间、baseline/override、查询与推理pending、失败政策。按原设计先解决原串行pending且只保留同一回执，不为分支复制发出实际请求。",
+        "不同名字得到相同后续输入/预测则记录等价分支；记录无查询可做、预算不足、迟到、缺档案和失败。no_further_paid_query不等于终止整个会话或冻结共同预报。",
+        "逐层输出字段→特征→概率→候选完成/生效→固定未来结果。事后最佳分支只是指定有限动作和后端下的诊断。"
+      ],
+      "outputs": [
+        "C2_PREFIX_CHECKS.json",
+        "C2_BRANCH_TRACES/",
+        "C2_FIELD_TO_LOSS.json",
+        "C2_BRANCH_EFFECTS_CN.md"
+      ],
+      "acceptance": [
+        "原恢复路径与不中断路径科学状态相同；任何未来payload只在合法完成时可见。",
+        "不重置已花与预留，不把每日48额度在中午一次发满，不将目标私有证据共享。",
+        "停止查询分支仍能接收共同基线更新、执行后续合法预测和完整评分。",
+        "四个标签不自动等于四种信息；报告独特后续状态数和空操作比例。",
+        "缺少替代真实响应则not_evaluable；没有用LLM生成假资料补分支。",
+        "E若不是F输入，单独改E标签不称F干预；字段替换/Gold修复仅作评估侧敏感性。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [
+        "W07.closeout",
+        "W08.year_backend"
+      ],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W10.component_comparison",
+      "title": "用强后端重测信息、选择与时机",
+      "depends_on": [
+        "W07.closeout",
+        "W08.year_backend"
+      ],
+      "existing_paths": [
+        "plans/v11_execution_20260915_01/fullweek.py",
+        "plans/v11_execution_20260915_01/analyze_fullweek.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/forecast_schedule.py"
+      ],
+      "actions": [
+        "新注册五组完整日历比较；先固定选择器再补预算分配×授权四格，避免同时改变模型/后端/预算/日程。",
+        "明确三个问题：旧FOLLOW到common是后端；同values空证据到batch是补证；batch到coverage是策略及其时序。差值不强制做无交互因果百分比。",
+        "保留每日重置原轨；若新增整周336额度、缓存结转等，单独命名和注册。",
+        "同原生证据固定包比较原生提取/模型提取/同一后端，完整自适应另算；需要隔离等待时用固定查询计划的声明时延诊断，不冒充新模型运行。"
+      ],
+      "outputs": [
+        "MECHANISM_COMPARISONS.json",
+        "FULL_CALENDAR_EFFECTS_CN.md",
+        "COST_AND_SCHEDULE.json"
+      ],
+      "acceptance": [
+        "总体、含事件/无事件过程和正负结果贡献齐全，没有只看平静天气的平均获益。",
+        "共同预算上限与实际使用都报告；48次来源查询不等于同总成本。",
+        "固定证据和新会话分别统计；输入改变后不复用旧响应冒充新推理。",
+        "覆盖率、未来预测质量和预算效率分表；不以E覆盖作为F奖励的无条件替代。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W12.bounded_selector",
+      "title": "只运行一个有明确问题的新模型角色",
+      "depends_on": [
+        "W10.component_comparison",
+        "W11.branch_runtime"
+      ],
+      "existing_paths": [
+        "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md",
+        "plans/v11_execution_20260915_01/README_CN.md"
+      ],
+      "actions": [
+        "首先评估现有强程序是否已将登记小候选池读完或多数分支等价，确认新selector有非平凡选择。",
+        "沿用已验证235B优先做选择器；提取轨单独实验。新注册精确会话ID、提示/模型/后端哈希、资源、失败和停止规则。",
+        "现有计划建议最多12会话×24选择=288正式请求及最多2兼容性探测，可按新roster收缩，不自动扩大。所有真实请求必须有新或明确仍有效的运行授权。",
+        "若结果无增益或有效分支不足，保留结论，不通过强迫概率变化、削弱batch或加入模型追逐收益。"
+      ],
+      "outputs": [
+        "MODEL_TRIAL_PREREGISTRATION.json",
+        "MODEL_TRIAL_RESULTS_CN.md"
+      ],
+      "acceptance": [
+        "本轮只改变一个模型角色，所有基线有相同廉价解析/批处理工具。",
+        "来源费用、selector tokens/批次/排队/交付、漏交时刻和结果完整记录。",
+        "未尝试、传输失败、格式错误与科学预测错误分开；未知费用不回收为新预算。",
+        "模型失败/无收益也可完成注册，不按显著性追加日期或重试错误答案。"
+      ],
+      "execution_scope": "explicit_new_model_compute_authorization_required",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W09.confirmation_design",
+      "title": "预先定义过程、样本精度与最终确认",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "existing_paths": [
+        "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/process_split.py",
+        "plans/v11_execution_20260915_01/c2_design_01/DESIGN.json"
+      ],
+      "actions": [
+        "设计完整来源/目标足迹依赖块与自动外部规则的天气过程组，不等同于日会话、区域周或小时。",
+        "用开发数据的过程间变化制定区间精度、最大连续日历和不足时规则；不得先看确认效果。",
+        "Bay2025-02-17至23继续封闭；将其与新跨季节确认的作用明确，不让一个周承担所有结论。",
+        "保留1km/5km，预先确定主要假设、多重比较与辅助指标；不可识别ROC/AP时标不适用。"
+      ],
+      "outputs": [
+        "CONFIRMATION_DESIGN_DRAFT.json",
+        "SOURCE_DEPENDENCY_SPLITS.json"
+      ],
+      "acceptance": [
+        "现有四季开发资料及提示澄清涉及的样本全部登记为暴露，不重新叫测试集。",
+        "新确认开始前才最终冻结方法与哈希；设计草案不触发读取确认载荷。",
+        "按天气过程/保守块估计不确定性，缺失补全界独立命名。",
+        "研究未暴露与模型预训练未见分开说明；历史回放不自动成为前瞻证据。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W05.current_replay",
+      "title": "只对变更范围做当前源可移植检查",
+      "depends_on": [
+        "W07.E_count"
+      ],
+      "existing_paths": [
+        "publication/v10_execution_20260914/README_CN.md",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py"
+      ],
+      "actions": [
+        "用有明确任务范围的小型真实子集验证修复前后科学字段和派生E差异；没有当前源可搬迁字节就明确未完成。",
+        "读取旧有限capsule说明和清单，区分旧源码复算与当前源迁移；不每次都无目的全重跑。",
+        "测试新正式引用拒绝错目录、错合同、错STOP/journal/report、错data/bank；legacy只能显式只读，不能产生正式新资格。",
+        "同次评分加载复用继续保留检查；记录耗时/内存及冷暖缓存条件，不承诺2.26倍普遍加速。"
+      ],
+      "outputs": [
+        "CURRENT_SOURCE_REPLAY_SCOPE.json",
+        "COMPATIBILITY_AND_IMPACT.json"
+      ],
+      "acceptance": [
+        "没有以本包6个源副本覆盖生产模块；只用来理解和构造测试。",
+        "新schema和旧schema分别校验，不要求不同格式所有字节相同；科学字段等价必须证明。",
+        "已验证source/manifests未被热修改；未知影响标unavailable_to_review而非0。"
+      ],
+      "execution_scope": "local_cpu_existing_materials",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "W13.confirmation_release",
+      "title": "一次性确认并按能力层级发布",
+      "depends_on": [
+        "W09.confirmation_design",
+        "W12.bounded_selector",
+        "W05.current_replay"
+      ],
+      "existing_paths": [
+        "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md",
+        "publication/v11_inprogress_20260915/README_CN.md"
+      ],
+      "actions": [
+        "在最后冻结后按精确授权打开未暴露历史确认；负结果照常保留，不追加有利日期。",
+        "发布核心E/F的程序、模型、完整分母和复算范围，区分implemented/runtime/development/confirmation。",
+        "温度F-only与历史补证、原生MM、D、X09、在线分别给资格；不作为核心确认整体前置。",
+        "生成一页论文主张→实验→证据→限制表；未来资料/结果仅评估侧。"
+      ],
+      "outputs": [
+        "CONFIRMATION_RESULTS_CN.md",
+        "CLAIM_EVIDENCE_MATRIX.json",
+        "REPRODUCTION_SCOPE.json"
+      ],
+      "acceptance": [
+        "没有把有限E可达参照写成未来预测上界，也不将相关配对差异写成精确因果百分比。",
+        "有用信息、模型利用、及时生效和费用各自有对照；结论不要求模型胜出。",
+        "完整16类仍是总体目标，实际完成各自分项准确列出。",
+        "运行结束与资源终态有证据；进行中快照不包装成最终结果。"
+      ],
+      "execution_scope": "explicit_confirmatory_data_access_and_execution_scope_required",
+      "scientific_dependencies": [],
+      "status": "proposed_not_executed"
+    }
+  ],
+  "note": "Implementation dependencies and scientific dependencies are separate. No task authorizes new spending, changes active frozen runs, or opens confirmation data."
+}

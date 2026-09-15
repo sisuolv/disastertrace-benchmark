@@ -1,0 +1,39 @@
+[
+  {
+    "id": "R1",
+    "priority": "P1-before-next-temperature-task-expansion",
+    "status": "reproduced_on_synthetic_valid_target_inputs",
+    "file": "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+    "function": "event_probability -> validate_products",
+    "lines": [
+      29,
+      51
+    ],
+    "counterexamples": [
+      "max_only_product",
+      "invalid_unused_min",
+      "different_unused_min_member_count"
+    ],
+    "consequence": "raw target probability is blocked by unrelated min/max fields while other target-scoped entry accepts it",
+    "current_real_result_impact": "not established; existing complete products may be unaffected",
+    "minimum_fix": "scope raw-event validation to required target variables/days; retain full requirements for ECC; retain independent arithmetic"
+  },
+  {
+    "id": "R2",
+    "priority": "P2-before-enabling-new-calibrated-bank",
+    "status": "reproduced_validator_only",
+    "file": "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/native_feature.py",
+    "function": "validate_feature_bank(calibrated=True)",
+    "lines": [
+      51,
+      69
+    ],
+    "counterexamples": [
+      "negative_calibration_probability_passes_guard",
+      "unordered_calibration_domain_passes_guard"
+    ],
+    "consequence": "invalid bank passes preflight; not proof of an invalid admitted score",
+    "current_real_result_impact": "no demonstrated impact; downstream coherent_cdf has probability guard; raw track not affected by this calibration path",
+    "minimum_fix": "validate probability bounds and increasing nonoverlapping calibration support; preserve legitimate gaps and frozen mapping policy"
+  }
+]

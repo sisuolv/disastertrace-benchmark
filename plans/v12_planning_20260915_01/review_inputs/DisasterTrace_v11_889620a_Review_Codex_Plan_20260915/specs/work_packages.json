@@ -1,0 +1,230 @@
+{
+  "reviewed_commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "preserve_plan": "v11 W00-W13 C1/C2/C3 E/F/D/MM and 16 hazards",
+  "work_packages": [
+    {
+      "id": "W00-status",
+      "maps_to_existing": "W00",
+      "title": "对账进行中任务与冻结来源",
+      "depends_on": [],
+      "implementation_paths": [
+        "publication/v11_inprogress_20260915/PROGRESS_SNAPSHOT.json",
+        "plans/v11_execution_20260915_01/"
+      ],
+      "required_outputs": [
+        "STATUS_RECONCILIATION.json",
+        "SOURCE_RUNTIME_MATRIX.json"
+      ],
+      "acceptance_ids": [
+        "W00-status-T01",
+        "W00-status-T02",
+        "W00-status-T03",
+        "W00-status-T04"
+      ],
+      "first_pass": "CPU/read-only unless separately authorized scope is verified"
+    },
+    {
+      "id": "W05-07-E-summary",
+      "maps_to_existing": "W05/W07",
+      "title": "修正E枚举并只读核算影响",
+      "depends_on": [
+        "W00-status"
+      ],
+      "implementation_paths": [
+        "plans/v11_execution_20260915_01/fullweek.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/evidence.py"
+      ],
+      "required_outputs": [
+        "E_STATUS_SUMMARY_IMPACT.json",
+        "E_STATUS_RECOUNT.json"
+      ],
+      "acceptance_ids": [
+        "W05-07-E-summary-T01",
+        "W05-07-E-summary-T02",
+        "W05-07-E-summary-T03",
+        "W05-07-E-summary-T04"
+      ],
+      "first_pass": "CPU/read-only unless separately authorized scope is verified"
+    },
+    {
+      "id": "W11-universe",
+      "maps_to_existing": "W11",
+      "title": "从完整合法来源构建C2，不从可投影候选反推",
+      "depends_on": [
+        "W00-status"
+      ],
+      "implementation_paths": [
+        "plans/v11_execution_20260915_01/prepare_c2.py",
+        "plans/v8_measurement_execution_20260913_01/scripts/build_native_v2.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/taf_tasks.py"
+      ],
+      "required_outputs": [
+        "C2_UNIVERSE_DIFF.json",
+        "C2_CALENDAR_CENSUS.json",
+        "C2_INTERVENTION_DEPENDENCY.json"
+      ],
+      "acceptance_ids": [
+        "W11-universe-T01",
+        "W11-universe-T02",
+        "W11-universe-T03",
+        "W11-universe-T04",
+        "W11-universe-T05",
+        "W11-universe-T06"
+      ],
+      "first_pass": "CPU/read-only unless separately authorized scope is verified"
+    },
+    {
+      "id": "W07-close",
+      "maps_to_existing": "W07",
+      "title": "收口840条完整日历程序对照",
+      "depends_on": [
+        "W05-07-E-summary"
+      ],
+      "implementation_paths": [
+        "plans/v11_execution_20260915_01/fullweek.py",
+        "plans/v11_execution_20260915_01/analyze_fullweek.py"
+      ],
+      "required_outputs": [
+        "FULLWEEK_RECONCILIATION.json",
+        "FULLWEEK_PAIRED_REPORT_CN.md"
+      ],
+      "acceptance_ids": [
+        "W07-close-T01",
+        "W07-close-T02",
+        "W07-close-T03",
+        "W07-close-T04"
+      ],
+      "first_pass": "CPU/read-only unless separately authorized scope is verified"
+    },
+    {
+      "id": "W06-08-annual",
+      "maps_to_existing": "W06/W08/W09",
+      "title": "年度来源分层与季节覆盖的后端冻结",
+      "depends_on": [
+        "W00-status"
+      ],
+      "implementation_paths": [
+        "plans/v11_execution_20260915_01/annual_catalogs.py",
+        "plans/v11_execution_20260915_01/annual_native_sample.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/process_split.py"
+      ],
+      "required_outputs": [
+        "ANNUAL_STAGE_LEDGER.json",
+        "NATIVE_PRODUCT_DEDUP_MANIFEST.json",
+        "ROLE_DEPENDENCY_MANIFEST.json",
+        "BANK_REGISTRATION.json"
+      ],
+      "acceptance_ids": [
+        "W06-08-annual-T01",
+        "W06-08-annual-T02",
+        "W06-08-annual-T03",
+        "W06-08-annual-T04",
+        "W06-08-annual-T05"
+      ],
+      "first_pass": "CPU/read-only unless separately authorized scope is verified"
+    },
+    {
+      "id": "W01-02-contract",
+      "maps_to_existing": "W01/W02/W05",
+      "title": "补齐本轮新增路径需要的合同，不泛化重建",
+      "depends_on": [
+        "W00-status"
+      ],
+      "implementation_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_contract.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/outcome_policies.py"
+      ],
+      "required_outputs": [
+        "DATA_CARD_BINDING_REPORT.json",
+        "PROVIDER_QUALIFICATION_MATRIX.json",
+        "MEMBER_LINEAGE_MANIFEST.json"
+      ],
+      "acceptance_ids": [
+        "W01-02-contract-T01",
+        "W01-02-contract-T02",
+        "W01-02-contract-T03",
+        "W01-02-contract-T04"
+      ],
+      "first_pass": "CPU/read-only unless separately authorized scope is verified"
+    },
+    {
+      "id": "W10-11-branch",
+      "maps_to_existing": "W10/W11",
+      "title": "让真实同状态分支解释E到F而不追求必胜",
+      "depends_on": [
+        "W11-universe",
+        "W01-02-contract"
+      ],
+      "implementation_paths": [
+        "plans/v11_execution_20260915_01/c2_design_01/",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/session_checkpoint.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/residual_reachability.py"
+      ],
+      "required_outputs": [
+        "BRANCH_PARENT_MANIFEST.json",
+        "BRANCH_FEASIBILITY.json",
+        "FIELD_TO_LOSS_TRACE.jsonl"
+      ],
+      "acceptance_ids": [
+        "W10-11-branch-T01",
+        "W10-11-branch-T02",
+        "W10-11-branch-T03",
+        "W10-11-branch-T04",
+        "W10-11-branch-T05"
+      ],
+      "first_pass": "CPU/read-only unless separately authorized scope is verified"
+    },
+    {
+      "id": "W12-MM",
+      "maps_to_existing": "W12/C3并行出口",
+      "title": "一条同未来目标的原生多模态链",
+      "depends_on": [
+        "W01-02-contract"
+      ],
+      "implementation_paths": [
+        "disastertrace-starter/src/disastertrace/multimodal_v1/",
+        "disastertrace-starter/src/disastertrace/multimodal_live_v1/",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/"
+      ],
+      "required_outputs": [
+        "MM_OPPORTUNITY_QUALIFICATION.json",
+        "MM_INPUT_PROVENANCE.json",
+        "MM_COMPARISON_REGISTRATION.json"
+      ],
+      "acceptance_ids": [
+        "W12-MM-T01",
+        "W12-MM-T02",
+        "W12-MM-T03",
+        "W12-MM-T04"
+      ],
+      "first_pass": "CPU/read-only unless separately authorized scope is verified"
+    },
+    {
+      "id": "W12-13-validate",
+      "maps_to_existing": "W12/W13与前瞻分轨",
+      "title": "有限模型机制、独立确认和真实前瞻",
+      "depends_on": [
+        "W07-close",
+        "W06-08-annual",
+        "W10-11-branch"
+      ],
+      "implementation_paths": [
+        "plans/v11_planning_20260915_01/",
+        "plans/v11_execution_20260915_01/"
+      ],
+      "required_outputs": [
+        "MODEL_MECHANISM_REGISTRATION.json",
+        "CONFIRMATION_GATE.json",
+        "LIVE_SHADOW_SCOPE.json"
+      ],
+      "acceptance_ids": [
+        "W12-13-validate-T01",
+        "W12-13-validate-T02",
+        "W12-13-validate-T03",
+        "W12-13-validate-T04"
+      ],
+      "first_pass": "CPU/read-only unless separately authorized scope is verified"
+    }
+  ]
+}

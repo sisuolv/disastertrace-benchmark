@@ -1,0 +1,324 @@
+{
+  "schema": "disastertrace.review_plan.v1",
+  "at": "2026-09-15T13:42:52.740731+00:00",
+  "plan_batch": "v12_planning_20260915_01",
+  "research_framework_unchanged": [
+    "C1",
+    "C2",
+    "C3",
+    "E",
+    "F",
+    "D",
+    "MM",
+    "16_hazards",
+    "W00-W13"
+  ],
+  "execution_authorized": false,
+  "approval_basis": "current user explicitly requests review before formal execution",
+  "prior_v11_jobs": "continue original registered scope; no new owner or relaunch",
+  "recommended_first_batch": "A",
+  "first_batch_limits": {
+    "new_source_HTTP": 0,
+    "new_model_calls": 0,
+    "new_API_calls": 0,
+    "new_GPU": 0,
+    "new_fit": 0,
+    "confirmation_access": false,
+    "additional_cpu_cap": 16,
+    "additional_ram_GiB_cap": 64,
+    "proposed_runtime_ceiling_hours": 12,
+    "estimate_work_days": [
+      1,
+      2
+    ]
+  },
+  "tasks": [
+    {
+      "id": "W00.refresh",
+      "stage": "A",
+      "depends_on": [],
+      "purpose": "Observe original jobs and bind current phase/protected inputs",
+      "deliverable": "EXECUTION_BASELINE.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W07.e_summary",
+      "stage": "A",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "purpose": "Correct derived E status accounting without changing F",
+      "deliverable": "E_STATUS_SUMMARY_IMPACT.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W06.sample_summary",
+      "stage": "A",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "purpose": "Fix sample failure roster and inventory exact missing native data",
+      "deliverable": "ANNUAL_NATIVE_INVENTORY.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W01.bank_guard",
+      "stage": "A",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "purpose": "Reject invalid calibration maps at the real consumer",
+      "deliverable": "BANK_GUARD_IMPACT.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W07.closeout",
+      "stage": "A",
+      "depends_on": [
+        "W07.e_summary"
+      ],
+      "purpose": "Consume original fullweek final audit and add paired decomposition",
+      "deliverable": "FULLWEEK_FINDINGS_CN.md",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false,
+      "external_gate": "original fullweek_02 complete-roster formal audit; no relaunch"
+    },
+    {
+      "id": "W11.universe",
+      "stage": "A",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "purpose": "Census complete legal source universe on exposed calendars",
+      "deliverable": "C2_STATE_CENSUS.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W11.branch_engineering",
+      "stage": "A",
+      "depends_on": [
+        "W11.universe"
+      ],
+      "purpose": "No-op restore plus at most six real parents and 24 finite-plan branches",
+      "deliverable": "C2_ENGINEERING_REPORT_CN.md",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false,
+      "max_unique_parents": 6,
+      "max_branch_runs": 24,
+      "backend": "existing frozen",
+      "scope": "finite residual query-plan engineering; not complete adaptive opportunity-cost identification",
+      "selection": "one original noon reference per region and threshold in frozen metadata order; failures retained"
+    },
+    {
+      "id": "W05.acceptance",
+      "stage": "A",
+      "depends_on": [
+        "W07.closeout",
+        "W06.sample_summary",
+        "W01.bank_guard",
+        "W11.branch_engineering"
+      ],
+      "purpose": "One scoped acceptance and source/score preservation audit",
+      "deliverable": "BATCH_ACCEPTANCE.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W06.native_production",
+      "stage": "B",
+      "depends_on": [
+        "W06.sample_summary"
+      ],
+      "purpose": "Fresh bounded recovery and deduplicated annual raw acquisition",
+      "deliverable": "ANNUAL_TASK_QUALIFICATION.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W08.annual_backend",
+      "stage": "B",
+      "depends_on": [
+        "W06.native_production",
+        "W01.bank_guard"
+      ],
+      "purpose": "Purged 2023 internal selection and 2024 final calibration",
+      "deliverable": "BANK_MANIFEST.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W10.mechanism",
+      "stage": "C",
+      "depends_on": [
+        "W08.annual_backend",
+        "W07.closeout"
+      ],
+      "purpose": "Same-backend five-arm and fixed-selector allocation-sharing factors",
+      "deliverable": "MECHANISM_COMPARISONS.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W11.branch_science",
+      "stage": "C",
+      "depends_on": [
+        "W11.branch_engineering",
+        "W08.annual_backend"
+      ],
+      "purpose": "New-bank branches with frozen continuation semantics and session effects",
+      "deliverable": "C2_BRANCH_EFFECTS_CN.md",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W12.selector",
+      "stage": "C",
+      "depends_on": [
+        "W10.mechanism",
+        "W11.branch_science",
+        "W05.acceptance"
+      ],
+      "purpose": "One bounded local model role under frozen exact IDs and settings",
+      "deliverable": "MODEL_TRIAL_RESULTS_CN.md",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false,
+      "max_development_sessions": 12,
+      "max_decisions_per_session": 24,
+      "max_benchmark_requests": 288,
+      "max_compatibility_requests": 2,
+      "max_H100": 4,
+      "role": "selector_only",
+      "api_fallback_automatic": false
+    },
+    {
+      "id": "W09.confirmation_design",
+      "stage": "parallel",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "purpose": "Draft process units and precision without opening unread outcomes",
+      "deliverable": "CONFIRMATION_DESIGN_DRAFT.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W13.confirmation",
+      "stage": "D",
+      "depends_on": [
+        "W12.selector",
+        "W09.confirmation_design"
+      ],
+      "purpose": "Freeze all methods and execute once on registered unread calendars",
+      "deliverable": "CONFIRMATION_RESULTS_CN.md",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W01.temperature_scope",
+      "stage": "parallel",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "purpose": "Separate raw event eligibility from full EMOS/ECC products",
+      "deliverable": "TEMPERATURE_INPUT_SCOPE.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W02.temperature_lineage",
+      "stage": "parallel",
+      "depends_on": [
+        "W01.temperature_scope"
+      ],
+      "purpose": "Bind origin/member coordinates, event prompts and DWD policy",
+      "deliverable": "TEMPERATURE_LINEAGE_QUALIFICATION.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W03.api_claim",
+      "stage": "parallel",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "purpose": "Atomic claim and local dispatch failure qualification before any new API",
+      "deliverable": "API_CLAIM_QUALIFICATION.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W12.mm_qualification",
+      "stage": "parallel",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "purpose": "At most 24 metadata-selected native image opportunity pairs",
+      "deliverable": "MM_OPPORTUNITY_QUALIFICATION.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false,
+      "max_image_pairs": 24,
+      "model_calls_in_qualification": 0
+    },
+    {
+      "id": "W02.h07_h08",
+      "stage": "parallel",
+      "depends_on": [
+        "W00.refresh"
+      ],
+      "purpose": "Qualify one second active physical chain by matching support and forecast/reference",
+      "deliverable": "SECOND_CHAIN_QUALIFICATION.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W13.decision",
+      "stage": "later",
+      "depends_on": [
+        "W10.mechanism"
+      ],
+      "purpose": "Scenario-only program decisions with preference-blind fixed weather head",
+      "deliverable": "DECISION_SCENARIO_RESULTS.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    },
+    {
+      "id": "W13.online",
+      "stage": "later",
+      "depends_on": [
+        "W10.mechanism"
+      ],
+      "purpose": "Bounded prospective program submissions before outcome maturity",
+      "deliverable": "PROSPECTIVE_SUBMISSION_AUDIT.json",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_launcher_created": false
+    }
+  ],
+  "scope_note": "Deliverable paths name future artifacts, not existing receipts. This specification cannot launch jobs."
+}

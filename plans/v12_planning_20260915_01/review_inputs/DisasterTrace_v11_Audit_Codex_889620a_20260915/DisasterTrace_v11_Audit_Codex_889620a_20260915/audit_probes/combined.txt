@@ -1,0 +1,221 @@
+.......................................FFF..........F.....               [100%]
+=================================== FAILURES ===================================
+____ test_event_probability_does_not_require_unconsumed_variable[max_only] _____
+
+case = 'max_only'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+>           other=T.event_probability(r)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+
+test_v11_boundaries.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+sources/temperature_postprocess.py:33: in event_probability
+    validate_products(products)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+products = [{'day_index': 1, 'forecast_max_members_C': [31.0, 20.0], 'target_date': '2018-01-02'}]
+
+    def validate_products(products):
+        dates = [p["target_date"] for p in products]
+        if len(dates) != len(set(dates)) or not products:
+            raise ValueError("Unique daily products are required")
+        sizes = set()
+        for product in products:
+            if type(product["day_index"]) is not int or product["day_index"] < 1:
+                raise ValueError("Day0 is excluded from fixed future extrema")
+            for field in ("forecast_min_members_C", "forecast_max_members_C"):
+>               values = product[field]
+                         ^^^^^^^^^^^^^^
+E               KeyError: 'forecast_min_members_C'
+
+sources/temperature_postprocess.py:19: KeyError
+
+During handling of the above exception, another exception occurred:
+
+case = 'max_only'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+            other=T.event_probability(r)
+        except (ValueError,KeyError) as exc:
+>           pytest.fail('Unused variable rejects a complete target-specific event: '+repr(exc))
+E           Failed: Unused variable rejects a complete target-specific event: KeyError('forecast_min_members_C')
+
+test_v11_boundaries.py:30: Failed
+___ test_event_probability_does_not_require_unconsumed_variable[min_invalid] ___
+
+case = 'min_invalid'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+>           other=T.event_probability(r)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+
+test_v11_boundaries.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+sources/temperature_postprocess.py:33: in event_probability
+    validate_products(products)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+products = [{'day_index': 1, 'forecast_max_members_C': [31.0, 20.0], 'forecast_min_members_C': [nan], 'target_date': '2018-01-02'}]
+
+    def validate_products(products):
+        dates = [p["target_date"] for p in products]
+        if len(dates) != len(set(dates)) or not products:
+            raise ValueError("Unique daily products are required")
+        sizes = set()
+        for product in products:
+            if type(product["day_index"]) is not int or product["day_index"] < 1:
+                raise ValueError("Day0 is excluded from fixed future extrema")
+            for field in ("forecast_min_members_C", "forecast_max_members_C"):
+                values = product[field]
+                sizes.add(len(values))
+                if not values or any(
+                    not finite_number(v) for v in values
+                ):
+>                   raise ValueError("Finite complete temperature members required")
+E                   ValueError: Finite complete temperature members required
+
+sources/temperature_postprocess.py:24: ValueError
+
+During handling of the above exception, another exception occurred:
+
+case = 'min_invalid'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+            other=T.event_probability(r)
+        except (ValueError,KeyError) as exc:
+>           pytest.fail('Unused variable rejects a complete target-specific event: '+repr(exc))
+E           Failed: Unused variable rejects a complete target-specific event: ValueError('Finite complete temperature members required')
+
+test_v11_boundaries.py:30: Failed
+____ test_event_probability_does_not_require_unconsumed_variable[min_only] _____
+
+case = 'min_only'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+>           other=T.event_probability(r)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+
+test_v11_boundaries.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+sources/temperature_postprocess.py:33: in event_probability
+    validate_products(products)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+products = [{'day_index': 1, 'forecast_min_members_C': [-2.0, 2.0], 'target_date': '2018-01-02'}]
+
+    def validate_products(products):
+        dates = [p["target_date"] for p in products]
+        if len(dates) != len(set(dates)) or not products:
+            raise ValueError("Unique daily products are required")
+        sizes = set()
+        for product in products:
+            if type(product["day_index"]) is not int or product["day_index"] < 1:
+                raise ValueError("Day0 is excluded from fixed future extrema")
+            for field in ("forecast_min_members_C", "forecast_max_members_C"):
+>               values = product[field]
+                         ^^^^^^^^^^^^^^
+E               KeyError: 'forecast_max_members_C'
+
+sources/temperature_postprocess.py:19: KeyError
+
+During handling of the above exception, another exception occurred:
+
+case = 'min_only'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+            other=T.event_probability(r)
+        except (ValueError,KeyError) as exc:
+>           pytest.fail('Unused variable rejects a complete target-specific event: '+repr(exc))
+E           Failed: Unused variable rejects a complete target-specific event: KeyError('forecast_max_members_C')
+
+test_v11_boundaries.py:30: Failed
+___________________ test_failed_sample_is_not_counted_twice ____________________
+
+annual = <module '_v11_annual_test' from '/mnt/data/DisasterTrace_v11_Audit_Codex_889620a_20260915/audit_probes/sources/annual_catalogs.py'>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_failed_sample_is_not_coun0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f1a3dac2060>
+
+    def test_failed_sample_is_not_counted_twice(annual,tmp_path,monkeypatch):
+        result,called,code=simulate(annual,tmp_path,monkeypatch,{'u01'})
+        assert code==1 and set(called)=={'u00','u01','u02'} and len(called)==3
+>       assert len(result['results'])==3, 'Failed sample was concatenated with itself'
+E       AssertionError: Failed sample was concatenated with itself
+E       assert 6 == 3
+E        +  where 6 = len([{'complete': True, 'unit': 'u00'}, {'complete': False, 'unit': 'u01'}, {'complete': True, 'unit': 'u02'}, {'complete': True, 'unit': 'u00'}, {'complete': False, 'unit': 'u01'}, {'complete': True, 'unit': 'u02'}])
+
+test_v11_boundaries.py:93: AssertionError
+=========================== short test summary info ============================
+FAILED test_v11_boundaries.py::test_event_probability_does_not_require_unconsumed_variable[max_only] - Failed: Unused variable rejects a complete target-specific event: KeyError('forecast_min_members_C')
+FAILED test_v11_boundaries.py::test_event_probability_does_not_require_unconsumed_variable[min_invalid] - Failed: Unused variable rejects a complete target-specific event: ValueError('Finite complete temperature members required')
+FAILED test_v11_boundaries.py::test_event_probability_does_not_require_unconsumed_variable[min_only] - Failed: Unused variable rejects a complete target-specific event: KeyError('forecast_max_members_C')
+FAILED test_v11_boundaries.py::test_failed_sample_is_not_counted_twice - AssertionError: Failed sample was concatenated with itself
+assert 6 == 3
+ +  where 6 = len([{'complete': True, 'unit': 'u00'}, {'complete': False, 'unit': 'u01'}, {'complete': True, 'unit': 'u02'}, {'complete': True, 'unit': 'u00'}, {'complete': False, 'unit': 'u01'}, {'complete': True, 'unit': 'u02'}])
+4 failed, 54 passed in 0.18s

@@ -1,0 +1,728 @@
+{
+  "commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "source_verification": {
+    "temperature_contract.py": {
+      "git_blob": "5d46a2c8705d9cc92618bd082431be2c5c9124a9",
+      "sha256": "2f83277ac8c6308aec05e0df6106dfe7eeb3e62ecb0fca6716ea8f0c80238efd",
+      "bytes": 2506
+    },
+    "feature_tasks.py": {
+      "git_blob": "12aa74dc5f8ae72c59f8eed3c444a43210c4f576",
+      "sha256": "4248e82247beed0dad83cf7d9f1c6d8d2b1d2294f669a479e65438a8deeca5d4",
+      "bytes": 4323
+    },
+    "temperature_postprocess.py": {
+      "git_blob": "2e221bb7c82e126b1aa8a68dac495bf4a33f75fa",
+      "sha256": "7a7f9f113da5616f689f270334a36002235d8da36bc3b943c5a4c78a6d97508c",
+      "bytes": 3949
+    },
+    "api_capture_v2.py": {
+      "git_blob": "37acedfe328cb4d12d12d154078fb23e3aebdd34",
+      "sha256": "7c72e97db852a54537e2189aa6711fe00cbf65774b5bc32220b916a1f7e11278",
+      "bytes": 5558
+    },
+    "api_ledger.py": {
+      "git_blob": "766b3fb1adc99a0388ec183256e5c38c8f122675",
+      "sha256": "c9f9e1dbc87ec39296df2c894668a893cb15074d8f1d07c556ee4f701d50f489",
+      "bytes": 13306
+    },
+    "common.py": {
+      "git_blob": "31ed9e5f3cceabda9d9553b28be89ed1858bfc9f",
+      "sha256": "ccfc97a39cb32f3152770ddb0dd3dd6e9f0425510bca9d8d395a7f35611f6b87",
+      "bytes": 2187
+    },
+    "audit_contracts.py": {
+      "git_blob": "f39167dea94dba4e45d86f3e5b2ad094dceb8f63",
+      "sha256": "46fd8753645ee7ea9133d7b1ab2e7bd40b5335f10365e80ccf4ed9fa3373a442",
+      "bytes": 609
+    },
+    "native_feature.py": {
+      "git_blob": "b3928a682eb146002f501973f641297d9b2a3ffc",
+      "sha256": "9d3f7afce5adda689edd573d611fc376da8516f652da59dc0e14174ad2a23e2b",
+      "bytes": 4414
+    }
+  },
+  "scope": "Offline function/module-level synthetic checks; real local files and original ApiLedger/capture; mocked HTTP/clock and transport helpers. Not the 750-test suite, real-weather replay, production FormalSession or a live HTTP concurrency test. NativeFeature bank guard is an AST-extracted original function with constants bound; no calibrated forecast is executed.",
+  "no_model_calls": true,
+  "no_network_calls_in_checks": true,
+  "cases": [
+    {
+      "name": "temperature_valid_daily_agrees",
+      "kind": "normal_control",
+      "observation": {
+        "feature_task": {
+          "accepted": true,
+          "value": 0.6666666666666666
+        },
+        "postprocess": {
+          "accepted": true,
+          "value": 0.6666666666666666
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "negative_celsius_and_open_zero",
+      "kind": "normal_control",
+      "observation": {
+        "feature_task": {
+          "accepted": true,
+          "value": 0.3333333333333333
+        },
+        "postprocess": {
+          "accepted": true,
+          "value": 0.3333333333333333
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "three_day_member_dependence_not_marginal_product",
+      "kind": "normal_control",
+      "observation": {
+        "feature_task": {
+          "accepted": true,
+          "value": 0.0
+        },
+        "postprocess": {
+          "accepted": true,
+          "value": 0.0
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "common_member_permutation_raw_event_invariant",
+      "kind": "normal_control",
+      "observation": {
+        "feature_task": {
+          "accepted": true,
+          "value": 0.0
+        },
+        "postprocess": {
+          "accepted": true,
+          "value": 0.0
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "noon_shift",
+      "kind": "previous_boundary_now_rejected",
+      "observation": {
+        "feature_task": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "duplicate_product",
+      "kind": "previous_boundary_now_rejected",
+      "observation": {
+        "feature_task": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Unique daily products are required"
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Unique daily products are required"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "boolean_day_index",
+      "kind": "previous_boundary_now_rejected",
+      "observation": {
+        "feature_task": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Day0 is excluded from fixed future extrema"
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Day0 is excluded from fixed future extrema"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "nan_threshold",
+      "kind": "previous_boundary_now_rejected",
+      "observation": {
+        "feature_task": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "boolean_threshold",
+      "kind": "previous_boundary_now_rejected",
+      "observation": {
+        "feature_task": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "max_only_product",
+      "kind": "counterexample_target_scope",
+      "observation": {
+        "feature_task": {
+          "accepted": true,
+          "value": 0.6666666666666666
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "KeyError",
+          "message": "'forecast_min_members_C'"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "invalid_unused_min",
+      "kind": "counterexample_target_scope",
+      "observation": {
+        "feature_task": {
+          "accepted": true,
+          "value": 0.6666666666666666
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Finite complete temperature members required"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "different_unused_min_member_count",
+      "kind": "counterexample_target_scope",
+      "observation": {
+        "feature_task": {
+          "accepted": true,
+          "value": 0.6666666666666666
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Same member dimensions must survive the entire product"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "ecc_full_product_rejects_missing_min",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "KeyError",
+        "message": "'forecast_min_members_C'"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "day0",
+      "kind": "protection_control",
+      "observation": {
+        "feature_task": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Day0 is excluded from fixed future extrema"
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Day0 is excluded from fixed future extrema"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "post_cutoff",
+      "kind": "protection_control",
+      "observation": {
+        "feature_task": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "bad_unit",
+      "kind": "protection_control",
+      "observation": {
+        "feature_task": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "empty_members",
+      "kind": "protection_control",
+      "observation": {
+        "feature_task": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Finite complete temperature members required"
+        },
+        "postprocess": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Finite complete temperature members required"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "valid_probability_json_17",
+      "kind": "normal_control",
+      "observation": {
+        "accepted": true,
+        "value": [
+          0.2,
+          {
+            "whole_json_fence": false
+          }
+        ]
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "valid_probability_json_18",
+      "kind": "normal_control",
+      "observation": {
+        "accepted": true,
+        "value": [
+          0.2,
+          {
+            "whole_json_fence": true
+          }
+        ]
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "probability_rejects_boolean",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Expected one bounded future-event probability"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "probability_rejects_negative",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Expected one bounded future-event probability"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "probability_rejects_nonfinite",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "nonfinite JSON number: NaN"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "probability_rejects_duplicate_key",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "duplicate JSON key: probability"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "temperature_head_oversized_integer",
+      "kind": "previous_boundary_now_rejected",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Expected one bounded future-event probability"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "coverage_rejects_missing",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Incomplete coverage in missing: missing=['b'], extra=[]"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "coverage_rejects_extra",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Incomplete coverage in extra: missing=[], extra=['b']"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "coverage_rejects_duplicate",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Duplicate coverage identity in duplicate"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "coverage_exact_set_control",
+      "kind": "normal_control",
+      "observation": 2,
+      "check_satisfied": true
+    },
+    {
+      "name": "api_normal_fsynced_usage_and_terminal",
+      "kind": "normal_control",
+      "observation": {
+        "result": {
+          "accepted": true,
+          "value": [
+            "{\"probability\":0.2}",
+            {
+              "input_tokens": 8,
+              "output_tokens": 3,
+              "seconds": 0.010000000000000009,
+              "elapsed_seconds": 0.010000000000000009,
+              "ended_with_eos": true,
+              "model_returned": "test-only",
+              "provider_compute_seconds": null,
+              "timing_basis": "client HTTP and durable capture elapsed; provider compute unknown",
+              "fee_upper_nanodollars": 6000
+            }
+          ]
+        },
+        "http_open_calls": [
+          {
+            "at_ns": 1000000000,
+            "timeout": 120
+          }
+        ],
+        "deadline_ns": 3000000000,
+        "stop_exists": false,
+        "ledger": {
+          "registered": 1,
+          "claimed": 1,
+          "dispatch_intents": 1,
+          "responses": 1,
+          "settled": 1,
+          "reconciled": 0,
+          "unresolved_reservations": 0,
+          "unresolved_nanodollars": 0,
+          "actual_upper_nanodollars": 6000,
+          "failed_pre_dispatch": 0
+        },
+        "terminal": {
+          "elapsed_seconds": 0.010000000000000009,
+          "ended_with_eos": true,
+          "fee_upper_nanodollars": 6000,
+          "input_tokens": 8,
+          "logical_retry": false,
+          "model_returned": "test-only",
+          "output_tokens": 3,
+          "provider_compute_seconds": null,
+          "seconds": 0.010000000000000009,
+          "state": "BILLED",
+          "timing_basis": "client HTTP and durable capture elapsed; provider compute unknown"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "api_duplicate_claim_rejected",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "FileExistsError",
+        "message": "[Errno 17] File exists: '/tmp/v11-review-oqq633rp/normal/attempts/7edb360f06acaef2cc80dba16cf563f199d347db4443da04da0c8173e3f9e4ed'"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "api_stop_before_claim",
+      "kind": "protection_control",
+      "observation": {
+        "result": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "API deadline or stop gate reached"
+        },
+        "http_open_calls": [],
+        "deadline_ns": 3000000000,
+        "stop_exists": true,
+        "ledger": {
+          "registered": 1,
+          "claimed": 0,
+          "dispatch_intents": 0,
+          "responses": 0,
+          "settled": 0,
+          "reconciled": 0,
+          "unresolved_reservations": 0,
+          "unresolved_nanodollars": 0,
+          "actual_upper_nanodollars": 0,
+          "failed_pre_dispatch": 0
+        },
+        "terminal": null
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "api_deadline_before_claim",
+      "kind": "protection_control",
+      "observation": {
+        "result": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "API deadline or stop gate reached"
+        },
+        "http_open_calls": [],
+        "deadline_ns": 3000000000,
+        "stop_exists": false,
+        "ledger": {
+          "registered": 1,
+          "claimed": 0,
+          "dispatch_intents": 0,
+          "responses": 0,
+          "settled": 0,
+          "reconciled": 0,
+          "unresolved_reservations": 0,
+          "unresolved_nanodollars": 0,
+          "actual_upper_nanodollars": 0,
+          "failed_pre_dispatch": 0
+        },
+        "terminal": null
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "api_stop_after_claim",
+      "kind": "previous_boundary_now_rejected",
+      "observation": {
+        "result": {
+          "accepted": false,
+          "exception": "RuntimeError",
+          "message": "Original API v2 attempt failed; inspect immutable receipts"
+        },
+        "http_open_calls": [],
+        "deadline_ns": 3000000000,
+        "stop_exists": true,
+        "ledger": {
+          "registered": 1,
+          "claimed": 1,
+          "dispatch_intents": 0,
+          "responses": 0,
+          "settled": 0,
+          "reconciled": 0,
+          "unresolved_reservations": 0,
+          "unresolved_nanodollars": 0,
+          "actual_upper_nanodollars": 0,
+          "failed_pre_dispatch": 1
+        },
+        "terminal": {
+          "elapsed_seconds": 0.0,
+          "error_type": "ValueError",
+          "logical_retry": false,
+          "state": "FAILED_PRE_DISPATCH"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "api_deadline_after_claim",
+      "kind": "previous_boundary_now_rejected",
+      "observation": {
+        "result": {
+          "accepted": false,
+          "exception": "RuntimeError",
+          "message": "Original API v2 attempt failed; inspect immutable receipts"
+        },
+        "http_open_calls": [],
+        "deadline_ns": 3000000000,
+        "stop_exists": false,
+        "ledger": {
+          "registered": 1,
+          "claimed": 1,
+          "dispatch_intents": 0,
+          "responses": 0,
+          "settled": 0,
+          "reconciled": 0,
+          "unresolved_reservations": 0,
+          "unresolved_nanodollars": 0,
+          "actual_upper_nanodollars": 0,
+          "failed_pre_dispatch": 1
+        },
+        "terminal": {
+          "elapsed_seconds": 3.0,
+          "error_type": "ValueError",
+          "logical_retry": false,
+          "state": "FAILED_PRE_DISPATCH"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "api_nested_error_now_preserves_terminal",
+      "kind": "protection_control",
+      "observation": {
+        "result": {
+          "accepted": false,
+          "exception": "RuntimeError",
+          "message": "Original API v2 attempt failed; inspect immutable receipts"
+        },
+        "http_open_calls": [
+          {
+            "at_ns": 1000000000,
+            "timeout": 120
+          }
+        ],
+        "deadline_ns": 3000000000,
+        "stop_exists": false,
+        "ledger": {
+          "registered": 1,
+          "claimed": 1,
+          "dispatch_intents": 1,
+          "responses": 0,
+          "settled": 0,
+          "reconciled": 0,
+          "unresolved_reservations": 1,
+          "unresolved_nanodollars": 2496000,
+          "actual_upper_nanodollars": 0,
+          "failed_pre_dispatch": 0
+        },
+        "terminal": {
+          "elapsed_seconds": 0.0,
+          "error_body_read_error": "OSError",
+          "error_type": "HTTPError",
+          "http_status": 402,
+          "logical_retry": false,
+          "state": "FAILED_POST_DISPATCH"
+        }
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "valid_common_bank",
+      "kind": "normal_control",
+      "observation": {
+        "accepted": true,
+        "value": null
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "common_bank_rejects_paid_slot",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "A common information bank cannot consume paid slot features"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "bank_rejects_nonpositive_scale",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Feature coefficients and scales must be finite and valid"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "bank_rejects_wrong_class_count",
+      "kind": "protection_control",
+      "observation": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Invalid feature bank dimensions"
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "negative_calibration_probability_passes_guard",
+      "kind": "counterexample_bank_guard",
+      "observation": {
+        "accepted": true,
+        "value": null
+      },
+      "check_satisfied": true
+    },
+    {
+      "name": "unordered_calibration_domain_passes_guard",
+      "kind": "counterexample_bank_guard",
+      "observation": {
+        "accepted": true,
+        "value": null
+      },
+      "check_satisfied": true
+    }
+  ],
+  "counts": {
+    "counterexample_bank_guard": 2,
+    "counterexample_target_scope": 3,
+    "normal_control": 9,
+    "previous_boundary_now_rejected": 8,
+    "protection_control": 19
+  }
+}

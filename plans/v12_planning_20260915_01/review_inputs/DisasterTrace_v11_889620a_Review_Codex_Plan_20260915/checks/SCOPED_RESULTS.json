@@ -1,0 +1,269 @@
+{
+  "reviewed_commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "scope": "Three Git-blob-verified upstream modules, synthetic fixtures only",
+  "checks": [
+    {
+      "check": "T01_max_only_does_not_require_unused_min_field",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "actual": [
+          [
+            31.0,
+            29.0
+          ]
+        ],
+        "expected": [
+          [
+            31.0,
+            29.0
+          ]
+        ]
+      }
+    },
+    {
+      "check": "T02_negative_minimum_is_legal",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "actual": [
+          [
+            -5.0,
+            2.0
+          ]
+        ],
+        "expected": [
+          [
+            -5.0,
+            2.0
+          ]
+        ]
+      }
+    },
+    {
+      "check": "T03_nonmidnight_start_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Absolute future UTC days in Celsius are required"
+      }
+    },
+    {
+      "check": "T04_late_cutoff_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Absolute future UTC days in Celsius are required"
+      }
+    },
+    {
+      "check": "T05_boolean_threshold_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Unqualified temperature endpoint"
+      }
+    },
+    {
+      "check": "T06_wrong_duration_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Variable and fixed target duration disagree"
+      }
+    },
+    {
+      "check": "T07_unqualified_variable_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Unqualified temperature variable"
+      }
+    },
+    {
+      "check": "T08_boolean_member_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Finite complete temperature members required"
+      }
+    },
+    {
+      "check": "T09_NaN_member_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Finite complete temperature members required"
+      }
+    },
+    {
+      "check": "T10_huge_integer_member_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Finite complete temperature members required"
+      }
+    },
+    {
+      "check": "T11_duplicate_dates_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Unique daily products are required"
+      }
+    },
+    {
+      "check": "T12_day_zero_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Day0 is excluded from fixed future extrema"
+      }
+    },
+    {
+      "check": "T13_missing_requested_date_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Requested physical target is not fully covered"
+      }
+    },
+    {
+      "check": "T14_member_shape_mismatch_rejected",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "rejected": true,
+        "type": "ValueError",
+        "message": "Same member dimensions must survive the entire product"
+      }
+    },
+    {
+      "check": "T15_shape_is_not_member_lineage",
+      "passed": true,
+      "kind": "documented_scope_limit",
+      "detail": {
+        "aligned_member_paths": 0.5,
+        "one_day_permuted_paths": 0.0,
+        "interpretation": "Known scope limit: shape checking cannot certify source member identity; not proof actual data are misaligned."
+      }
+    },
+    {
+      "check": "V01_core_latest_before_coverage",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "actual": "current_version_does_not_cover_target",
+        "expected": "current_version_does_not_cover_target"
+      }
+    },
+    {
+      "check": "V02_projectable_pool_hides_new_noncovering_version",
+      "passed": true,
+      "kind": "confirmed_selection_boundary",
+      "detail": {
+        "full_directory": {
+          "status": "current_version_does_not_cover_target",
+          "source_ids": [
+            "new_short"
+          ],
+          "selected_id": "new_short",
+          "issued_at": 1735711200000000
+        },
+        "projectable_candidate_pool": {
+          "status": "active",
+          "source_ids": [
+            "old"
+          ],
+          "selected_id": "old",
+          "issued_at": 1735689600000000
+        },
+        "scope": "Real current_taf on synthetic metadata; selection-order reproducer, not execution of the complete data compiler."
+      }
+    },
+    {
+      "check": "V03_core_retains_same_issue_conflict",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "actual": "conflict",
+        "expected": "conflict"
+      }
+    },
+    {
+      "check": "V04_projectable_pool_hides_same_issue_conflict",
+      "passed": true,
+      "kind": "confirmed_selection_boundary",
+      "detail": {
+        "full_directory": {
+          "status": "conflict",
+          "source_ids": [
+            "new_full",
+            "new_short"
+          ]
+        },
+        "projectable_candidate_pool": {
+          "status": "active",
+          "source_ids": [
+            "new_full"
+          ],
+          "selected_id": "new_full",
+          "issued_at": 1735711200000000
+        }
+      }
+    },
+    {
+      "check": "V05_equivalent_mirrors_keep_semantics",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "actual": [
+          "another_alias",
+          "new_full"
+        ],
+        "expected": [
+          "another_alias",
+          "new_full"
+        ]
+      }
+    },
+    {
+      "check": "V06_future_issue_not_yet_legal",
+      "passed": true,
+      "kind": "existing_guard",
+      "detail": {
+        "actual": "old",
+        "expected": "old"
+      }
+    }
+  ],
+  "total": 21,
+  "passed": 21,
+  "model_calls": 0,
+  "scientific_downloads": 0,
+  "repository_test_suite_rerun": false,
+  "production_C2_compiler_executed": false,
+  "actual_72_prefix_impact_recomputed": false
+}

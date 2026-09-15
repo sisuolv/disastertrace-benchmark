@@ -1,0 +1,80 @@
+[
+  {
+    "id": "V11-F01",
+    "severity": "P1 before partial-temperature admission; not a global stop",
+    "category": "target-specific eligibility mismatch; previously identified pending scope",
+    "file": "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+    "lines": "10-33",
+    "functions": [
+      "validate_products",
+      "event_probability"
+    ],
+    "trigger": "A complete daily-max event has valid maxima but minima absent/nonfinite; mirror daily-min case.",
+    "observed": "feature_tasks returns0.5; postprocess rejects with KeyError/ValueError. Three failing tests.",
+    "current_scientific_impact": "Not established. Existing paired min/max archives may not trigger; scan actual rosters.",
+    "fix": "Separate target-scoped event validation from joint min/max EMOS/ECC product qualification. Preserve independent numeric reducers.",
+    "mapped_tasks": [
+      "W01.target_scope",
+      "W05.current_source_replay"
+    ],
+    "source_ids": [
+      "S06",
+      "S07",
+      "S08",
+      "S16"
+    ]
+  },
+  {
+    "id": "V11-F02",
+    "severity": "P2 acquisition failure accounting",
+    "category": "reproduced deterministic orchestration bug",
+    "file": "plans/v11_execution_20260915_01/annual_catalogs.py",
+    "lines": "164-183",
+    "functions": [
+      "execute"
+    ],
+    "trigger": "One of three mandatory sample units fails before the rest of annual units start.",
+    "observed": "3 mocked acquire calls,2 successful unique units; output6rows,completed_units4,not_attempted69,passedfalse. One failing test.",
+    "current_scientific_impact": "Current published leap-month sample is reported passed; this does not explain current71/72 status or demonstrate doubled real network requests.",
+    "fix": "Append remaining results only when sample passes; validate exact unit identity and unique counts in every terminal branch. Retain failure and not-attempted units.",
+    "mapped_tasks": [
+      "W06.sample_failure_roster"
+    ],
+    "source_ids": [
+      "S12",
+      "S05"
+    ]
+  },
+  {
+    "id": "V11-Q01",
+    "severity": "qualification gate, not an additional failed test",
+    "category": "origin/day/member-lineage incomplete",
+    "file": "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_contract.py",
+    "lines": "18-58",
+    "observed": "A supplied day_index99 and a contradictory disclosed initialization are not cross-checked; only positive day_index and array lengths are checked.",
+    "current_scientific_impact": "Actual archive lineage error not established. Repository itself lists lineage as unfinished.",
+    "fix": "Add provider-bound origin/date/member-coordinate lineage, without treating equal lengths or array position as independent evidence.",
+    "mapped_tasks": [
+      "W02.lineage_input_roles"
+    ],
+    "source_ids": [
+      "S06",
+      "S03"
+    ]
+  },
+  {
+    "id": "V11-Q02",
+    "severity": "research identifiability gap",
+    "category": "C2 difficulty and forecast influence unverified",
+    "observed": "72 coverage tasks all full;144 native TAF tasks constructed; actual same-state branches not yet executed in the snapshot.",
+    "fix": "Full-calendar state census and deterministic trivial controls; trace field→feature→probability→admission→loss; no synthetic enrichment as natural evidence.",
+    "mapped_tasks": [
+      "W11.e_census",
+      "W11.same_state_branches"
+    ],
+    "source_ids": [
+      "S02",
+      "S05"
+    ]
+  }
+]

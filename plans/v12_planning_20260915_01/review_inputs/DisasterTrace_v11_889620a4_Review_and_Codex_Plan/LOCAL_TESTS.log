@@ -1,0 +1,46 @@
+..............................................
+----------------------------------------------------------------------
+Ran 46 tests in 0.004s
+
+OK
+[
+  {
+    "id": "TEMP_MAX_ONLY",
+    "scope": "source functions, not production adapter",
+    "feature_tasks": {
+      "accepted": true,
+      "probability": 0.5
+    },
+    "postprocess": {
+      "accepted": false,
+      "error": "KeyError",
+      "message": "'forecast_min_members_C'"
+    }
+  },
+  {
+    "id": "TEMP_UNUSED_MIN_NAN",
+    "feature_tasks": {
+      "accepted": true,
+      "probability": 0.5
+    },
+    "postprocess": {
+      "accepted": false,
+      "error": "ValueError",
+      "message": "Finite complete temperature members required"
+    }
+  },
+  {
+    "id": "MEMBER_LINEAGE",
+    "before": 0.5,
+    "after_semantically_equivalent_reordering": 0.0,
+    "same_physical_member_paths_expected": 0.5,
+    "scope": "extra identity metadata is not consumed by these numerical helpers; actual source misalignment NOT established"
+  },
+  {
+    "id": "ENDPOINT_INFORMATION_LOSS",
+    "open_E": "supported",
+    "closed_E": "undetermined",
+    "features_identical": true,
+    "scope": "explicit hypothetical claims with candidate=None; not evidence of a captured METAR at this endpoint; no production session run"
+  }
+]

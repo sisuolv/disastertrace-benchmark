@@ -1,3 +1,9 @@
+# Latest: v12 plan awaiting review
+
+Start with [the integrated plan and next batch](LATEST_PLAN_V12_CN.md) or [ChatGPT Pro review instructions](publication/v12_planning_20260915/REVIEW_FOR_CHATGPT_PRO_CN.md). This update publishes planning materials; no new benchmark execution is authorized or launched. Earlier entries below are historical snapshots.
+
+---
+
 # Latest: v11 code and in-progress experiments
 
 Start with [the current Chinese progress report](LATEST_PROGRESS_V11_CN.md) and [ChatGPT Pro review instructions](publication/v11_inprogress_20260915/REVIEW_FOR_CHATGPT_PRO_CN.md). This is a timestamped snapshot: full-calendar execution and annual data acquisition continue. Earlier entries below describe historical releases.

@@ -1,0 +1,1 @@
+Run `python3 -B run_local_checks.py` from this directory or via its full path. Standard-library only. All fixtures synthetic; repeated run does not create new independent evidence. Expected acceptance of malformed calibration is a reproduced validator gap, not a passing production requirement.

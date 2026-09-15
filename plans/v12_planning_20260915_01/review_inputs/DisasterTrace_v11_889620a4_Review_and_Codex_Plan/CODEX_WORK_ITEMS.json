@@ -1,0 +1,445 @@
+{
+  "schema": "reviewer.codex_continuation.v1",
+  "reviewed_commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "snapshot_at": "2026-09-15T12:06:47.602706+00:00",
+  "proposal_not_execution": true,
+  "constraints": {
+    "preserve_C1_C2_C3": true,
+    "preserve_E_F_D_MM": true,
+    "hazard_families": 16,
+    "no_new_per_question_gold": true,
+    "no_llm_judge_gold": true,
+    "no_automatic_spending_authorization": true,
+    "do_not_open_confirmation": "Bay 2025-02-17 through 2025-02-23",
+    "preserve_worktree_and_historical_failures": true
+  },
+  "items": [
+    {
+      "id": "V11-00",
+      "title": "对账进行中范围并建立唯一续行起点",
+      "maps_to_existing": [
+        "W00"
+      ],
+      "priority": 0,
+      "dependencies": [],
+      "input_paths": [
+        "publication/v11_inprogress_20260915/PROGRESS_SNAPSHOT.json",
+        "plans/v11_execution_20260915_01/README_CN.md"
+      ],
+      "actions": [
+        "读取真实工作区HEAD、status、暂存和未提交修改；隔离发布SHA不要求与工作区HEAD相同。",
+        "查现有作业、claim、分片终态与审计输出；以实际最新回执更新状态，不按此快照推定仍在运行或已结束。",
+        "保留原目录和来源/模型失败；不重开fullweek_02或annual_catalog_01总启动器。"
+      ],
+      "acceptance": [
+        "计划、提交、运行、完成、可重放、正式计分、独立确认分别列出；无重叠工作量计数。",
+        "可接续的原逻辑任务、新增授权任务和状态未知项有单独列表。"
+      ],
+      "outputs": [
+        "STATUS_DELTA.json",
+        "WORKTREE_PRESERVATION.json",
+        "CONTINUATION_ROSTER.json"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-01",
+      "title": "统一原生事件准入并补校准银行边界",
+      "maps_to_existing": [
+        "W01"
+      ],
+      "priority": 1,
+      "dependencies": [
+        "V11-00"
+      ],
+      "input_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_contract.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/native_feature.py"
+      ],
+      "actions": [
+        "复现R01和R02，先建立RED测试；把raw事件资格与完整EMOS/ECC资格分层。",
+        "统一温度合法性规则，保留两个独立成员概率计算；不要放宽ECC所需的min/max完整产品约束。",
+        "校准value显式限定[0,1]并独立验证单调性；检查真实银行及调用方。",
+        "按unchanged/affected/unavailable_to_review扫描已有实际输入；不重生成模型回答。"
+      ],
+      "acceptance": [
+        "午夜、重复日期、NaN/巨大整数/布尔、所需成员缺失等仍被拒绝。",
+        "只需max的raw任务不会因无关min被静默排除，或通过显式版本说明完整产品限制；分母差异有记录。",
+        "合法旧概率不变；无影响结论仅限实际扫描范围。"
+      ],
+      "outputs": [
+        "CONTRACT_DELTA.md",
+        "RED_GREEN_RESULTS.json",
+        "INPUT_IMPACT_REPORT.json"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-02",
+      "title": "正式来源与评分优化的回归和迁移",
+      "maps_to_existing": [
+        "W02",
+        "W04",
+        "W05"
+      ],
+      "priority": 1,
+      "dependencies": [
+        "V11-00"
+      ],
+      "input_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py"
+      ],
+      "actions": [
+        "复验v2原目录、data/bank、journal/report/STOP、provider政策绑定与失败臂处理。",
+        "验证同次调用只重放一次/方法；非法历次干预、共同基线变化、少机会、结果冲突继续失败。",
+        "使用新源码做一个小型当前源capsule迁移；旧v10 capsule仍以原源码复现，不强行篡改哈希。",
+        "继续剖析每机会重复建registry和每step哈希；仅在证明瓶颈后优化，保留内容身份。"
+      ],
+      "acceptance": [
+        "科学字段等价与兼容旧格式字节等价分开报告。",
+        "没有按路径/mtime或外部任意engine跳过验证的新入口。",
+        "单案例2.26倍不是普遍性能承诺；计时说明缓存与profile开销。"
+      ],
+      "outputs": [
+        "FORMAL_NEGATIVE_TESTS.json",
+        "REPLAY_EQUIVALENCE.json",
+        "CURRENT_SOURCE_CAPSULE_SCOPE.md"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-03",
+      "title": "收尾已启动840轨迹，先取得完整日历结论",
+      "maps_to_existing": [
+        "W07"
+      ],
+      "priority": 0,
+      "dependencies": [
+        "V11-00"
+      ],
+      "input_paths": [
+        "plans/v11_execution_20260915_01/fullweek.py",
+        "plans/v11_execution_20260915_01/fullweek_02"
+      ],
+      "actions": [
+        "复用已有有效轨迹与真实运行身份，只接续确有剩余的原任务；失败保留、hash异常停止受影响路径。",
+        "检查168日条件×5方法、12096方法无关机会、60480方法行；这是期望量，最终由ID逐条核对。",
+        "四个values条件与F_COMMON不同银行分别绑定；共同产品/结果/预测日程对齐。",
+        "生成全日历、地区/全局周/逐日、事件与非事件损失贡献、最差块、缺失界、费用和时延。"
+      ],
+      "acceptance": [
+        "注册ID全集存在；未完成或失败不能删除后称完整比较。",
+        "每天48查询不结转、缓存/override等日界重置与base_bound协议公开；不是连续周会话。",
+        "1km/5km正例是实际本批分母，不引用其他全集替代。",
+        "缺失敏感性界与抽样不确定性分开，四个全局周不按小时bootstrap成独立大样本。"
+      ],
+      "outputs": [
+        "FULLWEEK_CLOSURE.json",
+        "FULLWEEK_STRATIFIED_REPORT_CN.md",
+        "COMPLETE_METHOD_ROSTER.json"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-04",
+      "title": "只补年度目录缺片，完成三个原生月预检",
+      "maps_to_existing": [
+        "W06"
+      ],
+      "priority": 1,
+      "dependencies": [
+        "V11-00"
+      ],
+      "input_paths": [
+        "plans/v11_execution_20260915_01/annual_catalogs.py",
+        "plans/v11_execution_20260915_01/annual_native_sample.py"
+      ],
+      "actions": [
+        "核验Chicago2023-01的五个已成功分片和KORD失败回执；原一次精确重试已消耗，任何新增请求要另登记上限。",
+        "在原获取之外新建仅针对缺片的续行清单，保留429与传输超时，不重下432项。",
+        "先查看2470份TAF任务是否已有新完成记录；补真正缺少的原文，完成三地区闰月连接。",
+        "对原文HTTP字节、产品ID、解析/不支持语法、4176机会每区预期值、缺失/QC分别验收。"
+      ],
+      "acceptance": [
+        "目录、原文、解码、任务连接、角色资格和拟合六个状态分开。",
+        "有界重试、单提供方统一退避，月样例完成不宣称两年全年已完成。"
+      ],
+      "outputs": [
+        "CATALOG_CONTINUATION_PLAN.json",
+        "NATIVE_MONTH_QUALIFICATION.json",
+        "ORIGINAL_FAILURE_INDEX.json"
+      ],
+      "resource_policy": "Read existing receipts first. Extra network attempts only under newly bounded/current authorization.",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-05",
+      "title": "锁定全年原文与独立拟合/校准角色",
+      "maps_to_existing": [
+        "W06",
+        "W08",
+        "W09"
+      ],
+      "priority": 1,
+      "dependencies": [
+        "V11-04"
+      ],
+      "input_paths": [
+        "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md"
+      ],
+      "actions": [
+        "根据真实已枚举产品去重，保留每份TAF被各站/月/目标引用的关系；字节重复不抹掉来源事件。",
+        "2023做拟合与内部时间块选择；2024只做最终校准，需策略训练则使用2023折外输出或另划角色。",
+        "按全部TAF有效窗、观测回看、派生父、会话状态和结果窗口清除跨角色足迹；capture padding不自动有资格。",
+        "标准化、缺值、特征选择在训练折内；不按模型表现筛日期、不用未来值填输入。"
+      ],
+      "acceptance": [
+        "新请求数量/字节/停止规则在原文扩展前冻结；缺片保留。",
+        "数据事实依赖与天气过程组分层，机械相关块不叫已证明独立气象系统。",
+        "同一任务多阈值/子集/提前量不无意增大权重。"
+      ],
+      "outputs": [
+        "ANNUAL_NATIVE_MANIFEST.json",
+        "ROLE_FOOTPRINT_AUDIT.json",
+        "FIT_CALIBRATION_REGISTRATION.json"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-06",
+      "title": "全年强后端及信息损失审计",
+      "maps_to_existing": [
+        "W08"
+      ],
+      "priority": 1,
+      "dependencies": [
+        "V11-01",
+        "V11-05"
+      ],
+      "input_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/native_feature.py"
+      ],
+      "actions": [
+        "保留冬季银行及去year项开发消融，新建common/mask-age/values后端。",
+        "训练内选择周期项/正则/标准化；验证部署的未读/缺报/旧记录掩码覆盖，不谎称旧训练从未包含子集。",
+        "解释每次预测的公共项、掩码/时效、值、原始概率、校准与回退。",
+        "对真实合法边界与模型提取检查端点开闭碰撞；有必要才新版本加入closure并重新拟合。",
+        "common锚定残差仅作为至多一个非阻塞程序候选，使用训练内折外信息，不建立无界方法搜索。"
+      ],
+      "acceptance": [
+        "不要求后端必须胜出才能通过代码准入；科学主张随分层结果调整。",
+        "原始和校准结果、阈值CDF一致性与同信息身份分别保存。",
+        "无TAF/稀疏单元/未读/真实缺报分层；后端差异不能算纯补证价值。"
+      ],
+      "outputs": [
+        "BACKEND_BANKS_VNEXT.json",
+        "FEATURE_PROBABILITY_LINEAGE.json",
+        "SEASONAL_BACKEND_REPORT_CN.md"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-07",
+      "title": "冻结新后端的预算因素与强策略对照",
+      "maps_to_existing": [
+        "W10"
+      ],
+      "priority": 2,
+      "dependencies": [
+        "V11-03",
+        "V11-06"
+      ],
+      "input_paths": [
+        "plans/v11_execution_20260915_01/fullweek.py"
+      ],
+      "actions": [
+        "先固定coverage selector和预测器做分额/全局×私有/共享四格。",
+        "再固定B11比较batch/risk/coverage/round-robin以及明确的无模型基线；已同分不自动认为策略等价。",
+        "逐日reset主轨和真连续周轨分开，后者明确每日信用释放、余额、缓存/状态。",
+        "base_bound主轨与persistent修订对照分开，保留FOLLOW、COPY_CURRENT、COPY_BASELINE。"
+      ],
+      "acceptance": [
+        "同一后端、同公共预报、同机会和结果掩膜；公开来源预算与总计算差异。",
+        "动作、版本、授权、输入与状态等价有证据才允许复用结果，不能按分数近似省掉策略。",
+        "完整背景保留；严重事件块改坏不能被大量正常时段小幅改善掩盖。"
+      ],
+      "outputs": [
+        "MECHANISM_COMPARISON_FREEZE.json",
+        "PAIRED_ACTION_AND_SCORE_AUDIT.json",
+        "BUDGET_CURVES.md"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-08",
+      "title": "执行与目标相关的同状态C2分支",
+      "maps_to_existing": [
+        "W11"
+      ],
+      "priority": 2,
+      "dependencies": [
+        "V11-03"
+      ],
+      "input_paths": [
+        "plans/v11_execution_20260915_01/c2_design_01/DESIGN.json"
+      ],
+      "actions": [
+        "已有72prefix/144TAF任务保持登记；全full覆盖为零成本一致性/负控制，不重命名为有区分度C2成绩。",
+        "固定完整日历普查覆盖、版本、缺报、删失、冲突；普通和无效背景保留，合成扰动另轨。",
+        "分支敏感主事实对应真正查询的邻站槽、时空支持与字段；记录字段→特征→概率→采用→损失。",
+        "有pending先按当前设计完成同一个原请求并计时计费，形成一个共同fork点，再克隆四分支；无法及时完成不回退时钟。",
+        "共享session的全部目标和费用共同评价，不给每个单目标prefix重置预算；同一24父session的72前缀有相关性。",
+        "同一终点评价，记录等待导致的公共预报变化；必要的统一公共到达/日程对照与真实等待结果分表。"
+      ],
+      "acceptance": [
+        "clock/spent/reserved/auth/cache/pending/base/override/source版本的fork哈希一致。",
+        "无论是否盈利，可行/不可行/未归档/超时/失败全部保留。",
+        "最小E证书和事后最佳有限分支不成为在线策略输入，也不叫未来预测最优上界。"
+      ],
+      "outputs": [
+        "C2_BRANCH_ROSTER.json",
+        "COMMON_PREFIX_EQUALITY.json",
+        "FIELD_TO_LOSS_TRACE.json",
+        "C2_IDENTIFIABILITY_REPORT_CN.md"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [
+        "Engineering sanity may use already frozen development bank in parallel; main new-backend C2 comparisons require V11-06/V11-07."
+      ],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-09",
+      "title": "一次有限、真正回答新问题的模型实验",
+      "maps_to_existing": [
+        "W12"
+      ],
+      "priority": 3,
+      "dependencies": [
+        "V11-07",
+        "V11-08"
+      ],
+      "input_paths": [
+        "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md"
+      ],
+      "actions": [
+        "首轮只让已验证235B担任selector；模型/版本/量化/提示/输入清单/时钟/费用新冻结。",
+        "沿当前计划建议上限12开发会话×24次选择=288正式请求、最多2次兼容，但以新授权和真实决策ID为准。",
+        "固定后端比selector；提取另批固定输入，不同时更改所有因素。",
+        "模型能使用的程序解析对各方法同样开放；校验完整专业TAF与隐藏结果隔离。",
+        "保留不修改概率、失败与回退；不要要求必须修改或必须胜出。"
+      ],
+      "acceptance": [
+        "CPU比较与任务有效性先通过；真实API不可用只阻塞API臂。",
+        "48来源查询不称同总成本；调用/token/批次/排队/完成/错过槽位全计。",
+        "固定查询计划的情景时延回放与真实模型闭环分开，不复用旧回答到改变后的合法信息流。"
+      ],
+      "outputs": [
+        "MODEL_PILOT_REGISTRATION.json",
+        "RAW_CAPTURE_INDEX.json",
+        "SELECTOR_COMPONENT_REPORT_CN.md"
+      ],
+      "resource_policy": "No launch authorization from this document. Explicit current provider/GPU/time/call budget required; preserve previous closed trials.",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-10",
+      "title": "第二主链与多模态保持有界推进",
+      "maps_to_existing": [
+        "C3",
+        "H10/H11",
+        "H07/H08",
+        "MM",
+        "X09",
+        "D",
+        "online"
+      ],
+      "priority": 2,
+      "dependencies": [
+        "V11-01"
+      ],
+      "input_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "plans/v11_planning_20260915_01/OVERALL_PLAN_CN.md"
+      ],
+      "actions": [
+        "温度已有程序/EMOS/ECC/模型试点不重做；补member lineage与ECC修复影响，连续多过程F-only资格先行。",
+        "DWD最终档案无历史发布证据时仍仅作结果或明确情景，不固定补一个时延就声称严格as-of收费证据。",
+        "H07累计端点与H08QINE/成员/断面各做小型独立资格；任何一路失败不阻塞主线。",
+        "沿总体计划并行24个预定元数据目标的MM配对上限；图像时间/覆盖/许可/processor通过后才另行冻结VLM smoke。",
+        "X09仍是同信息单/联合目标推理；D偏好与F输入隔离；online first-seen与预先提交分别验收。"
+      ],
+      "acceptance": [
+        "阵列长度不替代成员身份；共同免费集合内容不拆成付费查询。",
+        "原生/派生工具/特权标签分轨，不以无效图像或私有mask填补MM。",
+        "16灾种范围保留，A0-A5与E/F/D/MM逐项资格不批量涂绿。"
+      ],
+      "outputs": [
+        "SECOND_CHAIN_SCOPE.md",
+        "MEMBER_LINEAGE.json",
+        "PHYSICAL_AND_MM_ADMISSION.json"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    },
+    {
+      "id": "V11-11",
+      "title": "冻结确认设计与分级复现交付",
+      "maps_to_existing": [
+        "W09",
+        "W13"
+      ],
+      "priority": 3,
+      "dependencies": [
+        "V11-02",
+        "V11-07",
+        "V11-09"
+      ],
+      "input_paths": [
+        "plans/v11_execution_20260915_01/c2_design_01/DESIGN.json"
+      ],
+      "actions": [
+        "确认设计草案可提前，实际冻结在方法、银行与源合同固定后。Bay2025-02-17..23继续封闭。",
+        "按真实依赖/过程或保守时空块确定样本量与精度，不以100正例或四周就宣布足够。",
+        "自然日历proper score为主，事件/非事件条件损失作诊断，1km与5km主次/多重比较规则提前声明。",
+        "无足够独立过程或正例时报告探索性，不重复选阳性直到显著。",
+        "新当前源码capsule提供可搬迁索引及重建范围，旧capsule与旧结论不改写。"
+      ],
+      "acceptance": [
+        "确认不用于调参、改提示、选阈值或追加有利样本。",
+        "模型预训练可能见过历史公开资料仍披露；小型前瞻不宣称完全无污染。",
+        "数据、模型、API失败、未尝试、结果缺失与科学负结果分别保留；支持到哪个资格就发布哪个资格。"
+      ],
+      "outputs": [
+        "CONFIRMATION_LOCK.json",
+        "CLAIM_EVIDENCE_MATRIX.md",
+        "REPRODUCTION_SCOPE.md",
+        "RELEASE_MANIFEST.json"
+      ],
+      "resource_policy": "CPU/read-only first; new external spending requires current explicit authorization",
+      "conditional_dependencies": [],
+      "status": "proposed continuation, not executed by this review"
+    }
+  ]
+}

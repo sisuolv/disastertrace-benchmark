@@ -1,0 +1,111 @@
+{
+  "commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "execution_mode": "isolated_complete_hash_bound_modules",
+  "synthetic_only": true,
+  "temperature": {
+    "complete": {
+      "feature_tasks": {
+        "accepted": true,
+        "probability": 0.5
+      },
+      "postprocess": {
+        "accepted": true,
+        "probability": 0.5
+      }
+    },
+    "max_only": {
+      "feature_tasks": {
+        "accepted": true,
+        "probability": 0.5
+      },
+      "postprocess": {
+        "accepted": false,
+        "exception": "KeyError",
+        "message": "'forecast_min_members_C'"
+      }
+    },
+    "unconsumed_min_missing": {
+      "feature_tasks": {
+        "accepted": true,
+        "probability": 0.5
+      },
+      "postprocess": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Finite complete temperature members required"
+      }
+    },
+    "shifted_day": {
+      "feature_tasks": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Absolute future UTC days in Celsius are required"
+      },
+      "postprocess": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Absolute future UTC days in Celsius are required"
+      }
+    },
+    "duplicate_day": {
+      "feature_tasks": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Unique daily products are required"
+      },
+      "postprocess": {
+        "accepted": false,
+        "exception": "ValueError",
+        "message": "Unique daily products are required"
+      }
+    },
+    "wrong_day_index": {
+      "feature_tasks": {
+        "accepted": true,
+        "probability": 0.5
+      },
+      "postprocess": {
+        "accepted": true,
+        "probability": 0.5
+      }
+    }
+  },
+  "annual_sample_failure": {
+    "actual_calls": 3,
+    "actual_unique_units": 3,
+    "actual_success_units": 2,
+    "summary_rows": 6,
+    "summary_completed_units": 4,
+    "not_attempted": 69,
+    "passed": false,
+    "exit_code": 1,
+    "results": [
+      {
+        "unit": "u00",
+        "complete": true
+      },
+      {
+        "unit": "u01",
+        "complete": false
+      },
+      {
+        "unit": "u02",
+        "complete": true
+      },
+      {
+        "unit": "u00",
+        "complete": true
+      },
+      {
+        "unit": "u01",
+        "complete": false
+      },
+      {
+        "unit": "u02",
+        "complete": true
+      }
+    ],
+    "network_used": false,
+    "current_published_sample_gate": "reported passed; this failed branch was not established on current run"
+  }
+}

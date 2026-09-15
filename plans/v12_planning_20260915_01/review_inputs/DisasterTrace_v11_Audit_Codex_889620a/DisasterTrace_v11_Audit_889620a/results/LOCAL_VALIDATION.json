@@ -1,0 +1,288 @@
+{
+  "commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "tests_run": 32,
+  "passed": 29,
+  "failures": 3,
+  "errors": 0,
+  "observations": {
+    "annual_sample_failure": {
+      "summary": {
+        "passed": false,
+        "expected_units": 72,
+        "completed_units": 4,
+        "results": [
+          {
+            "unit": "m00",
+            "complete": false
+          },
+          {
+            "unit": "m01",
+            "complete": true
+          },
+          {
+            "unit": "m02",
+            "complete": true
+          },
+          {
+            "unit": "m00",
+            "complete": false
+          },
+          {
+            "unit": "m01",
+            "complete": true
+          },
+          {
+            "unit": "m02",
+            "complete": true
+          }
+        ],
+        "not_attempted": [
+          "m03",
+          "m04",
+          "m05",
+          "m06",
+          "m07",
+          "m08",
+          "m09",
+          "m10",
+          "m11",
+          "m12",
+          "m13",
+          "m14",
+          "m15",
+          "m16",
+          "m17",
+          "m18",
+          "m19",
+          "m20",
+          "m21",
+          "m22",
+          "m23",
+          "m24",
+          "m25",
+          "m26",
+          "m27",
+          "m28",
+          "m29",
+          "m30",
+          "m31",
+          "m32",
+          "m33",
+          "m34",
+          "m35",
+          "m36",
+          "m37",
+          "m38",
+          "m39",
+          "m40",
+          "m41",
+          "m42",
+          "m43",
+          "m44",
+          "m45",
+          "m46",
+          "m47",
+          "m48",
+          "m49",
+          "m50",
+          "m51",
+          "m52",
+          "m53",
+          "m54",
+          "m55",
+          "m56",
+          "m57",
+          "m58",
+          "m59",
+          "m60",
+          "m61",
+          "m62",
+          "m63",
+          "m64",
+          "m65",
+          "m66",
+          "m67",
+          "m68",
+          "m69",
+          "m70",
+          "m71"
+        ],
+        "full_native_download_complete": false,
+        "annual_fit_complete": false,
+        "confirmation_opened": false,
+        "model_calls": 0
+      },
+      "calls": [
+        "m00",
+        "m01",
+        "m02"
+      ],
+      "exit": 1
+    },
+    "E_status_count": {
+      "actual_states": [
+        "supported",
+        "refuted",
+        "undetermined",
+        "inconsistent"
+      ],
+      "observed": {
+        "registered": 4,
+        "settled": 4,
+        "positive": 2,
+        "missing": 0,
+        "brier": 0.25,
+        "e_determined": 1
+      },
+      "expected_determined": 2
+    },
+    "max_only_raw_probability": {
+      "feature_tasks": {
+        "accepted": true,
+        "probability": 0.75
+      },
+      "temperature_postprocess": {
+        "accepted": false,
+        "exception": "KeyError",
+        "message": "'forecast_min_members_C'"
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "__main__.ExistingEvidenceAndAudit.test_all_negative",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ExistingEvidenceAndAudit.test_annual_all_samples_pass",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ExistingEvidenceAndAudit.test_annual_later_failure_is_not_duplicate",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ExistingEvidenceAndAudit.test_conflict",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ExistingEvidenceAndAudit.test_failed_arm_not_declared_complete",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ExistingEvidenceAndAudit.test_fullweek_brier_control_unchanged",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ExistingEvidenceAndAudit.test_negative_with_unread_not_refuted",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ExistingEvidenceAndAudit.test_true_witness_with_unknown",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.NewRegressionSpecifications.test_failed_sample_roster_is_unique",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/mnt/data/dt_v11_audit_889620a/tests/test_review.py\", line 206, in test_failed_sample_roster_is_unique\n    self.assertEqual(len(o['summary']['results']),len(set(r['unit'] for r in o['summary']['results'])),\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                     'sample+sample duplicates three receipts when the sample gate fails')\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 6 != 3 : sample+sample duplicates three receipts when the sample gate fails\n"
+    },
+    {
+      "id": "__main__.NewRegressionSpecifications.test_fullweek_positive_support_is_counted",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/mnt/data/dt_v11_audit_889620a/tests/test_review.py\", line 203, in test_fullweek_positive_support_is_counted\n    self.assertEqual(observed['e_determined'],2,'supported is omitted by entailed/refuted test')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 1 != 2 : supported is omitted by entailed/refuted test\n"
+    },
+    {
+      "id": "__main__.NewRegressionSpecifications.test_raw_max_only_probability_entrypoints_agree",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/mnt/data/dt_v11_audit_889620a/tests/test_review.py\", line 212, in test_raw_max_only_probability_entrypoints_agree\n    self.assertEqual(a,b,'raw max event should not inconsistently depend on unused minimum field')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'accepted': True, 'probability': 0.75} != {'accepted': False, 'exception': 'KeyError', 'message'[24 chars]_C'\"}\n- {'accepted': True, 'probability': 0.75}\n+ {'accepted': False,\n+  'exception': 'KeyError',\n+  'message': \"'forecast_min_members_C'\"} : raw max event should not inconsistently depend on unused minimum field\n"
+    },
+    {
+      "id": "__main__.StrictResponses.test_duplicate_response_key_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.StrictResponses.test_huge_probability_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.StrictResponses.test_nan_probability_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.StrictResponses.test_valid_probability_fence",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_bool_member_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_bool_threshold_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_cutoff_equal_start_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_daily_max_match",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_daily_min_match",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_day0_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_duplicate_day_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_ecc_full_product_still_requires_min",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_empty_required_array_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_huge_threshold_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_infinite_member_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_nan_threshold_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_nonmidnight_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_required_dimension_mismatch_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_same_common_member_permutation_invariance",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_three_day_ice_match",
+      "status": "passed"
+    },
+    {
+      "id": "__main__.ValidTemperature.test_three_day_member_path",
+      "status": "passed"
+    }
+  ],
+  "scope": "CPU-only: complete verified modules, exact AST functions, two source function excerpts with mocked IO/executors. No FormalSession/native-weather replay, network, model, or complete 750-test run.",
+  "repo_modified": false,
+  "upstream_reported_tests_not_rerun": 750,
+  "fixtures_are_synthetic_not_scientific_results": true
+}

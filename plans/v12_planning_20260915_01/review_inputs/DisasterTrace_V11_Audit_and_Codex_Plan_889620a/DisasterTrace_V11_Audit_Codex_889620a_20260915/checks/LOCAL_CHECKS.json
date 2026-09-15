@@ -1,0 +1,318 @@
+{
+  "commit": "889620a4fc4ee6ad70757dd3e832a40c7509126a",
+  "source_hashes_verified": 4,
+  "checks": 21,
+  "verified_expectations": 21,
+  "not_full_repository_audit": true,
+  "no_real_data_or_model_calls": true,
+  "results": [
+    {
+      "id": "T01_valid_daily_agreement",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        0.5,
+        0.5
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T02_finite_numeric_guard",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T03_non_midnight",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T04_duplicate_date",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Unique daily products are required"
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Unique daily products are required"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T05_nan_threshold",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T06_boolean_threshold",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T07_huge_threshold",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T08_cutoff_at_target",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T09_empty_members",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Finite complete temperature members required"
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Finite complete temperature members required"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T10_day_zero",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Day0 is excluded from fixed future extrema"
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Day0 is excluded from fixed future extrema"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T11_same_member_three_day",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        0.0,
+        0.0
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T12_member_dimensions",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": [
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Same member dimensions must survive the entire product"
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Same member dimensions must survive the entire product"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T13_max_only_scope_difference",
+      "scope": "synthetic_local",
+      "classification": "reproduced_contract_boundary",
+      "observed": [
+        {
+          "status": "accepted",
+          "value": 0.5
+        },
+        {
+          "status": "rejected",
+          "error_type": "KeyError",
+          "message": "'forecast_min_members_C'"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T14_irrelevant_minimum_scope_difference",
+      "scope": "synthetic_local",
+      "classification": "reproduced_contract_boundary",
+      "observed": [
+        {
+          "status": "accepted",
+          "value": 0.5
+        },
+        {
+          "status": "rejected",
+          "error_type": "ValueError",
+          "message": "Finite complete temperature members required"
+        }
+      ],
+      "expectation_verified": true
+    },
+    {
+      "id": "T15_ecc_immutable_and_ordered",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": {
+        "minmax_projections": 6,
+        "member_day_pairs": 6,
+        "tie_rule": "stable original member index",
+        "joint_calibration_guarantee": false
+      },
+      "expectation_verified": true
+    },
+    {
+      "id": "B01_valid_common_bank",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": {
+        "status": "accepted",
+        "value": null
+      },
+      "expectation_verified": true
+    },
+    {
+      "id": "B02_common_rejects_paid_feature",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": {
+        "status": "rejected",
+        "error_type": "ValueError",
+        "message": "A common information bank cannot consume paid slot features"
+      },
+      "expectation_verified": true
+    },
+    {
+      "id": "B03_negative_probability_map_accepted",
+      "scope": "synthetic_local",
+      "classification": "reproduced_validation_gap",
+      "observed": {
+        "status": "accepted",
+        "value": null
+      },
+      "expectation_verified": true
+    },
+    {
+      "id": "B04_reversed_domain_blocks_accepted",
+      "scope": "synthetic_local",
+      "classification": "reproduced_validation_gap",
+      "observed": {
+        "status": "accepted",
+        "value": null
+      },
+      "expectation_verified": true
+    },
+    {
+      "id": "B05_nonmonotone_values_rejected",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": {
+        "status": "rejected",
+        "error_type": "ValueError",
+        "message": "Invalid monotone feature calibration"
+      },
+      "expectation_verified": true
+    },
+    {
+      "id": "B06_greater_than_one_rejected",
+      "scope": "synthetic_local",
+      "classification": "regression",
+      "observed": {
+        "status": "rejected",
+        "error_type": "ValueError",
+        "message": "Invalid monotone feature calibration"
+      },
+      "expectation_verified": true
+    }
+  ]
+}

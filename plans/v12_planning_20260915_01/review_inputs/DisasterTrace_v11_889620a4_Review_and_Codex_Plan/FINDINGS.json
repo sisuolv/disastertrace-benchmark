@@ -1,0 +1,75 @@
+[
+  {
+    "id": "R01",
+    "priority": "P1 before new raw temperature qualification",
+    "status": "reproduced scoped contract mismatch",
+    "source": [
+      "S06",
+      "S07",
+      "S08"
+    ],
+    "location": "temperature_postprocess.py:29-33; validate_products:10-26; feature_tasks.py:43-64",
+    "trigger": "A daily-max event has complete max members but min members are absent or NaN.",
+    "observation": "The raw helper returns 0.5; the postprocess probability helper rejects due to unrelated min requirements.",
+    "consequence": "Potentially inconsistent eligibility/denominator across raw event evaluation and complete-product postprocessing. No affected archived target established.",
+    "minimal_fix": "Separate requested-event validation from full-product EMOS/ECC eligibility; keep independent probability computations and ECC protection.",
+    "evidence": "BOUNDARY_PROBES.json: TEMP_MAX_ONLY, TEMP_UNUSED_MIN_NAN"
+  },
+  {
+    "id": "R02",
+    "priority": "P2 before new calibrated-bank admission",
+    "status": "reproduced input-validator defect",
+    "source": [
+      "S10"
+    ],
+    "location": "native_feature.py:53-69",
+    "trigger": "First monotone calibration block has value=-0.1 and valid x interval.",
+    "observation": "validate_feature_bank(calibrated=True) accepts because previous starts at -1 and no 0<=value guard is present.",
+    "consequence": "Malformed bank fails too late; downstream probability guards can still reject it. No negative probability accepted in actual formal score is established.",
+    "minimal_fix": "Explicit finite/type/range 0<=value<=1 check independently of monotonicity; use existing input guards for extreme integers.",
+    "evidence": "BANK_GUARD_PROBE.json"
+  },
+  {
+    "id": "R03",
+    "priority": "P1 for expanded multi-member source adapters",
+    "status": "known gap independently illustrated; not proof of real misalignment",
+    "source": [
+      "S06",
+      "S07"
+    ],
+    "location": "temperature_contract.py:event_values member dimension check",
+    "trigger": "A source supplies reordered member arrays with corresponding member IDs.",
+    "observation": "Numerical helper uses positions, so same semantic member paths can change probability 0.5 to 0.0 if upstream canonicalization is missing.",
+    "consequence": "Equal dimensions alone cannot establish joint temporal member identity.",
+    "minimal_fix": "Provider-level frozen member-axis lineage, initialization and date-support bindings; canonicalize using verified identities or reject unknown mappings.",
+    "evidence": "BOUNDARY_PROBES.json: MEMBER_LINEAGE"
+  },
+  {
+    "id": "R04",
+    "priority": "P1 for interpreting E-to-F interventions",
+    "status": "known lossy representation independently reproduced",
+    "source": [
+      "S09",
+      "S04"
+    ],
+    "location": "native_feature_forecast.py:156-172",
+    "trigger": "Hypothetical supports [0,1000) and [0,1000] differ only in upper closure.",
+    "observation": "E is supported vs undetermined for <1000; F feature vectors are identical.",
+    "consequence": "A repair to that support flag cannot change this fixed predictor through its numerical input. Does not imply both futures require different probabilities.",
+    "minimal_fix": "Audit real collisions and model-claim errors first; add closure/censoring feature in a new version only if justified; refit in legal roles.",
+    "evidence": "BOUNDARY_PROBES.json: ENDPOINT_INFORMATION_LOSS"
+  },
+  {
+    "id": "R05",
+    "priority": "P1 before C2 acquisition-value claims",
+    "status": "design distinction requiring implementation; no executed-branch failure asserted",
+    "source": [
+      "S05",
+      "S16"
+    ],
+    "trigger": "TAF version/coverage E tasks are used as primary outcomes for branches that only fetch neighboring METAR.",
+    "observation": "The public TAF is common/free; neighbor queries do not directly change its coverage/selected version at the same comparison time. All 72 current coverage cases are full.",
+    "consequence": "144 resolved construction tasks are not evidence of branch discrimination or paid information value.",
+    "minimal_fix": "Keep these as zero-cost native-source sanity controls; add branch-sensitive neighbor/coverage facts and field-feature-probability-adoption-loss tracing."
+  }
+]

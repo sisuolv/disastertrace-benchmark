@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="58" time="0.177" timestamp="2026-09-15T12:20:42.743059+00:00" hostname="localhost"><testcase classname="test_inherited_controls" name="test_daily_calculators_agree[daily_max_2m_temperature-ge-30-0.5]" time="0.034" /><testcase classname="test_inherited_controls" name="test_daily_calculators_agree[daily_max_2m_temperature-lt-30-0.5]" time="0.000" /><testcase classname="test_inherited_controls" name="test_daily_calculators_agree[daily_min_2m_temperature-lt-0-0.5]" time="0.000" /><testcase classname="test_inherited_controls" name="test_daily_calculators_agree[daily_min_2m_temperature-ge-0-0.5]" time="0.000" /><testcase classname="test_inherited_controls" name="test_same_member_three_day_not_product_of_marginals" time="0.000" /><testcase classname="test_inherited_controls" name="test_member_path_permutation_matters_only_when_not_common" time="0.000" /><testcase classname="test_inherited_controls" name="test_three_day_ice_max_along_member" time="0.001" /><testcase classname="test_inherited_controls" name="test_both_calculators_reject_common_invalid_products[day0]" time="0.000" /><testcase classname="test_inherited_controls" name="test_both_calculators_reject_common_invalid_products[different_member_count]" time="0.000" /><testcase classname="test_inherited_controls" name="test_both_calculators_reject_common_invalid_products[nonfinite_member]" time="0.000" /><testcase classname="test_inherited_controls" name="test_both_calculators_reject_common_invalid_products[empty_members]" time="0.000" /><testcase classname="test_inherited_controls" name="test_both_calculators_reject_nonfuture_cutoff" time="0.000" /><testcase classname="test_inherited_controls" name="test_temperature_input_contracts_should_reject_same_bad_row[shifted_utc_day]" time="0.000" /><testcase classname="test_inherited_controls" name="test_temperature_input_contracts_should_reject_same_bad_row[duplicate_target_date]" time="0.000" /><testcase classname="test_inherited_controls" name="test_temperature_response_strict_type[True]" time="0.000" /><testcase classname="test_inherited_controls" name="test_temperature_response_strict_type[0.5]" time="0.000" /><testcase classname="test_inherited_controls" name="test_temperature_response_strict_type[-0.1]" time="0.000" /><testcase classname="test_inherited_controls" name="test_temperature_response_strict_type[1.1]" time="0.000" /><testcase classname="test_inherited_controls" name="test_temperature_response_duplicate_key_rejected" time="0.000" /><testcase classname="test_inherited_controls" name="test_temperature_single_fence_and_no_prose" time="0.000" /><testcase classname="test_inherited_controls" name="test_feature_parser_valid_native_intervals[0-402.336-True-False]" time="0.000" /><testcase classname="test_inherited_controls" name="test_feature_parser_valid_native_intervals[9656.064-+inf-False-False]" time="0.000" /><testcase classname="test_inherited_controls" name="test_feature_parser_valid_native_intervals[16093.44-16093.44-True-True]" time="0.000" /><testcase classname="test_inherited_controls" name="test_feature_parser_rejects_unread_slot" time="0.000" /><testcase classname="test_inherited_controls" name="test_feature_parser_rejects_empty_finite_interval" time="0.000" /><testcase classname="test_inherited_controls" name="test_feature_parser_should_reject_infinite_lower_endpoint" time="0.000" /><testcase classname="test_inherited_controls" name="test_open_closed_feature_collision_is_documented_diagnostic" time="0.000" /><testcase classname="test_inherited_controls" name="test_mask_age_does_not_encode_numeric_values" time="0.000" /><testcase classname="test_inherited_controls" name="test_future_observation_rejected_with_model_claims" time="0.000" /><testcase classname="test_inherited_controls" name="test_softmax_threshold_coherence" time="0.001" /><testcase classname="test_inherited_controls" name="test_coherent_cdf[values0-expected0]" time="0.001" /><testcase classname="test_inherited_controls" name="test_coherent_cdf[values1-expected1]" time="0.000" /><testcase classname="test_inherited_controls" name="test_coherent_cdf[values2-expected2]" time="0.000" /><testcase classname="test_inherited_controls" name="test_cdf_rejects_different_information" time="0.000" /><testcase classname="test_inherited_controls" name="test_fixed_total_prior_invariant_to_splitting_weights" time="0.000" /><testcase classname="test_inherited_controls" name="test_zero_harm_gate_can_only_accept_identical_binary_probability" time="0.000" /><testcase classname="test_inherited_controls" name="test_gate_bound_checks_both_outcomes" time="0.000" /><testcase classname="test_inherited_controls" name="test_ecc_no_mutation_rank_and_member_count" time="0.001" /><testcase classname="test_inherited_controls" name="test_ecc_minmax_repair_is_reported" time="0.000" /><testcase classname="test_v11_boundaries" name="test_event_probability_does_not_require_unconsumed_variable[max_only]" time="0.000"><failure message="Failed: Unused variable rejects a complete target-specific event: KeyError('forecast_min_members_C')">case = 'max_only'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+&gt;           other=T.event_probability(r)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+
+test_v11_boundaries.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+sources/temperature_postprocess.py:33: in event_probability
+    validate_products(products)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+products = [{'day_index': 1, 'forecast_max_members_C': [31.0, 20.0], 'target_date': '2018-01-02'}]
+
+    def validate_products(products):
+        dates = [p["target_date"] for p in products]
+        if len(dates) != len(set(dates)) or not products:
+            raise ValueError("Unique daily products are required")
+        sizes = set()
+        for product in products:
+            if type(product["day_index"]) is not int or product["day_index"] &lt; 1:
+                raise ValueError("Day0 is excluded from fixed future extrema")
+            for field in ("forecast_min_members_C", "forecast_max_members_C"):
+&gt;               values = product[field]
+                         ^^^^^^^^^^^^^^
+E               KeyError: 'forecast_min_members_C'
+
+sources/temperature_postprocess.py:19: KeyError
+
+During handling of the above exception, another exception occurred:
+
+case = 'max_only'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+            other=T.event_probability(r)
+        except (ValueError,KeyError) as exc:
+&gt;           pytest.fail('Unused variable rejects a complete target-specific event: '+repr(exc))
+E           Failed: Unused variable rejects a complete target-specific event: KeyError('forecast_min_members_C')
+
+test_v11_boundaries.py:30: Failed</failure></testcase><testcase classname="test_v11_boundaries" name="test_event_probability_does_not_require_unconsumed_variable[min_invalid]" time="0.000"><failure message="Failed: Unused variable rejects a complete target-specific event: ValueError('Finite complete temperature members required')">case = 'min_invalid'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+&gt;           other=T.event_probability(r)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+
+test_v11_boundaries.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+sources/temperature_postprocess.py:33: in event_probability
+    validate_products(products)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+products = [{'day_index': 1, 'forecast_max_members_C': [31.0, 20.0], 'forecast_min_members_C': [nan], 'target_date': '2018-01-02'}]
+
+    def validate_products(products):
+        dates = [p["target_date"] for p in products]
+        if len(dates) != len(set(dates)) or not products:
+            raise ValueError("Unique daily products are required")
+        sizes = set()
+        for product in products:
+            if type(product["day_index"]) is not int or product["day_index"] &lt; 1:
+                raise ValueError("Day0 is excluded from fixed future extrema")
+            for field in ("forecast_min_members_C", "forecast_max_members_C"):
+                values = product[field]
+                sizes.add(len(values))
+                if not values or any(
+                    not finite_number(v) for v in values
+                ):
+&gt;                   raise ValueError("Finite complete temperature members required")
+E                   ValueError: Finite complete temperature members required
+
+sources/temperature_postprocess.py:24: ValueError
+
+During handling of the above exception, another exception occurred:
+
+case = 'min_invalid'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+            other=T.event_probability(r)
+        except (ValueError,KeyError) as exc:
+&gt;           pytest.fail('Unused variable rejects a complete target-specific event: '+repr(exc))
+E           Failed: Unused variable rejects a complete target-specific event: ValueError('Finite complete temperature members required')
+
+test_v11_boundaries.py:30: Failed</failure></testcase><testcase classname="test_v11_boundaries" name="test_event_probability_does_not_require_unconsumed_variable[min_only]" time="0.000"><failure message="Failed: Unused variable rejects a complete target-specific event: KeyError('forecast_max_members_C')">case = 'min_only'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+&gt;           other=T.event_probability(r)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+
+test_v11_boundaries.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+sources/temperature_postprocess.py:33: in event_probability
+    validate_products(products)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+products = [{'day_index': 1, 'forecast_min_members_C': [-2.0, 2.0], 'target_date': '2018-01-02'}]
+
+    def validate_products(products):
+        dates = [p["target_date"] for p in products]
+        if len(dates) != len(set(dates)) or not products:
+            raise ValueError("Unique daily products are required")
+        sizes = set()
+        for product in products:
+            if type(product["day_index"]) is not int or product["day_index"] &lt; 1:
+                raise ValueError("Day0 is excluded from fixed future extrema")
+            for field in ("forecast_min_members_C", "forecast_max_members_C"):
+&gt;               values = product[field]
+                         ^^^^^^^^^^^^^^
+E               KeyError: 'forecast_max_members_C'
+
+sources/temperature_postprocess.py:19: KeyError
+
+During handling of the above exception, another exception occurred:
+
+case = 'min_only'
+
+    @pytest.mark.parametrize('case',['max_only','min_invalid','min_only'])
+    def test_event_probability_does_not_require_unconsumed_variable(case):
+        r=row()
+        if case=='max_only':
+            del r['common']['daily_products'][0]['forecast_min_members_C']
+        elif case=='min_invalid':
+            r['common']['daily_products'][0]['forecast_min_members_C']=[float('nan')]
+        else:
+            r=row(variable='daily_min_2m_temperature',operator='lt',threshold=0)
+            del r['common']['daily_products'][0]['forecast_max_members_C']
+        assert F.temperature_ensemble_probability(r)==0.5
+        try:
+            other=T.event_probability(r)
+        except (ValueError,KeyError) as exc:
+&gt;           pytest.fail('Unused variable rejects a complete target-specific event: '+repr(exc))
+E           Failed: Unused variable rejects a complete target-specific event: KeyError('forecast_max_members_C')
+
+test_v11_boundaries.py:30: Failed</failure></testcase><testcase classname="test_v11_boundaries" name="test_both_probability_paths_reject_bad_threshold[True]" time="0.000" /><testcase classname="test_v11_boundaries" name="test_both_probability_paths_reject_bad_threshold[10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000]" time="0.000" /><testcase classname="test_v11_boundaries" name="test_both_probability_paths_reject_bad_threshold[nan]" time="0.000" /><testcase classname="test_v11_boundaries" name="test_both_probability_paths_reject_bad_threshold[inf]" time="0.000" /><testcase classname="test_v11_boundaries" name="test_large_nonfinite_response_has_uniform_value_error[{&quot;probability&quot;:10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000}]" time="0.000" /><testcase classname="test_v11_boundaries" name="test_large_nonfinite_response_has_uniform_value_error[{&quot;probability&quot;:1e10000}]" time="0.000" /><testcase classname="test_v11_boundaries" name="test_large_nonfinite_response_has_uniform_value_error[{&quot;probability&quot;:NaN}]" time="0.000" /><testcase classname="test_v11_boundaries" name="test_required_max_missing_rejected_in_both_paths" time="0.000" /><testcase classname="test_v11_boundaries" name="test_common_vector_does_not_access_paid_values" time="0.000" /><testcase classname="test_v11_boundaries" name="test_day_index_relation_not_yet_attested_characterization" time="0.000" /><testcase classname="test_v11_boundaries" name="test_failed_sample_is_not_counted_twice" time="0.005"><failure message="AssertionError: Failed sample was concatenated with itself&#10;assert 6 == 3&#10; +  where 6 = len([{'complete': True, 'unit': 'u00'}, {'complete': False, 'unit': 'u01'}, {'complete': True, 'unit': 'u02'}, {'complete': True, 'unit': 'u00'}, {'complete': False, 'unit': 'u01'}, {'complete': True, 'unit': 'u02'}])">annual = &lt;module '_v11_annual_test' from '/mnt/data/DisasterTrace_v11_Audit_Codex_889620a_20260915/audit_probes/sources/annual_catalogs.py'&gt;
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_failed_sample_is_not_coun0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f1a3dac2060&gt;
+
+    def test_failed_sample_is_not_counted_twice(annual,tmp_path,monkeypatch):
+        result,called,code=simulate(annual,tmp_path,monkeypatch,{'u01'})
+        assert code==1 and set(called)=={'u00','u01','u02'} and len(called)==3
+&gt;       assert len(result['results'])==3, 'Failed sample was concatenated with itself'
+E       AssertionError: Failed sample was concatenated with itself
+E       assert 6 == 3
+E        +  where 6 = len([{'complete': True, 'unit': 'u00'}, {'complete': False, 'unit': 'u01'}, {'complete': True, 'unit': 'u02'}, {'complete': True, 'unit': 'u00'}, {'complete': False, 'unit': 'u01'}, {'complete': True, 'unit': 'u02'}])
+
+test_v11_boundaries.py:93: AssertionError</failure></testcase><testcase classname="test_v11_boundaries" name="test_all_annual_units_success_unique" time="0.005" /><testcase classname="test_v11_boundaries" name="test_failure_after_sample_keeps_other_units" time="0.004" /><testcase classname="test_v11_boundaries" name="test_month_boundaries[2023-2-28]" time="0.002" /><testcase classname="test_v11_boundaries" name="test_month_boundaries[2024-2-29]" time="0.002" /><testcase classname="test_v11_boundaries" name="test_month_boundaries[2023-12-31]" time="0.002" /></testsuite></testsuites>
