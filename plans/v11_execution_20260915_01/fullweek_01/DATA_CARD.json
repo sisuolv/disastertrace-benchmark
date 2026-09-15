@@ -1,0 +1,168 @@
+{
+  "schema": "disastertrace.descriptive_data_card.v1",
+  "created_at": "2026-09-14T22:58:51.290143+00:00",
+  "status": "documentation of completed frozen contracts; not a retroactive registration or a new runtime gate",
+  "hazard": "H15 low visibility; a5km label does not identify fog cause",
+  "source": "NOAA/NWS routine METAR and complete TAF archived by Iowa Environmental Mesonet",
+  "reference_kind": "native encoded report label, decoded by the frozen provider parser",
+  "support_assumption": "Exact support of the encoded report label under the stated parser contract; no error-free physical-weather claim. Model-extracted values remain model estimates.",
+  "visible_information_scope": {
+    "common": "same full applicable TAF product and legal version for all methods",
+    "supplemental": "only routine METAR text actually disclosed for the current query IDs",
+    "not_visible": [
+      "future outcome labels",
+      "unread raw observation payloads",
+      "evaluator-only repaired features"
+    ],
+    "private_authorization": "target-private and session-shared arms are separate; the LLM selector was only evaluated in the registered shared arm"
+  },
+  "support_rule_version": "native_h15_snapshot.v1 plus each frozen study source manifest",
+  "routine_result_policy": "h15_routine_archive.v1",
+  "main_report_rule": "Read before RMK, TEMPO, BECMG, NOSIG or FM time-group; ignore remarks/trend refinements. Routine/special classification and observation time come from the source contract.",
+  "units": {
+    "visibility": "metres",
+    "temperature": "degrees Celsius",
+    "statute_mile_metres": 1609.344
+  },
+  "missing_rule": "Missing/conflicting source slots and unavailable fields stay null; no unread-slot imputation.",
+  "comparison_rule": {
+    "literal_exact": "serialized equality, reported separately",
+    "semantic": "ignore closure flag at positive infinity; require finite endpoint closure agreement",
+    "numeric_absolute_tolerance": 1e-06,
+    "duplicate_JSON_keys": "rejected"
+  },
+  "F_scope": "Future archived routine-report event relative to the simulated cutoff, scored against provider-bound results; does not establish real-time first-publication or live model prediction",
+  "baseline_kind": "research probability mapping of the complete common professional TAF product",
+  "historical_availability": "declared archival availability scenario; current download time is not historical first-publication time",
+  "source_code_sha256": {
+    "disastertrace-starter/src/disastertrace/monitoring_v1/providers/aviation.py": "65e42052a88207f2d4892d9f5b1ffeac5a63a0e28273fe73955934f71e5fb232",
+    "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py": "5e31391b0d375f222000ab9da98b42e4d9c6b28abba7153c31eb39f29e421b06",
+    "disastertrace-starter/src/disastertrace/monitoring_v1/feature_scoring.py": "2a252569bfac176a6136c3e006f3584a6ffb683fc6e1bd3b6eb7aa169c2bed33"
+  },
+  "examples": [
+    {
+      "native_text": "KZZZ 010000Z 00000KT 10SM CLR 03/M02 A3000 RMK T00331022",
+      "observation_time": "2025-01-01T00:00:00Z",
+      "report_type": "routine",
+      "reference": {
+        "visibility": {
+          "lower": 16093.44,
+          "upper": 16093.44,
+          "lower_closed": true,
+          "upper_closed": true
+        },
+        "temperature_c": 3,
+        "dewpoint_c": -2
+      },
+      "synthetic_contract_example_not_a_weather_evaluation": true
+    },
+    {
+      "native_text": "KZZZ 010000Z 00000KT P6SM CLR 03/M02 A3000 RMK T00331022",
+      "observation_time": "2025-01-01T00:00:00Z",
+      "report_type": "routine",
+      "reference": {
+        "visibility": {
+          "lower": 9656.064,
+          "upper": "+inf",
+          "lower_closed": false,
+          "upper_closed": true
+        },
+        "temperature_c": 3,
+        "dewpoint_c": -2
+      },
+      "synthetic_contract_example_not_a_weather_evaluation": true
+    },
+    {
+      "native_text": "KZZZ 010000Z 00000KT M1/4SM CLR 03/M02 A3000 RMK T00331022",
+      "observation_time": "2025-01-01T00:00:00Z",
+      "report_type": "routine",
+      "reference": {
+        "visibility": {
+          "lower": 0,
+          "upper": 402.336,
+          "lower_closed": true,
+          "upper_closed": false
+        },
+        "temperature_c": 3,
+        "dewpoint_c": -2
+      },
+      "synthetic_contract_example_not_a_weather_evaluation": true
+    },
+    {
+      "native_text": "KZZZ 010000Z 00000KT 9999 CLR 03/M02 A3000 RMK T00331022",
+      "observation_time": "2025-01-01T00:00:00Z",
+      "report_type": "routine",
+      "reference": {
+        "visibility": {
+          "lower": 10000,
+          "upper": "+inf",
+          "lower_closed": true,
+          "upper_closed": true
+        },
+        "temperature_c": 3,
+        "dewpoint_c": -2
+      },
+      "synthetic_contract_example_not_a_weather_evaluation": true
+    },
+    {
+      "native_text": "KZZZ 010000Z 00000KT 0000 CLR 03/M02 A3000 RMK T00331022",
+      "observation_time": "2025-01-01T00:00:00Z",
+      "report_type": "routine",
+      "reference": {
+        "visibility": {
+          "lower": 0,
+          "upper": 50,
+          "lower_closed": true,
+          "upper_closed": false
+        },
+        "temperature_c": 3,
+        "dewpoint_c": -2
+      },
+      "synthetic_contract_example_not_a_weather_evaluation": true
+    },
+    {
+      "native_text": "KZZZ 010000Z 00000KT CAVOK CLR 03/M02 A3000 RMK T00331022",
+      "observation_time": "2025-01-01T00:00:00Z",
+      "report_type": "routine",
+      "reference": {
+        "visibility": {
+          "lower": 10000,
+          "upper": "+inf",
+          "lower_closed": true,
+          "upper_closed": true
+        },
+        "temperature_c": 3,
+        "dewpoint_c": -2
+      },
+      "synthetic_contract_example_not_a_weather_evaluation": true
+    }
+  ],
+  "examples_verified_by_current_frozen_equivalent_parser": true,
+  "new_data_downloads": 0,
+  "new_model_calls": 0,
+  "new_scientific_experiments": 0,
+  "matching_clarified_study_files": {
+    "clarified_feature_trial_01/source/disastertrace/monitoring_v1/providers/aviation.py": {
+      "current_source": "disastertrace-starter/src/disastertrace/monitoring_v1/providers/aviation.py",
+      "current_sha256": "65e42052a88207f2d4892d9f5b1ffeac5a63a0e28273fe73955934f71e5fb232",
+      "frozen_sha256": "65e42052a88207f2d4892d9f5b1ffeac5a63a0e28273fe73955934f71e5fb232",
+      "byte_identical": true,
+      "full_AST_identical": true
+    },
+    "clarified_feature_trial_01/source/disastertrace/monitoring_v1/feature_tasks.py": {
+      "current_source": "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+      "current_sha256": "5e31391b0d375f222000ab9da98b42e4d9c6b28abba7153c31eb39f29e421b06",
+      "frozen_sha256": "42f27cc8bac322278ba2575f4aa576ac9aab38fd1656df52ab41bc8603c0d983",
+      "byte_identical": false,
+      "full_AST_identical": true
+    },
+    "clarified_feature_trial_01/source/disastertrace/monitoring_v1/feature_scoring.py": {
+      "current_source": "disastertrace-starter/src/disastertrace/monitoring_v1/feature_scoring.py",
+      "current_sha256": "2a252569bfac176a6136c3e006f3584a6ffb683fc6e1bd3b6eb7aa169c2bed33",
+      "frozen_sha256": "25dbdac3064d8334edd08475cd127dce214618d0ea6d2df9ef190cedfc3426b9",
+      "byte_identical": false,
+      "full_AST_identical": true
+    }
+  },
+  "equivalence_note": "Provider parser is byte-identical; feature output parser and scorer differ only in formatting, with full module AST equality including constants. The task-level prompt clarification remains as registered."
+}

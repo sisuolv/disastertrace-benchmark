@@ -1,0 +1,647 @@
+{
+  "schema": "disastertrace.v11.planning_queue.v1",
+  "status": "plan_ready_for_user_review",
+  "auto_launch": false,
+  "scientific_experiments_started": false,
+  "scope": "planning only; new tasks need fresh registered execution identities, existing user resource preferences persist",
+  "entrypoint": "START_HERE.md",
+  "initial_batch": [
+    "W00",
+    "W01",
+    "W02",
+    "W03",
+    "W04",
+    "W05"
+  ],
+  "parallel_design_only": [
+    "W06",
+    "W07",
+    "W09",
+    "T03"
+  ],
+  "first_runtime_batch_model_calls": 0,
+  "first_runtime_batch_confirmation_opened": false,
+  "first_runtime_batch_new_weather_downloads": false,
+  "max_simultaneous_h100": 4,
+  "tasks": [
+    {
+      "id": "W00",
+      "title_cn": "刷新执行起点与保护清单",
+      "state": "planned",
+      "depends_on": [],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "plans/v10_execution_20260914_01/FINAL_RESULT.json",
+        "plans/v10_execution_20260914_01/GITHUB_UPLOAD.json",
+        "plans/v10_execution_20260914_01/CLOSURE_BOUNDARY.json"
+      ],
+      "planned_outputs": [
+        "BASELINE.json",
+        "EXPOSURE_LEDGER.json"
+      ],
+      "acceptance": [
+        "Record actual source/index identity without reset",
+        "Distinguish planning probes from production fixes and weather experiments",
+        "Preserve all existing changes and unopened confirmation"
+      ],
+      "resource_class": "cci_small",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W01",
+      "title_cn": "输入边界、模型响应与旧数据影响",
+      "state": "planned",
+      "depends_on": [
+        "W00"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_scoring.py"
+      ],
+      "planned_outputs": [
+        "BOUNDARY_RED_GREEN.json",
+        "HISTORICAL_IMPACT.json"
+      ],
+      "acceptance": [
+        "Current-package invalid inputs rejected; legitimate UTC/day/member/censoring cases retained",
+        "Independent member arithmetic retained",
+        "Scan exact frozen input/response rosters; affected, unchanged and unavailable separately",
+        "No model regeneration for validation-only changes"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W02",
+      "title_cn": "正式来源、初始数据卡和结果绑定",
+      "state": "planned",
+      "depends_on": [
+        "W00"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/outcomes.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/outcome_policies.py",
+        "plans/v10_execution_20260914_01/contracts/H15_REPORT_LABEL_DATA_CARD.json"
+      ],
+      "planned_outputs": [
+        "FORMAL_CONTRACT_SPEC.json",
+        "FORMAL_PROVENANCE_TESTS.json",
+        "PROVIDER_BINDING_TESTS.json"
+      ],
+      "acceptance": [
+        "Current-path provenance counterexamples before patching",
+        "Bind data-card/prompt/parser/input roles without circular hashes",
+        "Retain failed/stopped runs in denominators; incomplete trusted snapshots block complete comparisons",
+        "Strict new formal path and explicitly scoped legacy replay",
+        "DWD result semantics and forecast member lineage checked in their respective contracts"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W03",
+      "title_cn": "API 最终许可、不完整 claim 与截断记录",
+      "state": "planned",
+      "depends_on": [
+        "W00"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/api_ledger.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/api_capture_v2.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/spool_backend.py"
+      ],
+      "planned_outputs": [
+        "DISPATCH_GATE_TESTS.json",
+        "CLAIM_RECOVERY_TESTS.json",
+        "CAPTURE_SCHEMA_COMPATIBILITY.json"
+      ],
+      "acceptance": [
+        "Offline fake-clock and transport tests only in first batch",
+        "Define no-new-dispatch linearization; no cancellation promise after send",
+        "No-overwrite durable local claims and explainable incomplete states",
+        "Unknown reservations retained; no selective or free logical retry",
+        "Captured prefix vs full response hashes distinguished"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W04",
+      "title_cn": "剖析和单次评分去重",
+      "state": "planned",
+      "depends_on": [
+        "W00"
+      ],
+      "completion_requires": [
+        "W02"
+      ],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/outcomes.py",
+        "plans/v10_execution_20260914_01/reports/replay_static_inspection_01/RESULT.json"
+      ],
+      "planned_outputs": [
+        "PROFILE_BEFORE.json",
+        "REPLAY_EQUIVALENCE.json",
+        "PROFILE_AFTER.json"
+      ],
+      "acceptance": [
+        "Profile may begin before W02 completion; final API integrates W02",
+        "One full verified replay per journal per comparison",
+        "All provider/baseline/transaction/intervention/outcome checks retained",
+        "Scientific fields equivalent; legacy byte equality and new schema differences explicit",
+        "Measured timings only, no predicted speedup"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W05",
+      "title_cn": "一次集成回归与有限复算",
+      "state": "planned",
+      "depends_on": [
+        "W01",
+        "W02",
+        "W04"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/tests/test_monitoring_feature_tasks.py",
+        "disastertrace-starter/tests/test_monitoring_formal_session.py",
+        "disastertrace-starter/tests/test_monitoring_api_ledger_v2.py",
+        "plans/v10_execution_20260914_01/scripts/run_checks.py",
+        "plans/v10_execution_20260914_01/scripts/verify_capsule.py",
+        "plans/v10_execution_20260914_01/scripts/verify_model_capsule.py"
+      ],
+      "planned_outputs": [
+        "REGRESSION_RESULT.json",
+        "CURRENT_LEGACY_EQUIVALENCE.json",
+        "CAPSULE_SCOPE_RESULT.json"
+      ],
+      "acceptance": [
+        "Actual nodeid counts and failure logs; no addition of repeated test counts",
+        "Current changed code compared on applicable real inputs, not only frozen capsule replay",
+        "API branch checked when W03 available; its failure does not masquerade as core failure",
+        "No unchanged full-suite repetition without cause"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W06",
+      "title_cn": "全年源清单与有界分片获取",
+      "state": "planned",
+      "depends_on": [
+        "W00"
+      ],
+      "completion_requires": [
+        "W02"
+      ],
+      "existing_code_or_evidence": [
+        "plans/v10_execution_20260914_01/seasonal_completion_02/COMPLETE.json",
+        "plans/v10_execution_20260914_01/scripts/acquire_seasonal_development.py",
+        "plans/v10_execution_20260914_01/scripts/complete_seasonal_data.py",
+        "plans/v10_execution_20260914_01/scripts/audit_full_dependencies.py"
+      ],
+      "planned_outputs": [
+        "ANNUAL_INVENTORY.json",
+        "ACQUISITION_REGISTER.json",
+        "ANNUAL_COVERAGE.json",
+        "ROLE_FOOTPRINT_AUDIT.json"
+      ],
+      "acceptance": [
+        "Inventory starts without downloads",
+        "2023 fit / 2024 calibration are candidates until coverage and dependency validation",
+        "432 logical station-month-product units are not necessarily 432 HTTP requests",
+        "Freeze representative pilot and byte/request caps before acquisition",
+        "Provider-level backoff, only missing shards, no confirmation payloads"
+      ],
+      "resource_class": "cpu_network",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W07",
+      "title_cn": "已有完整周五条件及扩展策略",
+      "state": "planned",
+      "depends_on": [
+        "W05"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "plans/v10_execution_20260914_01/scripts/run_seasonal_controls.py",
+        "plans/v10_execution_20260914_01/scripts/run_multicutoff.py",
+        "plans/v10_execution_20260914_01/scripts/analyze_seasonal_budget.py",
+        "plans/v10_execution_20260914_01/seasonal_controls_01/REGISTRATION.json"
+      ],
+      "planned_outputs": [
+        "FULL_WEEK_REGISTER.json",
+        "FULL_WEEK_RESULT.json",
+        "PATH_EQUIVALENCE.json",
+        "BLOCK_LOSSES.json"
+      ],
+      "acceptance": [
+        "Complete exposed calendar, not outcome-selected days",
+        "48 requests per UTC day; reset/carry/cache/pending rules explicit",
+        "Initial five conditions and one primary protocol; expand factors in registered second tier",
+        "Expected IDs derived, all missing/failed/unattempted retained",
+        "No claim that equal scores prove equal paths or region-weeks prove independence"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W08",
+      "title_cn": "全年强共同信息及补证后端",
+      "state": "planned",
+      "depends_on": [
+        "W01",
+        "W02",
+        "W06"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "plans/v10_execution_20260914_01/scripts/fit_native_feature_bank.py",
+        "plans/v10_execution_20260914_01/scripts/audit_native_feature_bank.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/regional_calibration_v2.py"
+      ],
+      "planned_outputs": [
+        "TRAIN_ROLE_AUDIT.json",
+        "BANK_MANIFEST.json",
+        "BACKEND_QUALIFICATION.json"
+      ],
+      "acceptance": [
+        "Model/feature/hyperparameter selection inside training folds, independent final calibration",
+        "Reuse existing weighted subset training; audit adaptive missingness coverage",
+        "Retain original winter and no-year banks",
+        "At most one optional common-anchored residual candidate with out-of-fold common predictions",
+        "No positive gain requirement for engineering completion"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W09",
+      "title_cn": "过程和确认设计草案",
+      "state": "planned",
+      "depends_on": [
+        "W00"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/process_split.py",
+        "plans/v10_execution_20260914_01/scripts/audit_full_dependencies.py",
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md"
+      ],
+      "planned_outputs": [
+        "PROCESS_RULES.json",
+        "EXPOSURE_AND_SPLIT_PLAN.json",
+        "CONFIRMATION_DESIGN_DRAFT.json"
+      ],
+      "acceptance": [
+        "Source/target footprint blocks distinct from externally supported weather processes",
+        "Conservative primary blocks and multiscale sensitivity",
+        "Both thresholds retained; preregister hypotheses, multiplicity, precision and finite calendar",
+        "Bay stays unopened; final freeze follows model/backend selection"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W10",
+      "title_cn": "新后端完整程序机制对照",
+      "state": "planned",
+      "depends_on": [
+        "W05",
+        "W07",
+        "W08",
+        "W09"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/policies.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/forecast_schedule.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_scoring.py",
+        "plans/v10_execution_20260914_01/scripts/run_query_controls.py"
+      ],
+      "planned_outputs": [
+        "MATCHED_BACKEND_CONTROLS.json",
+        "ALLOCATION_SHARING_RESULT.json",
+        "PROTOCOL_FUNNEL.json"
+      ],
+      "acceptance": [
+        "Fixed backend evidence contrasts distinct from separately trained backend comparisons",
+        "Coverage fixed for allocation/authorization 2x2; selector varies only within B11",
+        "Batch/RR/risk and FOLLOW/common/no-evidence anchors",
+        "Natural-calendar risk plus event-block harm and missing sensitivity",
+        "Actual versus declared latency separately identified"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W11",
+      "title_cn": "同前缀真实 C2 分支与 E 到 F 诊断",
+      "state": "planned",
+      "depends_on": [
+        "W10"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/residual_reachability.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/evidence.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_scoring.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/session_checkpoint.py"
+      ],
+      "planned_outputs": [
+        "BRANCH_REGISTER.json",
+        "JOINT_E_WITNESSES.json",
+        "E_TO_F_DIAGNOSTICS.json"
+      ],
+      "acceptance": [
+        "2-4 registered existing-asset paths per fixed prefix",
+        "Carry clock, paid/reserved resources, permissions, caches, pending and override",
+        "At least one real coverage/version/censoring task beyond JSON format",
+        "Trace changed field to consumed feature/probability/admission/loss",
+        "No fabricated counterfactuals or interpretation of finite E oracle as F upper bound"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W12",
+      "title_cn": "单角色有界本地模型比较",
+      "state": "planned",
+      "depends_on": [
+        "W10",
+        "W11"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "plans/v10_execution_20260914_01/scripts/prepare_selector_trial.py",
+        "plans/v10_execution_20260914_01/scripts/run_selector_trial.py",
+        "plans/v10_execution_20260914_01/scripts/qwen235_feature_worker.py"
+      ],
+      "planned_outputs": [
+        "MODEL_REGISTER.json",
+        "MODEL_ACCOUNTING.json",
+        "MODEL_COMPONENT_RESULT.json"
+      ],
+      "acceptance": [
+        "Fresh bound launcher; never restart consumed script identities",
+        "Default one deployed 235B selector; proposal <=288 benchmark plus <=2 compatibility requests",
+        "Freeze exact IDs, prompts, caps, failures and resource envelope",
+        "Retain valid/invalid/unattempted/unknown charges and all outcomes",
+        "API branch additionally requires W03; local model does not"
+      ],
+      "resource_class": "h100_up_to_4",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "W13",
+      "title_cn": "一次性确认与分级发布",
+      "state": "planned",
+      "depends_on": [
+        "W09",
+        "W12"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "plans/v10_execution_20260914_01/scripts/build_capsule.py",
+        "plans/v10_execution_20260914_01/scripts/build_model_capsule.py",
+        "plans/v10_execution_20260914_01/FINAL_RESULT.json"
+      ],
+      "planned_outputs": [
+        "CONFIRMATION_FREEZE.json",
+        "CONFIRMATION_RESULT.json",
+        "CLAIM_EVIDENCE_MATRIX.json",
+        "PUBLICATION_RECEIPT.json"
+      ],
+      "acceptance": [
+        "No confirmation data opened before final method/metric/stop freeze",
+        "Independent or conservative process support and uncertainty explicitly qualified",
+        "Finite calendar and underpowered stopping; no searching until positive",
+        "Publish negative results and exact replay scope",
+        "Private GitHub publication follows inherited authorization and verifies remote readback"
+      ],
+      "resource_class": "cpu_and_registered_model",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "T01",
+      "title_cn": "温度 F-only 稳定性",
+      "state": "planned",
+      "depends_on": [
+        "W01",
+        "W02"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "plans/v10_execution_20260914_01/scripts/fit_temperature_postprocess.py",
+        "plans/v10_execution_20260914_01/scripts/audit_temperature_evidence_gate.py"
+      ],
+      "planned_outputs": [
+        "TEMPERATURE_STABILITY.json",
+        "ECC_REPAIR_IMPACT.json"
+      ],
+      "acceptance": [
+        "Preserve hot-day regression and repeated-target dependence",
+        "Audit ECC repair/ties and affected marginals/paths",
+        "Final DWD archive remains outcome reference, not documented historical supplement"
+      ],
+      "resource_class": "cpu",
+      "optional": false,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "T02",
+      "title_cn": "H07/H08 物理数据资格",
+      "state": "planned",
+      "depends_on": [
+        "W00"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "plans/v10_execution_20260914_01/OVERALL_PLAN_UPDATED_CN.md"
+      ],
+      "planned_outputs": [
+        "MRMS_ADMISSION_DELTA.json",
+        "HEFS_ADMISSION_DELTA.json"
+      ],
+      "acceptance": [
+        "MRMS exact accumulation/window/QC/version and matched forecast/reference",
+        "HEFS quantity/member/regulation/section/unit/window matched",
+        "One qualified branch can advance while other remains blocked",
+        "Do not imply every candidate has been newly sampled in this planning turn"
+      ],
+      "resource_class": "cpu_bounded_network",
+      "optional": true,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "T03",
+      "title_cn": "原生 MM 近期小入口",
+      "state": "planned",
+      "depends_on": [
+        "W00"
+      ],
+      "completion_requires": [
+        "W02"
+      ],
+      "existing_code_or_evidence": [
+        "plans/v10_execution_20260914_01/OVERALL_PLAN_UPDATED_CN.md"
+      ],
+      "planned_outputs": [
+        "MM_JOIN_PLAN.json",
+        "MM_ASSET_QUALIFICATION.json",
+        "MM_SMOKE_REGISTER.json"
+      ],
+      "acceptance": [
+        "Initially 24 metadata-selected target joins, not 24 claimed usable samples",
+        "GOES ABI first if eligible; alternate chain chosen by data gates not VLM scores",
+        "Actual visual checkpoint/processor qualification separately required",
+        "Image, professional product and privileged label diagnostics separated",
+        "No automatic new image-model calls from metadata completion"
+      ],
+      "resource_class": "cpu_then_bounded_vision",
+      "optional": true,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "T04",
+      "title_cn": "D 与 X09 的独立机制出口",
+      "state": "planned",
+      "depends_on": [
+        "W10"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/preparation.py",
+        "plans/v10_execution_20260914_01/OVERALL_PLAN_UPDATED_CN.md"
+      ],
+      "planned_outputs": [
+        "SCENARIO_CARD.json",
+        "DECISION_HEAD_ISOLATION.json",
+        "JOINT_TARGET_REGISTER.json"
+      ],
+      "acceptance": [
+        "Fixed-evidence F request unaffected by decision preferences",
+        "Program decision references first, synthetic loss only",
+        "Bounded multi-pending only when preparation/query overlap requires it",
+        "X09 means same-information single vs joint targets with group-level compute control"
+      ],
+      "resource_class": "cpu",
+      "optional": true,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    },
+    {
+      "id": "T05",
+      "title_cn": "真实前瞻 shadow",
+      "state": "planned",
+      "depends_on": [
+        "W08",
+        "W10"
+      ],
+      "completion_requires": [],
+      "existing_code_or_evidence": [
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md"
+      ],
+      "planned_outputs": [
+        "SHADOW_REGISTER.json",
+        "PREDICTION_SEALS.jsonl",
+        "SHADOW_SETTLEMENT.json"
+      ],
+      "acceptance": [
+        "Fixed finite windows and source-only vs program vs model distinctions",
+        "Prediction durable before cutoff/outcome; actual first-seen provenance",
+        "No public warnings or device actions; no claim prior historical replay was online"
+      ],
+      "resource_class": "bounded_network_and_model",
+      "optional": true,
+      "executable_launcher": null,
+      "launcher_status": "not_implemented_or_registered_for_this_plan",
+      "change_scope": "fresh execution namespace; frozen historical artifacts remain read-only"
+    }
+  ],
+  "token_policy": {
+    "read_on_resume": [
+      "START_HERE.md",
+      "selected task object from EXECUTION_QUEUE.json",
+      "current run STATUS.json and RESULT_SUMMARY.json when present"
+    ],
+    "reread_all_reviews_by_default": false,
+    "machine_poll_seconds": [
+      60,
+      300
+    ],
+    "agent_wakeup_on": [
+      "completion",
+      "failure",
+      "timeout",
+      "qualification_change"
+    ],
+    "automatic_codex_wakeup_available": null,
+    "raw_evidence_retained": true,
+    "benchmark_model_budget_unchanged_by_orchestration_optimization": true,
+    "percentage_saving_claim": null
+  }
+}

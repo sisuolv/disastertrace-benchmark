@@ -1,0 +1,29 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> plans/v11_execution_20260915_01/prepare_c2.py:3:1
+   |
+ 1 |   """Bind a development C2 roster and real native E references, keeping F closed."""
+ 2 |
+ 3 | / import argparse
+ 4 | | import datetime as dt
+ 5 | | from collections import Counter
+ 6 | | from dataclasses import asdict
+ 7 | | from pathlib import Path
+ 8 | |
+ 9 | | from disastertrace.monitoring_fixed_v1.aviation import typed_target
+10 | | from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask, evaluate, messages
+11 | | from disastertrace.monitoring_v1.spool_backend import digest, publish, read
+   | |___________________________________________________________________________^
+help: Organize imports
+   |
+9  | from disastertrace.monitoring_fixed_v1.aviation import typed_target
+   - from disastertrace.monitoring_fixed_v1.taf_tasks import TafEvidenceTask, evaluate, messages
+10 + from disastertrace.monitoring_fixed_v1.taf_tasks import (
+11 +     TafEvidenceTask,
+12 +     evaluate,
+13 +     messages,
+14 + )
+15 | from disastertrace.monitoring_v1.spool_backend import digest, publish, read
+   |
+
+Found 1 error.
+[*] 1 fixable with the `--fix` option.

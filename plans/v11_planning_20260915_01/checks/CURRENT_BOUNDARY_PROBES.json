@@ -1,0 +1,173 @@
+{
+  "schema": "disastertrace.v11.planning_probes.v1",
+  "at": "2026-09-15T03:08:28.279972+00:00",
+  "script_sha256": "d9a9fa915c8ce663c21f7897dde08c6c43e88ecb080f8223eee1b9c5e6a9a43d",
+  "scope": "13 synthetic cases, direct current-package imports; API transport replaced",
+  "production_source_changed": false,
+  "historical_weather_inputs_scanned": false,
+  "model_calls": 0,
+  "network_calls": 0,
+  "credentials_read": false,
+  "cases": [
+    {
+      "id": "valid_utc_day",
+      "feature_tasks": {
+        "returned": 0.5
+      },
+      "temperature_postprocess": {
+        "returned": 0.5
+      }
+    },
+    {
+      "id": "midday_window",
+      "feature_tasks": {
+        "returned": 0.5
+      },
+      "temperature_postprocess": {
+        "exception": "ValueError",
+        "message": "Absolute future UTC days in Celsius are required"
+      }
+    },
+    {
+      "id": "duplicate_date",
+      "feature_tasks": {
+        "returned": 1.0
+      },
+      "temperature_postprocess": {
+        "exception": "ValueError",
+        "message": "Unique daily products are required"
+      }
+    },
+    {
+      "id": "duplicate_date_reversed",
+      "feature_tasks": {
+        "returned": 0.5
+      },
+      "temperature_postprocess": {
+        "exception": "ValueError",
+        "message": "Unique daily products are required"
+      }
+    },
+    {
+      "id": "nan_threshold",
+      "feature_tasks": {
+        "returned": 0.0
+      },
+      "temperature_postprocess": {
+        "exception": "ValueError",
+        "message": "Unqualified temperature endpoint"
+      }
+    },
+    {
+      "id": "boolean_day_index",
+      "feature_tasks": {
+        "returned": 0.5
+      },
+      "temperature_postprocess": {
+        "exception": "ValueError",
+        "message": "Day0 is excluded from fixed future extrema"
+      }
+    },
+    {
+      "id": "boolean_threshold",
+      "feature_tasks": {
+        "returned": 1.0
+      },
+      "temperature_postprocess": {
+        "exception": "ValueError",
+        "message": "Unqualified temperature endpoint"
+      }
+    },
+    {
+      "id": "both_positive_infinity",
+      "parse_features": {
+        "returned": [
+          {
+            "q": {
+              "visibility": {
+                "lower": "+inf",
+                "upper": "+inf",
+                "lower_closed": true,
+                "upper_closed": true
+              },
+              "temperature_c": null,
+              "dewpoint_c": null
+            }
+          },
+          {
+            "whole_json_fence": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "valid_censored_upper",
+      "parse_features": {
+        "returned": [
+          {
+            "q": {
+              "visibility": {
+                "lower": 9656.064,
+                "upper": "+inf",
+                "lower_closed": false,
+                "upper_closed": false
+              },
+              "temperature_c": null,
+              "dewpoint_c": null
+            }
+          },
+          {
+            "whole_json_fence": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "huge_integer_probability",
+      "parse_temperature": {
+        "exception": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "valid_probability",
+      "parse_temperature": {
+        "returned": [
+          0.5,
+          {
+            "whole_json_fence": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "stop_after_claim",
+      "transport_stub_calls": 1,
+      "actual_network_calls": 0,
+      "capture": {
+        "exception": "RuntimeError",
+        "message": "Original API v2 attempt failed; inspect immutable receipts"
+      }
+    },
+    {
+      "id": "deadline_after_claim",
+      "transport_stub_calls": 1,
+      "actual_network_calls": 0,
+      "capture": {
+        "exception": "RuntimeError",
+        "message": "Original API v2 attempt failed; inspect immutable receipts"
+      }
+    }
+  ],
+  "expected_observations": {
+    "valid_utc_day": true,
+    "six_temperature_differences": true,
+    "infinite_lower_accepted": true,
+    "valid_upper_censoring_accepted": true,
+    "huge_integer_overflow": true,
+    "valid_probability_accepted": true,
+    "post_claim_gates_allow_stub_dispatch": true
+  },
+  "all_observed_as_expected": true,
+  "interpretation": "Observed gaps are not passing production correctness tests or proven historical score impact"
+}

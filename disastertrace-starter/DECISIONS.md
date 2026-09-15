@@ -1,5 +1,31 @@
 # Decisions
 
+## v11 execution decisions, 2026-09-15
+
+Continue the weekly-audit priorities: complete exposed seasonal weeks, qualify
+annual source roles, and register a focused C2 design. Do not add a new model
+matrix before these comparisons are interpretable. Use CPU ACP jobs for replay
+and bounded public acquisition; GPU authorization remains available when needed.
+Scripts handle ordinary stage handoffs and status checks without repeated LLM polling.
+
+Preserve the failed fullweek01/F_COMMON preflight and use a fresh fullweek02 freeze.
+The common predictor consumes only common features; it has a distinct bound bank
+and comparison group. Keep all five arms on the same calendar, result mask and
+prediction schedule. Do not attribute a common-versus-values bank difference solely
+to acquisition. The nine-arm replay speed measurement is one-case evidence only.
+
+Freeze432 logical annual catalog slices before retrieval. Validate the fixed
+February2024 three-region sample, then acquire remaining catalogs automatically;
+separate native-body sample preparation from catalog success. Capture padding
+does not grant fitting-role eligibility: the full evidence/reference footprint
+must fit inside a single purged chronological role before any optimization.
+
+C2's72 calendar-selected target prefixes and144 native E tasks are developmental.
+All current coverage examples are full, so do not present construction success
+as evidence of a challenging coverage mechanism. Freeze branch resources, state,
+failure retention and the field-to-feature-to-F chain before actual branches.
+The previously exposed results do not become independent confirmation; Bay stays closed.
+
 ## v10 review decisions, 2026-09-14
 
 The new10h authorization resumes work in `../plans/v10_execution_20260914_01/`;

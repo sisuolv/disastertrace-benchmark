@@ -1,0 +1,25 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+__________________ test_formal_scoring_replays_each_arm_once ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_formal_scoring_replays_ea0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0b0ec01e40>
+
+    def test_formal_scoring_replays_each_arm_once(tmp_path, monkeypatch):
+        from test_monitoring_formal_session import setup
+    
+        from disastertrace.monitoring_fixed_v1.admission import AdmissionEngine
+        from disastertrace.monitoring_v1.formal_session import FormalSession, score_formal
+    
+        data, bank, config, comparison, files = setup()
+        run = FormalSession(data, bank, config, comparison=comparison,
+                            bound_files=files, directory=tmp_path / "formal")
+        report = run.finish(max_steps=20)
+        engine = AdmissionEngine.restore(report["event_replay"])
+        journal = run.directory / "admission.jsonl"
+>       run.export_journal(journal)
+E       AttributeError: 'FormalSession' object has no attribute 'export_journal'
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:126: AttributeError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_formal_scoring_replays_each_arm_once

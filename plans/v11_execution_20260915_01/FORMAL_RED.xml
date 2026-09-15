@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="2.608" timestamp="2026-09-15T10:50:06.451855+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-jwp24"><testcase classname="tests.test_monitoring_v11_boundaries" name="test_formal_scoring_replays_each_arm_once" time="1.075"><failure message="AttributeError: 'FormalSession' object has no attribute 'export_journal'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-2/test_formal_scoring_replays_ea0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0b0ec01e40&gt;
+
+    def test_formal_scoring_replays_each_arm_once(tmp_path, monkeypatch):
+        from test_monitoring_formal_session import setup
+    
+        from disastertrace.monitoring_fixed_v1.admission import AdmissionEngine
+        from disastertrace.monitoring_v1.formal_session import FormalSession, score_formal
+    
+        data, bank, config, comparison, files = setup()
+        run = FormalSession(data, bank, config, comparison=comparison,
+                            bound_files=files, directory=tmp_path / "formal")
+        report = run.finish(max_steps=20)
+        engine = AdmissionEngine.restore(report["event_replay"])
+        journal = run.directory / "admission.jsonl"
+&gt;       run.export_journal(journal)
+E       AttributeError: 'FormalSession' object has no attribute 'export_journal'
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:126: AttributeError</failure></testcase><testcase classname="tests.test_monitoring_v11_boundaries" name="test_formal_restore_rejects_changed_bank_even_if_experiment_shape_matches" time="0.834" /></testsuite></testsuites>

@@ -1,3 +1,9 @@
+# Latest: v11 code and in-progress experiments
+
+Start with [the current Chinese progress report](LATEST_PROGRESS_V11_CN.md) and [ChatGPT Pro review instructions](publication/v11_inprogress_20260915/REVIEW_FOR_CHATGPT_PRO_CN.md). This is a timestamped snapshot: full-calendar execution and annual data acquisition continue. Earlier entries below describe historical releases.
+
+---
+
 # Latest: v10 experiments and review materials
 
 Start with [the final Chinese report](LATEST_PROGRESS_V10_CN.md), [the overall plan](plans/v10_execution_20260914_01/OVERALL_PLAN_UPDATED_CN.md), and [review instructions](publication/v10_execution_20260914/REVIEW_FOR_CHATGPT_PRO_CN.md). Completed engineering checks, negative model results and remaining data gates are reported separately.

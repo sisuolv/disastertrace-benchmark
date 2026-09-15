@@ -1,0 +1,294 @@
+{
+  "snapshot_at": "2026-09-15T12:06:47.602706+00:00",
+  "release_kind": "in_progress_code_and_status_snapshot",
+  "all_work_complete": false,
+  "regression": {
+    "unique_tests": 750,
+    "failures": 0,
+    "skips": 0,
+    "full_current_tests": 585,
+    "supplemental_tests": 165,
+    "source_xml": [
+      "FULL_02.xml",
+      "SUPPLEMENTAL.xml"
+    ]
+  },
+  "real_preflight": {
+    "passed": true,
+    "results": [
+      {
+        "case": "new_york__2025-03-03__1000",
+        "arm": "F_COMMON",
+        "state": "completed",
+        "seconds": 267.6570035321638,
+        "opportunities": 72,
+        "model_calls": 0
+      },
+      {
+        "case": "new_york__2025-03-03__1000",
+        "arm": "FOLLOW",
+        "state": "completed",
+        "seconds": 107.67862178618088,
+        "opportunities": 72,
+        "model_calls": 0
+      },
+      {
+        "case": "new_york__2025-03-03__1000",
+        "arm": "F_BASE_ONLY",
+        "state": "completed",
+        "seconds": 268.51914583006874,
+        "opportunities": 72,
+        "model_calls": 0
+      },
+      {
+        "case": "new_york__2025-03-03__1000",
+        "arm": "B11_BATCH",
+        "state": "completed",
+        "seconds": 273.76362033188343,
+        "opportunities": 72,
+        "model_calls": 0
+      },
+      {
+        "case": "new_york__2025-03-03__1000",
+        "arm": "B11_COVERAGE",
+        "state": "completed",
+        "seconds": 272.66112374700606,
+        "opportunities": 72,
+        "model_calls": 0
+      }
+    ],
+    "audited_rows": 360,
+    "model_calls": 0
+  },
+  "profile": {
+    "passed": true,
+    "runs": {
+      "before": {
+        "exit_code": 0,
+        "command": [
+          "/usr/bin/python",
+          "-B",
+          "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/profile_replay.py",
+          "--case",
+          "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v10_execution_20260914_01/seasonal_controls_01/new_york__2025-03-03__1000",
+          "--out",
+          "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/profile_01/before"
+        ],
+        "arms": 9,
+        "cache_state": "uncontrolled filesystem cache; profile overhead included",
+        "cpu_seconds": 1243.655841639,
+        "from_journal_calls": 19,
+        "mode": "legacy_journal_rescore_only; not new formal provenance admission",
+        "peak_rss_kib": 656272,
+        "score_sha256": "328c0795b87088f8fc02831c76ba23636e764713fb70d328c656c93bcce5440e",
+        "seconds": 1255.995093619451,
+        "source": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v10_execution_20260914_01/seasonal_controls_01/source/disastertrace/monitoring_v1/formal_session.py",
+        "source_sha256": "4c9292150ecf2291012c110750defb13b9067c2e283caf722f338be0a2e4c423"
+      },
+      "after": {
+        "exit_code": 0,
+        "command": [
+          "/usr/bin/python",
+          "-B",
+          "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/profile_replay.py",
+          "--case",
+          "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v10_execution_20260914_01/seasonal_controls_01/new_york__2025-03-03__1000",
+          "--out",
+          "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/profile_01/after"
+        ],
+        "arms": 9,
+        "cache_state": "uncontrolled filesystem cache; profile overhead included",
+        "cpu_seconds": 551.592109544,
+        "from_journal_calls": 9,
+        "mode": "legacy_journal_rescore_only; not new formal provenance admission",
+        "peak_rss_kib": 551732,
+        "score_sha256": "328c0795b87088f8fc02831c76ba23636e764713fb70d328c656c93bcce5440e",
+        "seconds": 554.6279129423201,
+        "source": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/fullweek_01/source/disastertrace/monitoring_v1/formal_session.py",
+        "source_sha256": "03fced7278ae65799022b8aa61593e9ce2e79799df5c74652926d4e2bbe31b25"
+      }
+    },
+    "claim": "one measured case; no general speedup or cache-isolation claim"
+  },
+  "fullweek_status": {
+    "at": "2026-09-15T12:01:39.266994+00:00",
+    "state": "running_full_calendar",
+    "jobs": [
+      {
+        "job_id": "pt-719j72ho",
+        "job_name": "dt-v11-fullweek02-shard-0",
+        "gpus": 0,
+        "spec": "n6ls.iu.i40.16c64g"
+      },
+      {
+        "job_id": "pt-e5uibxrq",
+        "job_name": "dt-v11-fullweek02-shard-1",
+        "gpus": 0,
+        "spec": "n6ls.iu.i40.16c64g"
+      },
+      {
+        "job_id": "pt-py2m5d2n",
+        "job_name": "dt-v11-fullweek02-shard-2-small",
+        "gpus": 0,
+        "spec": "n6ls.iu.i40.8c32g"
+      },
+      {
+        "job_id": "pt-sld4fduw",
+        "job_name": "dt-v11-fullweek02-shard-3-submission-1",
+        "gpus": 0,
+        "spec": "n6ls.iu.i40.16c64g"
+      }
+    ],
+    "workers_per_shard": [
+      12,
+      12,
+      6,
+      12
+    ],
+    "expected_trajectories": 840
+  },
+  "fullweek_expected": {
+    "daily_cases": 168,
+    "trajectories": 840,
+    "opportunities": 12096
+  },
+  "fullweek_audit_complete": false,
+  "annual_catalog": {
+    "expected_region_months": 72,
+    "expected_logical_slices": 432,
+    "completed_region_months": 71,
+    "failed_region_months": [
+      {
+        "unit": "chicago__2023-01",
+        "complete": false,
+        "error": "AssertionError",
+        "message": "Failed exact retry retained"
+      }
+    ],
+    "pending_region_months": 0
+  },
+  "native_sample": {
+    "registered_native_originals": 2470,
+    "expected_regions": 3,
+    "completed_regions": 0,
+    "full_year_native_complete": false,
+    "annual_fit_complete": false
+  },
+  "c2": {
+    "F_scored": false,
+    "coverage": {
+      "full": 72
+    },
+    "current_scope": "native E construction sanity and development protocol registration only",
+    "model_calls": 0,
+    "native_E_tasks": 144,
+    "passed": true,
+    "reference_statuses": {
+      "resolved": 144
+    },
+    "registered_prefixes": 72,
+    "source_script_sha256": "5bbe9a02b780d7998957057767448dbb8110d11eafac24853f179e23efa24656"
+  },
+  "jobs": [
+    {
+      "job_id": "pt-j0b736m1",
+      "job_name": "dt-v11-annual-catalog-01",
+      "gpus": 0,
+      "spec": "n6ls.iu.i40.16c64g",
+      "runtime": "annual_catalog_01",
+      "worker_exit": 1,
+      "last_reported_progress": null
+    },
+    {
+      "job_id": "pt-foikk3r3",
+      "job_name": "dt-v11-annual-native-sample-01",
+      "gpus": 0,
+      "spec": "n6ls.iu.i40.16c64g",
+      "runtime": "annual_native_sample_01",
+      "worker_exit": null,
+      "last_reported_progress": null
+    },
+    {
+      "job_id": "pt-719j72ho",
+      "job_name": "dt-v11-fullweek02-shard-0",
+      "gpus": 0,
+      "spec": "n6ls.iu.i40.16c64g",
+      "runtime": "fullweek02_shard_0",
+      "worker_exit": null,
+      "last_reported_progress": {
+        "shard": 0,
+        "finished": 90,
+        "expected": 210,
+        "failed": 0
+      }
+    },
+    {
+      "job_id": "pt-e5uibxrq",
+      "job_name": "dt-v11-fullweek02-shard-1",
+      "gpus": 0,
+      "spec": "n6ls.iu.i40.16c64g",
+      "runtime": "fullweek02_shard_1",
+      "worker_exit": null,
+      "last_reported_progress": {
+        "shard": 1,
+        "finished": 100,
+        "expected": 210,
+        "failed": 0
+      }
+    },
+    {
+      "job_id": "pt-py2m5d2n",
+      "job_name": "dt-v11-fullweek02-shard-2-small",
+      "gpus": 0,
+      "spec": "n6ls.iu.i40.8c32g",
+      "runtime": "fullweek02_shard_2_small",
+      "worker_exit": null,
+      "last_reported_progress": {
+        "shard": 2,
+        "finished": 40,
+        "expected": 210,
+        "failed": 0
+      }
+    },
+    {
+      "job_id": "pt-sld4fduw",
+      "job_name": "dt-v11-fullweek02-shard-3-submission-1",
+      "gpus": 0,
+      "spec": "n6ls.iu.i40.16c64g",
+      "runtime": "fullweek02_shard_3_submission_1",
+      "worker_exit": null,
+      "last_reported_progress": null
+    },
+    {
+      "job_id": "pt-lt7e2djb",
+      "job_name": "dt-v11-fullweek-pilot-01",
+      "gpus": 0,
+      "spec": "n6ls.iu.i40.16c64g",
+      "runtime": "pilot_01",
+      "worker_exit": 1,
+      "last_reported_progress": null
+    },
+    {
+      "job_id": "pt-d79qwid8",
+      "job_name": "dt-v11-fullweek-pilot-02",
+      "gpus": 0,
+      "spec": "n6ls.iu.i40.16c64g",
+      "runtime": "pilot_02",
+      "worker_exit": 0,
+      "last_reported_progress": null
+    },
+    {
+      "job_id": "pt-3kvdi2va",
+      "job_name": "dt-v11-replay-profile-01",
+      "gpus": 0,
+      "spec": "n6ls.iu.i40.16c64g",
+      "runtime": "profile_01",
+      "worker_exit": 0,
+      "last_reported_progress": null
+    }
+  ],
+  "new_benchmark_model_calls": 0,
+  "codex_development_token_usage": "not measured; not zero by inference",
+  "confirmation_opened": false,
+  "publication_freezes_observation_only": true
+}

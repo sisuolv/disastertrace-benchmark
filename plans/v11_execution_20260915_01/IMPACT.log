@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/impact_scan.py", line 94, in <module>
+    main()
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/impact_scan.py", line 57, in main
+    bundle = read_bound(root / "bundles" / (call_id + ".json"))
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/impact_scan.py", line 49, in read_bound
+    bindings[str(path)] = digest(path)
+  File "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/disastertrace-starter/src/disastertrace/monitoring_v1/spool_backend.py", line 15, in digest
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+  File "/usr/lib/python3.10/pathlib.py", line 1126, in read_bytes
+    with self.open(mode='rb') as f:
+  File "/usr/lib/python3.10/pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v10_execution_20260914_01/clarified_feature_trial_01/bundles/04de3ce2f5757aadad62e192.json'

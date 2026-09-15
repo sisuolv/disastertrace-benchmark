@@ -1,0 +1,1 @@
+"""Frozen monthly data qualification."""

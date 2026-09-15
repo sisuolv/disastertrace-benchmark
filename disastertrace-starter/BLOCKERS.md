@@ -1,5 +1,34 @@
 # Blockers
 
+## v11 current execution limits, 2026-09-15
+
+- Fullweek02 passes its real five-arm preflight and exact historical scoring
+  equivalence, but840trajectory execution/audit must finish before scientific claims.
+- Member CPU quota prevented the original third16CPU allocation. Three shards
+  now have16/16/8CPUs; the fourth automatically waits for16CPUs to be released.
+  The explicit quota rejection and original stopped coordinator are retained.
+- Annual432catalog acquisition is active. Three leap-month regional samples pass;
+  their2470 native TAF bodies/full-month joins are a separate active scope. Full
+  annual raw data, purged role qualification, fitting and calibration are not done.
+- ChicagoJanuary2023 KORD catalog acquisition receives429 and then a200 response
+  with curl28 timeout on its registered exact retry. The unit remains incomplete;
+  this is retrieval failure, not established source unavailability. Other units continue.
+- C2 has72 registered prefixes and144 real E construction checks; all coverage
+  references are full. Actual same-state branches and diverse coverage/version/
+  missingness support still require qualification. No independent confirmation run.
+- Formal managed provenance and shape validation do not solve arbitrary execution
+  isolation, full ensemble member lineage, every DWD eligibility rule or every
+  data-card/prompt binding proposal. The two historical capsules have not been
+  rerun as current-code migration checks in this batch.
+- One initial F_COMMON preflight failed and is preserved; its corrected preflight
+  succeeds in a new directory. A first annual KJFK fetch timed out and its declared
+  exact retry succeeds. These failures are retained, not silently replaced.
+- The old hydro shadow record remains an incomplete historical run with a passing
+  available-prefix audit; no observed terminal receipt or reliable exit cause exists.
+- No v11 GitHub publication yet. The development worktree's Git ownership check
+  needs reconciliation at publication; no Git index or global trust setting changed.
+
+
 ## Current v10 gates, 2026-09-14
 
 Canonical progress is `../plans/v10_execution_20260914_01/CANONICAL_STATUS.json`.

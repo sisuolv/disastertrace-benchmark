@@ -1,5 +1,57 @@
 # Implementation Status
 
+## v11 execution in progress, 2026-09-15
+
+Entry: `../plans/v11_execution_20260915_01/README_CN.md`; machine progress is
+`DASHBOARD_02.json`, with full-calendar coordination in `STATUS_03.json`.
+Historical v10 outputs and Git index remain preserved. This batch makes no new
+model calls and keeps independent confirmation closed.
+
+Current monitoring regression passes585 tests;165 distinct prior supplementary
+tests also pass (750 unique nodes, no failures/errors/skips). Shared temperature
+support validation rejects malformed UTC windows, duplicate/missing days, invalid
+numeric inputs and mismatched member shapes. Visibility lower infinity is rejected;
+legal upper censoring remains supported. This does not establish member lineage.
+Managed formal v2 references bind actual input content, journals, reports, STOP
+receipts, source/data hashes and result-provider policy; explicit legacy rescoring
+remains available. API STOP/deadline checks share a short local dispatch gate.
+These are managed-run checks, not arbitrary-code or distributed-transaction security.
+
+Historical impact scan checks252 feature responses,256 temperature responses,
+256 temperature input checks and11644 full-calendar temperature policy rows:
+no changed eligibility/probability in the checked records. The first scanner
+failed on a metadata/task-roster mismatch; its failure remains alongside the
+successful registered-task scan. The stale September12 hydro run is classified
+as historical incomplete; its available prefix verifies, but full completion
+and original worker-exit cause are not established.
+
+A real five-arm preflight exposed an adapter restriction to values banks.
+The common bank now has an explicit mode that skips paid-record extraction;
+two regressions check lawful common execution and reject paid slot features.
+The original failed preflight remains. Fresh preflight02 completes all five
+arms and audits360 rows. A same-node nine-arm before/after profile verifies
+identical score-file hashes,19 to9 journal replays,1256.0 to554.6 seconds.
+This one-case result includes profiler overhead and uncontrolled filesystem cache.
+
+Fullweek02 freezes168 daily cases,840 trajectories and12096 opportunities across
+the original12 region-weeks, five conditions and48 source queries per daily
+session. The four same-values-bank conditions are scored separately from F_COMMON.
+Three shards are submitted with16/16/8 CPUs and12/12/6 workers. The original third
+16CPU submission was definitively quota-rejected and is preserved; a fresh8CPU
+submission succeeds. `advance_resume.py` queues shard3 for a released16CPU slot,
+then performs the whole-roster audit. No original shard restarts. Scientific
+results are not yet available at this entry's timestamp.
+
+Annual source acquisition registers432 station/month/product slices in72 regional
+months,2023 fit/internal-selection and2024 final-calibration. The fixed leap-month
+sample passes18 catalog/METAR slices and enumerates2470 native TAF originals.
+Remaining catalogs and three full-month native joins run as separate bounded CPU
+jobs. Entire annual native acquisition, purged admission and fitting are unfinished.
+C2 registers72 noon target prefixes and constructs144 real native coverage/revision
+E tasks; all references resolve, and all72 coverage tasks are full. This verifies
+construction only, not coverage diversity, actual branch execution or F improvement.
+Final method/backend/independent-process confirmation remains gated.
+
 ## v10 closed execution, 2026-09-14
 
 Current entry: `../plans/v10_execution_20260914_01/README_CN.md` and its

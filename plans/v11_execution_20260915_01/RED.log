@@ -1,0 +1,686 @@
+F.F.F.F.F.F.FFFFF....FFFFFF                                              [100%]
+=================================== FAILURES ===================================
+_ test_temperature_contract_rejects_ambiguous_support[midday-temperature_ensemble_probability] _
+
+function = <function temperature_ensemble_probability at 0x7fd487a9ecb0>
+failure = 'midday'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:58: Failed
+_ test_temperature_contract_rejects_ambiguous_support[duplicate-temperature_ensemble_probability] _
+
+function = <function temperature_ensemble_probability at 0x7fd487a9ecb0>
+failure = 'duplicate'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:58: Failed
+_ test_temperature_contract_rejects_ambiguous_support[reversed_duplicate-temperature_ensemble_probability] _
+
+function = <function temperature_ensemble_probability at 0x7fd487a9ecb0>
+failure = 'reversed_duplicate'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:58: Failed
+_ test_temperature_contract_rejects_ambiguous_support[nan-temperature_ensemble_probability] _
+
+function = <function temperature_ensemble_probability at 0x7fd487a9ecb0>
+failure = 'nan'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:58: Failed
+_ test_temperature_contract_rejects_ambiguous_support[bool_threshold-temperature_ensemble_probability] _
+
+function = <function temperature_ensemble_probability at 0x7fd487a9ecb0>
+failure = 'bool_threshold'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:58: Failed
+_ test_temperature_contract_rejects_ambiguous_support[bool_day-temperature_ensemble_probability] _
+
+function = <function temperature_ensemble_probability at 0x7fd487a9ecb0>
+failure = 'bool_day'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:58: Failed
+_ test_temperature_contract_rejects_ambiguous_support[bool_cutoff-temperature_ensemble_probability] _
+
+function = <function temperature_ensemble_probability at 0x7fd487a9ecb0>
+failure = 'bool_cutoff'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:58: Failed
+_ test_temperature_contract_rejects_ambiguous_support[bool_cutoff-event_probability] _
+
+function = <function event_probability at 0x7fd487a9f0a0>
+failure = 'bool_cutoff'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:58: Failed
+_ test_temperature_contract_rejects_ambiguous_support[huge_threshold-temperature_ensemble_probability] _
+
+function = <function temperature_ensemble_probability at 0x7fd487a9ecb0>
+failure = 'huge_threshold'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:58: Failed
+_ test_temperature_contract_rejects_ambiguous_support[huge_threshold-event_probability] _
+
+function = <function event_probability at 0x7fd487a9f0a0>
+failure = 'huge_threshold'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+        with pytest.raises(ValueError):
+>           function(row)
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+row = {'cutoff': 0, 'target': {'units': 'C', 'physical_start': 86400000000, 'physical_end': 172800000000, 'variable': 'daily...{'target_date': '1970-01-02', 'day_index': 1, 'forecast_max_members_C': [31, 20], 'forecast_min_members_C': [10, 5]}]}}
+products = [{'target_date': '1970-01-02', 'day_index': 1, 'forecast_max_members_C': [31, 20], 'forecast_min_members_C': [10, 5]}]
+
+    def event_probability(row, *, products=None):
+        target = row["target"]
+        start, end = target["physical_start"], target["physical_end"]
+        if (
+            target["units"] != "C"
+            or type(start) is not int
+            or type(end) is not int
+            or start % DAY
+            or end % DAY
+            or end <= start
+            or row["cutoff"] >= start
+        ):
+            raise ValueError("Absolute future UTC days in Celsius are required")
+        products = row["common"]["daily_products"] if products is None else products
+        validate_products(products)
+        by_date = {p["target_date"]: p for p in products}
+        dates = [
+            datetime.fromtimestamp(t / 1_000_000, timezone.utc).date().isoformat()
+            for t in range(start, end, DAY)
+        ]
+        variable = target["variable"]
+        field = (
+            "forecast_min_members_C"
+            if variable == "daily_min_2m_temperature"
+            else "forecast_max_members_C"
+        )
+        try:
+            values = [by_date[date][field] for date in dates]
+        except KeyError as exc:
+            raise ValueError("Requested physical target is not fully covered") from exc
+        if variable in {"daily_min_2m_temperature", "daily_max_2m_temperature"} and len(values) == 1:
+            members = values[0]
+        elif variable == "min_of_3_daily_max_2m_temperature" and len(values) == 3:
+            members = [min(path) for path in zip(*values, strict=True)]
+        elif variable == "max_of_3_daily_max_2m_temperature" and len(values) == 3:
+            members = [max(path) for path in zip(*values, strict=True)]
+        else:
+            raise ValueError("Variable and fixed target duration disagree")
+        operator, threshold = target["event_operator"], target["threshold"]
+        if (
+            operator not in {"ge", "lt"}
+            or type(threshold) not in (float, int)
+>           or not math.isfinite(threshold)
+        ):
+E       OverflowError: int too large to convert to float
+
+disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py:72: OverflowError
+_ test_temperature_contract_rejects_ambiguous_support[missing_day-temperature_ensemble_probability] _
+
+function = <function temperature_ensemble_probability at 0x7fd487a9ecb0>
+failure = 'missing_day'
+
+    @pytest.mark.parametrize("function", [temperature_ensemble_probability, event_probability])
+    @pytest.mark.parametrize("failure", [
+        "midday", "duplicate", "reversed_duplicate", "nan", "bool_threshold",
+        "bool_day", "bool_cutoff", "huge_threshold", "missing_day", "wrong_duration",
+    ])
+    def test_temperature_contract_rejects_ambiguous_support(function, failure):
+        row = temperature_row()
+        if failure == "midday":
+            row["target"]["physical_start"] += 43200_000_000
+            row["target"]["physical_end"] += 43200_000_000
+        elif "duplicate" in failure:
+            extra = copy.deepcopy(row["common"]["daily_products"][0])
+            extra["forecast_max_members_C"] = [35, 35]
+            row["common"]["daily_products"].append(extra)
+            if failure == "reversed_duplicate":
+                row["common"]["daily_products"].reverse()
+        elif failure in {"nan", "bool_threshold", "huge_threshold"}:
+            row["target"]["threshold"] = {"nan": float("nan"), "bool_threshold": True,
+                                         "huge_threshold": 10**400}[failure]
+        elif failure == "bool_day":
+            row["common"]["daily_products"][0]["day_index"] = True
+        elif failure == "bool_cutoff":
+            row["cutoff"] = False
+        elif failure == "missing_day":
+            row["common"]["daily_products"][0]["target_date"] = "1970-01-03"
+        else:
+            row["target"]["variable"] = "min_of_3_daily_max_2m_temperature"
+        with pytest.raises(ValueError):
+>           function(row)
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py:73: in temperature_ensemble_probability
+    daily = [products[date] for date in dates]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7fd4883ba3e0>
+
+>   daily = [products[date] for date in dates]
+E   KeyError: '1970-01-02'
+
+disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py:73: KeyError
+________ test_unbounded_lower_and_overflow_are_invalid_responses[lower] ________
+
+field = 'lower'
+
+    @pytest.mark.parametrize("field", ["lower", "temperature_c", "probability"])
+    def test_unbounded_lower_and_overflow_are_invalid_responses(field):
+        if field == "probability":
+            with pytest.raises(ValueError):
+                parse_temperature('{"probability":' + str(10**400) + '}')
+            return
+        slot = {"visibility": {"lower": "+inf", "upper": "+inf",
+                               "lower_closed": True, "upper_closed": True},
+                "temperature_c": None, "dewpoint_c": None}
+        if field == "temperature_c":
+            slot["visibility"] = None
+            slot["temperature_c"] = 10**400
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:80: Failed
+____ test_unbounded_lower_and_overflow_are_invalid_responses[temperature_c] ____
+
+field = 'temperature_c'
+
+    @pytest.mark.parametrize("field", ["lower", "temperature_c", "probability"])
+    def test_unbounded_lower_and_overflow_are_invalid_responses(field):
+        if field == "probability":
+            with pytest.raises(ValueError):
+                parse_temperature('{"probability":' + str(10**400) + '}')
+            return
+        slot = {"visibility": {"lower": "+inf", "upper": "+inf",
+                               "lower_closed": True, "upper_closed": True},
+                "temperature_c": None, "dewpoint_c": None}
+        if field == "temperature_c":
+            slot["visibility"] = None
+            slot["temperature_c"] = 10**400
+        with pytest.raises(ValueError):
+>           parse_features(json.dumps({"slots": {"q": slot}}), ["q"])
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py:29: in parse_features
+    validate_claims(value["slots"], dict.fromkeys(read_ids))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+claims = {'q': {'visibility': None, 'temperature_c': 100000000000000000...0000000000000000000, 'dewpoint_c': None}}
+disclosed = {'q': None}
+
+    def validate_claims(claims, disclosed):
+        if not isinstance(claims, dict) or set(claims) != set(disclosed):
+            raise ValueError("Claims must match the actually disclosed slots")
+        for value in claims.values():
+            if not isinstance(value, dict) or set(value) != {
+                "visibility",
+                "temperature_c",
+                "dewpoint_c",
+            }:
+                raise ValueError("Invalid native feature claim schema")
+            for key in ("temperature_c", "dewpoint_c"):
+                if value[key] is not None and (
+>                   type(value[key]) not in (float, int) or not math.isfinite(value[key])
+                ):
+E               OverflowError: int too large to convert to float
+
+disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py:67: OverflowError
+_____ test_unbounded_lower_and_overflow_are_invalid_responses[probability] _____
+
+field = 'probability'
+
+    @pytest.mark.parametrize("field", ["lower", "temperature_c", "probability"])
+    def test_unbounded_lower_and_overflow_are_invalid_responses(field):
+        if field == "probability":
+            with pytest.raises(ValueError):
+>               parse_temperature('{"probability":' + str(10**400) + '}')
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '{"probability":100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000...000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000}'
+
+    def parse_temperature(raw):
+        value, wrapped = output_json(raw)
+        if (
+            not isinstance(value, dict)
+            or set(value) != {"probability"}
+            or type(value["probability"]) not in (int, float)
+>           or not math.isfinite(value["probability"])
+            or not 0 <= value["probability"] <= 1
+        ):
+E       OverflowError: int too large to convert to float
+
+disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py:39: OverflowError
+_________ test_api_gate_is_checked_after_claim_before_transport[stop] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_api_gate_is_checked_after0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd4885c70a0>
+failure = 'stop'
+
+    @pytest.mark.parametrize("failure", ["stop", "deadline"])
+    def test_api_gate_is_checked_after_claim_before_transport(tmp_path, monkeypatch, failure):
+        from test_monitoring_api_ledger_v2 import setup, valid_response
+    
+        api, ledger, messages = setup(tmp_path, monkeypatch, valid_response())
+        original = ledger.claim
+        sends = []
+    
+        def claim(*args):
+            value = original(*args)
+            if failure == "stop":
+                ledger.stop("test stop after reservation")
+            else:
+                monkeypatch.setattr(api.time, "time_ns", lambda: ledger.contract["deadline_wall_ns"])
+            return value
+    
+        class Opener:
+            def open(self, *args, **kwargs):
+                sends.append(1)
+                raise RuntimeError("offline transport")
+    
+        monkeypatch.setattr(ledger, "claim", claim)
+        monkeypatch.setattr(api, "build_opener", lambda *args: Opener())
+        with pytest.raises(RuntimeError):
+            api.capture(ledger, "0", messages)
+>       assert not sends
+E       assert not [1]
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:109: AssertionError
+_______ test_api_gate_is_checked_after_claim_before_transport[deadline] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_api_gate_is_checked_after1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd4883baa10>
+failure = 'deadline'
+
+    @pytest.mark.parametrize("failure", ["stop", "deadline"])
+    def test_api_gate_is_checked_after_claim_before_transport(tmp_path, monkeypatch, failure):
+        from test_monitoring_api_ledger_v2 import setup, valid_response
+    
+        api, ledger, messages = setup(tmp_path, monkeypatch, valid_response())
+        original = ledger.claim
+        sends = []
+    
+        def claim(*args):
+            value = original(*args)
+            if failure == "stop":
+                ledger.stop("test stop after reservation")
+            else:
+                monkeypatch.setattr(api.time, "time_ns", lambda: ledger.contract["deadline_wall_ns"])
+            return value
+    
+        class Opener:
+            def open(self, *args, **kwargs):
+                sends.append(1)
+                raise RuntimeError("offline transport")
+    
+        monkeypatch.setattr(ledger, "claim", claim)
+        monkeypatch.setattr(api, "build_opener", lambda *args: Opener())
+        with pytest.raises(RuntimeError):
+            api.capture(ledger, "0", messages)
+>       assert not sends
+E       assert not [1]
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:109: AssertionError
+__________________ test_formal_scoring_replays_each_arm_once ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_formal_scoring_replays_ea0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd4879495a0>
+
+    def test_formal_scoring_replays_each_arm_once(tmp_path, monkeypatch):
+        from test_monitoring_formal_session import setup
+    
+        from disastertrace.monitoring_fixed_v1.admission import AdmissionEngine
+        from disastertrace.monitoring_v1.formal_session import FormalSession, score_formal
+    
+        data, bank, config, comparison, files = setup()
+        run = FormalSession(data, bank, config, comparison=comparison,
+                            bound_files=files, directory=tmp_path / "formal")
+        report = run.finish(max_steps=20)
+        engine = AdmissionEngine.restore(report["event_replay"])
+        journal = tmp_path / "admission.jsonl"
+        engine.write_journal(journal)
+        outcomes = [{
+            "opportunity_id": oid, "target_contract_hash": o.target.contract_hash,
+            "resolution_version": "missing-test.v1", "value": None, "status": "missing",
+            "source_revision": "no-observation", "source_sha256": None,
+            "physical_start": o.target.physical_start, "physical_end": o.target.physical_end,
+            "units": o.target.units, "quality_status": "missing", "observed_at": None,
+            "published_at": None, "fetched_at": None, "resolved_at": o.target.physical_end + 1,
+            "availability_basis": "declared_archive_scenario",
+            "resolution_policy": "h15_routine_archive.v1", "provider": "IEM",
+            "provider_version": "native_h15_snapshot.v1",
+            "reference_kind": "final_archived_routine_report_not_continuous_physical_truth",
+        } for oid, o in engine.opportunities.items()]
+        calls = []
+        original = AdmissionEngine.from_journal
+    
+        def load(path):
+            calls.append(path)
+            return original(path)
+    
+        monkeypatch.setattr(AdmissionEngine, "from_journal", load)
+        result = score_formal(outcomes, {"one": journal, "two": journal}, comparison=comparison)
+        assert result["scores"]
+>       assert len(calls) == 2
+E       AssertionError: assert 5 == 2
+E        +  where 5 = len([PosixPath('/tmp/pytest-of-root/pytest-0/test_formal_scoring_replays_ea0/admission.jsonl'), PosixPath('/tmp/pytest-of-...plays_ea0/admission.jsonl'), PosixPath('/tmp/pytest-of-root/pytest-0/test_formal_scoring_replays_ea0/admission.jsonl')])
+
+disastertrace-starter/tests/test_monitoring_v11_boundaries.py:149: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[midday-temperature_ensemble_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[duplicate-temperature_ensemble_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[reversed_duplicate-temperature_ensemble_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[nan-temperature_ensemble_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[bool_threshold-temperature_ensemble_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[bool_day-temperature_ensemble_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[bool_cutoff-temperature_ensemble_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[bool_cutoff-event_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[huge_threshold-temperature_ensemble_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[huge_threshold-event_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_temperature_contract_rejects_ambiguous_support[missing_day-temperature_ensemble_probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_unbounded_lower_and_overflow_are_invalid_responses[lower]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_unbounded_lower_and_overflow_are_invalid_responses[temperature_c]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_unbounded_lower_and_overflow_are_invalid_responses[probability]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_api_gate_is_checked_after_claim_before_transport[stop]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_api_gate_is_checked_after_claim_before_transport[deadline]
+FAILED disastertrace-starter/tests/test_monitoring_v11_boundaries.py::test_formal_scoring_replays_each_arm_once

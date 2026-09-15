@@ -1,0 +1,48 @@
+{
+  "passed": false,
+  "results": [
+    {
+      "case": "new_york__2025-03-03__1000",
+      "arm": "F_COMMON",
+      "state": "failed",
+      "error": "ValueError",
+      "message": "A frozen values feature bank is required",
+      "traceback": "Traceback (most recent call last):\n  File \"/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/fullweek.py\", line 150, in run_arm\n    report = run.finish(max_steps=100)\n  File \"/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/fullweek_01/source/disastertrace/monitoring_v1/formal_session.py\", line 209, in finish\n    self.step()\n  File \"/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/fullweek_01/source/disastertrace/monitoring_v1/formal_session.py\", line 157, in step\n    return self.coordinator.step(controls)\n  File \"/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/fullweek_01/source/disastertrace/monitoring_v1/session_checkpoint.py\", line 471, in step\n    result = run_session(\n  File \"/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/fullweek_01/source/disastertrace/monitoring_v1/policies.py\", line 116, in run_session\n    validate_feature_bank(\n  File \"/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v11_execution_20260915_01/fullweek_01/source/disastertrace/monitoring_fixed_v1/native_feature.py\", line 24, in validate_feature_bank\n    raise ValueError(\"A frozen values feature bank is required\")\nValueError: A frozen values feature bank is required\n",
+      "seconds": 0.7005807273089886
+    },
+    {
+      "case": "new_york__2025-03-03__1000",
+      "arm": "FOLLOW",
+      "state": "completed",
+      "seconds": 104.74959561275318,
+      "opportunities": 72,
+      "model_calls": 0
+    },
+    {
+      "case": "new_york__2025-03-03__1000",
+      "arm": "F_BASE_ONLY",
+      "state": "completed",
+      "seconds": 260.29171777516603,
+      "opportunities": 72,
+      "model_calls": 0
+    },
+    {
+      "case": "new_york__2025-03-03__1000",
+      "arm": "B11_BATCH",
+      "state": "completed",
+      "seconds": 269.3527596751228,
+      "opportunities": 72,
+      "model_calls": 0
+    },
+    {
+      "case": "new_york__2025-03-03__1000",
+      "arm": "B11_COVERAGE",
+      "state": "completed",
+      "seconds": 271.1613817634061,
+      "opportunities": 72,
+      "model_calls": 0
+    }
+  ],
+  "audited_rows": 0,
+  "model_calls": 0
+}

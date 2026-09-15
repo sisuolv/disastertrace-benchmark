@@ -1,0 +1,51 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_common_bank_session_uses_only_common_features ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7efd77d9aad0>
+
+    def test_common_bank_session_uses_only_common_features(monkeypatch):
+        from disastertrace.monitoring_v1 import native_feature_forecast
+    
+        data, bank, config = setup()
+        config["native_feature_bank"].update(mode="common", feature_names=["taf_present"])
+    
+        def reject_extraction(*args, **kwargs):
+            raise AssertionError("Common-information prediction must not extract paid records")
+    
+        monkeypatch.setattr(native_feature_forecast, "native_claims", reject_extraction)
+>       report = run_session(data, bank, config)
+
+disastertrace-starter/tests/test_monitoring_native_feature_session.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/policies.py:116: in run_session
+    validate_feature_bank(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+bank = {'mode': 'common', 'feature_version': 'native_h15_features.v1', 'mapping_version': 'test-only', 'feature_names': ['taf_present'], ...}
+calibrated = False
+
+    def validate_feature_bank(bank, *, calibrated=False):
+        if (
+            not isinstance(bank, dict)
+            or bank.get("feature_version") != FEATURE_VERSION
+            or bank.get("mode") != "values"
+        ):
+>           raise ValueError("A frozen values feature bank is required")
+E           ValueError: A frozen values feature bank is required
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/native_feature.py:24: ValueError
+______________ test_common_bank_cannot_declare_paid_slot_features ______________
+
+    def test_common_bank_cannot_declare_paid_slot_features():
+        data, bank, config = setup()
+        config["native_feature_bank"]["mode"] = "common"
+>       with pytest.raises(ValueError, match="common.*feature"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'common.*feature'
+E         Actual message: 'A frozen values feature bank is required'
+
+disastertrace-starter/tests/test_monitoring_native_feature_session.py:91: AssertionError
+=========================== short test summary info ============================
+FAILED disastertrace-starter/tests/test_monitoring_native_feature_session.py::test_common_bank_session_uses_only_common_features
+FAILED disastertrace-starter/tests/test_monitoring_native_feature_session.py::test_common_bank_cannot_declare_paid_slot_features

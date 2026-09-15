@@ -68,3 +68,25 @@ def test_missing_or_wrong_feature_bank_is_rejected_before_a_session():
     del config["native_feature_bank"]
     with pytest.raises(ValueError, match="feature"):
         run_session(data, bank, config)
+
+
+def test_common_bank_session_uses_only_common_features(monkeypatch):
+    from disastertrace.monitoring_v1 import native_feature_forecast
+
+    data, bank, config = setup()
+    config["native_feature_bank"].update(mode="common", feature_names=["taf_present"])
+
+    def reject_extraction(*args, **kwargs):
+        raise AssertionError("Common-information prediction must not extract paid records")
+
+    monkeypatch.setattr(native_feature_forecast, "native_claims", reject_extraction)
+    report = run_session(data, bank, config)
+    assert report["calls"]
+    assert all(0 <= call["proposed_probability"] <= 1 for call in report["calls"])
+
+
+def test_common_bank_cannot_declare_paid_slot_features():
+    data, bank, config = setup()
+    config["native_feature_bank"]["mode"] = "common"
+    with pytest.raises(ValueError, match="common.*feature"):
+        run_session(data, bank, config)
