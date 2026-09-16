@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="4" time="20.195" timestamp="2026-09-15T16:59:17.087978+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-mlmzp"><testcase classname="tests.test_monitoring_stage_c_integration" name="test_real_spool_and_formal_controller_keep_denominator_and_costs[valid]" time="3.626"><failure message="KeyError: 'selector_records'">prepared = (&lt;module 'stage_c_integration' from '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans...: 'KOAK-2024-01-05T07:00:00Z-vis-lt-1000m', 'entity': 'KOAK', 'variable': 'visibility', 'units': 'm', ...}, ...], ...})
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fce0e608130&gt;
+response_kind = 'valid'
+
+    @pytest.mark.parametrize("response_kind", ["valid", "invalid", "http_failure"])
+    def test_real_spool_and_formal_controller_keep_denominator_and_costs(prepared, monkeypatch, response_kind):
+        stage, data = prepared
+        sent = []
+        original_deliver = stage.deliver
+    
+        def send(payload, policy):
+            sent.append(payload)
+            view = json.loads(payload["messages"][-1]["content"])
+            assert "outcomes" not in view
+            assert view["forecast_handles_are_ignored"] is True
+            answer = json.dumps({"query_order": list(view["queries"]), "forecast_handles": []})
+            if response_kind == "invalid":
+                answer = "not valid JSON"
+            body = json.dumps({"model": policy["model"], "usage": {"prompt_tokens": 100, "completion_tokens": 20},
+                "choices": [{"finish_reason": "stop", "message": {"content": answer}}]}).encode()
+            return (429 if response_kind == "http_failure" else 200), body, hashlib.sha256(body).hexdigest(), False
+    
+        monkeypatch.setattr(stage, "deliver", lambda b, c, p: original_deliver(b, c, p, send=send))
+        result = stage.run_arm(("fixture", "LLM_SELECTOR"))
+        assert result["passed"], result
+        assert len(sent) == len({o["cutoff"] for o in data["opportunities"]})
+        case = stage.OUT / "fixture"
+        report = read(case / "LLM_SELECTOR/FORMAL_REPORT.json")
+        assert len(report["snapshots"]) == len(data["opportunities"])
+        assert len(list((case / "spool").glob("*.api_intent.json"))) == len(sent)
+        assert report["actual_model_calls"] == len(sent)
+        assert all(c["head"] == "program" for c in report["calls"])
+        cfg = read(case / "CONFIGS.json")["LLM_SELECTOR"]
+        assert len(report["calls"]) == cfg["per_tick_forecast_cap"] * len(sent)
+        assert all(c["started_at"] &lt; next(o["cutoff"] for o in data["opportunities"]
+            if o["opportunity_id"] == c["opportunity_id"]) for c in report["calls"])
+        assert (case / "LLM_SELECTOR/STOP.json").exists()
+        if response_kind == "http_failure":
+            assert len(list((case / "spool").glob("*.failure.json"))) == len(sent)
+            assert report["resource_reserved"]["tokens"] &gt; 0
+        else:
+            assert report["resource_spent"]["tokens"] == 120 * len(sent)
+&gt;           errors = [r["response_error"] for r in report["selector_records"]]
+E           KeyError: 'selector_records'
+
+disastertrace-starter/tests/test_monitoring_stage_c_integration.py:100: KeyError</failure></testcase><testcase classname="tests.test_monitoring_stage_c_integration" name="test_real_spool_and_formal_controller_keep_denominator_and_costs[invalid]" time="3.508"><failure message="KeyError: 'selector_records'">prepared = (&lt;module 'stage_c_integration' from '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans...: 'KOAK-2024-01-05T07:00:00Z-vis-lt-1000m', 'entity': 'KOAK', 'variable': 'visibility', 'units': 'm', ...}, ...], ...})
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fce0e6be080&gt;
+response_kind = 'invalid'
+
+    @pytest.mark.parametrize("response_kind", ["valid", "invalid", "http_failure"])
+    def test_real_spool_and_formal_controller_keep_denominator_and_costs(prepared, monkeypatch, response_kind):
+        stage, data = prepared
+        sent = []
+        original_deliver = stage.deliver
+    
+        def send(payload, policy):
+            sent.append(payload)
+            view = json.loads(payload["messages"][-1]["content"])
+            assert "outcomes" not in view
+            assert view["forecast_handles_are_ignored"] is True
+            answer = json.dumps({"query_order": list(view["queries"]), "forecast_handles": []})
+            if response_kind == "invalid":
+                answer = "not valid JSON"
+            body = json.dumps({"model": policy["model"], "usage": {"prompt_tokens": 100, "completion_tokens": 20},
+                "choices": [{"finish_reason": "stop", "message": {"content": answer}}]}).encode()
+            return (429 if response_kind == "http_failure" else 200), body, hashlib.sha256(body).hexdigest(), False
+    
+        monkeypatch.setattr(stage, "deliver", lambda b, c, p: original_deliver(b, c, p, send=send))
+        result = stage.run_arm(("fixture", "LLM_SELECTOR"))
+        assert result["passed"], result
+        assert len(sent) == len({o["cutoff"] for o in data["opportunities"]})
+        case = stage.OUT / "fixture"
+        report = read(case / "LLM_SELECTOR/FORMAL_REPORT.json")
+        assert len(report["snapshots"]) == len(data["opportunities"])
+        assert len(list((case / "spool").glob("*.api_intent.json"))) == len(sent)
+        assert report["actual_model_calls"] == len(sent)
+        assert all(c["head"] == "program" for c in report["calls"])
+        cfg = read(case / "CONFIGS.json")["LLM_SELECTOR"]
+        assert len(report["calls"]) == cfg["per_tick_forecast_cap"] * len(sent)
+        assert all(c["started_at"] &lt; next(o["cutoff"] for o in data["opportunities"]
+            if o["opportunity_id"] == c["opportunity_id"]) for c in report["calls"])
+        assert (case / "LLM_SELECTOR/STOP.json").exists()
+        if response_kind == "http_failure":
+            assert len(list((case / "spool").glob("*.failure.json"))) == len(sent)
+            assert report["resource_reserved"]["tokens"] &gt; 0
+        else:
+            assert report["resource_spent"]["tokens"] == 120 * len(sent)
+&gt;           errors = [r["response_error"] for r in report["selector_records"]]
+E           KeyError: 'selector_records'
+
+disastertrace-starter/tests/test_monitoring_stage_c_integration.py:100: KeyError</failure></testcase><testcase classname="tests.test_monitoring_stage_c_integration" name="test_real_spool_and_formal_controller_keep_denominator_and_costs[http_failure]" time="3.956"><failure message="ValueError: Every opportunity requires a frozen result version">prepared = (&lt;module 'stage_c_integration' from '/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans...: 'KOAK-2024-01-05T07:00:00Z-vis-lt-1000m', 'entity': 'KOAK', 'variable': 'visibility', 'units': 'm', ...}, ...], ...})
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fce0e603940&gt;
+response_kind = 'http_failure'
+
+    @pytest.mark.parametrize("response_kind", ["valid", "invalid", "http_failure"])
+    def test_real_spool_and_formal_controller_keep_denominator_and_costs(prepared, monkeypatch, response_kind):
+        stage, data = prepared
+        sent = []
+        original_deliver = stage.deliver
+    
+        def send(payload, policy):
+            sent.append(payload)
+            view = json.loads(payload["messages"][-1]["content"])
+            assert "outcomes" not in view
+            assert view["forecast_handles_are_ignored"] is True
+            answer = json.dumps({"query_order": list(view["queries"]), "forecast_handles": []})
+            if response_kind == "invalid":
+                answer = "not valid JSON"
+            body = json.dumps({"model": policy["model"], "usage": {"prompt_tokens": 100, "completion_tokens": 20},
+                "choices": [{"finish_reason": "stop", "message": {"content": answer}}]}).encode()
+            return (429 if response_kind == "http_failure" else 200), body, hashlib.sha256(body).hexdigest(), False
+    
+        monkeypatch.setattr(stage, "deliver", lambda b, c, p: original_deliver(b, c, p, send=send))
+        result = stage.run_arm(("fixture", "LLM_SELECTOR"))
+        assert result["passed"], result
+        assert len(sent) == len({o["cutoff"] for o in data["opportunities"]})
+        case = stage.OUT / "fixture"
+        report = read(case / "LLM_SELECTOR/FORMAL_REPORT.json")
+        assert len(report["snapshots"]) == len(data["opportunities"])
+        assert len(list((case / "spool").glob("*.api_intent.json"))) == len(sent)
+        assert report["actual_model_calls"] == len(sent)
+        assert all(c["head"] == "program" for c in report["calls"])
+        cfg = read(case / "CONFIGS.json")["LLM_SELECTOR"]
+        assert len(report["calls"]) == cfg["per_tick_forecast_cap"] * len(sent)
+        assert all(c["started_at"] &lt; next(o["cutoff"] for o in data["opportunities"]
+            if o["opportunity_id"] == c["opportunity_id"]) for c in report["calls"])
+        assert (case / "LLM_SELECTOR/STOP.json").exists()
+        if response_kind == "http_failure":
+            assert len(list((case / "spool").glob("*.failure.json"))) == len(sent)
+            assert report["resource_reserved"]["tokens"] &gt; 0
+        else:
+            assert report["resource_spent"]["tokens"] == 120 * len(sent)
+            errors = [r["response_error"] for r in report["selector_records"]]
+            assert all(errors) if response_kind == "invalid" else not any(errors)
+        # Frozen real scoring consumes the managed journal even without model success.
+        group = read(case / "COMPARISONS.json")["values"]["contract"]["payload"]
+        comparison = ComparisonContract(group["invariants"], group["allowed_interventions"])
+&gt;       scored = score_formal([], {"model": case / "LLM_SELECTOR/admission.jsonl"},
+            comparison=comparison, run_references={"model": case / "LLM_SELECTOR"})
+
+disastertrace-starter/tests/test_monitoring_stage_c_integration.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py:444: in score_formal
+    canonical_rows = registry.opportunity_rows(first.opportunities.values(), versions)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_fixed_v1.outcomes.OutcomeRegistry object at 0x7fce0e6c6ce0&gt;
+opportunities = [TypedOpportunity(opportunity_id='KSFO-2024-01-05T01:00:00Z-vis-lt-1000m-cutoff-2024-01-05T00:00:00Z', target=Target(t...em_routine_unique_hour.v1', event_operator='lt', threshold=1000, release_event_at=None), cutoff=1704412800000000), ...]
+resolution_versions = {}
+
+    def opportunity_rows(self, opportunities, resolution_versions):
+        opportunities = list(opportunities)
+        if set(resolution_versions) != {o.opportunity_id for o in opportunities}:
+&gt;           raise ValueError("Every opportunity requires a frozen result version")
+E           ValueError: Every opportunity requires a frozen result version
+
+disastertrace-starter/src/disastertrace/monitoring_fixed_v1/outcomes.py:119: ValueError</failure></testcase><testcase classname="tests.test_monitoring_stage_c_integration" name="test_all_program_controls_use_frozen_raw_banks_without_model_dispatch" time="8.285" /></testsuite></testsuites>

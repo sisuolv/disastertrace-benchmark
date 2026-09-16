@@ -1,3 +1,9 @@
+# Latest: v12 execution completed (2026-09-16 publication)
+
+Start with [current code, results and next gates](LATEST_PROGRESS_V12_CN.md) or [ChatGPT Pro review instructions](publication/v12_execution_20260916/REVIEW_FOR_CHATGPT_PRO_CN.md). The 72-month source chain and bounded model comparison are complete; LLM gains and independent confirmation remain unproved. Earlier entries below are historical.
+
+---
+
 # Latest: v12 plan awaiting review
 
 Start with [the integrated plan and next batch](LATEST_PLAN_V12_CN.md) or [ChatGPT Pro review instructions](publication/v12_planning_20260915/REVIEW_FOR_CHATGPT_PRO_CN.md). This update publishes planning materials; no new benchmark execution is authorized or launched. Earlier entries below are historical snapshots.

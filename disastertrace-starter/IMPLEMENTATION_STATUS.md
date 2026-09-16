@@ -1,5 +1,58 @@
 # Implementation Status
 
+## v12 closed execution, 2026-09-15
+
+Current entry: `../plans/v12_execution_20260915_01/README_CN.md`.
+The registered batch closes at 2026-09-15 22:34:09 UTC, about 7h10m after starting,
+within the ten-hour authorization. `RESULT_SUMMARY.json`, `FINAL_REPORT_CN.md`,
+and `FINDINGS_AND_NEXT_GATES_CN.md` separate implementation, development comparisons,
+scientific limitations and next gates.
+
+Stage A completes six actual parent reconstructions and six exact original-policy
+continuations, followed by 24 formal finite-query branches. All 36 pairwise contrasts
+change features and effective probabilities. The parents share one date and all
+settled outcomes are negative: these are engineering/false-alarm diagnostics,
+not extreme-event detection or independent-process confirmation. The old 840-run
+fullweek audit is complete; its derived report retains all 12096 opportunities.
+E summaries correct 718 previously omitted supported method rows without changing
+original forecasts, outcomes, masks or losses. Native feature bank guards and
+annual failure summaries have scoped regressions; old failures remain recorded.
+
+Annual catalogs and native joins complete 72/72. Of 58221 unique source requests,
+5673 verified cached objects are reused and all 52548 missing bodies are acquired.
+Nine retained transport timeouts each receive their single registered retry;
+52557 download attempts complete with no 429 response. Frozen common/values banks
+use 2023 fitting and 2024 January-November calibration; no confirmation is opened.
+
+The 12-session, nine-condition DeepSeek-V4-Flash query-selector comparison completes
+all 108 method runs and 24 formal score groups. All 288 formal HTTP requests return
+200 with stop finish and 738634 provider-reported tokens. Only 71 replies satisfy
+the original selector contract: 192 schema failures and 25 non-JSON responses remain.
+Among valid replies, 58 select nothing and 13 select all three options in original
+order. The 864 registered opportunities include 861 settled, 16 positive, 3 missing;
+all positives are in Chicago on 2025-12-01. Brier: F_COMMON 0.0072363081,
+B11_COVERAGE 0.0077495538, B11_BATCH 0.0080625504, LLM_SELECTOR 0.0085665575,
+F_BASE_ONLY 0.0085985311. LLM's small gain over F_BASE_ONLY is entirely negative-case
+gain; missing-outcome sensitivity spans zero. F_COMMON uses a different bank.
+
+The first synthetic compatibility call fails its one-query instruction. The second,
+posthoc strict-schema synthetic call passes; it does not replace formal replies or
+qualify a repaired weather interface. All request identities remain consumed.
+
+Affected monitoring and API/report/closeout qualification covers 628 unique test
+nodes without failure or skip. Formal-score/report reconciliation passes 108/108.
+The protected-file audit retains 181 original files, identifies seven authorized
+current-code edits and verifies the isolated source snapshot without differences.
+CCI editable-import differences remain distinct from actual ACP frozen bindings.
+
+Eight CPU jobs are used, with no local H100 generation. Seven reach SUCCEEDED.
+After all method runs complete, the serial score tail is explicitly stopped and
+the remaining 21 score groups run in a fresh 12-worker finalizer; three complete
+groups are reused. The original platform state is SUSPENDED, with unknown process
+exit code retained. Closure is CLOSED_WITH_CONTROLLED_AUDIT_HANDOFF; the finalizer
+and automatic closeout exit zero. No jobs remain running, no confirmation is opened,
+and no Git publication occurs in this batch. Do not rerun consumed launchers.
+
 ## v11 execution in progress, 2026-09-15
 
 Entry: `../plans/v11_execution_20260915_01/README_CN.md`; machine progress is

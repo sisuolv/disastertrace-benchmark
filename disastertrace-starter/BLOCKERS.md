@@ -1,5 +1,32 @@
 # Blockers
 
+## v12 current scientific gates, 2026-09-15
+
+The v12 batch is closed: annual raw acquisition, all 72 native joins, frozen annual
+banks, 24 finite C2 branches and the 108-run/24-score-group model comparison complete.
+Older running/download-blocked statements below are historical. Current findings:
+
+- Only 71/288 DeepSeek selector replies satisfy the free-output contract. A strict
+  schema passes one synthetic diagnostic; the repaired real-weather interface is
+  not yet implemented or qualified. Preserve all original failures and requests.
+- Valid selector actions are 58 empty and 13 select-all, with no observed proper
+  subset or reordering. Precise adaptive allocation is not demonstrated by this run.
+- The model comparison has 16 positive opportunities, all in Chicago on one day.
+  Its small gain over F_BASE_ONLY is entirely from negative cases; strong coverage
+  and F_COMMON have lower Brier loss. Four calendar blocks are not independent
+  weather-process confirmation, and F_COMMON uses a different fitted bank.
+- The six C2 parents share one date and have zero settled positives. Actual branch
+  effects are established, but positive-event sensitivity and diverse native TAF
+  interventions remain unqualified. All 72 initial TAF coverage tasks were full.
+- Annual fitting uses cutoff minus 600 seconds, while application uses the actual
+  fixed slots near cutoff. This registered time difference needs a separate analysis;
+  existing banks and scores cannot be replaced retroactively.
+- Bay confirmation remains closed. Temperature lineage and eligibility, a second
+  qualified active hazard chain, native multimodal input and full 16-hazard delivery
+  remain separate scientific/data gates.
+
+Entry: `../plans/v12_execution_20260915_01/FINDINGS_AND_NEXT_GATES_CN.md`.
+
 ## v11 current execution limits, 2026-09-15
 
 - Fullweek02 passes its real five-arm preflight and exact historical scoring

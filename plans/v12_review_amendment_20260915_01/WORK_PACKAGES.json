@@ -1,0 +1,597 @@
+{
+  "schema": "disastertrace.review_plan.v2",
+  "created_at": "2026-09-15T14:59:59.103243+00:00",
+  "plan_batch": "v12_review_amendment_20260915_01",
+  "supersedes_for_future_planning": "v12_planning_20260915_01/WORK_PACKAGES.json",
+  "historical_plan_preserved": true,
+  "execution_authorized": false,
+  "new_launchers_created": false,
+  "scope": "planning amendment only; proposed next 10-hour stage A",
+  "framework": [
+    "C1",
+    "C2",
+    "C3",
+    "E",
+    "F",
+    "D",
+    "MM",
+    "16_hazards",
+    "W00-W13"
+  ],
+  "recommended_first_batch": "A",
+  "stage_execution_authorized": {
+    "A": false,
+    "B": false,
+    "C": false,
+    "D": false
+  },
+  "dependency_completion_is_execution_authorization": false,
+  "stage_order_is_not_a_global_all_hazards_barrier": true,
+  "first_batch_limits": {
+    "wall_hours": 10,
+    "first_qualified_parent_gate_hour": 4,
+    "no_new_branch_after_hour": 8.5,
+    "worker_stop_latest_hour": 9.5,
+    "additional_cpu": 16,
+    "additional_ram_GiB": 64,
+    "new_gpu": 0,
+    "new_benchmark_model_calls": 0,
+    "new_model_API_calls": 0,
+    "new_upstream_source_HTTP": 0,
+    "new_fits": 0,
+    "confirmation_access": false,
+    "max_unique_parents": 6,
+    "max_parent_reconstruction_attempts": 6,
+    "max_original_policy_continuation_attempts": 6,
+    "max_treatment_branch_attempts": 24,
+    "max_minutes_per_continuation_or_treatment": 45
+  },
+  "counter_policy": {
+    "failed_attempt_consumes_cap": true,
+    "replacement_sampling": false,
+    "alias_branches_executed_twice": false,
+    "all_replay_categories_logged": true,
+    "any_of_these_counts_is_independent_weather_N": false
+  },
+  "existing_v11_jobs": "remain in original registered scope; never duplicate/relaunch; external audit can outlive this batch",
+  "evidence_status_schemas": {
+    "metar": [
+      "supported",
+      "refuted",
+      "undetermined",
+      "inconsistent"
+    ],
+    "taf": [
+      "resolved",
+      "unknown",
+      "unsupported",
+      "conflict"
+    ],
+    "taf_coverage": [
+      "full",
+      "partial",
+      "none"
+    ],
+    "separate_axes": [
+      "native_product_state",
+      "archive_scope_completeness",
+      "query_execution_state",
+      "frame_presence"
+    ]
+  },
+  "residual_plan_names": [
+    "no_further_paid_query",
+    "first",
+    "second",
+    "all"
+  ],
+  "acceptance_axes": [
+    "SCOPED_IMPLEMENTATION_ACCEPTANCE",
+    "BATCH_CLOSEOUT",
+    "SCIENTIFIC_COMPARISON_COMPLETE"
+  ],
+  "terminal_receipt_states": [
+    "completed",
+    "failed",
+    "not_evaluable",
+    "blocked",
+    "stopped_time_limit",
+    "not_started_time_limit",
+    "pending_external"
+  ],
+  "verified_dependency_rule": "requires explicit qualification/pass for the registered scope; failed/blocked/unknown do not satisfy",
+  "terminal_dependency_rule": "can emit acceptance/failure report when attempt terminal; terminal never implies verified",
+  "tasks": [
+    {
+      "id": "W00.refresh",
+      "stage": "A",
+      "purpose": "Freeze identities, current receipts, protected inputs and batch scope",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "EXECUTION_BASELINE.json",
+        "PRESERVATION_BEFORE.json"
+      ]
+    },
+    {
+      "id": "W07.e_summary",
+      "stage": "A",
+      "purpose": "Fix derived METAR E status counting; preserve original F/Y/roster/mask/loss",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W00.refresh"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "E_STATUS_SUMMARY_IMPACT.json"
+      ],
+      "aggregate_counts_gate": "original_fullweek_full_roster_formal_audit_verified",
+      "local_fix_does_not_wait_for_aggregate": true
+    },
+    {
+      "id": "W06.sample_summary",
+      "stage": "A",
+      "purpose": "Correct failed sample summary without re-acquisition",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W00.refresh"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "ANNUAL_SUMMARY_IMPACT.json"
+      ]
+    },
+    {
+      "id": "W01.bank_guard",
+      "stage": "A",
+      "purpose": "Validate calibrated banks at the actual consumer and classify historical impact",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W00.refresh"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "BANK_GUARD_IMPACT.json"
+      ]
+    },
+    {
+      "id": "W11.universe",
+      "stage": "A",
+      "purpose": "Inventory the bounded archive scope; separate public and evaluator information",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W00.refresh"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "SOURCE_UNIVERSE_CONTRACT.json",
+        "PUBLIC_CATALOG.json",
+        "EVALUATOR_CATALOG.json",
+        "C2_STATE_CENSUS.json"
+      ]
+    },
+    {
+      "id": "W11.wiring",
+      "stage": "A",
+      "purpose": "Audit TAF processing and METAR acquisition consumers and distinct status schemas",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W11.universe"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "C2_CONSUMER_WIRING.json"
+      ],
+      "taf_track_result": "wiring_audited_not_intervened"
+    },
+    {
+      "id": "W11.parent_inventory",
+      "stage": "A",
+      "purpose": "Check six metadata-selected parent states without materializing them",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W00.refresh"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "PARENT_CHECKPOINT_INVENTORY.json"
+      ],
+      "parent_roster": "PARENT_CANDIDATES.json"
+    },
+    {
+      "id": "W11.query_plan_interface",
+      "stage": "A",
+      "purpose": "Implement a typed exact query-plan consumer with action/receipt trace",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W00.refresh"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "RESIDUAL_QUERY_PLAN_CONTRACT.json"
+      ],
+      "real_branch_plan_freeze_requires": [
+        "W11.universe",
+        "W11.parent_materialization"
+      ]
+    },
+    {
+      "id": "W11.parent_materialization",
+      "stage": "A",
+      "purpose": "Use captured states or bounded deterministic reconstruction of original frozen prefixes",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W11.parent_inventory"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "parent_day_terminal_and_verified"
+      ],
+      "deliverables": [
+        "PARENT_MATERIALIZATION_REPORT.json"
+      ],
+      "gate_granularity": "per_parent",
+      "max_attempts": 6,
+      "network_calls": 0,
+      "model_calls": 0
+    },
+    {
+      "id": "W11.fork_qualification",
+      "stage": "A",
+      "purpose": "Bind new child identity to parent prefix without reopening stopped originals",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W11.parent_materialization",
+        "W11.query_plan_interface"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "parent_day_terminal_and_verified"
+      ],
+      "deliverables": [
+        "FORMAL_FORK_QUALIFICATION.json"
+      ],
+      "gate_granularity": "per_parent",
+      "allow_legacy_diagnostic": true,
+      "legacy_is_formal": false,
+      "verified_output_requires": "formal_branch_qualified=true; a legacy-only diagnostic is not verified for downstream formal branches"
+    },
+    {
+      "id": "W11.noop_equivalence",
+      "stage": "A",
+      "purpose": "Continue original policy and compare scientific state, inputs, billing and forecasts",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W11.fork_qualification"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "C2_NOOP_EQUIVALENCE.json"
+      ],
+      "gate_granularity": "per_parent",
+      "max_attempts": 6,
+      "not_the_no_further_paid_query_treatment": true
+    },
+    {
+      "id": "W11.branch_engineering",
+      "stage": "A",
+      "purpose": "Run four finite residual query plans only for qualified parents",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W11.noop_equivalence",
+        "W11.query_plan_interface",
+        "W11.wiring"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "parent_day_terminal_and_verified",
+        "first_qualified_parent_and_noop_by_hour_4"
+      ],
+      "deliverables": [
+        "C2_BRANCH_ROSTER.json",
+        "PLANNED_EXECUTED_ACTIONS.json",
+        "C2_FIELD_TO_LOSS.json",
+        "C2_ENGINEERING_REPORT_CN.md"
+      ],
+      "gate_granularity": "per_parent",
+      "max_attempts": 24,
+      "results_include_alias_failed_degenerate_unavailable": true,
+      "requires_at_least_one_qualified_real_branch_for_engineering_chain_complete": true
+    },
+    {
+      "id": "W06.inventory",
+      "stage": "A",
+      "purpose": "Inventory references, raw identities/variants, verified cache, missing bytes and exposure",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W06.sample_summary"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "ANNUAL_NATIVE_INVENTORY.json",
+        "EXPOSURE_LEDGER.json",
+        "NEXT_ACQUISITION_SPEC.json"
+      ],
+      "requests_sent": 0
+    },
+    {
+      "id": "W07.closeout",
+      "stage": "A",
+      "purpose": "Consume original full-roster formal audit; derive ten descriptive paired comparisons",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W07.e_summary"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "original_fullweek_full_roster_formal_audit_verified"
+      ],
+      "deliverables": [
+        "FULLWEEK_FINDINGS_CN.md",
+        "FULLWEEK_PAIRED_DECOMPOSITION.json"
+      ],
+      "allow_batch_close_while_external_pending": true,
+      "may_relaunch_original_audit": false
+    },
+    {
+      "id": "W05.local_acceptance",
+      "stage": "A",
+      "purpose": "Validate implemented scope; record incomplete scientific paths separately",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W00.refresh"
+      ],
+      "requires_terminal": [
+        "W07.e_summary",
+        "W06.sample_summary",
+        "W01.bank_guard",
+        "W11.universe",
+        "W11.wiring",
+        "W11.query_plan_interface",
+        "W06.inventory"
+      ],
+      "external_gates": [],
+      "deliverables": [
+        "SCOPED_IMPLEMENTATION_ACCEPTANCE.json",
+        "PRESERVATION_AFTER.json"
+      ],
+      "optional_receipts": [
+        "W11.parent_inventory",
+        "W11.parent_materialization",
+        "W11.fork_qualification",
+        "W11.noop_equivalence",
+        "W11.branch_engineering",
+        "W07.closeout"
+      ],
+      "wait_for_original_fullweek_audit": false,
+      "actual_scope_manifest_required": true
+    },
+    {
+      "id": "W05.full_acceptance",
+      "stage": "A",
+      "purpose": "Verify complete scoped scientific comparison plus actual real branch qualifications",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W05.local_acceptance",
+        "W07.closeout",
+        "W11.branch_engineering",
+        "W07.e_summary",
+        "W06.sample_summary",
+        "W01.bank_guard",
+        "W11.universe",
+        "W11.wiring",
+        "W11.query_plan_interface",
+        "W06.inventory"
+      ],
+      "requires_terminal": [],
+      "external_gates": [],
+      "deliverables": [
+        "FULL_ACCEPTANCE.json"
+      ],
+      "no_positive_gain_requirement": true,
+      "blocked_is_not_pass": true
+    },
+    {
+      "id": "W05.batch_closeout",
+      "stage": "A",
+      "purpose": "Close batch by deadline with explicit external pending and scientific completeness",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [],
+      "requires_terminal": [
+        "W05.local_acceptance"
+      ],
+      "external_gates": [],
+      "deliverables": [
+        "BATCH_CLOSEOUT.json",
+        "STATUS.json",
+        "RESULT_SUMMARY.json",
+        "FINAL_REPORT_CN.md",
+        "NEXT_ACTION.md"
+      ],
+      "observe_all_stage_A_nodes": true,
+      "depends_on_full_acceptance": false,
+      "wait_for_external_job": false,
+      "close_by_hours": 10,
+      "partial_state": "CLOSED_WITH_PENDING_EXTERNAL",
+      "stop_scope": "only this new batch; preserve original v11 audit and coordinator"
+    },
+    {
+      "id": "W06.native_production",
+      "stage": "B",
+      "purpose": "Recover exact failed slices and obtain qualified annual native data",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W06.inventory",
+        "W05.local_acceptance"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "stage_B_scope_approved",
+        "acquisition_limits_frozen"
+      ],
+      "deliverables": [
+        "ANNUAL_TASK_QUALIFICATION.json"
+      ]
+    },
+    {
+      "id": "W08.annual_backend",
+      "stage": "B",
+      "purpose": "Fit and calibrate annual backends with dynamic purging and exposure disclosure",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W06.native_production",
+        "W01.bank_guard"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "stage_B_scope_approved",
+        "data_roles_and_exposure_qualified"
+      ],
+      "deliverables": [
+        "BANK_MANIFEST.json"
+      ]
+    },
+    {
+      "id": "W10.mechanism",
+      "stage": "C",
+      "purpose": "Use new bank for five arms and fixed-selector allocation/sharing comparisons",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W08.annual_backend",
+        "W07.closeout"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "stage_C_scope_approved"
+      ],
+      "deliverables": [
+        "MECHANISM_COMPARISONS.json"
+      ]
+    },
+    {
+      "id": "W11.branch_science",
+      "stage": "C",
+      "purpose": "Register new-bank C2 effects including timing and shared session opportunities",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W11.branch_engineering",
+        "W08.annual_backend"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "stage_C_scope_approved"
+      ],
+      "deliverables": [
+        "C2_BRANCH_EFFECTS_CN.md"
+      ]
+    },
+    {
+      "id": "W12.selector",
+      "stage": "C",
+      "purpose": "One fixed-predictor query-only model experiment under verified public slots",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W10.mechanism",
+        "W11.branch_science",
+        "W05.local_acceptance"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "stage_C_scope_approved",
+        "public_forecast_schedule_nonempty_and_negative_control_passes",
+        "choice_space_and_consumption_qualified"
+      ],
+      "deliverables": [
+        "MODEL_TRIAL_RESULTS_CN.md"
+      ],
+      "max_sessions": 12,
+      "max_decisions_per_session": 24,
+      "max_formal_requests": 288,
+      "max_compatibility_requests": 2,
+      "max_h100": 4,
+      "positive_gain_is_not_an_entry_gate": true
+    },
+    {
+      "id": "W13.forecast_confirmation",
+      "stage": "D",
+      "purpose": "Confirm frozen forecast comparisons on independent processes",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W12.selector",
+        "W10.mechanism"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "stage_D_scope_approved",
+        "methods_sources_statistics_and_unread_calendar_frozen",
+        "independent_process_and_precision_design",
+        "shared_calendar_requires_both_freezes_before_opening_or_disjoint_calendars"
+      ],
+      "deliverables": [
+        "FORECAST_CONFIRMATION_CN.md"
+      ],
+      "endpoints": [
+        "forecast_comparison"
+      ],
+      "null_gain_is_not_equivalence": true
+    },
+    {
+      "id": "W13.c2_confirmation",
+      "stage": "D",
+      "purpose": "Confirm C2 diagnostic phenomena independently of model superiority",
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "requires_verified": [
+        "W11.branch_science"
+      ],
+      "requires_terminal": [],
+      "external_gates": [
+        "stage_D_scope_approved",
+        "methods_sources_statistics_and_unread_calendar_frozen",
+        "independent_process_and_precision_design",
+        "shared_calendar_requires_both_freezes_before_opening_or_disjoint_calendars"
+      ],
+      "deliverables": [
+        "C2_CONFIRMATION_CN.md"
+      ],
+      "endpoints": [
+        "c2_diagnostic_replication"
+      ],
+      "null_gain_is_not_equivalence": true
+    }
+  ]
+}

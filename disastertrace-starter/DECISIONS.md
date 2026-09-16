@@ -1,5 +1,31 @@
 # Decisions
 
+## v12 execution and closeout decisions, 2026-09-15
+
+Complete the registered engineering, annual data and bounded selector comparison
+under the expanded CPU/API authorization, retaining C1/C2/C3 and all scientific
+gates. Use one exact provider-listed DeepSeek-V4-Flash ID; bind the annual banks
+before the 288-request development comparison. The model selects queries only;
+the frozen program produces probabilities. Do not call them direct LLM forecasts.
+
+Retain 217 invalid selector replies and all denominators. The second compatibility
+slot tests strict JSON schema on the same synthetic prompt after the failures;
+this is a posthoc diagnostic, not a repair or rerun of formal model responses.
+Next interface work gets a new identity and remains separate from free-output data.
+
+After 108 method runs finish, stop only the original serial score tail and record
+the platform's SUSPENDED state. Reuse its three completed formal scores and audit
+21 unfinished groups in parallel using the identical frozen scorer. This changes
+verification scheduling, not forecast trajectories, outcomes, or source/model fees.
+Never represent the controlled stop as a successful process exit or restart it.
+
+Report 16 positive opportunities from a single case/day, zero positive C2 parent
+outcomes and a negative-case-only model gain over F_BASE_ONLY. A lower development
+mean alone cannot establish novelty, calibration guarantees, or independent-process
+value. Confirmation and all16-hazard completion remain unclaimed. Next gates are
+described in the batch findings and selector-interface proposal, with no new model
+calls or confirmation opened during closeout.
+
 ## v11 execution decisions, 2026-09-15
 
 Continue the weekly-audit priorities: complete exposed seasonal weeks, qualify

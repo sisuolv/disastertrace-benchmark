@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="11" skipped="0" tests="16" time="2.697" timestamp="2026-09-15T15:27:53.216159+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-mlmzp"><testcase classname="tests.test_monitoring_v12_reporting" name="test_actual_calibrated_consumer_rejects_invalid_maps[blocks0]" time="0.175"><failure message="Failed: DID NOT RAISE ValueError">tests/test_monitoring_v12_reporting.py:35: in test_actual_calibrated_consumer_rejects_invalid_maps
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_actual_calibrated_consumer_rejects_invalid_maps[blocks1]" time="0.140"><failure message="Failed: DID NOT RAISE ValueError">tests/test_monitoring_v12_reporting.py:35: in test_actual_calibrated_consumer_rejects_invalid_maps
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_actual_calibrated_consumer_rejects_invalid_maps[blocks2]" time="0.139"><failure message="Failed: DID NOT RAISE ValueError">tests/test_monitoring_v12_reporting.py:35: in test_actual_calibrated_consumer_rejects_invalid_maps
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_actual_calibrated_consumer_rejects_invalid_maps[blocks3]" time="0.143"><failure message="Failed: DID NOT RAISE ValueError">tests/test_monitoring_v12_reporting.py:35: in test_actual_calibrated_consumer_rejects_invalid_maps
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_actual_calibrated_consumer_rejects_invalid_maps[blocks4]" time="0.140" /><testcase classname="tests.test_monitoring_v12_reporting" name="test_actual_calibrated_consumer_rejects_invalid_maps[blocks5]" time="0.141" /><testcase classname="tests.test_monitoring_v12_reporting" name="test_actual_calibrated_consumer_rejects_invalid_maps[blocks6]" time="0.134" /><testcase classname="tests.test_monitoring_v12_reporting" name="test_actual_calibrated_consumer_rejects_invalid_maps[blocks7]" time="0.126"><failure message="OverflowError: int too large to convert to float">tests/test_monitoring_v12_reporting.py:36: in test_actual_calibrated_consumer_rejects_invalid_maps
+    NativeFeaturePredictor(value, at=0, calibrated=True)
+src/disastertrace/monitoring_fixed_v1/native_feature.py:74: in __init__
+    validate_feature_bank(bank, calibrated=calibrated)
+src/disastertrace/monitoring_fixed_v1/native_feature.py:62: in validate_feature_bank
+    or any(
+src/disastertrace/monitoring_fixed_v1/native_feature.py:63: in &lt;genexpr&gt;
+    type(x) not in (int, float) or not math.isfinite(x) for x in block.values()
+E   OverflowError: int too large to convert to float</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_legitimate_sparse_gaps_and_extrapolation_are_preserved" time="0.126" /><testcase classname="tests.test_monitoring_v12_reporting" name="test_touching_domains_with_identical_value_are_compatible" time="0.122" /><testcase classname="tests.test_monitoring_v12_reporting" name="test_huge_coefficient_rejected_with_controlled_value_error[mean]" time="0.121"><failure message="OverflowError: int too large to convert to float">tests/test_monitoring_v12_reporting.py:62: in test_huge_coefficient_rejected_with_controlled_value_error
+    NativeFeaturePredictor(value, at=0)
+src/disastertrace/monitoring_fixed_v1/native_feature.py:74: in __init__
+    validate_feature_bank(bank, calibrated=calibrated)
+src/disastertrace/monitoring_fixed_v1/native_feature.py:49: in validate_feature_bank
+    if any(type(x) not in (int, float) or not math.isfinite(x) for x in numbers) or any(
+src/disastertrace/monitoring_fixed_v1/native_feature.py:49: in &lt;genexpr&gt;
+    if any(type(x) not in (int, float) or not math.isfinite(x) for x in numbers) or any(
+E   OverflowError: int too large to convert to float</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_huge_coefficient_rejected_with_controlled_value_error[scale]" time="0.132"><failure message="OverflowError: int too large to convert to float">tests/test_monitoring_v12_reporting.py:62: in test_huge_coefficient_rejected_with_controlled_value_error
+    NativeFeaturePredictor(value, at=0)
+src/disastertrace/monitoring_fixed_v1/native_feature.py:74: in __init__
+    validate_feature_bank(bank, calibrated=calibrated)
+src/disastertrace/monitoring_fixed_v1/native_feature.py:49: in validate_feature_bank
+    if any(type(x) not in (int, float) or not math.isfinite(x) for x in numbers) or any(
+src/disastertrace/monitoring_fixed_v1/native_feature.py:49: in &lt;genexpr&gt;
+    if any(type(x) not in (int, float) or not math.isfinite(x) for x in numbers) or any(
+E   OverflowError: int too large to convert to float</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_huge_coefficient_rejected_with_controlled_value_error[intercepts]" time="0.123"><failure message="OverflowError: int too large to convert to float">tests/test_monitoring_v12_reporting.py:62: in test_huge_coefficient_rejected_with_controlled_value_error
+    NativeFeaturePredictor(value, at=0)
+src/disastertrace/monitoring_fixed_v1/native_feature.py:74: in __init__
+    validate_feature_bank(bank, calibrated=calibrated)
+src/disastertrace/monitoring_fixed_v1/native_feature.py:49: in validate_feature_bank
+    if any(type(x) not in (int, float) or not math.isfinite(x) for x in numbers) or any(
+src/disastertrace/monitoring_fixed_v1/native_feature.py:49: in &lt;genexpr&gt;
+    if any(type(x) not in (int, float) or not math.isfinite(x) for x in numbers) or any(
+E   OverflowError: int too large to convert to float</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_e_denominator_keeps_missing_frames_and_independent_of_y" time="0.003"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.reporting'">tests/test_monitoring_v12_reporting.py:66: in test_e_denominator_keeps_missing_frames_and_independent_of_y
+    from disastertrace.monitoring_v1.reporting import e_status_summary
+E   ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.reporting'</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_e_summary_rejects_unknown_state_and_duplicate_roster" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.reporting'">tests/test_monitoring_v12_reporting.py:77: in test_e_summary_rejects_unknown_state_and_duplicate_roster
+    from disastertrace.monitoring_v1.reporting import e_status_summary
+E   ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.reporting'</failure></testcase><testcase classname="tests.test_monitoring_v12_reporting" name="test_annual_execute_sample_failure_has_unique_results" time="0.010"><failure message="AssertionError: assert 6 == 3&#10; +  where 6 = len([{'unit': 'month-0', 'complete': True}, {'unit': 'month-1', 'complete': True}, {'unit': 'month-2', 'complete': False}, {'unit': 'month-0', 'complete': True}, {'unit': 'month-1', 'complete': True}, {'unit': 'month-2', 'complete': False}])">tests/test_monitoring_v12_reporting.py:105: in test_annual_execute_sample_failure_has_unique_results
+    assert len(actual["results"]) == 3
+E   AssertionError: assert 6 == 3
+E    +  where 6 = len([{'unit': 'month-0', 'complete': True}, {'unit': 'month-1', 'complete': True}, {'unit': 'month-2', 'complete': False}, {'unit': 'month-0', 'complete': True}, {'unit': 'month-1', 'complete': True}, {'unit': 'month-2', 'complete': False}])</failure></testcase></testsuite></testsuites>
