@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="10" skipped="0" tests="10" time="4.097" timestamp="2026-09-16T08:05:25.063269+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-fpcnm"><testcase classname="tests.test_monitoring_v13_residual" name="test_v2_intents_execute_through_inherited_controller[none]" time="0.359"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">rule = 'none'
+
+    @pytest.mark.parametrize("rule", ["none", "first_new", "second_new", "all_new"])
+    def test_v2_intents_execute_through_inherited_controller(rule):
+        data, bank, checkpoint, opportunity = parent()
+&gt;       plan = freeze_residual_plan(data, checkpoint, opportunity["opportunity_id"], rule,
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:17: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v13_residual" name="test_v2_intents_execute_through_inherited_controller[first_new]" time="0.317"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">rule = 'first_new'
+
+    @pytest.mark.parametrize("rule", ["none", "first_new", "second_new", "all_new"])
+    def test_v2_intents_execute_through_inherited_controller(rule):
+        data, bank, checkpoint, opportunity = parent()
+&gt;       plan = freeze_residual_plan(data, checkpoint, opportunity["opportunity_id"], rule,
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:17: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v13_residual" name="test_v2_intents_execute_through_inherited_controller[second_new]" time="0.345"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">rule = 'second_new'
+
+    @pytest.mark.parametrize("rule", ["none", "first_new", "second_new", "all_new"])
+    def test_v2_intents_execute_through_inherited_controller(rule):
+        data, bank, checkpoint, opportunity = parent()
+&gt;       plan = freeze_residual_plan(data, checkpoint, opportunity["opportunity_id"], rule,
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:17: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v13_residual" name="test_v2_intents_execute_through_inherited_controller[all_new]" time="0.310"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">rule = 'all_new'
+
+    @pytest.mark.parametrize("rule", ["none", "first_new", "second_new", "all_new"])
+    def test_v2_intents_execute_through_inherited_controller(rule):
+        data, bank, checkpoint, opportunity = parent()
+&gt;       plan = freeze_residual_plan(data, checkpoint, opportunity["opportunity_id"], rule,
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:17: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v13_residual" name="test_real_previous_cache_obeys_scope[session_shared]" time="0.299"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">scope = 'session_shared'
+
+    @pytest.mark.parametrize("scope", ["session_shared","target_private"])
+    def test_real_previous_cache_obeys_scope(scope):
+        data, bank, checkpoint, target = shared_parent(scope)
+&gt;       plan = freeze_residual_plan(data, checkpoint, target["opportunity_id"], "all_new",
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:46: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v13_residual" name="test_real_previous_cache_obeys_scope[target_private]" time="0.310"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">scope = 'target_private'
+
+    @pytest.mark.parametrize("scope", ["session_shared","target_private"])
+    def test_real_previous_cache_obeys_scope(scope):
+        data, bank, checkpoint, target = shared_parent(scope)
+&gt;       plan = freeze_residual_plan(data, checkpoint, target["opportunity_id"], "all_new",
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:46: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v13_residual" name="test_requested_slots_are_excluded_even_when_not_cached[False-unknown_execution]" time="0.312"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">settled = False, outcome = 'unknown_execution'
+
+    @pytest.mark.parametrize("settled,outcome", [(False,"unknown_execution"),(False,None),(True,"failed_not_sent")])
+    def test_requested_slots_are_excluded_even_when_not_cached(settled, outcome):
+        data, _, checkpoint, target = parent()
+        initial = freeze_residual_plan(data, checkpoint, target["opportunity_id"], "all")
+        qid = initial["eligible_query_order"][0]
+        from disastertrace.monitoring_v1.policies import stable_rank
+        p = checkpoint["payload"]
+        p["ledger"]["events"].append({"event":"reserve", "receipt_id":"query-"+stable_rank(qid)})
+        checkpoint["sha256"] = canonical_hash(p)
+&gt;       plan = freeze_residual_plan(data, checkpoint, target["opportunity_id"], "first_new",
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:70: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v13_residual" name="test_requested_slots_are_excluded_even_when_not_cached[False-None]" time="0.376"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">settled = False, outcome = None
+
+    @pytest.mark.parametrize("settled,outcome", [(False,"unknown_execution"),(False,None),(True,"failed_not_sent")])
+    def test_requested_slots_are_excluded_even_when_not_cached(settled, outcome):
+        data, _, checkpoint, target = parent()
+        initial = freeze_residual_plan(data, checkpoint, target["opportunity_id"], "all")
+        qid = initial["eligible_query_order"][0]
+        from disastertrace.monitoring_v1.policies import stable_rank
+        p = checkpoint["payload"]
+        p["ledger"]["events"].append({"event":"reserve", "receipt_id":"query-"+stable_rank(qid)})
+        checkpoint["sha256"] = canonical_hash(p)
+&gt;       plan = freeze_residual_plan(data, checkpoint, target["opportunity_id"], "first_new",
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:70: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v13_residual" name="test_requested_slots_are_excluded_even_when_not_cached[True-failed_not_sent]" time="0.310"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">settled = True, outcome = 'failed_not_sent'
+
+    @pytest.mark.parametrize("settled,outcome", [(False,"unknown_execution"),(False,None),(True,"failed_not_sent")])
+    def test_requested_slots_are_excluded_even_when_not_cached(settled, outcome):
+        data, _, checkpoint, target = parent()
+        initial = freeze_residual_plan(data, checkpoint, target["opportunity_id"], "all")
+        qid = initial["eligible_query_order"][0]
+        from disastertrace.monitoring_v1.policies import stable_rank
+        p = checkpoint["payload"]
+        p["ledger"]["events"].append({"event":"reserve", "receipt_id":"query-"+stable_rank(qid)})
+        checkpoint["sha256"] = canonical_hash(p)
+&gt;       plan = freeze_residual_plan(data, checkpoint, target["opportunity_id"], "first_new",
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:70: TypeError</failure></testcase><testcase classname="tests.test_monitoring_v13_residual" name="test_v2_parent_binding_and_empty_second" time="0.299"><failure message="TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'">def test_v2_parent_binding_and_empty_second():
+        data, _, checkpoint, target = parent()
+        for r in data["query_catalog"]: r["available_at"] = target["cutoff"] + 1
+        checkpoint["payload"]["data_sha256"] = canonical_hash(data)
+        checkpoint["sha256"] = canonical_hash(checkpoint["payload"])
+&gt;       plan = freeze_residual_plan(data, checkpoint, target["opportunity_id"], "second_new",
+                                    version="disastertrace.residual_query_plan.v2")
+E       TypeError: freeze_residual_plan() got an unexpected keyword argument 'version'
+
+disastertrace-starter/tests/test_monitoring_v13_residual.py:82: TypeError</failure></testcase></testsuite></testsuites>

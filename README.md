@@ -1,3 +1,9 @@
+# Latest: v13 code and in-progress experiments (2026-09-16)
+
+Start with [current progress](LATEST_PROGRESS_V13_CN.md), [review instructions](publication/v13_inprogress_20260916/REVIEW_FOR_CHATGPT_PRO_CN.md), or [the code and evidence ZIP](publication/v13_inprogress_20260916/DisasterTrace_v13_progress_and_code.zip). This is a timestamped snapshot; background experiments continue. Earlier entries below retain their historical scope.
+
+---
+
 # Latest: v12 execution completed (2026-09-16 publication)
 
 Start with [current code, results and next gates](LATEST_PROGRESS_V12_CN.md) or [ChatGPT Pro review instructions](publication/v12_execution_20260916/REVIEW_FOR_CHATGPT_PRO_CN.md). The 72-month source chain and bounded model comparison are complete; LLM gains and independent confirmation remain unproved. Earlier entries below are historical.

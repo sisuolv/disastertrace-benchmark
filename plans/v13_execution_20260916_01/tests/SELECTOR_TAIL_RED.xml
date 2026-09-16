@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="29" time="6.420" timestamp="2026-09-16T08:47:18.236410+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-fpcnm"><testcase classname="tests.test_monitoring_v13_selector" name="test_query_only_response_reaches_controller_and_keeps_fixed_forecasts" time="0.572" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[&quot;q0&quot;,&quot;q0&quot;]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[&quot;no&quot;]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[],&quot;forecast_handles&quot;:[]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[],&quot;query_order&quot;:[]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:false}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[1]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[```json\n{&quot;query_order&quot;:[]}\n```]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[I refuse]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;: []" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;: [], &quot;x&quot;: 1}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles0-selected0]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles1-selected1]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles2-selected2]" time="0.007" /><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles3-selected3]" time="0.003" /><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles4-selected4]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles5-selected5]" time="0.003" /><testcase classname="tests.test_monitoring_v13_selector" name="test_pending_v2_resume_binds_new_prompt_and_charges_once" time="0.883" /><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_rejects_incompatible_or_unknown_mode[changes0]" time="0.160" /><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_rejects_incompatible_or_unknown_mode[changes1]" time="0.270" /><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_rejects_incompatible_or_unknown_mode[changes2]" time="0.146" /><testcase classname="tests.test_monitoring_v13_selector" name="test_query_intent_can_exceed_affordable_prefix_without_changing_schema" time="0.440" /><testcase classname="tests.test_monitoring_v13_selector" name="test_invalid_or_late_selection_retains_costs_and_full_calendar[refused-True-0.001]" time="0.425" /><testcase classname="tests.test_monitoring_v13_selector" name="test_invalid_or_late_selection_retains_costs_and_full_calendar[{&quot;query_order&quot;:[]}-False-0.001]" time="0.433" /><testcase classname="tests.test_monitoring_v13_selector" name="test_invalid_or_late_selection_retains_costs_and_full_calendar[{&quot;query_order&quot;:[]}-True-601]" time="0.413" /><testcase classname="tests.test_monitoring_v13_selector" name="test_query_only_dispositions_keep_whole_intent_and_unexecuted_tail[0]" time="0.525"><failure message="KeyError: 'selector_query_intent'">budget = 0
+
+    @pytest.mark.parametrize("budget",[0,2])
+    def test_query_only_dispositions_keep_whole_intent_and_unexecuted_tail(budget):
+        data,bank,config=config_fixture(request_budget=budget,model_call_budget=1)
+        report=run_session(data,bank,config,backend=select_all)
+&gt;       trace=report["frames"][0]["selector_query_intent"]
+E       KeyError: 'selector_query_intent'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:117: KeyError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_query_only_dispositions_keep_whole_intent_and_unexecuted_tail[2]" time="0.379"><failure message="KeyError: 'selector_query_intent'">budget = 2
+
+    @pytest.mark.parametrize("budget",[0,2])
+    def test_query_only_dispositions_keep_whole_intent_and_unexecuted_tail(budget):
+        data,bank,config=config_fixture(request_budget=budget,model_call_budget=1)
+        report=run_session(data,bank,config,backend=select_all)
+&gt;       trace=report["frames"][0]["selector_query_intent"]
+E       KeyError: 'selector_query_intent'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:117: KeyError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_does_not_skip_infeasible_first_intent_to_execute_later_query" time="0.440"><failure message="AssertionError: assert not [{'query_id': 'routine-KSFO-2024-01-04T22:00:00Z', 'asset_id': 'routine-KSFO-2024-01-04T22:00:00Z', 'payer': 'KOAK-202...T01:00:00Z-vis-lt-1000m', 'receipt_id': 'query-fbe91c786cf59750b519d35aea0e331fd620d71ac123c386bfec2444772a17e5', ...}]">def test_v2_does_not_skip_infeasible_first_intent_to_execute_later_query():
+        data,bank,config=config_fixture(request_budget=10,model_call_budget=1)
+        slow_station=data["query_catalog"][0]["station"]
+        for q in data["query_catalog"]:
+            if q["station"] == slow_station:q["latency_ms"]=600000
+        def backend(system,request,call_id):
+            ordered=sorted(request["queries"],key=lambda h:-request["queries"][h]["metadata"]["latency_ms"])
+            assert request["queries"][ordered[0]]["metadata"]["latency_ms"] == 600000
+            return json.dumps({"query_order":ordered}),{"input_tokens":10,"output_tokens":10,"seconds":.001,"ended_with_eos":True}
+        report=run_session(data,bank,config,backend=backend)
+&gt;       assert not report["source_receipts"]
+E       AssertionError: assert not [{'query_id': 'routine-KSFO-2024-01-04T22:00:00Z', 'asset_id': 'routine-KSFO-2024-01-04T22:00:00Z', 'payer': 'KOAK-202...T01:00:00Z-vis-lt-1000m', 'receipt_id': 'query-fbe91c786cf59750b519d35aea0e331fd620d71ac123c386bfec2444772a17e5', ...}]
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:134: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_intent_survives_original_pending_source_resume" time="0.345"><failure message="KeyError: 'query_intent'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-7/test_v2_intent_survives_origin0')
+
+    def test_v2_intent_survives_original_pending_source_resume(tmp_path):
+        from test_monitoring_pending_source import PendingSource,reply
+        data,bank,config=config_fixture(request_budget=2,model_call_budget=1)
+        source=PendingSource(tmp_path,data["query_results"])
+        session=SessionCoordinator(data,bank,config,backend=select_all,source_backend=source)
+        session.step();snapshot=session.snapshot()
+        assert "pending_source" in snapshot["payload"]
+&gt;       trace=snapshot["payload"]["controller"]["selector_records"][0]["query_intent"]
+E       KeyError: 'query_intent'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:147: KeyError</failure></testcase></testsuite></testsuites>

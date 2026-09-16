@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="42" time="10.068" timestamp="2026-09-16T08:03:47.794034+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-fpcnm"><testcase classname="tests.test_monitoring_v13_selector" name="test_query_only_response_reaches_controller_and_keeps_fixed_forecasts" time="0.374" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[&quot;q0&quot;,&quot;q0&quot;]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[&quot;no&quot;]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[],&quot;forecast_handles&quot;:[]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[],&quot;query_order&quot;:[]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:false}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[1]}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[```json\n{&quot;query_order&quot;:[]}\n```]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[I refuse]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;: []" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;: [], &quot;x&quot;: 1}]" time="0.002" /><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles0-selected0]" time="0.004"><failure message="ModuleNotFoundError: No module named 'jsonschema'">handles = [], selected = []
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+        from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+&gt;       import jsonschema
+E       ModuleNotFoundError: No module named 'jsonschema'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:47: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles1-selected1]" time="0.002"><failure message="ModuleNotFoundError: No module named 'jsonschema'">handles = ['q0'], selected = []
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+        from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+&gt;       import jsonschema
+E       ModuleNotFoundError: No module named 'jsonschema'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:47: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles2-selected2]" time="0.002"><failure message="ModuleNotFoundError: No module named 'jsonschema'">handles = ['q0'], selected = ['q0']
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+        from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+&gt;       import jsonschema
+E       ModuleNotFoundError: No module named 'jsonschema'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:47: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles3-selected3]" time="0.002"><failure message="ModuleNotFoundError: No module named 'jsonschema'">handles = ['q0', 'q1'], selected = ['q1', 'q0']
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+        from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+&gt;       import jsonschema
+E       ModuleNotFoundError: No module named 'jsonschema'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:47: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles4-selected4]" time="0.002"><failure message="ModuleNotFoundError: No module named 'jsonschema'">handles = ['q0', 'q1'], selected = ['q1']
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+        from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+&gt;       import jsonschema
+E       ModuleNotFoundError: No module named 'jsonschema'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:47: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles5-selected5]" time="0.002"><failure message="ModuleNotFoundError: No module named 'jsonschema'">handles = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', ...]
+selected = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', ...]
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+        from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+&gt;       import jsonschema
+E       ModuleNotFoundError: No module named 'jsonschema'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:47: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_pending_v2_resume_binds_new_prompt_and_charges_once" time="0.722" /><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_rejects_incompatible_or_unknown_mode[changes0]" time="0.164" /><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_rejects_incompatible_or_unknown_mode[changes1]" time="0.141" /><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_rejects_incompatible_or_unknown_mode[changes2]" time="0.137" /><testcase classname="tests.test_monitoring_selection" name="test_selector_rejects_unregistered_repeated_and_over_capacity_handles" time="0.002" /><testcase classname="tests.test_monitoring_selection" name="test_selector_and_forecaster_consume_the_same_model_call_and_token_budget" time="0.180" /><testcase classname="tests.test_monitoring_selection" name="test_invalid_selector_is_charged_and_keeps_all_opportunities" time="0.203" /><testcase classname="tests.test_monitoring_selection" name="test_llm_selector_cannot_silently_open_private_global_model_state" time="0.144" /><testcase classname="tests.test_monitoring_selection" name="test_shared_selector_sees_current_explicit_states_and_remaining_hard_resources" time="0.156" /><testcase classname="tests.test_monitoring_forecast_schedule" name="test_public_schedule_is_identical_under_distinct_query_policies" time="0.972" /><testcase classname="tests.test_monitoring_forecast_schedule" name="test_acquisition_cannot_use_time_reserved_for_forecast_slots" time="0.376" /><testcase classname="tests.test_monitoring_forecast_schedule" name="test_overrunning_a_slot_keeps_costs_and_skips_the_next_without_backdating" time="0.291" /><testcase classname="tests.test_monitoring_forecast_schedule" name="test_schedule_survives_actual_controller_restore" time="0.778" /><testcase classname="tests.test_monitoring_forecast_schedule" name="test_invalid_slot_contract_is_not_silently_ignored[change0]" time="0.146" /><testcase classname="tests.test_monitoring_forecast_schedule" name="test_invalid_slot_contract_is_not_silently_ignored[change1]" time="0.153" /><testcase classname="tests.test_monitoring_forecast_schedule" name="test_invalid_slot_contract_is_not_silently_ignored[change2]" time="0.134" /><testcase classname="tests.test_monitoring_forecast_schedule" name="test_invalid_slot_contract_is_not_silently_ignored[change3]" time="0.157" /><testcase classname="tests.test_monitoring_committed_spool" name="test_worker_cannot_claim_before_checkpoint_is_durable" time="0.435" /><testcase classname="tests.test_monitoring_committed_spool" name="test_repeated_commit_is_idempotent_but_worker_claim_is_once" time="0.371" /><testcase classname="tests.test_monitoring_committed_spool" name="test_wrong_request_binding_cannot_release_worker" time="0.303" /><testcase classname="tests.test_monitoring_committed_spool" name="test_changed_checkpoint_after_ready_blocks_worker" time="0.317" /><testcase classname="tests.test_monitoring_committed_spool" name="test_committed_response_resumes_same_original_call" time="0.932" /><testcase classname="tests.test_monitoring_committed_spool" name="test_response_without_committed_worker_remains_pending" time="0.277" /><testcase classname="tests.test_monitoring_committed_spool" name="test_altered_pending_ticket_rejected_before_any_worker_claim" time="0.267" /><testcase classname="tests.test_monitoring_committed_spool" name="test_pending_selector_requires_its_original_durable_checkpoint" time="0.827" /></testsuite></testsuites>

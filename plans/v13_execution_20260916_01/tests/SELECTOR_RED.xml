@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="21" skipped="0" tests="21" time="3.027" timestamp="2026-09-16T08:02:30.337914+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-fpcnm"><testcase classname="tests.test_monitoring_v13_selector" name="test_query_only_response_reaches_controller_and_keeps_fixed_forecasts" time="0.471"><failure message="assert False&#10; +  where False = all(&lt;generator object test_query_only_response_reaches_controller_and_keeps_fixed_forecasts.&lt;locals&gt;.&lt;genexpr&gt; at 0x7fa8aa04a570&gt;)">def test_query_only_response_reaches_controller_and_keeps_fixed_forecasts():
+        data, bank, config = config_fixture()
+        def backend(system, request, call_id):
+            assert '"forecast_handles"' not in system
+            assert request["selector_contract_version"] == "selector_query_only.v2"
+            return json.dumps({"query_order": list(request["queries"])}), {
+                "input_tokens": 10, "output_tokens": 10, "seconds": .001, "ended_with_eos": True}
+        report = run_session(data, bank, config, backend=backend)
+        assert report["selector_calls"]
+&gt;       assert all(c["response_error"] is None for c in report["selector_calls"])
+E       assert False
+E        +  where False = all(&lt;generator object test_query_only_response_reaches_controller_and_keeps_fixed_forecasts.&lt;locals&gt;.&lt;genexpr&gt; at 0x7fa8aa04a570&gt;)
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:28: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[&quot;q0&quot;,&quot;q0&quot;]}]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = '{"query_order":["q0","q0"]}'
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[&quot;no&quot;]}]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = '{"query_order":["no"]}'
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[],&quot;forecast_handles&quot;:[]}]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = '{"query_order":[],"forecast_handles":[]}'
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[],&quot;query_order&quot;:[]}]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = '{"query_order":[],"query_order":[]}'
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:false}]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = '{"query_order":false}'
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;:[1]}]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = '{"query_order":[1]}'
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[```json\n{&quot;query_order&quot;:[]}\n```]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = '```json\n{"query_order":[]}\n```'
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[I refuse]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = 'I refuse'
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;: []" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = '{"query_order": ['
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_strict_parser_rejects_malformed_or_legacy_outputs[{&quot;query_order&quot;: [], &quot;x&quot;: 1}]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">raw = '{"query_order": [], "x": 1}'
+
+    @pytest.mark.parametrize("raw", ['{"query_order":["q0","q0"]}', '{"query_order":["no"]}',
+        '{"query_order":[],"forecast_handles":[]}', '{"query_order":[],"query_order":[]}',
+        '{"query_order":false}', '{"query_order":[1]}', '```json\n{"query_order":[]}\n```',
+        'I refuse', '{"query_order": [', '{"query_order": [], "x": 1}'])
+    def test_strict_parser_rejects_malformed_or_legacy_outputs(raw):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import parse_query_only
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:37: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles0-selected0]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">handles = [], selected = []
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:46: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles1-selected1]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">handles = ['q0'], selected = []
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:46: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles2-selected2]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">handles = ['q0'], selected = ['q0']
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:46: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles3-selected3]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">handles = ['q0', 'q1'], selected = ['q1', 'q0']
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:46: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles4-selected4]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">handles = ['q0', 'q1'], selected = ['q1']
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:46: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_prompt_schema_parser_share_one_contract[handles5-selected5]" time="0.002"><failure message="ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'">handles = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', ...]
+selected = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', ...]
+
+    @pytest.mark.parametrize("handles,selected", [([],[]), (["q0"],[]), (["q0"],["q0"]),
+        (["q0","q1"],["q1","q0"]), (["q0","q1"],["q1"]),
+        ([f"q{i}" for i in range(1000)], [f"q{i}" for i in range(1000)])])
+    def test_prompt_schema_parser_share_one_contract(handles, selected):
+&gt;       from disastertrace.monitoring_v1.selector_contract_v2 import contract, parse_query_only, to_internal
+E       ModuleNotFoundError: No module named 'disastertrace.monitoring_v1.selector_contract_v2'
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:46: ModuleNotFoundError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_pending_v2_resume_binds_new_prompt_and_charges_once" time="0.741"><failure message="AssertionError: assert 'Invalid selector schema' is None">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-1/test_pending_v2_resume_binds_n0')
+
+    def test_pending_v2_resume_binds_new_prompt_and_charges_once(tmp_path):
+        spec = {k:{} for k in ("model","weights","tokenizer","adapter","generation","runtime")}
+        backend = CommittedSpoolBackend(tmp_path, spec, run_id="selector-v2")
+        data, bank, config = config_fixture(model_call_budget=1)
+        session = SessionCoordinator(data, bank, config, backend=backend)
+        session.step()
+        record = session.persist(tmp_path / "checkpoint.json")
+        pending = record["payload"]["pending_selector"]
+        backend.claim_ready(pending["call_id"], worker_id="original")
+        response(backend, pending, '{"query_order":[]}')
+        report = SessionCoordinator.restore(record, data, bank, backend=backend).finish()
+&gt;       assert report["selector_calls"][0]["response_error"] is None
+E       AssertionError: assert 'Invalid selector schema' is None
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:69: AssertionError</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_rejects_incompatible_or_unknown_mode[changes0]" time="0.280"><failure message="Failed: DID NOT RAISE ValueError">changes = {'predictor_kind': 'llm'}
+
+    @pytest.mark.parametrize("changes", [{"predictor_kind":"llm"},{"forecast_schedule":None},
+                                         {"selector_contract_version":"unknown"}])
+    def test_v2_rejects_incompatible_or_unknown_mode(changes):
+        data, bank, config = config_fixture()
+        config.update(changes)
+&gt;       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:79: Failed</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_rejects_incompatible_or_unknown_mode[changes1]" time="0.254"><failure message="Failed: DID NOT RAISE ValueError">changes = {'forecast_schedule': None}
+
+    @pytest.mark.parametrize("changes", [{"predictor_kind":"llm"},{"forecast_schedule":None},
+                                         {"selector_contract_version":"unknown"}])
+    def test_v2_rejects_incompatible_or_unknown_mode(changes):
+        data, bank, config = config_fixture()
+        config.update(changes)
+&gt;       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:79: Failed</failure></testcase><testcase classname="tests.test_monitoring_v13_selector" name="test_v2_rejects_incompatible_or_unknown_mode[changes2]" time="0.238"><failure message="Failed: DID NOT RAISE ValueError">changes = {'selector_contract_version': 'unknown'}
+
+    @pytest.mark.parametrize("changes", [{"predictor_kind":"llm"},{"forecast_schedule":None},
+                                         {"selector_contract_version":"unknown"}])
+    def test_v2_rejects_incompatible_or_unknown_mode(changes):
+        data, bank, config = config_fixture()
+        config.update(changes)
+&gt;       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+disastertrace-starter/tests/test_monitoring_v13_selector.py:79: Failed</failure></testcase></testsuite></testsuites>

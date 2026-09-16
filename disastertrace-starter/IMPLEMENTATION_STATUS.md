@@ -1,3 +1,144 @@
+# v13 M01 executor and resource handoff, 2026-09-16 11:14 UTC
+
+New bundle: `../plans/v13_selector_execution_20260916_01/`. It contains the
+frozen12-day roster/configs,288-call cap, model contract, authorization, formal
+controller, original capture audit, actual NativeFeaturePredictor consumer
+reconstruction and full-denominator paired scoring. Invalid/late/unknown replies
+remain in the original run and ledger. Original historical scripts are unchanged.
+The source is the existing B02frozen376-file package; no core edit in this step.
+
+`prepare.py` exits0. `test_model_run.py` passes14tests in4.88s with mocked HTTP;
+OFFLINE_TESTS_01.xml/log and OFFLINE_RESULT.json preserve results. A real old
+B11report's72program probabilities and96paid asset references reproduce in
+CONSUMER_PREFLIGHT.json; this is not a new weather trajectory. Prior912package
+tests remain prior evidence, not a newly executed total. Frozen prepare.py has
+two harmless unused imports; no claim of a clean lint result is made.
+
+The initial exact ACP create exits70 with429 CPU quota rejection, not success.
+CREATE_ARGUMENTS.json,CREATE.stdout,CREATE.stderr and CREATE_EXIT.json preserve
+the attempt. No job ID was returned. New wait_submit.py is tested using:
+`python -m pytest -q -p no:cacheprovider plans/v13_selector_execution_20260916_01/test_wait_submit.py`.
+All14scheduler tests pass in0.61s; SCHEDULER_TEST_RESULT.json binds the JUnit.
+They cover unknown responses, duplicate create claims, mismatched existing jobs,
+release/deadline conditions and exact quota rejection, with zero real submissions.
+
+Detached ordinary submitter PID216755 and observer PID216756 launch at11:13UTC;
+their respective LAUNCH.json/OBSERVER_LAUNCH.json bind commands and script hashes.
+All7tracked ACP jobs report RUNNING on the first poll; no release/new create yet.
+The target remains computing-cluster-01g-02,1H100/8CPU/128GiB,4case processes;
+this is CPU/API work, not local GPU inference. Platform acceptance and scientific
+gate opening will have separate receipts. B00=102/168,C00=6/12passed at11:14UTC;
+B02waits full B00,M01HTTP=0. Automated status updates carry later progress.
+
+Next: finish B00/B02, qualify and run M01if technical gates pass, then retain
+all model/program outcomes and aggregate known/unknown usage. C00continues
+independently. New-lead C01,PROCESS/TIMING,confirmation and new fits remain
+unexecuted. Git index mismatch from10:14stays recorded; no staging/push occurs.
+
+# v13 strong program baselines prepared and gated, 2026-09-16 10:30 UTC
+
+Entry: `../plans/v13_strong_baselines_20260916_01/README_CN.md`.
+User approved sequential followup execution with CCI resources. Three versioned
+public query selectors now preserve fixed program forecast slots: cyclic round
+robin, public risk/publication recency, and fixed hash. Legacy selectors retain
+behavior. The combined affected regression passes912unique tests, including all
+previous880;13legacy selector/allocation/authorization configurations produce
+identical reports under old/new code, with exact legacy AST specialization.
+
+A metadata/hash-only roster freezes12days, one per region/week at5000m. Two new
+16CPU ACP jobs pt-fmwdnhyy and pt-gi51ss1f qualify and then wait for full B00
+acceptance. No B02 method-day is claimed completed at this checkpoint. After
+complete B00, formal old-score reconstruction, explicit retained-bank identity
+and public action census, they execute at most72additional program method-days.
+Three selector controls plus three coverage factors complete the2x2 using the
+reverified existing B11reference. All new methods use the same annual raw values
+consumer; no refit, model/API call, weather download or confirmation access.
+The no-refit choice isolates selection; it does not deny measured clock effects.
+
+New STATUS.json and minute-level ordinary Python observer carry execution state;
+FINAL_RESULT.json is the formal completion receipt, not this preparation note.
+Existing B00/C00/M00 workers and consumed freezes remain untouched. Total newly
+requested compute is32CPU/0GPU; including prior jobs the allocation is88CPU/2H100.
+All prior frozen package sources remain unchanged. A git status stat-cache
+refresh changed Git index bytes; see INDEX_REFRESH_RECEIPT.json, which preserves
+the mismatch and verifies the original17staged-addition path set. No staging or
+commit was performed; future Git reads use GIT_OPTIONAL_LOCKS=0.
+
+# v13 followup live checkpoint: M00 passed, 2026-09-16 09:48 UTC
+
+Entry: `../plans/v13_followup_20260916_01/README_CN.md`.
+M00 completes12real API attempts:12valid and consumed,28,880provider tokens,
+0retries/unsettled reservations. Independent capture/publication audit passes.
+All12 choose the entire three-query catalogue in original order: interface
+qualification only, no evidence yet of smarter allocation than batch.
+B00 first168-calendar-unit roster member passes all5arms/360rows and formal
+scores; remaining full roster executes on three CPU shards. C00 waits for each
+selected B00 parent case to qualify, then automatically executes exact original
+continuations and GET-v2 branches. Separate legal-source strata audit is running.
+Latest resources:56CPU/2H100 allocated across five jobs; H100nodes provide CPU
+capacity here, no local-model GPU inference claimed. JOBS_03.json is current.
+Full-case/shard scientific conclusions remain pending. No confirmation/refit or
+formal288model batch is launched. FINAL_RESULT.json will be created by the
+bounded completion process; source-strata result has its own receipt.
+
+# v13 B00/C00/M00 followup running, 2026-09-16
+
+User approved sequential execution after the final A00-A06 review. Entry:
+`../plans/v13_followup_20260916_01/README_CN.md`; live state is STATUS.json.
+B00 freezes168daily cases/840program trajectories with existing annual raw banks;
+three ACP CPU jobs use16+16+8CPU. C00 registers12new-bank legal parents and up to48
+GET-v2 branches. M00 registers12single-attempt initial production-selector ticks;
+it is an interface smoke, not12full model forecast days. A one-H100/8CPU ACP node
+runs the auxiliary CPU/API work; local GPU inference is not claimed.
+
+Source matches the prior880-node regression. This batch's6summary checks and one
+mocked-HTTP production smoke pass. Zero-step parent materialization produces an
+identical first-tick report to direct execution. No new fitting/weather download
+or confirmation access. The first auxiliary job was stopped before any actual API
+or parent attempt (platform SUSPENDED); documented handoff pt-x9wf6mak uses
+resume_m00.py and c00_02.py. Preserve original claims and freezes. B00jobs:
+pt-bgtjydm7, pt-5tgzbejc, pt-npr5eak9. Completion is not yet claimed; the bounded
+finalizer writes FINAL_RESULT.json and RESULT_SUMMARY_CN.md when results arrive.
+
+# v13 final amended closeout, 2026-09-16
+
+Canonical receipt: `../plans/v13_execution_20260916_01/FINAL_RESULT.json`.
+The final source passes880unique tests (793existing+87new),0failure/skip/missing.
+A documented A03/A06 amendment after the first876-node close adds strict query
+prefix execution and complete tail dispositions, including original pending-source
+resume. Four new tests first reproduced the gap. Both sequential16CPU ACP jobs
+finish SUCCEEDED; no model/weather/scientific experiment starts. Use
+STOP_RECEIPT_02.json, TEST_RECEIPTS_02.json and FINAL_PRESERVATION_02.json.
+The first closeout/source receipts and earlier notes below remain historical.
+B00/C00/M00 remain unlaunched proposals; this batch stops for review.
+
+# v13 current execution, 2026-09-16
+
+Entry: `../plans/v13_execution_20260916_01/README_CN.md`; implementation and impacts:
+IMPACT_SUMMARY_CN.md. Current production integration changes are confined to
+policies.py, production.py, residual_query_plan.py and session_checkpoint.py,
+with four new modules and four new regression files. Frozen v12 scripts stay intact.
+
+Commands: audit_history.py (first canonical/file-hash mismatch preserved in
+HISTORY_01.log; corrected HISTORY_02.log exits0), diagnose_existing.py exits0,
+prepare_handoff.py exits0, and system-Python validate_schema.py exits0. Targeted
+failures and fixes remain in tests/ and logs/. The new frozen combined regression
+runs `regression.py execute` on one16CPU/64GiB ACP job, eight processes:79modules,
+876unique tests,0failures/skips,793historical+83new. Exact argv,code/test hashes,
+JUnit,exit codes and terminal platform receipt are saved in the execution bundle.
+
+All24C2 branch metrics and108method-session arithmetic reconcile with old scores;
+84FOLLOW-related comparisons get corrected consumer classification.288public
+requests have no cost/age/coverage-degree asymmetry.24public-ID/hash-selected
+clock diagnostics reproduce actual probabilities; all have measurable numerical
+clock effects.290historical API receipts lack the new final-permit/EOF evidence;
+288formal unredacted body hashes match. No hindsight repair of old replies occurs.
+
+Final preservation and task statuses are in RESULT_SUMMARY.json and
+FINAL_PRESERVATION.json when emitted by finalize.py. Next executable preparation
+is B00's fixed annual-raw-bank calendar, then separately qualified C00/M00.
+This batch stops at A06; new model calls/downloads/fits/confirmation/push remain0.
+
 # Implementation Status
 
 ## v12 closed execution, 2026-09-15

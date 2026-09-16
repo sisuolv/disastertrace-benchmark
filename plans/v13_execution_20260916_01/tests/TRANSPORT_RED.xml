@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="23" time="12.970" timestamp="2026-09-16T08:12:28.593509+00:00" hostname="app-d9e128442cf74fbdb23e94ebb8b4aa61-8c8bcf6db-fpcnm"><testcase classname="tests.test_monitoring_v13_transport" name="test_recovered_capture_resolves_in_production_and_settles_once" time="0.427"><failure message="RuntimeError: Original worker failed; execution reservation remains unknown">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-4/test_recovered_capture_resolve0')
+
+    def test_recovered_capture_resolves_in_production_and_settles_once(tmp_path):
+        session, backend, pending, _, _ = fixture(tmp_path)
+        with pytest.raises(OSError): deliver(backend,pending,hook=broken_publication)
+        failure = next(backend.directory.glob("*.failure.json")); original = failure.read_bytes()
+        trusted = anchor(backend)
+        api.reconcile_capture(backend,pending["call_id"],trusted_anchor_sha256=trusted)
+        first = next(backend.directory.glob("*.reconciliation.json")).read_bytes()
+        api.reconcile_capture(backend,pending["call_id"],trusted_anchor_sha256=trusted)
+        assert next(backend.directory.glob("*.reconciliation.json")).read_bytes() == first
+&gt;       assert backend.resolve(pending["ticket"],pending["call_id"])[0] == '{"query_order":[]}'
+
+disastertrace-starter/tests/test_monitoring_v13_transport.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_v1.production.ProductionSpoolBackend object at 0x7f8646a18880&gt;
+ticket = {'remote_id': 'fe7e85aaadbd591eaa47731982c9bcfa7c796f6c9a522b5d7be584af47d23c18', 'request_sha256': 'b248e4aeffa6c4bcb3a9a6cc2555d767151765aa30a6f34826ab4285f53514d6'}
+call_id = 'select-0'
+
+    def resolve(self, ticket, call_id):
+        self.validate_binding()
+        from .spool_backend import digest, read
+    
+        key = self._key(call_id)
+        failed = self.directory / (key + ".failure.json")
+        if failed.exists():
+            request_path = self.directory / (key + ".request.json")
+            failure, request = read(failed), read(request_path)
+            if (
+                ticket != {"remote_id": key, "request_sha256": digest(request_path)}
+                or failure.get("call_id") != call_id
+                or failure.get("request_sha256") != ticket["request_sha256"]
+                or failure.get("execution_sha256") != request["execution_sha256"]
+            ):
+                raise ValueError("Worker failure does not bind the original request")
+&gt;           raise RuntimeError("Original worker failed; execution reservation remains unknown")
+E           RuntimeError: Original worker failed; execution reservation remains unknown
+
+disastertrace-starter/src/disastertrace/monitoring_v1/production.py:76: RuntimeError</failure></testcase><testcase classname="tests.test_monitoring_v13_transport" name="test_late_recovery_changes_costs_but_cannot_reopen_old_forecasts" time="0.867"><failure message="RuntimeError: Original worker failed; execution reservation remains unknown">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-4/test_late_recovery_changes_cos0')
+
+    def test_late_recovery_changes_costs_but_cannot_reopen_old_forecasts(tmp_path):
+        session, backend, pending, _, _ = fixture(tmp_path)
+        with pytest.raises(OSError): deliver(backend,pending,hook=broken_publication)
+        failed = session.finish(); predictions = copy.deepcopy(failed["snapshots"])
+        assert failed["resource_reserved"]["tokens"] &gt; 0
+        api.reconcile_capture(backend,pending["call_id"],trusted_anchor_sha256=anchor(backend))
+&gt;       receipt = api.cost_reconciliation(backend,pending,observed_at=session.snapshot()["payload"]["clock"])
+
+disastertrace-starter/tests/test_monitoring_v13_transport.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+disastertrace-starter/src/disastertrace/monitoring_v1/api_transport_v2.py:305: in cost_reconciliation
+    raw, details = backend.resolve(pending["ticket"], pending["call_id"])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;disastertrace.monitoring_v1.production.ProductionSpoolBackend object at 0x7f8646bb11b0&gt;
+ticket = {'remote_id': 'fe7e85aaadbd591eaa47731982c9bcfa7c796f6c9a522b5d7be584af47d23c18', 'request_sha256': '279d81baf4ab4a52aeafeb21a52f569fb67820fada81e25c7cb351d1e90b1e0d'}
+call_id = 'select-0'
+
+    def resolve(self, ticket, call_id):
+        self.validate_binding()
+        from .spool_backend import digest, read
+    
+        key = self._key(call_id)
+        failed = self.directory / (key + ".failure.json")
+        if failed.exists():
+            request_path = self.directory / (key + ".request.json")
+            failure, request = read(failed), read(request_path)
+            if (
+                ticket != {"remote_id": key, "request_sha256": digest(request_path)}
+                or failure.get("call_id") != call_id
+                or failure.get("request_sha256") != ticket["request_sha256"]
+                or failure.get("execution_sha256") != request["execution_sha256"]
+            ):
+                raise ValueError("Worker failure does not bind the original request")
+&gt;           raise RuntimeError("Original worker failed; execution reservation remains unknown")
+E           RuntimeError: Original worker failed; execution reservation remains unknown
+
+disastertrace-starter/src/disastertrace/monitoring_v1/production.py:76: RuntimeError</failure></testcase><testcase classname="tests.test_monitoring_v13_transport" name="test_expiry_after_preparation_or_intent_prevents_send[credential]" time="0.388" /><testcase classname="tests.test_monitoring_v13_transport" name="test_expiry_after_preparation_or_intent_prevents_send[before_permit]" time="0.391" /><testcase classname="tests.test_monitoring_v13_transport" name="test_expiry_after_preparation_or_intent_prevents_send[intent_io]" time="0.412" /><testcase classname="tests.test_monitoring_v13_transport" name="test_stop_has_an_explicit_local_permit_boundary[before_permit-0]" time="0.358" /><testcase classname="tests.test_monitoring_v13_transport" name="test_stop_has_an_explicit_local_permit_boundary[after_permit-1]" time="0.409" /><testcase classname="tests.test_monitoring_v13_transport" name="test_original_claim_blocks_second_worker_and_unknown_is_never_resent" time="0.751" /><testcase classname="tests.test_monitoring_v13_transport" name="test_crash_without_capture_cannot_invent_recovery[after_permit]" time="0.803" /><testcase classname="tests.test_monitoring_v13_transport" name="test_crash_without_capture_cannot_invent_recovery[after_http_before_capture]" time="0.762" /><testcase classname="tests.test_monitoring_v13_transport" name="test_first_reconciliation_verifies_external_anchor[capture]" time="0.444" /><testcase classname="tests.test_monitoring_v13_transport" name="test_first_reconciliation_verifies_external_anchor[capture_and_local_hash]" time="0.416" /><testcase classname="tests.test_monitoring_v13_transport" name="test_first_reconciliation_verifies_external_anchor[anchor]" time="0.392" /><testcase classname="tests.test_monitoring_v13_transport" name="test_first_reconciliation_verifies_external_anchor[intent]" time="0.386" /><testcase classname="tests.test_monitoring_v13_transport" name="test_first_reconciliation_verifies_external_anchor[wrong_trusted_hash]" time="0.320" /><testcase classname="tests.test_monitoring_v13_transport" name="test_invalid_wire_response_keeps_capture_failure_and_reservation[\xff-True]" time="0.748" /><testcase classname="tests.test_monitoring_v13_transport" name="test_invalid_wire_response_keeps_capture_failure_and_reservation[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-False]" time="0.704" /><testcase classname="tests.test_monitoring_v13_transport" name="test_invalid_wire_response_keeps_capture_failure_and_reservation[{&quot;model&quot;: &quot;wrong-model&quot;, &quot;usage&quot;: {&quot;prompt_tokens&quot;: 10, &quot;completion_tokens&quot;: 10}, &quot;choices&quot;: [{&quot;message&quot;: {&quot;content&quot;: &quot;{\&quot;query_order\&quot;:[]}&quot;}, &quot;finish_reason&quot;: &quot;stop&quot;}]}-True]" time="0.743" /><testcase classname="tests.test_monitoring_v13_transport" name="test_invalid_wire_response_keeps_capture_failure_and_reservation[{&quot;model&quot;: &quot;fixture-model&quot;, &quot;usage&quot;: {&quot;prompt_tokens&quot;: true, &quot;completion_tokens&quot;: 10}, &quot;choices&quot;: [{&quot;message&quot;: {&quot;content&quot;: &quot;{\&quot;query_order\&quot;:[]}&quot;}, &quot;finish_reason&quot;: &quot;stop&quot;}]}-True]" time="0.701" /><testcase classname="tests.test_monitoring_v13_transport" name="test_invalid_wire_response_keeps_capture_failure_and_reservation[{&quot;model&quot;: &quot;fixture-model&quot;, &quot;usage&quot;: {&quot;prompt_tokens&quot;: 10, &quot;completion_tokens&quot;: 513}, &quot;choices&quot;: [{&quot;message&quot;: {&quot;content&quot;: &quot;{\&quot;query_order\&quot;:[]}&quot;}, &quot;finish_reason&quot;: &quot;stop&quot;}]}-True]" time="0.807" /><testcase classname="tests.test_monitoring_v13_transport" name="test_invalid_wire_response_keeps_capture_failure_and_reservation[{&quot;model&quot;: &quot;fixture-model&quot;, &quot;usage&quot;: {&quot;prompt_tokens&quot;: 10, &quot;completion_tokens&quot;: 10}, &quot;choices&quot;: [{&quot;message&quot;: {&quot;content&quot;: &quot;{\&quot;query_order\&quot;:[]}&quot;}, &quot;finish_reason&quot;: &quot;stop&quot;}]}-False]" time="0.762" /><testcase classname="tests.test_monitoring_v13_transport" name="test_redaction_cannot_hide_original_truncation" time="0.002" /><testcase classname="tests.test_monitoring_v13_transport" name="test_bounded_read_proves_eof_and_handles_short_reads" time="0.002" /></testsuite></testsuites>

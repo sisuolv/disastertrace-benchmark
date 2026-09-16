@@ -1,3 +1,122 @@
+# v13 sequential M01 execution decisions, 2026-09-16 11:14 UTC
+
+The latest user continuation authorizes the separately registered M01following
+B00/B02. Keep B02's consumed observer unchanged: its M01_READINESS file describes
+the earlier batch boundary; use v13_selector_execution_20260916_01's authorization,
+gate decision and live receipts for the subsequent batch. No old model scope
+or execution claim is reopened.
+
+Use the same12metadata/hash-selected days and fixed annual program to isolate
+query selection. One existing verified DeepSeek-V4-Flash route, at most288calls,
+no retries. Qualification requires complete technical denominators, actual paid
+source consumption and an observed different query/probability trajectory under
+the same predictor. Positive Brier gain is not a gate. C00is an independent
+mechanism track; its completion is not required for this selector comparison.
+Late/invalid/failed replies remain in full scoring, with actual latency charged.
+
+CPU quota, not GPU count, blocked the first create. Preserve active experiments;
+wait for a verified release and reuse the unchanged registered worker command.
+The ordinary submitter checks existing job identity before any new create and
+does not retry ambiguous submissions. Platform retry after a definitive quota
+rejection is distinct from prohibited model-request retries. New resources use
+the authorized CCI/ACP pool. No credential is copied into these artifacts.
+
+# v13 strong program baselines prepared and gated, 2026-09-16 10:30 UTC
+
+Entry: `../plans/v13_strong_baselines_20260916_01/README_CN.md`.
+User approved sequential followup execution with CCI resources. Three versioned
+public query selectors now preserve fixed program forecast slots: cyclic round
+robin, public risk/publication recency, and fixed hash. Legacy selectors retain
+behavior. The combined affected regression passes912unique tests, including all
+previous880;13legacy selector/allocation/authorization configurations produce
+identical reports under old/new code, with exact legacy AST specialization.
+
+A metadata/hash-only roster freezes12days, one per region/week at5000m. Two new
+16CPU ACP jobs pt-fmwdnhyy and pt-gi51ss1f qualify and then wait for full B00
+acceptance. No B02 method-day is claimed completed at this checkpoint. After
+complete B00, formal old-score reconstruction, explicit retained-bank identity
+and public action census, they execute at most72additional program method-days.
+Three selector controls plus three coverage factors complete the2x2 using the
+reverified existing B11reference. All new methods use the same annual raw values
+consumer; no refit, model/API call, weather download or confirmation access.
+The no-refit choice isolates selection; it does not deny measured clock effects.
+
+New STATUS.json and minute-level ordinary Python observer carry execution state;
+FINAL_RESULT.json is the formal completion receipt, not this preparation note.
+Existing B00/C00/M00 workers and consumed freezes remain untouched. Total newly
+requested compute is32CPU/0GPU; including prior jobs the allocation is88CPU/2H100.
+All prior frozen package sources remain unchanged. A git status stat-cache
+refresh changed Git index bytes; see INDEX_REFRESH_RECEIPT.json, which preserves
+the mismatch and verifies the original17staged-addition path set. No staging or
+commit was performed; future Git reads use GIT_OPTIONAL_LOCKS=0.
+
+# v13 followup live checkpoint: M00 passed, 2026-09-16 09:48 UTC
+
+Entry: `../plans/v13_followup_20260916_01/README_CN.md`.
+M00 completes12real API attempts:12valid and consumed,28,880provider tokens,
+0retries/unsettled reservations. Independent capture/publication audit passes.
+All12 choose the entire three-query catalogue in original order: interface
+qualification only, no evidence yet of smarter allocation than batch.
+B00 first168-calendar-unit roster member passes all5arms/360rows and formal
+scores; remaining full roster executes on three CPU shards. C00 waits for each
+selected B00 parent case to qualify, then automatically executes exact original
+continuations and GET-v2 branches. Separate legal-source strata audit is running.
+Latest resources:56CPU/2H100 allocated across five jobs; H100nodes provide CPU
+capacity here, no local-model GPU inference claimed. JOBS_03.json is current.
+Full-case/shard scientific conclusions remain pending. No confirmation/refit or
+formal288model batch is launched. FINAL_RESULT.json will be created by the
+bounded completion process; source-strata result has its own receipt.
+
+# v13 B00/C00/M00 followup running, 2026-09-16
+
+User approved sequential execution after the final A00-A06 review. Entry:
+`../plans/v13_followup_20260916_01/README_CN.md`; live state is STATUS.json.
+B00 freezes168daily cases/840program trajectories with existing annual raw banks;
+three ACP CPU jobs use16+16+8CPU. C00 registers12new-bank legal parents and up to48
+GET-v2 branches. M00 registers12single-attempt initial production-selector ticks;
+it is an interface smoke, not12full model forecast days. A one-H100/8CPU ACP node
+runs the auxiliary CPU/API work; local GPU inference is not claimed.
+
+Source matches the prior880-node regression. This batch's6summary checks and one
+mocked-HTTP production smoke pass. Zero-step parent materialization produces an
+identical first-tick report to direct execution. No new fitting/weather download
+or confirmation access. The first auxiliary job was stopped before any actual API
+or parent attempt (platform SUSPENDED); documented handoff pt-x9wf6mak uses
+resume_m00.py and c00_02.py. Preserve original claims and freezes. B00jobs:
+pt-bgtjydm7, pt-5tgzbejc, pt-npr5eak9. Completion is not yet claimed; the bounded
+finalizer writes FINAL_RESULT.json and RESULT_SUMMARY_CN.md when results arrive.
+
+# v13 final amended closeout, 2026-09-16
+
+Canonical receipt: `../plans/v13_execution_20260916_01/FINAL_RESULT.json`.
+The final source passes880unique tests (793existing+87new),0failure/skip/missing.
+A documented A03/A06 amendment after the first876-node close adds strict query
+prefix execution and complete tail dispositions, including original pending-source
+resume. Four new tests first reproduced the gap. Both sequential16CPU ACP jobs
+finish SUCCEEDED; no model/weather/scientific experiment starts. Use
+STOP_RECEIPT_02.json, TEST_RECEIPTS_02.json and FINAL_PRESERVATION_02.json.
+The first closeout/source receipts and earlier notes below remain historical.
+B00/C00/M00 remain unlaunched proposals; this batch stops for review.
+
+# v13 implementation decisions, 2026-09-16
+
+Execute the reviewed A00-A06 first batch and stop for review. The user's expanded
+resource permission prioritizes CCI resources; use one16CPU/64GiB ACP job for the
+CPU regression. API credential remains outside the repository and is not printed.
+No task in this batch requires H100 inference or provider requests.
+
+Preserve v1 defaults and frozen old scripts. New selector uses only query_order,
+with an explicit empty forecast_handles internal adapter and fixed program slots.
+New residual queries exclude payer-scoped cache and any original request identity.
+API recovery requires a separate trusted receipt, retained failure and verified
+production consumption; late results only reconcile costs, never reopen forecasts.
+
+Preserve failed test/audit attempts. Treat unchanged numerical scores separately
+from84corrected consumer labels. Keep annual banks for the next bridge; measured
+clock differences alone do not prove benefit from refitting or justify Y-based
+selection.12M00 requests,168B00 calendar units and12C00 parent candidates are
+unsent/unlaunched proposals with distinct remaining qualification requirements.
+
 # Decisions
 
 ## v12 execution and closeout decisions, 2026-09-15

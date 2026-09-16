@@ -1,0 +1,511 @@
+{
+  "schema": "disastertrace.v13_planning.v1",
+  "status": "DRAFT_FOR_USER_REVIEW",
+  "not_a_launcher": true,
+  "execution_authorized": false,
+  "reference_publication_commit": "1eba36dd272c72573d1309c78d45dbe97dd8af12",
+  "first_batch": [
+    "A00",
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06"
+  ],
+  "first_batch_limits": {
+    "new_weather_http": 0,
+    "new_model_calls": 0,
+    "gpu": 0,
+    "new_fits": 0,
+    "confirmation_payload_reads": 0,
+    "new_scientific_branches": 0,
+    "new_full_calendar_runs": 0,
+    "automatic_git_push": false
+  },
+  "decision_defaults": {
+    "model_output_keys": [
+      "query_order"
+    ],
+    "internal_compat_adapter_forecast_handles": [],
+    "smoke_requests_max": 12,
+    "formal_selector_requests_max": 288,
+    "combined_request_proposal_max": 300,
+    "c2_parent_max": 12,
+    "primary_forecast_mode": "raw",
+    "primary_visibility_threshold_m": 5000
+  },
+  "resource_note": "Future explicit batch approval may cover multiple stages; passing a technical gate alone is not execution authorization. No new jobs launched by this plan.",
+  "dependency_semantics": "requires_pass binds technical evidence; requires_evidence must be satisfied at the specified runtime stage. observes is not a pass dependency. A06 can close incomplete batches without granting engineering_complete. B01 NOT_NEEDED still supplies frozen bank identity.",
+  "tasks": [
+    {
+      "id": "A00",
+      "title": "基线、保护范围与测试集合",
+      "phase": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [],
+      "outputs": [
+        "BASELINE.json",
+        "PROTECTION_MANIFEST.json",
+        "EDIT_SCOPE.json",
+        "TEST_SCOPE_DIFF.json"
+      ],
+      "completion_gate": "真实身份与保护边界完成；不将历史测试回执当新测试通过",
+      "limits": {}
+    },
+    {
+      "id": "A01",
+      "title": "C2分析完整性和消费者指纹",
+      "phase": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "C2_INTEGRITY.json",
+        "METHOD_FINGERPRINTS.json",
+        "HISTORICAL_REPORT_IMPACT.json"
+      ],
+      "completion_gate": "注册集合、hash、alias、实际调用均核对；正常数据数值等价，异常数据明确不完整；生产入口定向测试通过",
+      "limits": {
+        "old_c2_parents_to_scan": 6,
+        "old_c2_registered_rules": 24,
+        "old_method_sessions_to_scan": 108
+      }
+    },
+    {
+      "id": "A02",
+      "title": "发送、捕获、恢复和实际消费者",
+      "phase": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "TRANSPORT_V2_CONTRACT.json",
+        "DISPATCH_CAPTURE_RECOVERY_TESTS.json",
+        "API_HISTORICAL_IMPACT.json"
+      ],
+      "completion_gate": "实际resolve/coordinator/ledger恢复测试通过；UNKNOWN和旧failure保留；本地许可与capture完整性可验证",
+      "limits": {
+        "historical_request_receipts_to_scan_max": 290,
+        "new_http_requests": 0
+      }
+    },
+    {
+      "id": "A03",
+      "title": "单字段query-only v2与冻结适配器",
+      "phase": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "QUERY_ONLY_V2_CONTRACT.json",
+        "SELECTOR_V2_OFFLINE_MATRIX.json",
+        "M00_PROPOSAL.json"
+      ],
+      "completion_gate": "合同源统一、动态句柄及异常语义测试通过；旧v1不改变",
+      "limits": {
+        "new_model_calls": 0
+      }
+    },
+    {
+      "id": "A04",
+      "title": "remaining_new残余计划v2",
+      "phase": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "RESIDUAL_V2_CONTRACT.json",
+        "RESIDUAL_V1_IMPACT.json",
+        "C00_ROSTER_PROPOSAL.json"
+      ],
+      "completion_gate": "私有/共享权益与请求状态符合新合同；保留旧v1；不执行新真实分支",
+      "limits": {}
+    },
+    {
+      "id": "A05",
+      "title": "有限时点、公开动作与历史影响普查",
+      "phase": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "CLOCK_INFORMATION_AUDIT.json",
+        "ACTION_SPACE_CENSUS.json",
+        "ROLE_LEDGER.json",
+        "B00_ROSTER_PROPOSAL.json"
+      ],
+      "completion_gate": "固定metadata/hash样本；区分age、版本、潜在可查与实际披露；缺资料不补样",
+      "limits": {
+        "old_request_metadata_max": 288,
+        "numerical_target_diagnostics_max": 24,
+        "new_scientific_branches": 0
+      }
+    },
+    {
+      "id": "A06",
+      "title": "一次合并回归、分轨验收和停止",
+      "phase": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "TEST_RECEIPTS.json",
+        "IMPACT_SUMMARY_CN.md",
+        "NEXT_GATE_DECISION.json",
+        "STOP_RECEIPT.json",
+        "RESULT_SUMMARY_CN.md"
+      ],
+      "completion_gate": "可在必需节点失败/阻塞时关闭批次；engineering_complete仅在所有必需验收真实通过时成立",
+      "limits": {},
+      "observes": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05"
+      ],
+      "close_condition": "observed nodes terminal OR approved batch deadline reached and active work safely stopped",
+      "engineering_complete_requires_pass": [
+        "A00",
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05"
+      ],
+      "automatic_next_phase": false
+    },
+    {
+      "id": "B00",
+      "title": "年度raw bank完整自然日历程序桥接",
+      "phase": "B",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00",
+        "A01",
+        "A05"
+      ],
+      "outputs": [
+        "BRIDGE_REGISTRATION.json",
+        "REUSE_MANIFEST.json",
+        "ANNUAL_FULL_CALENDAR_COMPARISON.json",
+        "BRIDGE_REPORT_CN.md"
+      ],
+      "completion_gate": "精确roster全分母对账；身份一致复用；五臂同条件配对；零新模型与来源下载",
+      "limits": {
+        "method_trajectories_max": 840,
+        "method_independent_opportunities_if_roster_unchanged": 12096,
+        "method_rows_if_roster_unchanged": 60480,
+        "new_model_calls": 0
+      },
+      "requires_closed_batches": [
+        "A"
+      ]
+    },
+    {
+      "id": "B01",
+      "title": "保留或条件性更新预测器",
+      "phase": "B",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A05",
+        "B00"
+      ],
+      "outputs": [
+        "BANK_DECISION.json",
+        "FROZEN_BANK_IDENTITY.json"
+      ],
+      "completion_gate": "无必要则NOT_NEEDED且冻结现有身份；有证据及执行范围时至多一个新slot-aligned候选；保持年份角色",
+      "limits": {
+        "new_fit_candidates_max": 1,
+        "default_new_fit_candidates": 0
+      },
+      "conditional": true
+    },
+    {
+      "id": "B02",
+      "title": "强程序、2x2和公开可利用性",
+      "phase": "B",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "B00"
+      ],
+      "outputs": [
+        "PROGRAM_ROSTER.json",
+        "STRONG_BASELINE_COMPARISON.json",
+        "ACTION_EQUIVALENCE_REPORT.json"
+      ],
+      "completion_gate": "12日由metadata/hash固定；六个增补程序条件至多72方法日；不以Y/赢家选样；训练支持不足不伪造VOI",
+      "limits": {
+        "new_program_method_days_max": 72
+      },
+      "requires_evidence": [
+        "BANK_DECISION.frozen_bank_identity"
+      ]
+    },
+    {
+      "id": "C00",
+      "title": "多状态同父GET及独立PROCESS/TIMING子轨",
+      "phase": "C",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00",
+        "A01",
+        "A04"
+      ],
+      "outputs": [
+        "C2_PARENT_ROSTER.json",
+        "GET_REPORT.json",
+        "PROCESS_SCOPE_RESULT.json",
+        "TIMING_SCOPE_RESULT.json",
+        "RESIDUAL_SESSION_EFFECTS.json"
+      ],
+      "completion_gate": "元数据/合法公开状态取父；同父续跑对齐；整个U_parent评分；PROCESS/TIMING各有真实适用资格",
+      "limits": {
+        "parent_materializations_max": 12,
+        "original_policy_continuations_max": 12,
+        "get_branches_max": 48,
+        "process_pairs_max": 6,
+        "process_paths_max": 12,
+        "timing_pairs_max": 6,
+        "timing_paths_max": 12,
+        "new_model_calls": 0
+      },
+      "requires_closed_batches": [
+        "A"
+      ],
+      "requires_evidence": [
+        "BANK_DECISION.frozen_bank_identity"
+      ],
+      "subtrack_failure_does_not_invalidate_qualified_get": true
+    },
+    {
+      "id": "C01",
+      "title": "同一未来目标多截止修订资格",
+      "phase": "C",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00",
+        "A01"
+      ],
+      "outputs": [
+        "MULTICUTOFF_PRIOR_EVIDENCE.json",
+        "FIXED_TARGET_REVISION_PROPOSAL.json",
+        "FIXED_TARGET_REVISION_RESULT.json"
+      ],
+      "completion_gate": "先核旧回执；新截止必须在预测器支持范围；不支持则BLOCKED；共享Y目标总权重固定",
+      "limits": {
+        "fixed_targets_max": 6,
+        "cutoffs_per_target_max": 3,
+        "protocols_max": 2,
+        "program_conditions_max": 4,
+        "score_rows_max": 144
+      },
+      "requires_evidence": [
+        "BANK_DECISION.frozen_bank_identity"
+      ]
+    },
+    {
+      "id": "M00",
+      "title": "真实天气接口smoke",
+      "phase": "M",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00",
+        "A02",
+        "A03"
+      ],
+      "outputs": [
+        "MODEL_INTERFACE_REGISTRATION.json",
+        "MODEL_INTERFACE_RESULT.json"
+      ],
+      "completion_gate": "实际冻结分母内合同全部有效且运输/身份合格；仅smoke，不证明总体高可靠率",
+      "limits": {
+        "model_requests_max": 12,
+        "automatic_retries": 0
+      },
+      "requires_closed_batches": [
+        "A"
+      ],
+      "requires_evidence": [
+        "approved_request_scope",
+        "frozen_real_public_views"
+      ]
+    },
+    {
+      "id": "M01",
+      "title": "单模型selector有界开发比较",
+      "phase": "M",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "B00",
+        "B02",
+        "M00"
+      ],
+      "outputs": [
+        "SELECTOR_REGISTRATION.json",
+        "SELECTOR_RESULTS.json",
+        "SELECTOR_REPORT_CN.md"
+      ],
+      "completion_gate": "同预测器、日历、强程序和完整分母；保留全部失败；无正收益可正常完成；技术不合格不能执行",
+      "limits": {
+        "daily_sessions_max": 12,
+        "decisions_per_session_max": 24,
+        "model_requests_max": 288,
+        "automatic_retries": 0
+      },
+      "requires_evidence": [
+        "approved_request_scope",
+        "qualified_field_to_forecast_consumer",
+        "BANK_DECISION.frozen_bank_identity"
+      ],
+      "does_not_require_all_process_or_temperature_or_mm": true
+    },
+    {
+      "id": "D00",
+      "title": "双确认协议与统计冻结",
+      "phase": "D",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "CONFIRMATION_DRAFT.json",
+        "CONFIRMATION_FREEZE.json"
+      ],
+      "completion_gate": "草案可提前写；最终freeze在任何确认载荷暴露前绑定所声称C1/C2方法、端点、过程范围和停止规则",
+      "limits": {},
+      "requires_evidence_for_final_freeze": [
+        "selected_claim_scopes",
+        "frozen_methods_for_all_claimed_scopes",
+        "development_based_precision_design"
+      ],
+      "confirmation_payload_access": false
+    },
+    {
+      "id": "D01",
+      "title": "未读历史确认",
+      "phase": "D",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "D00"
+      ],
+      "outputs": [
+        "CONFIRMATION_EXPOSURE_RECEIPT.json",
+        "CONFIRMATION_RESULTS.json"
+      ],
+      "completion_gate": "共同确认载荷打开前两轨同时冻结或使用隔离日历；不追加到显著；不足如实报告",
+      "limits": {},
+      "requires_evidence": [
+        "approved_confirmation_scope",
+        "CONFIRMATION_FREEZE.complete"
+      ]
+    },
+    {
+      "id": "D02",
+      "title": "按主张范围发布复算切片",
+      "phase": "D",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A01"
+      ],
+      "outputs": [
+        "RELEASE_SCOPE.json",
+        "REPRODUCTION_MANIFEST.json",
+        "RELEASE_REPORT_CN.md"
+      ],
+      "completion_gate": "真实记录/合成夹具分开；许可、完整性和重建范围明确；无确认不冒称确认版",
+      "limits": {},
+      "requires_evidence": [
+        "release_level_specific_evidence"
+      ]
+    },
+    {
+      "id": "S00",
+      "title": "温度F-only资格",
+      "phase": "S",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "TEMPERATURE_READINESS.json"
+      ],
+      "completion_gate": "raw目标局部与ECC完整联合资格分开；真实成员谱系/日窗/动态目标证明；不自动升级C1",
+      "limits": {}
+    },
+    {
+      "id": "S01",
+      "title": "H07/H08第二主动链准入与选择",
+      "phase": "S",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "SECOND_ACTIVE_CHAIN_READINESS.json",
+        "SECOND_ACTIVE_CHAIN_DECISION.json"
+      ],
+      "completion_gate": "同目标预报/补证/结果、时间物理支持、自动评分和许可过门；不按模型成绩选链",
+      "limits": {}
+    },
+    {
+      "id": "S02",
+      "title": "原生MM资产和实际消费资格",
+      "phase": "S",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "NATIVE_MM_ASSET_QUALIFICATION.json",
+        "NATIVE_MM_PROPOSAL.json"
+      ],
+      "completion_gate": "真实原生像素与合法时空/来源绑定；没有VLM实际调用不声称MM模型评测",
+      "limits": {
+        "existing_asset_opportunity_pairs_max": 24,
+        "default_new_model_calls": 0
+      }
+    },
+    {
+      "id": "S03",
+      "title": "模型E/F、X09和D的分轨设计",
+      "phase": "S",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "MODEL_EF_PROPOSAL.json",
+        "JOINT_REASONING_PROPOSAL.json",
+        "SCENARIO_CARD_PROPOSAL.json"
+      ],
+      "completion_gate": "角色分离；固定证据/目标下DecisionSpec不改变F；独立预算，不占用selector名额",
+      "limits": {}
+    },
+    {
+      "id": "S04",
+      "title": "first_seen与prospective设计",
+      "phase": "S",
+      "status": "PROPOSED_NOT_RUN",
+      "requires_pass": [
+        "A00"
+      ],
+      "outputs": [
+        "FIRST_SEEN_PROPOSAL.json",
+        "PROSPECTIVE_SCOPE_PROPOSAL.json"
+      ],
+      "completion_gate": "历史声明时延/可证明发布/实测first_seen分开；窗口开始前冻结才可称prospective",
+      "limits": {
+        "default_network_requests": 0
+      }
+    }
+  ]
+}
