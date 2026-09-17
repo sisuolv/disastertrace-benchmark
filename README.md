@@ -1,3 +1,9 @@
+# Latest: v13 completed experiments and results (2026-09-17)
+
+Start with [current progress](LATEST_PROGRESS_V13_CN.md), [review instructions](publication/v13_completed_20260917/REVIEW_FOR_CHATGPT_PRO_CN.md), or [the code and evidence ZIP](publication/v13_completed_20260917/DisasterTrace_v13_completed_results.zip). B00, C00, B02 and M01 are complete. Model gains over all strong programs are not established. Earlier entries below retain their historical scope.
+
+---
+
 # Latest: v13 code and in-progress experiments (2026-09-16)
 
 Start with [current progress](LATEST_PROGRESS_V13_CN.md), [review instructions](publication/v13_inprogress_20260916/REVIEW_FOR_CHATGPT_PRO_CN.md), or [the code and evidence ZIP](publication/v13_inprogress_20260916/DisasterTrace_v13_progress_and_code.zip). This is a timestamped snapshot; background experiments continue. Earlier entries below retain their historical scope.

@@ -1,3 +1,23 @@
+# v13 registered experiments complete; publication update 2026-09-17
+
+Current entry: `../publication/v13_completed_20260917/RESULTS_CN.md`.
+B00 completes 168 cases / 840 trajectories / 60,480 method rows; C00 completes
+12 parents / 48 GET branches; B02 completes 72 new and 60 reused method-days;
+M01 completes 12 days / 864 opportunities at 2026-09-16 14:47 UTC.
+All scientific batch completion receipts pass. M01 has 275 verified valid HTTP
+responses and 13 pre-send BlockingIOError failures retained in the denominator;
+transport says not_sent while the consumer says unknown_execution. There are
+1,119,368 known provider tokens and 432,640 still-reserved tokens, not a charge.
+The current task publishes existing results, with no experiment or retry launch.
+
+The model is a query selector with a fixed program probability head. It improves
+on batch/coverage in this development subset but does not beat cyclic or hash
+selection; 857 settled opportunities contain only three positives. No independent
+confirmation or full 16-hazard completion is claimed. C00 source strata are all
+full TAF temporal coverage; PROCESS/TIMING and new 3/6-hour predictor support
+remain unfinished. The documented Git index byte mismatch is preserved as false;
+prior frozen sources/bindings match. Earlier entries below are historical.
+
 # v13 sequential M01 execution decisions, 2026-09-16 11:14 UTC
 
 The latest user continuation authorizes the separately registered M01following

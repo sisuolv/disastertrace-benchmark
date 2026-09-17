@@ -1,55 +1,92 @@
 {
-  "at": "2026-09-16T11:31:42.336209+00:00",
+  "at": "2026-09-16T14:48:15.421768+00:00",
   "B00_C00_M00": {
     "B00": {
       "failed_cases": 0,
       "registered_arms": 840,
       "registered_cases": 168,
-      "summary_ready": false,
-      "terminal_arm_files": 695,
-      "verified_cases": 129
+      "summary_ready": true,
+      "terminal_arm_files": 840,
+      "verified_cases": 168
     },
-    "C00_result_ready": false,
+    "C00_result_ready": true,
     "M00_result_ready": true,
-    "at": "2026-09-16T11:30:55.886426+00:00",
+    "at": "2026-09-16T13:52:34.876523+00:00",
+    "batch_closed": true,
     "confirmation_opened": false
   },
   "B02": {
-    "at": "2026-09-16T11:30:58.541556+00:00",
+    "at": "2026-09-16T13:55:18.608270+00:00",
     "prior_batch": {
       "B00": {
         "failed_cases": 0,
         "registered_arms": 840,
         "registered_cases": 168,
-        "summary_ready": false,
-        "terminal_arm_files": 695,
-        "verified_cases": 129
+        "summary_ready": true,
+        "terminal_arm_files": 840,
+        "verified_cases": 168
       },
-      "C00_result_ready": false,
+      "C00_result_ready": true,
       "M00_result_ready": true,
-      "at": "2026-09-16T11:30:55.886426+00:00",
+      "at": "2026-09-16T13:52:34.876523+00:00",
+      "batch_closed": true,
       "confirmation_opened": false
     },
     "regression_passed": true,
     "regression_unique_tests": 912,
     "legacy_compatibility_passed": true,
-    "B02_gates_open": false,
+    "B02_gates_open": true,
     "B02_registered_new_method_days": 72,
-    "B02_passed_method_days": 0,
+    "B02_passed_method_days": 72,
     "B02_failed_method_days": 0,
-    "B02_final_result": null,
-    "worker_exits": {},
+    "B02_final_result": {
+      "completed_new_method_days": 72,
+      "confirmation_opened": false,
+      "failed": [],
+      "finished_at": "2026-09-16T13:54:49.227579+00:00",
+      "method_rows": 9504,
+      "model_calls": 0,
+      "new_fits": 0,
+      "new_method_rows": 5184,
+      "passed": true,
+      "registered_days": 12,
+      "registered_new_method_days": 72,
+      "registered_opportunities": 864,
+      "reused_method_days": 60,
+      "rows_sha256": "3274d6ab606521fc7aa52c035445058be600a599ff0a4cfff1d67449c63ece86"
+    },
+    "worker_exits": {
+      "shard0": {
+        "exit_code": 0,
+        "at": "2026-09-16T13:55:11.333883+00:00"
+      },
+      "shard1": {
+        "exit_code": 0,
+        "at": "2026-09-16T13:53:09.599838+00:00"
+      }
+    },
     "new_model_calls": 0,
     "confirmation_opened": false
   },
   "scheduling": {
-    "job": null,
+    "job": {
+      "at": "2026-09-16T11:36:31.511777+00:00",
+      "job_id": "pt-2th92gca",
+      "CPU": 8,
+      "H100": 1,
+      "cluster": "computing-cluster-01g-02",
+      "submission_evidence": "/mnt/afs/260010168/extreme_weather_benchmark/development/disastertrace-next/plans/v13_selector_execution_20260916_01/runtime/submission_wait/attempt-02/RESPONSE.json",
+      "worker_gates_still_required": true,
+      "local_GPU_inference": false
+    },
     "resource_wait": {
-      "at": "2026-09-16T11:30:17.763584+00:00",
-      "status": "waiting_CPU_release",
-      "attempts_after_original": 0,
+      "at": "2026-09-16T11:36:28.937162+00:00",
+      "status": "accepted",
+      "attempts_after_original": 1,
       "submission_unknown": false,
-      "released_job_ids": [],
+      "released_job_ids": [
+        "pt-bgtjydm7"
+      ],
       "states": [
         {
           "job_id": "pt-bgtjydm7",
@@ -57,7 +94,7 @@
           "CPU": 16,
           "H100": 0,
           "baseline": "allocated at definitive 11:02 CPU quota rejection",
-          "state": "RUNNING"
+          "state": "SUCCEEDED"
         },
         {
           "job_id": "pt-5tgzbejc",
@@ -109,20 +146,717 @@
         }
       ]
     },
-    "submitter_stop": null,
+    "submitter_stop": {
+      "at": "2026-09-16T11:36:31.516714+00:00",
+      "reason": "submission_accepted",
+      "job_id": "pt-2th92gca"
+    },
     "submitter_error": null
   },
   "M01": {
-    "gates_open": false,
+    "gates_open": true,
     "registered_days": 12,
-    "completed_days": 0,
+    "completed_days": 12,
     "failed_days": 0,
     "request_cap": 288,
-    "HTTP_intents": 0,
-    "case_results": [],
+    "HTTP_intents": 275,
+    "case_results": [
+      {
+        "HTTP_intents": 20,
+        "actual_model_calls": 24,
+        "case": "chicago__2025-03-04__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:15:00.581809+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 88276,
+        "requests_without_usage": 4,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 480000,
+          "requests": 0,
+          "tokens": 133120
+        },
+        "resource_spent": {
+          "bytes": 34510,
+          "compute_ms": 108763,
+          "requests": 48,
+          "tokens": 88276
+        },
+        "rows_sha256": "ecbdb58080c54fedd196f31cff6b2a9abbabeed3ed8aef34688d6e71651deb82",
+        "schema_valid": 20,
+        "seconds": 1129.6553058903664
+      },
+      {
+        "HTTP_intents": 22,
+        "actual_model_calls": 24,
+        "case": "chicago__2025-06-08__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:12:22.248908+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 92913,
+        "requests_without_usage": 2,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 240000,
+          "requests": 0,
+          "tokens": 66560
+        },
+        "resource_spent": {
+          "bytes": 34278,
+          "compute_ms": 117684,
+          "requests": 48,
+          "tokens": 92913
+        },
+        "rows_sha256": "5ff55dfb07a77b0d03da6a7827b02f7208c26c1aac7ab9efdc0117a40dce20d7",
+        "schema_valid": 22,
+        "seconds": 971.3214177973568
+      },
+      {
+        "HTTP_intents": 24,
+        "actual_model_calls": 24,
+        "case": "chicago__2025-09-02__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:14:12.082910+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 95081,
+        "requests_without_usage": 0,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 0,
+          "requests": 0,
+          "tokens": 0
+        },
+        "resource_spent": {
+          "bytes": 33441,
+          "compute_ms": 116176,
+          "requests": 48,
+          "tokens": 95081
+        },
+        "rows_sha256": "8b9874d54d8740d2223bfe574230eeab93b89cfb05e93e1a09449b7cafcc29fb",
+        "schema_valid": 24,
+        "seconds": 1081.1570136658847
+      },
+      {
+        "HTTP_intents": 22,
+        "actual_model_calls": 24,
+        "case": "chicago__2025-12-05__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:13:24.412920+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 88500,
+        "requests_without_usage": 2,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 240000,
+          "requests": 0,
+          "tokens": 66560
+        },
+        "resource_spent": {
+          "bytes": 32521,
+          "compute_ms": 123261,
+          "requests": 48,
+          "tokens": 88500
+        },
+        "rows_sha256": "9775e0b87224f6bddb2e2fba0b73e7ee06505a96c2b68f11b4e53d142bad3128",
+        "schema_valid": 22,
+        "seconds": 1033.4884210359305
+      },
+      {
+        "HTTP_intents": 24,
+        "actual_model_calls": 24,
+        "case": "denver__2025-03-09__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:25:41.333833+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 92603,
+        "requests_without_usage": 0,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 0,
+          "requests": 0,
+          "tokens": 0
+        },
+        "resource_spent": {
+          "bytes": 31687,
+          "compute_ms": 46827,
+          "requests": 48,
+          "tokens": 92603
+        },
+        "rows_sha256": "a65508061b2fcc5ea0bb4f3ddffd2cb2b9d8344b2df3418243408ceb03d4bd0d",
+        "schema_valid": 24,
+        "seconds": 799.0329347848892
+      },
+      {
+        "HTTP_intents": 24,
+        "actual_model_calls": 24,
+        "case": "denver__2025-06-07__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:28:14.261019+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 95666,
+        "requests_without_usage": 0,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 0,
+          "requests": 0,
+          "tokens": 0
+        },
+        "resource_spent": {
+          "bytes": 32752,
+          "compute_ms": 71257,
+          "requests": 48,
+          "tokens": 95666
+        },
+        "rows_sha256": "1d09dc9202dc1a8f9a9957cd4bdf0a3da45336e32f60ef83e5216dc6624c043e",
+        "schema_valid": 24,
+        "seconds": 889.7882939372212
+      },
+      {
+        "HTTP_intents": 23,
+        "actual_model_calls": 24,
+        "case": "denver__2025-09-04__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:28:23.811556+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 90770,
+        "requests_without_usage": 1,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 120000,
+          "requests": 0,
+          "tokens": 33280
+        },
+        "resource_spent": {
+          "bytes": 31146,
+          "compute_ms": 51817,
+          "requests": 48,
+          "tokens": 90770
+        },
+        "rows_sha256": "6be968de2cf63e186c8d383c94654ef75dc33368dfdbb698686667bb65cf2b0a",
+        "schema_valid": 23,
+        "seconds": 851.6748243812472
+      },
+      {
+        "HTTP_intents": 23,
+        "actual_model_calls": 24,
+        "case": "denver__2025-12-05__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:29:56.014223+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 91253,
+        "requests_without_usage": 1,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 120000,
+          "requests": 0,
+          "tokens": 33280
+        },
+        "resource_spent": {
+          "bytes": 32611,
+          "compute_ms": 57029,
+          "requests": 48,
+          "tokens": 91253
+        },
+        "rows_sha256": "f9c0e3f43734eee7f3eb3c79f0efda71963552a51a30e6cf9018a6b47600d07a",
+        "schema_valid": 23,
+        "seconds": 895.3818237520754
+      },
+      {
+        "HTTP_intents": 24,
+        "actual_model_calls": 24,
+        "case": "new_york__2025-03-08__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:40:41.692970+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 98604,
+        "requests_without_usage": 0,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 0,
+          "requests": 0,
+          "tokens": 0
+        },
+        "resource_spent": {
+          "bytes": 33748,
+          "compute_ms": 43847,
+          "requests": 48,
+          "tokens": 98604
+        },
+        "rows_sha256": "9fc34d825f978eca5b599264c4ccab573fe0ffd02a73af53f4e3d597cbda8c0d",
+        "schema_valid": 24,
+        "seconds": 900.3113732747734
+      },
+      {
+        "HTTP_intents": 23,
+        "actual_model_calls": 24,
+        "case": "new_york__2025-06-08__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:43:51.086888+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 97201,
+        "requests_without_usage": 1,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 120000,
+          "requests": 0,
+          "tokens": 33280
+        },
+        "resource_spent": {
+          "bytes": 34454,
+          "compute_ms": 38981,
+          "requests": 48,
+          "tokens": 97201
+        },
+        "rows_sha256": "9bf8794f2238dc88f543f2573dff7b8d6cb779b8217b6b43eb7ea47c9c119dd6",
+        "schema_valid": 23,
+        "seconds": 936.7804792989045
+      },
+      {
+        "HTTP_intents": 23,
+        "actual_model_calls": 24,
+        "case": "new_york__2025-09-01__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:47:25.201347+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 93623,
+        "requests_without_usage": 1,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 120000,
+          "requests": 0,
+          "tokens": 33280
+        },
+        "resource_spent": {
+          "bytes": 33455,
+          "compute_ms": 45151,
+          "requests": 48,
+          "tokens": 93623
+        },
+        "rows_sha256": "36d18ce83a4ce4d843c20cc370acda0dd9c2ca92012bb7f94797edf1007fef7f",
+        "schema_valid": 23,
+        "seconds": 1141.346331646666
+      },
+      {
+        "HTTP_intents": 23,
+        "actual_model_calls": 24,
+        "case": "new_york__2025-12-06__5000",
+        "complete_does_not_require_valid_model_outputs": true,
+        "finished_at": "2026-09-16T14:45:42.402095+00:00",
+        "forecast_call_cap": 72,
+        "forecast_calls": 72,
+        "method_rows": 72,
+        "passed": true,
+        "provider_tokens_known": 94878,
+        "requests_without_usage": 1,
+        "resource_reserved": {
+          "bytes": 0,
+          "compute_ms": 120000,
+          "requests": 0,
+          "tokens": 33280
+        },
+        "resource_spent": {
+          "bytes": 34059,
+          "compute_ms": 47224,
+          "requests": 48,
+          "tokens": 94878
+        },
+        "rows_sha256": "b9d9a496d52fdd472b48925ff4e98da285734ec11547c6b74c8eea7a8cb48b76",
+        "schema_valid": 23,
+        "seconds": 946.3380929362029
+      }
+    ],
     "not_launched": null,
-    "final_result": null,
-    "worker_exit": null
+    "final_result": {
+      "HTTP_intents": 275,
+      "automatic_retries": 0,
+      "complete_days": 12,
+      "confirmation_opened": false,
+      "finished_at": "2026-09-16T14:47:25.379081+00:00",
+      "passed": true,
+      "provider_tokens_known": 1119368,
+      "registered_days": 12,
+      "registered_opportunities": 864,
+      "registered_request_cap": 288,
+      "requests_without_usage": 13,
+      "results": [
+        {
+          "HTTP_intents": 22,
+          "actual_model_calls": 24,
+          "case": "chicago__2025-06-08__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:12:22.248908+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 92913,
+          "requests_without_usage": 2,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 240000,
+            "requests": 0,
+            "tokens": 66560
+          },
+          "resource_spent": {
+            "bytes": 34278,
+            "compute_ms": 117684,
+            "requests": 48,
+            "tokens": 92913
+          },
+          "rows_sha256": "5ff55dfb07a77b0d03da6a7827b02f7208c26c1aac7ab9efdc0117a40dce20d7",
+          "schema_valid": 22,
+          "seconds": 971.3214177973568
+        },
+        {
+          "HTTP_intents": 22,
+          "actual_model_calls": 24,
+          "case": "chicago__2025-12-05__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:13:24.412920+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 88500,
+          "requests_without_usage": 2,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 240000,
+            "requests": 0,
+            "tokens": 66560
+          },
+          "resource_spent": {
+            "bytes": 32521,
+            "compute_ms": 123261,
+            "requests": 48,
+            "tokens": 88500
+          },
+          "rows_sha256": "9775e0b87224f6bddb2e2fba0b73e7ee06505a96c2b68f11b4e53d142bad3128",
+          "schema_valid": 22,
+          "seconds": 1033.4884210359305
+        },
+        {
+          "HTTP_intents": 24,
+          "actual_model_calls": 24,
+          "case": "chicago__2025-09-02__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:14:12.082910+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 95081,
+          "requests_without_usage": 0,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 0,
+            "requests": 0,
+            "tokens": 0
+          },
+          "resource_spent": {
+            "bytes": 33441,
+            "compute_ms": 116176,
+            "requests": 48,
+            "tokens": 95081
+          },
+          "rows_sha256": "8b9874d54d8740d2223bfe574230eeab93b89cfb05e93e1a09449b7cafcc29fb",
+          "schema_valid": 24,
+          "seconds": 1081.1570136658847
+        },
+        {
+          "HTTP_intents": 20,
+          "actual_model_calls": 24,
+          "case": "chicago__2025-03-04__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:15:00.581809+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 88276,
+          "requests_without_usage": 4,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 480000,
+            "requests": 0,
+            "tokens": 133120
+          },
+          "resource_spent": {
+            "bytes": 34510,
+            "compute_ms": 108763,
+            "requests": 48,
+            "tokens": 88276
+          },
+          "rows_sha256": "ecbdb58080c54fedd196f31cff6b2a9abbabeed3ed8aef34688d6e71651deb82",
+          "schema_valid": 20,
+          "seconds": 1129.6553058903664
+        },
+        {
+          "HTTP_intents": 24,
+          "actual_model_calls": 24,
+          "case": "denver__2025-03-09__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:25:41.333833+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 92603,
+          "requests_without_usage": 0,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 0,
+            "requests": 0,
+            "tokens": 0
+          },
+          "resource_spent": {
+            "bytes": 31687,
+            "compute_ms": 46827,
+            "requests": 48,
+            "tokens": 92603
+          },
+          "rows_sha256": "a65508061b2fcc5ea0bb4f3ddffd2cb2b9d8344b2df3418243408ceb03d4bd0d",
+          "schema_valid": 24,
+          "seconds": 799.0329347848892
+        },
+        {
+          "HTTP_intents": 24,
+          "actual_model_calls": 24,
+          "case": "denver__2025-06-07__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:28:14.261019+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 95666,
+          "requests_without_usage": 0,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 0,
+            "requests": 0,
+            "tokens": 0
+          },
+          "resource_spent": {
+            "bytes": 32752,
+            "compute_ms": 71257,
+            "requests": 48,
+            "tokens": 95666
+          },
+          "rows_sha256": "1d09dc9202dc1a8f9a9957cd4bdf0a3da45336e32f60ef83e5216dc6624c043e",
+          "schema_valid": 24,
+          "seconds": 889.7882939372212
+        },
+        {
+          "HTTP_intents": 23,
+          "actual_model_calls": 24,
+          "case": "denver__2025-09-04__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:28:23.811556+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 90770,
+          "requests_without_usage": 1,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 120000,
+            "requests": 0,
+            "tokens": 33280
+          },
+          "resource_spent": {
+            "bytes": 31146,
+            "compute_ms": 51817,
+            "requests": 48,
+            "tokens": 90770
+          },
+          "rows_sha256": "6be968de2cf63e186c8d383c94654ef75dc33368dfdbb698686667bb65cf2b0a",
+          "schema_valid": 23,
+          "seconds": 851.6748243812472
+        },
+        {
+          "HTTP_intents": 23,
+          "actual_model_calls": 24,
+          "case": "denver__2025-12-05__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:29:56.014223+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 91253,
+          "requests_without_usage": 1,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 120000,
+            "requests": 0,
+            "tokens": 33280
+          },
+          "resource_spent": {
+            "bytes": 32611,
+            "compute_ms": 57029,
+            "requests": 48,
+            "tokens": 91253
+          },
+          "rows_sha256": "f9c0e3f43734eee7f3eb3c79f0efda71963552a51a30e6cf9018a6b47600d07a",
+          "schema_valid": 23,
+          "seconds": 895.3818237520754
+        },
+        {
+          "HTTP_intents": 24,
+          "actual_model_calls": 24,
+          "case": "new_york__2025-03-08__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:40:41.692970+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 98604,
+          "requests_without_usage": 0,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 0,
+            "requests": 0,
+            "tokens": 0
+          },
+          "resource_spent": {
+            "bytes": 33748,
+            "compute_ms": 43847,
+            "requests": 48,
+            "tokens": 98604
+          },
+          "rows_sha256": "9fc34d825f978eca5b599264c4ccab573fe0ffd02a73af53f4e3d597cbda8c0d",
+          "schema_valid": 24,
+          "seconds": 900.3113732747734
+        },
+        {
+          "HTTP_intents": 23,
+          "actual_model_calls": 24,
+          "case": "new_york__2025-06-08__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:43:51.086888+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 97201,
+          "requests_without_usage": 1,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 120000,
+            "requests": 0,
+            "tokens": 33280
+          },
+          "resource_spent": {
+            "bytes": 34454,
+            "compute_ms": 38981,
+            "requests": 48,
+            "tokens": 97201
+          },
+          "rows_sha256": "9bf8794f2238dc88f543f2573dff7b8d6cb779b8217b6b43eb7ea47c9c119dd6",
+          "schema_valid": 23,
+          "seconds": 936.7804792989045
+        },
+        {
+          "HTTP_intents": 23,
+          "actual_model_calls": 24,
+          "case": "new_york__2025-12-06__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:45:42.402095+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 94878,
+          "requests_without_usage": 1,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 120000,
+            "requests": 0,
+            "tokens": 33280
+          },
+          "resource_spent": {
+            "bytes": 34059,
+            "compute_ms": 47224,
+            "requests": 48,
+            "tokens": 94878
+          },
+          "rows_sha256": "b9d9a496d52fdd472b48925ff4e98da285734ec11547c6b74c8eea7a8cb48b76",
+          "schema_valid": 23,
+          "seconds": 946.3380929362029
+        },
+        {
+          "HTTP_intents": 23,
+          "actual_model_calls": 24,
+          "case": "new_york__2025-09-01__5000",
+          "complete_does_not_require_valid_model_outputs": true,
+          "finished_at": "2026-09-16T14:47:25.201347+00:00",
+          "forecast_call_cap": 72,
+          "forecast_calls": 72,
+          "method_rows": 72,
+          "passed": true,
+          "provider_tokens_known": 93623,
+          "requests_without_usage": 1,
+          "resource_reserved": {
+            "bytes": 0,
+            "compute_ms": 120000,
+            "requests": 0,
+            "tokens": 33280
+          },
+          "resource_spent": {
+            "bytes": 33455,
+            "compute_ms": 45151,
+            "requests": 48,
+            "tokens": 93623
+          },
+          "rows_sha256": "36d18ce83a4ce4d843c20cc370acda0dd9c2ca92012bb7f94797edf1007fef7f",
+          "schema_valid": 23,
+          "seconds": 1141.346331646666
+        }
+      ],
+      "rows_sha256": "158ad2f98f9298b0ea2c4269820597eb424ca1cbb4833271ae8ed8c4d3ab25ad",
+      "schema_valid": 275,
+      "source": "actual model capture; program probabilities; end-to-end development only"
+    },
+    "worker_exit": {
+      "exit_code": 0,
+      "at": "2026-09-16T14:47:25.665076+00:00"
+    }
   },
   "observer_model_calls": 0,
   "confirmation_opened": false
