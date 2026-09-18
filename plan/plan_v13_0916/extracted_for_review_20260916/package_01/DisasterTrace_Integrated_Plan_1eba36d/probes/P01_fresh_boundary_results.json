@@ -1,0 +1,97 @@
+{
+  "commit": "1eba36dd272c72573d1309c78d45dbe97dd8af12",
+  "scope": "isolated repository-function probes with test-double IO, backend and clocks; NOT full production qualification",
+  "source_files": [
+    {
+      "file": "siliconflow_worker.py",
+      "git_blob_sha1": "7d2efb6dce9d35f2904c454ab44098bd51e6d9ff",
+      "sha256": "c7ae4da4e8a36245d13d7d337d5d87b7f3261b1e2295a6a8e6079f3c97339b02",
+      "verified": true
+    },
+    {
+      "file": "analyze_branches.py",
+      "git_blob_sha1": "dffffd3440ab1f6363c3f042759b78118898ec0e",
+      "sha256": "425190f595ddd75ff5ebab63ee9a9c6650c4ab6175e7f3de51d709fff6aac40c",
+      "verified": true
+    }
+  ],
+  "network_calls": 0,
+  "model_calls": 0,
+  "weather_samples": 0,
+  "cases": [
+    {
+      "case": "valid_worker_control",
+      "fake_HTTP_calls": 1,
+      "dispatches": [
+        {
+          "at": 1,
+          "STOP_present": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "case": "already_expired_control",
+      "fake_HTTP_calls": 0,
+      "dispatches": [],
+      "error": "ValueError: Unregistered selector call or expired API phase"
+    },
+    {
+      "case": "deadline_crossed_during_claim",
+      "fake_HTTP_calls": 1,
+      "dispatches": [
+        {
+          "at": 20,
+          "STOP_present": false
+        }
+      ],
+      "error": null
+    },
+    {
+      "case": "STOP_created_after_claim",
+      "fake_HTTP_calls": 1,
+      "dispatches": [
+        {
+          "at": 1,
+          "STOP_present": true
+        }
+      ],
+      "error": null
+    },
+    {
+      "case": "wrong_model_control",
+      "response_published": false,
+      "fake_HTTP_calls": 0,
+      "error": "ValueError: Provider returned a different model identifier"
+    },
+    {
+      "case": "unredacted_capture_digest_mismatch",
+      "response_published": true,
+      "fake_HTTP_calls": 0,
+      "error": null
+    },
+    {
+      "case": "analyzer_None",
+      "passed": true,
+      "comparisons": 36,
+      "formal_scored_parents": 6,
+      "error": null
+    },
+    {
+      "case": "analyzer_one",
+      "passed": true,
+      "comparisons": 33,
+      "formal_scored_parents": 6,
+      "error": null
+    },
+    {
+      "case": "analyzer_all",
+      "passed": true,
+      "comparisons": 0,
+      "formal_scored_parents": 6,
+      "error": null
+    }
+  ],
+  "all_observations_reproduced": true,
+  "historical_impact": "Not established by these synthetic probes. Read original captures/rosters to assess actual affected records."
+}

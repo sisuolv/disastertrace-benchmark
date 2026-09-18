@@ -1,0 +1,498 @@
+{
+  "schema": "disastertrace.codex.plan.work_packages.v1",
+  "reference_commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+  "all_items_are_proposed": true,
+  "work_packages": [
+    {
+      "id": "CP00",
+      "title_cn": "基线、原材料与唯一内核职责冻结",
+      "status": "planned",
+      "depends_on": [],
+      "execution_mode": "offline_cpu",
+      "proposed_paths": [
+        "plans/v7_next_execution_20260913/",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/"
+      ],
+      "deliverables": [
+        "BASELINE_STATE.json",
+        "ARCHITECTURE_DECISION_CN.md",
+        "SOURCE_REUSE_LOCK.json",
+        "INPUT_MATERIAL_TRACEABILITY.json"
+      ],
+      "acceptance_cn": [
+        "读取实际HEAD与未提交差异；不reset",
+        "区分旧归档、新生产入口和拟新增D-sim",
+        "两份原材料的主要建议均映射到工作包，显式说明后置项"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "无权重/GPU/下载/安装",
+        "现有资费与权限不推断为新授权"
+      ],
+      "first_offline_batch": true,
+      "optional_extension": false
+    },
+    {
+      "id": "CP01",
+      "title_cn": "正式预测准入、封存与控制动作边界",
+      "status": "planned",
+      "depends_on": [
+        "CP00"
+      ],
+      "execution_mode": "offline_cpu",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/admission.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/contracts.py",
+        "disastertrace-starter/tests/test_monitoring_admission.py"
+      ],
+      "deliverables": [
+        "ADMISSION_REPORT.json",
+        "EFFECTIVE_FORECAST_MANIFEST.json",
+        "BOUNDARY_TEST_RESULTS.xml"
+      ],
+      "acceptance_cn": [
+        "所有正式分数来自合法机会/输入/状态/收据",
+        "迟到FOLLOW/撤销/更新不改封存结果",
+        "多个机会分别封存",
+        "输入snapshot哈希与context内容哈希分开"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "数学评分可继续但不授予monitoring资格",
+        "任何修复不覆盖旧捕获冻结源码"
+      ],
+      "first_offline_batch": true,
+      "optional_extension": false
+    },
+    {
+      "id": "CP02",
+      "title_cn": "通用C2语义桥与联合路径",
+      "status": "planned",
+      "depends_on": [
+        "CP00",
+        "CP01"
+      ],
+      "execution_mode": "offline_cpu",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/support_bridge.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/support.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/reachability.py",
+        "disastertrace-starter/tests/test_monitoring_support_bridge.py"
+      ],
+      "deliverables": [
+        "SUPPORT_BRIDGE_REPORT.json",
+        "REAL_E_CONTRACTS.json",
+        "JOINT_WITNESS_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "禁止只替换枚举值即认证",
+        "有真实TAF覆盖或删失事实测试",
+        "同一路径满足共享预算/依赖/并发/截止",
+        "图像标签不自动贡献认证事实"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "E oracle不作为F/D最优或部署策略",
+        "大图到上限报告界，不伪称精确"
+      ],
+      "first_offline_batch": true,
+      "optional_extension": false
+    },
+    {
+      "id": "CP03",
+      "title_cn": "区域任务、基线、准备规则与数据准入",
+      "status": "planned",
+      "depends_on": [
+        "CP00"
+      ],
+      "execution_mode": "offline_then_bounded_data",
+      "proposed_paths": [
+        "plans/v7_next_execution_20260913/scenarios/",
+        "plans/v7_next_execution_20260913/source_audits/"
+      ],
+      "deliverables": [
+        "SCENARIO_CARD_CN.md",
+        "REGIONAL_JOIN_AUDIT.json",
+        "BASELINE_ADMISSION.json",
+        "DATA_ROLE_ADMISSION.json",
+        "DECISION_RULES.json"
+      ],
+      "acceptance_cn": [
+        "预登记地理/日历/结果/阈值/切分",
+        "完整专业信息对称",
+        "D规则区分研究假设和文档依据",
+        "H15/H07/H08/H10来源不互相冒充"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "未知历史可用时间走受控回放",
+        "首轮只本地/离线部分；新取数另获范围"
+      ],
+      "first_offline_batch": true,
+      "optional_extension": false
+    },
+    {
+      "id": "CP04",
+      "title_cn": "动作合同与完整状态分支",
+      "status": "planned",
+      "depends_on": [
+        "CP01",
+        "CP02",
+        "CP03"
+      ],
+      "execution_mode": "offline_then_bounded_tools",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/action_contracts.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/snapshots.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/branch_runner.py"
+      ],
+      "deliverables": [
+        "ACTION_CATALOG.json",
+        "SNAPSHOT_BRANCH_SMOKE.json",
+        "BRANCH_REGISTRY.json",
+        "BRANCH_EFFECT_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "复制完整时钟/资源/授权/在途/状态/RNG",
+        "同一继续策略在不同状态正常响应",
+        "缺真实归档的分支不可评估",
+        "现有源receipt/实际调用与重放分开计数"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "不生成天气/替代观测",
+        "首轮4–6动作和最多两步仅上限提案，不获额外资源"
+      ],
+      "first_offline_batch": true,
+      "optional_extension": false
+    },
+    {
+      "id": "CP05",
+      "title_cn": "真实多模态与专业处理工具",
+      "status": "planned",
+      "depends_on": [
+        "CP03",
+        "CP04"
+      ],
+      "execution_mode": "bounded_data_and_tools_then_gpu",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/adapters/",
+        "plans/v7_next_execution_20260913/multimodal/"
+      ],
+      "deliverables": [
+        "VISUAL_ASSET_MANIFEST.json",
+        "TOOL_RECEIPTS.json",
+        "MODEL_INPUT_VALIDATION.json",
+        "SAME_TARGET_MM_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "原始产品/显示/隐藏参考分离",
+        "图像实际进入处理器",
+        "同资产ROI不称新观测",
+        "pysteps输入雨量/时间/网格正确",
+        "所有方法可使用相同专业工具"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "先复用旧视觉adapter；不是新建全套多模态框架",
+        "无同目标视觉链不称MM收益；GPU单独授权"
+      ],
+      "first_offline_batch": false,
+      "optional_extension": false
+    },
+    {
+      "id": "CP06",
+      "title_cn": "独立E/F与固定证据融合实验",
+      "status": "planned",
+      "depends_on": [
+        "CP01",
+        "CP02",
+        "CP03"
+      ],
+      "execution_mode": "cpu_then_bounded_gpu",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/heads.py",
+        "plans/v7_next_execution_20260913/head_experiments/"
+      ],
+      "deliverables": [
+        "HEAD_PREREGISTRATION.json",
+        "F_ONLY_ACTUAL_CALLS.json",
+        "HEAD_PAIRED_RESULTS.json",
+        "REVISION_FUNNEL.json"
+      ],
+      "acceptance_cn": [
+        "E-only/F-only/joint为真实独立调用",
+        "相同bundle哈希、fresh上下文、无填值示例",
+        "F改善同时对照f(B)与B",
+        "new确认不使用旧48暴露机会"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "旧joint不拆成F-only",
+        "正常保留基线不是自动失败",
+        "不以正增益筛选确认样本"
+      ],
+      "first_offline_batch": false,
+      "optional_extension": false
+    },
+    {
+      "id": "CP07",
+      "title_cn": "准备行动最小状态机",
+      "status": "planned",
+      "depends_on": [
+        "CP01",
+        "CP03"
+      ],
+      "execution_mode": "offline_cpu",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/preparation.py",
+        "disastertrace-starter/tests/test_monitoring_preparation.py"
+      ],
+      "deliverables": [
+        "PREPARATION_STATE_SMOKE.json",
+        "RESOURCE_OCCUPANCY_TRACE.json",
+        "D_RULE_VALIDATION.json"
+      ],
+      "acceptance_cn": [
+        "队列/运行/完成/取消/过期有真实状态",
+        "三类资源不同账",
+        "查询推理和准备可并发",
+        "预报失效不自动撤销准备",
+        "取消不退款已用资源且幂等"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "只D-sim，绝不调用真实防灾系统",
+        "合成测试不是业务规则已验证"
+      ],
+      "first_offline_batch": true,
+      "optional_extension": false
+    },
+    {
+      "id": "CP08",
+      "title_cn": "固定预测的准备对照与需求配对",
+      "status": "planned",
+      "depends_on": [
+        "CP06",
+        "CP07"
+      ],
+      "execution_mode": "cpu_then_optional_gpu",
+      "proposed_paths": [
+        "plans/v7_next_execution_20260913/preparation_experiments/",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/alerts.py"
+      ],
+      "deliverables": [
+        "PREPARATION_BASELINES.json",
+        "DEMAND_PAIRING_MANIFEST.json",
+        "BELIEF_POLICY_SEPARATION.json",
+        "PREPARATION_SCORECARD.json"
+      ],
+      "acceptance_cn": [
+        "固定F比较D与固定D比较F分开",
+        "基线+同优化器/便宜全读+工具对照",
+        "偏好隔离软件测试与模型行为实验分开",
+        "未知结果不当浪费/无灾",
+        "指标分项和敏感性均报告"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "无规则审核仅research_assumption",
+        "不宣称真实金钱/生命收益",
+        "不要求参数改变必然改变行动"
+      ],
+      "first_offline_batch": false,
+      "optional_extension": false
+    },
+    {
+      "id": "CP09",
+      "title_cn": "共享资源与持续触发策略",
+      "status": "planned",
+      "depends_on": [
+        "CP04",
+        "CP05",
+        "CP06"
+      ],
+      "execution_mode": "cpu_then_bounded_gpu",
+      "proposed_paths": [
+        "plans/v7_next_execution_20260913/resource_experiments/",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/policies.py"
+      ],
+      "deliverables": [
+        "ALLOCATION_PERMISSION_2X2.json",
+        "COST_FRONTIER.json",
+        "TRIGGER_POLICY_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "同selector做分配×授权2×2",
+        "再在同格比较策略",
+        "真实批量接口/缓存给全部对手",
+        "端到端总预算与固定预测机会诊断分开",
+        "未被选择目标不从分母删除"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "不抬价制造主动收益",
+        "固定计划/触发减少调用策略同权限开放"
+      ],
+      "first_offline_batch": false,
+      "optional_extension": false
+    },
+    {
+      "id": "CP10",
+      "title_cn": "第二物理过程及16类资格推进",
+      "status": "planned",
+      "depends_on": [
+        "CP01",
+        "CP02",
+        "CP03",
+        "CP05"
+      ],
+      "execution_mode": "bounded_scientific_data_cpu",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/providers/",
+        "plans/v7_next_execution_20260913/hazard_extension/"
+      ],
+      "deliverables": [
+        "H07_CONTRACT_REPORT.json",
+        "H08_PHYSICAL_SUPPORT_REPORT.json",
+        "CROSS_PROCESS_READINESS.json",
+        "HAZARD_ADMISSION_DELTA.json"
+      ],
+      "acceptance_cn": [
+        "H07原生时序/QPE参考与工具输入通过",
+        "H08保留调蓄/瞬时平均/成员等缺口",
+        "温度接口不直接称热浪",
+        "不同物理过程MM不靠变量更名"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "某源失败不让其他路线停摆",
+        "其余16类只更新实际delta不重置旧状态"
+      ],
+      "first_offline_batch": false,
+      "optional_extension": false
+    },
+    {
+      "id": "CP11",
+      "title_cn": "简单参考系统与条件风险回归",
+      "status": "planned",
+      "depends_on": [
+        "CP04",
+        "CP06",
+        "CP08"
+      ],
+      "execution_mode": "cpu_then_explicit_fit_scope",
+      "proposed_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/reference_policies.py",
+        "plans/v7_next_execution_20260913/reference_methods/"
+      ],
+      "deliverables": [
+        "REFERENCE_POLICY_SPEC.json",
+        "RISK_TO_GO_DATA_AUDIT.json",
+        "POLICY_FREEZE.json"
+      ],
+      "acceptance_cn": [
+        "先规则/优化/触发，不训练大Agent",
+        "若训练只用开发分支与交叉拟合",
+        "部署不读结果/未获候选",
+        "非均匀成本/等待/停止不直接套单位预算Bellman式"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "训练默认未授权",
+        "复用BRiG需标改编，不宣称原算法天气已复现"
+      ],
+      "first_offline_batch": false,
+      "optional_extension": true
+    },
+    {
+      "id": "CP12",
+      "title_cn": "有界真实影子运行",
+      "status": "planned",
+      "depends_on": [
+        "CP01",
+        "CP03",
+        "CP04",
+        "CP06"
+      ],
+      "execution_mode": "separately_authorized_online",
+      "proposed_paths": [
+        "plans/v7_next_execution_20260913/shadow/",
+        "disastertrace-starter/src/disastertrace/hydro_shadow_v1/"
+      ],
+      "deliverables": [
+        "SHADOW_REGISTRATION.json",
+        "FIRST_SEEN_INTERVALS.json",
+        "DURABLE_SUBMISSIONS.json",
+        "SHADOW_SETTLEMENT.json"
+      ],
+      "acceptance_cn": [
+        "明确开始/停止/限额",
+        "未来目标提前登记并实际提交",
+        "首轮发现左删失不称精确首次发布时间",
+        "只记录不操作业务",
+        "失败/普通窗口/成熟结果版本保留"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "无无限后台任务",
+        "CPU observer可先行；VLM须CP05多模态准入和额外授权"
+      ],
+      "first_offline_batch": false,
+      "optional_extension": false
+    },
+    {
+      "id": "CP13",
+      "title_cn": "独立确认与分级交付",
+      "status": "planned",
+      "depends_on": [
+        "CP09",
+        "CP10",
+        "CP12"
+      ],
+      "execution_mode": "frozen_confirmatory",
+      "proposed_paths": [
+        "plans/v7_next_execution_20260913/confirmation/",
+        "publication/v7_next_execution_20260913/"
+      ],
+      "deliverables": [
+        "CONFIRMATORY_FREEZE.json",
+        "PROCESS_SPLIT_AUDIT.json",
+        "CLAIM_EVIDENCE_MATRIX.json",
+        "REPRODUCE_CN.md",
+        "FINAL_REPORT_CN.md"
+      ],
+      "acceptance_cn": [
+        "方法/参数/确认日期冻结",
+        "天气过程/时空块bootstrap和purge",
+        "无正收益也可发布范围正确的机制负结果",
+        "公开许可/权重凭据扫描",
+        "历史/前瞻/仿真与实际明确区分"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "未满16类只能按级发布",
+        "工程版可早交；完整科学版逐合同验收"
+      ],
+      "first_offline_batch": false,
+      "optional_extension": false
+    },
+    {
+      "id": "CP14",
+      "title_cn": "联合风险与共同需求的条件扩展",
+      "status": "planned",
+      "depends_on": [
+        "CP08",
+        "CP10"
+      ],
+      "execution_mode": "optional_scientific_extension",
+      "proposed_paths": [
+        "plans/v7_next_execution_20260913/joint_risk/"
+      ],
+      "deliverables": [
+        "JOINT_TARGET_CONTRACT.json",
+        "MEMBER_IDENTITY_AUDIT.json",
+        "JOINT_RISK_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "只有非线性共同损失/目标才新增联合分布",
+        "验证同步目标和原成员对应",
+        "独立概率乘法仅作明确假设基线",
+        "可加期望损失不强称必须联合"
+      ],
+      "stop_or_scope_boundary_cn": [
+        "不阻塞主线",
+        "资料不支持则保持planned/blocked"
+      ],
+      "first_offline_batch": false,
+      "optional_extension": true
+    }
+  ]
+}

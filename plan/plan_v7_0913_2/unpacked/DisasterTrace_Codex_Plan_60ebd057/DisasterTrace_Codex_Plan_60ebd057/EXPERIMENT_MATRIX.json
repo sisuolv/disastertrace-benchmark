@@ -1,0 +1,312 @@
+{
+  "schema": "disastertrace.codex.experiment_plan.v1",
+  "base_commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+  "status": "planned",
+  "preserve_existing_ids": "X00-X09",
+  "experiments": [
+    {
+      "id": "DX00",
+      "title": "旧轨兼容与解析单步",
+      "depends_on": [
+        "DS02",
+        "DS04"
+      ],
+      "fixed": [
+        "旧目标与预报",
+        "固定损失规则"
+      ],
+      "changes": [
+        "行动disabled/单步prepare"
+      ],
+      "metrics": [
+        "legacy_equality",
+        "analytic_loss"
+      ],
+      "acceptance_case_ids": [
+        "AC01",
+        "AC23"
+      ],
+      "scope": "synthetic_unit and existing frozen replay",
+      "status": "planned",
+      "results": null
+    },
+    {
+      "id": "DX01",
+      "title": "准备截止、占用和修改",
+      "depends_on": [
+        "DS03",
+        "DS04"
+      ],
+      "fixed": [
+        "预测",
+        "任务与profile"
+      ],
+      "changes": [
+        "开始时刻",
+        "合法取消/释放"
+      ],
+      "metrics": [
+        "ready_on_time",
+        "known_action_cost",
+        "capacity_violations"
+      ],
+      "acceptance_case_ids": [
+        "AC10",
+        "AC14",
+        "AC17",
+        "AC18"
+      ],
+      "scope": "synthetic_unit first; historical_research after DS05",
+      "status": "planned",
+      "results": null
+    },
+    {
+      "id": "DX02",
+      "title": "相同证据下不同准备要求",
+      "depends_on": [
+        "DS06"
+      ],
+      "fixed": [
+        "bundle",
+        "weather_target",
+        "predictor settings",
+        "processing budget"
+      ],
+      "changes": [
+        "prep duration",
+        "capacity",
+        "cost; one factor at a time"
+      ],
+      "metrics": [
+        "profile_conditioned_probability_shift",
+        "decision_loss",
+        "action_changes"
+      ],
+      "acceptance_case_ids": [
+        "AC30",
+        "AC31",
+        "AC32"
+      ],
+      "scope": "fixed-evidence diagnostic; adaptive mode separately named",
+      "status": "planned",
+      "results": null
+    },
+    {
+      "id": "DX03",
+      "title": "获取/理解/预测/行动分开",
+      "depends_on": [
+        "DS05",
+        "DS06"
+      ],
+      "fixed": [
+        "visible evidence",
+        "cutoff",
+        "common baseline"
+      ],
+      "changes": [
+        "predictor OR action policy; orthogonal comparisons"
+      ],
+      "metrics": [
+        "E_status_errors",
+        "F_loss",
+        "D_loss",
+        "compute_cost"
+      ],
+      "acceptance_case_ids": [
+        "AC25",
+        "AC28",
+        "AC43"
+      ],
+      "scope": "historical_research; real calls only DS10 grant",
+      "status": "planned",
+      "results": null
+    },
+    {
+      "id": "DX04",
+      "title": "按需获取与处理",
+      "depends_on": [
+        "DS05",
+        "DS09"
+      ],
+      "fixed": [
+        "predictor",
+        "action optimizer",
+        "tools",
+        "total accounting"
+      ],
+      "changes": [
+        "all-read",
+        "rule",
+        "trigger",
+        "one-step",
+        "two-step",
+        "LLM selection"
+      ],
+      "metrics": [
+        "net research decision loss",
+        "cost frontier",
+        "useful completion timing"
+      ],
+      "acceptance_case_ids": [
+        "AC21",
+        "AC22",
+        "AC35",
+        "AC44",
+        "AC45"
+      ],
+      "scope": "actual-cost vs controlled-quota lanes separate",
+      "status": "planned",
+      "results": null
+    },
+    {
+      "id": "DX05",
+      "title": "相关风险在哪些任务中有用",
+      "depends_on": [
+        "DS04",
+        "DS09"
+      ],
+      "fixed": [
+        "marginals",
+        "legal visible information"
+      ],
+      "changes": [
+        "dependence",
+        "linear/static versus nonlinear/recourse objective"
+      ],
+      "metrics": [
+        "additive_negative_control",
+        "capacity_excess_loss",
+        "joint_demand_score"
+      ],
+      "acceptance_case_ids": [
+        "AC33",
+        "AC34",
+        "AC35",
+        "AC36"
+      ],
+      "scope": "synthetic analytic tests; real joint data only if member identities qualified",
+      "status": "planned",
+      "results": null
+    },
+    {
+      "id": "DX06",
+      "title": "原生多模态与专业工具对照",
+      "depends_on": [
+        "DS08"
+      ],
+      "fixed": [
+        "source asset",
+        "time",
+        "public ROI"
+      ],
+      "changes": [
+        "native image",
+        "same-source features",
+        "professional derived product",
+        "VLM"
+      ],
+      "metrics": [
+        "F_loss",
+        "D_loss",
+        "bytes",
+        "processing latency",
+        "visual tokens"
+      ],
+      "acceptance_case_ids": [
+        "AC41",
+        "AC42"
+      ],
+      "scope": "native_mm; declared provenance and target eligibility",
+      "status": "planned",
+      "results": null
+    },
+    {
+      "id": "DX07",
+      "title": "延迟、失败和恢复",
+      "depends_on": [
+        "DS03",
+        "DS05"
+      ],
+      "fixed": [
+        "weather",
+        "action rules",
+        "archived responses"
+      ],
+      "changes": [
+        "recorded latency OR preregistered stress schedule"
+      ],
+      "metrics": [
+        "late preparations",
+        "expired evidence",
+        "recovery equality",
+        "spent cost"
+      ],
+      "acceptance_case_ids": [
+        "AC11",
+        "AC12",
+        "AC20",
+        "AC22"
+      ],
+      "scope": "observed timing and synthetic stress results never pooled",
+      "status": "planned",
+      "results": null
+    },
+    {
+      "id": "DX08",
+      "title": "新过程和新任务条件",
+      "depends_on": [
+        "DS11"
+      ],
+      "fixed": [
+        "frozen method",
+        "scoring",
+        "preregistered profile grid"
+      ],
+      "changes": [
+        "weather process",
+        "region/season",
+        "held-out profile combinations"
+      ],
+      "metrics": [
+        "paired effect",
+        "independent group count",
+        "uncertainty interval",
+        "missingness bounds"
+      ],
+      "acceptance_case_ids": [
+        "AC46",
+        "AC47"
+      ],
+      "scope": "confirmation only after freeze; no repeated calls counted as new events",
+      "status": "planned",
+      "results": null
+    },
+    {
+      "id": "DX09",
+      "title": "有界前瞻影子运行",
+      "depends_on": [
+        "DS12"
+      ],
+      "fixed": [
+        "frozen method",
+        "finite run grant"
+      ],
+      "changes": [
+        "naturally arriving data"
+      ],
+      "metrics": [
+        "submission_before_outcome",
+        "service failures",
+        "matured outcomes",
+        "pending count"
+      ],
+      "acceptance_case_ids": [
+        "AC48",
+        "AC49"
+      ],
+      "scope": "shadow only; no real actuation or public warning",
+      "status": "planned",
+      "results": null
+    }
+  ]
+}

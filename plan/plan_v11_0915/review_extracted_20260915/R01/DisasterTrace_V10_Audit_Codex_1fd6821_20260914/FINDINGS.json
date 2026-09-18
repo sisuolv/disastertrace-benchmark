@@ -1,0 +1,83 @@
+[
+  {
+    "id": "F01",
+    "priority": "P1",
+    "kind": "locally_reproduced_validation_gap",
+    "title": "两个温度概率入口的防错条件不一致",
+    "paths": [
+      "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py:temperature_ensemble_probability",
+      "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py:event_probability"
+    ],
+    "trigger": "非UTC午夜整日、重复target_date、NaN阈值",
+    "observed": "较早函数分别返回0.5、1.0、0.0；较新函数三者均拒绝",
+    "historical_impact": "尚未扫描真实冻结输入；未发现已发布分数受影响的证据",
+    "action": "把共用准入规则覆盖全部公开入口，保留独立数值参考；先只读扫描历史，不改旧捕获或强制重跑"
+  },
+  {
+    "id": "F02",
+    "priority": "P2",
+    "kind": "static_information_compression_limit",
+    "title": "F特征验证了区间端点，但不编码开闭标志",
+    "paths": [
+      "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py:feature_vector"
+    ],
+    "trigger": "上下界相同但端点开闭不同的支持区间",
+    "observed": "values包含上下界log和infinite标志，不含lower_closed/upper_closed；这是有损特征而不是原始E参考错误",
+    "historical_impact": "尚未测量实际资料中有多少目标受影响；不能把假设边界例当已发生错误",
+    "action": "先统计相关原生边界；若新增特征，版本化训练/银行，旧条件保留；不要求F逐题必须变化"
+  },
+  {
+    "id": "F03",
+    "priority": "P2",
+    "kind": "declared_postprocessing_diagnostic",
+    "title": "EMOS/ECC后的min/max修复会改变最终边际",
+    "paths": [
+      "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py:ecc_products"
+    ],
+    "observed": "中点修复、tie规则及joint_calibration_guarantee=False已在实现中明确；不是未披露bug",
+    "action": "报告每季节/时效修复率、tie率、受影响目标和修复前后分数，不把最终结果宣称为严格未变的Gaussian边际或联合校准"
+  },
+  {
+    "id": "F04",
+    "priority": "P1_performance",
+    "kind": "source_confirmed_reported_overhead",
+    "title": "九臂正式评分结构会重放19次完整日志",
+    "paths": [
+      "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py:score_formal"
+    ],
+    "observed": "首次加载一次+每臂一次+下层score_admitted每臂一次；未实测其运行时间占比",
+    "action": "先分阶段profile；同次调用复用已完整验证的引擎，保留全部合同检查；禁止直接信任SNAPSHOTS或按mtime跨版本复用"
+  },
+  {
+    "id": "F05",
+    "priority": "P1_science",
+    "kind": "reported_generalization_boundary",
+    "title": "首日平均收益掩盖12月事件块退化",
+    "observed": "首日5km共16正例全部位于12月，coverage在12月差于FOLLOW和batch",
+    "action": "完整日历仍是主总体；增加预登记过程/事件检测诊断，不删正常日也不以含事件条件分数替代整体proper score"
+  },
+  {
+    "id": "F06",
+    "priority": "P1_science",
+    "kind": "reported_training_distribution_limit",
+    "title": "冬季训练迁移到全年、缺证策略迁移均需验证",
+    "observed": "去年周期是看过开发结果后的有效消融，不是全年能力确认；已有all-mask训练不证明自适应缺证分布下校准",
+    "action": "完整年度角色与依赖排除；同信息强基线、固定预测器证据差分、各mask/年龄/季节切片分别报告"
+  },
+  {
+    "id": "F07",
+    "priority": "P1_data",
+    "kind": "known_source_qualification_limit",
+    "title": "最终DWD档案不能直接当作严格历史补证",
+    "observed": "729天数值存在但严格历史补证资格0；温度仍是F-only",
+    "action": "结果角色照常保留；新补证需历史版本/到达依据；受控最终档案另轨且不能声称真实as-of"
+  },
+  {
+    "id": "F08",
+    "priority": "P1_protocol",
+    "kind": "plan_to_machine_contract_gap",
+    "title": "H15描述性数据卡需要绑定未来注册、提示与正式资格",
+    "observed": "当前主报文/remarks/10SM澄清在看过错误后执行，改善提取未改善F",
+    "action": "同一ContractID生成任务说明和校验政策；新运行固定初始合同，保留旧条件与失败，不再用同题提示调优证明泛化"
+  }
+]

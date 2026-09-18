@@ -1,0 +1,71 @@
+{
+  "commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "probes": [
+    {
+      "id": "P1",
+      "kind": "synthetic_attribution_probe",
+      "question": "Can a missing query change p through calibrator choice alone?",
+      "without_query": {
+        "probability": 0.1,
+        "cell_key": "[1000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 98,
+        "mapping_version": "review_synthetic.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "missing_query": {
+        "probability": 0.35,
+        "cell_key": "[1000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 98,
+        "mapping_version": "review_synthetic.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "same_selected_raw_cell": true,
+      "raw_probabilities": [
+        0.1,
+        0.1
+      ],
+      "statement": "Missing content leaves the report fact unknown. A nonempty disclosed dict changes the post-calibration family even when the raw cell remains identical. This is a design attribution confound, not proof that archived gains are wrong."
+    },
+    {
+      "id": "P2",
+      "kind": "synthetic_scope_probe",
+      "question": "Can different observation content affect a no-TAF fallback?",
+      "low": {
+        "probability": 0.35,
+        "cell_key": "[1000,\"no_taf\"]",
+        "n": 98,
+        "mapping_version": "review_synthetic.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "high": {
+        "probability": 0.35,
+        "cell_key": "[1000,\"no_taf\"]",
+        "n": 98,
+        "mapping_version": "review_synthetic.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "low_key": "[1000,\"no_taf\"]",
+      "high_key": "[1000,\"no_taf\"]",
+      "statement": "For candidate=None the key omits evidence content. This is the current frequency predictor scope, not evidence that an LLM cannot use observations."
+    },
+    {
+      "id": "P3",
+      "kind": "existing_response_content_recheck",
+      "original_call_id": "1079e059c870ec9994df3f67",
+      "source": "plans/v9_followup_execution_20260914_01/api_evidence_02/captures/deepseek-v4-pro/1079e059c870ec9994df3f67/RESPONSE.json",
+      "source_git_blob": "b24655fdaa33bf5674121810c0f976372422d110",
+      "scope": "Recheck of the fetched response content with source policy; not a replay of the HTTP receipt or every E02 response.",
+      "parsed_answer": {
+        "slots": {
+          "routine-KSFO-2025-02-06T01:00:00Z": "false",
+          "routine-KSJC-2025-02-06T01:00:00Z": "unknown"
+        },
+        "fact_truth": "false"
+      },
+      "computed_aggregate": "unknown",
+      "original_score_replaced": false,
+      "new_model_call": false
+    }
+  ],
+  "counterexamples_do_not_prove_published_scoring_corruption": true
+}

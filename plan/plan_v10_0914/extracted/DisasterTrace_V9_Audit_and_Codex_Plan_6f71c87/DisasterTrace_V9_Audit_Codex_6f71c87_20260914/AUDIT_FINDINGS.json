@@ -1,0 +1,103 @@
+[
+  {
+    "id": "F01",
+    "level": "P1",
+    "class": "confirmed_local_parser_hardening_gap",
+    "title": "selector重复JSON字段被静默覆盖",
+    "paths": [
+      "disastertrace-starter/src/disastertrace/monitoring_v1/selection.py"
+    ],
+    "evidence": "本地原样模块接受两个query_order键并采用最后一项；E解析器已拒绝重复键。",
+    "historical_impact": "未读取完整selector原始集合进行发生率扫描，不能宣布真实分数受影响。",
+    "action": "采用统一唯一键解析；只读扫描旧捕获；命中才生成版本化影响表，不覆盖旧结果。"
+  },
+  {
+    "id": "F02",
+    "level": "P1-research",
+    "class": "verified_design_effect_not_bug",
+    "title": "证据后处理分支在原始频率单元不变时也可改变概率",
+    "paths": [
+      "disastertrace-starter/src/disastertrace/monitoring_v1/regional_calibration.py",
+      "plans/v9_followup_execution_20260914_01/scripts/fit_regional_baselines.py",
+      "disastertrace-starter/src/disastertrace/monitoring_v1/calibration.py"
+    ],
+    "evidence": "base/evidence两套独立映射；family由disclosed是否非空决定。限定无TAF的合成探针同cell/n输出0.1与0.4。",
+    "historical_impact": "仅证明控制流；未重算实际查询的影响。缺测本身可能有信息，不要求所有空结果保持概率不变。",
+    "action": "逐次导出raw probability、cell/fallback、family、post probability；固定映射诊断和端到端模型分开。"
+  },
+  {
+    "id": "F03",
+    "level": "P2-research",
+    "class": "documented_estimator_sensitivity",
+    "title": "每个不同原始概率的伪计数对数值细分敏感",
+    "paths": [
+      "disastertrace-starter/src/disastertrace/monitoring_v1/regional_calibration.py"
+    ],
+    "evidence": "100个0.1负样本给出1/102；100个仅相差1e-12的不同概率负样本均给出1/3。PAV仍单调且范围合法。",
+    "historical_impact": "极端合成敏感性，不是实际银行已经错误或发生测试泄漏的证据。",
+    "action": "报告不同概率数、真实权重、伪计数比例；比较预冻结正则方案，不事后挑获胜校准器。"
+  },
+  {
+    "id": "F04",
+    "level": "P1-research",
+    "class": "estimand_coupling",
+    "title": "LLM selector同时改变取证和预测调用调度",
+    "paths": [
+      "plans/v9_followup_execution_20260914_01/scripts/run_api_pilot.py",
+      "disastertrace-starter/src/disastertrace/monitoring_v1/selection.py"
+    ],
+    "evidence": "输出query_order与forecast_handles；selector_program的F数值由冻结程序生成。",
+    "historical_impact": "原总系统比较有效，但不能直接把全部变化归因于选到更有价值的证据。",
+    "action": "固定预测日程变查询；固定证据变调用日程；联合策略另列。"
+  },
+  {
+    "id": "F05",
+    "level": "P1-research",
+    "class": "protocol_identifiability",
+    "title": "base-bound与一小时目标不足以显露所有FOLLOW/COPY/KEEP差异",
+    "paths": [
+      "plans/v9_followup_execution_20260914_01/scripts/run_api_pilot.py",
+      "plans/v9_followup_execution_20260914_01/scripts/run_temperature_fullcalendar.py"
+    ],
+    "evidence": "本轮航空只base-bound；温度两协议程序已具备，但没有额外证据。",
+    "historical_impact": "相同F分数是当前路径事实，不证明持久修订与copy语义全面等价。",
+    "action": "最小状态区分见证、有限persistent真实档案配对；不人为制造方法胜出。"
+  },
+  {
+    "id": "F06",
+    "level": "P1-research",
+    "class": "reported_development_boundary",
+    "title": "自然样本严重正例不足且Denver为结果选取诊断",
+    "paths": [
+      "LATEST_PROGRESS_20260914_CN.md",
+      "plans/v9_followup_execution_20260914_01/README_CN.md"
+    ],
+    "evidence": "普通阈值1000m的431可结算机会无正例；Denver诊断3正例在选日期前已知。",
+    "historical_impact": "已正确披露，不能合并成独立自然收益或估计严格召回。",
+    "action": "完整日历与机制富集分轨；来源与时间组外部定义；旧集仍开发。"
+  },
+  {
+    "id": "F07",
+    "level": "P2",
+    "class": "reproducibility_scope",
+    "title": "发布包是选择性阅读证据，不是完整重建",
+    "paths": [
+      "publication/v9_followup_20260914/README_CN.md"
+    ],
+    "evidence": "F完整事件日志/运行检查点及部分大原始资料省略。",
+    "historical_impact": "本机通过不等于第三方已复现；不据此否定已报告结果。",
+    "action": "提供一个许可合格的小会话端到端包及明确缺失清单；不复制全部大文件。"
+  },
+  {
+    "id": "F08",
+    "level": "resolved",
+    "class": "previous_issue_fixed",
+    "title": "2→3→2中间非法配置现已逐次拒绝",
+    "paths": [
+      "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py"
+    ],
+    "evidence": "score_admitted从初始interventions逐条更新并comparison.validate，再校验最终状态。",
+    "historical_impact": "本轮源码静态确认，不重复宣称仍未修复；未本地重跑完整日志用例。",
+    "action": "保留回归，不新增平行验证框架。"
+  }
+]

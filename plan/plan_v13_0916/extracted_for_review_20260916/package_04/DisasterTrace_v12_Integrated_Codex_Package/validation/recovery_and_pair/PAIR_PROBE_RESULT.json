@@ -1,0 +1,65 @@
+{
+  "scope": "isolated exact function excerpt, synthetic rows; not complete production execution",
+  "source_commit": "1eba36dd272c72573d1309c78d45dbe97dd8af12",
+  "source_path": "plans/v12_execution_20260915_01/analyze_stage_c.py",
+  "network_calls": 0,
+  "model_calls": 0,
+  "weather_experiments": 0,
+  "provenance_flags": [
+    {
+      "reference": "FOLLOW",
+      "candidate": "LLM_SELECTOR",
+      "bank_difference_involved": false
+    },
+    {
+      "reference": "F_COMMON",
+      "candidate": "LLM_SELECTOR",
+      "bank_difference_involved": true
+    },
+    {
+      "reference": "F_BASE_ONLY",
+      "candidate": "LLM_SELECTOR",
+      "bank_difference_involved": false
+    }
+  ],
+  "finding": "FOLLOW vs LLM_SELECTOR is labelled as no bank difference. This flag does not encode the actual FOLLOW mapping versus native values consumer; numerical losses are unchanged.",
+  "missing_bounds_control_tests": [
+    {
+      "reference": "FOLLOW",
+      "enumerated": [
+        -0.007499999999999944,
+        0.2591666666666667
+      ],
+      "reported": [
+        -0.007499999999999951,
+        0.2591666666666667
+      ],
+      "matches": true
+    },
+    {
+      "reference": "F_COMMON",
+      "enumerated": [
+        0.010633333333333309,
+        0.13063333333333327
+      ],
+      "reported": [
+        0.010633333333333309,
+        0.13063333333333327
+      ],
+      "matches": true
+    },
+    {
+      "reference": "F_BASE_ONLY",
+      "enumerated": [
+        -0.06853333333333333,
+        0.1114666666666666
+      ],
+      "reported": [
+        -0.06853333333333333,
+        0.11146666666666662
+      ],
+      "matches": true
+    }
+  ],
+  "joint_label_scope": "Independent missing binary targets only; shared or nested labels need joint constraints."
+}

@@ -1,0 +1,51 @@
+............FF...........F.............                                  [100%]
+=================================== FAILURES ===================================
+_ test_temperature_input_contracts_should_reject_same_bad_row[shifted_utc_day] _
+
+case = 'shifted_utc_day'
+
+    @pytest.mark.parametrize('case',['shifted_utc_day','duplicate_target_date'])
+    def test_temperature_input_contracts_should_reject_same_bad_row(case):
+        r=row()
+        if case=='shifted_utc_day':
+            r['target']['physical_start']+=DAY//2;r['target']['physical_end']+=DAY//2
+        else:
+            r['common']['daily_products'].append(product(values=(35.,35.)))
+        with pytest.raises(ValueError):T.event_probability(r)
+>       with pytest.raises(ValueError):F.temperature_ensemble_probability(r)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+test_v10_controls.py:77: Failed
+_ test_temperature_input_contracts_should_reject_same_bad_row[duplicate_target_date] _
+
+case = 'duplicate_target_date'
+
+    @pytest.mark.parametrize('case',['shifted_utc_day','duplicate_target_date'])
+    def test_temperature_input_contracts_should_reject_same_bad_row(case):
+        r=row()
+        if case=='shifted_utc_day':
+            r['target']['physical_start']+=DAY//2;r['target']['physical_end']+=DAY//2
+        else:
+            r['common']['daily_products'].append(product(values=(35.,35.)))
+        with pytest.raises(ValueError):T.event_probability(r)
+>       with pytest.raises(ValueError):F.temperature_ensemble_probability(r)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+test_v10_controls.py:77: Failed
+__________ test_feature_parser_should_reject_infinite_lower_endpoint ___________
+
+    def test_feature_parser_should_reject_infinite_lower_endpoint():
+        # A lower endpoint at +infinity contains no finite native visibility value.
+        c=claim('+inf','+inf',True,True)
+>       with pytest.raises(ValueError):F.parse_features(json.dumps({'slots':{'q':c}}),['q'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+test_v10_controls.py:104: Failed
+=========================== short test summary info ============================
+FAILED test_v10_controls.py::test_temperature_input_contracts_should_reject_same_bad_row[shifted_utc_day] - Failed: DID NOT RAISE <class 'ValueError'>
+FAILED test_v10_controls.py::test_temperature_input_contracts_should_reject_same_bad_row[duplicate_target_date] - Failed: DID NOT RAISE <class 'ValueError'>
+FAILED test_v10_controls.py::test_feature_parser_should_reject_infinite_lower_endpoint - Failed: DID NOT RAISE <class 'ValueError'>
+3 failed, 36 passed in 0.20s

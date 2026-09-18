@@ -1,0 +1,431 @@
+{
+  "schema": "disastertrace.codex_incremental_review_plan.v1",
+  "baseline_commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "inherits": "v9 / C1-C2-C3 / E-F-D-MM / 16 hazard scope / existing N1-N5",
+  "execution_status": "plan_only_not_launched",
+  "first_batch": [
+    "VX00",
+    "VX01",
+    "VX02",
+    "VX03",
+    "VX04"
+  ],
+  "default_boundary": "local code review/implementation/CPU using existing accessible assets; preserve user pause and spent jobs",
+  "do_not": [
+    "git reset/clean or overwrite staged work",
+    "relabel E02 or old F as repaired model runs",
+    "read heldout before freeze",
+    "treat diagnostic selected positives as natural prevalence",
+    "require Agent positive gain for admission",
+    "create another monitoring clock",
+    "replicate all historical model runs just to demonstrate progress"
+  ],
+  "tasks": [
+    {
+      "id": "VX00",
+      "title": "锁定v9、保全暂停和既有成果",
+      "phase": "A",
+      "depends_on": [],
+      "maps_to_existing": [
+        "N1",
+        "CR00"
+      ],
+      "relevant_existing_paths": [
+        "README.md",
+        "LATEST_PROGRESS_20260914_CN.md",
+        "plans/v9_followup_execution_20260914_01/PAUSE_AFTER_BATCH.json"
+      ],
+      "implementation": [
+        "先git status和HEAD核对；若比基线新，只读diff后更新delta，不reset/clean，不覆盖staged。",
+        "建立旧CR/N工作包完成映射；616测试、E02、COPY、校准和温度全历史移到完成/回归。",
+        "读取实际有效授权，历史已消费的API/GPU目录不再启动；本计划不自动解除暂停。"
+      ],
+      "deliverables": [
+        "REVIEW_BASELINE.json",
+        "STATUS_DELTA_CN.md",
+        "EXECUTION_SCOPE.json"
+      ],
+      "acceptance": [
+        "旧结果哈希保持；每个完成声明连接实际证据；确认周保持封闭"
+      ],
+      "permission": "local_cpu_and_existing_data",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX01",
+      "title": "统一selector严格解析与旧捕获影响扫描",
+      "phase": "A",
+      "depends_on": [
+        "VX00"
+      ],
+      "maps_to_existing": [
+        "N1",
+        "CR01"
+      ],
+      "relevant_existing_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/selection.py",
+        "plans/v9_followup_execution_20260914_01/scripts/evidence_diagnostic.py"
+      ],
+      "implementation": [
+        "新增唯一键解析，复用已有实现而非另建JSON修复器；重复键、未知句柄、重复句柄、超cap均拒绝。",
+        "旧selector原文只读扫描，输出命中ID和对应费用/机会；不重试答案。",
+        "动态intervention旧修复仅回归；不要重复开发validate_trace。"
+      ],
+      "deliverables": [
+        "PARSER_IMPACT_AUDIT.json",
+        "针对selector的实际回归测试"
+      ],
+      "acceptance": [
+        "重复query_order示例被拒绝；普通合法输出行为保持；零命中时明确无已知历史影响"
+      ],
+      "permission": "local_cpu_and_existing_data",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX02",
+      "title": "小型端到端证据包与计分身份",
+      "phase": "A",
+      "depends_on": [
+        "VX00"
+      ],
+      "maps_to_existing": [
+        "N1",
+        "N5",
+        "CR03"
+      ],
+      "relevant_existing_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py",
+        "publication/v9_followup_20260914/README_CN.md",
+        "plans/v9_followup_execution_20260914_01/scripts/analyze_api_followup.py"
+      ],
+      "implementation": [
+        "选择已经暴露且许可允许的一个小会话：原文→规范记录→bank→状态日志→封存→结果评分。",
+        "冻结代码、配置、消息、响应、费用和结果版本；保留一份失败/缺失用例。",
+        "增加独立算术脚本，仅从封存预测和规范结果复算分母、Brier及每组help/harm，不共享主评分实现。",
+        "按来源政策省略的原字节列为缺项，不能声称完整重建；审计与推理分任务。"
+      ],
+      "deliverables": [
+        "MINI_REPLAY_MANIFEST.json",
+        "CPU_ONLY_REPLAY.md",
+        "ARITHMETIC_CROSSCHECK.json"
+      ],
+      "acceptance": [
+        "断网新目录可运行；不需权重/API；迟到不回填；同目标结果一致；缓存键绑定代码/结果/合同"
+      ],
+      "permission": "local_cpu_and_existing_data",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX03",
+      "title": "E原生输出与确定性组合分开评价",
+      "phase": "A",
+      "depends_on": [
+        "VX00",
+        "VX01"
+      ],
+      "maps_to_existing": [
+        "N3",
+        "N4",
+        "X04"
+      ],
+      "relevant_existing_paths": [
+        "plans/v9_followup_execution_20260914_01/scripts/evidence_diagnostic.py",
+        "plans/v9_followup_execution_20260914_01/reports/e_error_mechanisms_01/REPORT_CN.md"
+      ],
+      "implementation": [
+        "在原E02原始槽输出上只读计算reported aggregate与aggregate(predicted slots)；不得用真值槽代换。",
+        "错误分为原生解析/单槽/聚合/格式；保留unknown常量、确定性原文解析器及模型直接输出。",
+        "新增独立管线协议，由模型给结构化逐槽事实，确定性reducer汇总；标签身份保持model_estimate。",
+        "纯原文可确定计算的工具向所有策略同等开放；后验修正结果只作诊断，未来实际管线另登记。"
+      ],
+      "deliverables": [
+        "E_COMPOSITION_AUDIT.json",
+        "E_PIPELINE_CONTRACT.md"
+      ],
+      "acceptance": [
+        "不覆盖101/126等旧分数；空槽和未知不变false；冲突与删失端点按冻结规则；42底层问题聚类"
+      ],
+      "permission": "local_cpu_and_existing_data",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX04",
+      "title": "拆开基线、原始补证与校准分支",
+      "phase": "A",
+      "depends_on": [
+        "VX00"
+      ],
+      "maps_to_existing": [
+        "N3",
+        "CR04",
+        "CR05",
+        "X00"
+      ],
+      "relevant_existing_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/regional_calibration.py",
+        "plans/v9_followup_execution_20260914_01/scripts/fit_regional_baselines.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/calibration.py"
+      ],
+      "implementation": [
+        "导出每预测raw cell、n/positive、回退层、raw p、calibration family和post p。",
+        "统计不同浮点概率数、权重、伪计数总质量、回退与缺测；不自动更改旧PAV。",
+        "对新增证据单元未命中、无TAF、缺报返回等分别计数；不把missingness先验规定为无信息。",
+        "登记B、同一映射的f(B)/f(B,E)诊断、分支映射端到端、正则逻辑校准等少数候选；拟合/校准/确认分离。"
+      ],
+      "deliverables": [
+        "CALIBRATION_ATTRIBUTION.json",
+        "CALIBRATION_SUPPORT_CN.md",
+        "PREDICTOR_PROTOCOLS.json"
+      ],
+      "acceptance": [
+        "合成同cell不同family反例复现且标为设计效应；禁止测试集拟合/后验选择；保留原映射及分数"
+      ],
+      "permission": "local_cpu_and_existing_data",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX05",
+      "title": "分离查询选择、预测调度和联合策略",
+      "phase": "B",
+      "depends_on": [
+        "VX02",
+        "VX04"
+      ],
+      "maps_to_existing": [
+        "N4",
+        "CR09",
+        "X01"
+      ],
+      "relevant_existing_paths": [
+        "plans/v9_followup_execution_20260914_01/scripts/run_api_pilot.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/selection.py"
+      ],
+      "implementation": [
+        "定义两种显式政策输出：query_policy与forecast_schedule；生产控制器继续唯一。",
+        "固定预测日程比查询；固定合法证据比调用/提交日程；二者同时变为联合总效应。",
+        "用已存在14种臂生成完整对照表，包括risk/coverage/RR2×2，不能因暂停摘要简表只比较FOLLOW。",
+        "增加同预测机会数的随机/廉价skip诊断；主榜仍计真实selector成本，不免费赠调用。"
+      ],
+      "deliverables": [
+        "FACTOR_IDENTIFICATION.md",
+        "ALL_ARMS_SCORECARD.json",
+        "RESOURCE_PROTOCOL.json"
+      ],
+      "acceptance": [
+        "允许批量或FOLLOW胜出；模型selector的数值由程序生成必须标识；当前已保存结果不改称纯取证效应"
+      ],
+      "permission": "local_cpu_and_existing_data",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX06",
+      "title": "状态区分见证与有限持久协议",
+      "phase": "B",
+      "depends_on": [
+        "VX02"
+      ],
+      "maps_to_existing": [
+        "N4",
+        "X02",
+        "X07"
+      ],
+      "relevant_existing_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/contracts.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py",
+        "plans/v9_followup_execution_20260914_01/scripts/run_temperature_fullcalendar.py"
+      ],
+      "implementation": [
+        "复用COPY已实现控制；构建同值重提交、基线更新、期限刷新、KEEP、FOLLOW、在途失效的短合成见证。",
+        "在合格真实档案中统计自然出现可区分机会，不根据最终损失挑选；不存在就如实记录。",
+        "冻结有限base-bound/persistent配对；在录制输入固定候选与端到端重新执行之间保持边界。"
+      ],
+      "deliverables": [
+        "STATE_DISTINGUISHABILITY.json",
+        "PERSISTENT_PAIR_SPEC.json"
+      ],
+      "acceptance": [
+        "同值重发不等同KEEP/FOLLOW；合成不计真实收益；旧base-bound分数和日志保留"
+      ],
+      "permission": "local_cpu_and_existing_data",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX07",
+      "title": "建设任务相关的有限补证目录与固定预测器",
+      "phase": "B",
+      "depends_on": [
+        "VX03",
+        "VX04"
+      ],
+      "maps_to_existing": [
+        "N3",
+        "N4",
+        "X00",
+        "X04"
+      ],
+      "relevant_existing_paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/calibration.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/evidence.py",
+        "plans/v9_followup_execution_20260914_01/scripts/build_process_manifest.py"
+      ],
+      "implementation": [
+        "不再只增加存在量词题：候选为最新合格本站/邻站序列、TAF适用与订正、原生资料年龄/覆盖。",
+        "每证据族明确与目标的时空作用、原生/派生身份、供应可用性、处理成本和未获取内容屏蔽。",
+        "共享固定预测器接受缺测mask/证据年龄/槽结构；不能仅给它单个existential yes/no就宣称所有E已利用。",
+        "对已有资料先做小规模B、f(B)、f(B,E)矩阵；新下载必须有独立端点、时期和字节限额。"
+      ],
+      "deliverables": [
+        "EVIDENCE_FAMILY_CONTRACTS.json",
+        "FIXED_BUNDLE_MATRIX_SPEC.json"
+      ],
+      "acceptance": [
+        "额外资料没有增益仍可发布；同源重述不算独立；不削弱共同专业输入制造差异"
+      ],
+      "permission": "local_cpu_and_existing_data",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX08",
+      "title": "把温度F版本流推进到真实补证监测",
+      "phase": "B",
+      "depends_on": [
+        "VX02",
+        "VX04",
+        "VX07"
+      ],
+      "maps_to_existing": [
+        "N5",
+        "CR06",
+        "X06"
+      ],
+      "relevant_existing_paths": [
+        "plans/v9_followup_execution_20260914_01/scripts/run_temperature_fullcalendar.py"
+      ],
+      "implementation": [
+        "复用192轨迹和3645目标，不重新跑相同24月COPY充当新进度。",
+        "先固定一个有明确作用的辅助证据家族与一个冻结概率/分布预测器，再进入模型小批。",
+        "对单站完整4日专业产品已免费内容去重；不能把它拆成付费新证据。",
+        "增加同一目标多次合法提交和真实补证回执；相邻三日窗口/跨月有依赖。",
+        "没有合理补证时发布温度F控制轨，不强称C1；多站扩展需实际区域关联。"
+      ],
+      "deliverables": [
+        "TEMPERATURE_ACTIVE_SESSION_SPEC.json",
+        "TEMPERATURE_E_F_ROLE_MATRIX.md",
+        "程序端到端样例"
+      ],
+      "acceptance": [
+        "同成员多日概率、日界和单位保持；历史3小时延迟仍是声明情景；普通绝对阈值不改称官方热浪"
+      ],
+      "permission": "local_cpu_and_existing_data",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX09",
+      "title": "冻结有限实际模型管线实验",
+      "phase": "C",
+      "depends_on": [
+        "VX03",
+        "VX04",
+        "VX05",
+        "VX07"
+      ],
+      "maps_to_existing": [
+        "N4",
+        "X00",
+        "X04"
+      ],
+      "relevant_existing_paths": [
+        "plans/v9_followup_execution_20260914_01/scripts/run_api_pilot.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/api_capture.py"
+      ],
+      "implementation": [
+        "固定一个效率配置；需要时另设单个官方支持推理配置，分别登记额外token和超时，不要求其获胜。",
+        "冻结direct、slotwise+program aggregate、程序解析和合法结构化事实条件；F与E输出各自评分。",
+        "核心对比固定预测器换证据、固定证据换预测器、固定证据换调用日程；不全笛卡尔积。",
+        "记录requested/returned model ID、endpoint、时间、配置与usage；远端权重无法固定的边界公开。",
+        "保留E01未知费用，不因新批成功而释放旧预留；新的请求预算覆盖所有辅调用和失败。"
+      ],
+      "deliverables": [
+        "MODEL_BATCH_PREREGISTRATION.json",
+        "CAPTURE_AND_FAILURE_POLICY.md"
+      ],
+      "acceptance": [
+        "有对应有效授权才执行；不重启已消费launcher；旧E02与新配置分表；no-positivegain门槛"
+      ],
+      "permission": "requires_current_authorized_model_budget",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX10",
+      "title": "连续日历、独立过程与确认冻结",
+      "phase": "C",
+      "depends_on": [
+        "VX04",
+        "VX05",
+        "VX07"
+      ],
+      "maps_to_existing": [
+        "N2",
+        "N5",
+        "X06",
+        "X08"
+      ],
+      "relevant_existing_paths": [
+        "plans/v9_followup_execution_20260914_01/scripts/build_process_manifest.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/process_split.py"
+      ],
+      "implementation": [
+        "普通主队列先固定完整日历与站点；Denver结果选取诊断单列。",
+        "外部定义的极端/近失机制集与自然队列分开，公开已暴露清单。",
+        "purge覆盖输入、预报版本、目标支持、多个时效及持续事件；月/周只是容器，不自动是独立天气系统。",
+        "按开发块方差和希望识别的效应冻结确认规模及资源/质量停止规则，不因看见显著结果停止。",
+        "Bay2025-02-17—23保持封闭，只有所有方法和分析冻结且明确有效授权后开启。"
+      ],
+      "deliverables": [
+        "SAMPLING_PREREGISTRATION.json",
+        "DEPENDENCY_GROUPS.json",
+        "CONFIRMATION_LOCK.json"
+      ],
+      "acceptance": [
+        "1km无正例时不报可估召回；方法间统一结果mask但披露条件总体；不挑赢家日期"
+      ],
+      "permission": "local_existing_data; acquisition_and_confirmation_need_separate_scope",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "VX11",
+      "title": "分级发布与D/MM后置扩展",
+      "phase": "D",
+      "depends_on": [
+        "VX02"
+      ],
+      "maps_to_existing": [
+        "N5",
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "relevant_existing_paths": [
+        "publication/v9_followup_20260914/README_CN.md",
+        "plans/v7_next_20260913_2/OVERALL_PLAN_CN.md"
+      ],
+      "implementation": [
+        "工程、E机制、F版本控制、主动F、D研究仿真、原生MM、独立确认分别展示资格。",
+        "D先固定F比较安排，保持准备时长/占用/取消的既有合同；不以D成绩掩盖F没有增益。",
+        "H07按连续定量降水资料+专业工具推进，H08按物理量/断面/时间支持推进；保留全部16类但按子轨准入。",
+        "只有具体物理场景与结果链合格才增加原生MM或影子运行；不让全部16类/D/live同时成为核心发布前置。",
+        "逐条列实际完成、失败、未知和限界，提供小型端到端重建路径。"
+      ],
+      "deliverables": [
+        "READINESS_BY_HAZARD.json",
+        "RELEASE_CLAIMS_CN.md",
+        "更新后的原N1—N5状态"
+      ],
+      "acceptance": [
+        "只发布实际通过的子层级；工程版不等待D/MM；机制版要求对应独立结果与强对照"
+      ],
+      "permission": "publication/write scopes require actual authorization",
+      "status": "planned_not_executed"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+schema: disastertrace.execution_profile.proposal.v1
+profile: bounded_pilot
+base_commit: 60ebd05723f9483590611976d379da2e4edd85b0
+proposal_only: true
+authorization_ref: null
+repo_root: null
+workspace_root: null
+frozen_artifact_root: null
+allow_git_push: false
+allow_license_acceptance: false
+allow_public_warning: false
+allow_operational_control: false
+allow_background_service: false
+enabled: false
+model:
+  identity: null
+  weights_hash: null
+  backend_version: null
+  prompt_version: null
+  decoding: null
+  context_limit: null
+data:
+  mission_spec: null
+  preregistered_opportunities: 24
+  evidence_conditions:
+  - common_only
+  - one_legal_addition
+  - all_registered_legal
+  confirmation_use: false
+suggested_not_authorized_budget:
+  f_only_calls: 72
+  e_only_calls: 72
+  joint_optional_calls: 72
+  max_total_calls_with_joint: 216
+  gpu_count: 1
+  gpu_hours: null
+  tokens: null
+  paid_api_usd: 0
+  download_bytes: null
+  network_requests: null
+must_complete_before_enable:
+- authorization_ref
+- model_identity_and_backend
+- actual_token_and_walltime_estimates
+- mission_spec
+- source_admission
+- physical_window_match
+- no_private_labels
+- budget_and_stop_time

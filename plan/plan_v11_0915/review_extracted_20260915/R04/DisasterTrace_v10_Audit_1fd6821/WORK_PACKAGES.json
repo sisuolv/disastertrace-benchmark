@@ -1,0 +1,488 @@
+{
+  "schema": "disastertrace.review_followup_plan.v1",
+  "basis_commit": "1fd6821fef15b26898a57c74d4715714f33ea779",
+  "framework": "Keep v10 execution context, original C1/C2/C3 and latest P0-P3. T1/EXT are scoped parallel tracks, not a new top-level research version.",
+  "default_permissions": "Local CPU and existing files only; no new GPU/API/cloud/download/push/confirmation opening authorized by this planning request.",
+  "tasks": [
+    {
+      "id": "P0.scope",
+      "title_cn": "固定审阅增量与现有资格",
+      "priority": "first",
+      "depends_on": [],
+      "code_or_data_entries": [
+        "LATEST_PROGRESS_V10_CN.md",
+        "plans/v10_execution_20260914_01/FINAL_RESULT.json",
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md"
+      ],
+      "implementation": [
+        "读取实际HEAD及工作区改动；与审阅提交比较，后来的修复优先复用。",
+        "保留C1/C2/C3、E/F/D/MM、X00—X09和当前P0—P3；建立到旧N/W任务的映射而不重置完成状态。",
+        "记录原始银行、提示、冻结执行源码、已暴露日期和未开启确认资料；旧启动器与运行权限不继承。"
+      ],
+      "acceptance": [
+        "没有reset/clean/覆盖未提交改动；HEAD差异可追踪。",
+        "每项状态分别列已实现、实际运行、独立复算和科学确认。",
+        "2812回答、720测试、12096机会等各自有单位，不相互折算。",
+        "不把旧v9校准、COPY或温度程序流重新计为新成果。"
+      ],
+      "outputs": [
+        "REVIEW_BASELINE.json",
+        "PROGRESS_DELTA_CN.md",
+        "EXPOSURE_LEDGER_DELTA.json"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P0.boundaries",
+      "title_cn": "修复已复现的输入边界并核查真实影响",
+      "priority": "first",
+      "depends_on": [
+        "P0.scope"
+      ],
+      "code_or_data_entries": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_scoring.py"
+      ],
+      "implementation": [
+        "将本包四个红测试转为当前包的直接导入测试，再检查实际数据构建和评分入口是否另有保护。",
+        "统一温度目标和产品校验：UTC整日、正窗口、有限阈值、唯一日期、同成员完整性、对应变量/时长及截止。生产代码只维护一个共享规则；独立审计保留另一实现。",
+        "能见度模型声明只允许有限非负lower；upper允许有限非负数或+inf，且区间非空。不得将+inf lower裁剪成正常特征。",
+        "只读扫描真实冻结目标和原模型回答；输出affected/unchanged/not_evaluated。修复后的重新评分与新推理分别计数。"
+      ],
+      "acceptance": [
+        "中午到次日中午、重复日期、非有限阈值均明确拒绝。",
+        "[+inf,+inf]模型声明拒绝；合法P/M删失及9999等原合同不变。",
+        "日/三日合法概率逐项保持；同成员0.5而非边际乘积0.125的正向例通过。",
+        "原无效回答、费用和输入不被修补成有效原模型成绩。",
+        "生产入口若已拒绝某反例，要明确降低其实际影响，而不是扩大缺陷结论。"
+      ],
+      "outputs": [
+        "BOUNDARY_RED_GREEN.json",
+        "HISTORICAL_IMPACT.json",
+        "tests/test_temperature_contract_shared.py (suggested)",
+        "tests/test_visibility_claim_domain.py (suggested)"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P0.contract",
+      "title_cn": "把描述性数据卡绑定到新的实验",
+      "priority": "first",
+      "depends_on": [
+        "P0.scope"
+      ],
+      "code_or_data_entries": [
+        "plans/v10_execution_20260914_01/contracts/H15_REPORT_LABEL_DATA_CARD.json",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/outcome_policies.py"
+      ],
+      "implementation": [
+        "在新注册中绑定报告语义、解析器、提示、字段政策、比较精度和失败规则的不可变摘要。",
+        "主报文与remarks分开；报告标签的单点、明确删失与物理测量范围不可混用。",
+        "明确表示是否含原生结构化字段、模型提取还是评估器修复；工具处理若提供给策略则同权限、同计费。",
+        "为温度和新来源沿用可得性等级：真实first_seen、文档证明历史发行、声明归档情景，不能互相晋级。"
+      ],
+      "acceptance": [
+        "修改提示或标签政策触发新合同版本；不能回写旧冻结。",
+        "同一原生样例重建相同输入/标签，六个通用样例不计天气样本。",
+        "错误原字段不会因新提示成为旧回答正确。",
+        "结果标签与评估器修复信息不进入模型视图。",
+        "H15报告标签、未来物理状态、产品发布事件在名称和评分中区分。"
+      ],
+      "outputs": [
+        "RUN_TASK_CONTRACT.json",
+        "CONTRACT_BINDING_TESTS.json",
+        "PROMPT_AND_PARSER_MANIFEST.json"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P0.replay",
+      "title_cn": "先测量并消除同一次评分的重复重放",
+      "priority": "first",
+      "depends_on": [
+        "P0.scope"
+      ],
+      "code_or_data_entries": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py",
+        "plans/v10_execution_20260914_01/scripts/audit_selector_timing.py"
+      ],
+      "implementation": [
+        "对解析、原始哈希读取、from_journal、provider验证、评分、输出和等待分别记录墙钟/CPU/内存/读取字节。",
+        "score_formal一次调用只重放每个不同arm一次，再将只读、已验证状态交给共同评分核心；保留全部正式资格和交易重放验证。",
+        "禁用仅按路径的跨运行缓存。复用对象需绑定原始字节/合同/语义/机会/结果身份，并防止评分过程修改。",
+        "用两个有范围的capsule验证原旧格式重放和当前正式入口，实际下载齐备后才声称搬迁通过。"
+      ],
+      "acceptance": [
+        "九arm正常路径从源码可见的19次重复加载降到预登记的每arm一次，实际计数验证。",
+        "逐机会概率、原分数、结果掩膜、准入状态和合同摘要与未优化原路径一致。",
+        "同路径内容改动、截断/未提交尾、协议不符、错误提供方、未封存机会仍拒绝。",
+        "记录真实前后耗时和峰值内存；没有测量不填写加速倍数。",
+        "不把197秒generate之外的时间全归因CPU/AFS，不声称GPU利用率。"
+      ],
+      "outputs": [
+        "PROFILE_BASELINE.json",
+        "REPLAY_EQUIVALENCE.json",
+        "SCORER_PERFORMANCE.json",
+        "CAPSULE_SCOPE_REPLAY.json"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P1.archive",
+      "title_cn": "建立完整季节的拟合与校准资料",
+      "priority": "second",
+      "depends_on": [
+        "P0.scope",
+        "P0.contract"
+      ],
+      "code_or_data_entries": [
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/process_split.py",
+        "plans/v10_execution_20260914_01/scripts/complete_seasonal_data.py",
+        "plans/v10_execution_20260914_01/scripts/audit_full_dependencies.py"
+      ],
+      "implementation": [
+        "将当前计划的2023拟合/2024校准作为候选角色；先核已有缓存、历史格式和全季节覆盖，再冻结实际获取清单。",
+        "先按月/站/产品分块做有限质量与兼容性预检；资源允许后只补缺块、单提供方限流并保留失败。不得默认两年全量已具备。",
+        "所有输入回看、原生版本、派生父资产、目标结果与会话历史纳入跨角色依赖；边界清除长度按最大支持推导。",
+        "2025四季数据仍为开发；当前确认周不读取。"
+      ],
+      "acceptance": [
+        "实际清单逐月给成功/缺失/解析失败、正负目标及可得性等级。",
+        "训练和校准都覆盖季节，不把季节与数据角色等同。",
+        "角色间原生依赖冲突明确拒绝或清除，源镜像不计独立资料。",
+        "新下载有请求/字节/磁盘上限和停止条件；旧429/503及成功缓存保留。",
+        "无法获取某月不填造数据，也不因模型输赢换月份。"
+      ],
+      "outputs": [
+        "HISTORICAL_ACQUISITION_PLAN.json",
+        "SOURCE_COVERAGE_BY_MONTH.json",
+        "ROLE_AND_DEPENDENCY_MANIFEST.json"
+      ],
+      "execution_scope": "metadata_cpu_first; external_download_only_with_new_bounded_authorization",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P1.backend",
+      "title_cn": "完整季节同信息强后端与稳定性",
+      "priority": "second",
+      "depends_on": [
+        "P0.boundaries",
+        "P0.contract",
+        "P1.archive"
+      ],
+      "code_or_data_entries": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/regional_calibration_v2.py",
+        "plans/v10_execution_20260914_01/scripts/fit_native_feature_bank.py",
+        "plans/v10_execution_20260914_01/scripts/audit_native_feature_bank.py"
+      ],
+      "implementation": [
+        "保留冬季原银行和去年周期开发消融；新bank单独冻结，使用相同物理信息单元的common/mask-age/values。",
+        "每个物理单元的多缺证视图权重和为1；部署缺证模式必须在训练/校准中有覆盖。原始概率和后校准分别保存。",
+        "先比较少量预登记线性/收缩或季节条件候选；只用训练及内层校准决定参数，不反复在2025开发结果挑主方法后称确认。",
+        "报告OOD特征、站点/季节/缺证模式、端点闭合信息压缩、校准先验总量与概率单调性。",
+        "对no-TAF合法补证已有新后端支持，测试保护而非重复从零实现。"
+      ],
+      "acceptance": [
+        "拟合均值/方差、特征选取、先验、正则都仅来自合法训练角色。",
+        "common与values-no-evidence不是同一个模型，报告中不得据此给纯信息因果归因。",
+        "同values银行的无证据/mask/内容比较有共同目标和失败掩膜。",
+        "高温/低能见度稀有正例不删除、不因极端数值自动裁为错误标签；数值特征截断单列。",
+        "CDF在同信息条件下保持p1000<=p5000；不同策略信息不同不强行联合投影。",
+        "退出不要求模型或新bank一定获胜。"
+      ],
+      "outputs": [
+        "BANK_MANIFEST.json",
+        "BASELINE_QUALIFICATION.json",
+        "BACKEND_BY_SEASON_AND_MASK.json",
+        "INFORMATION_CONTROL_TABLE.json"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P2.fullcalendar",
+      "title_cn": "将预算控制从首日扩展至完整已有周",
+      "priority": "second",
+      "depends_on": [
+        "P0.boundaries",
+        "P0.contract"
+      ],
+      "code_or_data_entries": [
+        "plans/v10_execution_20260914_01/seasonal_controls_01",
+        "plans/v10_execution_20260914_01/reports/seasonal_budget_interpretation_01",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/forecast_schedule.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py"
+      ],
+      "implementation": [
+        "先使用已暴露四季完整周做开发分析；不用等待年度下载才进行此任务。新银行另立后续比较，不替换旧selector批次。",
+        "首轮只运行FOLLOW、同values不补证、B11batch、B11coverage；round-robin先检查实际查询/状态是否等价，避免只为名称重复大矩阵。",
+        "再按需要在全日历或预登记机制子集完成coverage的分配×授权四格。全程保持相同来源信用释放、日程、结果掩膜和两协议分表。",
+        "明确每天重置还是整周持续会话；跨日缓存、预算、目标与未结束准备不得暗中丢弃。"
+      ],
+      "acceptance": [
+        "完整周注册机会覆盖可核对，不借用其他集合的29/307正例数。",
+        "12区域周按4全局块及自然过程分层，不称12独立事件。",
+        "报告December等含事件块的help/harm与幅度，不能只突出平均改善。",
+        "缺失敏感性界与抽样不确定性不同字段、不同表头。",
+        "仅发生事件的子集指标标为条件诊断；完整日历主损失继续包含无事件时段。"
+      ],
+      "outputs": [
+        "FULL_WEEK_PROGRAM_REGISTRATION.json",
+        "FULL_WEEK_PAIRED_RESULTS.json",
+        "EVENT_AND_BACKGROUND_STRATA.json",
+        "QUERY_TRACE_EQUIVALENCE.json"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P2.confirm",
+      "title_cn": "冻结自然过程分组和一次性确认",
+      "priority": "third",
+      "depends_on": [
+        "P0.contract",
+        "P1.backend",
+        "P2.fullcalendar"
+      ],
+      "code_or_data_entries": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/process_split.py",
+        "plans/v10_execution_20260914_01/scripts/audit_full_dependencies.py",
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md"
+      ],
+      "implementation": [
+        "按可核实天气过程/原生依赖和保守时空块分组，参数在开发时固定；日期块不是天然独立性证明。",
+        "先明确主次阈值、模型/提示、工具、成本、采用、缺失和停止规则，再打开未暴露自然连续数据。",
+        "保留Bay确认周，检查其角色及与已暴露资料关系；一个周不足以自动支持全年跨地区。",
+        "样本量按开发过程间变异和预定区间精度确定；正过程不足报告不足，不按显著性追补有利日期。"
+      ],
+      "acceptance": [
+        "实验未暴露与模型预训练未见过分开披露。",
+        "同天气过程的站点/提前量/阈值/profile放同组，不重复计算独立样本。",
+        "ROC/AP在无正或无负时不强行填数；预警阈值仅开发期固定。",
+        "确认前冻结方法；开放后的失败/缺失/负结果不删除。",
+        "核心E/F确认不依赖D/MM/16类或更大模型；如最终方法来自P3则加入相应方法冻结依赖。"
+      ],
+      "outputs": [
+        "CONFIRMATION_PREREGISTRATION.json",
+        "PROCESS_SPLIT_AND_POWER_NOTE.md",
+        "UNOPENED_DATA_SCOPE.json"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P3.components",
+      "title_cn": "固定证据的处理与预测利用比较",
+      "priority": "third",
+      "depends_on": [
+        "P0.boundaries",
+        "P0.contract",
+        "P1.backend"
+      ],
+      "code_or_data_entries": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_scoring.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/fixed_packet.py",
+        "plans/v10_execution_20260914_01/scripts/prepare_feature_temperature_trial.py"
+      ],
+      "implementation": [
+        "复用已有values_validmask/values_missingmask等诊断，建立冻结证据×后端的小矩阵，不重写旧E02归约。",
+        "每组比较只改变模型提取、原生程序提取、同源特征或直接预测中的一个因素。新清楚合同从一开始固定，不沿用错误后澄清当确认。",
+        "程序替换模型某字段的离线敏感性单列特权诊断，不改原模型成绩、不声称可识别的精确因果百分比。",
+        "核端点closure等字段是否进入预测特征；相同特征导致同输出是后端表示边界，不是证据天然无用。"
+      ],
+      "acceptance": [
+        "无效回答和全分母保留，不仅在双方成功交集评分。",
+        "语法有效、字段正确、最终E正确和F改善分表。",
+        "当前值/基线精确相等、容差相等及最终生效分别记录。",
+        "模型没有变概率是合法行为；不通过强迫改动制造novelty。",
+        "需要新输入/提示时计新调用；复用旧回答仅限明确的离线诊断。"
+      ],
+      "outputs": [
+        "FROZEN_COMPONENT_MATRIX.json",
+        "EXTRACTION_TO_FORECAST_REPORT.md",
+        "COMPONENT_SENSITIVITY_DIAGNOSTIC.json"
+      ],
+      "execution_scope": "cpu_design_and_existing_response_analysis; model_calls_require_new_authorization",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P3.acquisition",
+      "title_cn": "固定后端下的查询选择、处理成本与延迟",
+      "priority": "third",
+      "depends_on": [
+        "P1.backend",
+        "P2.fullcalendar"
+      ],
+      "code_or_data_entries": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/policies.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/forecast_schedule.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/residual_reachability.py",
+        "plans/v10_execution_20260914_01/scripts/prepare_selector_trial.py"
+      ],
+      "implementation": [
+        "固定新后端、同来源预算48及预测日程，先比较现成强程序，再限定一个已验证模型作为selector。",
+        "分别呈现相同总资源、相同预测机会和相同查询计划的时延诊断；selector开销不免费。",
+        "保留按槽受控预算轨，同时为真实服务成本轨允许批量、缓存、同资产重处理；首次下载和重复模型处理分账。",
+        "事件触发/短计划仅作为有限候选：用公开基线变化、实际合法新证据和已知截止触发，不读取未来更新时间。",
+        "残余E参照继续为有限串行联合路径；不作为未来F或D最优，不把E覆盖最大化强加为F奖励。"
+      ],
+      "acceptance": [
+        "后端和信息不同的批次不得直接归因selector。",
+        "查询预算相同不写成总成本相同。",
+        "旧模型查询脚本的固定时延回放标为条件诊断，不冒充新便宜闭环。",
+        "所有方法工具、缓存与处理权限对等，原生Gold不进入策略。",
+        "如只在无事件块改善，结论必须相应收窄。"
+      ],
+      "outputs": [
+        "SELECTOR_FIXED_BACKEND_REGISTRATION.json",
+        "COST_AND_LATENCY_FRONTIER.json",
+        "RESIDUAL_REFERENCE_SCOPE.json"
+      ],
+      "execution_scope": "cpu_controls_first; bounded_model_sessions_require_new_authorization",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "P3.revision",
+      "title_cn": "区分候选、采用规则与持续保留",
+      "priority": "third",
+      "depends_on": [
+        "P0.contract",
+        "P3.components"
+      ],
+      "code_or_data_entries": [
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/copy_controls.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/forecast_provenance.py"
+      ],
+      "implementation": [
+        "保留FOLLOW、COPY_CURRENT、COPY_BASELINE、KEEP的动作身份与有效期差别。",
+        "同已捕获候选比较两协议/门控的离线变化；需要策略重新决策的情况另跑闭环。",
+        "同值重发、旧值持有、基线更新、过时完成与最终截止生效分开记录。"
+      ],
+      "acceptance": [
+        "自动回退或旧值保留的收益不全部归给模型生成能力。",
+        "不同协议不合并单一模型分数。",
+        "门控不能看到未来结果；事后最优采用只作诊断。",
+        "冻结候选重放不计新预测次数或独立天气样本。"
+      ],
+      "outputs": [
+        "REVISION_FUNNEL.json",
+        "PROTOCOL_PAIRED_RESULTS.json",
+        "GATE_SCOPE.md"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "T1.temperature",
+      "title_cn": "温度F-only稳定性与数据资格",
+      "priority": "parallel",
+      "depends_on": [
+        "P0.boundaries",
+        "P0.scope"
+      ],
+      "code_or_data_entries": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "plans/v10_execution_20260914_01/scripts/fit_temperature_postprocess.py",
+        "plans/v10_execution_20260914_01/scripts/audit_temperature_evidence_gate.py"
+      ],
+      "implementation": [
+        "承认24月程序、128题27B/235B和EMOS/ECC均已有结果；不从头接流。",
+        "按季节、提前量、事件持续期及过程检查hot-day后处理退化；拟合/内层校准/确认分开，2018已暴露。",
+        "记录ECC秩重排、min/max修复次数及其对联合事件和边际的影响；修复后不笼统声称保留原copula或联合校准。",
+        "同成员和同一起报身份贯穿三日；对缺日期/重复日期/成员错配/日边界给生产回归。",
+        "729天DWD最终值仍主要为结果；0天严格历史补证资格不得改写。合法新来源核实后才追加C1，明确情景轨也只能按其假设报告。"
+      ],
+      "acceptance": [
+        "5796fit、5720dev、128排除及共享目标依赖有完整分母。",
+        "高温日变差仍并列，不仅报告另外四种改善。",
+        "原始集合、EMOS、ECC、修复后路径等比较不混作同一处理。",
+        "新模型任务使用冻结的新合同和未暴露评测资料；不在128题反复调提示称泛化。",
+        "没有额外合法资料时F-only可独立发布，不阻塞核心，也不宣称温度C1。"
+      ],
+      "outputs": [
+        "TEMPERATURE_STABILITY_BY_PROCESS.json",
+        "ECC_REPAIR_IMPACT.json",
+        "TEMPERATURE_EVIDENCE_ADMISSION.json"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "EXT.application",
+      "title_cn": "有条件推进MM与准备反馈",
+      "priority": "conditional",
+      "depends_on": [
+        "P0.contract"
+      ],
+      "code_or_data_entries": [
+        "plans/v10_execution_20260914_01/OVERALL_PLAN_UPDATED_CN.md",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/preparation.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/decision_inputs.py"
+      ],
+      "implementation": [
+        "MRMS精确累计区间与同目标预报/参考、HEFS物理量/成员/调控/断面资格分别推进；不同时铺开16条模型矩阵。",
+        "多模态区分原图、同源专业产品、模型提取和评估器标签；原生图像进入模型不等于科学通过。",
+        "D先固定F做不同准备条件配对，再将准备状态接入查询/处理/预测同钟反馈。",
+        "研究性准备成本与真实业务后果分开；没有使用方核准不宣称社会减灾收益。online仅有另行授权的预先提交/成熟结算才算模型前瞻。"
+      ],
+      "acceptance": [
+        "新灾种逐项保持A0—A5及E/F/D/MM资格，不凭下载数量晋级。",
+        "预报更新不能退还已耗准备资源；pending模型不冻结现场准备。",
+        "准备偏好不进入固定证据预测器；自主取证改变证据后F可以改变。",
+        "未归档替代响应保留不可评估，不生成假资料补反事实。",
+        "不作为核心E/F确认的硬前置。"
+      ],
+      "outputs": [
+        "EXTENSION_ADMISSION_DELTA.json",
+        "DECISION_FEEDBACK_PROTOCOL.md"
+      ],
+      "execution_scope": "design_and_existing_data_only; new_collection_or_model_runs_require_separate_authorization",
+      "status": "proposed_not_executed"
+    },
+    {
+      "id": "DELIVERY.scope",
+      "title_cn": "交付可执行增量与精确复算范围",
+      "priority": "every_batch",
+      "depends_on": [
+        "P0.scope"
+      ],
+      "code_or_data_entries": [
+        "plans/v10_execution_20260914_01/FINAL_RESULT.json",
+        "publication/v10_execution_20260914/README_CN.md"
+      ],
+      "implementation": [
+        "每批输出改动、真实测试、数据/结果影响、原失败与阻塞。",
+        "保留两个capsule边界；实跑前不要声称全部212结果或720测试已独立重建。",
+        "调用成功、有效回答、兼容性失败、NOT_ATTEMPTED、未知费用分别列。",
+        "旧启动器和原预算不续用；新收费/下载/云资源调用需要明确本批范围。"
+      ],
+      "acceptance": [
+        "清单无凭据/临时签名URL/模型权重/字体。",
+        "测试通过数不累加重复复跑，样本数不按阈值/视图增殖。",
+        "文件链接只指向实际存在的文件；ZIP的每个清单条目可核验。",
+        "科学出口与工程完成分列，不以正收益才允许收尾。"
+      ],
+      "outputs": [
+        "BATCH_RESULT_CN.md",
+        "VALIDATION_SCOPE.json",
+        "ARTIFACT_MANIFEST.json"
+      ],
+      "execution_scope": "local_cpu_existing_data",
+      "status": "proposed_not_executed"
+    }
+  ]
+}

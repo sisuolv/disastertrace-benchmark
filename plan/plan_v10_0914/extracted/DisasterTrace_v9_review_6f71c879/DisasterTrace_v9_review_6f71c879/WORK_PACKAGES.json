@@ -1,0 +1,135 @@
+{
+  "baseline_commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "tasks": [
+    {
+      "id": "N1.R0",
+      "title": "read-only checkout and test baseline",
+      "depends_on": [],
+      "execution_scope": "cpu",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N1.R1",
+      "title": "audit exact registered coverage",
+      "depends_on": [
+        "N1.R0"
+      ],
+      "execution_scope": "cpu",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N1.R2",
+      "title": "nested API failures and fee reconciliation",
+      "depends_on": [
+        "N1.R0"
+      ],
+      "execution_scope": "cpu",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N3.A1",
+      "title": "cell/calibrator/admission attribution",
+      "depends_on": [
+        "N1.R0"
+      ],
+      "execution_scope": "cpu",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N3.E1",
+      "title": "reduce already-produced E slot outputs",
+      "depends_on": [
+        "N1.R0"
+      ],
+      "execution_scope": "cpu",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N4.C1",
+      "title": "all completed F arms and factor decomposition",
+      "depends_on": [
+        "N1.R1",
+        "N3.A1"
+      ],
+      "execution_scope": "cpu",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N2.D1",
+      "title": "input footprints and confirmation design",
+      "depends_on": [
+        "N1.R0"
+      ],
+      "execution_scope": "cpu",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N5.T1",
+      "title": "temperature denominator bridge and evidence contract",
+      "depends_on": [
+        "N1.R1"
+      ],
+      "execution_scope": "cpu",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N4.F1",
+      "title": "bounded E to F model experiment",
+      "depends_on": [
+        "N1.R1",
+        "N1.R2",
+        "N3.A1",
+        "N3.E1",
+        "N4.C1"
+      ],
+      "execution_scope": "new_authorization_required",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N4.P1",
+      "title": "persistent protocol CPU controls",
+      "depends_on": [
+        "N4.C1"
+      ],
+      "execution_scope": "cpu_then_conditional_model",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N4.C2",
+      "title": "actual-ledger joint reachability witnesses",
+      "depends_on": [
+        "N1.R1",
+        "N4.C1"
+      ],
+      "execution_scope": "cpu",
+      "status": "not_started_by_this_review"
+    },
+    {
+      "id": "N5.T2",
+      "title": "temperature auxiliary-evidence/model experiment",
+      "depends_on": [
+        "N5.T1",
+        "N2.D1"
+      ],
+      "execution_scope": "new_authorization_required",
+      "status": "not_started_by_this_review"
+    }
+  ],
+  "not_authorized_by_this_plan": [
+    "paid_api",
+    "gpu",
+    "new_remote_cpu_job",
+    "network_download",
+    "training",
+    "continuous_background_collection",
+    "opening_confirmation_data"
+  ],
+  "preserve": [
+    "original_outputs",
+    "frozen_code",
+    "consumed_launchers",
+    "paused_state",
+    "unknown_cost_reservations",
+    "user_git_worktree"
+  ]
+}

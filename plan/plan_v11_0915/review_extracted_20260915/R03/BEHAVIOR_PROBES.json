@@ -1,0 +1,57 @@
+{
+  "scope": "synthetic malformed inputs to real functions; not evidence of affected published runs",
+  "probes": [
+    {
+      "case": "non_midnight_24h_window",
+      "feature_tasks_function": {
+        "status": "returned",
+        "value": 0.5
+      },
+      "postprocess_function": {
+        "status": "rejected",
+        "exception": "ValueError",
+        "message": "Absolute future UTC days in Celsius are required"
+      }
+    },
+    {
+      "case": "NaN_threshold",
+      "feature_tasks_function": {
+        "status": "returned",
+        "value": 0.0
+      },
+      "postprocess_function": {
+        "status": "rejected",
+        "exception": "ValueError",
+        "message": "Unqualified temperature endpoint"
+      }
+    },
+    {
+      "case": "duplicate_date",
+      "feature_tasks_function": {
+        "status": "returned",
+        "value": 1.0
+      },
+      "postprocess_function": {
+        "status": "rejected",
+        "exception": "ValueError",
+        "message": "Unique daily products are required"
+      },
+      "feature_tasks_reversed_order": {
+        "status": "returned",
+        "value": 0.5
+      }
+    },
+    {
+      "case": "boolean_day_index",
+      "feature_tasks_function": {
+        "status": "returned",
+        "value": 0.5
+      },
+      "postprocess_function": {
+        "status": "rejected",
+        "exception": "ValueError",
+        "message": "Day0 is excluded from fixed future extrema"
+      }
+    }
+  ]
+}

@@ -1,0 +1,246 @@
+{
+  "schema": "disastertrace.codex.source_reuse.v1",
+  "reference_commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+  "sources": [
+    {
+      "id": "R00",
+      "name": "DisasterTrace固定工作基线",
+      "urls": [
+        "https://github.com/sisuolv/disastertrace-benchmark/tree/60ebd05723f9483590611976d379da2e4edd85b0"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "connected_repo_read",
+      "proposed_reuse_cn": "既有内核、固定证据、完整报告和接口",
+      "limitations_cn": "不是本次重跑用户项目测试",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R01",
+      "name": "AFABench",
+      "urls": [
+        "https://arxiv.org/html/2508.14734v3",
+        "https://github.com/Linusaronsson/AFA-Benchmark"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "primary_paper_opened",
+      "proposed_reuse_cn": "同预测器获取比较、动作和停止接口",
+      "limitations_cn": "分类特征框架不直接解决时钟/空间/准备",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R02",
+      "name": "BRiG-AFA",
+      "urls": [
+        "https://arxiv.org/html/2608.02305v1",
+        "https://github.com/JIAORONG-FENG/BRiG-AFA"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "primary_paper_and_author_readme_read",
+      "proposed_reuse_cn": "可选小型风险到终点回归",
+      "limitations_cn": "论文为单位成本、固定获取数、分类；需另适配停止/时延/资源。首轮不训练",
+      "read_file_blob_sha": "b31753b067d6be2cdecf0f108885470b4cb92054",
+      "executed_locally": false
+    },
+    {
+      "id": "R03",
+      "name": "Expert-Conditioned Advice",
+      "urls": [
+        "https://arxiv.org/html/2603.14324v2"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "primary_paper_opened",
+      "proposed_reuse_cn": "复合工具/专家与信息动作的比较设计",
+      "limitations_cn": "不将其特定surrogate结果扩大为所有模块化系统失效；本次未验证代码",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R04",
+      "name": "pysteps",
+      "urls": [
+        "https://pysteps.readthedocs.io/en/latest/generated/pysteps.blending.steps.forecast.html",
+        "https://pysteps.readthedocs.io/en/latest/generated/pysteps.nowcasts.steps.forecast.html",
+        "https://github.com/pySTEPS/pysteps"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "official_blending_documentation_opened",
+      "proposed_reuse_cn": "雨场平流/集合短临与NWP融合工具",
+      "limitations_cn": "先核雨量变量、时间/网格/负码，输出是预测；所有方法同权",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R05",
+      "name": "OR-Tools CP-SAT",
+      "urls": [
+        "https://developers.google.com/optimization/scheduling/job_shop",
+        "https://github.com/google/or-tools"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "official_scheduling_documentation_opened",
+      "proposed_reuse_cn": "资源占用/先后约束调度基线",
+      "limitations_cn": "当前官方页示例不是已适配DisasterTrace；准备时长/损失仍需独立规则",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R06",
+      "name": "scores REV",
+      "urls": [
+        "https://scores.readthedocs.io/en/latest/tutorials/Relative_Economic_Value_Score.html",
+        "https://github.com/nci/scores"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "official_documentation_opened",
+      "proposed_reuse_cn": "静态成本—损失小任务与数值交叉核验",
+      "limitations_cn": "不可替代动态多资源D，处理零分母与稀有事件",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R07",
+      "name": "USGS NLDI",
+      "urls": [
+        "https://api.water.usgs.gov/docs/nldi/navigation/"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "official_documentation_opened",
+      "proposed_reuse_cn": "水网导航与上下游拓扑",
+      "limitations_cn": "本次没有发起特定流域查询；拓扑非传播/损失模型",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R08",
+      "name": "NOAA MRMS",
+      "urls": [
+        "https://registry.opendata.aws/noaa-mrms-pds/",
+        "s3://noaa-mrms-pds/"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "official_registry_opened",
+      "proposed_reuse_cn": "H07连续雷达相关科学产品入口",
+      "limitations_cn": "需枚举具体产品/版本，2分钟系统更新不保证任意单产品/地区连续覆盖",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R09",
+      "name": "NOAA GOES",
+      "urls": [
+        "https://registry.opendata.aws/noaa-goes/",
+        "s3://noaa-goes18/",
+        "s3://noaa-goes19/"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "official_registry_opened",
+      "proposed_reuse_cn": "历史同期/前瞻视觉资料",
+      "limitations_cn": "平台与业务时期、重处理版本、地区通道/质量分别核准",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R10",
+      "name": "AWC METAR/TAF",
+      "urls": [
+        "https://aviationweather.gov/data/api/",
+        "https://aviationweather.gov/data/cache/metars.cache.csv.gz",
+        "https://aviationweather.gov/data/cache/tafs.cache.xml.gz"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "official_api_and_cache_documentation_opened",
+      "proposed_reuse_cn": "H15当前批量源及前瞻",
+      "limitations_cn": "当前接口最多前30天；旧历史用档案，完整TAF与删失不省略",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R11",
+      "name": "CNRFC历史/当前HEFS",
+      "urls": [
+        "https://www.cnrfc.noaa.gov/ensembleHourlyProductCSV.php",
+        "https://www.cnrfc.noaa.gov/csv/2024010112_SCOC1_hefs_csv_hourly.csv.zip"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "official_current_doc_opened_historical_url_in_repo_report",
+      "proposed_reuse_cn": "H08历史版本候选",
+      "limitations_cn": "本次未下载ZIP；历史43列/当前44成员、瞬时平均/调蓄未解决",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R12",
+      "name": "ExtremeWeatherBench",
+      "urls": [
+        "https://github.com/brightbandtech/ExtremeWeatherBench",
+        "https://extremeweatherbench.readthedocs.io/en/latest/data/"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "inherited_from_prior_source_read_not_reexecuted_this_turn",
+      "proposed_reuse_cn": "预报结果适配及事件组织",
+      "limitations_cn": "新计划只复用设计和加载器，不把版本/可得时间交给它自动证明",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R13",
+      "name": "LEAP",
+      "urls": [
+        "https://github.com/layingfish/LEAP",
+        "https://github.com/layingfish/LEAP/blob/main/SKILL.md"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "inherited_prior_code_read_and_user_material",
+      "proposed_reuse_cn": "证据锁定和哈希绑定",
+      "limitations_cn": "当前已读适配依赖额外finalizer；完整实现未核验",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R14",
+      "name": "EUPPBench",
+      "urls": [
+        "https://eupp-benchmark.github.io/EUPPBench-doc/files/EUPPBench_datasets.html"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "current_repo_validation_report_and_prior_official_read",
+      "proposed_reuse_cn": "第二连续量验证",
+      "limitations_cn": "63配对不等于独立过程；forecast/reforecast与历史可见性分开",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R15",
+      "name": "SIREN/EarthVerse/FutureSim等近邻",
+      "urls": [
+        "https://arxiv.org/html/2607.24588v1",
+        "https://arxiv.org/html/2608.23525v1",
+        "https://arxiv.org/html/2605.15188v1",
+        "https://arxiv.org/html/2606.05342v1",
+        "https://arxiv.org/html/2608.00012v1"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "user_material_and_prior_context_not_rechecked_this_turn",
+      "proposed_reuse_cn": "保留重合点和差异矩阵，实施后再定向更新",
+      "limitations_cn": "本计划不新增首创声明；不以未重新读全文作排他性判断",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    },
+    {
+      "id": "R16",
+      "name": "NOAA FLASH",
+      "urls": [
+        "https://www.nssl.noaa.gov/projects/flash/"
+      ],
+      "checked_on": "2026-09-13",
+      "verification": "open_attempt_failed_internal_error",
+      "proposed_reuse_cn": "来源材料提醒专业降水水文系统已存在",
+      "limitations_cn": "本次页面未成功读取；不据此给出新的事实结论",
+      "read_file_blob_sha": null,
+      "executed_locally": false
+    }
+  ],
+  "note": "URL可读/文档已读不等于科学数据已下载、工具已安装或项目已复现"
+}

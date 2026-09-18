@@ -1,0 +1,359 @@
+{
+  "schema": "disastertrace.reviewer.v9_followup_plan.v1",
+  "base_commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "status": "review_and_plan_only",
+  "preserve": [
+    "v9",
+    "C1",
+    "C2",
+    "C3",
+    "E",
+    "F",
+    "D",
+    "MM",
+    "H01-H16",
+    "N1-N5",
+    "W00-W19",
+    "X00-X09"
+  ],
+  "new_model_or_gpu_authorized_by_this_review": false,
+  "unopened_confirmation_remains_unopened": true,
+  "resource_notes_cn": "旧限时授权不自动延长；读取实际有效新授权。无授权先做CPU，不反复重问已有明确约束。",
+  "first_wave": [
+    "N0_SYNC",
+    "N3_PROBABILITY_ATTRIBUTION",
+    "N3_E_PIPELINES",
+    "N4_FULL_FACTORS",
+    "N1_FEE_RECOVERY"
+  ],
+  "parallel_after_sync": [
+    "N2_INDEPENDENCE",
+    "N4_PROTOCOL",
+    "N4_C2_JOINT",
+    "N5_TEMPERATURE",
+    "N5_EXTENSION_GATES"
+  ],
+  "tasks": [
+    {
+      "id": "N0_SYNC",
+      "title_cn": "同步真实暂停、当前HEAD和完成状态",
+      "depends_on": [],
+      "maps_to": [
+        "N1",
+        "W00",
+        "W19"
+      ],
+      "execution_kind": "cpu_readonly",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "HEAD/worktree/index摘要",
+        "完成状态增补",
+        "范围与缺失清单"
+      ],
+      "acceptance_cn": [
+        "保留全部已消费启动器与原失败",
+        "616仅标为发布记录",
+        "当前32/72等实际批次分母逐项绑定"
+      ]
+    },
+    {
+      "id": "N3_PROBABILITY_ATTRIBUTION",
+      "title_cn": "频率单元与后校准来源审计",
+      "depends_on": [
+        "N0_SYNC"
+      ],
+      "maps_to": [
+        "N3",
+        "N4",
+        "W06",
+        "W11",
+        "W12",
+        "X00"
+      ],
+      "execution_kind": "cpu_existing_captures",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "PROBABILITY_PROVENANCE.jsonl",
+        "CALIBRATOR_EFFECT_AUDIT.json",
+        "对应回归"
+      ],
+      "acceptance_cn": [
+        "复现P1/P2合成效应且不误称真实分数",
+        "原数值不变",
+        "记录raw/evidence/postfamily/fallback",
+        "不同于基线不等于新LLM信息"
+      ]
+    },
+    {
+      "id": "N3_E_PIPELINES",
+      "title_cn": "原生模型与逐槽程序汇总分轨",
+      "depends_on": [
+        "N0_SYNC"
+      ],
+      "maps_to": [
+        "N3",
+        "W10",
+        "W12",
+        "X04"
+      ],
+      "execution_kind": "cpu_then_new_authorized_model",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "E_PIPELINE_CONTRACT.json",
+        "E_ORIGINAL_AND_DERIVED.json",
+        "PAIRED_INPUT_BUDGET_AUDIT.json"
+      ],
+      "acceptance_cn": [
+        "程序只能汇总模型自己的slots",
+        "原native分数不覆写",
+        "无效/缺失保留",
+        "同信息与格式/token成本分开"
+      ]
+    },
+    {
+      "id": "N4_FULL_FACTORS",
+      "title_cn": "完整同批方法和资源比较",
+      "depends_on": [
+        "N3_PROBABILITY_ATTRIBUTION"
+      ],
+      "maps_to": [
+        "N4",
+        "W07",
+        "W12",
+        "X01"
+      ],
+      "execution_kind": "cpu_existing_logs",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "ALL_ARMS_SCORECARD",
+        "MATCHED_DELTAS.json",
+        "RESOURCE_ATTRIBUTION.json"
+      ],
+      "acceptance_cn": [
+        "natural切片与Denver分表",
+        "包含risk/coverage/2x2",
+        "同bank/cutoff/outcome mask",
+        "对batch及廉价规则的增量与FOLLOW增量分开"
+      ]
+    },
+    {
+      "id": "N2_INDEPENDENCE",
+      "title_cn": "过程清单与校准适用性增补",
+      "depends_on": [
+        "N0_SYNC"
+      ],
+      "maps_to": [
+        "N2",
+        "N3",
+        "W11",
+        "W17"
+      ],
+      "execution_kind": "cpu_then_bounded_data_if_authorized",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "PROCESS_AND_SOURCE_DEPENDENCIES.json",
+        "CALIBRATION_COVERAGE.json",
+        "CONFIRMATION_GATE.json"
+      ],
+      "acceptance_cn": [
+        "保留已完成fit/calibration而非重做",
+        "完整输入/版本/记忆/结果足迹",
+        "相关块不称已知独立天气系统",
+        "确认周仍关闭"
+      ]
+    },
+    {
+      "id": "N4_PROTOCOL",
+      "title_cn": "双修订协议和有限执行资格",
+      "depends_on": [
+        "N0_SYNC"
+      ],
+      "maps_to": [
+        "N1",
+        "N4",
+        "W03",
+        "W08",
+        "W12",
+        "X02",
+        "X03"
+      ],
+      "execution_kind": "cpu_then_bounded_model_if_authorized",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "PROTOCOL_CONTROL_TESTS",
+        "MATCHED_REPLAY_SCOPE.json",
+        "FINITE_CONCURRENCY_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "当前basebound不宣称persistent也已测",
+        "三COPY/FOLLOW行为可区分",
+        "不改旧时延伪造新闭环",
+        "外部未知请求不保证exactly-once"
+      ]
+    },
+    {
+      "id": "N4_C2_JOINT",
+      "title_cn": "真实剩余资源与支持见证增补",
+      "depends_on": [
+        "N0_SYNC"
+      ],
+      "maps_to": [
+        "C2",
+        "W09",
+        "X04"
+      ],
+      "execution_kind": "cpu",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "RESIDUAL_GRAPH.json",
+        "JOINT_WITNESSES.json",
+        "INDEPENDENT_ENGINE_REPLAY.json"
+      ],
+      "acceptance_cn": [
+        "费用时间同一路径",
+        "已付共享/私有权限/预留完整",
+        "搜索截断有界",
+        "E参照不当F/D最优"
+      ]
+    },
+    {
+      "id": "N5_TEMPERATURE",
+      "title_cn": "复用两年程序流新增合法证据与模型合同",
+      "depends_on": [
+        "N0_SYNC"
+      ],
+      "maps_to": [
+        "N5",
+        "W13",
+        "X06"
+      ],
+      "execution_kind": "cpu_preflight_then_authorized_model",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "TEMPERATURE_ADDITIONAL_EVIDENCE.json",
+        "TEMPERATURE_MODEL_CONTRACT.json",
+        "SOURCE_RANGE_DELTA.json"
+      ],
+      "acceptance_cn": [
+        "192轨迹不重跑当新建设",
+        "11,644与旧规模差异可追溯",
+        "同成员跨日/日界/day0规则不变",
+        "免费完整集合不拆收费",
+        "无新信息则仅F不称C1"
+      ]
+    },
+    {
+      "id": "N1_FEE_RECOVERY",
+      "title_cn": "原API未知费用与安全复现",
+      "depends_on": [
+        "N0_SYNC"
+      ],
+      "maps_to": [
+        "N1",
+        "W03",
+        "W05",
+        "W19"
+      ],
+      "execution_kind": "cpu_no_http",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "ORIGINAL_ATTEMPT_RECONCILIATION.json",
+        "APPEND_ONLY_CORRECTIONS.json",
+        "MINIMAL_PORTABLE_REPLAY"
+      ],
+      "acceptance_cn": [
+        "62未知无证据不清零",
+        "原attempt不重试不换新response",
+        "价格估计不当账单",
+        "一条真完整会话可离线路径搬迁"
+      ]
+    },
+    {
+      "id": "N5_EXTENSION_GATES",
+      "title_cn": "H07/H08/MM/D/X09平行资格",
+      "depends_on": [
+        "N0_SYNC"
+      ],
+      "maps_to": [
+        "N5",
+        "W14",
+        "W15",
+        "W16",
+        "X05",
+        "X09"
+      ],
+      "execution_kind": "separate_scoped_cpu_and_data",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "HAZARD_TRACK_DELTA.json",
+        "X09_BUDGET_FACTORS.json",
+        "D_FEEDBACK_SCOPE.json"
+      ],
+      "acceptance_cn": [
+        "MRMS时间端点明确",
+        "HEFS物理量/免费共同信息不混",
+        "联合输出预算两规则",
+        "D研究损失不当真实减灾",
+        "不阻塞核心"
+      ]
+    },
+    {
+      "id": "N4_BOUNDED_STUDY",
+      "title_cn": "新冻结的C1/C2模型机制试点",
+      "depends_on": [
+        "N3_PROBABILITY_ATTRIBUTION",
+        "N3_E_PIPELINES",
+        "N4_FULL_FACTORS",
+        "N2_INDEPENDENCE",
+        "N4_C2_JOINT"
+      ],
+      "maps_to": [
+        "N4",
+        "W12",
+        "X00",
+        "X01",
+        "X04"
+      ],
+      "execution_kind": "requires_new_scope_and_budget",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "NEW_DEVELOPMENT_FREEZE.json",
+        "RAW_CAPTURES",
+        "FAIR_COMPARISON_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "每次调用解决明确未知问题",
+        "固定selector或predictor拆贡献",
+        "不强迫概率修订",
+        "所有成本/失败/未结算完整",
+        "仅在需要persistent时额外依赖N4_PROTOCOL"
+      ]
+    },
+    {
+      "id": "N5_CONFIRM_RELEASE",
+      "title_cn": "独立确认与分级交付",
+      "depends_on": [
+        "N4_BOUNDED_STUDY"
+      ],
+      "maps_to": [
+        "N5",
+        "W17",
+        "W18",
+        "W19"
+      ],
+      "execution_kind": "preregister_then_authorized_confirmation",
+      "status": "proposed_not_executed",
+      "outputs": [
+        "CONFIRMATION_PREREG.json",
+        "CONFIRMATION_REPORT",
+        "RELEASE_SCOPE.json"
+      ],
+      "acceptance_cn": [
+        "freeze后才打开独立数据",
+        "不以正收益为验收",
+        "确认不调参或挑日期",
+        "D/MM/前瞻/16类分轨发布"
+      ]
+    }
+  ]
+}

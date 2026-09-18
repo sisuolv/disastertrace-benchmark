@@ -1,0 +1,287 @@
+{
+  "schema": "disastertrace.codex_plan.sources.v1",
+  "checked_on": "2026-09-13",
+  "notice": "网络与源码读取不等于复现。失败读取显式保留。当前计划不宣称穷尽所有相关工作。",
+  "sources": [
+    {
+      "id": "R01",
+      "type": "user_repository",
+      "title": "最新分支HEAD",
+      "url": "https://api.github.com/repos/sisuolv/disastertrace-benchmark/branches/next-phase-v1",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "分支响应，2026-09-13读取；HEAD与父提交",
+      "status": "current_connector_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R02",
+      "type": "user_repository",
+      "title": "执行后下一阶段计划",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/plans/v7_execution_20260913/NEXT_PLAN_CN.md",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "当前起始段与W2—W5；尾部已有同提交读取",
+      "status": "current_connector_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R03",
+      "type": "user_repository",
+      "title": "本轮执行报告",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/plans/v7_execution_20260913/FINAL_REPORT_CN.md",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本对话此前读取同一不可变提交的正文和尾部，覆盖结果/数据/真实head边界",
+      "status": "previous_turn_same_commit_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R04",
+      "type": "user_repository",
+      "title": "typed合同与固定证据",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_fixed_v1/contracts.py",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "此前1—190；本轮190—480；非全文件形式化审计",
+      "status": "targeted_code_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R05",
+      "type": "user_repository",
+      "title": "独立输出heads",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_fixed_v1/heads.py",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本轮完整返回，核查航空限定/消息/解析",
+      "status": "targeted_code_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R06",
+      "type": "user_repository",
+      "title": "旧会话策略",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_v1/policies.py",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本轮1—180行；run_session起点、预算与航空限制；未审完整函数",
+      "status": "targeted_code_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R07",
+      "type": "user_repository",
+      "title": "资源账本",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_v1/resources.py",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本轮1—220返回，Cost和预留/结算/恢复",
+      "status": "targeted_code_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R08",
+      "type": "user_repository",
+      "title": "有限联合可达性",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_v1/reachability.py",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本轮1—260返回，solve_joint/validate_witness及固定时长范围",
+      "status": "targeted_code_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R09",
+      "type": "user_repository",
+      "title": "航空证据支持",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_v1/evidence.py",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本轮完整返回，存在命题、有限配方、特征",
+      "status": "targeted_code_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R10",
+      "type": "user_repository",
+      "title": "旧单写者状态",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_v1/state.py",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本轮1—220行，Baseline、EVENT_ORDER、状态初始化与当前视图；非全文件审计",
+      "status": "targeted_code_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R11",
+      "type": "user_repository",
+      "title": "项目依赖与入口",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/pyproject.toml",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本轮完整返回",
+      "status": "current_connector_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R12",
+      "type": "user_repository",
+      "title": "最终验证记录",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/plans/v7_execution_20260913/FINAL_VALIDATION.json",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本轮完整返回；仅仓库声称250项通过，本次未重跑",
+      "status": "current_connector_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R13",
+      "type": "user_repository",
+      "title": "16类数据与任务合同",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/plans/v7_0912_overall_research/HAZARD_DATA_PLAN_CN.md",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本对话此前分段读取；保留16类/子类资格，不视为全部已完成",
+      "status": "previous_turn_same_commit_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "R14",
+      "type": "user_repository",
+      "title": "v7整体计划与原实验矩阵",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/plans/v7_0912_overall_research/OVERALL_PLAN_CN.md",
+      "commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+      "read_scope": "本对话此前总纲；本轮219—380行，明确X00—X09、分组与评分",
+      "status": "current_connector_read",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E01",
+      "type": "external_primary",
+      "title": "AFABench",
+      "url": "https://arxiv.org/html/2508.14734v3",
+      "read_scope": "2026-02-22版本；§2.3、§3.2离线分类与固定外部预测器",
+      "status": "paper_html_read",
+      "proposed_reuse": "固定预测器与策略比较，不整套改造天气引擎",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E02",
+      "type": "external_primary",
+      "title": "BRiG-AFA",
+      "url": "https://arxiv.org/html/2608.02305v1",
+      "read_scope": "2026-08预印本；Bellman风险回归与实验范围；未复现",
+      "status": "paper_html_read",
+      "proposed_reuse": "先一步两步适配；测试期不看未读值/标签",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E03",
+      "type": "external_primary",
+      "title": "BTF-2",
+      "url": "https://arxiv.org/html/2604.26106v1",
+      "read_scope": "2026-04预印本；§4.2固定材料与研究/判断对照",
+      "status": "paper_html_read",
+      "proposed_reuse": "不要声称首次分离检索与预测",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E04",
+      "type": "external_primary",
+      "title": "LEAP",
+      "url": "https://arxiv.org/html/2609.01337v1",
+      "read_scope": "2026-09预印本；固定证据预测聚合。公开适配器此前本对话读取见E12",
+      "status": "paper_html_read",
+      "proposed_reuse": "仅先用冻结/接口思想；独立后端未复现",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E05",
+      "type": "external_primary",
+      "title": "EarthVerse",
+      "url": "https://arxiv.org/abs/2608.23525",
+      "read_scope": "本轮摘要页；跨灾种可执行答案、科学可靠性与控制实验。未重新审完整论文",
+      "status": "abstract_read",
+      "proposed_reuse": "只支持近邻边界，不凭摘要宣称精确缺少某特性",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E06",
+      "type": "external_primary",
+      "title": "ExtremeWeatherBench官方文档",
+      "url": "https://extremeweatherbench.readthedocs.io/en/latest/",
+      "read_scope": "本轮官方文档首页；未复现代码/数据",
+      "status": "official_docs_read",
+      "proposed_reuse": "来源/预报结果适配；实施时固定版本",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E07",
+      "type": "external_primary",
+      "title": "pysteps官方融合示例",
+      "url": "https://pysteps.readthedocs.io/en/v1.20.0/auto_examples/steps_blended_forecast.html",
+      "read_scope": "本轮官方检索返回示例代码/输入条件；v1.21.4 API完整open缓存失败，不声称逐行审计当前实现",
+      "status": "official_search_excerpt",
+      "proposed_reuse": "雨量场/时间网格合格后采用；实施时核对本机版本",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E08",
+      "type": "external_primary",
+      "title": "ForecastBench",
+      "url": "https://forecastbench.org/",
+      "read_scope": "本轮官方首页；未来提交/结算的参考，不声称本次执行",
+      "status": "official_site_read",
+      "proposed_reuse": "前瞻影子轨参考，历史污染边界仍单列",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E09",
+      "type": "external_primary",
+      "title": "USGS NLDI导航",
+      "url": "https://api.water.usgs.gov/docs/nldi/navigation/",
+      "read_scope": "本轮官方导航文档；上下游模式，未调用数据API",
+      "status": "official_docs_read",
+      "proposed_reuse": "辅助河网连接，不替代流量定义或传播时间",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E10",
+      "type": "external_primary",
+      "title": "AWC Data API",
+      "url": "https://aviationweather.gov/data/api/",
+      "read_scope": "本轮官方产品/缓存/频率/错误码文档",
+      "status": "official_docs_read",
+      "proposed_reuse": "批量缓存为强对手，当前接口不作多年归档",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E11",
+      "type": "external_primary",
+      "title": "LAMP官方webservices（本轮受限）",
+      "url": "https://vlab.noaa.gov/web/mdl/lamp-nws-webservices",
+      "read_scope": "本轮直接读取403；LAMP具体已有进度依据R03，不假装本轮验证科学字段",
+      "status": "fetch_failed_403",
+      "proposed_reuse": "Codex优先复用仓库已保存的原生文档和样例；不绕过权限",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E12",
+      "type": "external_primary",
+      "title": "LEAP适配器",
+      "url": "https://github.com/layingfish/LEAP/blob/main/SKILL.md",
+      "read_scope": "本对话此前GitHub读取，blob a3dc453b89f0c4f1c7c2023d9dec90a2c0d50687；未运行外部finalizer",
+      "status": "previous_turn_connector_code_read",
+      "proposed_reuse": "要求单独AGENTFUTURE_FINALIZER_BIN；接口可借鉴不等于算法已复现",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E13",
+      "type": "external_primary",
+      "title": "AFABench仓库",
+      "url": "https://github.com/Linusaronsson/AFA-Benchmark",
+      "read_scope": "本对话此前README读取；本轮论文再次核查",
+      "status": "previous_turn_connector_read",
+      "proposed_reuse": "当前范围以实际固定commit核对，禁止评估标签进入正常策略",
+      "rerun_or_reproduced": false
+    },
+    {
+      "id": "E14",
+      "type": "external_primary",
+      "title": "BRiG-AFA仓库",
+      "url": "https://github.com/JIAORONG-FENG/BRiG-AFA",
+      "read_scope": "本对话此前README读取；本轮论文再次核查",
+      "status": "previous_turn_connector_read",
+      "proposed_reuse": "选择性借风险回归，避免启动全量训练矩阵",
+      "rerun_or_reproduced": false
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "R1",
+    "priority": "P1",
+    "type": "confirmed_audit_completeness_boundary",
+    "file": "plans/v9_followup_execution_20260914_01/scripts/analyze_temperature_fullcalendar.py",
+    "function": "main",
+    "scenarios": [
+      "remove one month: observes 23 months/184 arms but reports24/192/passed",
+      "remove one arm: observes24/191 but reports24/192/passed"
+    ],
+    "impact": "Audit may certify an incomplete artifact tree; no evidence the published real run was incomplete.",
+    "fix": "Use predeclared exact case/arm/opportunity IDs; reject missing/unexpected sets before scoring; derive counts; explicit statuses, no unchecked glob/hardcoded certification."
+  },
+  {
+    "id": "R2",
+    "priority": "P2",
+    "type": "confirmed_nested_failure_recording_boundary",
+    "file": "disastertrace-starter/src/disastertrace/monitoring_v1/api_capture.py",
+    "function": "capture",
+    "scenarios": [
+      "billing settlement and unknown-disposition both fail: raw response retained but FAILURE.json absent",
+      "HTTPError.read raises: no failure receipt; reserve remains reserved"
+    ],
+    "impact": "Local diagnostic/finalization gap; outer F service has separate failure record, so do not claim every pipeline loses all evidence. No demonstrated impact on completed E02/F scores.",
+    "fix": "Persist independent sanitized terminal observation before shared-ledger mutation; separately guard HTTP error-body read; append-only reconciliation of authoritative known usage; no network retries, unknown not zero."
+  },
+  {
+    "id": "A1",
+    "priority": "P1-science",
+    "type": "confirmed_mapping_behavior_needs_attribution_control",
+    "file": "disastertrace-starter/src/disastertrace/monitoring_v1/calibration.py",
+    "function": "predict",
+    "scenarios": [
+      "same no_taf raw cell and raw probability but disclosed becomes nonempty: base calibrator0.2 vs evidence calibrator0.6 in synthetic bank"
+    ],
+    "impact": "New program probabilities can come from calibration-family switch rather than a new raw feature-cell contribution. Not automatically a bug: missingness/selection can be informative. Actual affected rows not counted in this review.",
+    "fix": "Trace selected cell and fallback, raw p, base map, evidence map, source-content changes; frozen calibrator-only controls; distinguish mapping/selection/fusion/evidence effects."
+  }
+]

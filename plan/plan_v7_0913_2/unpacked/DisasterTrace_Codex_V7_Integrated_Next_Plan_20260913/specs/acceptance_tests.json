@@ -1,0 +1,762 @@
+{
+  "schema": "disastertrace.codex.acceptance_spec.v1",
+  "status": "proposed_not_project_test_results",
+  "tests": [
+    {
+      "id": "AT001",
+      "work_package": "CP00",
+      "title_cn": "工作区不可破坏",
+      "setup_cn": "HEAD更新且有已暂存/未暂存变更",
+      "expected_cn": "记录差异，不reset、不覆盖、不全量git add",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT002",
+      "work_package": "CP00",
+      "title_cn": "原材料完整映射",
+      "setup_cn": "读取两份不同novelty建议",
+      "expected_cn": "监测/处理/分支和准备/需求配对均有对应项",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT003",
+      "work_package": "CP00",
+      "title_cn": "历史授权不能复用",
+      "setup_cn": "当前未提供GPU额度但旧记录有4卡",
+      "expected_cn": "不启动GPU，继续可做的离线任务",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT004",
+      "work_package": "CP01",
+      "title_cn": "截止后FOLLOW",
+      "setup_cn": "已有override，机会已封存，然后FOLLOW",
+      "expected_cn": "保存拒绝/晚动作，不改已封存预测",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT005",
+      "work_package": "CP01",
+      "title_cn": "早机会不关晚机会",
+      "setup_cn": "同目标分别6h、3h、1h截止",
+      "expected_cn": "关闭6h后仍允许合法3h、1h更新",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT006",
+      "work_package": "CP01",
+      "title_cn": "物理目标关闭后更新",
+      "setup_cn": "未来物理、产品发布、partial各过边界",
+      "expected_cn": "新的base/proposal不能生效",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT007",
+      "work_package": "CP01",
+      "title_cn": "只有预测开始及时不够",
+      "setup_cn": "开始在截止前，完成或提交在截止后",
+      "expected_cn": "该机会拒绝并按冻结回退保留分母",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT008",
+      "work_package": "CP01",
+      "title_cn": "同刻完成有因",
+      "setup_cn": "此前START，完成恰等截止",
+      "expected_cn": "按冻结event order处理；不能新建无START回执",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT009",
+      "work_package": "CP01",
+      "title_cn": "数学评分不自动准入",
+      "setup_cn": "给paired_scores一个事后正确数值",
+      "expected_cn": "可计算离线数学分，monitoring入口无准入manifest则拒绝",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT010",
+      "work_package": "CP01",
+      "title_cn": "forecast/bundle/target交叉错配",
+      "setup_cn": "forecast目标哈希与输入包不同",
+      "expected_cn": "拒绝，不只凭数值范围接收",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT011",
+      "work_package": "CP01",
+      "title_cn": "快照与内容指纹分开",
+      "setup_cn": "封装timestamp改变、目标内容不变",
+      "expected_cn": "快照变化可记录；context规则不自动变化",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT012",
+      "work_package": "CP01",
+      "title_cn": "均值相同但分布变化",
+      "setup_cn": "集合均值相同、越阈频率不同",
+      "expected_cn": "目标相关风险context识别变化",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT013",
+      "work_package": "CP01",
+      "title_cn": "迟到控制回放",
+      "setup_cn": "序列含晚FOLLOW、已关闭base",
+      "expected_cn": "恢复与原准入/封存逐字段相同",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT014",
+      "work_package": "CP02",
+      "title_cn": "隐藏标签不能认证",
+      "setup_cn": "raw_image伴随评估mask",
+      "expected_cn": "E_certified不读取mask；感知评分单列",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT015",
+      "work_package": "CP02",
+      "title_cn": "有界测量转换",
+      "setup_cn": "新bounded_error转旧类型",
+      "expected_cn": "只有单位/对象/误差契约齐全时认证",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT016",
+      "work_package": "CP02",
+      "title_cn": "缺少provider映射",
+      "setup_cn": "只设置policy_after_query字段",
+      "expected_cn": "不得默认当作认证事实",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT017",
+      "work_package": "CP02",
+      "title_cn": "空支持集合",
+      "setup_cn": "互不替代公开事实冲突",
+      "expected_cn": "返回inconsistent，不利用all([])双真",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT018",
+      "work_package": "CP02",
+      "title_cn": "无可靠上界",
+      "setup_cn": "非负累计缺段",
+      "expected_cn": "保留+inf，不能用样本最大值填充",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT019",
+      "work_package": "CP02",
+      "title_cn": "重叠覆盖",
+      "setup_cn": "两产品覆盖相同cell",
+      "expected_cn": "按并集计，不双计面积",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT020",
+      "work_package": "CP02",
+      "title_cn": "订正后支持变宽",
+      "setup_cn": "新版撤回旧确定内容",
+      "expected_cn": "按当前合法版本重算，不假定单调缩小",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT021",
+      "work_package": "CP02",
+      "title_cn": "分别可达但联合不可达",
+      "setup_cn": "两个目标各需成本1不同资料，预算1",
+      "expected_cn": "联合只能完成一个，不将两者都算可避免失败",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT022",
+      "work_package": "CP02",
+      "title_cn": "共享资料同时支持两目标",
+      "setup_cn": "同asset成本1支持A、B",
+      "expected_cn": "联合收费1且保存同一路径见证",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT023",
+      "work_package": "CP02",
+      "title_cn": "虚假见证",
+      "setup_cn": "篡改完成时间/依赖顺序",
+      "expected_cn": "独立validator拒绝",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT024",
+      "work_package": "CP02",
+      "title_cn": "搜索截断",
+      "setup_cn": "max_states提前耗尽",
+      "expected_cn": "返回界与exact=false，不报告精确最优",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT025",
+      "work_package": "CP03",
+      "title_cn": "完整TAF公平",
+      "setup_cn": "TEMPO包含相关风险",
+      "expected_cn": "模型和强对照可见同一完整产品，不忽略条件段",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT026",
+      "work_package": "CP03",
+      "title_cn": "原生发行分钟",
+      "setup_cn": "LAV原文00:30、包装00:00",
+      "expected_cn": "保留原生时刻，不能提前30分钟授权",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT027",
+      "work_package": "CP03",
+      "title_cn": "1英里与1公里",
+      "setup_cn": "新增LAMP阈值",
+      "expected_cn": "新建1609.344m原生合同，不改旧1km结果",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT028",
+      "work_package": "CP03",
+      "title_cn": "15分钟最低与例行报告",
+      "setup_cn": "以单条METAR匹配minimum窗口",
+      "expected_cn": "拒绝等价性或改为合法独立目标",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT029",
+      "work_package": "CP03",
+      "title_cn": "显式研究行动规则",
+      "setup_cn": "没有业务审核的时长/成本",
+      "expected_cn": "标research_assumption，不称真实措施效果",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT030",
+      "work_package": "CP03",
+      "title_cn": "按结果择日",
+      "setup_cn": "试图只保留LLM有收益日期",
+      "expected_cn": "确认清单拒绝后验筛选并记录暴露",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT031",
+      "work_package": "CP04",
+      "title_cn": "完整状态恢复",
+      "setup_cn": "含spent/reserved/缓存授权/在途/覆盖",
+      "expected_cn": "无动作重放逐字段/哈希一致",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT032",
+      "work_package": "CP04",
+      "title_cn": "在途快照",
+      "setup_cn": "查询已经预留，分支时未完成",
+      "expected_cn": "克隆保留版本和预留，不重复支付、不免费取消",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT033",
+      "work_package": "CP04",
+      "title_cn": "跨分支污染",
+      "setup_cn": "分支A取得资料，随后跑B",
+      "expected_cn": "B除非合法取得不得使用A私有内容",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT034",
+      "work_package": "CP04",
+      "title_cn": "未归档响应",
+      "setup_cn": "替代动作没有真实历史资料",
+      "expected_cn": "not_evaluated，不生成假返回",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT035",
+      "work_package": "CP04",
+      "title_cn": "固定继续策略",
+      "setup_cn": "首动作改变后剩余预算不同",
+      "expected_cn": "后续同policy按各自合法状态行动，不强迫非法同序列",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT036",
+      "work_package": "CP04",
+      "title_cn": "重新推理身份",
+      "setup_cn": "bundle或处理器参数变化",
+      "expected_cn": "新调用或明确不可复用，不混作旧回复回放",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT037",
+      "work_package": "CP04",
+      "title_cn": "原子并发预算",
+      "setup_cn": "两动作同时申请最后额度",
+      "expected_cn": "只有合法数量启动，spent+reserved不超限",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT038",
+      "work_package": "CP04",
+      "title_cn": "相同源不同处理",
+      "setup_cn": "一次下载后两次ROI推理",
+      "expected_cn": "不双算下载；两次处理/视觉调用均计费",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT039",
+      "work_package": "CP04",
+      "title_cn": "全状态不是全信息",
+      "setup_cn": "内部快照有未来event cursor",
+      "expected_cn": "模型公开视图不暴露未来资产/结果",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT040",
+      "work_package": "CP05",
+      "title_cn": "图像真正输入",
+      "setup_cn": "请求宣称带图",
+      "expected_cn": "验证图片哈希、processor pixel/grid/token，不凭模型描述",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT041",
+      "work_package": "CP05",
+      "title_cn": "图像裁剪不偷看未来",
+      "setup_cn": "ROI由未来灾害中心生成",
+      "expected_cn": "普通轨拒绝，特权诊断显式单列",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT042",
+      "work_package": "CP05",
+      "title_cn": "派生可见性",
+      "setup_cn": "child时间早于parent或权限更宽",
+      "expected_cn": "拒绝",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT043",
+      "work_package": "CP05",
+      "title_cn": "同资产重读",
+      "setup_cn": "相同图片再次推理",
+      "expected_cn": "标表示/计算操作，不标新增观测",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT044",
+      "work_package": "CP05",
+      "title_cn": "VIL误作雨量",
+      "setup_cn": "pysteps输入为VIL标签或未核单位",
+      "expected_cn": "拒绝科学执行，不只看array shape",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT045",
+      "work_package": "CP05",
+      "title_cn": "输入帧缺口",
+      "setup_cn": "不规则时间间隔或缺帧",
+      "expected_cn": "按预登记重采样/拒绝，不默认补成零",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT046",
+      "work_package": "CP05",
+      "title_cn": "工具输出参考隔离",
+      "setup_cn": "专业短临输出被送入评分Gold",
+      "expected_cn": "拒绝；它仅是候选预测",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT047",
+      "work_package": "CP06",
+      "title_cn": "独立head不是字段拆分",
+      "setup_cn": "已有joint原回复",
+      "expected_cn": "不计为E-only/F-only新调用",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT048",
+      "work_package": "CP06",
+      "title_cn": "无填值提示",
+      "setup_cn": "schema示例含0.1默认值",
+      "expected_cn": "普通提示拒绝该模板；仅故障诊断单列",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT049",
+      "work_package": "CP06",
+      "title_cn": "空证据与基线",
+      "setup_cn": "模型无额外资料回到0.5",
+      "expected_cn": "分开报告对f(B)和对B收益，不奖励恢复自造退化",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT050",
+      "work_package": "CP06",
+      "title_cn": "存在命题边界",
+      "setup_cn": "读一条否定，另一条未读",
+      "expected_cn": "unknown；另一个确定正例则true",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT051",
+      "work_package": "CP06",
+      "title_cn": "未要求E输出",
+      "setup_cn": "F-only没有fact_truth",
+      "expected_cn": "E分母不计，不算unknown错误",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT052",
+      "work_package": "CP06",
+      "title_cn": "基线银行身份",
+      "setup_cn": "不同区域/年份银行被替换",
+      "expected_cn": "输入bundle哈希/银行版本一致性拒绝静默替换",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT053",
+      "work_package": "CP07",
+      "title_cn": "资源互斥",
+      "setup_cn": "一队两个同时RUNNING任务",
+      "expected_cn": "拒绝超分配，不凭文字计划认可",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT054",
+      "work_package": "CP07",
+      "title_cn": "查询准备并行",
+      "setup_cn": "LLM推理时准备已开始",
+      "expected_cn": "准备进度照常推进，资源分别计",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT055",
+      "work_package": "CP07",
+      "title_cn": "不可撤销已用工时",
+      "setup_cn": "运行一半取消",
+      "expected_cn": "保留已耗+清理成本，不全额退款",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT056",
+      "work_package": "CP07",
+      "title_cn": "重复指令幂等",
+      "setup_cn": "同START/CANCEL ID重放",
+      "expected_cn": "不双派、不重复释放或收费",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT057",
+      "work_package": "CP07",
+      "title_cn": "预报回退不撤准备",
+      "setup_cn": "base_bound使预测override失效",
+      "expected_cn": "准备任务不自动取消",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT058",
+      "work_package": "CP07",
+      "title_cn": "完成期限",
+      "setup_cn": "完成晚于固定need_by",
+      "expected_cn": "不计及时准备；不改weather结果",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT059",
+      "work_package": "CP07",
+      "title_cn": "保护有效期",
+      "setup_cn": "READY有效期早于风险时点结束",
+      "expected_cn": "按规则过期，不能永久保护",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT060",
+      "work_package": "CP07",
+      "title_cn": "重启恢复",
+      "setup_cn": "运行中崩溃后恢复",
+      "expected_cn": "时间进度/资源/已耗成本一致",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT061",
+      "work_package": "CP08",
+      "title_cn": "偏好隔离",
+      "setup_cn": "固定F输入、只改准备费用",
+      "expected_cn": "纯天气头请求不变；行动头收到费用",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT062",
+      "work_package": "CP08",
+      "title_cn": "系统不变非模型鲁棒性",
+      "setup_cn": "程序删除费用字段",
+      "expected_cn": "仅称结构隔离，不能称模型对偏好天然不敏感",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT063",
+      "work_package": "CP08",
+      "title_cn": "不要求所有行动变化",
+      "setup_cn": "改成本但最优区间没跨边界",
+      "expected_cn": "允许相同行动，不奖励为改而改",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT064",
+      "work_package": "CP08",
+      "title_cn": "缺结果不当浪费",
+      "setup_cn": "已准备且未来结果缺测",
+      "expected_cn": "工时可报，miss/waste/结果损失未结算",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT065",
+      "work_package": "CP08",
+      "title_cn": "强优化器不偷看结果",
+      "setup_cn": "规划输入含future y",
+      "expected_cn": "普通基线拒绝；perfect-information另标oracle",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT066",
+      "work_package": "CP08",
+      "title_cn": "求解未证明最优",
+      "setup_cn": "CP-SAT time limit仅可行",
+      "expected_cn": "报告FEASIBLE和bound，不写optimal",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT067",
+      "work_package": "CP09",
+      "title_cn": "同格公平",
+      "setup_cn": "比较共享/私有同时换selector",
+      "expected_cn": "实验注册拒绝混合因素",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT068",
+      "work_package": "CP09",
+      "title_cn": "调用总预算",
+      "setup_cn": "selector占用了预测名额",
+      "expected_cn": "全成本记录，固定预测机会诊断另表",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT069",
+      "work_package": "CP09",
+      "title_cn": "真实批量公平",
+      "setup_cn": "官方一次返回多站",
+      "expected_cn": "所有策略同样可使用，不人为按站高价",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT070",
+      "work_package": "CP09",
+      "title_cn": "固定分母",
+      "setup_cn": "策略不关注某目标",
+      "expected_cn": "按FOLLOW或固定失败政策保留评分",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT071",
+      "work_package": "CP10",
+      "title_cn": "水文物理量",
+      "setup_cn": "QINE只做单位与时间连接",
+      "expected_cn": "未核支持/调蓄前不授予F资格",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT072",
+      "work_package": "CP10",
+      "title_cn": "成员配对",
+      "setup_cn": "43列没有历史成员ID",
+      "expected_cn": "不按列号跨站/周期联合，保留未知",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT073",
+      "work_package": "CP10",
+      "title_cn": "流域关系",
+      "setup_cn": "两站距离近",
+      "expected_cn": "无水网证据不声明上下游",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT074",
+      "work_package": "CP10",
+      "title_cn": "产品降水真值",
+      "setup_cn": "同MRMS上游输入和后续QPE",
+      "expected_cn": "披露P/同源身份，不声称独立观测",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT075",
+      "work_package": "CP10",
+      "title_cn": "普通温度非热浪",
+      "setup_cn": "60条正时效温度",
+      "expected_cn": "仅连续量资格；未多日规则不称热浪",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT076",
+      "work_package": "CP11",
+      "title_cn": "风险模型无标签部署",
+      "setup_cn": "学习策略输入候选实际值/未来y",
+      "expected_cn": "拒绝",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT077",
+      "work_package": "CP11",
+      "title_cn": "两步价值不直接套单位公式",
+      "setup_cn": "异构耗时/费用/等待",
+      "expected_cn": "明确实现新状态转移与损失，标适配方法",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT078",
+      "work_package": "CP12",
+      "title_cn": "只读shadow",
+      "setup_cn": "ActionSpec指向真实设备/公众通知",
+      "expected_cn": "拒绝执行",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT079",
+      "work_package": "CP12",
+      "title_cn": "有界与first-seen",
+      "setup_cn": "初次发现现存产品，轮询失败",
+      "expected_cn": "左删失/区间记录，不假设精确发布",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT080",
+      "work_package": "CP12",
+      "title_cn": "真实提前提交",
+      "setup_cn": "目标发生后才写预测",
+      "expected_cn": "拒绝前瞻成绩，不回填",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT081",
+      "work_package": "CP13",
+      "title_cn": "确认独立",
+      "setup_cn": "同天气过程多站不同条件拆两边",
+      "expected_cn": "按父过程/重叠时空图合并，purge",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT082",
+      "work_package": "CP13",
+      "title_cn": "发布泄漏",
+      "setup_cn": "凭据/权重/无权再发源资产",
+      "expected_cn": "扫描拒绝，保留清单",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT083",
+      "work_package": "CP14",
+      "title_cn": "相同边际不同联合",
+      "setup_cn": "A、B均0.5；完全相关或互斥",
+      "expected_cn": "至少两地同时事件分别0.5或0，不能用边际乘法冒充",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    },
+    {
+      "id": "AT084",
+      "work_package": "CP14",
+      "title_cn": "可加期望不强制联合",
+      "setup_cn": "损失严格可加、可行域确定",
+      "expected_cn": "承认边际可能足够，不凭复杂度判优势",
+      "required_level": "synthetic",
+      "status": "not_implemented_or_run_by_this_plan"
+    }
+  ]
+}

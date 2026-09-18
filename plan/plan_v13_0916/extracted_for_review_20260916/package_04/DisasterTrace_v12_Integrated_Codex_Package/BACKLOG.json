@@ -1,0 +1,849 @@
+{
+  "schema": "disastertrace.integrated_next_plan.v1",
+  "reference_commit": "1eba36dd272c72573d1309c78d45dbe97dd8af12",
+  "status": "proposed_not_executed",
+  "not_a_launcher": true,
+  "execution_authorized": false,
+  "first_batch": [
+    "I00",
+    "I01",
+    "I02",
+    "I03",
+    "I04",
+    "I05",
+    "I06:bounded_sample_only"
+  ],
+  "first_batch_stop_after": true,
+  "cross_dependencies": [
+    "I09 decision (not necessarily training) must be closed before final bank freeze in I10/I12.",
+    "I13 draft may start after I00; confirmation execution requires both final protocols and relevant methods frozen before any unread payload access.",
+    "I11 is an interface-only exception: it need not wait for all C2/temperature work, but always requires separate API authorization.",
+    "I14 starts as a live evidence matrix and only packages actual completed scope."
+  ],
+  "resource_proposals_not_authorization": {
+    "preflight_default_calls": 12,
+    "preflight_optional_replacement_design_calls": 24,
+    "large_selector_call_upper": 288,
+    "c2_parent_upper": 12,
+    "c2_original_continuation_upper": 12,
+    "c2_acquisition_branch_upper": 48,
+    "taf_processing_pair_upper": 12,
+    "initial_clock_audit_target_upper": 24,
+    "fullcalendar_five_arm_trajectory_expected_if_original_roster_unchanged": 840
+  },
+  "tasks": [
+    {
+      "id": "I00",
+      "title": "基线、保护清单、测试集合与当前导航",
+      "phase": "A",
+      "status": "proposed",
+      "depends_on": [],
+      "optional": false,
+      "scope": "bounded_offline_cpu",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "disastertrace-starter/AGENTS.md",
+        "disastertrace-starter/CURRENT_PHASE.md",
+        "LATEST_PROGRESS_V12_CN.md",
+        "plans/v12_execution_20260915_01/"
+      ],
+      "deliverables": [
+        "BASELINE.json",
+        "PROTECTION_MANIFEST.json",
+        "CONSUMED_RUNS.json",
+        "TEST_SCOPE_DIFF.json",
+        "CURRENT_PHASE.md"
+      ],
+      "acceptance_tests": [
+        "真实HEAD/dirty/index与旧运行身份分开；不reset",
+        "750/628按唯一nodeid对账；附件探针不累加",
+        "短导航指向v12终态；不继承旧授权"
+      ],
+      "gate": "准确列当前已完成、受阻、未尝试与权限",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I01",
+      "title": "统一最后发送许可、字节捕获与恢复消费",
+      "phase": "A",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": false,
+      "scope": "bounded_offline_cpu",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "plans/v12_execution_20260915_01/siliconflow_worker.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/production.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/spool_backend.py",
+        "actual coordinator and resource-ledger consumers"
+      ],
+      "deliverables": [
+        "DISPATCH_CAPTURE_RECOVERY_CONTRACT.json",
+        "WORKER_RED_GREEN.xml",
+        "HISTORICAL_CALL_IMPACT.json"
+      ],
+      "acceptance_tests": [
+        "claim/凭据/落盘后到期不发送；permit前STOP不发送",
+        "捕获原长度先于脱敏；截断不升级完整；保存字节摘要绑定",
+        "首次reconcile核原capture；错摘要/模型/usage拒绝",
+        "response落盘失败后原failure保留，合法recovery使真实consumer恰好结算一次",
+        "重复恢复与迟到恢复不免费重发、不回溯改分"
+      ],
+      "gate": "新API前必过；isolated probe不能替代真实模块集成",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I02",
+      "title": "派生评分完整性、正式资格与方法身份",
+      "phase": "A",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": false,
+      "scope": "bounded_offline_cpu",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "plans/v12_execution_20260915_01/analyze_branches.py",
+        "plans/v12_execution_20260915_01/analyze_stage_c.py",
+        "formal scorer and publication admission"
+      ],
+      "deliverables": [
+        "ANALYSIS_ADMISSION.json",
+        "COMPARISON_PROVENANCE.json",
+        "HISTORICAL_ANALYSIS_IMPACT.json"
+      ],
+      "acceptance_tests": [
+        "缺一/全部报告、需有但缺的call trace不得完整passed",
+        "重复IDs/错alias/错hash明确拒绝；合法fallback无需伪造trace",
+        "FOLLOW、common、values真实consumer身份分开",
+        "完整历史输入数值等价；正式/legacy/diagnostic明确"
+      ],
+      "gate": "固定注册分母，不能以现存文件/交集悄悄缩小",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I03",
+      "title": "单一query-only v2合同与兼容适配器",
+      "phase": "A",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": false,
+      "scope": "bounded_offline_cpu",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/selection.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/policies.py",
+        "new versioned selector contracts/adapters"
+      ],
+      "deliverables": [
+        "SELECTOR_QUERY_ONLY_V2.json",
+        "PROVIDER_SCHEMA_PARITY.json",
+        "SELECTOR_V2_TESTS.xml",
+        "PREFLIGHT_DRAFT.json"
+      ],
+      "acceptance_tests": [
+        "单一query_order输出，兼容adapter补空forecast_handles且固定schedule不变",
+        "同一合同生成prompt/schema/parser；动态enum仅公开合法handles",
+        "空目录、空/子集/全取/重排、重复键/handle/额外字段/未知/拒答/截断",
+        "v1分类与原288原样保留；无alias洗白"
+      ],
+      "gate": "纯CPU通过后才可注册真实接口；不强迫非空/子集",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I04",
+      "title": "剩余新增获取的v2语义",
+      "phase": "A",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": false,
+      "scope": "bounded_offline_cpu",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/residual_query_plan.py",
+        "residual plan executor"
+      ],
+      "deliverables": [
+        "RESIDUAL_QUERY_PLAN_V2.json",
+        "RESIDUAL_SEMANTICS_TESTS.xml"
+      ],
+      "acceptance_tests": [
+        "cached/requested项不进入remaining_new；保留所有排除原因",
+        "private/shared/payer/其他目标已付款/失败已消费不免费重试",
+        "second不存在/late/infeasible/no-op明示",
+        "原策略续跑与no_further_paid_query不混同"
+      ],
+      "gate": "保留v1旧语义；新run不改变父cache/费用",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I05",
+      "title": "真实模块回归与最小历史切片",
+      "phase": "A",
+      "status": "proposed",
+      "depends_on": [
+        "I01",
+        "I02",
+        "I03",
+        "I04"
+      ],
+      "optional": false,
+      "scope": "bounded_offline_cpu",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "current tests",
+        "existing replay capsules",
+        "v12 frozen receipts"
+      ],
+      "deliverables": [
+        "REGRESSION_RESULT.json",
+        "NODEIDS.json",
+        "IMPACT.json",
+        "SCOPED_REPLAY_RESULT.json",
+        "STOP_RECEIPT.json"
+      ],
+      "acceptance_tests": [
+        "实际当前唯一测试范围，不把旧XML数量相加",
+        "原非法/合法空/合法查询/C2变化四种真实切片；恢复测试另列",
+        "旧源码与当前迁移结果分表；同输入算术等价",
+        "缺AFS材料明确unavailable与受阻gate，不伪造全部通过"
+      ],
+      "gate": "批次A完成停止，不自动调用API/训练/提交云任务",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I06",
+      "title": "固定bank的时点和信息漂移桥接",
+      "phase": "A_sample_then_B_full",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": false,
+      "scope": "bounded_offline_cpu",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "plans/v12_execution_20260915_01/fit_annual.py",
+        "plans/v10_execution_20260914_01/scripts/fit_native_feature_bank.py",
+        "native feature forecast consumer"
+      ],
+      "deliverables": [
+        "CLOCK_AUDIT_SAMPLE.json",
+        "CLOCK_ALIGNMENT_ROWS.jsonl",
+        "FEATURE_DRIFT_REPORT_CN.md",
+        "BANK_DECISION_INPUTS.json"
+      ],
+      "acceptance_tests": [
+        "同一目标与旧权重；每时点分别过滤as-of/权限/实际披露",
+        "早信息、同信息仅age变化、晚时点新增信息分开",
+        "初批最多24元数据固定目标；下一批完整日历",
+        "无Y/loss挑样；缺新源不回填早时点"
+      ],
+      "gate": "先诊断，不自动重拟合；新资料资格独立",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I07",
+      "title": "年度raw bank完整自然日历五臂对照",
+      "phase": "B",
+      "status": "proposed",
+      "depends_on": [
+        "I02",
+        "I05",
+        "I06"
+      ],
+      "optional": false,
+      "scope": "registered_cpu_program_runs",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "existing fullweek launcher as implementation reference only",
+        "annual frozen BANK_common/BANK_values",
+        "formal scorer"
+      ],
+      "deliverables": [
+        "ANNUAL_FULLCALENDAR_REGISTRATION.json",
+        "MATCHED_BANK_CALENDAR_RESULTS.json",
+        "FULLCALENDAR_RESOURCES.json"
+      ],
+      "acceptance_tests": [
+        "新run身份，保持原daily reset/48每单阈值日/缓存边界",
+        "精确roster核840方法轨迹、12096机会、60480方法行候选范围",
+        "FOLLOW/common/values-empty/batch/coverage分consumer；raw为主",
+        "正负/地区/周/threshold/missing全部分层；不删1km"
+      ],
+      "gate": "需独立有效CPU范围；不是重启原840，不新增模型",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I08",
+      "title": "动作可区分性、有限响应与强程序",
+      "phase": "B",
+      "status": "proposed",
+      "depends_on": [
+        "I02",
+        "I04",
+        "I06"
+      ],
+      "optional": false,
+      "scope": "bounded_registered_cpu_diagnostics",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "existing policies",
+        "residual query executor",
+        "actual feature/probability/admission chain"
+      ],
+      "deliverables": [
+        "ACTION_SPACE_CENSUS.json",
+        "ACTION_RESPONSE_MATRIX.json",
+        "PROGRAM_POLICY_REGISTRATION.json",
+        "SAME_BACKEND_PROGRAM_RESULTS.json"
+      ],
+      "acceptance_tests": [
+        "census不看Y；评估oracle不暴露给policy",
+        "3候选8子集/16有序部分列表仅组合上限；真实可行性剪枝",
+        "不拼各目标单独最优；完整共享预算路径",
+        "none/batch/coverage/risk-age/固定/固定随机，费用向量报告",
+        "expected-loss需要训练期/折外模型，否则仅evaluator诊断"
+      ],
+      "gate": "完全等价则No-Go大selector；all/none合法不强迫换序",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I09",
+      "title": "是否需要slot-aligned或锚定残差bank",
+      "phase": "B",
+      "status": "proposed",
+      "depends_on": [
+        "I06",
+        "I07"
+      ],
+      "optional": true,
+      "scope": "decision_offline; conditional_registered_cpu_fit",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "annual fit and feature-bank modules"
+      ],
+      "deliverables": [
+        "BACKEND_CHANGE_DECISION.json",
+        "NEW_BANK_REGISTRATION.json",
+        "BANK_ROLE_FOOTPRINT.json",
+        "MATCHED_NEW_BANK_RESULTS.json"
+      ],
+      "acceptance_tests": [
+        "可not_needed终结，不为任务完成而训练",
+        "2023内部选择/2024Jan-Nov校准/Dec排除/2025开发不混",
+        "多时点缺证视图权重守恒，normalizer训练角色",
+        "旧bank不变，新bank同日历比较，阈值CDF一致"
+      ],
+      "gate": "decision必须在模型/C2最终freeze前关闭；训练需新授权",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I10",
+      "title": "跨状态C2获取与TAF实际处理链",
+      "phase": "C",
+      "status": "proposed",
+      "depends_on": [
+        "I02",
+        "I04",
+        "I08"
+      ],
+      "optional": false,
+      "scope": "registered_bounded_cpu_branches",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "run_branches.py / formal fork / residual executor",
+        "TAF processor to feature adapter"
+      ],
+      "deliverables": [
+        "SOURCE_STATE_CENSUS.json",
+        "C2_PARENT_FREEZE.json",
+        "CONTINUATION_EQUIVALENCE.json",
+        "FIELD_TO_SESSION_LOSS.json"
+      ],
+      "acceptance_tests": [
+        "最多12父/12原续跑/48获取分支建议；先固定exact roster",
+        "父按calendar/public状态选，Y/loss不参与；不足留缺",
+        "新bank重建新父，prefix/cache/payer/pending/全部U_parent绑定",
+        "等时内容、自然获取总效应、共同后续策略下残余会话效应分开",
+        "TAF同raw免费共同信息；处理adapter真正进F；E-only负控制",
+        "不同父、分支、阈值不自动独立"
+      ],
+      "gate": "最终bank选择已冻结；程序先行，模型PROCESS另授权",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I11",
+      "title": "真实天气形状接口预检",
+      "phase": "D_interface",
+      "status": "proposed",
+      "depends_on": [
+        "I01",
+        "I03",
+        "I05"
+      ],
+      "optional": false,
+      "scope": "new_bounded_paid_api_authorization_required",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "query_only_v2 / qualified transport"
+      ],
+      "deliverables": [
+        "WEATHER_PREFLIGHT_REGISTRATION.json",
+        "PREFLIGHT_CAPTURES_MANIFEST.json",
+        "PREFLIGHT_RESULT.json"
+      ],
+      "acceptance_tests": [
+        "默认12固定快照×1次，12/12结构/handle合法规则执行前冻结",
+        "纯模式因果问题可事前改成12×2=24替代设计，不能累加12/24/48",
+        "所有原始失败与未尝试保留，不补成功样本",
+        "安全身份零容忍；普通格式失败不洗白；unknown fee不当0",
+        "精确model/endpoint/schema/payload/call IDs，上限与STOP登记"
+      ],
+      "gate": "单独新API授权；通过只代表该小范围接口，不是预测有益",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I12",
+      "title": "一次同后端有界selector实验",
+      "phase": "D_model",
+      "status": "proposed",
+      "depends_on": [
+        "I07",
+        "I08",
+        "I10",
+        "I11"
+      ],
+      "optional": false,
+      "scope": "separately_registered_paid_model_experiment",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "versioned selector runner",
+        "qualified transport",
+        "frozen consumer/program controls"
+      ],
+      "deliverables": [
+        "SELECTOR_RUN_FREEZE.json",
+        "FULL_DENOMINATOR_RESULTS.json",
+        "COST_AND_FAILURES.json"
+      ],
+      "acceptance_tests": [
+        "最终bank决策已关；最多12日/288新calls建议、一个model/role",
+        "强batch/coverage与C1固定selector四格对照；同日历同协议",
+        "registered到loss全漏斗、invalid/none分开且主表不删",
+        "raw原始回应/费用/时延保存，不换模型/不追加到赢",
+        "元数据选calendar；旧12日复用只称开发"
+      ],
+      "gate": "工程与科学输入资格都满足才开；正增益非工程门槛",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I13",
+      "title": "双协议同时冻结与独立确认",
+      "phase": "E",
+      "status": "proposed",
+      "depends_on": [],
+      "optional": false,
+      "scope": "draft_offline; confirmation_requires_separate_freeze_and_authorization",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "existing exposure/holdout registry",
+        "formal scorer",
+        "process grouping and protocol manifests"
+      ],
+      "deliverables": [
+        "CONFIRMATION_MODEL_PROTOCOL.json",
+        "CONFIRMATION_C2_PROTOCOL.json",
+        "DEPENDENCY_BLOCKS.json",
+        "CONFIRMATION_FREEZE.json",
+        "CONFIRMATION_RESULTS.json"
+      ],
+      "acceptance_tests": [
+        "草案I00后可做，执行需最终methods/C2/metrics/blocks冻结",
+        "共用未读calendar则两协议首次读取前同时冻结，否则隔离",
+        "连续最大范围/精度/支持不足规则预定，不增样到显著",
+        "Bay仅窄确认；相邻小时/双阈值/分支不是独立过程",
+        "missing敏感性/采样不确定性分离"
+      ],
+      "gate": "draft不授权打开确认；允许program-only限定主张，不强制LLM获胜",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "I14",
+      "title": "证据矩阵与最小可移植发布切片",
+      "phase": "E_continuous",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": false,
+      "scope": "bounded_offline_cpu",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "publication scripts / existing portable capsules"
+      ],
+      "deliverables": [
+        "CLAIM_EVIDENCE_MATRIX.md",
+        "FORMAL_INPUT_MANIFEST.json",
+        "SCOPED_REPLAY_CAPSULE.zip",
+        "RELEASE_SCOPE.md"
+      ],
+      "acceptance_tests": [
+        "旧source replay/当前source migration/formal qualification分开",
+        "illegal/none/query/C2/recovery代表切片与完整分母绑定",
+        "许可允许的raw+input+consumer+bank+schema+ledger+score+算术",
+        "未完成16hazards/MM/D/confirmation如实标记"
+      ],
+      "gate": "不以模型正增益作为发布必要条件；推送需授权",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "P01",
+      "title": "温度目标局部、动态prompt和member lineage",
+      "phase": "parallel_C3",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": true,
+      "scope": "bounded_offline_cpu",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "temperature_contract.py",
+        "temperature_postprocess.py",
+        "feature_tasks.py",
+        "DWD outcome policies"
+      ],
+      "deliverables": [
+        "TEMPERATURE_TARGET_LOCAL_TESTS.xml",
+        "MEMBER_LINEAGE_AUDIT.json",
+        "TEMPERATURE_IMPACT.json"
+      ],
+      "acceptance_tests": [
+        "raw max-only/min-only可算；所需变量坏仍拒绝",
+        "完整ECC缺必需边际仍拒绝",
+        "prompt与evaluator同阈值/算子/时段合同",
+        "原issue/member IDs证据不以数组等长代替"
+      ],
+      "gate": "只阻塞温度出口；资料不足则unavailable",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "选择一条合格第二主动物理链",
+      "phase": "parallel_C3",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": true,
+      "scope": "offline_qualification; acquisition_separate",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "H07 precipitation and H08 hydrology adapters"
+      ],
+      "deliverables": [
+        "SECOND_CHAIN_READINESS.json",
+        "PHYSICAL_TARGET_CONTRACT.json"
+      ],
+      "acceptance_tests": [
+        "H07累计窗/空间/单位/QC/available/outcome",
+        "H08流量水位/瞬时均值/断面/调控/member/阈值",
+        "按合同成熟度非loss选择一条，不同时启动16链"
+      ],
+      "gate": "baseline+supplementary+outcome+as-of+cost都闭合才进主动轨",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "原生视觉资产与真实消费资格",
+      "phase": "parallel_MM",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": true,
+      "scope": "offline_cpu_qualification; model_separate",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "native multimodal asset and processor pipeline"
+      ],
+      "deliverables": [
+        "NATIVE_VISUAL_ASSET_MANIFEST.json",
+        "TIME_ROI_PROCESSOR_GATE.json",
+        "MM_INPUT_CONSUMPTION_TESTS.json"
+      ],
+      "acceptance_tests": [
+        "发行/可得/ROI/support与forecast目标对齐",
+        "原图/专业派生/结构化数值信息范围与成本公开",
+        "真实processor/像素消费不等于视觉增益"
+      ],
+      "gate": "CPU资格可并行；真实VLM调用另授权",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "D、X09与prospective分别设出口",
+      "phase": "parallel_extensions",
+      "status": "proposed",
+      "depends_on": [
+        "I00"
+      ],
+      "optional": true,
+      "scope": "offline_drafts; each_external_track_separate",
+      "execution_authorized_by_this_package": false,
+      "target_paths_or_modules": [
+        "decision / X09 / prospective tracks"
+      ],
+      "deliverables": [
+        "SCENARIO_CARD.json",
+        "F_PREFERENCE_BLINDNESS_TEST.json",
+        "X09_BUDGET_PROTOCOL.json",
+        "PROSPECTIVE_READINESS.json"
+      ],
+      "acceptance_tests": [
+        "同weather/evidence/predictor不同DecisionSpec时F不变",
+        "D先程序optimizer，研究仿真不称真实减灾",
+        "X09每请求与每目标组总预算分别匹配",
+        "first_seen采集不是预测成绩，事前预测后取Y才计prospective"
+      ],
+      "gate": "三条独立问题，不阻塞H15科学诊断",
+      "historical_evidence_policy": "Do not overwrite frozen source/capture/failure/ledger/STOP/bank/score; create new version and impact lineage. Missing assets are unavailable, not a passing check.",
+      "status_receipt_required": [
+        "actual_command",
+        "exit_code",
+        "unique_nodeids_or_explicit_nonpytest_case_ids",
+        "source_sha256",
+        "input_sha256",
+        "scope",
+        "costs",
+        "failure_history",
+        "historical_impact",
+        "next_gate"
+      ]
+    }
+  ]
+}

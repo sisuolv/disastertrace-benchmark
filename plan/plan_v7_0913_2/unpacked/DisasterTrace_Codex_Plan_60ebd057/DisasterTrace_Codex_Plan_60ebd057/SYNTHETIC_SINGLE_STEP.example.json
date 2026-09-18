@@ -1,0 +1,41 @@
+{
+  "schema": "disastertrace.proposed.synthetic_example.v1",
+  "scope": "synthetic_unit",
+  "counts_as_real_weather_sample": false,
+  "status": "input_specification_not_executed_by_this_bundle",
+  "profile_id": "toy_local_prep_20min_v1",
+  "known_schedule": {
+    "decision_time": "2024-01-01T15:00:00Z",
+    "readiness_deadline": "2024-01-01T16:00:00Z",
+    "outcome_time": "2024-01-01T16:00:00Z",
+    "source": "synthetic_public_schedule_not_weather_onset"
+  },
+  "single_step_cases": [
+    {
+      "probability": 0.19,
+      "start_cost": 2,
+      "miss_penalty": 10,
+      "analytic_optimal_action": "WAIT"
+    },
+    {
+      "probability": 0.2,
+      "start_cost": 2,
+      "miss_penalty": 10,
+      "analytic_optimal_action": "TIE_USE_DECLARED_RULE"
+    },
+    {
+      "probability": 0.21,
+      "start_cost": 2,
+      "miss_penalty": 10,
+      "analytic_optimal_action": "START_PREP"
+    }
+  ],
+  "derivation": "Expected cost of preparing is C; not preparing is p*M. This analytic baseline is not an experiment result.",
+  "test_boundary_cases": [
+    "Prepare at 15:40 finishes at 16:00; accepted by the declared action-completion rule.",
+    "Prepare after 15:40 cannot receive on-time credit.",
+    "A forecast submitted at outcome_time is not a legal future forecast, even though a previously started preparation may finish exactly then."
+  ],
+  "joint_negative_control": "Two fixed marginals at 0.5 and a static additive loss: altering dependence alone must not alter expected loss for fixed actions.",
+  "joint_nonlinear_control": "With capacity=1 and loss=max(Y_A+Y_B-1,0), simultaneous Bernoulli events have expected loss 0.5; mutually exclusive events have expected loss 0."
+}

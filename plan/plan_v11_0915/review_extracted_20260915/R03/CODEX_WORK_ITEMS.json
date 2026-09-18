@@ -1,0 +1,369 @@
+{
+  "schema": "disastertrace.reviewer_v10_followup.v1",
+  "baseline_commit": "1fd6821fef15b26898a57c74d4715714f33ea779",
+  "research_continuity": "C1/C2/C3; existing P0-P3 extended, not a new direction",
+  "execution_authorized_by_this_plan": false,
+  "tasks": [
+    {
+      "id": "SYNC-0",
+      "maps_to": [
+        "P0",
+        "发布"
+      ],
+      "title": "同步v10真实状态与冻结边界",
+      "priority": "P0",
+      "depends_on": [],
+      "paths": [
+        "LATEST_PROGRESS_V10_CN.md",
+        "plans/v10_execution_20260914_01/FINAL_RESULT.json",
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md"
+      ],
+      "deliverables": [
+        "STATUS_DELTA.json"
+      ],
+      "acceptance": [
+        "读取实际HEAD/status/staged差异；保留既有未提交内容",
+        "720/37重复测试、2812回答/15兼容尝试/424未尝试分开",
+        "四季数据、216控制、EMOS/ECC、235B selector、澄清84与两capsule不重复登记为新完成",
+        "Bay2025-02-17至23保持封闭，已消费launcher不重开"
+      ],
+      "authorization": "只读与本地CPU检查；不启动新云/API任务"
+    },
+    {
+      "id": "P0-1",
+      "maps_to": [
+        "P0",
+        "R01",
+        "R05"
+      ],
+      "title": "统一温度物理入口与H15机器合同",
+      "priority": "P1",
+      "depends_on": [
+        "SYNC-0"
+      ],
+      "paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "plans/v10_execution_20260914_01/contracts/H15_REPORT_LABEL_DATA_CARD.json"
+      ],
+      "deliverables": [
+        "CONTRACT_CHANGE_AND_IMPACT.json",
+        "生产入口回归"
+      ],
+      "acceptance": [
+        "复现四个原函数反例后再修；分享输入校验但保留独立成员概率计算",
+        "UTC起止/类型、finite阈值、日期唯一、成员维度/day0与缺失拒绝",
+        "扫描冻结温度目标/调用并报告影响，不推定旧分数有错",
+        "H15主报文/remarks/删失/编码例外/格式政策进入新注册hash",
+        "合法旧样本概率不变；旧实验不被新协议改写"
+      ],
+      "authorization": "CPU/源代码修改范围按新的用户执行授权；本计划本身不改库"
+    },
+    {
+      "id": "PERF-1",
+      "maps_to": [
+        "P0",
+        "NEXT_PHASE_PLAN第4节",
+        "R02"
+      ],
+      "title": "单次评分验证对象复用与端到端剖析",
+      "priority": "P1",
+      "depends_on": [
+        "SYNC-0"
+      ],
+      "paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py"
+      ],
+      "deliverables": [
+        "PROFILE_BASELINE.json",
+        "REPLAY_EQUIVALENCE.json",
+        "优化后验证对象接口"
+      ],
+      "acceptance": [
+        "先记录replay次数及CPU/IO/hash/模型等待分项",
+        "每日志每次比较只做一次完整from_journal；所有基线/合同/结果/干预校验保留",
+        "缓存按内容hash+代码/合同身份，不用路径或mtime作为信任依据",
+        "篡改日志/结果/合同仍拒绝，重复与并行比较不共享可变状态",
+        "旧/新所有规范评分字段相同；无计时前不承诺倍数",
+        "优化重放不改变历史模型生成和原耗时"
+      ],
+      "authorization": "CPU性能与完整性测试；无新模型调用"
+    },
+    {
+      "id": "P1-1",
+      "maps_to": [
+        "P1"
+      ],
+      "title": "全年资料角色清单与有界获取",
+      "priority": "P1",
+      "depends_on": [
+        "SYNC-0",
+        "P0-1"
+      ],
+      "paths": [
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md",
+        "现有IEM获取/角色/依赖脚本"
+      ],
+      "deliverables": [
+        "YEAR_SOURCE_MANIFEST.json",
+        "ROLE_AND_DEPENDENCY_AUDIT.json"
+      ],
+      "acceptance": [
+        "2023拟合/2024校准作为候选先核metadata、质量、解析和已存在hash",
+        "按月/站点复用，只补缺片，预登记请求/字节/并发上限和429退避",
+        "全部输入、有效窗、派生、记忆、结果跨角色依赖检查",
+        "2025所有已暴露资料只作开发；年份隔离不声称消除预训练污染"
+      ],
+      "authorization": "网络获取须有新明确范围；不沿用关闭的自治窗口"
+    },
+    {
+      "id": "P1-2",
+      "maps_to": [
+        "P1",
+        "P3",
+        "R04"
+      ],
+      "title": "冻结跨季节common/mask-age/values强后端",
+      "priority": "P1",
+      "depends_on": [
+        "P1-1"
+      ],
+      "paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/regional_calibration_v2.py",
+        "已有bank拟合脚本"
+      ],
+      "deliverables": [
+        "BANKS_AND_FIT_RECEIPTS",
+        "FEATURE_COVERAGE_AND_OOD.json",
+        "MATCHED_BACKEND_CONTROLS.json"
+      ],
+      "acceptance": [
+        "共同目标/拟合角色/权重固定；所有部署缺证模式参与开发设计",
+        "视图权重按基础目标归一，不能用更多mask视图放大同一目标",
+        "原冬季bank与noyear消融保留；新选择仅来自训练内验证",
+        "日期特征、scale近零和OOD策略事先固定，不根据新确认标签选择",
+        "同后端empty/full对照；raw/pav/cdf分列且概率一致性同信息校验",
+        "校准器切换与真实数值内容可追踪；不以正增益作为放行条件"
+      ],
+      "authorization": "CPU拟合；不把全年下载未完成写成已完成"
+    },
+    {
+      "id": "P2-1",
+      "maps_to": [
+        "P2",
+        "C3"
+      ],
+      "title": "自然过程、完整监测与确认登记",
+      "priority": "P0-confirmation",
+      "depends_on": [
+        "SYNC-0"
+      ],
+      "paths": [
+        "已有process_split/EXPOSURE_LEDGER",
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md"
+      ],
+      "deliverables": [
+        "EXPOSURE_AND_PROCESS_SPLITS.json",
+        "CONFIRMATION_PREREGISTRATION.json"
+      ],
+      "acceptance": [
+        "12区域周只认4共同日历块，不把机会或3站相加为独立过程",
+        "事件富集与自然日历分开，已知正例日保持诊断身份",
+        "完善回看/TAF支持/持久状态/结果purge；保守块敏感性明确",
+        "一次性确认冻结主次指标、样本精度/停止、bank/模型/提示/失败规则",
+        "不事后以正收益/显著为扩样停止标准"
+      ],
+      "authorization": "保留确认周不打开；先元数据设计"
+    },
+    {
+      "id": "P3-1",
+      "maps_to": [
+        "P3",
+        "C1",
+        "R03"
+      ],
+      "title": "完整周预算CPU矩阵与天气块损失",
+      "priority": "P1",
+      "depends_on": [
+        "P0-1",
+        "PERF-1",
+        "P2-1"
+      ],
+      "paths": [
+        "现有seasonal_controls执行器/评分器",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/forecast_schedule.py"
+      ],
+      "deliverables": [
+        "FULL_CALENDAR_CONTROLS",
+        "BLOCK_PAIRED_LOSSES.json"
+      ],
+      "acceptance": [
+        "先已下载完整周，不把首日当完整周；oldbank与新bank新版本分列",
+        "48/day等价预算、carry/reset、历史warmup/cache/权限明确；拼日不默认等价整周连续",
+        "同coverage固定2x2；同B11比RR/risk/coverage/batch",
+        "FOLLOW/common/同values无E/合法全读/预算策略均有身份",
+        "报告正常/含事件完整块、正负贡献、损失幅度、缺失界，不把敏感性界当CI",
+        "可先旧bankCPU重放，新bank输出必须额外依赖P1-2"
+      ],
+      "authorization": "CPU新回放需明确资源范围；不重新生成历史模型回答"
+    },
+    {
+      "id": "P3-2",
+      "maps_to": [
+        "P3",
+        "C2"
+      ],
+      "title": "固定提取合同下的组件及失败掩膜对照",
+      "priority": "P1",
+      "depends_on": [
+        "P0-1",
+        "P1-2"
+      ],
+      "paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_scoring.py"
+      ],
+      "deliverables": [
+        "EXTRACTION_PIPELINE_REGISTRATION",
+        "FIELD_AND_FORECAST_ATTRIBUTION.json"
+      ],
+      "acceptance": [
+        "clear初始合同不再重复“修提示直至成功”；确认不得调提示",
+        "原生解码/模型实际提取/模型槽位程序归约/特权修复分开",
+        "全机会失败回退主分与同validmask归因对照分别报告",
+        "可见完整原生字段不需要LLM时保留廉价程序baseline",
+        "数值字段损失变化与F使用该字段是否相关单列；不人为奖励必须修改概率"
+      ],
+      "authorization": "先现有捕获离线；新模型仅在新注册与授权后"
+    },
+    {
+      "id": "P3-3",
+      "maps_to": [
+        "P3",
+        "C1"
+      ],
+      "title": "新冻结selector/predictor最小模型对照",
+      "priority": "P2",
+      "depends_on": [
+        "P1-2",
+        "P2-1",
+        "P3-1",
+        "P3-2"
+      ],
+      "paths": [
+        "现有selector_trial执行器",
+        "FormalSession",
+        "forecast_schedule.py"
+      ],
+      "deliverables": [
+        "NEW_MODEL_BATCH_PREREG",
+        "完整调用与成本账本",
+        "同批强基线表"
+      ],
+      "acceptance": [
+        "沿用已验证27B/235B，不为模型规模再开无边界比较",
+        "首先一个backend、相同budget/forecast schedule的强程序与LLMselector",
+        "提取/预测另因子，不与selector一起改变",
+        "来源等预算≠总成本等价；token/卡秒/排队/交付/错过槽位分列",
+        "API402保持未尝试，不能加回退伪装模型成绩；不释放旧未知预留",
+        "固定查询计划重放是机制诊断，不能把旧墙钟改短当新真实会话"
+      ],
+      "authorization": "必须有新的模型/网络/费用/并发/时长授权；计划不触发执行"
+    },
+    {
+      "id": "C2-1",
+      "maps_to": [
+        "C2",
+        "P0"
+      ],
+      "title": "残余可达性与有限在途恢复按新增范围验收",
+      "priority": "P2",
+      "depends_on": [
+        "P0-1",
+        "PERF-1"
+      ],
+      "paths": [
+        "residual_reachability.py",
+        "formal_session.py",
+        "session_checkpoint.py",
+        "api_ledger.py"
+      ],
+      "deliverables": [
+        "RESIDUAL_AND_RECOVERY_SCOPE.json"
+      ],
+      "acceptance": [
+        "已有19prefix/8配置和串行4进程不重复称首次实现",
+        "新用例基于实际剩余资源/缓存权限/版本/处理依赖/截止",
+        "同一路径费时联合见证；截断搜索返回界/unknown",
+        "E上界不是未来F可预测性上界",
+        "新增有限并发必须单列；未知远端不免费重试，不声称远端exactly-once"
+      ],
+      "authorization": "本地/CPU故障注入；不重新发送历史请求"
+    },
+    {
+      "id": "C3-1",
+      "maps_to": [
+        "第二主链",
+        "C3"
+      ],
+      "title": "温度F-only与H07/H08物理资格并行",
+      "priority": "P2",
+      "depends_on": [
+        "P0-1",
+        "P2-1"
+      ],
+      "paths": [
+        "temperature_postprocess.py",
+        "已冻结EUPP/DWD结果",
+        "现有MRMS/HEFS准入清单"
+      ],
+      "deliverables": [
+        "TEMPERATURE_POSTPROCESS_SCOPE.json",
+        "HAZARD_ADMISSION_DELTA.json"
+      ],
+      "acceptance": [
+        "2017/2018既有EMOS/ECC和模型结果保留，hot-day退化单列",
+        "同成员三日及minmax修复比例/影响有记录，不能宣称联合校准保证",
+        "DWD严格历史补证资格0保持；需要情景轨另注册，不捏造asof",
+        "MRMS精确累计端点与HEFS变量/断面准入先于物理F/MM",
+        "16类A0-A5/EFDMM各自登记，不为headline硬拼来源"
+      ],
+      "authorization": "先CPU和已有材料；新增数据按范围授权"
+    },
+    {
+      "id": "RELEASE-1",
+      "maps_to": [
+        "P2",
+        "C3",
+        "发布"
+      ],
+      "title": "一次性确认与分级可搬迁交付",
+      "priority": "P2",
+      "depends_on": [
+        "P2-1",
+        "P3-3"
+      ],
+      "paths": [
+        "既有portable_capsule_01",
+        "portable_model_capsule_01",
+        "当前confirmation清单"
+      ],
+      "deliverables": [
+        "CONFIRMATION_RESULT",
+        "SCOPED_PORTABLE_RELEASE",
+        "CLAIM_EVIDENCE_MATRIX"
+      ],
+      "acceptance": [
+        "确认仅在新明确许可后打开；冻结后不因输赢调银行/样本/提示",
+        "已通过范围可发布，不依赖16灾种/D/MM/online全齐或LLM正收益",
+        "两个已有capsule复验支持范围，不重开模型launcher",
+        "X09保持相同信息单/多目标与每请求/每组总预算对照；D/MM/online独立登记未完成",
+        "每个论文主张对应独立/开发/情景/工程身份及完整负结果"
+      ],
+      "authorization": "本计划不打开确认周；交付范围和隐私/许可另核"
+    }
+  ]
+}

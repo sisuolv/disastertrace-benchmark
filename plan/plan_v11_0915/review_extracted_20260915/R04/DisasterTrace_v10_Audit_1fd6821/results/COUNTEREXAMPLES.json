@@ -1,0 +1,190 @@
+{
+  "source_commit": "1fd6821fef15b26898a57c74d4715714f33ea779",
+  "scope": "Synthetic exact-function probes; not production-entry or real-weather reruns.",
+  "cases": [
+    {
+      "case": "noon",
+      "synthetic": true,
+      "input": {
+        "target": {
+          "units": "C",
+          "physical_start": 1514894400000000,
+          "physical_end": 1514980800000000,
+          "variable": "daily_max_2m_temperature",
+          "event_operator": "ge",
+          "threshold": 30
+        },
+        "cutoff": 1514851199999999,
+        "common": {
+          "daily_products": [
+            {
+              "target_date": "2018-01-02",
+              "day_index": 1,
+              "forecast_min_members_C": [
+                -2,
+                1,
+                2,
+                3
+              ],
+              "forecast_max_members_C": [
+                29,
+                30,
+                31,
+                32
+              ]
+            }
+          ]
+        }
+      },
+      "observed": {
+        "feature_tasks.temperature_ensemble_probability": {
+          "accepted": true,
+          "probability": 0.75
+        },
+        "temperature_postprocess.event_probability": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        }
+      }
+    },
+    {
+      "case": "duplicate",
+      "synthetic": true,
+      "input": {
+        "target": {
+          "units": "C",
+          "physical_start": 1514851200000000,
+          "physical_end": 1514937600000000,
+          "variable": "daily_max_2m_temperature",
+          "event_operator": "ge",
+          "threshold": 30
+        },
+        "cutoff": 1514851199999999,
+        "common": {
+          "daily_products": [
+            {
+              "target_date": "2018-01-02",
+              "day_index": 1,
+              "forecast_min_members_C": [
+                -2,
+                1,
+                2,
+                3
+              ],
+              "forecast_max_members_C": [
+                29,
+                30,
+                31,
+                32
+              ]
+            },
+            {
+              "target_date": "2018-01-02",
+              "day_index": 1,
+              "forecast_min_members_C": [
+                -2,
+                1,
+                2,
+                3
+              ],
+              "forecast_max_members_C": [
+                35,
+                35,
+                35,
+                35
+              ]
+            }
+          ]
+        }
+      },
+      "observed": {
+        "feature_tasks.temperature_ensemble_probability": {
+          "accepted": true,
+          "probability": 1.0
+        },
+        "temperature_postprocess.event_probability": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Unique daily products are required"
+        }
+      }
+    },
+    {
+      "case": "nan_threshold",
+      "synthetic": true,
+      "input": {
+        "target": {
+          "units": "C",
+          "physical_start": 1514851200000000,
+          "physical_end": 1514937600000000,
+          "variable": "daily_max_2m_temperature",
+          "event_operator": "ge",
+          "threshold": "NONFINITE_NaN_TEST_VALUE"
+        },
+        "cutoff": 1514851199999999,
+        "common": {
+          "daily_products": [
+            {
+              "target_date": "2018-01-02",
+              "day_index": 1,
+              "forecast_min_members_C": [
+                -2,
+                1,
+                2,
+                3
+              ],
+              "forecast_max_members_C": [
+                29,
+                30,
+                31,
+                32
+              ]
+            }
+          ]
+        }
+      },
+      "observed": {
+        "feature_tasks.temperature_ensemble_probability": {
+          "accepted": true,
+          "probability": 0.0
+        },
+        "temperature_postprocess.event_probability": {
+          "accepted": false,
+          "exception": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        }
+      }
+    },
+    {
+      "case": "infinite_lower_visibility",
+      "synthetic": true,
+      "input": {
+        "q": {
+          "visibility": {
+            "lower": "+inf",
+            "upper": "+inf",
+            "lower_closed": true,
+            "upper_closed": true
+          },
+          "temperature_c": 0.0,
+          "dewpoint_c": -1.0
+        }
+      },
+      "accepted_by_parse_features": true,
+      "feature_upper_log": 9.90353755128617,
+      "feature_lower_log": 9.90353755128617
+    },
+    {
+      "case": "open_closed_information_compression",
+      "synthetic": true,
+      "is_declared_bug": false,
+      "features_identical": true,
+      "supports_at_5000": [
+        "undetermined",
+        "supported"
+      ],
+      "interpretation": "The current numerical feature map intentionally/implicitly omits endpoint closure. This limits what F can respond to; it is not proof of a scoring error or existing-data impact."
+    }
+  ]
+}

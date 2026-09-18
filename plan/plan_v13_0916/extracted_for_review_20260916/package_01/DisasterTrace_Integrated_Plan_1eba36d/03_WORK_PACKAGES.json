@@ -1,0 +1,1002 @@
+{
+  "schema": "disastertrace.integrated_plan.work_packages.v1",
+  "review_reference_commit": "1eba36dd272c72573d1309c78d45dbe97dd8af12",
+  "proposal_only": true,
+  "execution_has_not_been_started": true,
+  "not_a_new_benchmark_protocol_name": true,
+  "preserved_frameworks": [
+    "C1",
+    "C2",
+    "C3",
+    "E/F/D/MM",
+    "X00-X09",
+    "A0-A5",
+    "six_groups_sixteen_hazards"
+  ],
+  "first_batch_task_ids": [
+    "A00",
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06"
+  ],
+  "first_batch_hard_stop": true,
+  "historical_batches_are_consumed": true,
+  "default_automatic_retries": 0,
+  "bank_optional_gate_note": "B03 is an optional inserted node; its numeric order is not execution order. No needed refit requires a SKIPPED_NOT_NEEDED receipt.",
+  "work_packages": [
+    {
+      "id": "A00",
+      "title": "实际起点、保护范围和测试集合对账",
+      "stage": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [],
+      "conditional_dependencies": [],
+      "goal": "记录本地状态与已审查远端参照；保留dirty工作区、消费过的运行和确认隔离。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/CURRENT_PHASE.md",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "不联网刷新远端；标明已有tracking ref新鲜度",
+        "区分当前允许修改源码与不可变历史工件/冻结源码快照",
+        "750/628以nodeid集合对账，不推断固定差值",
+        "已有v12批次不重新执行"
+      ],
+      "artifacts_proposed": [
+        "BASELINE.json",
+        "PROTECTION_MANIFEST.json",
+        "CONSUMED_RUNS.json",
+        "NODEID_DIFF.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "A01",
+      "title": "C2注册完整性与正式资格",
+      "stage": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A00"
+      ],
+      "conditional_dependencies": [],
+      "goal": "缺失报告或必需trace不再靠缩小集合通过；零效应不作为缺陷。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/branch_analysis_v2.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/qualification.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [
+        "missing_one_branch_report",
+        "all_reports_missing",
+        "missing_required_trace",
+        "duplicate_opportunity",
+        "alias_without_bound_source",
+        "valid_zero_effect_branch"
+      ],
+      "acceptance": [
+        "注册父/分支/机会/必需trace集合精确一致，或保留明确不完整终态",
+        "旧派生表只读，不覆盖已消费批次分析器快照",
+        "完整性不要求非零特征或概率变化"
+      ],
+      "artifacts_proposed": [
+        "C2_COMPLETENESS_IMPACT.json",
+        "QUALIFICATION_MATRIX.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "A02",
+      "title": "最终发送许可、capture和恢复消费闭环",
+      "stage": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A00"
+      ],
+      "conditional_dependencies": [],
+      "goal": "实现新运输协议并保留旧失败；不声称外部exactly-once。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/provider_transport_v2.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/production.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [
+        "deadline_after_claim",
+        "deadline_after_credential",
+        "stop_before_permit",
+        "duplicate_worker",
+        "kill_after_intent",
+        "capture_hash_mismatch",
+        "redaction_shrinks_truncated_prefix",
+        "failure_marker_then_valid_reconciliation",
+        "reconcile_twice",
+        "late_recovery_not_timely"
+      ],
+      "acceptance": [
+        "许可绑定STOP、deadline、request、execution及一次性dispatch",
+        "凭据/序列化/claim耗时位于最终检查之前",
+        "脱敏前截断信息与存储字节哈希均正确",
+        "恢复保留failure并追加reconciliation；无新HTTP/无重复结算",
+        "late recovery不倒填天气时效；unknown保持unknown",
+        "未验证共享FS时限制单一dispatch authority"
+      ],
+      "artifacts_proposed": [
+        "DISPATCH_FAULT_MATRIX.json",
+        "CAPTURE_INTEGRITY_MATRIX.json",
+        "RECOVERY_CONSUMPTION_MATRIX.json",
+        "HISTORICAL_API_IMPACT.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "A03",
+      "title": "query-only v2单一契约",
+      "stage": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A00"
+      ],
+      "conditional_dependencies": [],
+      "goal": "输出仅query_order，prompt/schema/parser一致；v1不可重写。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/selection_v2.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/selector_contracts.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [
+        "empty_candidates",
+        "empty_order",
+        "all_order",
+        "subset",
+        "reordered",
+        "duplicate_handle",
+        "unknown_handle",
+        "extra_key",
+        "duplicate_json_key",
+        "prose",
+        "refusal",
+        "truncation",
+        "invalid_encoding"
+      ],
+      "acceptance": [
+        "旧71/217标签不改变",
+        "动态合法句柄且支持零候选",
+        "逻辑schema与provider支持子集分离，限制不被取消",
+        "structural/semantic/execution/science分开",
+        "不要求严格子集或重排才合格"
+      ],
+      "artifacts_proposed": [
+        "SELECTOR_V2_CONTRACT.json",
+        "OFFLINE_SCHEMA_MATRIX.json",
+        "PROMPT_SCHEMA_FINGERPRINTS.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "A04",
+      "title": "新增查询语义与配对消费者指纹",
+      "stage": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A00"
+      ],
+      "conditional_dependencies": [],
+      "goal": "区分first relevant slot与first new acquisition；完整标记比较改变的因子。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/residual_query_plan_v2.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/comparison_fingerprint.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [
+        "first_cached",
+        "first_requested",
+        "private_asset_not_shared",
+        "shared_paid_elsewhere",
+        "no_second",
+        "late_unavailable",
+        "consumer_changed_without_F_COMMON"
+      ],
+      "acceptance": [
+        "按private/shared权益排除cached/requested/unavailable",
+        "second不存在有明确状态",
+        "FOLLOW/common/values消费者差异不靠方法名字推断",
+        "历史v1计划只读可复算"
+      ],
+      "artifacts_proposed": [
+        "RESIDUAL_V2_MATRIX.json",
+        "COMPARISON_FACTORS.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "A05",
+      "title": "只读时钟、动作空间和旧结果影响普查",
+      "stage": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A01",
+        "A02",
+        "A03",
+        "A04"
+      ],
+      "conditional_dependencies": [],
+      "goal": "用本地已暴露工件定位clock/subset/consumer/接口问题，不注册新天气实验。",
+      "implementation_targets": [
+        {
+          "path": "plans/v12_integrated_followup_01/audit_existing_inputs.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "fit-clock与actual-clock合法资料分开",
+        "公共特征与evaluator结果分开",
+        "未取得的数据/fixture逐项BLOCKED，不下载",
+        "旧fullweek与annual首日明确不同日历/bank",
+        "现有动作只能posthoc诊断，不能新正式排名"
+      ],
+      "artifacts_proposed": [
+        "CLOCK_ALIGNMENT_AUDIT.json",
+        "ACTION_SPACE_OBSERVED_CENSUS.json",
+        "OLD_RESULT_FACTOR_AUDIT.json",
+        "HISTORICAL_IMPACT.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "A06",
+      "title": "回归、历史影响汇总和第一批停止",
+      "stage": "A",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05"
+      ],
+      "conditional_dependencies": [],
+      "goal": "证明修复边界并交接科学实验提案，不自动推进。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/IMPLEMENTATION_STATUS.md",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/DECISIONS.md",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/BLOCKERS.md",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "去重当前suite以及新增red/green回执",
+        "所有未运行或skip有原因",
+        "旧capsule与算术复算记录适用范围",
+        "生产历史哈希不变或明确暴露既有损坏不覆盖",
+        "下载/API/model/GPU/training/confirmation均零",
+        "STOP并输出下一批具体范围"
+      ],
+      "artifacts_proposed": [
+        "TEST_RECEIPTS.json",
+        "CURRENT_NODEIDS.json",
+        "CAPSULE_RESULTS.json",
+        "NEXT_GATE_DECISION.json",
+        "STOP_RECEIPT.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "B00",
+      "title": "已有后端的同日历程序桥接",
+      "stage": "B",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A06"
+      ],
+      "conditional_dependencies": [],
+      "goal": "分离calendar、bank、acquisition和clock，利用已暴露完整日历。",
+      "implementation_targets": [
+        {
+          "path": "plans/v12_integrated_followup_02/bridge_protocol.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "先冻结确切日历/arm/slots/预算/结果mask",
+        "新CPU运行使用新identity，不覆盖840条历史轨迹",
+        "报告正负例、过程/日历块及consumer指纹",
+        "先小因子桥接而非完整笛卡尔积",
+        "输出bank_revision_needed及依据"
+      ],
+      "artifacts_proposed": [
+        "BRIDGE_INTENT.json",
+        "BRIDGE_COMPARISON.json",
+        "BANK_GATE_DECISION.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "B03",
+      "title": "条件性slot-aligned bank",
+      "stage": "B",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "B00"
+      ],
+      "conditional_dependencies": [],
+      "goal": "只在审计确有需要且得到训练授权时拟合。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/application_clock_bank_v2.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "无必要则显式SKIPPED_NOT_NEEDED，不阻塞后续",
+        "2023训练/内部选择；2024Jan-Nov既定校准；保留2024Dec排除；2025仅暴露开发",
+        "多时点/子集权重按信息单位归一",
+        "有界候选数、raw主评分、旧bank只读",
+        "新bank与全部后续接口一起冻结"
+      ],
+      "artifacts_proposed": [
+        "BANK_REVISION_INTENT.json",
+        "TRAIN_CAL_ROLE_MANIFEST.json",
+        "FROZEN_BANK_REFERENCE.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": "REQUIRES_SEPARATE_EXPLICIT_AUTHORIZATION",
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "B01",
+      "title": "来源状态普查与多父GET/PROCESS机制",
+      "stage": "B",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "B00",
+        "A01",
+        "A04"
+      ],
+      "conditional_dependencies": [
+        {
+          "task": "B03",
+          "when": "B00.bank_revision_needed == true",
+          "otherwise": "require signed SKIPPED_NOT_NEEDED receipt"
+        }
+      ],
+      "goal": "在来源状态选择的父状态上测有限E可达性与全残余会话效应。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/source_state_census.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/counterfactual_branch_suite.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "父选择不看未来Y/损失/赢家",
+        "GET固定处理器；PROCESS固定raw；TIMING注明真实或声明scenario",
+        "冻结U_parent并保留共享外溢与机会成本",
+        "零正例/零效应保留",
+        "处理路径真实执行，不写理想模型输出",
+        "hindsight finite oracle只在evaluator"
+      ],
+      "artifacts_proposed": [
+        "SOURCE_STATE_CENSUS.json",
+        "PARENT_ROSTER.json",
+        "C2_FIELD_TO_SESSION_LOSS.json",
+        "E_REACHABILITY_DIAGNOSTICS.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false,
+      "proposed_scope_caps": {
+        "max_parent_states": 24,
+        "max_get_arms_per_parent": 4,
+        "max_real_processing_alternatives_per_parent": 1,
+        "max_branch_attempts": 120,
+        "approved": false,
+        "note": "Pre-register exact source-state-based roster; no outcome-based replacement; counts are cost caps, not independence or statistical power."
+      }
+    },
+    {
+      "id": "B02",
+      "title": "强廉价选择器与信息可利用性",
+      "stage": "B",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "B01"
+      ],
+      "conditional_dependencies": [],
+      "goal": "增加有界预期最终损失策略并检验公开状态是否能利用动作差异。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/value_selector.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "adapters/afabench_reference_adapter.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "no-query/batch/risk/coverage公平预算与相同bank",
+        "训练估计器不读取2025或confirmation标签用于拟合",
+        "一/两步lookahead有限，不伪称24tick全局oracle",
+        "all/none可以是有效最优动作",
+        "报告loss/query/token/wall/late多轴指标",
+        "若公开可利用性不足，No-Go新LLM",
+        "价值监督在训练角色内部作分块交叉拟合/独立内部验证，避免自身拟合误差形成虚假信息价值"
+      ],
+      "artifacts_proposed": [
+        "PROGRAM_SELECTOR_SPEC.json",
+        "PUBLIC_LEARNABILITY_REPORT.json",
+        "VALUE_BUDGET_CURVES.json",
+        "MODEL_GO_NOGO.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": "ONLY_IF_A_SEPARATELY_AUTHORIZED_TRAIN_ROLE_ESTIMATOR_IS_USED",
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "C00",
+      "title": "真实天气形状接口小试",
+      "stage": "C",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A02",
+        "A03",
+        "A06",
+        "B00",
+        "B01",
+        "B02"
+      ],
+      "conditional_dependencies": [
+        {
+          "task": "B03",
+          "when": "B00.bank_revision_needed == true",
+          "otherwise": "require signed SKIPPED_NOT_NEEDED receipt"
+        }
+      ],
+      "goal": "默认12个冻结请求，只测接口，不补偿失败，不宣称总体可靠性。",
+      "implementation_targets": [
+        {
+          "path": "plans/v12_selector_v2_compat/",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "新授权及新请求身份；旧兼容性名额不可复用",
+        "model/provider/schema/prompt/calls/token/deadline全部冻结",
+        "所有失败保留；无自动重试",
+        "不以正确策略或子集比例作为接口条件",
+        "结束STOP；不自动启动C01"
+      ],
+      "artifacts_proposed": [
+        "COMPAT_INTENT.json",
+        "RAW_RECEIPTS_INDEX.json",
+        "COMPAT_RESULT.json",
+        "STOP_RECEIPT.json"
+      ],
+      "resource_policy": {
+        "remote_api": "REQUIRES_NEW_EXPLICIT_AUTHORIZATION",
+        "max_api_calls_proposed": 12,
+        "automatic_retries": 0,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "C01",
+      "title": "一个模型的query-only开发比较",
+      "stage": "C",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "C00",
+        "B02"
+      ],
+      "conditional_dependencies": [],
+      "goal": "识别模型相对同条件强程序的增量，而非接口或后端差异。",
+      "implementation_targets": [
+        {
+          "path": "plans/v12_selector_v2_comparison/",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "单模型单角色；上限288是提案非授权",
+        "确切session/tick/call roster重新冻结",
+        "同bank/slots/budget/adoption/outcome",
+        "invalid/fallback/fee unknown完整分母",
+        "无模型或prompt sweep",
+        "输出正负例贡献及缺失敏感性，不称独立确认"
+      ],
+      "artifacts_proposed": [
+        "MODEL_COMPARISON_INTENT.json",
+        "END_TO_END_TABLE.json",
+        "FAILURE_FUNNEL.json",
+        "RESOURCE_LEDGER.json",
+        "STOP_RECEIPT.json"
+      ],
+      "resource_policy": {
+        "remote_api": "REQUIRES_NEW_EXPLICIT_AUTHORIZATION",
+        "max_api_calls_proposed": 288,
+        "automatic_retries": 0,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "D00",
+      "title": "双确认协议同时冻结",
+      "stage": "D",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "B01",
+        "B02",
+        "C01"
+      ],
+      "conditional_dependencies": [],
+      "goal": "在读未见结果前固定模型增量与机制复现的协议。",
+      "implementation_targets": [
+        {
+          "path": "plans/disastertrace_confirmation_protocols/",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "方法/后端/process/主端点/缺失/停止/多重比较冻结",
+        "共享calendar则双协议同时冻结，否则calendar隔离",
+        "Bay只承担窄确认",
+        "真实过程不确定时写calendar block",
+        "确认范围/调用上限未设定时阻止执行"
+      ],
+      "artifacts_proposed": [
+        "PROCESS_REGISTRY.json",
+        "PROTOCOL_A.json",
+        "PROTOCOL_B.json",
+        "EXPOSURE_ROLE_MANIFEST.json",
+        "CONFIRMATION_AUTH_REQUEST.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "D01",
+      "title": "密封日历执行与结算",
+      "stage": "D",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "D00"
+      ],
+      "conditional_dependencies": [],
+      "goal": "执行既定确认，记录首次outcome访问与全部失败。",
+      "implementation_targets": [
+        {
+          "path": "plans/disastertrace_confirmation_run/",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "必须额外授权，不能因D00文件存在自动读Y",
+        "不按结果追加日期/模型/父状态",
+        "模型与机制只按冻结目标解释",
+        "sampling uncertainty与missing bounds分开",
+        "真实费用未核验时保持unknown"
+      ],
+      "artifacts_proposed": [
+        "FIRST_OUTCOME_ACCESS_RECEIPT.json",
+        "CONFIRMATION_RESULTS.json",
+        "FULL_DENOMINATOR_LEDGER.json",
+        "STOP_RECEIPT.json"
+      ],
+      "resource_policy": {
+        "remote_api": "ONLY_AS_PREREGISTERED_AND_NEWLY_AUTHORIZED",
+        "max_api_calls": "UNSET_BLOCKING_UNTIL_PREREGISTERED",
+        "gpu": false,
+        "training": false,
+        "downloads": "UNSET_BLOCKING_IF_NEEDED",
+        "confirmation_outcomes": "REQUIRES_NEW_EXPLICIT_AUTHORIZATION"
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "D02",
+      "title": "分级成果与可重建发布",
+      "stage": "D",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A06",
+        "B00",
+        "B01"
+      ],
+      "conditional_dependencies": [],
+      "goal": "发布真实已合格范围，内容寻址迁移不混淆formal与legacy。",
+      "implementation_targets": [
+        {
+          "path": "publication/integrated_followup/",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "沿用原A0-A5/EFDMM与16灾种资格表",
+        "H15/双过程发布不冒充全16",
+        "source/data/bank/contract/license身份可追溯",
+        "确认尚未做则明确标记未做",
+        "重建与formal再资格范围分开"
+      ],
+      "artifacts_proposed": [
+        "CLAIM_EVIDENCE_MATRIX.json",
+        "FORMAL_INPUT_MANIFEST.json",
+        "REPRODUCE_CN.md",
+        "LIMITATIONS_CN.md"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "T00",
+      "title": "温度目标局部资格与成员谱系",
+      "stage": "PARALLEL",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A00"
+      ],
+      "conditional_dependencies": [],
+      "goal": "修raw需求与ECC需求、动态prompt及跨日成员身份，不阻塞H15。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_contract_v2.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_lineage.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [
+        "max_only_raw",
+        "min_only_raw",
+        "irrelevant_variable_missing",
+        "dynamic_threshold_prompt",
+        "permuted_member_ids",
+        "mixed_issue"
+      ],
+      "acceptance": [
+        "raw只要求target所需变量；ECC保留双变量条件",
+        "阈值/operator/duration/time来自同contract",
+        "same member count不替代member ID/issue验证",
+        "无法核验标记UNAVAILABLE_TO_VERIFY",
+        "无新拟合/模型实验"
+      ],
+      "artifacts_proposed": [
+        "TEMPERATURE_CONTRACT_MATRIX.json",
+        "MEMBER_LINEAGE_AUDIT.json",
+        "TEMPERATURE_IMPACT.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "M00",
+      "title": "一个原生多模态与第二主动链设计",
+      "stage": "PARALLEL",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A00"
+      ],
+      "conditional_dependencies": [],
+      "goal": "在已有资料中按资格选择H07/H08之一并设计原生模态等信息对照。",
+      "implementation_targets": [
+        {
+          "path": "adapters/native_multimodal_slice.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "plans/second_physical_chain/",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "不以损失挑灾种/事件",
+        "同space/time/native产品身份",
+        "图像实际进入VLM才可宣称MM运行；此工单不启动VLM",
+        "forecast/outcome统计支持和许可证明确",
+        "不将temperature F-only当C1"
+      ],
+      "artifacts_proposed": [
+        "SECOND_CHAIN_GATE_CARD.json",
+        "MM_REPRESENTATION_SPEC.json",
+        "DATA_LICENSE_ROLE_MANIFEST.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "E00",
+      "title": "后续固定轨迹的模型E/F角色提案",
+      "stage": "PARALLEL",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "C01"
+      ],
+      "conditional_dependencies": [],
+      "goal": "保留原选择性修订目标，逐个隔离E提取与模型F作用。",
+      "implementation_targets": [
+        {
+          "path": "plans/model_e_f_role_protocol/",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "固定query/evidence/slots，每次只改一个角色",
+        "独立请求预算未冻结不得执行",
+        "旧E/F/D/MM与X框架不被query-only永久替代",
+        "模型F版本与合法证据绑定",
+        "不以已打开确认结果设计新任务"
+      ],
+      "artifacts_proposed": [
+        "E_F_ROLE_PROTOCOL.json",
+        "ROLE_COMPARISON_MATRIX.json",
+        "AUTH_REQUEST.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "V00",
+      "title": "ScenarioCard与受控行动程序原型",
+      "stage": "PARALLEL",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "B01"
+      ],
+      "conditional_dependencies": [],
+      "goal": "让行动可行性影响取证，但同证据下气象概率不受偏好污染。",
+      "implementation_targets": [
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/decision_spec.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        },
+        {
+          "path": "disastertrace-starter/src/disastertrace/monitoring_v1/action_state_machine.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "声明时长/容量/成本/截止/可逆性及研究假设",
+        "same weather/evidence/predictor/cutoff+不同DecisionSpec => same F",
+        "先程序基线和小exact optimizer",
+        "不对外发布预警、不称真实减灾",
+        "新真实模型/模拟实验分别另行登记"
+      ],
+      "artifacts_proposed": [
+        "SCENARIO_CARD.json",
+        "PREFERENCE_BLINDNESS_TESTS.json",
+        "ACTION_BASELINE_SPEC.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    },
+    {
+      "id": "P00",
+      "title": "前瞻first_seen记录器设计",
+      "stage": "PARALLEL",
+      "status": "PROPOSED_NOT_RUN",
+      "dependencies": [
+        "A00"
+      ],
+      "conditional_dependencies": [],
+      "goal": "把元数据记录设计提前，但实际联网及确认窗口另行授权。",
+      "implementation_targets": [
+        {
+          "path": "tools/prospective_first_seen_recorder.py",
+          "role": "proposed_or_existing_extension_to_verify_before_edit"
+        }
+      ],
+      "red_tests_proposed": [],
+      "acceptance": [
+        "此包不发任何网络请求",
+        "issue/valid/available/observed_first_seen区分",
+        "请求失败和重复观察保留",
+        "确认outcomes与开发元数据隔离",
+        "实际采集max requests/period/endpoint未定则禁止启动"
+      ],
+      "artifacts_proposed": [
+        "FIRST_SEEN_SCHEMA.json",
+        "COLLECTION_AUTH_REQUEST.json",
+        "PROSPECTIVE_ROLE_SPEC.json"
+      ],
+      "resource_policy": {
+        "remote_api": false,
+        "gpu": false,
+        "training": false,
+        "downloads": false,
+        "confirmation_outcomes": false
+      },
+      "requires_user_execution_authorization": true,
+      "may_auto_advance_to_next_stage": false
+    }
+  ],
+  "dag_validated": true
+}

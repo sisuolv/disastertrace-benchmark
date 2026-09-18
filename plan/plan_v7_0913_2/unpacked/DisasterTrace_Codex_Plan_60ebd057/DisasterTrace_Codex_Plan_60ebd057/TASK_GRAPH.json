@@ -1,0 +1,532 @@
+{
+  "schema": "disastertrace.codex.task_plan.v1",
+  "base_commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+  "default_first_wave": [
+    "DS00",
+    "DS01",
+    "DS02",
+    "DS03",
+    "DS04"
+  ],
+  "preserved_research_scope": [
+    "v7",
+    "C1",
+    "C2",
+    "C3",
+    "E",
+    "F",
+    "D",
+    "MM",
+    "six_groups_16_hazards",
+    "X00-X09"
+  ],
+  "new_extension": "D.sequence; new experiments DX00-DX09, not a new top-level benchmark version",
+  "tasks": [
+    {
+      "id": "DS00",
+      "title": "盘点当前实现与冻结输入",
+      "status": "planned",
+      "depends_on": [],
+      "wave": 0,
+      "resource_policy": "CPU/local",
+      "objective": "不覆盖历史结果；生成实际版本、数据和暴露清单",
+      "deliverables": [
+        "EXECUTION_MANIFEST.json",
+        "EXPOSURE_REGISTRY.json",
+        "STATUS.json"
+      ],
+      "acceptance_case_ids": [
+        "AC00"
+      ],
+      "references": [
+        "R01",
+        "R02",
+        "R08",
+        "R09"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS01",
+      "title": "定义研究性行动任务和规则来源",
+      "status": "planned",
+      "depends_on": [
+        "DS00"
+      ],
+      "wave": 0,
+      "resource_policy": "CPU/local",
+      "objective": "明确任务、截止、准备/驻留资源、来源等级和损失",
+      "deliverables": [
+        "TASK_CONTRACT.md",
+        "PROFILE_REGISTRY.json",
+        "ACTION_SCHEMA.json"
+      ],
+      "acceptance_case_ids": [
+        "AC08",
+        "AC09"
+      ],
+      "references": [
+        "R03",
+        "U01",
+        "P15"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS02",
+      "title": "连接旧事件、固定证据和决策视图",
+      "status": "planned",
+      "depends_on": [
+        "DS00",
+        "DS01"
+      ],
+      "wave": 0,
+      "resource_policy": "CPU/local",
+      "objective": "不修改旧bundle；显式语义桥接；策略无未来权限",
+      "deliverables": [
+        "CODE_INTEGRATION_MAP.json",
+        "BRIDGE_VALIDATION.json",
+        "VISIBLE_CONTEXT_SPEC.md"
+      ],
+      "acceptance_case_ids": [
+        "AC01",
+        "AC02",
+        "AC03",
+        "AC04",
+        "AC05",
+        "AC06",
+        "AC07"
+      ],
+      "references": [
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS03",
+      "title": "实现准备动作、容量和统一事件时钟",
+      "status": "planned",
+      "depends_on": [
+        "DS01",
+        "DS02"
+      ],
+      "wave": 0,
+      "resource_policy": "CPU/local",
+      "objective": "并行、幂等、到期、取消和资源守恒",
+      "deliverables": [
+        "ACTION_TRACE_FIXTURES.jsonl",
+        "CAPACITY_TEST_REPORT.json",
+        "REPLAY_EQUIVALENCE.json"
+      ],
+      "acceptance_case_ids": [
+        "AC10",
+        "AC11",
+        "AC12",
+        "AC13",
+        "AC14",
+        "AC15",
+        "AC16",
+        "AC17",
+        "AC18",
+        "AC19",
+        "AC20",
+        "AC21",
+        "AC22"
+      ],
+      "references": [
+        "R03",
+        "R06",
+        "P09"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS04",
+      "title": "评分和无模型参考解",
+      "status": "planned",
+      "depends_on": [
+        "DS03"
+      ],
+      "wave": 0,
+      "resource_policy": "CPU/local",
+      "objective": "解析正确、全分母、未知界、普通与特权参照分开",
+      "deliverables": [
+        "ANALYTIC_CHECKS.json",
+        "TOY_POLICY_RESULTS.json",
+        "SCORING_CONTRACT.md"
+      ],
+      "acceptance_case_ids": [
+        "AC23",
+        "AC24",
+        "AC25",
+        "AC26",
+        "AC27",
+        "AC28",
+        "AC29",
+        "AC33",
+        "AC34"
+      ],
+      "references": [
+        "R03",
+        "R07",
+        "P10"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS05",
+      "title": "H15真实轨迹与强共同基线",
+      "status": "planned",
+      "depends_on": [
+        "DS02",
+        "DS04"
+      ],
+      "wave": 1,
+      "resource_policy": "CPU/local; network only if separately authorized",
+      "objective": "复用既有数据；原生报告目标与准备任务绑定",
+      "deliverables": [
+        "H15_DATA_ADMISSION.json",
+        "BASELINE_REGISTRY.json",
+        "H15_RESEARCH_RUN_MANIFEST.json"
+      ],
+      "acceptance_case_ids": [
+        "AC37"
+      ],
+      "references": [
+        "R01",
+        "R02",
+        "U01",
+        "U02"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS06",
+      "title": "固定证据下的准备要求配对",
+      "status": "planned",
+      "depends_on": [
+        "DS04"
+      ],
+      "wave": 1,
+      "resource_policy": "CPU/local initially",
+      "objective": "固定证据和自适应两种模式；概率偏好污染单列",
+      "deliverables": [
+        "PROFILE_PAIR_REGISTRY.json",
+        "PAIRING_CHECKS.json",
+        "DX02_CONFIG.json"
+      ],
+      "acceptance_case_ids": [
+        "AC30",
+        "AC31",
+        "AC32"
+      ],
+      "references": [
+        "U02",
+        "U03",
+        "P05",
+        "P06"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS07R",
+      "title": "短时降水资料与领域预测器准入",
+      "status": "planned",
+      "depends_on": [
+        "DS00",
+        "DS01",
+        "DS02"
+      ],
+      "wave": 1,
+      "resource_policy": "CPU/local or separately authorized bounded downloads",
+      "objective": "雨率/累计、时间步、空间和质量真实核验",
+      "deliverables": [
+        "H07_ADMISSION.json",
+        "RADAR_PRODUCT_MANIFEST.json",
+        "PYSTEPS_ADAPTATION_REPORT.md"
+      ],
+      "acceptance_case_ids": [
+        "AC39"
+      ],
+      "references": [
+        "R02",
+        "P08",
+        "P13",
+        "P14"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS07H",
+      "title": "水文历史物理合同与连续窗口",
+      "status": "planned",
+      "depends_on": [
+        "DS00",
+        "DS01",
+        "DS02"
+      ],
+      "wave": 1,
+      "resource_policy": "CPU/local or separately authorized bounded downloads",
+      "objective": "不因时间戳匹配越过物理量/调蓄/断面门槛",
+      "deliverables": [
+        "H08_ADMISSION.json",
+        "HYDROLOGY_SUPPORT_AUDIT.json"
+      ],
+      "acceptance_case_ids": [
+        "AC38"
+      ],
+      "references": [
+        "R01",
+        "R02"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS07T",
+      "title": "连续温度与新目标类型",
+      "status": "planned",
+      "depends_on": [
+        "DS00",
+        "DS01",
+        "DS02"
+      ],
+      "wave": 1,
+      "resource_policy": "CPU/local or separately authorized bounded downloads",
+      "objective": "普通温度数值可用与热浪身份分开",
+      "deliverables": [
+        "H10_H11_ADMISSION.json",
+        "TEMPERATURE_WINDOW_AUDIT.json"
+      ],
+      "acceptance_case_ids": [
+        "AC40"
+      ],
+      "references": [
+        "R01",
+        "R02",
+        "R03"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS08",
+      "title": "多模态表示与处理成本",
+      "status": "planned",
+      "depends_on": [
+        "DS05"
+      ],
+      "wave": 2,
+      "resource_policy": "CPU preprocessing; VLM needs explicit model authorization",
+      "objective": "先GOES；合格H07可选；实际图像输入回执",
+      "deliverables": [
+        "MM_ASSET_LINEAGE.json",
+        "VISUAL_PROCESSING_COSTS.json",
+        "DX06_CONFIG.json"
+      ],
+      "acceptance_case_ids": [
+        "AC41",
+        "AC42"
+      ],
+      "references": [
+        "U01",
+        "U03",
+        "P08"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null,
+      "conditional_gates": [
+        "GOES native asset and target-time contract qualified; H07 branch additionally requires DS07R admission.",
+        "Actual VLM invocation requires explicit current grant; preprocessing may proceed without it."
+      ]
+    },
+    {
+      "id": "DS09",
+      "title": "事件触发与有限两步策略",
+      "status": "planned",
+      "depends_on": [
+        "DS05",
+        "DS06"
+      ],
+      "wave": 2,
+      "resource_policy": "CPU/local; optional solver installation separately authorized",
+      "objective": "同工具同成本；非预知约束；保留全读强对照",
+      "deliverables": [
+        "POLICY_REGISTRY.json",
+        "LOOKAHEAD_CHECKS.json",
+        "DX04_CONFIG.json",
+        "DX05_CONFIG.json"
+      ],
+      "acceptance_case_ids": [
+        "AC35",
+        "AC36",
+        "AC44",
+        "AC45"
+      ],
+      "references": [
+        "R06",
+        "R07",
+        "P06",
+        "P07",
+        "P09"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null
+    },
+    {
+      "id": "DS10",
+      "title": "有限真实模型开发实验",
+      "status": "planned",
+      "depends_on": [
+        "DS05",
+        "DS06",
+        "DS09"
+      ],
+      "wave": 2,
+      "resource_policy": "Explicit resource grant required",
+      "objective": "独立head、真实调用ID、全部失败和成本保留",
+      "deliverables": [
+        "MODEL_RUN_MANIFEST.json",
+        "RAW_RESPONSE_INDEX.json",
+        "DEVELOPMENT_COMPARISON.json"
+      ],
+      "acceptance_case_ids": [
+        "AC43"
+      ],
+      "references": [
+        "R01",
+        "R04",
+        "U02"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null,
+      "conditional_gates": [
+        "EXECUTION_POLICY populated with current nonzero, bounded model authorization.",
+        "VLM arm additionally requires DS08 native-input evidence."
+      ]
+    },
+    {
+      "id": "DS11",
+      "title": "独立确认登记、冻结后运行",
+      "status": "planned",
+      "depends_on": [
+        "DS05",
+        "DS06",
+        "DS09",
+        "DS10"
+      ],
+      "wave": 3,
+      "resource_policy": "Explicit resource grant and held-out data gate",
+      "objective": "预登记先于确认数据暴露；第二领域按已合格路线择先",
+      "deliverables": [
+        "CONFIRMATION_PREREGISTRATION.json",
+        "SPLIT_AUDIT.json",
+        "CONFIRMATION_RESULTS.json"
+      ],
+      "acceptance_case_ids": [
+        "AC46",
+        "AC47"
+      ],
+      "references": [
+        "R02",
+        "U02",
+        "U03"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null,
+      "conditional_gates": [
+        "Preregistration before opening any confirmation outcome.",
+        "Cross-physical-process claims require one qualified second route from DS07R/DS07H/DS07T; not all three.",
+        "MM generalization claims require qualified native-MM data in the claimed processes."
+      ]
+    },
+    {
+      "id": "DS12",
+      "title": "有限前瞻与使用者规则审核",
+      "status": "planned",
+      "depends_on": [
+        "DS11"
+      ],
+      "wave": 4,
+      "resource_policy": "Separate network/model grant; human review not automated",
+      "objective": "只记录不干预；无业务审核则标等待验证",
+      "deliverables": [
+        "SHADOW_RUN_MANIFEST.json",
+        "PROFILE_REVIEW_RECORD.json",
+        "PENDING_OUTCOMES.json"
+      ],
+      "acceptance_case_ids": [
+        "AC48"
+      ],
+      "references": [
+        "R02",
+        "P15"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null,
+      "conditional_gates": [
+        "A finite current collection/run authorization, no real-world actuation.",
+        "If practitioner review is absent, keep research_assumption; do not claim validated operational use."
+      ]
+    },
+    {
+      "id": "DS13",
+      "title": "复现包、主张和交接",
+      "status": "planned",
+      "depends_on": [
+        "DS04"
+      ],
+      "wave": 1,
+      "resource_policy": "CPU/local; publication disabled unless explicitly authorized",
+      "objective": "可分阶段打工程/开发包；高等级主张按实际证据门控",
+      "deliverables": [
+        "CLAIMS_LEDGER.json",
+        "REPRODUCE_CN.md",
+        "FINAL_REPORT_CN.md",
+        "NEXT_ACTIONS_CN.md"
+      ],
+      "acceptance_case_ids": [
+        "AC49"
+      ],
+      "references": [
+        "R01",
+        "R02",
+        "U01"
+      ],
+      "success_rule": "Use actual command logs and evidence; do not require positive LLM gain.",
+      "blocked_rule": "Record exact missing dependency; continue independent tasks.",
+      "execution_result": null,
+      "conditional_gates": [
+        "Engineering package may start after DS04. Higher-level claims must point to completed relevant DS05–DS12 evidence.",
+        "No push/release/upload of restricted assets without current explicit authorization."
+      ]
+    }
+  ]
+}

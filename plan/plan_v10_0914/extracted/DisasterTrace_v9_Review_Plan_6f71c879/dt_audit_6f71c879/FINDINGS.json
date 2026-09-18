@@ -1,0 +1,56 @@
+{
+  "no_new_p0_confirmed": true,
+  "full_repository_correctness_certified": false,
+  "findings": [
+    {
+      "id": "R1",
+      "priority": "P1-research",
+      "kind": "attribution_confound",
+      "location": "monitoring_v1/calibration.py::predict",
+      "evidence": "full source plus exact-module synthetic probes",
+      "observation": "The evidence-presence branch selects a different calibrator even with the same raw fallback score.",
+      "current_scores_invalidated": false,
+      "required_check": "Count this mechanism in actual saved inputs; content/mask/post-map controlled comparisons."
+    },
+    {
+      "id": "R2",
+      "priority": "P1-research",
+      "kind": "regularization_sensitivity",
+      "location": "monitoring_v1/regional_calibration.py::fit_monotone",
+      "evidence": "full source plus analytic PAV probes",
+      "observation": "Prior pseudocount total is 2 times the count of distinct raw scores.",
+      "current_scores_invalidated": false,
+      "required_check": "Real K/n, positive counts and calibration robustness on fitted/calibration periods only."
+    },
+    {
+      "id": "R3",
+      "priority": "P2-model-design",
+      "kind": "predictor_expressiveness_limit",
+      "location": "monitoring_v1/calibration.py::feature_key",
+      "evidence": "exact-module low/high evidence probe",
+      "observation": "No TAF/unavailable projection returns before evidence content features.",
+      "current_scores_invalidated": false,
+      "required_check": "Stratify real no_taf opportunities; versioned evidence-aware fallback if justified."
+    },
+    {
+      "id": "M1",
+      "priority": "research_signal",
+      "kind": "model_error_not_code_bug",
+      "location": "E02/b4036fdf4376bfe616b406a6",
+      "evidence": "exact request/response Git blobs and one local recheck",
+      "observation": "false and unknown slots, reported false; correct aggregate is unknown.",
+      "current_scores_invalidated": false,
+      "required_check": "Separate original final output and composed pipeline, then evaluate prospective F effect."
+    },
+    {
+      "id": "H1",
+      "priority": "P2-helper",
+      "kind": "input_validation_gap",
+      "location": "process_split.py::chronological_roles",
+      "evidence": "direct helper synthetic probe",
+      "observation": "Malformed reversed footprint can be assigned a role. Upstream production validation may reject it.",
+      "current_scores_invalidated": false,
+      "required_check": "Shared row validator and production regression; do not assert actual data leakage."
+    }
+  ]
+}

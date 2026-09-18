@@ -1,0 +1,74 @@
+[
+  {
+    "id": "R1_ALCE",
+    "url": "https://aclanthology.org/2023.emnlp-main.398/",
+    "checked_at_utc": "2026-09-08T16:51:21.747521+00:00",
+    "reading_scope": "Primary landing page title and abstract only; no reproduction or full-paper audit.",
+    "http_status": 200,
+    "resolved_url": "https://aclanthology.org/2023.emnlp-main.398/",
+    "title": "Enabling Large Language Models to Generate Text with Citations",
+    "abstract": "Abstract Large language models (LLMs) have emerged as a widely-used tool for information seeking, but their generated outputs are prone to hallucination. In this work, our aim is to allow LLMs to generate text with citations, improving their factual correctness and verifiability. Existing work mainly relies on commercial search engines and human evaluation, making it challenging to reproduce and compare different modeling approaches. We propose ALCE, the first benchmark for Automatic LLMs’ Citation Evaluation. ALCE collects a diverse set of questions and retrieval corpora and requires building end-to-end systems to retrieve supporting evidence and generate answers with citations. We develop automatic metrics along three dimensions—fluency, correctness, and citation quality—and demonstrate their strong correlation with human judgements. Our experiments with state-of-the-art LLMs and novel prompting strategies show that current systems have considerable room for improvement—For example, on the ELI5 dataset, even the best models lack complete citation support 50% of the time. Our analyses further highlight promising future directions, including developing better retrievers, advancing long-context LLMs, and improving the ability to synthesize information from multiple sources.",
+    "status": "abstract_read",
+    "sha256": "422e958f16f0fa4867a843ae86a09f3073896d6d3eb40975bab86be42d5c82d3"
+  },
+  {
+    "id": "R2_LongMemEval",
+    "url": "https://arxiv.org/abs/2410.10813",
+    "checked_at_utc": "2026-09-08T16:51:21.748453+00:00",
+    "reading_scope": "Primary landing page title and abstract only; no reproduction or full-paper audit.",
+    "http_status": 200,
+    "resolved_url": "https://arxiv.org/abs/2410.10813",
+    "title": "LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory",
+    "abstract": "Abstract: Recent large language model (LLM)-driven chat assistant systems have integrated memory components to track user-assistant chat histories, enabling more accurate and personalized responses. However, their long-term memory capabilities in sustained interactions remain underexplored. We introduce LongMemEval, a comprehensive benchmark designed to evaluate five core long-term memory abilities of chat assistants: information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention. With 500 meticulously curated questions embedded within freely scalable user-assistant chat histories, LongMemEval presents a significant challenge to existing long-term memory systems, with commercial chat assistants and long-context LLMs showing a 30% accuracy drop on memorizing information across sustained interactions. We then present a unified framework that breaks down the long-term memory design into three stages: indexing, retrieval, and reading. Built upon key experimental insights, we propose several memory design optimizations including session decomposition for value granularity, fact-augmented key expansion for indexing, and time-aware query expansion for refining the search scope. Extensive experiments show that these optimizations greatly improve both memory recall and downstream question answering on LongMemEval. Overall, our study provides valuable resources and guidance for advancing the long-term memory capabilities of LLM-based chat assistants, paving the way toward more personalized and reliable conversational AI. Our benchmark and code are publicly available at this https URL .",
+    "status": "abstract_read",
+    "sha256": "99daea50e12f2d4b626df58da79690c50a0893bbbe0b58fea0f00c98a1a22ddb"
+  },
+  {
+    "id": "R3_StateMemBench",
+    "url": "https://arxiv.org/abs/2608.19652v1",
+    "checked_at_utc": "2026-09-08T16:51:21.749015+00:00",
+    "reading_scope": "Primary landing page title and abstract only; no reproduction or full-paper audit.",
+    "http_status": 200,
+    "resolved_url": "https://arxiv.org/abs/2608.19652v1",
+    "title": "Can Agent Memory Systems Track Evolving State?",
+    "abstract": "Abstract: As LLM-based agents are deployed for longer and higher-stakes tasks, their memory systems continue to have crucial gaps. While existing memory benchmarks focus largely on recall-shaped tasks, we argue an effective memory system must track the evolving state of the world; as facts, constraints, and decisions are revised over a long interaction, answers must reflect the current state and not a superseded one. We define this capability as state tracking and instantiate it in StateMemBench, a benchmark of 234 multi-session scenarios spanning two conversation-length regimes. Its closed-pool grading scores whether an answer reflects the current state, the superseded state, or fails otherwise, separating state-tracking failures from other errors by construction. Our analysis shows that this task is challenging for existing memory systems, retrieval-augmented baselines, and long-context baselines. We then present StateMem, a state-first memory method that explicitly tracks supersession and relational dependencies, and show it improves current-state accuracy over the strongest same-backbone baseline by 1.8x (0.205 -> 0.363) on DeepSeek-V4-Flash and over the strongest memory system by 1.6x (0.149 -> 0.233) on Qwen-3.5-9B, while remaining competitive with the long-context baselines. Finally, we show the same state approach can be applied as a lightweight single-call wrapper over existing memory systems, lifting current-state accuracy by +32 to +67 points on StateMemBench across six memory and retrieval backends. A length- and cost-matched control attributes +15 to +32 of those points to state structure rather than added context.",
+    "status": "abstract_read",
+    "sha256": "8030ebeb929b9af482f62bfd1e7c4b9152f914903c6a1a48c0ec56a097e4961b"
+  },
+  {
+    "id": "R4_STALE",
+    "url": "https://arxiv.org/abs/2605.06527v1",
+    "checked_at_utc": "2026-09-08T16:51:21.749371+00:00",
+    "reading_scope": "Primary landing page title and abstract only; no reproduction or full-paper audit.",
+    "http_status": 200,
+    "resolved_url": "https://arxiv.org/abs/2605.06527v1",
+    "title": "STALE: Can LLM Agents Know When Their Memories Are No Longer Valid?",
+    "abstract": "Abstract: Large Language Model (LLM) agents are increasingly expected to maintain coherent, long-term personalized memory, yet current benchmarks primarily measure static fact retrieval, overlooking the ability to revise stored beliefs when new evidence emerges. We identify a critical and underexplored failure mode, Implicit Conflict: a later observation invalidates an earlier memory without explicit negation, requiring contextual inference and commonsense reasoning to detect. To rigorously evaluate this capability, we introduce STALE, a benchmark of 400 expert-validated conflict scenarios (1,200 evaluation queries across three probing dimensions) spanning over 100 everyday topics with contexts up to 150K tokens. We propose a three-dimensional probing framework that tests State Resolution (detecting that a prior belief is outdated), Premise Resistance (rejecting queries that falsely presuppose a stale state), and Implicit Policy Adaptation (proactively applying updated states in downstream behavior). A systematic evaluation of frontier LLMs and specialized memory frameworks reveals a pervasive gap between retrieving updated evidence and acting on it, with even the best evaluated model achieving only 55.2% overall accuracy. Models often accept outdated assumptions embedded in a user's query, and they struggle to recognize when a change in one aspect of the user's state should invalidate related memories. To establish an initial baseline for state-aware memory, we further present CUPMem, a prototype that strengthens write-time revision through structured state consolidation and propagation-aware search, suggesting that explicit state adjudication is a promising direction for robust agentic memory.",
+    "status": "abstract_read",
+    "sha256": "8ebcd6edc865a8fb720741890e73142ed15bf47227b6d585570c0ae128ff338f"
+  },
+  {
+    "id": "R5_tau_bench",
+    "url": "https://arxiv.org/abs/2406.12045",
+    "checked_at_utc": "2026-09-08T16:51:22.439415+00:00",
+    "reading_scope": "Primary landing page title and abstract only; no reproduction or full-paper audit.",
+    "http_status": 200,
+    "resolved_url": "https://arxiv.org/abs/2406.12045",
+    "title": "$\\tau$-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains",
+    "abstract": "Abstract: Existing benchmarks do not test language agents on their interaction with human users or ability to follow domain-specific rules, both of which are vital for deploying them in real world applications. We propose $\\tau$-bench, a benchmark emulating dynamic conversations between a user (simulated by language models) and a language agent provided with domain-specific API tools and policy guidelines. We employ an efficient and faithful evaluation process that compares the database state at the end of a conversation with the annotated goal state. We also propose a new metric (pass^k) to evaluate the reliability of agent behavior over multiple trials. Our experiments show that even state-of-the-art function calling agents (like gpt-4o) succeed on <50% of the tasks, and are quite inconsistent (pass^8 <25% in retail). Our findings point to the need for methods that can improve the ability of agents to act consistently and follow rules reliably.",
+    "status": "abstract_read",
+    "sha256": "d82d45164e1bc9743a8d56201542a17d023b151d510f04aa024b6af25bd07ad3"
+  },
+  {
+    "id": "R6_ExtremeWeatherBench",
+    "url": "https://arxiv.org/abs/2605.01126",
+    "checked_at_utc": "2026-09-08T16:51:22.441617+00:00",
+    "reading_scope": "Primary landing page title and abstract only; no reproduction or full-paper audit.",
+    "http_status": 200,
+    "resolved_url": "https://arxiv.org/abs/2605.01126",
+    "title": "Extreme Weather Bench: A framework and benchmark for evaluation of high-impact weather",
+    "abstract": "Abstract: Forecasting the wide variety of high-impact weather events experienced globally is a challenge for both Artificial Intelligence (AI) and Numerical Weather Prediction (NWP) models and it is critical that such models be properly verified before deployment. Although AI weather models are rapidly evolving, much of their evaluation is currently done either with a global-scale evaluation or by hand-picking a small number of case studies or a region. A widely-used open-source benchmark suite focusing on high-impact weather will help to drive the science forward for all scales of weather models, as it has for other AI fields. Here we introduce Extreme Weather Bench (EWB), a new community-driven benchmark suite that facilitates model validation and verification on a variety of high-impact hazards that matter to people around the globe. EWB provides a standard set of case studies (spanning across multiple spatial and temporal scales and different parts of the weather spectrum), observational data, impact-based metrics, and open-source code for users to evaluate their models. Verifying that a model works against a standard set of case studies, especially events that are high-impact for the general public, is a key piece of improving the trustworthiness of AI models. EWB will help to drive the science forward for all weather models, enabling true comparisons across models and evaluating models on specific high-impact phenomena through the use of case studies. EWB is a free open-source community-driven system and will continue to evolve to include additional phenomena, test cases and metrics in collaboration with the worldwide weather and forecast verification community.",
+    "status": "abstract_read",
+    "sha256": "4e5630748d2595bd3b6cbe573805f8b00796d4e8919a62a981ea298008b5093a"
+  }
+]

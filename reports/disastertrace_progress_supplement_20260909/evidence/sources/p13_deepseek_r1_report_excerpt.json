@@ -1,0 +1,906 @@
+{
+  "analysis": "closed_loop_native_trajectories; descriptive six-storm development; one sampling repeat",
+  "counts": {
+    "attempted": 2064,
+    "content_tokens": 615627,
+    "delimiter_tokens": 2057,
+    "extraction_errors": 7,
+    "max_requested_output_tokens": 16908288,
+    "output_tokens": 2265726,
+    "parsed_saved": 2064,
+    "planned": 2412,
+    "prompt_tokens_reserved": 12398970,
+    "raw_returned": 2064,
+    "reasoning_tokens": 1646031,
+    "recovered_raw": 0,
+    "terminal_tokens": 2011,
+    "unattempted": 348,
+    "unknown_outcomes": 0
+  },
+  "execution_id": "1a183b62948cda643fdc1aa35e9a5d8966d3a5ff7c634789b16034d9b7cf47de",
+  "finish_reasons": {
+    "length": 53,
+    "stop": 2011
+  },
+  "kind": "model",
+  "model_profile": "deepseek_r1",
+  "phase_id": "e1e4a7b00d8a1fc22b9e57fe8a6e626880a3f19359cffd11296ca9a8b413a47a",
+  "platform_jobs": [
+    {
+      "cluster": "computing-cluster-01g-02",
+      "complete_time": "2026-09-09T00:42:45Z",
+      "display_name": "dt-p13-model-e1e4a7b00d-w0",
+      "gpu_count": 1,
+      "job_id": "pt-hlskn0oj",
+      "raw_details_sha256": "240d35f6652f37eb0c77df58a6f113d2dce9331275d982963b5c9cad2c708ce4",
+      "released": true,
+      "start_time": "2026-09-08T23:18:11Z",
+      "state": "FAILED",
+      "worker_id": 0
+    },
+    {
+      "cluster": "computing-cluster-01g-02",
+      "complete_time": "2026-09-09T00:45:38Z",
+      "display_name": "dt-p13-model-e1e4a7b00d-w1",
+      "gpu_count": 1,
+      "job_id": "pt-ynwy8zym",
+      "raw_details_sha256": "23786218a0225ca3a372cadce7c6e87ff04da8f8ae208a25169fd731b41f95c7",
+      "released": true,
+      "start_time": "2026-09-08T23:18:18Z",
+      "state": "FAILED",
+      "worker_id": 1
+    }
+  ],
+  "report_id": "c9af22d325fa63892a8db69475d9a371583eafda426064586b54119730010421",
+  "schema_version": "forecast_compact_grammar_global_audit_v1",
+  "status_counts": {
+    "stopped_prefix": 2
+  },
+  "scores": {
+    "absent_capture_records": 348,
+    "both_repeats": {
+      "answer_history": {
+        "all_checkpoints_both_repeats_correct": 0,
+        "planned_episodes": 144
+      },
+      "snapshot": {
+        "all_checkpoints_both_repeats_correct": 0,
+        "planned_episodes": 144
+      },
+      "structured_state": {
+        "all_checkpoints_both_repeats_correct": 0,
+        "planned_episodes": 144
+      }
+    },
+    "breakdowns": {
+      "method": {
+        "answer_history": {
+          "all_correct": 3,
+          "current_source": 193,
+          "errors": {
+            "correct": 3,
+            "invalid_json_shape": 39,
+            "missing_response": 112,
+            "wrong_key": 84,
+            "wrong_locator": 1,
+            "wrong_value_status_or_unit": 565
+          },
+          "fields": {
+            "latitude": 4,
+            "longitude": 5,
+            "max_sustained_wind": 96
+          },
+          "key_correct": 569,
+          "kind_correct": 646,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 1
+          },
+          "locator_correct": 55,
+          "planned": 804,
+          "received": 692,
+          "shape_valid": 653,
+          "status_correct": 429,
+          "storm_correct": 653,
+          "time_correct": 574,
+          "units": {
+            "latitude": 91,
+            "longitude": 91,
+            "max_sustained_wind": 649
+          },
+          "values": {
+            "latitude": 81,
+            "longitude": 31,
+            "max_sustained_wind": 156
+          }
+        },
+        "snapshot": {
+          "all_correct": 0,
+          "current_source": 171,
+          "errors": {
+            "invalid_json_shape": 4,
+            "missing_response": 118,
+            "wrong_key": 167,
+            "wrong_locator": 1,
+            "wrong_source_version": 1,
+            "wrong_value_status_or_unit": 513
+          },
+          "fields": {
+            "latitude": 5,
+            "longitude": 4,
+            "max_sustained_wind": 95
+          },
+          "key_correct": 515,
+          "kind_correct": 681,
+          "literal_support": {
+            "latitude": 1,
+            "longitude": 1,
+            "max_sustained_wind": 0
+          },
+          "locator_correct": 92,
+          "planned": 804,
+          "received": 686,
+          "shape_valid": 682,
+          "status_correct": 473,
+          "storm_correct": 676,
+          "time_correct": 518,
+          "units": {
+            "latitude": 40,
+            "longitude": 40,
+            "max_sustained_wind": 672
+          },
+          "values": {
+            "latitude": 67,
+            "longitude": 33,
+            "max_sustained_wind": 145
+          }
+        },
+        "structured_state": {
+          "all_correct": 3,
+          "current_source": 165,
+          "errors": {
+            "correct": 3,
+            "invalid_json_shape": 10,
+            "missing_response": 118,
+            "unseen_source": 1,
+            "wrong_key": 87,
+            "wrong_value_status_or_unit": 585
+          },
+          "fields": {
+            "latitude": 7,
+            "longitude": 4,
+            "max_sustained_wind": 94
+          },
+          "key_correct": 589,
+          "kind_correct": 673,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 4
+          },
+          "locator_correct": 66,
+          "planned": 804,
+          "received": 686,
+          "shape_valid": 676,
+          "status_correct": 425,
+          "storm_correct": 673,
+          "time_correct": 595,
+          "units": {
+            "latitude": 140,
+            "longitude": 140,
+            "max_sustained_wind": 674
+          },
+          "values": {
+            "latitude": 74,
+            "longitude": 19,
+            "max_sustained_wind": 165
+          }
+        }
+      },
+      "repeat": {
+        "0": {
+          "all_correct": 6,
+          "current_source": 529,
+          "errors": {
+            "correct": 6,
+            "invalid_json_shape": 53,
+            "missing_response": 348,
+            "unseen_source": 1,
+            "wrong_key": 338,
+            "wrong_locator": 2,
+            "wrong_source_version": 1,
+            "wrong_value_status_or_unit": 1663
+          },
+          "fields": {
+            "latitude": 16,
+            "longitude": 13,
+            "max_sustained_wind": 285
+          },
+          "key_correct": 1673,
+          "kind_correct": 2000,
+          "literal_support": {
+            "latitude": 1,
+            "longitude": 1,
+            "max_sustained_wind": 5
+          },
+          "locator_correct": 213,
+          "planned": 2412,
+          "received": 2064,
+          "shape_valid": 2011,
+          "status_correct": 1327,
+          "storm_correct": 2002,
+          "time_correct": 1687,
+          "units": {
+            "latitude": 271,
+            "longitude": 271,
+            "max_sustained_wind": 1995
+          },
+          "values": {
+            "latitude": 222,
+            "longitude": 83,
+            "max_sustained_wind": 466
+          }
+        }
+      },
+      "status": {
+        "DISSIPATED": {
+          "all_correct": 0,
+          "current_source": 1,
+          "errors": {
+            "missing_response": 11,
+            "wrong_key": 4,
+            "wrong_value_status_or_unit": 15
+          },
+          "fields": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 0
+          },
+          "key_correct": 15,
+          "kind_correct": 19,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 0
+          },
+          "locator_correct": 0,
+          "planned": 30,
+          "received": 19,
+          "shape_valid": 19,
+          "status_correct": 2,
+          "storm_correct": 19,
+          "time_correct": 15,
+          "units": {
+            "latitude": 3,
+            "longitude": 3,
+            "max_sustained_wind": 19
+          },
+          "values": {
+            "latitude": 1,
+            "longitude": 1,
+            "max_sustained_wind": 0
+          }
+        },
+        "not_stated": {
+          "all_correct": 6,
+          "current_source": 205,
+          "errors": {
+            "correct": 6,
+            "invalid_json_shape": 11,
+            "unseen_source": 1,
+            "wrong_key": 79,
+            "wrong_source_version": 1,
+            "wrong_value_status_or_unit": 490
+          },
+          "fields": {
+            "latitude": 9,
+            "longitude": 9,
+            "max_sustained_wind": 63
+          },
+          "key_correct": 498,
+          "kind_correct": 575,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 0
+          },
+          "locator_correct": 205,
+          "planned": 588,
+          "received": 588,
+          "shape_valid": 577,
+          "status_correct": 338,
+          "storm_correct": 576,
+          "time_correct": 501,
+          "units": {
+            "latitude": 72,
+            "longitude": 72,
+            "max_sustained_wind": 577
+          },
+          "values": {
+            "latitude": 57,
+            "longitude": 57,
+            "max_sustained_wind": 73
+          }
+        },
+        "numeric": {
+          "all_correct": 0,
+          "current_source": 323,
+          "errors": {
+            "invalid_json_shape": 42,
+            "missing_response": 337,
+            "wrong_key": 255,
+            "wrong_locator": 2,
+            "wrong_value_status_or_unit": 1158
+          },
+          "fields": {
+            "latitude": 7,
+            "longitude": 4,
+            "max_sustained_wind": 222
+          },
+          "key_correct": 1160,
+          "kind_correct": 1406,
+          "literal_support": {
+            "latitude": 1,
+            "longitude": 1,
+            "max_sustained_wind": 5
+          },
+          "locator_correct": 8,
+          "planned": 1794,
+          "received": 1457,
+          "shape_valid": 1415,
+          "status_correct": 987,
+          "storm_correct": 1407,
+          "time_correct": 1171,
+          "units": {
+            "latitude": 196,
+            "longitude": 196,
+            "max_sustained_wind": 1399
+          },
+          "values": {
+            "latitude": 164,
+            "longitude": 25,
+            "max_sustained_wind": 393
+          }
+        }
+      },
+      "storm": {
+        "AL052019": {
+          "all_correct": 1,
+          "current_source": 83,
+          "errors": {
+            "correct": 1,
+            "invalid_json_shape": 3,
+            "missing_response": 59,
+            "wrong_key": 61,
+            "wrong_value_status_or_unit": 278
+          },
+          "fields": {
+            "latitude": 4,
+            "longitude": 2,
+            "max_sustained_wind": 50
+          },
+          "key_correct": 279,
+          "kind_correct": 339,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 0
+          },
+          "locator_correct": 28,
+          "planned": 402,
+          "received": 343,
+          "shape_valid": 340,
+          "status_correct": 243,
+          "storm_correct": 337,
+          "time_correct": 281,
+          "units": {
+            "latitude": 21,
+            "longitude": 21,
+            "max_sustained_wind": 339
+          },
+          "values": {
+            "latitude": 43,
+            "longitude": 19,
+            "max_sustained_wind": 78
+          }
+        },
+        "AL072022": {
+          "all_correct": 1,
+          "current_source": 95,
+          "errors": {
+            "correct": 1,
+            "invalid_json_shape": 13,
+            "missing_response": 59,
+            "wrong_key": 55,
+            "wrong_value_status_or_unit": 274
+          },
+          "fields": {
+            "latitude": 1,
+            "longitude": 1,
+            "max_sustained_wind": 70
+          },
+          "key_correct": 275,
+          "kind_correct": 328,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 2
+          },
+          "locator_correct": 34,
+          "planned": 402,
+          "received": 343,
+          "shape_valid": 330,
+          "status_correct": 226,
+          "storm_correct": 329,
+          "time_correct": 276,
+          "units": {
+            "latitude": 47,
+            "longitude": 47,
+            "max_sustained_wind": 326
+          },
+          "values": {
+            "latitude": 45,
+            "longitude": 20,
+            "max_sustained_wind": 121
+          }
+        },
+        "AL082021": {
+          "all_correct": 1,
+          "current_source": 92,
+          "errors": {
+            "correct": 1,
+            "invalid_json_shape": 6,
+            "missing_response": 58,
+            "wrong_key": 62,
+            "wrong_value_status_or_unit": 275
+          },
+          "fields": {
+            "latitude": 3,
+            "longitude": 3,
+            "max_sustained_wind": 49
+          },
+          "key_correct": 276,
+          "kind_correct": 338,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 0
+          },
+          "locator_correct": 33,
+          "planned": 402,
+          "received": 344,
+          "shape_valid": 338,
+          "status_correct": 219,
+          "storm_correct": 338,
+          "time_correct": 276,
+          "units": {
+            "latitude": 75,
+            "longitude": 75,
+            "max_sustained_wind": 337
+          },
+          "values": {
+            "latitude": 31,
+            "longitude": 11,
+            "max_sustained_wind": 75
+          }
+        },
+        "AL092020": {
+          "all_correct": 1,
+          "current_source": 84,
+          "errors": {
+            "correct": 1,
+            "invalid_json_shape": 16,
+            "missing_response": 58,
+            "unseen_source": 1,
+            "wrong_key": 49,
+            "wrong_locator": 1,
+            "wrong_value_status_or_unit": 276
+          },
+          "fields": {
+            "latitude": 3,
+            "longitude": 3,
+            "max_sustained_wind": 45
+          },
+          "key_correct": 279,
+          "kind_correct": 323,
+          "literal_support": {
+            "latitude": 1,
+            "longitude": 1,
+            "max_sustained_wind": 1
+          },
+          "locator_correct": 42,
+          "planned": 402,
+          "received": 344,
+          "shape_valid": 328,
+          "status_correct": 203,
+          "storm_correct": 328,
+          "time_correct": 282,
+          "units": {
+            "latitude": 38,
+            "longitude": 38,
+            "max_sustained_wind": 319
+          },
+          "values": {
+            "latitude": 24,
+            "longitude": 8,
+            "max_sustained_wind": 90
+          }
+        },
+        "AL092024": {
+          "all_correct": 1,
+          "current_source": 88,
+          "errors": {
+            "correct": 1,
+            "invalid_json_shape": 10,
+            "missing_response": 56,
+            "wrong_key": 53,
+            "wrong_locator": 1,
+            "wrong_source_version": 1,
+            "wrong_value_status_or_unit": 280
+          },
+          "fields": {
+            "latitude": 3,
+            "longitude": 3,
+            "max_sustained_wind": 32
+          },
+          "key_correct": 283,
+          "kind_correct": 336,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 2
+          },
+          "locator_correct": 36,
+          "planned": 402,
+          "received": 346,
+          "shape_valid": 336,
+          "status_correct": 212,
+          "storm_correct": 335,
+          "time_correct": 284,
+          "units": {
+            "latitude": 39,
+            "longitude": 39,
+            "max_sustained_wind": 336
+          },
+          "values": {
+            "latitude": 48,
+            "longitude": 13,
+            "max_sustained_wind": 44
+          }
+        },
+        "AL132023": {
+          "all_correct": 1,
+          "current_source": 87,
+          "errors": {
+            "correct": 1,
+            "invalid_json_shape": 5,
+            "missing_response": 58,
+            "wrong_key": 58,
+            "wrong_value_status_or_unit": 280
+          },
+          "fields": {
+            "latitude": 2,
+            "longitude": 1,
+            "max_sustained_wind": 39
+          },
+          "key_correct": 281,
+          "kind_correct": 336,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 0
+          },
+          "locator_correct": 40,
+          "planned": 402,
+          "received": 344,
+          "shape_valid": 339,
+          "status_correct": 224,
+          "storm_correct": 335,
+          "time_correct": 288,
+          "units": {
+            "latitude": 51,
+            "longitude": 51,
+            "max_sustained_wind": 338
+          },
+          "values": {
+            "latitude": 31,
+            "longitude": 12,
+            "max_sustained_wind": 58
+          }
+        }
+      },
+      "transition": {
+        "changed_wind": {
+          "all_correct": 0,
+          "current_source": 31,
+          "errors": {
+            "invalid_json_shape": 8,
+            "missing_response": 67,
+            "wrong_key": 36,
+            "wrong_value_status_or_unit": 177
+          },
+          "fields": {
+            "latitude": 1,
+            "longitude": 0,
+            "max_sustained_wind": 18
+          },
+          "key_correct": 177,
+          "kind_correct": 211,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 1
+          },
+          "locator_correct": 1,
+          "planned": 288,
+          "received": 221,
+          "shape_valid": 213,
+          "status_correct": 178,
+          "storm_correct": 212,
+          "time_correct": 180,
+          "units": {
+            "latitude": 35,
+            "longitude": 35,
+            "max_sustained_wind": 209
+          },
+          "values": {
+            "latitude": 5,
+            "longitude": 1,
+            "max_sustained_wind": 24
+          }
+        },
+        "first_checkpoint": {
+          "all_correct": 5,
+          "current_source": 187,
+          "errors": {
+            "correct": 5,
+            "invalid_json_shape": 7,
+            "unseen_source": 1,
+            "wrong_key": 54,
+            "wrong_locator": 2,
+            "wrong_source_version": 1,
+            "wrong_value_status_or_unit": 362
+          },
+          "fields": {
+            "latitude": 11,
+            "longitude": 11,
+            "max_sustained_wind": 79
+          },
+          "key_correct": 371,
+          "kind_correct": 425,
+          "literal_support": {
+            "latitude": 1,
+            "longitude": 1,
+            "max_sustained_wind": 2
+          },
+          "locator_correct": 74,
+          "planned": 432,
+          "received": 432,
+          "shape_valid": 425,
+          "status_correct": 266,
+          "storm_correct": 422,
+          "time_correct": 374,
+          "units": {
+            "latitude": 73,
+            "longitude": 73,
+            "max_sustained_wind": 425
+          },
+          "values": {
+            "latitude": 101,
+            "longitude": 55,
+            "max_sustained_wind": 132
+          }
+        },
+        "first_explicit": {
+          "all_correct": 0,
+          "current_source": 72,
+          "errors": {
+            "invalid_json_shape": 4,
+            "missing_response": 18,
+            "wrong_key": 34,
+            "wrong_value_status_or_unit": 235
+          },
+          "fields": {
+            "latitude": 1,
+            "longitude": 0,
+            "max_sustained_wind": 46
+          },
+          "key_correct": 235,
+          "kind_correct": 268,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 0
+          },
+          "locator_correct": 0,
+          "planned": 291,
+          "received": 273,
+          "shape_valid": 269,
+          "status_correct": 155,
+          "storm_correct": 269,
+          "time_correct": 235,
+          "units": {
+            "latitude": 35,
+            "longitude": 35,
+            "max_sustained_wind": 268
+          },
+          "values": {
+            "latitude": 22,
+            "longitude": 2,
+            "max_sustained_wind": 75
+          }
+        },
+        "no_new_coverage": {
+          "all_correct": 0,
+          "current_source": 87,
+          "errors": {
+            "invalid_json_shape": 24,
+            "missing_response": 211,
+            "wrong_key": 158,
+            "wrong_value_status_or_unit": 585
+          },
+          "fields": {
+            "latitude": 2,
+            "longitude": 1,
+            "max_sustained_wind": 115
+          },
+          "key_correct": 585,
+          "kind_correct": 737,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 2
+          },
+          "locator_correct": 3,
+          "planned": 978,
+          "received": 767,
+          "shape_valid": 743,
+          "status_correct": 547,
+          "storm_correct": 739,
+          "time_correct": 590,
+          "units": {
+            "latitude": 92,
+            "longitude": 92,
+            "max_sustained_wind": 733
+          },
+          "values": {
+            "latitude": 76,
+            "longitude": 8,
+            "max_sustained_wind": 202
+          }
+        },
+        "still_not_stated": {
+          "all_correct": 1,
+          "current_source": 135,
+          "errors": {
+            "correct": 1,
+            "invalid_json_shape": 4,
+            "wrong_key": 38,
+            "wrong_value_status_or_unit": 254
+          },
+          "fields": {
+            "latitude": 1,
+            "longitude": 1,
+            "max_sustained_wind": 17
+          },
+          "key_correct": 255,
+          "kind_correct": 291,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 0
+          },
+          "locator_correct": 135,
+          "planned": 297,
+          "received": 297,
+          "shape_valid": 293,
+          "status_correct": 131,
+          "storm_correct": 292,
+          "time_correct": 258,
+          "units": {
+            "latitude": 28,
+            "longitude": 28,
+            "max_sustained_wind": 293
+          },
+          "values": {
+            "latitude": 17,
+            "longitude": 17,
+            "max_sustained_wind": 22
+          }
+        },
+        "unchanged_wind": {
+          "all_correct": 0,
+          "current_source": 17,
+          "errors": {
+            "invalid_json_shape": 6,
+            "missing_response": 52,
+            "wrong_key": 18,
+            "wrong_value_status_or_unit": 50
+          },
+          "fields": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 10
+          },
+          "key_correct": 50,
+          "kind_correct": 68,
+          "literal_support": {
+            "latitude": 0,
+            "longitude": 0,
+            "max_sustained_wind": 0
+          },
+          "locator_correct": 0,
+          "planned": 126,
+          "received": 74,
+          "shape_valid": 68,
+          "status_correct": 50,
+          "storm_correct": 68,
+          "time_correct": 50,
+          "units": {
+            "latitude": 8,
+            "longitude": 8,
+            "max_sustained_wind": 67
+          },
+          "values": {
+            "latitude": 1,
+            "longitude": 0,
+            "max_sustained_wind": 11
+          }
+        }
+      }
+    },
+    "capture_records": 2064,
+    "counts": {
+      "all_correct": 6,
+      "current_source": 529,
+      "errors": {
+        "correct": 6,
+        "invalid_json_shape": 53,
+        "missing_response": 348,
+        "unseen_source": 1,
+        "wrong_key": 338,
+        "wrong_locator": 2,
+        "wrong_source_version": 1,
+        "wrong_value_status_or_unit": 1663
+      },
+      "fields": {
+        "latitude": 16,
+        "longitude": 13,
+        "max_sustained_wind": 285
+      },
+      "key_correct": 1673,
+      "kind_correct": 2000,
+      "literal_support": {
+        "latitude": 1,
+        "longitude": 1,
+        "max_sustained_wind": 5
+      },
+      "locator_correct": 213,
+      "planned": 2412,
+      "received": 2064,
+      "shape_valid": 2011,
+      "status_correct": 1327,
+      "storm_correct": 2002,
+      "time_correct": 1687,
+      "units": {
+        "latitude": 271,
+        "longitude": 271,
+        "max_sustained_wind": 1995
+      },
+      "values": {
+        "latitude": 222,
+        "longitude": 83,
+        "max_sustained_wind": 466
+      }
+    },
+    "literal_support_note": "positive/terminal source claims only; not_stated has no literal citation",
+    "schema_version": "forecast_task_scores_v1",
+    "whole_trajectories": {
+      "all_checkpoints_correct": 0,
+      "planned": 432
+    }
+  },
+  "source_sha256": "7bb9d5cca9108ec9bb3024c64c218be75637a2fd16959ed74b061360bb164464",
+  "excerpt_not_full_report": true
+}

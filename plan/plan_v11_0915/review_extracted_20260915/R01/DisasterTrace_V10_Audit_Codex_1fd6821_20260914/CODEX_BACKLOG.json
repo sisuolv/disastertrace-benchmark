@@ -1,0 +1,420 @@
+{
+  "schema": "disastertrace.review_increment.v1",
+  "base_commit": "1fd6821fef15b26898a57c74d4715714f33ea779",
+  "purpose": "v10 existing plan patch, not a new benchmark version",
+  "first_batch": [
+    "VT00",
+    "VT01",
+    "VT02",
+    "VT03"
+  ],
+  "next_research_dependency": "VT04→VT05→VT06; VT07/VT09 parallel as inputs qualify",
+  "default_permissions": {
+    "network_acquisition": false,
+    "API_calls": false,
+    "GPU_jobs": false,
+    "training": false,
+    "confirmation_payloads": false,
+    "push": false
+  },
+  "tasks": [
+    {
+      "id": "VT00",
+      "title": "差异冻结与已完成工作去重",
+      "depends_on": [],
+      "maps_to_existing_plan": [
+        "P0"
+      ],
+      "paths": [
+        "LATEST_PROGRESS_V10_CN.md",
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md"
+      ],
+      "changes": [
+        "记录HEAD、dirty/staged、运行冻结、授权是否仍有效；发现新成果则先做delta表",
+        "将正式入口、COPY、逐槽汇总、四季资料、温度EMOS/ECC与有限capsule列为已完成/维护，不重复建设"
+      ],
+      "acceptance": [
+        "无reset/clean、覆盖暂存、修改旧回答/旧分数、打开确认周或启动旧launcher",
+        "声明本计划不延长v10自治窗口，不自动启动下载/模型/训练"
+      ],
+      "deliverables": [
+        "BASELINE_DELTA.json",
+        "ACTIVE_GATES.json"
+      ],
+      "execution_permission": "local_cpu_only",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT01",
+      "title": "统一科学输入准入与有限历史影响扫描",
+      "depends_on": [
+        "VT00"
+      ],
+      "maps_to_existing_plan": [
+        "P0"
+      ],
+      "paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py",
+        "disastertrace-starter/tests/test_monitoring_feature_tasks.py",
+        "disastertrace-starter/tests/test_monitoring_temperature_postprocess.py",
+        "plans/v10_execution_20260914_01/contracts/H15_REPORT_LABEL_DATA_CARD.json"
+      ],
+      "changes": [
+        "修复F01的UTC整日、重复日期、有限阈值、变量/天数与成员支持检查；共享准入但保留独立计算实现",
+        "把H15字段政策与prompt/数据卡/注册绑定到同一ContractID，不改旧合同",
+        "只读扫描已有模型温度任务、2017/18原机会，记录实际影响，原始失败保留"
+      ],
+      "acceptance": [
+        "本包三个非法反例在两个入口均拒绝；合法同成员概率相同",
+        "真实冻结记录无问题时出具0影响证据；若有问题先quarantine，不选择性改正评分",
+        "复用已存在测试目录，不声称本次局部检查就是全仓库测试"
+      ],
+      "deliverables": [
+        "CONTRACT_PARITY_REPORT.json",
+        "HISTORICAL_IMPACT_SCAN.json"
+      ],
+      "execution_permission": "local_cpu_only",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT02",
+      "title": "剖析重放开销并只复用已验证状态",
+      "depends_on": [
+        "VT00"
+      ],
+      "maps_to_existing_plan": [
+        "P0",
+        "资源安排"
+      ],
+      "paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/admission.py"
+      ],
+      "changes": [
+        "对既有小capsule记录读取/哈希、反序列化、事件应用、参考校验、聚合各阶段时间",
+        "score_formal每臂加载一次，将只读verified engine集合交给内部评分；不暴露可以伪造验证资格的公开捷径",
+        "优先调用内缓存；若持久缓存，绑定journal内容/代码/协议/结果/比较签名，不能只看mtime",
+        "不在本阶段修改模型生成逻辑、延迟规则或重试"
+      ],
+      "acceptance": [
+        "正式评分所有合同、事务、共同基线、结果一致性检查仍运行",
+        "原/新每机会预测、分母、损失、非法输入拒绝结果一致；记录重放次数，不预设倍数",
+        "日志变更/截断/追加、同路径替换、版本和比较签名变化均使缓存失效",
+        "GPU结束后可释放，CPU审计独立且失败不重跑模型"
+      ],
+      "deliverables": [
+        "REPLAY_PROFILE.json",
+        "SCORER_EQUIVALENCE.json",
+        "PERFORMANCE_NOTES_CN.md"
+      ],
+      "execution_permission": "local_cpu_only",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT03",
+      "title": "特征与EMOS/ECC语义诊断",
+      "depends_on": [
+        "VT01"
+      ],
+      "maps_to_existing_plan": [
+        "P0",
+        "温度主链"
+      ],
+      "paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py"
+      ],
+      "changes": [
+        "统计原生支持边界与特征碰撞，不把F的有损摘要当与E参考等信息",
+        "若端点/年龄/地理身份特征需要扩展，新增明确feature_version并训练新bank，旧代码冻结保留",
+        "按季节/时距报告ECC tie、minmax投影、目标事件概率受影响率；保留raw/EMOS边际/ECC/修复后结果角色"
+      ],
+      "acceptance": [
+        "所有新增量来自合法输入，没有Gold派生字段",
+        "任何投影或聚合改变都有独立账本，不能隐含联合校准保证",
+        "不得因一次后处理某类变差就删hot-day数据或选最优分支"
+      ],
+      "deliverables": [
+        "FEATURE_SEMANTICS_AUDIT.json",
+        "TEMPERATURE_POSTPROCESS_DIAGNOSTICS.json"
+      ],
+      "execution_permission": "local_cpu_only",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT04",
+      "title": "年度来源与角色清单，不直接全量盲采",
+      "depends_on": [
+        "VT00",
+        "VT01"
+      ],
+      "maps_to_existing_plan": [
+        "P1",
+        "P2"
+      ],
+      "paths": [
+        "plans/v10_execution_20260914_01/NEXT_PHASE_PLAN_CN.md",
+        "既有IEM原生读取器及来源清单"
+      ],
+      "changes": [
+        "候选2023拟合/2024校准/2025已暴露开发，先比对全部既有依赖、角色与实际覆盖",
+        "按月固定请求/字节/并发/退避上限，优先已有哈希资产，仅补缺片；失败不改变预选日期",
+        "明确每类观测支持/发布证据，missing记录不变负例，purge按照最大真实依赖而非任意固定天数"
+      ],
+      "acceptance": [
+        "日期与角色在新增评价之前冻结；有效下载授权不存在则只交规格",
+        "每个角色包含四季或明确缺口，未知availability保留",
+        "确认周及其禁止载荷未读取，预算不足时报告部分覆盖不换成正例日期"
+      ],
+      "deliverables": [
+        "ANNUAL_SOURCE_PLAN.json",
+        "ROLE_DEPENDENCY_MANIFEST.json",
+        "ACQUISITION_BUDGET.json"
+      ],
+      "execution_permission": "requires_explicit_bounded_acquisition_authorization",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT05",
+      "title": "跨季节强基线与证据响应矩阵",
+      "depends_on": [
+        "VT01",
+        "VT03",
+        "VT04"
+      ],
+      "maps_to_existing_plan": [
+        "P1",
+        "P3"
+      ],
+      "paths": [
+        "plans/v10_execution_20260914_01/scripts/fit_native_feature_bank.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/regional_calibration_v2.py"
+      ],
+      "changes": [
+        "保留原FOLLOW为历史参考，新增固定同信息强common基线B*；比较B*,values-empty,values-partial,values-all",
+        "候选模型保持小而透明，正则/特征选择只在训练内部按时间/过程交叉验证，不在2025确认上调优",
+        "保留raw primary与后校准分轨，同信息时核对嵌套阈值；all-mask权重不冒充自适应策略分布",
+        "报告年龄/mask/季节/站点的支持和OOD，明确预测器在全读/缺证上的适用性"
+      ],
+      "acceptance": [
+        "拟合/校准/开发完整来源隔离，oldbanks/results未替换",
+        "完整自然日历及过程分层，同时报告Brier/区分/检测，缺失界与CI不同",
+        "输出信息增量或无增量，不设必须改善的放行门槛"
+      ],
+      "deliverables": [
+        "FROZEN_BASELINE_BANKS.json",
+        "EVIDENCE_RESPONSE_MATRIX.json",
+        "BASELINE_DATA_CARD.md"
+      ],
+      "execution_permission": "requires_valid_model_fitting_and_data_scope_authorization",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT06",
+      "title": "完整日历预算控制与比较可识别性",
+      "depends_on": [
+        "VT02",
+        "VT05"
+      ],
+      "maps_to_existing_plan": [
+        "P2",
+        "P3"
+      ],
+      "paths": [
+        "既有seasonal_controls_01与正式会话执行脚本",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/forecast_schedule.py"
+      ],
+      "changes": [
+        "把首日开发扩大到预登记完整日历，不按正例选时段；保留固定48信用的连续对照",
+        "同selector同predictor先做2x2；B11再比较RR/risk/coverage/batch/可行readall",
+        "所有策略同预测日程；若延迟实际造成缺调用，逐机会报告而不是隐性删除",
+        "另列机制固定时延与实测时延，成本资源定义不因策略而变"
+      ],
+      "acceptance": [
+        "输出每日期/过程、阈值、help/harm、正负支持与完整分母",
+        "共享一次计费与私有权限一致；固定quota用不满明确报告",
+        "coverage与RR行为或分数相同照实保留，不故意增大延迟制造差异"
+      ],
+      "deliverables": [
+        "FULLCALENDAR_CONTROL_RESULTS.json",
+        "PROCESS_GAIN_TABLE.json",
+        "RESOURCE_FRONTS.json"
+      ],
+      "execution_permission": "requires_valid_CPU_experiment_scope",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT07",
+      "title": "真实前缀上的C2—F配对修复",
+      "depends_on": [
+        "VT01",
+        "VT03",
+        "VT05"
+      ],
+      "maps_to_existing_plan": [
+        "P3",
+        "X03",
+        "X04"
+      ],
+      "paths": [
+        "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/support_bridge.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/residual_reachability.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/e_composition.py"
+      ],
+      "changes": [
+        "优先TAF目标窗口、版本与主报文数值、降水缺槽等会被预测器使用的事实，不无限扩同类存在题",
+        "从同一真实快照复制预算、缓存权限、在途请求和预测状态，仅修改指定合法处理环节",
+        "对照raw模型提取/程序合法提取/模型槽位+程序汇总，并保留格式失败共同回退",
+        "正确事实如依赖额外私有资料，升级为特权诊断不得混入主榜"
+      ],
+      "acceptance": [
+        "替代路径有真实资产与处理规则；没有归档就标不可评估",
+        "固定查询和预测器后独立重算E/F差异，不能相加成互斥因果百分比",
+        "E更正确而F不变/变差均保留，事后最好路径不当在线策略"
+      ],
+      "deliverables": [
+        "PREFIX_REPAIR_CASES.json",
+        "PAIRED_E_F_RESULTS.json"
+      ],
+      "execution_permission": "local_cpu_only",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT08",
+      "title": "一个轻量保守修订参考方法",
+      "depends_on": [
+        "VT05",
+        "VT06"
+      ],
+      "maps_to_existing_plan": [
+        "P3",
+        "X02",
+        "X07"
+      ],
+      "paths": [
+        "现有selector/forecast_provenance/adoption接口"
+      ],
+      "changes": [
+        "以冻结强共同基线B*为锚，便宜metadata/年龄/OOD或开发集风险估计决定是否取证",
+        "获取与预测调用调度分别固定再共同测试；不让模型用“有价值”自评作为标签",
+        "仅有限启发式/一步或两步策略，可用训练中合法分支拟合收益；不立即训练大型RL",
+        "FOLLOW/KEEP/重新提交同值保留不同动作身份和有效期"
+      ],
+      "acceptance": [
+        "门控阈值和损失参数在确认前冻结，不能利用当前结果选择是否安装",
+        "报告相对B*和同后端无证据的差异；方法未赢不改预算",
+        "完整计算与查询费，廉价baseline也有相同工具"
+      ],
+      "deliverables": [
+        "REFERENCE_POLICY_SPEC.md",
+        "DEVELOPMENT_POLICY_RESULTS.json"
+      ],
+      "execution_permission": "requires_valid_training_scope_if_fitted",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT09",
+      "title": "分轨推进温度与H07/H08",
+      "depends_on": [
+        "VT01",
+        "VT03"
+      ],
+      "maps_to_existing_plan": [
+        "第二主链",
+        "16灾种扩展"
+      ],
+      "paths": [
+        "既有temperature_postprocess_01",
+        "既有MRMS/HEFS数据合同与审计"
+      ],
+      "changes": [
+        "温度保留F-only全日历与分季节后处理，0严格补证资格不以人为lag改写",
+        "有真实vintage/first-seen时另注册温度补证；最终档案受控试验必须单列且不称历史业务",
+        "H07/H08只复用已登记候选做精确窗/单位/版本/站点或断面配对，允许一条成立另一条继续阻塞",
+        "原生图像与数值重绘区别，pysteps等工具输出不当参考真值；不硬拼无交集降雨与流量"
+      ],
+      "acceptance": [
+        "每条链分别给E/F/C1/MM/D和历史时间身份，不仅completed布尔值",
+        "尚无新数据时先完成可审阅准入清单，不能虚构配对或自动开启长期抓取",
+        "不需要所有16类均有行动层才交付主研究"
+      ],
+      "deliverables": [
+        "CROSS_HAZARD_QUALIFICATION.json",
+        "H07_H08_JOIN_AUDIT.json"
+      ],
+      "execution_permission": "requires_scope_for_any_new_acquisition",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT10",
+      "title": "冻结后的小型模型对照",
+      "depends_on": [
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "maps_to_existing_plan": [
+        "P3",
+        "模型和资源"
+      ],
+      "paths": [
+        "现有27B/235B后端与正式会话runner"
+      ],
+      "changes": [
+        "只用初始明确数据合同的新开发样本；保留已观察84任务为开发历史",
+        "按小矩阵区分模型提取、模型预测、query-only selector，所有方法相同强后端/工具授权",
+        "一个稳定本地后端为起点，额外thinking/视觉配置要有独立问题，不随意全笛卡尔积",
+        "调度费用计入，NOT_ATTEMPTED/兼容性/格式失败/基线回退各分母保持"
+      ],
+      "acceptance": [
+        "真实原文/模型返回/运行身份与成本齐全，无旧请求重新消费",
+        "当前问题是可解释性而非保证偏离基线；只copy照实报告",
+        "结束推理及时释放GPU，CPU审计异步组织由用户环境任务执行，不由本聊天许诺后台"
+      ],
+      "deliverables": [
+        "REGISTERED_MODEL_MATRIX.json",
+        "MODEL_COMPONENT_RESULTS.json"
+      ],
+      "execution_permission": "requires_new_valid_model_API_GPU_authorization",
+      "completion_is_not_conditioned_on_agent_winning": true
+    },
+    {
+      "id": "VT11",
+      "title": "确认冻结和有限发布",
+      "depends_on": [
+        "VT04",
+        "VT05",
+        "VT06",
+        "VT09"
+      ],
+      "maps_to_existing_plan": [
+        "P2",
+        "发布门槛"
+      ],
+      "paths": [
+        "现有exposure/process清单",
+        "publication已有capsule结构"
+      ],
+      "changes": [
+        "在打开任何确认载荷前冻结目标/来源/预测器/策略/成本/主次指标/停止规则",
+        "根据开发过程间方差和关注效应确定精度目标，不用小时或阈值复制扩独立N",
+        "完整自然日历为主、富集事件为诊断；Bay保留周只能承担其覆盖范围",
+        "重用现有两个capsule发布模式，不新建同类框架；D/MM/online有独立出口"
+      ],
+      "acceptance": [
+        "没有再调确认数据、修复失败答案或筛胜出日期",
+        "报告严格资格、负结果、缺失界/抽样区间/依赖单位，历史不等于无预训练污染",
+        "确认或前瞻授权缺失时只交封存规格，停止不绕过"
+      ],
+      "deliverables": [
+        "CONFIRMATION_REGISTRY.json",
+        "SCIENTIFIC_RELEASE_CARD.md",
+        "SCOPED_REPLAY_MANIFEST.json"
+      ],
+      "execution_permission": "requires_separate_confirmation_or_prospective_authorization",
+      "completion_is_not_conditioned_on_agent_winning": true
+    }
+  ]
+}

@@ -1,0 +1,483 @@
+{
+  "commit": "1eba36dd272c72573d1309c78d45dbe97dd8af12",
+  "scope": "isolated current-source tests; actual filesystem; stub spool IO/backend/clock/HTTP; synthetic journals/reports, no real experiment rerun",
+  "no_actual_http_or_model_calls": true,
+  "source_files": [
+    {
+      "local": "siliconflow_worker.py",
+      "repository_path": "plans/v12_execution_20260915_01/siliconflow_worker.py",
+      "git_blob_sha1": "7d2efb6dce9d35f2904c454ab44098bd51e6d9ff",
+      "bytes": 5561,
+      "verified_against_connector_sha": true
+    },
+    {
+      "local": "analyze_branches.py",
+      "repository_path": "plans/v12_execution_20260915_01/analyze_branches.py",
+      "git_blob_sha1": "dffffd3440ab1f6363c3f042759b78118898ec0e",
+      "bytes": 8584,
+      "verified_against_connector_sha": true
+    },
+    {
+      "local": "selection.py",
+      "repository_path": "disastertrace-starter/src/disastertrace/monitoring_v1/selection.py",
+      "git_blob_sha1": "74f24e9e484e76c350334b55b8dbad2d1efe0c6c",
+      "bytes": 2800,
+      "verified_against_connector_sha": true
+    },
+    {
+      "local": "common.py",
+      "repository_path": "disastertrace-starter/src/disastertrace/forecast_task/common.py",
+      "git_blob_sha1": "31ed9e5f3cceabda9d9553b28be89ed1858bfc9f",
+      "bytes": 2187,
+      "verified_against_connector_sha": true
+    }
+  ],
+  "checks": [
+    {
+      "id": "selector_empty",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": true
+      },
+      "expected_observation": {
+        "accepted": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_all",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": true
+      },
+      "expected_observation": {
+        "accepted": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_subset",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": true
+      },
+      "expected_observation": {
+        "accepted": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_reordered",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": true
+      },
+      "expected_observation": {
+        "accepted": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_whole_fence",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": true
+      },
+      "expected_observation": {
+        "accepted": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_wrong_alias",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": false
+      },
+      "expected_observation": {
+        "accepted": false
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_extra_field",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": false
+      },
+      "expected_observation": {
+        "accepted": false
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_duplicate_handle",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": false
+      },
+      "expected_observation": {
+        "accepted": false
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_unknown_handle",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": false
+      },
+      "expected_observation": {
+        "accepted": false
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_forecast_cap",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": false
+      },
+      "expected_observation": {
+        "accepted": false
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_non_json",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": false
+      },
+      "expected_observation": {
+        "accepted": false
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "selector_duplicate_key",
+      "category": "normal_or_guard",
+      "observation": {
+        "accepted": false
+      },
+      "expected_observation": {
+        "accepted": false
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_normal",
+      "category": "normal_or_guard",
+      "observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true
+      },
+      "expected_observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_expired_entry",
+      "category": "normal_or_guard",
+      "observation": {
+        "http_calls": 0,
+        "accepted": false,
+        "failure_receipt": false
+      },
+      "expected_observation": {
+        "http_calls": 0,
+        "accepted": false,
+        "failure_receipt": false
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_unknown_call",
+      "category": "normal_or_guard",
+      "observation": {
+        "http_calls": 0,
+        "accepted": false,
+        "failure_receipt": false
+      },
+      "expected_observation": {
+        "http_calls": 0,
+        "accepted": false,
+        "failure_receipt": false
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_expires_during_claim",
+      "category": "counterexample_dispatch_deadline",
+      "observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 4000000000,
+        "capture_complete": true
+      },
+      "expected_observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 4000000000,
+        "capture_complete": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_expires_during_credential",
+      "category": "counterexample_dispatch_deadline",
+      "observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 4000000000,
+        "capture_complete": true
+      },
+      "expected_observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 4000000000,
+        "capture_complete": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_http_error",
+      "category": "normal_or_guard",
+      "observation": {
+        "http_calls": 1,
+        "accepted": false,
+        "failure_receipt": true,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true
+      },
+      "expected_observation": {
+        "http_calls": 1,
+        "accepted": false,
+        "failure_receipt": true,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_wrong_model",
+      "category": "normal_or_guard",
+      "observation": {
+        "http_calls": 1,
+        "accepted": false,
+        "failure_receipt": true,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true
+      },
+      "expected_observation": {
+        "http_calls": 1,
+        "accepted": false,
+        "failure_receipt": true,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_token_overrun",
+      "category": "normal_or_guard",
+      "observation": {
+        "http_calls": 1,
+        "accepted": false,
+        "failure_receipt": true,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true
+      },
+      "expected_observation": {
+        "http_calls": 1,
+        "accepted": false,
+        "failure_receipt": true,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_reconcile_twice",
+      "category": "normal_or_guard",
+      "observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true,
+        "same_response": true,
+        "http_calls_after_reconcile": 1
+      },
+      "expected_observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true,
+        "same_response": true,
+        "http_calls_after_reconcile": 1
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_truncated_body",
+      "category": "normal_or_guard",
+      "observation": {
+        "http_calls": 1,
+        "accepted": false,
+        "failure_receipt": true,
+        "sent_at_ns": 1000000000,
+        "capture_complete": false,
+        "original_response_bytes": 4000100,
+        "transport_limit": 4000001
+      },
+      "expected_observation": {
+        "http_calls": 1,
+        "accepted": false,
+        "failure_receipt": true,
+        "sent_at_ns": 1000000000,
+        "capture_complete": false,
+        "original_response_bytes": 4000100,
+        "transport_limit": 4000001
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "worker_redacted_truncated_body",
+      "category": "counterexample_redacted_length",
+      "observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true,
+        "original_response_bytes": 4000100,
+        "transport_limit": 4000001
+      },
+      "expected_observation": {
+        "http_calls": 1,
+        "accepted": true,
+        "failure_receipt": false,
+        "sent_at_ns": 1000000000,
+        "capture_complete": true,
+        "original_response_bytes": 4000100,
+        "transport_limit": 4000001
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "branch_none",
+      "category": "normal_or_guard",
+      "observation": {
+        "result_written": true,
+        "passed": true,
+        "formal_scored_parents": 6,
+        "comparisons": 36,
+        "actual_treatment_attempts": 24,
+        "feature_trace_rows": 24
+      },
+      "expected_observation": {
+        "result_written": true,
+        "passed": true,
+        "formal_scored_parents": 6,
+        "comparisons": 36,
+        "actual_treatment_attempts": 24,
+        "feature_trace_rows": 24
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "branch_one_report",
+      "category": "counterexample_diagnostic_completeness",
+      "observation": {
+        "result_written": true,
+        "passed": true,
+        "formal_scored_parents": 6,
+        "comparisons": 33,
+        "actual_treatment_attempts": 24,
+        "feature_trace_rows": 23
+      },
+      "expected_observation": {
+        "result_written": true,
+        "passed": true,
+        "formal_scored_parents": 6,
+        "comparisons": 33,
+        "actual_treatment_attempts": 24,
+        "feature_trace_rows": 23
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "branch_all_reports",
+      "category": "counterexample_diagnostic_completeness",
+      "observation": {
+        "result_written": true,
+        "passed": true,
+        "formal_scored_parents": 6,
+        "comparisons": 0,
+        "actual_treatment_attempts": 24,
+        "feature_trace_rows": 0
+      },
+      "expected_observation": {
+        "result_written": true,
+        "passed": true,
+        "formal_scored_parents": 6,
+        "comparisons": 0,
+        "actual_treatment_attempts": 24,
+        "feature_trace_rows": 0
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "branch_missing_opportunity",
+      "category": "normal_or_guard",
+      "observation": {
+        "result_written": false,
+        "exception": "ValueError"
+      },
+      "expected_observation": {
+        "result_written": false,
+        "exception": "ValueError"
+      },
+      "observation_reproduced": true
+    },
+    {
+      "id": "branch_one_trace_row",
+      "category": "counterexample_diagnostic_trace_coverage",
+      "observation": {
+        "result_written": true,
+        "passed": true,
+        "formal_scored_parents": 6,
+        "comparisons": 36,
+        "actual_treatment_attempts": 24,
+        "feature_trace_rows": 23
+      },
+      "expected_observation": {
+        "result_written": true,
+        "passed": true,
+        "formal_scored_parents": 6,
+        "comparisons": 36,
+        "actual_treatment_attempts": 24,
+        "feature_trace_rows": 23
+      },
+      "observation_reproduced": true
+    }
+  ],
+  "distinct_checks": 28,
+  "normal_or_guard_count": 22,
+  "counterexample_count": 6,
+  "observations_reproduced": true
+}

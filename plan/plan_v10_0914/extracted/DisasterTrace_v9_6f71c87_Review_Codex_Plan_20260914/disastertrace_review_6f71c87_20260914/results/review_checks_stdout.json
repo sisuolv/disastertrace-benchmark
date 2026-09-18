@@ -1,0 +1,153 @@
+{
+  "commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "source_identity": [
+    {
+      "file": "regional_calibration.py",
+      "bytes": 1834,
+      "git_blob_sha1": "6236493c86c31e0f3b7c605692601146e716bbbf",
+      "exact_match": true
+    },
+    {
+      "file": "calibration.py",
+      "bytes": 2402,
+      "git_blob_sha1": "6c5cf91e7513bd7674f558ea1f474c58168db6b4",
+      "exact_match": true
+    },
+    {
+      "file": "evidence.py",
+      "bytes": 4040,
+      "git_blob_sha1": "d921c845ac6689131944271c34a1f462deb5fb9b",
+      "exact_match": true
+    },
+    {
+      "file": "support.py",
+      "bytes": 6385,
+      "git_blob_sha1": "d43b56c98aa3e59c4c1d17f72a503941b604698d",
+      "exact_match": true
+    }
+  ],
+  "findings": [
+    {
+      "id": "V01",
+      "kind": "counterexample_reproduced",
+      "title": "Independently calibrated nested thresholds cross",
+      "p_visibility_lt_1000": {
+        "probability": 0.009375,
+        "cell_key": "[1000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 589,
+        "mapping_version": "regional_dec2024_frequency_pav.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "p_visibility_lt_5000": {
+        "probability": 0.005952380952380952,
+        "cell_key": "[5000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 589,
+        "mapping_version": "regional_dec2024_frequency_pav.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "gap": 0.0034226190476190476,
+      "scope": "Same synthetic semantic input and published mapping cells. Full real-calendar frequency not measured."
+    },
+    {
+      "id": "V02-1000",
+      "kind": "mechanism_reproduced",
+      "title": "Base-cell fallback changes probability through a different post-calibrator",
+      "threshold": 1000,
+      "raw_probability": 0.001692047377326565,
+      "before": {
+        "probability": 0.009375,
+        "cell_key": "[1000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 589,
+        "mapping_version": "regional_dec2024_frequency_pav.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "after_missing_query": {
+        "probability": 0.014545454545454582,
+        "cell_key": "[1000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 589,
+        "mapping_version": "regional_dec2024_frequency_pav.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "scope": "Missingness can be informative. This demonstrates a confound to decompose, not proof the calibration choice is invalid."
+    },
+    {
+      "id": "V02-5000",
+      "kind": "mechanism_reproduced",
+      "title": "Base-cell fallback changes probability through a different post-calibrator",
+      "threshold": 5000,
+      "raw_probability": 0.001692047377326565,
+      "before": {
+        "probability": 0.005952380952380952,
+        "cell_key": "[5000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 589,
+        "mapping_version": "regional_dec2024_frequency_pav.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "after_missing_query": {
+        "probability": 0.015772870662460595,
+        "cell_key": "[5000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 589,
+        "mapping_version": "regional_dec2024_frequency_pav.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "scope": "Missingness can be informative. This demonstrates a confound to decompose, not proof the calibration choice is invalid."
+    },
+    {
+      "id": "V03",
+      "kind": "callee_boundary_reproduced",
+      "title": "Nonempty but irrelevant disclosure switches calibrator",
+      "before": {
+        "probability": 0.009375,
+        "cell_key": "[1000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 589,
+        "mapping_version": "regional_dec2024_frequency_pav.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "after": {
+        "probability": 0.014545454545454582,
+        "cell_key": "[1000,\"0-3\",\"no_low\",\"no_low\",false]",
+        "n": 589,
+        "mapping_version": "regional_dec2024_frequency_pav.v1",
+        "kind": "research_calibrated_taf_projection"
+      },
+      "scope": "Direct callee boundary only; current provider reachability not established. Audit before treating as executed-impact finding."
+    }
+  ],
+  "positive_controls": [
+    {
+      "id": "C01_positive_witness_and_unread",
+      "passed": true,
+      "observed": "supported"
+    },
+    {
+      "id": "C02_negative_and_unread",
+      "passed": true,
+      "observed": "undetermined"
+    },
+    {
+      "id": "C03_all_negative",
+      "passed": true,
+      "observed": "refuted"
+    },
+    {
+      "id": "C04_conflict_priority",
+      "passed": true,
+      "observed": "inconsistent"
+    },
+    {
+      "id": "C05_open_closed_threshold",
+      "passed": true
+    },
+    {
+      "id": "C06_hidden_label_not_public_support",
+      "passed": true
+    },
+    {
+      "id": "C07_within_score_monotonicity",
+      "passed": true,
+      "scope": "Does not imply coherence across separately fitted event thresholds."
+    }
+  ],
+  "executed_checks": 11,
+  "scope": "Direct imports of four original hash-verified modules. Synthetic inputs plus published Denver parameter subset. No original-journal, whole-bank/calendar, model or repository-suite rerun."
+}

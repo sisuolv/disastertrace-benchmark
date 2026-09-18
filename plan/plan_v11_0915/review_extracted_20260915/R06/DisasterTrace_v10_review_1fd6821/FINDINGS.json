@@ -1,0 +1,59 @@
+{
+  "commit": "1fd6821fef15b26898a57c74d4715714f33ea779",
+  "findings": [
+    {
+      "id": "V10-R1",
+      "priority": "P1",
+      "class": "scientific_input_contract_divergence",
+      "status": "reproduced_in_original_hash_verified_functions",
+      "locations": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py::temperature_ensemble_probability",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/temperature_postprocess.py::event_probability"
+      ],
+      "cases": [
+        "noon_shift",
+        "duplicate_product",
+        "boolean_day_index",
+        "nan_threshold",
+        "boolean_threshold",
+        "duplicate_product_order_changes_probability"
+      ],
+      "observed": "Weak helper accepts non-midnight 24h support and silently collapses duplicate daily products; order can change event probability. Strict helper rejects. Boolean/NaN validation also differs.",
+      "historical_impact": "Not established; production builders may supply only valid inputs. No claim of an exploit bypassing FormalSession or corrupted published scores.",
+      "exit_gate": "Shared versioned contract validation, independent arithmetic cross-checks, actual checkout entry tests and read-only scan of frozen temperature inputs."
+    },
+    {
+      "id": "V10-R2",
+      "priority": "P1",
+      "class": "dispatch_admission_window",
+      "status": "reproduced_with_original_ledger_capture_and_mock_http_clock",
+      "locations": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/api_ledger.py::ApiLedger.claim",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/api_capture_v2.py::capture"
+      ],
+      "cases": [
+        "api_stop_after_claim",
+        "api_deadline_after_claim"
+      ],
+      "observed": "STOP or expiration after claim during key-read does not prevent subsequent HTTP open. Pre-claim controls reject correctly.",
+      "contract_qualification": "If deadline means claim eligibility only, document this explicitly; no-new-dispatch guarantee needs a final gate and a stated local linearization rule. Does not imply remote cancellation.",
+      "historical_impact": "No published late or stopped real request established.",
+      "exit_gate": "Final dispatch authorization, before/after-boundary controls, unmodified escrow and original-request identity, actual-receipt impact scan."
+    },
+    {
+      "id": "V10-R3",
+      "priority": "P2",
+      "class": "defensive_probability_parser",
+      "status": "reproduced_in_original_hash_verified_function",
+      "locations": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/feature_tasks.py::parse_temperature"
+      ],
+      "cases": [
+        "temperature_head_oversized_integer"
+      ],
+      "observed": "A 401-digit JSON integer raises OverflowError at math.isfinite instead of a uniform invalid probability error.",
+      "historical_impact": "Not established. Normal invalid outputs already reject. Caller integration must preserve failed opportunities and cost.",
+      "exit_gate": "Safe ordered validation, actual caller invalid/fallback regression, no clipping or model retry."
+    }
+  ]
+}

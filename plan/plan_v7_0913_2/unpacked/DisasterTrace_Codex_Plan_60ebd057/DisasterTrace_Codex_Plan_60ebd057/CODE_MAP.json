@@ -1,0 +1,172 @@
+{
+  "schema": "disastertrace.codex.code_map.v1",
+  "base_commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+  "read_scope": "Directed static reading only; not a whole-repository audit or execution.",
+  "existing": [
+    {
+      "reference_id": "R03",
+      "path": "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/contracts.py",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_fixed_v1/contracts.py",
+      "read_scope": "full file, fetched in ranges 1–225, 226–475, 475–650 (through EOF)",
+      "interfaces": [
+        "Target",
+        "Forecast",
+        "EvidenceBundle",
+        "EvidenceProvider",
+        "Predictor",
+        "FollowPredictor",
+        "ForecastState",
+        "paired_scores"
+      ],
+      "reuse": "复用不可变输入、时间和类型、原F评分；新action不塞入原strict payload",
+      "boundary": "概率/标量而非联合分布；paired_scores不独立验证提交时刻；receipt跨包需去重"
+    },
+    {
+      "reference_id": "R04",
+      "path": "disastertrace-starter/src/disastertrace/monitoring_fixed_v1/heads.py",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_fixed_v1/heads.py",
+      "read_scope": "full file",
+      "interfaces": [
+        "model_messages",
+        "parse_response",
+        "HeadResponse"
+      ],
+      "reuse": "保留独立航空E/F接口；行动head另适配",
+      "boundary": "航空条件严格；不直接适配温度；旧joint不等于独立F-only"
+    },
+    {
+      "reference_id": "R05",
+      "path": "disastertrace-starter/src/disastertrace/monitoring_v1/policies.py",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_v1/policies.py",
+      "read_scope": "lines 1–170 only",
+      "interfaces": [
+        "run_session",
+        "parse_answer"
+      ],
+      "reuse": "薄接入公开事件/已获得资料/实际响应，不复制整个运行器",
+      "boundary": "此阅读范围未审计整个执行链；完整archive object不能直接给策略"
+    },
+    {
+      "reference_id": "R06",
+      "path": "disastertrace-starter/src/disastertrace/monitoring_v1/resources.py",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_v1/resources.py",
+      "read_scope": "full file",
+      "interfaces": [
+        "Cost",
+        "BudgetLedger"
+      ],
+      "reuse": "复用四维信息/计算预留结算",
+      "boundary": "不是物理资源区间占用器；人力不能塞进compute_ms"
+    },
+    {
+      "reference_id": "R07",
+      "path": "disastertrace-starter/src/disastertrace/monitoring_v1/reachability.py",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/src/disastertrace/monitoring_v1/reachability.py",
+      "read_scope": "lines 1–125 only",
+      "interfaces": [
+        "Query",
+        "Goal",
+        "Witness",
+        "ReachabilityResult",
+        "solve_joint"
+      ],
+      "reuse": "复用有限E见证检查思想",
+      "boundary": "E参照不是未来F/D最优策略；超时与上下界要显式"
+    },
+    {
+      "reference_id": "R08",
+      "path": "disastertrace-starter/pyproject.toml",
+      "url": "https://github.com/sisuolv/disastertrace-benchmark/blob/60ebd05723f9483590611976d379da2e4edd85b0/disastertrace-starter/pyproject.toml",
+      "read_scope": "full file",
+      "interfaces": [
+        "Python >= 3.10",
+        "pytest",
+        "hypothesis",
+        "ruff"
+      ],
+      "reuse": "沿用现有环境/测试；新优化/雷达库用可选依赖",
+      "boundary": "未安装依赖不视为测试通过；不得无授权全局升级"
+    }
+  ],
+  "proposed": [
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/contracts.py",
+      "status": "planned",
+      "task_id": "DS01",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/bridge.py",
+      "status": "planned",
+      "task_id": "DS02",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/operations.py",
+      "status": "planned",
+      "task_id": "DS03",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/capacity.py",
+      "status": "planned",
+      "task_id": "DS03",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/scheduler.py",
+      "status": "planned",
+      "task_id": "DS03",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/settlement.py",
+      "status": "planned",
+      "task_id": "DS04",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/optimizer.py",
+      "status": "planned",
+      "task_id": "DS04",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/paired.py",
+      "status": "planned",
+      "task_id": "DS06",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/policies.py",
+      "status": "planned",
+      "task_id": "DS09",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/joint.py",
+      "status": "planned",
+      "task_id": "DS09",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/cli.py",
+      "status": "planned",
+      "task_id": "DS03",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    },
+    {
+      "path": "disastertrace-starter/src/disastertrace/decision_support/providers/",
+      "status": "planned",
+      "task_id": "DS05",
+      "creation_rule": "Search local existing equivalents first; reuse them when present."
+    }
+  ],
+  "tests_proposed": "disastertrace-starter/tests/decision_support_v1",
+  "do_not_overwrite": [
+    "historical evidence/captures",
+    "frozen replay packages",
+    "old X00-X09 reports",
+    "old C1/C2/C3 and 16-hazard admission statuses"
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "based_on_commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "new_confirmed_production_bugs": [],
+  "scope_note": "No new crashing/admission-bypass defect was reproduced in the tested paths; not a whole-repository correctness certification.",
+  "findings": [
+    {
+      "id": "FIX-01",
+      "type": "previous_bug_fixed",
+      "priority": "closed_for_probed_scope",
+      "description": "未知执行普通结算被拒绝；合法原响应对账可用",
+      "basis": "executed_previous_probes",
+      "old_real_impact_reaudited_this_turn": false
+    },
+    {
+      "id": "FIX-02",
+      "type": "previous_bug_fixed",
+      "priority": "closed_for_probed_scope",
+      "description": "比较验证初始、中途与最终干预",
+      "basis": "executed_previous_probes",
+      "old_real_impact_reaudited_this_turn": false
+    },
+    {
+      "id": "A1",
+      "type": "attribution_risk_not_declared_software_bug",
+      "priority": "P1",
+      "description": "同一raw频率格可因非空补证切换校准家族而改变概率",
+      "confirmed": "synthetic_no_taf_branch",
+      "real_trajectory_impact": "not_independently_counted",
+      "task": "N3.calibration_attribution"
+    },
+    {
+      "id": "A2",
+      "type": "unperformed_control",
+      "priority": "P1",
+      "description": "E02逐槽/汇总未构成已测试的同条件连续E→F管线",
+      "basis": "read_scripts_and_current_adapter",
+      "task": "N4.pipeline_contract"
+    },
+    {
+      "id": "A3",
+      "type": "scope_limitation",
+      "priority": "P1",
+      "description": "本轮H15为1h及base_bound，不能充分识别多cutoff同目标持续覆盖",
+      "basis": "read_frozen_pilot_script",
+      "task": "N4.multicutoff_revision"
+    },
+    {
+      "id": "A4",
+      "type": "data_support_limitation",
+      "priority": "P1",
+      "description": "部分区域/阈值calibration零正例，平滑不证明尾部可靠",
+      "basis": "repository_coverage_report",
+      "task": "N3.baseline_support"
+    },
+    {
+      "id": "A5",
+      "type": "correctly_disclosed_scope",
+      "priority": "P2",
+      "description": "DenverJan9为结果选定探索集，与自然子集分表",
+      "basis": "final_report",
+      "task": "N2.process_extension"
+    },
+    {
+      "id": "A6",
+      "type": "measurement_scope",
+      "priority": "P2",
+      "description": "API客户端延迟不等于服务端计算，62条unknown需原证据对账",
+      "basis": "api_capture_source_and_final_report",
+      "task": "N1.api_reconcile"
+    },
+    {
+      "id": "A7",
+      "type": "reproduction_coverage_limitation",
+      "priority": "P2",
+      "description": "选择性发布缺完整F日志/检查点，本次未全重建",
+      "basis": "publication_scope",
+      "task": "N1.portable_capsule"
+    },
+    {
+      "id": "E-EXAMPLE",
+      "type": "real_model_answer_error",
+      "priority": "research_diagnostic",
+      "description": "一条模型回复false/unknown槽位聚合成false，与声明规则不符",
+      "response_git_blob": "b24655fdaa33bf5674121810c0f976372422d110",
+      "recomputed": true,
+      "count": 1,
+      "full_E02_reaudit": false,
+      "task": "N3.slot_aggregate"
+    }
+  ]
+}

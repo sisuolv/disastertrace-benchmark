@@ -1,0 +1,78 @@
+{
+  "commit": "1fd6821fef15b26898a57c74d4715714f33ea779",
+  "execution_mode": "isolated_hash_bound_definitions",
+  "synthetic_only": true,
+  "historical_impact": "not_scanned",
+  "noon_window": {
+    "input": {
+      "target": {
+        "units": "C",
+        "physical_start": 1514894400000000,
+        "physical_end": 1514980800000000,
+        "variable": "daily_max_2m_temperature",
+        "event_operator": "ge",
+        "threshold": 30.0
+      },
+      "cutoff": 1514808000000000,
+      "common": {
+        "daily_products": [
+          {
+            "target_date": "2018-01-02",
+            "day_index": 1,
+            "forecast_max_members_C": [
+              31.0,
+              20.0
+            ],
+            "forecast_min_members_C": [
+              -2.0,
+              2.0
+            ]
+          }
+        ]
+      }
+    },
+    "feature_tasks_probability": 0.5,
+    "postprocess_result": "ValueError: Absolute future UTC days in Celsius are required"
+  },
+  "conflicting_duplicate_dates": {
+    "forward_probability": 1.0,
+    "reversed_probability": 0.5,
+    "postprocess_rejects": true
+  },
+  "infinite_lower": {
+    "input": {
+      "slots": {
+        "q": {
+          "visibility": {
+            "lower": "+inf",
+            "upper": "+inf",
+            "lower_closed": true,
+            "upper_closed": true
+          },
+          "temperature_c": 5.0,
+          "dewpoint_c": 3.0
+        }
+      }
+    },
+    "parsed": {
+      "q": {
+        "visibility": {
+          "lower": "+inf",
+          "upper": "+inf",
+          "lower_closed": true,
+          "upper_closed": true
+        },
+        "temperature_c": 5.0,
+        "dewpoint_c": 3.0
+      }
+    },
+    "finite_physical_values_in_interval": false
+  },
+  "endpoint_feature_collision": {
+    "support_closed": "undetermined",
+    "support_open": "supported",
+    "same_feature_vector": true,
+    "classification": "representation limitation, not a failed score calculation",
+    "native_occurrence_in_current_thresholds": "unverified"
+  }
+}

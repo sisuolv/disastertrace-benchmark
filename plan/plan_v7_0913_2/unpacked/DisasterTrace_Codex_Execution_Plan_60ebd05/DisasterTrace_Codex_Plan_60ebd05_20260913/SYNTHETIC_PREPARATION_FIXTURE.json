@@ -1,0 +1,77 @@
+{
+  "schema": "disastertrace.preparation_plan_example.v1",
+  "status": "planning_example_not_engine_input_contract",
+  "synthetic_fixture": true,
+  "real_weather_data": false,
+  "deployable": false,
+  "parameter_basis": "research_assumption",
+  "scenario_id": "fixture_prepare_while_querying",
+  "session_start": "2024-01-01T12:00:00Z",
+  "target_physical_start": "2024-01-01T16:00:00Z",
+  "new_evidence_release": "2024-01-01T13:30:00Z",
+  "crew_capacity": 1,
+  "occupation_interval": "[start,end)",
+  "finish_rule": "end <= ready_deadline",
+  "jobs": [
+    {
+      "target": "fixture_site_A",
+      "duration_minutes": 180,
+      "crew_demand": 1
+    },
+    {
+      "target": "fixture_site_B",
+      "duration_minutes": 30,
+      "crew_demand": 1
+    }
+  ],
+  "cancellation": {
+    "policy": "cancel_then_cleanup",
+    "cleanup_minutes": 10,
+    "refund_consumed_work": false,
+    "progress_after_restart": "reset"
+  },
+  "tests": [
+    {
+      "name": "begin_A_before_query_returns",
+      "expected": "A12:00—15:00、B15:00—15:30可以都及时完成；查询可并行"
+    },
+    {
+      "name": "wait_until_13_30_then_begin_A",
+      "expected": "A16:30完成，不满足16:00准备截止"
+    },
+    {
+      "name": "double_allocate_crew",
+      "expected": "第二个同时启动的准备被拒绝并留痕"
+    },
+    {
+      "name": "cancel_reset_budget",
+      "expected": "不得退还已用工时或抹去取消记录"
+    }
+  ],
+  "forecast_preference_test": {
+    "fixed_probability": 0.6,
+    "change_only": [
+      "duration",
+      "crew_capacity",
+      "research_cost"
+    ],
+    "expected": "固定科学输入/预测器/计算条件时预测不变；准备选择允许不同；端到端若取证变化另议"
+  },
+  "dependence_test": {
+    "marginal_probabilities": [
+      0.5,
+      0.5
+    ],
+    "co_occurrence_synchronous": 0.5,
+    "co_occurrence_exclusive": 0.0,
+    "additive_fixed_schedule": "期望可加损失不因该相关性变化而变",
+    "nonadditive": "至少两处同时越阈或共同需求超容量的结果可不同"
+  },
+  "execution": {
+    "run_network": false,
+    "run_models": false,
+    "install_dependencies": false,
+    "contact_people": false,
+    "publish_warning": false
+  }
+}

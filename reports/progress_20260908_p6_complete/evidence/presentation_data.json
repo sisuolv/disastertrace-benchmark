@@ -1,0 +1,459 @@
+{
+  "counts": {
+    "action_correct": 2117,
+    "all_correct": 1861,
+    "checkpoints": 2160,
+    "corrections": 72,
+    "corrections_correct": 55,
+    "fields": 8640,
+    "grounded_correct": 8258,
+    "known": 6768,
+    "known_grounded_correct": 6386,
+    "known_value_correct": 6645,
+    "preservations": 4608,
+    "preservations_correct": 4321,
+    "recoveries": 72,
+    "recoveries_correct": 64,
+    "refreshes": 108,
+    "refreshes_correct": 65,
+    "schema_valid": 2160,
+    "scope": 144,
+    "scope_correct": 84,
+    "stale": 144,
+    "stale_correct": 124,
+    "unknown": 1872,
+    "unknown_correct": 1872,
+    "updates": 2160,
+    "updates_correct": 2065
+  },
+  "methods": [
+    {
+      "condition": "base",
+      "method": "snapshot",
+      "repeat_0_correct": 171,
+      "repeat_1_correct": 169,
+      "checkpoint_correct": 340,
+      "checkpoint_total": 360,
+      "trajectory_correct": 55,
+      "trajectory_total": 72,
+      "both_repeats_correct": 22,
+      "episode_total": 36
+    },
+    {
+      "condition": "base",
+      "method": "structured_state",
+      "repeat_0_correct": 171,
+      "repeat_1_correct": 178,
+      "checkpoint_correct": 349,
+      "checkpoint_total": 360,
+      "trajectory_correct": 64,
+      "trajectory_total": 72,
+      "both_repeats_correct": 30,
+      "episode_total": 36
+    },
+    {
+      "condition": "base",
+      "method": "answer_history",
+      "repeat_0_correct": 144,
+      "repeat_1_correct": 135,
+      "checkpoint_correct": 279,
+      "checkpoint_total": 360,
+      "trajectory_correct": 37,
+      "trajectory_total": 72,
+      "both_repeats_correct": 13,
+      "episode_total": 36
+    },
+    {
+      "condition": "irrelevant_scope",
+      "method": "snapshot",
+      "repeat_0_correct": 152,
+      "repeat_1_correct": 157,
+      "checkpoint_correct": 309,
+      "checkpoint_total": 360,
+      "trajectory_correct": 31,
+      "trajectory_total": 72,
+      "both_repeats_correct": 11,
+      "episode_total": 36
+    },
+    {
+      "condition": "irrelevant_scope",
+      "method": "structured_state",
+      "repeat_0_correct": 157,
+      "repeat_1_correct": 162,
+      "checkpoint_correct": 319,
+      "checkpoint_total": 360,
+      "trajectory_correct": 43,
+      "trajectory_total": 72,
+      "both_repeats_correct": 15,
+      "episode_total": 36
+    },
+    {
+      "condition": "irrelevant_scope",
+      "method": "answer_history",
+      "repeat_0_correct": 139,
+      "repeat_1_correct": 126,
+      "checkpoint_correct": 265,
+      "checkpoint_total": 360,
+      "trajectory_correct": 34,
+      "trajectory_total": 72,
+      "both_repeats_correct": 10,
+      "episode_total": 36
+    }
+  ],
+  "paired": [
+    {
+      "method": "snapshot",
+      "exposure": "before_first_exposure",
+      "total": 144,
+      "both_correct": 144,
+      "base_only": 0,
+      "condition_only": 0,
+      "both_wrong": 0
+    },
+    {
+      "method": "snapshot",
+      "exposure": "exposed",
+      "total": 216,
+      "both_correct": 151,
+      "base_only": 45,
+      "condition_only": 14,
+      "both_wrong": 6
+    },
+    {
+      "method": "structured_state",
+      "exposure": "before_first_exposure",
+      "total": 144,
+      "both_correct": 144,
+      "base_only": 0,
+      "condition_only": 0,
+      "both_wrong": 0
+    },
+    {
+      "method": "structured_state",
+      "exposure": "exposed",
+      "total": 216,
+      "both_correct": 168,
+      "base_only": 37,
+      "condition_only": 7,
+      "both_wrong": 4
+    },
+    {
+      "method": "answer_history",
+      "exposure": "before_first_exposure",
+      "total": 144,
+      "both_correct": 144,
+      "base_only": 0,
+      "condition_only": 0,
+      "both_wrong": 0
+    },
+    {
+      "method": "answer_history",
+      "exposure": "exposed",
+      "total": 216,
+      "both_correct": 97,
+      "base_only": 38,
+      "condition_only": 24,
+      "both_wrong": 57
+    }
+  ],
+  "attribution_counts": {
+    "citation_only_errors": 259,
+    "fields": 8640,
+    "grounded_correct": 8258,
+    "value_correct": 8517,
+    "value_status_or_invalid_errors": 123
+  },
+  "error_categories": {
+    "out_of_bounds_line": 26,
+    "status_or_value_mismatch": 123,
+    "superseded_different_value": 8,
+    "superseded_same_value": 116,
+    "unknown_record_id": 42,
+    "wrong_entity": 22,
+    "wrong_valid_window_or_measurement_kind": 35,
+    "wrong_variable_or_unit": 10
+  },
+  "source": {
+    "planned_bodies": 12,
+    "received_bodies": 12,
+    "admitted_bodies": 12,
+    "quarantined_bodies": 0,
+    "forecast_rows": 95,
+    "independent_storm_sources": 2,
+    "same_valid_revision_pairs": 49,
+    "wind_changed_pairs": 23,
+    "model_generations": 0,
+    "new_human_gold_annotations": 0,
+    "llm_judge": false,
+    "terminal_rows": 9,
+    "wind_unchanged_pairs": 24,
+    "terminal_involved_pairs": 2
+  },
+  "source_example": {
+    "storm_id": "AL062024",
+    "storm_name": "Francine",
+    "valid_at": "2024-09-10T18:00:00+00:00",
+    "selection": "First revision pair in frozen revision_pairs.json; include intervening advisory 006.",
+    "model_evaluation_run": false,
+    "products": [
+      {
+        "source_id": "al062024-fstadv-005",
+        "issued_at": "2024-09-09T21:00:00+00:00",
+        "target_row": {
+          "forecast_line": 31,
+          "gust_kt": 90,
+          "latitude": 25.9,
+          "lead_hours_from_center": 21.0,
+          "longitude": -95.9,
+          "max_sustained_wind_kt": 75,
+          "qualifier": "",
+          "terminal_status": null,
+          "valid_at": "2024-09-10T18:00:00+00:00",
+          "wind_line": 32
+        },
+        "all_valid_times": [
+          "2024-09-10T06:00:00+00:00",
+          "2024-09-10T18:00:00+00:00",
+          "2024-09-11T06:00:00+00:00",
+          "2024-09-11T18:00:00+00:00",
+          "2024-09-12T06:00:00+00:00",
+          "2024-09-12T18:00:00+00:00",
+          "2024-09-13T18:00:00+00:00",
+          "2024-09-14T18:00:00+00:00"
+        ],
+        "raw_path": "artifacts/nhc_forecast_source_v1/acquisition/al062024-fstadv-005/body.html",
+        "raw_sha256": "41a0d265408eb189aac288ca0391700dd52c5c01d34f49456eaeafd5e4cff7ff",
+        "excerpts": [
+          {
+            "canonical_line": 5,
+            "raw_byte_end": 12293,
+            "raw_byte_start": 12240,
+            "raw_line_sha256": "91307e542cff534428332300443e7f5baff16ed726d6d6c87f4e427f1b37fef0",
+            "text": "TROPICAL STORM FRANCINE FORECAST/ADVISORY NUMBER   5"
+          },
+          {
+            "canonical_line": 7,
+            "raw_byte_end": 12372,
+            "raw_byte_start": 12347,
+            "raw_line_sha256": "d7ae437b7860b34c407b31eb305f6fe9a1fbf85828aec16b98826d15a7cd4dca",
+            "text": "2100 UTC MON SEP 09 2024"
+          },
+          {
+            "canonical_line": 31,
+            "raw_byte_end": 13185,
+            "raw_byte_start": 13148,
+            "raw_line_sha256": "aee21d1643bc91ef135e99e5c08306866bb7cdd875634f5a37495e686314616a",
+            "text": "FORECAST VALID 10/1800Z 25.9N  95.9W"
+          },
+          {
+            "canonical_line": 32,
+            "raw_byte_end": 13217,
+            "raw_byte_start": 13185,
+            "raw_line_sha256": "67beffaf1d68ae62c4b0321062e38e109fec85b06544375beeee7ec37e1b92ea",
+            "text": "MAX WIND  75 KT...GUSTS  90 KT."
+          }
+        ]
+      },
+      {
+        "source_id": "al062024-fstadv-006",
+        "issued_at": "2024-09-10T03:00:00+00:00",
+        "target_row": null,
+        "all_valid_times": [
+          "2024-09-10T12:00:00+00:00",
+          "2024-09-11T00:00:00+00:00",
+          "2024-09-11T12:00:00+00:00",
+          "2024-09-12T00:00:00+00:00",
+          "2024-09-12T12:00:00+00:00",
+          "2024-09-13T00:00:00+00:00",
+          "2024-09-14T00:00:00+00:00",
+          "2024-09-15T00:00:00+00:00"
+        ],
+        "raw_path": "artifacts/nhc_forecast_source_v1/acquisition/al062024-fstadv-006/body.html",
+        "raw_sha256": "1e43f4a1ce7b241664b2d5a44b03376e18163df3c58e25656c5e0a5e204c2c6d",
+        "excerpts": [
+          {
+            "canonical_line": 5,
+            "raw_byte_end": 12293,
+            "raw_byte_start": 12240,
+            "raw_line_sha256": "a33fe5fb3f3f23ad51a0a18eef3122d20cb1cfbde758c657cb0e82b51f9ce6dc",
+            "text": "TROPICAL STORM FRANCINE FORECAST/ADVISORY NUMBER   6"
+          },
+          {
+            "canonical_line": 7,
+            "raw_byte_end": 12372,
+            "raw_byte_start": 12347,
+            "raw_line_sha256": "689b288cd1678868f82f87add8f584609168526064d7808827ffe921d4c9907b",
+            "text": "0300 UTC TUE SEP 10 2024"
+          },
+          {
+            "canonical_line": 25,
+            "raw_byte_end": 13015,
+            "raw_byte_start": 12978,
+            "raw_line_sha256": "6faaa9ef1c6b568f93ecb7d1038c4093a84a3b081df12490108fbf07f5a8bcf7",
+            "text": "FORECAST VALID 10/1200Z 24.9N  96.0W"
+          },
+          {
+            "canonical_line": 26,
+            "raw_byte_end": 13047,
+            "raw_byte_start": 13015,
+            "raw_line_sha256": "a3e2e255298c1d03808b434eb8449dbe5ccc9a8fc57116a3187f1c86da56ffb5",
+            "text": "MAX WIND  65 KT...GUSTS  80 KT."
+          },
+          {
+            "canonical_line": 31,
+            "raw_byte_end": 13185,
+            "raw_byte_start": 13148,
+            "raw_line_sha256": "4972dc6b04ec85fd7fbad0129ab63437b75a5ee53284e379ac792cbd48bb4732",
+            "text": "FORECAST VALID 11/0000Z 26.2N  95.2W"
+          },
+          {
+            "canonical_line": 32,
+            "raw_byte_end": 13217,
+            "raw_byte_start": 13185,
+            "raw_line_sha256": "222c78eceb30f5157a8148696f320ca121beedc92229b53a5b44770e2c88229c",
+            "text": "MAX WIND  80 KT...GUSTS 100 KT."
+          },
+          {
+            "canonical_line": 37,
+            "raw_byte_end": 13355,
+            "raw_byte_start": 13318,
+            "raw_line_sha256": "64b959205e4868b0c8f92661959d7e8234bf5949f1140ba42abef0ac702cf24c",
+            "text": "FORECAST VALID 11/1200Z 27.9N  93.7W"
+          },
+          {
+            "canonical_line": 38,
+            "raw_byte_end": 13387,
+            "raw_byte_start": 13355,
+            "raw_line_sha256": "b021624058777e5425bd25e0a20c01b0e72b84e6fcc7109db3914b6b0895bdbc",
+            "text": "MAX WIND  85 KT...GUSTS 105 KT."
+          },
+          {
+            "canonical_line": 43,
+            "raw_byte_end": 13534,
+            "raw_byte_start": 13488,
+            "raw_line_sha256": "8eee0c607f3a8056c092f4cd76192bc02bbcc2fe64a886e651691f1e59c05651",
+            "text": "FORECAST VALID 12/0000Z 29.9N  92.2W...INLAND"
+          },
+          {
+            "canonical_line": 44,
+            "raw_byte_end": 13566,
+            "raw_byte_start": 13534,
+            "raw_line_sha256": "67beffaf1d68ae62c4b0321062e38e109fec85b06544375beeee7ec37e1b92ea",
+            "text": "MAX WIND  75 KT...GUSTS  90 KT."
+          },
+          {
+            "canonical_line": 49,
+            "raw_byte_end": 13713,
+            "raw_byte_start": 13667,
+            "raw_line_sha256": "ea4e39ca6fd5e664c102e634a615c6aa2c1286fccd2f9d759e1fb31b41f73c70",
+            "text": "FORECAST VALID 12/1200Z 32.4N  90.9W...INLAND"
+          },
+          {
+            "canonical_line": 50,
+            "raw_byte_end": 13745,
+            "raw_byte_start": 13713,
+            "raw_line_sha256": "a7134410d49c6e2217a23a06afbdb87d1f3bcd85274e76c4f7ce7ce64be3b16c",
+            "text": "MAX WIND  40 KT...GUSTS  50 KT."
+          },
+          {
+            "canonical_line": 53,
+            "raw_byte_end": 13833,
+            "raw_byte_start": 13780,
+            "raw_line_sha256": "2df713057e55ffca2584800ac20bfbbca4156822d8174cbc7a3132c9754bb31d",
+            "text": "FORECAST VALID 13/0000Z 34.6N  90.6W...POST-TROPICAL"
+          },
+          {
+            "canonical_line": 54,
+            "raw_byte_end": 13865,
+            "raw_byte_start": 13833,
+            "raw_line_sha256": "dafc5d5d9db6605a4b33fc2d6762895fd50cce57ca22e0c10510933a797fbaf1",
+            "text": "MAX WIND  30 KT...GUSTS  40 KT."
+          },
+          {
+            "canonical_line": 59,
+            "raw_byte_end": 14058,
+            "raw_byte_start": 14006,
+            "raw_line_sha256": "310c4a8ec9a598c39ee088a905094967932f9bd255b4fa0bb9d508cc1867478e",
+            "text": "OUTLOOK VALID 14/0000Z 36.6N  90.0W...POST-TROPICAL"
+          },
+          {
+            "canonical_line": 60,
+            "raw_byte_end": 14090,
+            "raw_byte_start": 14058,
+            "raw_line_sha256": "e108530850b46bfac95e2f13962c2af0db638464852a93a9ff93eb66d440bba5",
+            "text": "MAX WIND  20 KT...GUSTS  30 KT."
+          },
+          {
+            "canonical_line": 62,
+            "raw_byte_end": 14128,
+            "raw_byte_start": 14092,
+            "raw_line_sha256": "3a07bee3f9ad442c32bcefbb2b6e919682e83767173a84eeb854ff4645865cdc",
+            "text": "OUTLOOK VALID 15/0000Z...DISSIPATED"
+          }
+        ]
+      },
+      {
+        "source_id": "al062024-fstadv-007",
+        "issued_at": "2024-09-10T09:00:00+00:00",
+        "target_row": {
+          "forecast_line": 25,
+          "gust_kt": 85,
+          "latitude": 25.4,
+          "lead_hours_from_center": 9.0,
+          "longitude": -95.6,
+          "max_sustained_wind_kt": 70,
+          "qualifier": "",
+          "terminal_status": null,
+          "valid_at": "2024-09-10T18:00:00+00:00",
+          "wind_line": 26
+        },
+        "all_valid_times": [
+          "2024-09-10T18:00:00+00:00",
+          "2024-09-11T06:00:00+00:00",
+          "2024-09-11T18:00:00+00:00",
+          "2024-09-12T06:00:00+00:00",
+          "2024-09-12T18:00:00+00:00",
+          "2024-09-13T06:00:00+00:00",
+          "2024-09-14T06:00:00+00:00",
+          "2024-09-15T06:00:00+00:00"
+        ],
+        "raw_path": "artifacts/nhc_forecast_source_v1/acquisition/al062024-fstadv-007/body.html",
+        "raw_sha256": "e21d080aa49daaad4d3885307eb8d9c8f56aa852b740504a3932389e1836b506",
+        "excerpts": [
+          {
+            "canonical_line": 5,
+            "raw_byte_end": 12293,
+            "raw_byte_start": 12240,
+            "raw_line_sha256": "4733a9a13d8c2dafef7af86320c21a3702706e3485c7daa4e5691aa627be998f",
+            "text": "TROPICAL STORM FRANCINE FORECAST/ADVISORY NUMBER   7"
+          },
+          {
+            "canonical_line": 7,
+            "raw_byte_end": 12372,
+            "raw_byte_start": 12347,
+            "raw_line_sha256": "0d98ee681064976a81f53786242366d3b14c39ea19538014b1de71df64bfe7e3",
+            "text": "0900 UTC TUE SEP 10 2024"
+          },
+          {
+            "canonical_line": 25,
+            "raw_byte_end": 13015,
+            "raw_byte_start": 12978,
+            "raw_line_sha256": "254d9832fa604a0cfcfda071385eb448cd109410260f4124261e9a23eaddc6c0",
+            "text": "FORECAST VALID 10/1800Z 25.4N  95.6W"
+          },
+          {
+            "canonical_line": 26,
+            "raw_byte_end": 13047,
+            "raw_byte_start": 13015,
+            "raw_line_sha256": "636a044f1a5a8f8cbd9cfa4b3077c5625e36cc6e926e7303fc41e86713d1a8d5",
+            "text": "MAX WIND  70 KT...GUSTS  85 KT."
+          }
+        ]
+      }
+    ]
+  },
+  "acceptance_id": "ec4121065f159b9305a21b34d3f2526b22d0efd85c1bbf2340c0d817da2b8924",
+  "original_job_state": "FAILED",
+  "original_worker_all_steps_passed": false,
+  "scope": "Descriptive figures from accepted P6; no new model calls or scoring changes."
+}

@@ -1,0 +1,297 @@
+{
+  "commit": "1fd6821fef15b26898a57c74d4715714f33ea779",
+  "scope": "synthetic local source probes; not end-to-end repository or historical dataset replay",
+  "source_checks": [
+    {
+      "file": "temperature_postprocess.py",
+      "git_blob": "1ca9ae6ce50540829344b0a73a79a7d82b3e645e",
+      "sha256": "4a13fadea3f46f64b740fcfb79bc38eb2064249d94981b6a75fb4332f2a904a6",
+      "verified": true
+    },
+    {
+      "file": "regional_calibration_v2.py",
+      "git_blob": "570658377052493448586f3306fc3f420e1e6d7c",
+      "sha256": "573a9ae2f4c3a973438866bb195299d9f6ec8e684f40cddebea48417027b0e7e",
+      "verified": true
+    },
+    {
+      "file": "feature_tasks.py",
+      "git_blob": "4226d87ef5d18d1acc495f59141c6a1307ec88f9",
+      "sha256": "5e31391b0d375f222000ab9da98b42e4d9c6b28abba7153c31eb39f29e421b06",
+      "verified": true
+    }
+  ],
+  "behavior_checks": [
+    {
+      "name": "same exact daily threshold uses ge correctly",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "old": 0.5,
+        "new": 0.5
+      }
+    },
+    {
+      "name": "negative Celsius and strict frost boundary",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "old": 0.5,
+        "new": 0.5
+      }
+    },
+    {
+      "name": "three-day probability retains member trajectories",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "same_member": 0.0,
+        "invalid_product_of_marginals": 0.125
+      }
+    },
+    {
+      "name": "three-day ice uses max over the same member",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "probability": 0.5
+      }
+    },
+    {
+      "name": "non-UTC-midnight target accepted only by older helper",
+      "status": "observed_as_asserted",
+      "kind": "validation_gap",
+      "detail": {
+        "older_accepts_midday_to_midday_with_calendar_day_array": 0.5,
+        "new": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        }
+      }
+    },
+    {
+      "name": "conflicting duplicate date accepted only by older helper",
+      "status": "observed_as_asserted",
+      "kind": "validation_gap",
+      "detail": {
+        "older_silently_uses_last_duplicate": 1.0,
+        "new": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Unique daily products are required"
+        }
+      }
+    },
+    {
+      "name": "NaN target threshold accepted only by older helper",
+      "status": "observed_as_asserted",
+      "kind": "validation_gap",
+      "detail": {
+        "older_returns_numeric_zero_for_nan_threshold": 0.0,
+        "new": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Unqualified temperature endpoint"
+        }
+      }
+    },
+    {
+      "name": "day0 rejected by both",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "older": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Day0 or inconsistent ensemble member dimensions"
+        },
+        "new": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Day0 is excluded from fixed future extrema"
+        }
+      }
+    },
+    {
+      "name": "incomplete same-member arrays rejected by both",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "older": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Day0 or inconsistent ensemble member dimensions"
+        },
+        "new": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Same member dimensions must survive the entire product"
+        }
+      }
+    },
+    {
+      "name": "nonfinite member rejected by both",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "older": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Finite complete same-member ensemble required"
+        },
+        "new": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Finite complete temperature members required"
+        }
+      }
+    },
+    {
+      "name": "cutoff at future support start rejected by both",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "older": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Temperature requires an absolute future UTC-day support"
+        },
+        "new": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Absolute future UTC days in Celsius are required"
+        }
+      }
+    },
+    {
+      "name": "missing target day rejected by both",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "older": {
+          "rejected": true,
+          "error": "KeyError",
+          "message": "'2025-01-04'"
+        },
+        "new": {
+          "rejected": true,
+          "error": "ValueError",
+          "message": "Requested physical target is not fully covered"
+        }
+      }
+    },
+    {
+      "name": "fixed total prior avoids per-distinct-probability inflation",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "identical_probability": 0.00980392156862745,
+        "tiny_distinct_probabilities": 0.00980392156862745,
+        "prior_mass": 2,
+        "n": 100
+      }
+    },
+    {
+      "name": "empty calibration rejected",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "rejected": true,
+        "error": "ValueError",
+        "message": "Calibration observations required"
+      }
+    },
+    {
+      "name": "negative observation weight rejected",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "rejected": true,
+        "error": "ValueError",
+        "message": "Invalid weighted calibration observation"
+      }
+    },
+    {
+      "name": "coherent CDF pools reversed nested thresholds",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "name": "ordered CDF preserved",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": [
+        0.1,
+        0.3,
+        0.9
+      ]
+    },
+    {
+      "name": "different information identities rejected",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "rejected": true,
+        "error": "ValueError",
+        "message": "Nested probabilities require identical information and support identities"
+      }
+    },
+    {
+      "name": "nonfinite CDF prediction rejected",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "rejected": true,
+        "error": "ValueError",
+        "message": "Finite complete probability vector required"
+      }
+    },
+    {
+      "name": "ECC preserves source arrays and untied ranks before repair",
+      "status": "observed_as_asserted",
+      "kind": "expected_behavior",
+      "detail": {
+        "input_immutable": true,
+        "trace": {
+          "minmax_projections": 0,
+          "member_day_pairs": 2,
+          "tie_rule": "stable original member index",
+          "joint_calibration_guarantee": false
+        }
+      }
+    },
+    {
+      "name": "declared min/max projection changes marginals visibly",
+      "status": "observed_as_asserted",
+      "kind": "declared_design_diagnostic",
+      "detail": {
+        "trace": {
+          "minmax_projections": 2,
+          "member_day_pairs": 2,
+          "tie_rule": "stable original member index",
+          "joint_calibration_guarantee": false
+        },
+        "min": [
+          10.0,
+          10.0
+        ],
+        "max": [
+          10.0,
+          10.0
+        ],
+        "interpretation": "declared projection, not a bug; final marginals no longer the unprojected Gaussians"
+      }
+    }
+  ],
+  "counts": {
+    "source_hash_checks": 3,
+    "behavior_checks": 21,
+    "probe_failures": 0
+  },
+  "qualification": "observed_as_asserted includes reproduction of known-invalid input acceptance; it is not a claim all production behavior is correct"
+}

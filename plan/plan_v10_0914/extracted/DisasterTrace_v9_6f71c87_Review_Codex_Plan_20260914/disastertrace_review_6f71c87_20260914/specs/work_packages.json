@@ -1,0 +1,533 @@
+{
+  "schema": "disastertrace.review_incremental_plan.v1",
+  "reference_commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "keep_current_direction": true,
+  "work_packages": [
+    {
+      "id": "N1-maintain",
+      "parent_plan": "N1",
+      "title": "冻结当前状态并核对旧意见落实",
+      "phase": "CPU first",
+      "depends_on": [],
+      "code_targets": [
+        "monitoring_fixed_v1/admission.py",
+        "monitoring_fixed_v1/outcome_policies.py",
+        "monitoring_v1/api_capture.py",
+        "current execution manifests"
+      ],
+      "deliverables": [
+        "STATUS_DELTA.json",
+        "SOURCE_RUNTIME_MATRIX.json",
+        "RESULT_COUNT_RECONCILIATION.json"
+      ],
+      "implementation": [
+        "读取实际AGENTS、HEAD、脏工作区和冻结目录；与本审查提交做diff，不reset。",
+        "将共同基线、完整干预历史、H15/DWD结果时间、COPY和在途恢复的已有工作标为已落实范围，不重建。",
+        "当前运行暂停；不自动重开旧启动器、API、下载、GPU或确认周。",
+        "区分E01基础设施失败与E02模型成绩；保留62未知/预留，不根据预算上界伪称服务商账单。"
+      ],
+      "acceptance": [
+        {
+          "id": "N1-maintain-T01",
+          "requirement": "旧输入/结果/失败/冻结源码哈希不变；新产物单独版本化。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N1-maintain-T02",
+          "requirement": "42底层问题、1008视图调用、2304普通F、384探索F、温度程序统计分别核算。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N1-maintain-T03",
+          "requirement": "首次采集故障不能被记为模型语义错误；全批E02复做不得记成选择性最佳重试。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N1-maintain-T04",
+          "requirement": "任何局部反例必须在真实影响扫描中报告affected/unchanged/not_evaluated，允许影响为0。",
+          "status": "not_executed_specification"
+        }
+      ]
+    },
+    {
+      "id": "N3-coherence",
+      "parent_plan": "N3",
+      "title": "多阈值概率一致性与影响核查",
+      "phase": "CPU first",
+      "depends_on": [
+        "N1-maintain"
+      ],
+      "code_targets": [
+        "monitoring_v1/calibration.py",
+        "monitoring_v1/regional_calibration.py",
+        "scripts/fit_regional_baselines.py",
+        "proposed calibration audit module"
+      ],
+      "deliverables": [
+        "PROBABILITY_COHERENCE_AUDIT.json",
+        "COHERENCE_GROUPS.json",
+        "BASELINE_METHODS.json"
+      ],
+      "implementation": [
+        "构造不读取标签的coherence_group_id：同实体/变量/支持/报告策略/cutoff/相同授权信息，只有阈值不同。",
+        "先扫描共同基线；方法输入不同或独立调度不同的跨阈值输出标为不可直接比较，不强制同组。",
+        "核对本文Denver真实参数反例；扫描全部可访问原始概率而非六位小数汇总。",
+        "保留旧映射；新增标签无关、权重预先固定的有序投影作为强基线，或另训练具有非负类别概率的有序分布模型。",
+        "原分数和新方法分数分列；不借投影重新声明模型改善，开发选择与确认隔离。"
+      ],
+      "acceptance": [
+        {
+          "id": "N3-coherence-T01",
+          "requirement": "同公开信息时P(V<1000)<=P(V<5000)；相等/零/一/缺一阈值分别处理。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-coherence-T02",
+          "requirement": "复现0.009375>0.005952380952380952；不误写成原生官方概率自相矛盾。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-coherence-T03",
+          "requirement": "已相容概率不被投影改变；不得读取未来标签选择投影方向或权重。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-coherence-T04",
+          "requirement": "不同输入或时间支持的输出不得强行施加跨阈值一致性。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-coherence-T05",
+          "requirement": "原二元Brier仍按原合同保留；多阈值/联合风险资格独立标明。",
+          "status": "not_executed_specification"
+        }
+      ]
+    },
+    {
+      "id": "N3-attribution",
+      "parent_plan": "N3",
+      "title": "校准切换、缺失模式与内容收益分离",
+      "phase": "CPU first",
+      "depends_on": [
+        "N1-maintain"
+      ],
+      "code_targets": [
+        "monitoring_v1/calibration.py::predict",
+        "monitoring_v1/evidence.py::evidence_features",
+        "scripts/fit_regional_baselines.py",
+        "scripts/analyze_api_followup.py"
+      ],
+      "deliverables": [
+        "CALIBRATION_PATH_AUDIT.json",
+        "FEATURE_REFERENCE_TRACE.json",
+        "FUSION_CONTROL_SPEC.json"
+      ],
+      "implementation": [
+        "在不改变原预测的只读审计中记录raw cell、fallback层、raw p、calibration family/hash、mapped p、相关查询数和质量缺失。",
+        "计数在原始cell/p相同但post-calibration切换时的概率变化，按普通/探索队列分别报告。",
+        "将注册缺报、未查询、范围外资料、查询失败、过期资料区分；范围外内容应过滤或拒收，不能仅由dict非空触发模式。",
+        "比较B、独立校准f(B)、合法readmask/缺失模式模型、合法内容融合、相同校准规则下的内容诊断。",
+        "所有方法只用fit/cal时期，选择策略导致的观测分布改变需报告；缺失可有信息，不强制查询缺失时概率恒定。"
+      ],
+      "acceptance": [
+        {
+          "id": "N3-attribution-T01",
+          "requirement": "本文同raw cell的1000/5000映射变化均可复现并有原因记录。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-attribution-T02",
+          "requirement": "不相关query_id不能改变该目标的内容融合分支；兼容旧快照时单列诊断。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-attribution-T03",
+          "requirement": "每个目标的证据视图权重总和为1；伪计数、稀疏单元和回退比例可审计。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-attribution-T04",
+          "requirement": "static fixed-prefix、timed session、oracle diagnostic分表，不比较不同输入为同预算因果效果。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-attribution-T05",
+          "requirement": "同时报告L(f(B))-L(f(B,E))及L(B)-L(f(B,E))；校准转换收益不自动记作新观测价值。",
+          "status": "not_executed_specification"
+        }
+      ]
+    },
+    {
+      "id": "N3-slot-bridge",
+      "parent_plan": "N3/N4",
+      "title": "合法逐槽解释与确定性汇总/预测接口",
+      "phase": "CPU then bounded model",
+      "depends_on": [
+        "N1-maintain"
+      ],
+      "code_targets": [
+        "scripts/evidence_diagnostic.py",
+        "scripts/analyze_e_error_mechanisms.py",
+        "monitoring_fixed_v1/heads.py",
+        "monitoring_fixed_v1/aviation.py",
+        "proposed feature_source adapter"
+      ],
+      "deliverables": [
+        "SLOT_PIPELINE_REPLAY.json",
+        "E_TO_F_DEPENDENCY.json",
+        "PREDICTED_EVIDENCE_SCHEMA.json",
+        "HEAD_COMPARISON_SPEC.json"
+      ],
+      "implementation": [
+        "先复算现有逐槽输出：原生最终答案、程序汇总模型槽位、合法原始资料reducer三个身份分别保存。",
+        "预测桥消费可见资料reducer特征或模型槽位特征；显式配置feature_source，禁止用Gold偷偷覆盖模型错槽位。",
+        "定义非法/漏槽/未知/冲突的处理；保留模型原始答案与解析失败，不能只评分可用样例。",
+        "当前f(B,E)只消费read/low/not_low/unresolved，不消费fact_truth；修最终汇总不应被宣传为自动改善F。",
+        "新小试点使用相同信息和预测器，分别测试model_slots与deterministic_slots；不以自然语言解释作Gold。"
+      ],
+      "acceptance": [
+        {
+          "id": "N3-slot-bridge-T01",
+          "requirement": "Program aggregate只读模型输出和公开规则，不读evaluator参考；结果单列新混合系统。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-slot-bridge-T02",
+          "requirement": "槽位固定时只改最终fact_truth，当前计数融合输出必须不变；若新方法消费final需独立声明。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-slot-bridge-T03",
+          "requirement": "正见证+未读、全反证、删失、冲突规则与来源合同一致。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-slot-bridge-T04",
+          "requirement": "对所有126个视图保留分母，格式失败不被程序生成正确替代答案。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N3-slot-bridge-T05",
+          "requirement": "同信息/同总成本对照分开；程序重算不是新模型推理。",
+          "status": "not_executed_specification"
+        }
+      ]
+    },
+    {
+      "id": "N2-next",
+      "parent_plan": "N2",
+      "title": "自然日历、外部事件诊断与独立过程",
+      "phase": "CPU/data registration",
+      "depends_on": [
+        "N1-maintain"
+      ],
+      "code_targets": [
+        "monitoring_v1/process_split.py",
+        "scripts/build_process_manifest.py",
+        "DATA_PROCESS_MANIFEST/SPLITS"
+      ],
+      "deliverables": [
+        "DATA_PROCESS_MANIFEST_NEXT.json",
+        "SPLITS_NEXT.json",
+        "EXPOSURE_LEDGER_NEXT.json",
+        "FROZEN_SAMPLING_RULES.json"
+      ],
+      "implementation": [
+        "保留Jan6/10普通切片与outcome-selected DenverJan9；后者永不进入无偏总体均值或独立确认。",
+        "依据外部过程目录或预先固定观察阈值生成完整过程/邻近平静窗口；不按模型收益增删。",
+        "按完整原始产品身份、输入回看、目标/结果窗和会话状态检查purge；阈值/站点/重复提前量不可当独立过程。",
+        "扩展多季节/地区之前冻结规则及取得范围；先小片段验证endpoint和许可，完整来源目录继续保留。",
+        "确认集在方法/成本/统计/停止规则冻结之前保持封存。"
+      ],
+      "acceptance": [
+        {
+          "id": "N2-next-T01",
+          "requirement": "切分只读已授权开发数据；保留周无读取记录。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N2-next-T02",
+          "requirement": "普通切片与探索队列同时给全机会/结果缺失/独立分组，而非仅总调用数。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N2-next-T03",
+          "requirement": "同资产/母过程不能分到fit/cal/confirmation；保守块不自称气象独立真值。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N2-next-T04",
+          "requirement": "未结算不是无事件；分组与极端比例不随模型输出修改。",
+          "status": "not_executed_specification"
+        }
+      ]
+    },
+    {
+      "id": "N4-next",
+      "parent_plan": "N4",
+      "title": "一次可归因的小型预测与取证实验",
+      "phase": "Bounded new execution",
+      "depends_on": [
+        "N3-coherence",
+        "N3-attribution",
+        "N3-slot-bridge",
+        "N2-next"
+      ],
+      "code_targets": [
+        "scripts/run_api_pilot.py",
+        "monitoring_v1/policies.py",
+        "monitoring_fixed_v1/adaptive.py",
+        "comparison/analysis exporters"
+      ],
+      "deliverables": [
+        "PREREGISTERED_F_MATRIX.json",
+        "REALIZED_METHOD_FACTORS.json",
+        "F_DELTA_DECOMPOSITION.json",
+        "COST_SCORECARD.json"
+      ],
+      "implementation": [
+        "继续Follow/CopyCurrent/CopyBaseline和简单内容融合，先固定同预测器比较selector，再改变预测器。",
+        "先做固定合法证据条件；再扩闭环资源/时序；不要一次同时改变head、calibrator、模型、资料及预算。",
+        "估计程序与模型客户端时延，服务端计算未知单列；API并发、费率和thinking设置前置冻结。",
+        "自动propose与显式决策head分开；新增persistent只在机制需要时单独注册，不追求复制旧值带来的正收益。",
+        "固定候选评分和重新运行闭环不同；相同输入数值等价不是新廉价路径的真实时序成绩。"
+      ],
+      "acceptance": [
+        {
+          "id": "N4-next-T01",
+          "requirement": "普通集对比f(B,E)和COPY而不只对比FOLLOW；探索日正收益不泛化。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N4-next-T02",
+          "requirement": "same-call-budget与same-prediction-opportunity的结果分表，selector不免费。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N4-next-T03",
+          "requirement": "所有新模型请求有新授权、单次命名空间、结束条件；旧脚本不重开。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N4-next-T04",
+          "requirement": "候选/采纳/截止生效/最终损失漏斗以及精确/1e-6/.005差异分别报告。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N4-next-T05",
+          "requirement": "有负收益或零收益仍按原计划停止，不追加模型直到获胜。",
+          "status": "not_executed_specification"
+        }
+      ]
+    },
+    {
+      "id": "N5-temperature",
+      "parent_plan": "N5",
+      "title": "两年温度程序轨之后的真正第二过程",
+      "phase": "CPU then bounded model",
+      "depends_on": [
+        "N1-maintain",
+        "N3-attribution"
+      ],
+      "code_targets": [
+        "scripts/run_temperature_fullcalendar.py",
+        "temperature providers",
+        "monitoring_fixed_v1/contracts.py",
+        "common-evidence adapter"
+      ],
+      "deliverables": [
+        "TEMPERATURE_CONTINUOUS_ADMISSION.json",
+        "TEMPERATURE_SUPPLEMENTARY_MANIFEST.json",
+        "TEMPERATURE_MODEL_SPEC.json"
+      ],
+      "implementation": [
+        "继承192条轨迹/11644机会/3645目标，不重新列成未实现日极值。",
+        "共享完整站点4日原生成员日极值免费；新证据必须是真正合法补充信息，不向基线已有成员重复收费。",
+        "连续跨月复用的起报和三日窗口按过程处理；同起报成员三日依赖保留，不跨起报凭member编号拼接。",
+        "先非平凡版本/目标支持E与数值控制；无可用补充资料则放行F基线迁移，C1标未验证。",
+        "模型类型使用温度目标，不能把航空存在性prompt换变量名；条件和基准独立冻结。"
+      ],
+      "acceptance": [
+        {
+          "id": "N5-temperature-T01",
+          "requirement": "day0、参考期外和三日窗口末尾缺参照全部保留约定。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N5-temperature-T02",
+          "requirement": "同一member三日概率与逐member核算一致，不乘边际概率。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N5-temperature-T03",
+          "requirement": "全部程序已用过数据是开发，不能当新独立确认。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N5-temperature-T04",
+          "requirement": "frost_day命名注明2m TNK<0，不宣称实际结霜/农损。",
+          "status": "not_executed_specification"
+        }
+      ]
+    },
+    {
+      "id": "N4-MM",
+      "parent_plan": "N4/N5 parallel",
+      "title": "同未来目标原生多模态最小主链",
+      "phase": "Data/CPU then bounded VLM",
+      "depends_on": [
+        "N1-maintain",
+        "N2-next"
+      ],
+      "code_targets": [
+        "existing multimodal_live_v1 adapter",
+        "monitoring_fixed_v1 evidence schema and heads",
+        "satellite/radar provider",
+        "render manifest"
+      ],
+      "deliverables": [
+        "MM_SOURCE_JOIN.json",
+        "RENDER_MANIFEST.json",
+        "MODEL_IMAGE_RECEIPTS.json",
+        "MM_F_MINILOOP.json"
+      ],
+      "implementation": [
+        "第一出口可复用日期/地区/时间确实匹配的H15 ABI，不因温度新结果而把MM继续后移。",
+        "H07仍是多模态/处理动作重点；累计端点未核准则保持阻塞，按预先规则选择H01候补，不看模型胜负。",
+        "定义原生图、合法工具提取、特权标签三角色；输入实际图片而非仅JSON答案。",
+        "先固定供图进行F全链，再开放少量概览/ROI/时序/专业处理选择；各方法同工具与数据权限。",
+        "pysteps只用于合格雨场，固定版本/变量/时间/网格/依赖；VIL不当毫米雨量，滚动累计不当瞬时强度。"
+      ],
+      "acceptance": [
+        {
+          "id": "N4-MM-T01",
+          "requirement": "每幅图绑定原资产、时间、区域、波段、渲染、裁剪与实际processor输入。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N4-MM-T02",
+          "requirement": "不使用事后中心或Gold裁剪；未来帧不可见；标签不伪装成原生传感器事实。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N4-MM-T03",
+          "requirement": "图片F与独立图片E演示分开，必须同一固定未来目标和合法基线/结果。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N4-MM-T04",
+          "requirement": "固定供图不称主动视觉收益；工具增强与原图结果分别发布。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N4-MM-T05",
+          "requirement": "读取成本、再渲染和重复视觉推理成本分别核算，批量专业工具对所有策略开放。",
+          "status": "not_executed_specification"
+        }
+      ]
+    },
+    {
+      "id": "N5-live",
+      "parent_plan": "N5 parallel",
+      "title": "有界真实前瞻模型提交与结算",
+      "phase": "New explicit permission",
+      "depends_on": [
+        "N1-maintain",
+        "N4-next"
+      ],
+      "code_targets": [
+        "existing live shadow collector",
+        "production backend",
+        "admission/outcomes",
+        "bounded future opportunity registry"
+      ],
+      "deliverables": [
+        "LIVE_PREREGISTRATION.json",
+        "DURABLE_FORECASTS.jsonl",
+        "LIVE_SETTLEMENT.json",
+        "UNKNOWN_COST_LEDGER.json"
+      ],
+      "implementation": [
+        "来源观察器不是预测器；新窗口必须登记未来目标、资料接收、真实提交、截止和成熟结果。",
+        "数据源允许合理批量缓存，按产品更新频率取得，API/网络预算明确。",
+        "首次看到不等于全球首发；客户端等待不当服务器GPU计算；HTTP调用不等于预测的是未知未来。",
+        "普通窗口可验证流程，极端技能需要相应结果；停机/失联/费用未知/缺测不删分母。"
+      ],
+      "acceptance": [
+        {
+          "id": "N5-live-T01",
+          "requirement": "历史1/3h声明延迟不能冒称实际首次公开时间。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N5-live-T02",
+          "requirement": "在真实结果出现前完成不可覆盖的持久化提交，迟到不回填。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N5-live-T03",
+          "requirement": "全过程只读，不发公众警报、不控制设备。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N5-live-T04",
+          "requirement": "按截止和资源自动停，不恢复本次已暂停launch。",
+          "status": "not_executed_specification"
+        }
+      ]
+    },
+    {
+      "id": "N5-release",
+      "parent_plan": "N5 / retained D/X09",
+      "title": "确认与分级发布，准备层后置但保留",
+      "phase": "After qualified pilot",
+      "depends_on": [
+        "N2-next",
+        "N4-next",
+        "N4-MM",
+        "N5-temperature"
+      ],
+      "code_targets": [
+        "HAZARD_ADMISSION",
+        "study registry",
+        "existing preparation reducer",
+        "X09 specification"
+      ],
+      "deliverables": [
+        "CLAIM_EVIDENCE_MATRIX.json",
+        "CONFIRMATION_PREREGISTRATION.json",
+        "HAZARD_ADMISSION_DELTA.json",
+        "OPTIONAL_D_X09_GATE.json"
+      ],
+      "implementation": [
+        "保留16类来源/目标合同，按E/F/MM/主动/online/D/确认分别升级，不以一个类型可用代理所有灾种。",
+        "先冻结独立过程和统计；阈值/单元/多视图/连续月不放大独立样本数。",
+        "D先固定F验证资源/准备/cancel场景；收益称研究性准备模型结果，不声称减少现实损失。",
+        "X09联合输出同信息和每目标组总预算两套对照；它不等于已经预测联合风险分布。",
+        "最后按工程、领域开发、跨过程机制、原生MM、前瞻、D分级发布，记录未证明主张。"
+      ],
+      "acceptance": [
+        {
+          "id": "N5-release-T01",
+          "requirement": "C1收益必须超出合理批量/固定预测器/校准切换可解释部分；没有收益也如实发布。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N5-release-T02",
+          "requirement": "C2若只修布尔汇总不升格为独有科学贡献；至少关联一个真实目标的时空/版本支持。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N5-release-T03",
+          "requirement": "C3不同物理过程模型/MM结果实际完成，不是两张程序MAE表或资料名单。",
+          "status": "not_executed_specification"
+        },
+        {
+          "id": "N5-release-T04",
+          "requirement": "确认集不根据模型胜负回滚重做；后续样本另行预登记。",
+          "status": "not_executed_specification"
+        }
+      ]
+    }
+  ]
+}

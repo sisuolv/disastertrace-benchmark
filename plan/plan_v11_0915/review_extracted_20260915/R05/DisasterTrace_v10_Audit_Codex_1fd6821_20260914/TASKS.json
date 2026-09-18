@@ -1,0 +1,321 @@
+{
+  "schema": "disastertrace.v10_review_delta_tasks.v1",
+  "base_commit": "1fd6821fef15b26898a57c74d4715714f33ea779",
+  "tasks": [
+    {
+      "id": "P0.01",
+      "title_cn": "当前提交、生产入口回归和有限复现",
+      "parent_plan": "P0",
+      "depends_on": [],
+      "execution_kind": "offline_cpu",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "REVIEW_BASELINE.json",
+        "PRODUCTION_REPRO.json",
+        "CAPSULE_REPLAY.json"
+      ],
+      "acceptance": [
+        "核实际HEAD/AGENTS/工作区，不回退",
+        "生产包执行39项并独立记录结果",
+        "核当前monitoring实际nodeid和缺fixture",
+        "两个capsule各按完整清单新路径复算，范围单列"
+      ]
+    },
+    {
+      "id": "P0.02",
+      "title_cn": "温度辅助入口合同一致性",
+      "parent_plan": "P0",
+      "depends_on": [
+        "P0.01"
+      ],
+      "execution_kind": "offline_cpu",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "TEMPERATURE_CONTRACT_TESTS.xml",
+        "TEMPERATURE_IMPACT.json"
+      ],
+      "acceptance": [
+        "UTC午夜和严格变量/长度/阈值验证",
+        "重复矛盾日期拒绝而非last-wins",
+        "独立数值核算保留同成员轨迹",
+        "扫描旧温度输入并分别记受影响/不变/未评估"
+      ]
+    },
+    {
+      "id": "P0.03",
+      "title_cn": "能见度无穷下界响应拒绝",
+      "parent_plan": "P0",
+      "depends_on": [
+        "P0.01"
+      ],
+      "execution_kind": "offline_cpu",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "VISIBILITY_CONTRACT_TESTS.xml",
+        "EXTRACTION_IMPACT.json"
+      ],
+      "acceptance": [
+        "正无穷下界在parse_features被拒绝",
+        "P/M合法删失仍通过",
+        "旧回复和失败分母保全",
+        "只修本领域claim不误改所有支持区间"
+      ]
+    },
+    {
+      "id": "P0.04",
+      "title_cn": "数据卡绑定与端点特征诊断",
+      "parent_plan": "P0",
+      "depends_on": [
+        "P0.01"
+      ],
+      "execution_kind": "offline_cpu",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "REPORT_CONTRACT_BINDINGS.json",
+        "ENDPOINT_COVERAGE.json"
+      ],
+      "acceptance": [
+        "新初始合同绑定提示parser/feature/result版本",
+        "扫描原生阈值是否实际发生开闭区别",
+        "增加特征须新版bank与训练资格",
+        "匹配invalid/missing控制不覆盖原模型表现"
+      ]
+    },
+    {
+      "id": "P0.05",
+      "title_cn": "评分profile及同次验证对象复用",
+      "parent_plan": "P0",
+      "depends_on": [
+        "P0.01"
+      ],
+      "execution_kind": "offline_cpu",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "REPLAY_PROFILE.json",
+        "VERIFIED_REPLAY_EQUIVALENCE.json"
+      ],
+      "acceptance": [
+        "先测解析/哈希/重放/复制/I-O分段",
+        "只同次评分复用完整验证对象",
+        "损坏尾部/不同代码/合同不得命中缓存",
+        "原慢结果和新结果一致并报告实测性能"
+      ]
+    },
+    {
+      "id": "P1.01",
+      "title_cn": "两完整年来源与足迹角色清单",
+      "parent_plan": "P1",
+      "depends_on": [
+        "P0.01"
+      ],
+      "execution_kind": "offline_then_authorized_data",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "ANNUAL_SOURCE_MANIFEST.json",
+        "ANNUAL_SPLITS.json"
+      ],
+      "acceptance": [
+        "先复用本地缓存与限速补缺",
+        "2023拟合2024校准候选先核角色依赖",
+        "四季支持和缺失按唯一目标统计",
+        "未授权不下载且保留确认周封闭"
+      ]
+    },
+    {
+      "id": "P1.02",
+      "title_cn": "全年强后端与校准分解",
+      "parent_plan": "P1",
+      "depends_on": [
+        "P1.01",
+        "P0.04"
+      ],
+      "execution_kind": "cpu_fit",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "BANK_REGISTRY.json",
+        "SEASONAL_BACKEND_CONTROLS.json"
+      ],
+      "acceptance": [
+        "三类概率一致且每目标mask总权重1",
+        "训练/选择/校准/确认职责分开",
+        "保留旧冬季和消融银行",
+        "完整季节/事件块的损失与OOD分别输出"
+      ]
+    },
+    {
+      "id": "P1.03",
+      "title_cn": "可选common锚定残差控制",
+      "parent_plan": "P1",
+      "depends_on": [
+        "P1.02"
+      ],
+      "execution_kind": "optional_cpu_fit",
+      "status": "planned_not_executed",
+      "optional": true,
+      "outputs": [
+        "RESIDUAL_BACKEND_ABLATION.json"
+      ],
+      "acceptance": [
+        "空已获取集合严格等于common",
+        "训练用OOF或独立common预测",
+        "失败/缺报mask语义单列",
+        "不以提升为资格出口、不阻塞主计划"
+      ]
+    },
+    {
+      "id": "P2.01",
+      "title_cn": "未暴露确认与过程设计",
+      "parent_plan": "P2",
+      "depends_on": [
+        "P0.01"
+      ],
+      "execution_kind": "offline_design",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "CONFIRMATION_PREREG.json",
+        "EXPOSURE_LEDGER_DELTA.json"
+      ],
+      "acceptance": [
+        "现有四季/澄清样本继续标开发",
+        "过程数与区域周/目标数分开",
+        "缺失界和统计区间分开",
+        "冻结全部方法和停止规则后才可能启用确认"
+      ]
+    },
+    {
+      "id": "P3.01",
+      "title_cn": "全日历预算内强程序控制",
+      "parent_plan": "P3",
+      "depends_on": [
+        "P1.02",
+        "P0.05"
+      ],
+      "execution_kind": "cpu_experiment",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "FULL_CALENDAR_SCORECARD.json",
+        "EVENT_BLOCK_DECOMPOSITION.json"
+      ],
+      "acceptance": [
+        "每日48查询规则和预测日程共同",
+        "完整日历且不按分数挑日期",
+        "相对FOLLOW/common/同后端无补证/batch同时报告",
+        "主张仅开发且正例块退化完整保留"
+      ]
+    },
+    {
+      "id": "P3.02",
+      "title_cn": "同信息提取到F组件对照",
+      "parent_plan": "P3",
+      "depends_on": [
+        "P0.02",
+        "P0.03",
+        "P0.04",
+        "P1.02"
+      ],
+      "execution_kind": "offline_then_authorized_model",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "EXTRACTION_TO_FORECAST_REPORT.json"
+      ],
+      "acceptance": [
+        "同已读集合、同后端只换提取",
+        "新初始提示统一格式和测量合同",
+        "确认E变化实际进入F输入",
+        "全部失败/费用/未尝试分别保留"
+      ]
+    },
+    {
+      "id": "P3.03",
+      "title_cn": "新冻结有限选择器与采用实验",
+      "parent_plan": "P3",
+      "depends_on": [
+        "P3.01",
+        "P2.01"
+      ],
+      "execution_kind": "authorized_model",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "SELECTOR_COST_ATTRIBUTION.json"
+      ],
+      "acceptance": [
+        "旧235B选择器和bank不覆盖",
+        "等来源与等总资源主张分开",
+        "同查询轨迹重放不冒充真实新策略",
+        "单次worst-case门控不称全期安全保证"
+      ]
+    },
+    {
+      "id": "N5.01",
+      "title_cn": "温度F-only跨季节稳定性",
+      "parent_plan": "N5",
+      "depends_on": [
+        "P0.02"
+      ],
+      "execution_kind": "cpu_then_authorized_model",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "TEMPERATURE_COMPONENT_REPORT.json"
+      ],
+      "acceptance": [
+        "修复后独立日/三日计算一致",
+        "EMOS/ECC与minmax修复分开统计",
+        "高温日退化与过程依赖保留",
+        "无历史发布证据不把DWD变收费补证"
+      ]
+    },
+    {
+      "id": "N5.02",
+      "title_cn": "条件扩展的数据资格",
+      "parent_plan": "N5",
+      "depends_on": [
+        "P0.01"
+      ],
+      "execution_kind": "scoped_source_audit",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "HAZARD_GATE_DELTA.json"
+      ],
+      "acceptance": [
+        "MRMS物理积累窗未核准不进F",
+        "HEFS共同产品不重新收费",
+        "X09/D/MM/online分别放行",
+        "任何支线未完不伪称16类完成"
+      ]
+    },
+    {
+      "id": "P0.06",
+      "title_cn": "持续分级交付和结果边界",
+      "parent_plan": "P0",
+      "depends_on": [
+        "P0.01"
+      ],
+      "execution_kind": "offline_packaging",
+      "status": "planned_not_executed",
+      "optional": false,
+      "outputs": [
+        "DELIVERY_MANIFEST.json",
+        "NEXT_EXECUTABLE_ACTION.md"
+      ],
+      "acceptance": [
+        "新文件hash与依赖检查",
+        "写清实际跑过与仅读回执",
+        "历史失败与未决原样保留",
+        "不上传密钥权重临时签名链接且未经授权不push"
+      ]
+    }
+  ]
+}

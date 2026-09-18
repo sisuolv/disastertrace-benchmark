@@ -1,0 +1,130 @@
+{
+  "baseline_commit": "1fd6821fef15b26898a57c74d4715714f33ea779",
+  "plan_adds_spending_authorization": false,
+  "existing_scope_must_be_respected": true,
+  "work_packages": [
+    {
+      "id": "P0.1",
+      "maps_to": "N1",
+      "title_cn": "本地完整基线与范围核验",
+      "depends_on": [],
+      "resource_gate": "existing_local_cpu",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "P0.2a",
+      "maps_to": "N1/N5",
+      "title_cn": "温度统一合同与模型输出校验",
+      "depends_on": [
+        "P0.1"
+      ],
+      "resource_gate": "existing_local_cpu",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "P0.2b",
+      "maps_to": "N1",
+      "title_cn": "API最终发送门槛与异常回归",
+      "depends_on": [
+        "P0.1"
+      ],
+      "resource_gate": "existing_local_cpu_mock_transport",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "P0.2c",
+      "maps_to": "N1/N3",
+      "title_cn": "初始H15数据卡/提示绑定",
+      "depends_on": [
+        "P0.1"
+      ],
+      "resource_gate": "existing_local_cpu",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "P0.3",
+      "maps_to": "N1",
+      "title_cn": "真实回放剖析与同次安全去重",
+      "depends_on": [
+        "P0.1"
+      ],
+      "resource_gate": "existing_local_cpu",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "P1.1",
+      "maps_to": "N2",
+      "title_cn": "两年资料差额、预注册、依赖清除",
+      "depends_on": [
+        "P0.2c"
+      ],
+      "resource_gate": "design_then_authorized_network",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "P1.2",
+      "maps_to": "N3",
+      "title_cn": "全年/多mask后端与冻结校准",
+      "depends_on": [
+        "P1.1"
+      ],
+      "resource_gate": "authorized_cpu_fit",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "P2.1",
+      "maps_to": "N2",
+      "title_cn": "过程与确认登记、暴露隔离",
+      "depends_on": [
+        "P0.2c"
+      ],
+      "resource_gate": "existing_metadata_only",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "P3.1",
+      "maps_to": "N4",
+      "title_cn": "完整连续周预算程序控制",
+      "depends_on": [
+        "P0.3",
+        "P1.2"
+      ],
+      "resource_gate": "authorized_bounded_cpu_replay",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "P3.2",
+      "maps_to": "N3/N4",
+      "title_cn": "固定后端的有限模型机制",
+      "depends_on": [
+        "P3.1",
+        "P0.2a",
+        "P0.2b",
+        "P2.1"
+      ],
+      "resource_gate": "new_explicit_model_authorization",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "N5.temp",
+      "maps_to": "N5",
+      "title_cn": "温度分季节与F-only资格",
+      "depends_on": [
+        "P0.2a"
+      ],
+      "resource_gate": "existing_local_cpu",
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "CONFIRM",
+      "maps_to": "N2/N4",
+      "title_cn": "一次性预注册确认",
+      "depends_on": [
+        "P2.1",
+        "P3.2"
+      ],
+      "resource_gate": "new_confirm_payload_authorization",
+      "status": "planned_not_executed"
+    }
+  ]
+}

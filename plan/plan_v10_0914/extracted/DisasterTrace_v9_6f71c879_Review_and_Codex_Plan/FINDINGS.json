@@ -1,0 +1,105 @@
+{
+  "commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "findings": [
+    {
+      "id": "F01",
+      "priority": "P0_for_confirmatory_claim",
+      "kind": "design_gate_not_new_code_failure",
+      "title_cn": "普通日历切片与按已知结果筛选的 Denver 诊断必须分开",
+      "evidence": [
+        "LATEST_PROGRESS_20260914_CN.md",
+        "scripts/run_api_pilot.py",
+        "scripts/run_api_rare_pilot.py"
+      ],
+      "impact_cn": "Denver 不能证明自然监测总体正增益；必须相对同批batch/risk/coverage归因而非只相对FOLLOW。",
+      "minimum_action_cn": "完整导出全部方法与配对损失；在新过程上冻结选择规则后确认。"
+    },
+    {
+      "id": "F02",
+      "priority": "P1",
+      "kind": "code_confirmed_and_synthetic_probe",
+      "title_cn": "补充资料存在性与后校准器选择混合",
+      "evidence": [
+        "monitoring_v1/calibration.py::predict",
+        "scripts/fit_regional_baselines.py",
+        "PROBE_RESULTS.json:P1"
+      ],
+      "impact_cn": "相同基础频率单元也可能因missing查询从base切换evidence映射而改变概率。尚未证明真实结果被该效应主导。",
+      "minimum_action_cn": "增加raw_cell/post_family/post_value来源记录和匹配calibration-only/missingness-only/content对照；旧银行冻结。"
+    },
+    {
+      "id": "F03",
+      "priority": "P1",
+      "kind": "code_confirmed_and_synthetic_probe",
+      "title_cn": "无TAF回退不使用附加观测内容",
+      "evidence": [
+        "monitoring_v1/calibration.py::feature_key",
+        "PROBE_RESULTS.json:P2"
+      ],
+      "impact_cn": "candidate=None/unavailable时低或高观测均进入同一no_taf单元；该程序未体现某些信息不能反推资料无信息。",
+      "minimum_action_cn": "分层报告no_taf/support counts；新方法仅在独立训练校准期开发。"
+    },
+    {
+      "id": "F04",
+      "priority": "P1",
+      "kind": "confirmed_model_output_not_parser_defect",
+      "title_cn": "逐槽事实正确而总体存在命题错误",
+      "evidence": [
+        "scripts/evidence_diagnostic.py",
+        "api_evidence_02/captures/deepseek-v4-pro/1079e059c870ec9994df3f67/RESPONSE.json",
+        "PROBE_RESULTS.json:P3"
+      ],
+      "impact_cn": "false+unknown被汇总为false；parse保持语义错误以便计分是正确的，不应自动修复原输出。",
+      "minimum_action_cn": "独立命名model-slot+deterministic-aggregate管线并冻结新实验；保留原始分母与失败。"
+    },
+    {
+      "id": "F05",
+      "priority": "P1",
+      "kind": "declared_scope_limit",
+      "title_cn": "当前连续API比较只覆盖base-bound",
+      "evidence": [
+        "scripts/run_api_pilot.py::prepare_case",
+        "scripts/analyze_api_followup.py::audit_f"
+      ],
+      "impact_cn": "不能把FOLLOW/COPY当前同分视为一般协议等价，persistent新批次尚未运行。",
+      "minimum_action_cn": "先CPU验证非退化版本链与动作差异；必要时新冻结双协议、匹配时延与原生成本两类实验。"
+    },
+    {
+      "id": "F06",
+      "priority": "P1",
+      "kind": "unresolved_qualification",
+      "title_cn": "过程分组不等于已证明独立天气系统",
+      "evidence": [
+        "scripts/build_process_manifest.py",
+        "RESEARCH_ROADMAP_CN.md"
+      ],
+      "impact_cn": "1h机会、重复阈值和相邻站点相关；全源依赖/状态回看与实际过程尚需核查。",
+      "minimum_action_cn": "保留fit/calibration隔离成果，增补完整输入依赖与保守块敏感性；确认周不打开。"
+    },
+    {
+      "id": "F07",
+      "priority": "P2",
+      "kind": "reported_capture_failure_with_retained_evidence",
+      "title_cn": "E01遗留未知费用与采集失败不是模型错误",
+      "evidence": [
+        "LATEST_PROGRESS_20260914_CN.md",
+        "monitoring_v1/api_capture.py"
+      ],
+      "impact_cn": "62项unknown/reserved不应清零或补采替换；完成E02只限定新批次可比性。",
+      "minimum_action_cn": "离线原回执对账及状态append-only更正；缺提供商计费证据保留未知。"
+    },
+    {
+      "id": "F08",
+      "priority": "P1_for_C3",
+      "kind": "completed_program_scope_but_unqualified_model_extension",
+      "title_cn": "温度完整两年程序链已完成，C1与模型温度尚未完成",
+      "evidence": [
+        "LATEST_PROGRESS_20260914_CN.md",
+        "scripts/run_temperature_fullcalendar.py"
+      ],
+      "impact_cn": "192程序轨迹无查询和模型，不能等于两灾种主动机制确认。",
+      "minimum_action_cn": "沿用合法日/三日结果与免费共同集合，先补真正新增信息或限定F验证，不重复下载扩数。"
+    }
+  ],
+  "confirmed_new_production_score_corruption": false
+}

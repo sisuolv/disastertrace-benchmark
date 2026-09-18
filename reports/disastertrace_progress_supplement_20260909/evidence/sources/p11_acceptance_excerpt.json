@@ -1,0 +1,238 @@
+{
+  "acceptance_id": "a6b69e2cd071b4255a000d44f3195827c0d16da88a8f19690bc5d3c8a45ad714",
+  "all_gpu_jobs_released": true,
+  "ancestors": {
+    "artifacts/p10_forecast_cohort_v1/OFFLINE_ACCEPTANCE.json": {
+      "acceptance_id": "78ce4f3e29d175613bb464ce854849c096382d17235b7ea3687ef46e991ca923",
+      "verified_files": 1399
+    }
+  },
+  "at": "2026-09-08T22:15:13.371979+00:00",
+  "audit_acceptance_is_not_collection_success": true,
+  "cpu_review_locations": {
+    "deepseek_r1": {
+      "analysis_id": "eabf96989b3930a86760b2cbe3a5e96db3595a2e1896e10d1703f1f52d8e5615",
+      "analysis_sha256": "28cb9f9b51346bdc56e0fd52b299f3791fa96bbe843d12a13aeff2aa431c5721",
+      "at": "2026-09-08T22:04:19.699408+00:00",
+      "execution_id": "ec998a81fb6d8e2efec754c9b1c42944e0027cf5f82786301c9b98547ef5832d",
+      "final_status_sha256": "f4bedf263f22af05ea6cba17fa073b1e44f036f11c8deb7fbb14af6c7839c8c1",
+      "finalization": "artifacts/p11_cohort_live_v1/finalization_deepseek_r1_01",
+      "model_profile": "deepseek_r1",
+      "phase": "p11",
+      "report_id": "2eee8cceb3356b08b56274a5b6d2242542b18f923d55c042d54c592fb7eec799",
+      "reused_existing_verified_analysis": true,
+      "review_directory": "artifacts/autonomy_10h_v1/cohort_reviews_01"
+    },
+    "qwen3": {
+      "analysis_id": "e54116face914904f5b032c8de555c811c6476a4eb35cce97533291bf7e26559",
+      "analysis_sha256": "e6a8ec59eb425d632871247eba85d1281bf8a56870e85f5652e1786907c5a840",
+      "at": "2026-09-08T22:04:19.361806+00:00",
+      "execution_id": "e7af44ccea2f037b1349c652cc9d3598f1b680a6a9d0c82914eaad22e3200406",
+      "final_status_sha256": "98feed0b95fc2c73045bf3a7753f3fba9260e60e37ae671b455310400dcce094",
+      "finalization": "artifacts/p11_cohort_live_v1/finalization_qwen3_01",
+      "model_profile": "qwen3",
+      "phase": "p11",
+      "report_id": "a8427f3e11a0dd3f56bafb6b021cb4a23b547a8a00cbafc8d30f7acaac59dfae",
+      "reused_existing_verified_analysis": false,
+      "review_directory": "artifacts/autonomy_10h_v1/reviews_continuation_v2"
+    }
+  },
+  "design_id": "a6e6a400b01633ecd31a56336da4a7541ce4b75bf523c89f298a6b85597728cc",
+  "initial_observer_failures_preserved": true,
+  "model_matrix_complete": false,
+  "model_results": {
+    "deepseek_r1": {
+      "all_gpu_jobs_succeeded": false,
+      "analysis_id": "eabf96989b3930a86760b2cbe3a5e96db3595a2e1896e10d1703f1f52d8e5615",
+      "counts": {
+        "attempted": 1604,
+        "content_tokens": 799037,
+        "delimiter_tokens": 1594,
+        "extraction_errors": 10,
+        "max_requested_output_tokens": 13139968,
+        "output_tokens": 2097855,
+        "parsed_saved": 1604,
+        "planned": 2412,
+        "prompt_tokens_reserved": 7918760,
+        "raw_returned": 1604,
+        "reasoning_tokens": 1295710,
+        "recovered_raw": 0,
+        "terminal_tokens": 1514,
+        "unattempted": 808,
+        "unknown_outcomes": 0
+      },
+      "execution_id": "ec998a81fb6d8e2efec754c9b1c42944e0027cf5f82786301c9b98547ef5832d",
+      "model_matrix_complete": false,
+      "platform_jobs": [
+        {
+          "cluster": "computing-cluster-01g-02",
+          "complete_time": "2026-09-08T20:08:19Z",
+          "display_name": "dt-p11-model-aadbbccefd-w0",
+          "gpu_count": 1,
+          "job_id": "pt-sc0yel4m",
+          "raw_details_sha256": "3eae32b5fd72d4cc37c12041e10905b99119adbef131a383c31a22b5f1dc34be",
+          "released": true,
+          "start_time": "2026-09-08T19:01:57Z",
+          "state": "FAILED",
+          "worker_id": 0
+        },
+        {
+          "cluster": "computing-cluster-01g-02",
+          "complete_time": "2026-09-08T20:45:44Z",
+          "display_name": "dt-p11-model-aadbbccefd-w1",
+          "gpu_count": 1,
+          "job_id": "pt-8a1ae7w8",
+          "raw_details_sha256": "24b72f681faf7ffc3252129abdfb0f9f86dc667b9f0029951e68d54c3bd8acd8",
+          "released": true,
+          "start_time": "2026-09-08T19:02:12Z",
+          "state": "FAILED",
+          "worker_id": 1
+        }
+      ],
+      "report_id": "2eee8cceb3356b08b56274a5b6d2242542b18f923d55c042d54c592fb7eec799",
+      "score_counts": {
+        "all_correct": 3,
+        "current_source": 479,
+        "errors": {
+          "correct": 3,
+          "invalid_json_shape": 90,
+          "missing_response": 808,
+          "wrong_key": 232,
+          "wrong_locator": 1,
+          "wrong_source_version": 5,
+          "wrong_value_status_or_unit": 1273
+        },
+        "fields": {
+          "latitude": 12,
+          "longitude": 10,
+          "max_sustained_wind": 250
+        },
+        "key_correct": 1282,
+        "kind_correct": 1503,
+        "literal_support": {
+          "latitude": 0,
+          "longitude": 0,
+          "max_sustained_wind": 0
+        },
+        "locator_correct": 216,
+        "planned": 2412,
+        "received": 1604,
+        "shape_valid": 1514,
+        "status_correct": 970,
+        "storm_correct": 1502,
+        "time_correct": 1299,
+        "units": {
+          "latitude": 137,
+          "longitude": 137,
+          "max_sustained_wind": 1505
+        },
+        "values": {
+          "latitude": 215,
+          "longitude": 120,
+          "max_sustained_wind": 357
+        }
+      },
+      "unreturned_in_primary_denominator": 808
+    },
+    "qwen3": {
+      "all_gpu_jobs_succeeded": true,
+      "analysis_id": "e54116face914904f5b032c8de555c811c6476a4eb35cce97533291bf7e26559",
+      "counts": {
+        "attempted": 2412,
+        "content_tokens": 345446,
+        "delimiter_tokens": 2411,
+        "extraction_errors": 1,
+        "max_requested_output_tokens": 19759104,
+        "output_tokens": 3317090,
+        "parsed_saved": 2412,
+        "planned": 2412,
+        "prompt_tokens_reserved": 16493455,
+        "raw_returned": 2412,
+        "reasoning_tokens": 2966822,
+        "recovered_raw": 0,
+        "terminal_tokens": 2411,
+        "unattempted": 0,
+        "unknown_outcomes": 0
+      },
+      "execution_id": "e7af44ccea2f037b1349c652cc9d3598f1b680a6a9d0c82914eaad22e3200406",
+      "model_matrix_complete": true,
+      "platform_jobs": [
+        {
+          "cluster": "computing-cluster-01g-02",
+          "complete_time": "2026-09-08T21:47:19Z",
+          "display_name": "dt-p11-model-261addb5d0-w0",
+          "gpu_count": 1,
+          "job_id": "pt-vzz3moge",
+          "raw_details_sha256": "279dda89a6aa7f6f3f842d05a0a9dbed98002eac90a59a91588054fb54f9ff34",
+          "released": true,
+          "start_time": "2026-09-08T19:01:52Z",
+          "state": "SUCCEEDED",
+          "worker_id": 0
+        },
+        {
+          "cluster": "computing-cluster-01g-02",
+          "complete_time": "2026-09-08T21:29:36Z",
+          "display_name": "dt-p11-model-261addb5d0-w1",
+          "gpu_count": 1,
+          "job_id": "pt-h1ida2hf",
+          "raw_details_sha256": "5a4d396884e692e00e0dec8f75a8c47b29b2c6870f6d5e4fa6958b2561f026f6",
+          "released": true,
+          "start_time": "2026-09-08T19:01:39Z",
+          "state": "SUCCEEDED",
+          "worker_id": 1
+        }
+      ],
+      "report_id": "a8427f3e11a0dd3f56bafb6b021cb4a23b547a8a00cbafc8d30f7acaac59dfae",
+      "score_counts": {
+        "all_correct": 1000,
+        "current_source": 1754,
+        "errors": {
+          "correct": 1000,
+          "invalid_json_shape": 1,
+          "wrong_key": 3,
+          "wrong_locator": 483,
+          "wrong_source_version": 33,
+          "wrong_value_status_or_unit": 892
+        },
+        "fields": {
+          "latitude": 1542,
+          "longitude": 1544,
+          "max_sustained_wind": 1669
+        },
+        "key_correct": 2408,
+        "kind_correct": 2411,
+        "literal_support": {
+          "latitude": 766,
+          "longitude": 761,
+          "max_sustained_wind": 597
+        },
+        "locator_correct": 1167,
+        "planned": 2412,
+        "received": 2412,
+        "shape_valid": 2411,
+        "status_correct": 2059,
+        "storm_correct": 2411,
+        "time_correct": 2408,
+        "units": {
+          "latitude": 2411,
+          "longitude": 2411,
+          "max_sustained_wind": 2411
+        },
+        "values": {
+          "latitude": 1588,
+          "longitude": 1589,
+          "max_sustained_wind": 1721
+        }
+      },
+      "unreturned_in_primary_denominator": 0
+    }
+  },
+  "new_model_calls": 0,
+  "phase": "p11",
+  "schema_version": "expanded_cohort_completed_acceptance_v2",
+  "status": "passed",
+  "unit_normalization": false,
+  "evidence_inventory_entries": 71485,
+  "excerpt_not_full_acceptance": true,
+  "source_sha256": "fa76fc961998b7cf0afecb1c30b9abbab6dde95dbe4cf06592225013a9ae0869"
+}

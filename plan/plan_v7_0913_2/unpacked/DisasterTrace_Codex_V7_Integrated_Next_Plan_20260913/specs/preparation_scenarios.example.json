@@ -1,0 +1,79 @@
+{
+  "schema": "disastertrace.preparation_scenario.example.v1",
+  "status": "synthetic_protocol_fixture_not_domain_rule",
+  "real_world_execution": false,
+  "time_units": "relative_minutes",
+  "cost_units": "research_units_not_currency",
+  "registered_need_time": 240,
+  "weather_realizations_for_synthetic_tests_only": [
+    {
+      "A": 1,
+      "B": 0
+    },
+    {
+      "A": 0,
+      "B": 1
+    },
+    {
+      "A": 1,
+      "B": 1
+    },
+    {
+      "A": 0,
+      "B": 0
+    }
+  ],
+  "future_realization_hidden_from_policy": true,
+  "common_forecast_example": {
+    "A": 0.4,
+    "B": 0.4
+  },
+  "execution_resources": {
+    "crew": 1
+  },
+  "jobs": [
+    {
+      "target": "A",
+      "duration_minutes": 180,
+      "crew_required": 1,
+      "release": 0,
+      "need_by": 240,
+      "cancel_cleanup_minutes": 10,
+      "retained_progress_after_cancel": 0
+    },
+    {
+      "target": "B",
+      "duration_minutes": 30,
+      "crew_required": 1,
+      "release": 0,
+      "need_by": 240,
+      "cancel_cleanup_minutes": 5,
+      "retained_progress_after_cancel": 0
+    }
+  ],
+  "rule": {
+    "preparation_progresses_during_inference": true,
+    "completion_at_deadline_allowed_with_prior_start": true,
+    "prediction_reversion_cancels_preparation": false,
+    "spent_effort_refunded": false,
+    "crew_released_at_completion": true,
+    "prepared_state_valid_until": 300,
+    "cancel_completed_job": false,
+    "zero_duration_action_cycles_allowed": false
+  },
+  "sensitivity_variants": [
+    {
+      "variant": "capacity2",
+      "execution_resources": {
+        "crew": 2
+      }
+    },
+    {
+      "variant": "shortA",
+      "duration_override_minutes": {
+        "A": 60
+      }
+    }
+  ],
+  "warning_cn": "数值只用于状态边界和非退化合成测试；真实场景需另登记规则依据，不作航空/水文操作建议。"
+}

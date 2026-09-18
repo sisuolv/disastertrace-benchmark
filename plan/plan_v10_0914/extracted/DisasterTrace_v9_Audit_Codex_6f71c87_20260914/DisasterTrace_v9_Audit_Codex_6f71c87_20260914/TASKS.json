@@ -1,0 +1,382 @@
+{
+  "schema": "disastertrace.v9.review_followup_plan.v1",
+  "based_on_commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "current_roadmap": "plans/v9_followup_roadmap_20260914_01/RESEARCH_ROADMAP_CN.md",
+  "preserved_contributions": [
+    "C1",
+    "C2",
+    "C3"
+  ],
+  "preserved_experiments": [
+    "X00",
+    "X01",
+    "X02",
+    "X03",
+    "X04",
+    "X05",
+    "X06",
+    "X07",
+    "X08",
+    "X09"
+  ],
+  "task_count": 17,
+  "tasks": [
+    {
+      "id": "N1.audit_current",
+      "title_cn": "复核当前生产包、旧修复与测试范围",
+      "status": "planned_not_executed",
+      "execution_kind": "production_import_and_scope",
+      "depends_on": [],
+      "historical_mapping": "W00/W01/W03/W04",
+      "proposed_outputs": [
+        "BASELINE_STATE.json",
+        "STATUS_DELTA.json",
+        "PRODUCTION_PROBES.xml"
+      ],
+      "acceptance_cn": [
+        "当前HEAD与工作区不回退；当前/冻结源码分别绑定",
+        "59探针用真实package执行并保留nodeid；缺fixture如实报告",
+        "未知执行普通结算拒绝；合法对账和干预仍通过"
+      ],
+      "result": null
+    },
+    {
+      "id": "N1.portable_capsule",
+      "title_cn": "完整小复现胶囊",
+      "status": "planned_not_executed",
+      "execution_kind": "local_cpu",
+      "depends_on": [
+        "N1.audit_current"
+      ],
+      "historical_mapping": "W19",
+      "proposed_outputs": [
+        "CAPSULE_MANIFEST.json",
+        "verify_capsule.py",
+        "CAPSULE_REPLAY.json"
+      ],
+      "acceptance_cn": [
+        "包含普通F、Denver探索、E02原答和温度多起报必要原件",
+        "移址且禁模型网络后从journal得到相同数值",
+        "篡改/缺失拒绝；不声称全量重建"
+      ],
+      "result": null
+    },
+    {
+      "id": "N1.api_reconcile",
+      "title_cn": "原62条未知/待定费用证明对账",
+      "status": "planned_not_executed",
+      "execution_kind": "local_cpu",
+      "depends_on": [
+        "N1.audit_current"
+      ],
+      "historical_mapping": "W03/W05/W08",
+      "proposed_outputs": [
+        "ORIGINAL_ATTEMPT_RECONCILIATION.json",
+        "UNRESOLVED_COSTS.json"
+      ],
+      "acceptance_cn": [
+        "每条结果绑定原请求与原响应或保留未知",
+        "无模型新增、无免费重试、无无证据释放预留",
+        "费用上界与服务商实际账单明确分开"
+      ],
+      "result": null
+    },
+    {
+      "id": "N3.calibration_attribution",
+      "title_cn": "分离原始频率与校准表切换",
+      "status": "planned_not_executed",
+      "execution_kind": "local_cpu",
+      "depends_on": [
+        "N1.audit_current"
+      ],
+      "historical_mapping": "W06/W11",
+      "proposed_outputs": [
+        "CALIBRATION_ATTRIBUTION.json",
+        "FOUR_CELL_DIAGNOSTICS.json"
+      ],
+      "acceptance_cn": [
+        "记录selected key、回退层、rawp、family和hash，原预测不变",
+        "合成0.2到0.4仅作行为诊断；实际日志另统计触发",
+        "四格交叉及交互分列，不伪装唯一因果分解"
+      ],
+      "result": null
+    },
+    {
+      "id": "N3.slot_aggregate",
+      "title_cn": "原模型逐槽答案的派生汇总",
+      "status": "planned_not_executed",
+      "execution_kind": "local_cpu",
+      "depends_on": [
+        "N1.audit_current"
+      ],
+      "historical_mapping": "W10",
+      "proposed_outputs": [
+        "E_ORIGINAL_AND_DERIVED.jsonl",
+        "AGGREGATION_ERROR_REPORT_CN.md"
+      ],
+      "acceptance_cn": [
+        "原答与原分母保留，格式错不修成对",
+        "程序只聚合模型槽位，不用隐藏或参考槽位替换",
+        "核126视图/42底题及全部原始错误，不计为新调用"
+      ],
+      "result": null
+    },
+    {
+      "id": "N2.process_extension",
+      "title_cn": "过程与输入依赖扩展",
+      "status": "planned_not_executed",
+      "execution_kind": "local_then_authorized_bounded_data",
+      "depends_on": [
+        "N1.audit_current"
+      ],
+      "historical_mapping": "W11/W17",
+      "proposed_outputs": [
+        "INPUT_DEPENDENCIES.json",
+        "SPLITS.json",
+        "EXPOSURE_LEDGER.json"
+      ],
+      "acceptance_cn": [
+        "自然与结果选定诊断分表，Denver已暴露身份不变",
+        "真实回看/状态/来源/结果交叠进入分组而非固定小时保证",
+        "先冻结新日期和范围；保留确认周不打开"
+      ],
+      "result": null
+    },
+    {
+      "id": "N3.baseline_support",
+      "title_cn": "区域尾部支持与轻量强融合",
+      "status": "planned_not_executed",
+      "execution_kind": "local_then_authorized_fit",
+      "depends_on": [
+        "N3.calibration_attribution",
+        "N2.process_extension"
+      ],
+      "historical_mapping": "W11",
+      "proposed_outputs": [
+        "BASELINE_SUPPORT_CARD.json",
+        "FROZEN_BASELINE_CANDIDATES.json"
+      ],
+      "acceptance_cn": [
+        "零正例calibration和cell退回率保留，不等于可靠校准",
+        "新拟合只用独立fit/cal，旧评价日不重拟合后复用为test",
+        "raw/现有PAV/收缩与持续性等对手共享同信息"
+      ],
+      "result": null
+    },
+    {
+      "id": "N4.pipeline_contract",
+      "title_cn": "E提取、汇总、F转换和采用接口",
+      "status": "planned_not_executed",
+      "execution_kind": "local_cpu",
+      "depends_on": [
+        "N3.slot_aggregate",
+        "N3.calibration_attribution"
+      ],
+      "historical_mapping": "W10/W12",
+      "proposed_outputs": [
+        "PIPELINE_CONTRACT.json",
+        "PIPELINE_TRACE_SCHEMA.json",
+        "PIPELINE_TESTS.xml"
+      ],
+      "acceptance_cn": [
+        "模型槽位、原汇总、程序汇总与程序事实分别标源",
+        "Eunknown不强制F0.5，E不是未来真值",
+        "每个转换绑定父资产/费用/时间；不新增平行时钟"
+      ],
+      "result": null
+    },
+    {
+      "id": "N4.fixed_pipeline_pilot",
+      "title_cn": "有限同信息E/F新管线实验",
+      "status": "planned_not_executed",
+      "execution_kind": "authorized_bounded_inference",
+      "depends_on": [
+        "N4.pipeline_contract",
+        "N3.baseline_support",
+        "N2.process_extension"
+      ],
+      "historical_mapping": "W12",
+      "proposed_outputs": [
+        "PIPELINE_PILOT_FREEZE.json",
+        "EF_PAIRED_RESULTS.json"
+      ],
+      "acceptance_cn": [
+        "模型/程序全部臂预登记、调用及费用自动计算",
+        "原有E02仅离线派生，不伪装新会话输出",
+        "记录精确和两阈值数值变化、原答/生效/缺失，负结果保留"
+      ],
+      "result": null
+    },
+    {
+      "id": "N4.multicutoff_revision",
+      "title_cn": "多截止同目标与两种修订协议",
+      "status": "planned_not_executed",
+      "execution_kind": "cpu_then_authorized_inference",
+      "depends_on": [
+        "N1.audit_current",
+        "N3.calibration_attribution"
+      ],
+      "historical_mapping": "W07/W08/W12",
+      "proposed_outputs": [
+        "MULTICUTOFF_TARGETS.json",
+        "REVISION_PROTOCOL_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "同一target至少两个合法cutoff，规范结果唯一",
+        "COPY/FOLLOW/FIRST_HOLD/融合及两协议分别运行",
+        "新程序自己运行时间，不压缩旧模型耗时伪造轨迹"
+      ],
+      "result": null
+    },
+    {
+      "id": "N4.shared_budget_witness",
+      "title_cn": "共享预算因素与有限联合见证",
+      "status": "planned_not_executed",
+      "execution_kind": "cpu_then_authorized_inference",
+      "depends_on": [
+        "N4.pipeline_contract",
+        "N4.multicutoff_revision"
+      ],
+      "historical_mapping": "W09/W12",
+      "proposed_outputs": [
+        "RESOURCE_FACTORIAL.json",
+        "JOINT_WITNESSES.json"
+      ],
+      "acceptance_cn": [
+        "固定selector/predictor做2x2，再在同global/shared比selector",
+        "真实已花/预留/缓存/截止进入同一见证并实际复放",
+        "E可达不是F上界，全读便宜不得人为涨价"
+      ],
+      "result": null
+    },
+    {
+      "id": "N5.temperature_model",
+      "title_cn": "温度连续模型与合法额外信息",
+      "status": "planned_not_executed",
+      "execution_kind": "local_then_authorized_inference",
+      "depends_on": [
+        "N4.pipeline_contract",
+        "N1.portable_capsule"
+      ],
+      "historical_mapping": "W13",
+      "proposed_outputs": [
+        "TEMPERATURE_PIPELINE_FREEZE.json",
+        "TEMPERATURE_MODEL_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "复用192轨迹与原生极值/成员/日界，保留day0/缺失",
+        "完整集合产品免费，不拆分制造获取优势",
+        "没有额外合法信息只放行F使用轨，不声称C1"
+      ],
+      "result": null
+    },
+    {
+      "id": "N5.confirmation_design",
+      "title_cn": "独立过程确认冻结",
+      "status": "planned_not_executed",
+      "execution_kind": "local_design_then_separate_authorization",
+      "depends_on": [
+        "N2.process_extension",
+        "N3.baseline_support",
+        "N4.fixed_pipeline_pilot",
+        "N4.shared_budget_witness"
+      ],
+      "historical_mapping": "W17",
+      "proposed_outputs": [
+        "CONFIRMATION_PREREG.json",
+        "CONFIRMATION_GATE.json"
+      ],
+      "acceptance_cn": [
+        "方法/主比较/预算/失败/统计/停止规则先冻结",
+        "相关块非已知独立天气过程；不靠重复视图或显著性扩样",
+        "确认不硬依赖D/MM/X09/16类或正收益"
+      ],
+      "result": null
+    },
+    {
+      "id": "N5.x09_controls",
+      "title_cn": "保留原X09并补总预算对照",
+      "status": "planned_not_executed",
+      "execution_kind": "local_then_authorized_inference",
+      "depends_on": [
+        "N4.pipeline_contract"
+      ],
+      "historical_mapping": "W12",
+      "proposed_outputs": [
+        "X09_BUDGET_MATCHING.json"
+      ],
+      "acceptance_cn": [
+        "相同共享信息，逐目标与联合回答集合明确",
+        "每请求上限与目标组总预算两条件分列",
+        "旧未提交启动器不重开；无效批答全目标保留"
+      ],
+      "result": null
+    },
+    {
+      "id": "N5.mm_hydro_d",
+      "title_cn": "MM、水文与D条件扩展",
+      "status": "planned_not_executed",
+      "execution_kind": "separate_qualified_extensions",
+      "depends_on": [
+        "N1.audit_current"
+      ],
+      "historical_mapping": "W14/W15/W16",
+      "proposed_outputs": [
+        "EXTENSION_GATES.json"
+      ],
+      "acceptance_cn": [
+        "MRMS精确时间支持过关后才进物理F；隐藏mask不免费",
+        "HEFS共同完整产品不重收费，物理流量口径单验",
+        "D固定F回放与全反馈、研究损失与真实应用严格分开"
+      ],
+      "result": null
+    },
+    {
+      "id": "N5.shadow_and_breadth",
+      "title_cn": "前瞻预测与16类增量维护",
+      "status": "planned_not_executed",
+      "execution_kind": "design_then_separate_authorization",
+      "depends_on": [
+        "N1.audit_current"
+      ],
+      "historical_mapping": "W18/W19",
+      "proposed_outputs": [
+        "PROSPECTIVE_SUBMISSION_GATE.json",
+        "HAZARD_ADMISSION_DELTA.json"
+      ],
+      "acceptance_cn": [
+        "来源采集不等于提前预测提交，first_seen不等于全网首发",
+        "没有当次采集/模型授权仅交付门槛，不后台启动",
+        "沿用原source_id，逐类E/F/D/MM/确认不同级别"
+      ],
+      "result": null
+    },
+    {
+      "id": "N1.delivery",
+      "title_cn": "持续增量交付",
+      "status": "planned_not_executed",
+      "execution_kind": "local_packaging",
+      "depends_on": [
+        "N1.audit_current"
+      ],
+      "historical_mapping": "W19",
+      "proposed_outputs": [
+        "MANIFEST.json",
+        "RELEASE_SCOPE_CN.md"
+      ],
+      "acceptance_cn": [
+        "reported/reproduced/proposed、原始/派生和真实/合成分别写",
+        "原始失败、unknown及旧冻结不覆盖，密钥/签名URL不发布",
+        "DAG/链接/JSON/hash/zip检验完成，未执行任务不打勾"
+      ],
+      "result": null
+    }
+  ],
+  "first_batch": [
+    "N1.audit_current",
+    "N1.portable_capsule",
+    "N1.api_reconcile",
+    "N3.calibration_attribution",
+    "N3.slot_aggregate"
+  ]
+}

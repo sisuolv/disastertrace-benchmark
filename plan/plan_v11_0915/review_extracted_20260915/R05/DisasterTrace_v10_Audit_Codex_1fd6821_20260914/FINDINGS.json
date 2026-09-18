@@ -1,0 +1,66 @@
+[
+  {
+    "id": "F01",
+    "priority": "P1",
+    "type": "reproduced_input_contract_gap",
+    "title_cn": "温度两份概率计算器的输入资格不一致",
+    "locations": [
+      "monitoring_v1/feature_tasks.py:43-57,73-99",
+      "monitoring_v1/temperature_postprocess.py:12-59"
+    ],
+    "observed": "非午夜起止的24h目标在feature_tasks中返回0.5，postprocess拒绝；同日期矛盾产品按数组次序返回1.0或0.5，postprocess拒绝。",
+    "scope": "合成入口反例；未证明已冻结的128温度任务或全历史轨迹触发；未测FormalSession端到端绕过。",
+    "fix": "共享严格目标/日期/成员身份验证，保留两份独立数值计算；拒绝矛盾重复日期而非静默覆盖。",
+    "old_result_policy": "扫原输入并另存影响表；无触发写0，不修改旧日志/分数/模型输出。"
+  },
+  {
+    "id": "F02",
+    "priority": "P1",
+    "type": "reproduced_response_validation_gap",
+    "title_cn": "模型能见度声明接受正无穷下界",
+    "locations": [
+      "monitoring_v1/native_feature_forecast.py:55-84",
+      "monitoring_v1/feature_tasks.py:25-30"
+    ],
+    "observed": "parse_features接受lower=upper=\"+inf\"且双闭端点；其集合不含有限的原生能见度值。",
+    "scope": "合成模型响应；原始212/84提取回答是否有此形状未扫描。",
+    "fix": "下界必须是有限非负数；只有上界可为+inf。保留P/M合法删失和主报文标签语义；禁止在全域Interval上错误禁掉合法无界支持。",
+    "old_result_policy": "原协议成绩保留；新协议修复后另列派生影响与新批成绩。"
+  },
+  {
+    "id": "F03",
+    "priority": "P2",
+    "type": "reproduced_representation_limitation",
+    "title_cn": "原生数值特征没有编码端点开闭",
+    "locations": [
+      "monitoring_v1/native_feature_forecast.py:87-199"
+    ],
+    "observed": "合成[0,1000]与[0,1000)的E支持分别未知/支持，但feature_vector完全相同。",
+    "scope": "特征压缩限制，非评分算错；当前1km/5km原生产品是否恰好触发尚未核验。",
+    "fix": "先做原生样本覆盖审计；需要时新增版本化开闭/删失标志或合法阈值支持特征，再仅在训练期重拟合。"
+  },
+  {
+    "id": "F04",
+    "priority": "P1",
+    "type": "source_reported_research_limit",
+    "title_cn": "总体收益不能代替含事件过程收益",
+    "locations": [
+      "LATEST_PROGRESS_V10_CN.md:3.3"
+    ],
+    "observed": "预算首日子集1km无正例；5km16正例全部在12月，coverage该块差于FOLLOW和batch，其他平静块抵消。",
+    "scope": "仓库已如实披露；不是本轮新发现的隐瞒或代码缺陷。",
+    "fix": "完整自然日历、按预定日期/过程分层，更新全年后端后再做固定后端策略对照。"
+  },
+  {
+    "id": "F05",
+    "priority": "P1",
+    "type": "static_efficiency_opportunity",
+    "title_cn": "正式评分重复重放同一journal",
+    "locations": [
+      "monitoring_v1/formal_session.py:score_formal"
+    ],
+    "observed": "静态正常路径为1+m+m次from_journal，9臂为19次；未实测这部分占耗时比例。",
+    "scope": "源代码静态核查；没有测得加速倍数。",
+    "fix": "先profile；单次调用内复用已完整核验的只读对象，缓存键绑定日志完整字节/源码/合同，不用全局猴子补丁。"
+  }
+]

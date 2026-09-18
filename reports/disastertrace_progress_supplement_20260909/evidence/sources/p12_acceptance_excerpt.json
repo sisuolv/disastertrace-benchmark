@@ -1,0 +1,241 @@
+{
+  "acceptance_id": "c7dd73fb286a3fcb47ea955336f67c8bbf13dd727c3479d890fab759e01632f5",
+  "all_gpu_jobs_released": true,
+  "ancestors": {
+    "artifacts/p10_forecast_cohort_v1/OFFLINE_ACCEPTANCE.json": {
+      "acceptance_id": "78ce4f3e29d175613bb464ce854849c096382d17235b7ea3687ef46e991ca923",
+      "verified_files": 1399
+    },
+    "artifacts/p11_cohort_live_v1/COMPLETED_ACCEPTANCE.json": {
+      "acceptance_id": "a6b69e2cd071b4255a000d44f3195827c0d16da88a8f19690bc5d3c8a45ad714",
+      "verified_files": 71485
+    }
+  },
+  "at": "2026-09-09T00:45:34.066697+00:00",
+  "audit_acceptance_is_not_collection_success": true,
+  "cpu_review_locations": {
+    "deepseek_r1": {
+      "analysis_id": "8b094b7555ed18f8706c3609557e6ad81ae801d28fb63f2b9b5d8cade67633c3",
+      "analysis_sha256": "1ad9cab8e515f810b107849bb81dcdd26356725540646efae0b355e98d4ffef1",
+      "at": "2026-09-08T23:23:36.828141+00:00",
+      "execution_id": "76dad214b04bd3dbddfea56d61c0f2d18e771aef7d44e6ba457db64cb84768be",
+      "final_status_sha256": "5f0df63ea73ba691e593e30d42e126e3842ffdc15956089158facc1c3404726a",
+      "finalization": "artifacts/p12_compact_grammar_v1/finalization_deepseek_r1_02",
+      "model_profile": "deepseek_r1",
+      "phase": "p12",
+      "report_id": "1de6e0c9e946358255996f17eb02027f55b59a636ec37b7ff94e62426fb2008e",
+      "reused_existing_verified_analysis": false,
+      "review_directory": "artifacts/autonomy_10h_v1/reviews_continuation_v2"
+    },
+    "qwen3": {
+      "analysis_id": "9646b79d544535fb083e79abb8f10cc516d309b74101ea76bd5e6ff12ca238ab",
+      "analysis_sha256": "8195c1e20b1956a8afc54eb198fa643d3202ba7cf56a38ab8d32f61d3c1069c0",
+      "at": "2026-09-09T00:34:33.339983+00:00",
+      "execution_id": "3ad16d08ce39d2cd4f6493f3b656531317e5be7fab268846b6232387e1850607",
+      "final_status_sha256": "c584768487fb55aaccc0a228f715099adeeb9be4afca6b1028ae85da52a9dcd8",
+      "finalization": "artifacts/p12_compact_grammar_v1/finalization_qwen3_02",
+      "model_profile": "qwen3",
+      "phase": "p12",
+      "report_id": "e7725945d1128b8ef7f0b56289fd406b373aab2008b5d1a2cc6744fed5a1ca2b",
+      "reused_existing_verified_analysis": false,
+      "review_directory": "artifacts/autonomy_10h_v1/reviews_continuation_v2"
+    }
+  },
+  "design_id": "03654ce96b4bb54c81c99f36b702387cc76804a39bdf373be27b599da4526837",
+  "initial_observer_failures_preserved": true,
+  "model_matrix_complete": false,
+  "model_results": {
+    "deepseek_r1": {
+      "all_gpu_jobs_succeeded": false,
+      "analysis_id": "8b094b7555ed18f8706c3609557e6ad81ae801d28fb63f2b9b5d8cade67633c3",
+      "counts": {
+        "attempted": 1994,
+        "content_tokens": 551207,
+        "delimiter_tokens": 1982,
+        "extraction_errors": 12,
+        "max_requested_output_tokens": 16334848,
+        "output_tokens": 2094655,
+        "parsed_saved": 1994,
+        "planned": 2412,
+        "prompt_tokens_reserved": 11742259,
+        "raw_returned": 1994,
+        "reasoning_tokens": 1539523,
+        "recovered_raw": 0,
+        "terminal_tokens": 1943,
+        "unattempted": 418,
+        "unknown_outcomes": 0
+      },
+      "execution_id": "76dad214b04bd3dbddfea56d61c0f2d18e771aef7d44e6ba457db64cb84768be",
+      "model_matrix_complete": false,
+      "platform_jobs": [
+        {
+          "cluster": "computing-cluster-01g-02",
+          "complete_time": "2026-09-08T23:01:49Z",
+          "display_name": "dt-p12-model-fbd55fed75-w0",
+          "gpu_count": 1,
+          "job_id": "pt-f7z0k9zq",
+          "raw_details_sha256": "f830306aaf68b36d86132855ef856fa749a862f3de2d43328cd283e82872ed6d",
+          "released": true,
+          "start_time": "2026-09-08T21:49:02Z",
+          "state": "FAILED",
+          "worker_id": 0
+        },
+        {
+          "cluster": "computing-cluster-01g-02",
+          "complete_time": "2026-09-08T23:17:04Z",
+          "display_name": "dt-p12-model-fbd55fed75-w1",
+          "gpu_count": 1,
+          "job_id": "pt-t2ldse6g",
+          "raw_details_sha256": "7e475ecada9e466b542d4b3465e1ce49e9829f555cc57a89b5a7c3a858008693",
+          "released": true,
+          "start_time": "2026-09-08T21:49:04Z",
+          "state": "FAILED",
+          "worker_id": 1
+        }
+      ],
+      "report_id": "1de6e0c9e946358255996f17eb02027f55b59a636ec37b7ff94e62426fb2008e",
+      "score_counts": {
+        "all_correct": 9,
+        "current_source": 552,
+        "errors": {
+          "correct": 9,
+          "invalid_json_shape": 51,
+          "missing_response": 418,
+          "wrong_key": 362,
+          "wrong_locator": 1,
+          "wrong_source_version": 4,
+          "wrong_value_status_or_unit": 1567
+        },
+        "fields": {
+          "latitude": 21,
+          "longitude": 17,
+          "max_sustained_wind": 305
+        },
+        "key_correct": 1581,
+        "kind_correct": 1931,
+        "literal_support": {
+          "latitude": 1,
+          "longitude": 1,
+          "max_sustained_wind": 0
+        },
+        "locator_correct": 250,
+        "planned": 2412,
+        "received": 1994,
+        "shape_valid": 1943,
+        "status_correct": 1332,
+        "storm_correct": 1925,
+        "time_correct": 1602,
+        "units": {
+          "latitude": 198,
+          "longitude": 198,
+          "max_sustained_wind": 1922
+        },
+        "values": {
+          "latitude": 206,
+          "longitude": 88,
+          "max_sustained_wind": 427
+        }
+      },
+      "unreturned_in_primary_denominator": 418
+    },
+    "qwen3": {
+      "all_gpu_jobs_succeeded": true,
+      "analysis_id": "9646b79d544535fb083e79abb8f10cc516d309b74101ea76bd5e6ff12ca238ab",
+      "counts": {
+        "attempted": 2412,
+        "content_tokens": 331772,
+        "delimiter_tokens": 2412,
+        "extraction_errors": 0,
+        "max_requested_output_tokens": 19759104,
+        "output_tokens": 3276610,
+        "parsed_saved": 2412,
+        "planned": 2412,
+        "prompt_tokens_reserved": 16468823,
+        "raw_returned": 2412,
+        "reasoning_tokens": 2940014,
+        "recovered_raw": 0,
+        "terminal_tokens": 2412,
+        "unattempted": 0,
+        "unknown_outcomes": 0
+      },
+      "execution_id": "3ad16d08ce39d2cd4f6493f3b656531317e5be7fab268846b6232387e1850607",
+      "model_matrix_complete": true,
+      "platform_jobs": [
+        {
+          "cluster": "computing-cluster-01g-02",
+          "complete_time": "2026-09-09T00:25:53Z",
+          "display_name": "dt-p12-model-6a8fb0d71b-w0",
+          "gpu_count": 1,
+          "job_id": "pt-q7di6zkl",
+          "raw_details_sha256": "a219b538d9dfef99b4a65228f2331509ca71f54d193e9fc46339ea10c6f9284f",
+          "released": true,
+          "start_time": "2026-09-08T21:48:46Z",
+          "state": "SUCCEEDED",
+          "worker_id": 0
+        },
+        {
+          "cluster": "computing-cluster-01g-02",
+          "complete_time": "2026-09-09T00:16:12Z",
+          "display_name": "dt-p12-model-6a8fb0d71b-w1",
+          "gpu_count": 1,
+          "job_id": "pt-rreg5y15",
+          "raw_details_sha256": "3286b59bc8f3537300b0741b244968df904edbca5e6b9b4b20fdee23cc01d41a",
+          "released": true,
+          "start_time": "2026-09-08T21:48:56Z",
+          "state": "SUCCEEDED",
+          "worker_id": 1
+        }
+      ],
+      "report_id": "e7725945d1128b8ef7f0b56289fd406b373aab2008b5d1a2cc6744fed5a1ca2b",
+      "score_counts": {
+        "all_correct": 1060,
+        "current_source": 1765,
+        "errors": {
+          "correct": 1060,
+          "wrong_key": 10,
+          "wrong_locator": 488,
+          "wrong_source_version": 32,
+          "wrong_value_status_or_unit": 822
+        },
+        "fields": {
+          "latitude": 1615,
+          "longitude": 1612,
+          "max_sustained_wind": 1725
+        },
+        "key_correct": 2402,
+        "kind_correct": 2404,
+        "literal_support": {
+          "latitude": 798,
+          "longitude": 776,
+          "max_sustained_wind": 610
+        },
+        "locator_correct": 1196,
+        "planned": 2412,
+        "received": 2412,
+        "shape_valid": 2412,
+        "status_correct": 2063,
+        "storm_correct": 2412,
+        "time_correct": 2410,
+        "units": {
+          "latitude": 2412,
+          "longitude": 2412,
+          "max_sustained_wind": 2412
+        },
+        "values": {
+          "latitude": 1656,
+          "longitude": 1652,
+          "max_sustained_wind": 1772
+        }
+      },
+      "unreturned_in_primary_denominator": 0
+    }
+  },
+  "new_model_calls": 0,
+  "phase": "p12",
+  "schema_version": "expanded_cohort_completed_acceptance_v3",
+  "status": "passed",
+  "unit_normalization": false,
+  "evidence_inventory_entries": 73264,
+  "excerpt_not_full_acceptance": true,
+  "source_sha256": "5d993b5c462d8a65e2566ba9b2b5369d26b9a170f46f869c4950ce10e9fa0eee"
+}

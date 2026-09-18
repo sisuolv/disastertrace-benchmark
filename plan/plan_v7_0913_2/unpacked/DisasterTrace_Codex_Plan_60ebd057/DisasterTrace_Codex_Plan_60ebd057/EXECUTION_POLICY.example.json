@@ -1,0 +1,54 @@
+{
+  "schema": "disastertrace.codex.execution_policy.example.v1",
+  "is_example": true,
+  "does_not_authorize_execution_by_itself": true,
+  "must_be_activated_by_current_user_execution_request": true,
+  "base_commit_reviewed": "60ebd05723f9483590611976d379da2e4edd85b0",
+  "first_wave": [
+    "DS00",
+    "DS01",
+    "DS02",
+    "DS03",
+    "DS04"
+  ],
+  "allowed_when_activated": {
+    "read_local_repository": true,
+    "read_existing_local_data_subject_to_license": true,
+    "edit_scoped_local_code": true,
+    "run_local_cpu_unit_tests": true,
+    "create_local_handoff_artifacts": true
+  },
+  "limits": {
+    "max_cpu_workers": 2,
+    "max_model_calls": 0,
+    "max_model_tokens": 0,
+    "max_gpu_concurrency": 0,
+    "max_gpu_seconds": 0,
+    "max_external_network_requests": 0,
+    "max_external_download_bytes": 0,
+    "max_paid_api_spend": 0,
+    "max_retries_per_operation": 0
+  },
+  "disabled": {
+    "network_science_downloads": true,
+    "paid_model_apis": true,
+    "model_training": true,
+    "gpu_jobs": true,
+    "dependency_installation": true,
+    "global_environment_changes": true,
+    "git_push": true,
+    "publication_release": true,
+    "real_world_actuation": true,
+    "public_alerts": true,
+    "unbounded_background_collection": true
+  },
+  "authorization_rule": "Any later bounded grant must be recorded in a new run policy. Null/missing limits mean not authorized, never unlimited. Do not inherit historical H100/CCI grants.",
+  "missing_dependency_rule": "Report the precise missing local package/data; continue independent CPU implementation/tests. Never silently install or simulate successful external execution.",
+  "protect": [
+    "existing uncommitted work",
+    "historical evidence and outputs",
+    "credentials and model weights",
+    "unrelated jobs/CCI/SSH/HOME/settings"
+  ],
+  "publication_rule": "Local artifacts only by default; any upload/push requires a current explicit request and license/secret review."
+}

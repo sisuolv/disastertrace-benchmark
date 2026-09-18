@@ -1,0 +1,693 @@
+{
+  "schema": "disastertrace.codex_plan.v1",
+  "source_commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+  "created": "2026-09-13",
+  "status": "planning_artifact_only",
+  "task_count": 20,
+  "default_first_batch": [
+    "C00",
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "C05"
+  ],
+  "parallel_cpu_candidate": "C08 after C01,C02",
+  "policies": {
+    "preserve_legacy": true,
+    "auto_push": false,
+    "allow_paid_api": false,
+    "allow_gpu": false,
+    "max_h100_gpus_if_newly_authorized": 4,
+    "allow_new_training": false,
+    "allow_unbounded_download": false,
+    "require_positive_gain_for_admission": false,
+    "benchmark_goal_hazard_count": 16
+  },
+  "tasks": [
+    {
+      "id": "C00",
+      "title": "绑定当前工作树、旧结果与新授权",
+      "status": "planned_not_executed",
+      "phase": "M0",
+      "lane": "integration",
+      "dependencies": [],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": true,
+      "implementation": [
+        "只读记录HEAD/分支/status/索引、已存在工作树修改；若HEAD更新先做delta review。",
+        "读最新报告和本包两份novelty输入摘要；建立旧产物哈希、暴露记录和实际权限清单。",
+        "不得reset/clean、覆盖用户暂存、复用GPU launch或自动push。"
+      ],
+      "deliverables": [
+        "BASELINE_LOCK.json",
+        "WORKTREE_PRESERVATION.json",
+        "AUTHORIZATION_REQUIREMENTS.json",
+        "DELTA_MAP_CN.md"
+      ],
+      "acceptance": [
+        "比对开始/结束时原有文件和暂存内容未被覆盖。",
+        "旧GPU授权窗口不自动延续；默认model_calls=0。"
+      ],
+      "release_gate": "清楚区分已有、未读、待做；授权不足只阻塞相关动作。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C01",
+      "title": "冻结场景、DecisionSpec和各层资格",
+      "status": "planned_not_executed",
+      "phase": "M0",
+      "lane": "task_science",
+      "dependencies": [
+        "C00"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": true,
+      "implementation": [
+        "编写一页区域值班任务：固定未来目标、共同预报、证据、工具、准备规则、结果。",
+        "ForecastTarget与DecisionSpec独立；登记研究假设/文档依据/专家审查状态。",
+        "沿用六组16类来源索引，登记E/F/D/MM层级而不重新统计97来源。",
+        "登记现有已暴露日历与提示数据；确认资料不按模型胜负选择。"
+      ],
+      "deliverables": [
+        "MONITORING_SCENARIO_CN.md",
+        "DECISION_SPEC.json",
+        "ELIGIBILITY_OVERLAY.json",
+        "EXPOSURE_MAP.json"
+      ],
+      "acceptance": [
+        "只改成本/时长/容量不会改F目标hash。",
+        "没有现实依据的参数显示research_assumption。",
+        "现有48机会不可标heldout。"
+      ],
+      "release_gate": "场景可由程序执行；没有真实动作部署；新参数不改变天气结果。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C02",
+      "title": "合法预测提交入口与三种身份",
+      "status": "planned_not_executed",
+      "phase": "M1",
+      "lane": "integration",
+      "dependencies": [
+        "C01"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": true,
+      "implementation": [
+        "在paired_scores之前新增由可信状态回放产生的CommittedForecast清单。",
+        "分开bundle_hash、product_revision_id、target_base_context_hash。",
+        "记录开始/完成/持久化、cutoff、版本、输入、fallback与迟到/失效。",
+        "概率与scalar类型均提供注册fallback；不把缺答变0.5。"
+      ],
+      "deliverables": [
+        "VALIDATED_FORECAST_MANIFEST.jsonl",
+        "COMMIT_ADMISSION_REPORT.json",
+        "BASE_CONTEXT_TEST_REPORT.json"
+      ],
+      "acceptance": [
+        "相同概率截止前/后完成激活结果不同。",
+        "无损重排不误失效；相同p相关内容改变可识别。",
+        "单目标多个机会不在第一个cutoff关闭。",
+        "不允许任意预测表获得monitoring资格。"
+      ],
+      "release_gate": "纯数学评分保留，正式入口拒绝未绑定合法轨迹的预测。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C03",
+      "title": "Typed数据、C2与单一会话状态桥接",
+      "status": "planned_not_executed",
+      "phase": "M1",
+      "lane": "integration",
+      "dependencies": [
+        "C02"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": true,
+      "implementation": [
+        "对新旧类型建立显式provider事实映射，不靠枚举名称替换。",
+        "只授权完成且合法可见的产品事实进入支持集；raw/model_estimate保持边界。",
+        "复用旧可达算法并绑定真实动作图/成本/截止/权限，输出联合见证。",
+        "选择唯一SessionRuntime权威时钟；概率影子差分，scalar走typed reducer，不建第三引擎。"
+      ],
+      "deliverables": [
+        "TYPED_C2_ADAPTER_REPORT.json",
+        "JOINT_WITNESS_REPLAY.json",
+        "LEGACY_DIFFERENTIAL_REPORT.json"
+      ],
+      "acceptance": [
+        "区间端点/负值/单位/冲突/缺槽/无限上界/版本替代。",
+        "两个目标单独可达但共同不可达的真实小图。",
+        "同一路径费用/时间不得拼接不同解。",
+        "旧概率回归按原协议保持。"
+      ],
+      "release_gate": "至少一条现有真实H15链从新bundle到旧C2/会话及有效F提交可重算。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C04",
+      "title": "完整会话快照与同前缀fork",
+      "status": "planned_not_executed",
+      "phase": "M1",
+      "lane": "runtime",
+      "dependencies": [
+        "C03"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": true,
+      "implementation": [
+        "snapshot包含时钟、事件phase、已付/预留资源、缓存权限、pending、基线、状态、RNG。",
+        "D1状态预留可插拔schema，未来外部cursor密封在可信重放器。",
+        "fork新命名空间，前缀费用继承一次；分支后缓存/资料/日志隔离。",
+        "复用EventJournal hash链与非破坏恢复；不截断旧日志。"
+      ],
+      "deliverables": [
+        "SESSION_SNAPSHOT_SCHEMA.json",
+        "FORK_EQUIVALENCE_REPORT.json",
+        "FORK_ISOLATION_REPORT.json"
+      ],
+      "acceptance": [
+        "无新动作分支与原continuation逐事件相同。",
+        "pending完成时间/版本不被免费重置。",
+        "分支A新结果对B不可见。",
+        "只复制bundle的输入不被接受为完整snapshot。"
+      ],
+      "release_gate": "确定性fork/restore通过，完整prefix与policy view分开。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C05",
+      "title": "取得、处理和专业工具动作目录",
+      "status": "planned_not_executed",
+      "phase": "M1",
+      "lane": "runtime",
+      "dependencies": [
+        "C03",
+        "C04"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": true,
+      "implementation": [
+        "动作区分QUERY/PROCESS/RUN_FORECAST_TOOL/WAIT/SUBMIT/STOP。",
+        "工具合同含变量/单位/支持/parent/ROI/时间和费用/失败/缓存。",
+        "按实际父资料/处理版本/参数/种子构建缓存键；授权继承。",
+        "采用唯一事件队列推进工具和模型，预留资源后启动。"
+      ],
+      "deliverables": [
+        "OPERATION_CATALOG.json",
+        "PROCESSING_RECEIPTS_SCHEMA.json",
+        "COST_PROFILE_SPEC.json",
+        "OPERATION_CONTRACT_TESTS.json"
+      ],
+      "acceptance": [
+        "未来父资料及未授权处理被拒绝。",
+        "cache命中不免除未授权读取。",
+        "STOP不删除后续机会。",
+        "仿真延迟与实测时间不混记；网络与解码分别收费。"
+      ],
+      "release_gate": "先CPU工具和合成时序通过；真实高成本工具另经data gate/权限。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C06",
+      "title": "真实程序闭环、完整基线与明确heads",
+      "status": "planned_not_executed",
+      "phase": "M2",
+      "lane": "forecast",
+      "dependencies": [
+        "C03",
+        "C05"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "在已有H15真实资产上跑FOLLOW、当前映射、完整TAF规则和合法全读。",
+        "记录映射样本/正例/回退/地区/季节；本地化与训练长度分开解释。",
+        "worker实际调用新heads；新generic head按provider注册，不套航空prompt到温度。",
+        "有限提示开发后冻结；不要求偏离baseline才算成功。"
+      ],
+      "deliverables": [
+        "BASELINE_SUPPORT_AUDIT.json",
+        "PROGRAM_END_TO_END_REPORT.json",
+        "HEAD_ROUTE_PREFLIGHT.json",
+        "PROMPT_FREEZE.json"
+      ],
+      "acceptance": [
+        "实际发送消息hash、head、模板、生成设置与解析器一致。",
+        "E-only没有F分母，F-only没有E分母。",
+        "旧January与48机会继续标开发。",
+        "新基线不能无执行地改旧LLM分数。"
+      ],
+      "release_gate": "冻结程序/输出合同可用；新模型运行C12另行授权。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。",
+      "new_data_policy": "现有本地资产优先；新日历采集必须单独限额授权。"
+    },
+    {
+      "id": "C07",
+      "title": "固定证据与完整路径三模式诊断",
+      "status": "planned_not_executed",
+      "phase": "M2",
+      "lane": "analysis",
+      "dependencies": [
+        "C04",
+        "C05",
+        "C06"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "实现fixed_bundle、fixed_candidate、full_state_branch三模式，输出互不混名。",
+        "先冻结统计预测器比较common/单条/全部登记证据；记录输入年龄和mask。",
+        "后验最优路径只存评估侧；不存在归档资料则不可评估。",
+        "真实分支损失与边际期望信息价值不混用。"
+      ],
+      "deliverables": [
+        "EVIDENCE_PREDICTOR_MATRIX.json",
+        "BRANCH_DEFINITIONS.json",
+        "BRANCH_RESPONSE_TABLE.json",
+        "CANDIDATE_GATE_REPORT.json"
+      ],
+      "acceptance": [
+        "同bundle不等同完整state；输出模式检查。",
+        "同前缀相同continuation基线可重现。",
+        "后验分支选择器无法被部署策略访问。",
+        "全部正/零/负差异保留。"
+      ],
+      "release_gate": "真实有限分支可重跑；无需LLM正收益。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C08",
+      "title": "研究准备状态机与第三种资源",
+      "status": "planned_not_executed",
+      "phase": "M3",
+      "lane": "decision",
+      "dependencies": [
+        "C01",
+        "C02"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "实现D1一类renewable crew、准备开始/运行/完成/取消清理。",
+        "原子预留、[start,end)占用、ready_deadline、取消沉没成本和幂等。",
+        "不实现任意交通/疏散/水库控制；不默认驻留设备随crew释放。",
+        "准备动作日志与F修订解耦；模式默认关闭，旧轨不变。"
+      ],
+      "deliverables": [
+        "PREPARATION_REDUCER_TESTS.json",
+        "RESOURCE_OCCUPANCY_REPORT.json",
+        "DECISION_COST_LEDGER.jsonl"
+      ],
+      "acceptance": [
+        "同一crew不得同时占用；finish<=deadline才及时。",
+        "取消不退已花工时，重放不重收费。",
+        "FOLLOW不删除READY。",
+        "零时长简化轨与旧截止规则相容。"
+      ],
+      "release_gate": "可先完成合成CPU测试；真实会话集成依赖C05/C09/C10，不将fixture称实际业务。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C09",
+      "title": "无LLM滚动准备规划与独立评分",
+      "status": "planned_not_executed",
+      "phase": "M3",
+      "lane": "decision",
+      "dependencies": [
+        "C05",
+        "C08",
+        "C06"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "实现never/always-feasible/deadline/风险规则/滚动优化器/全读+优化器。",
+        "小任务独立枚举核对；OR-Tools如需安装须隔离与授权。",
+        "优化器只读当前合法p与占用，最小化声明期望成本，不读y。",
+        "D评分实际开始/工时/取消和及时完成；F/资源分表。"
+      ],
+      "deliverables": [
+        "PREPARATION_BASELINES_REPORT.json",
+        "SCHEDULE_ENUMERATION_CHECK.json",
+        "DECISION_EVALUATOR_REPORT.json"
+      ],
+      "acceptance": [
+        "oracle与deployable不同入口/权限。",
+        "同任务多F时距只结算一次D。",
+        "等待模型不暂停准备；资料未回也可开始准备。",
+        "未知结果保留成本和惩罚界。"
+      ],
+      "release_gate": "程序和独立评价一致；资源与成本规则可信，不需专家逐题标注。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C10",
+      "title": "准备要求配对与概率偏好隔离",
+      "status": "planned_not_executed",
+      "phase": "M3",
+      "lane": "analysis",
+      "dependencies": [
+        "C04",
+        "C07",
+        "C09"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "固定天气/资料/预测条件，仅改变duration/capacity/cost。",
+        "ForecastView不含DecisionSpec；单体Agent另作敏感性诊断。",
+        "端到端资料选择可因目的改变，之后F变化不算违规。",
+        "改准备要求从中性初始状态或证明兼容的prefix开始。"
+      ],
+      "deliverables": [
+        "DECISION_PAIR_REGISTRY.json",
+        "FORECAST_PREFERENCE_ISOLATION.json",
+        "PURPOSE_CONDITIONAL_REPORT.json"
+      ],
+      "acceptance": [
+        "同科学输入/固定F的概率完全一致。",
+        "不因cost变更修改target hash。",
+        "有意更换证据后不强求F不变。",
+        "已运行工作不因参数替换免费重写历史。"
+      ],
+      "release_gate": "参数配对可以解释，纯假设参数明确标识。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C11",
+      "title": "事件触发与一至两步策略",
+      "status": "planned_not_executed",
+      "phase": "M4",
+      "lane": "policy",
+      "dependencies": [
+        "C07",
+        "C09",
+        "C10"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "实现固定周期、公开事件触发、低频模型规划+廉价规则。",
+        "先启发式/一两步公开规则，风险学习作为需训练授权的独立插件。",
+        "考虑资料完成、剩余deadline、版本有效期与准备占用。",
+        "保持共享预测器归因轨；资料+处理器联合策略另列X09。"
+      ],
+      "deliverables": [
+        "POLICY_SPECS.json",
+        "TRIGGER_COST_AUDIT.json",
+        "LOOKAHEAD_VISIBILITY_TESTS.json"
+      ],
+      "acceptance": [
+        "候选选择不读未查询值/未来实际发布时间/y。",
+        "selector与predictor同账计费。",
+        "E最大覆盖不是F自动奖励。",
+        "后验训练样例只来自开发组。"
+      ],
+      "release_gate": "策略合法可执行，不因无优势而篡改费用或资料。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。",
+      "training_requires_separate_authorization": true
+    },
+    {
+      "id": "C12",
+      "title": "有限真实E-only/F-only/joint运行",
+      "status": "planned_not_executed",
+      "phase": "M2",
+      "lane": "models",
+      "dependencies": [
+        "C06",
+        "C07"
+      ],
+      "permission": "new_model_authorization_required",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "冻结新材料与明确heads后，先微型入口检查再有限三头诊断。",
+        "同模型后端/表示/合法证据比较，记总计算成本而非只比较正确率。",
+        "原始回复先落盘，不重试到成功，不复用旧launch，不追溯改源码。"
+      ],
+      "deliverables": [
+        "MODEL_BATCH_MANIFEST.json",
+        "RAW_CALL_RECEIPTS.jsonl",
+        "HEAD_COMPARISON_REPORT.json"
+      ],
+      "acceptance": [
+        "F-only必须真正发送调用，不能由joint拆出。",
+        "测试数据未参与提示开发。",
+        "无填值示例；原概率维持baseline可合法。",
+        "报告独立过程/目标/调用不同分母。"
+      ],
+      "release_gate": "有当前有效推理授权且前置通过才执行；否则产出冻结待运行包。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C13",
+      "title": "H07短时降水与专业处理工具准入",
+      "status": "planned_not_executed",
+      "phase": "M4",
+      "lane": "data_rain",
+      "dependencies": [
+        "C01",
+        "C05"
+      ],
+      "permission": "local_first_bounded_data_and_dependency_authorization_when_needed",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "先检查既有MRMS/雷达/雨量/预报交集，连续时间窗和区域预登记。",
+        "核准降水率/累计/单位/CRS/规则间隔/缺测/时窗，拒绝VIL直当雨量。",
+        "接pysteps持久性/平流/STEPS及必要融合，所有策略可用。",
+        "未来站点观测或产品参考身份分开；不自动雨量到河流流量。"
+      ],
+      "deliverables": [
+        "RAIN_SOURCE_JOIN_AUDIT.json",
+        "RAIN_PROCESSING_CONTRACT.json",
+        "PYSTEPS_ADAPTER_REPORT.json",
+        "RAIN_MONITORING_ADMISSION.json"
+      ],
+      "acceptance": [
+        "真实科学输入而非彩色截图；不能悄悄填补缺帧。",
+        "tool产物非Gold。",
+        "空间裁剪不依赖未来灾害中心。",
+        "SEEPS日尺度不能替代短临时窗。"
+      ],
+      "release_gate": "按资格通过，不强制本轮成功；缺数据保留精确阻塞，温度/水文可继续。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C14",
+      "title": "H08水文与H10/H11温度的跨过程迁移",
+      "status": "planned_not_executed",
+      "phase": "M4",
+      "lane": "data_cross_domain",
+      "dependencies": [
+        "C03",
+        "C05",
+        "C07"
+      ],
+      "permission": "local_first_bounded_data_authorization_when_needed",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "水文核验QINE瞬时/平均、调蓄、单位/断面；未核准只E。",
+        "NLDI关系固定实际捕获，不将距离作为上游，也不推断未知传播时间。",
+        "温度先连续点目标/集合与合法补证，保持forecast/reforecast身份。",
+        "两条子路线分别资格通过；一条阻塞不能拖住另一条。"
+      ],
+      "deliverables": [
+        "HYDRO_QUANTITY_CONTRACT.json",
+        "HYDRO_RELATION_AUDIT.json",
+        "TEMPERATURE_SESSION_REPORT.json",
+        "CROSS_PROCESS_ADMISSION.json"
+      ],
+      "acceptance": [
+        "时效>0不等于historical_as_of。",
+        "流量不套水位阈值；成员身份不编造。",
+        "数值负值与K/Celsius正确；普通温度不称热浪。",
+        "不能以共享专业ZIP当新增补证收益。"
+      ],
+      "release_gate": "至少一条不同物理过程具备完整程序监测链；严格阻塞的部分继续隔离。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C15",
+      "title": "独立过程划分、功效与确认冻结",
+      "status": "planned_not_executed",
+      "phase": "M5",
+      "lane": "statistics",
+      "dependencies": [
+        "C06",
+        "C07",
+        "C10"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "锁定开发暴露、物理过程/资产关系、purge与全日历机会。",
+        "主对比与准备参数网格事先固定，有限多比较；检查样本支持。",
+        "按开发独立组估计方差/最小关心效应；不足时仅描述性。",
+        "源准入看语义/覆盖，不按LLM收益筛任务。"
+      ],
+      "deliverables": [
+        "CONFIRMATION_PREREGISTRATION.json",
+        "PROCESS_SPLITS.json",
+        "POWER_AND_COVERAGE_REPORT.json"
+      ],
+      "acceptance": [
+        "同过程多站/多阈值/提前量/seed不增加N。",
+        "新heldout没有开发反馈。",
+        "缺测共同mask仍报告选择偏差/界。"
+      ],
+      "release_gate": "确认协议可执行；不以GPU调用量代替统计资格。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C16",
+      "title": "有限完整会话与研究准备机制实验",
+      "status": "planned_not_executed",
+      "phase": "M5",
+      "lane": "experiments",
+      "dependencies": [
+        "C11",
+        "C12",
+        "C15"
+      ],
+      "permission": "new_model_authorization_required",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "依次做固定selector分配×共享、同global/shared策略、资料×处理、F×D。",
+        "加入准备时长/容量/成本单因素配对和少量完整状态fork。",
+        "先H15开发，跨过程实验另要求C13或C14中实际准入。",
+        "同资源完整成本为主；匹配预测机会仅为单列诊断。"
+      ],
+      "deliverables": [
+        "SESSION_EXPERIMENT_REPORT.json",
+        "F_E_D_RESOURCE_PANELS.json",
+        "CLAIM_EVIDENCE_TABLE.json"
+      ],
+      "acceptance": [
+        "公平全读与优化器基线，真实并发/费用。",
+        "不强求正收益、动作变化或排名翻转。",
+        "模拟准备损失不称真实减灾。",
+        "分支/重放不重复计作新模型调用。"
+      ],
+      "release_gate": "新模型授权与相应场景准入通过；否则只运行已有程序基线。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。",
+      "cross_process_requires_any_qualified": [
+        "C13",
+        "C14"
+      ]
+    },
+    {
+      "id": "C17",
+      "title": "分级发布与Codex交接",
+      "status": "planned_not_executed",
+      "phase": "M5",
+      "lane": "release",
+      "dependencies": [
+        "C16"
+      ],
+      "permission": "offline_local",
+      "optional": false,
+      "default_first_batch": false,
+      "implementation": [
+        "发布工程/机制/跨组/完整16类等级与逐层资格。",
+        "保存原始失败、冻结依赖、脚本、计划与数据权利；源数据和tokenizer等按许可。",
+        "附退出/重放命令与不同分母；不自动推送。"
+      ],
+      "deliverables": [
+        "FINAL_EXECUTION_REPORT_CN.md",
+        "PUBLICATION_MANIFEST.json",
+        "READING_PACKAGE.zip",
+        "NEXT_MINIMAL_TASK.json"
+      ],
+      "acceptance": [
+        "关键结果可从原始回执重算；数学/monitoring/D身份明确。",
+        "旧哈希与用户改动未覆盖。",
+        "发布不含凭据或不允许再分发的资料。",
+        "声称完成项都有实际证据。"
+      ],
+      "release_gate": "只按已完成级别发布；完整16类目标不因阶段性发布而降级。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C18",
+      "title": "联合风险与非可加后果",
+      "status": "planned_not_executed",
+      "phase": "conditional",
+      "lane": "joint_risk",
+      "dependencies": [
+        "C09",
+        "C14",
+        "C15"
+      ],
+      "permission": "conditional_data_and_model_authorization",
+      "optional": true,
+      "default_first_batch": false,
+      "implementation": [
+        "仅在损失真的依赖共同发生时增加joint target与scenario预测。",
+        "保留同周期跨目标成员身份/空间场和共同结果覆盖。",
+        "对照可加固定排程不需要joint的边界；独立乘积只作声明假设。"
+      ],
+      "deliverables": [
+        "JOINT_TARGET_CONTRACT.json",
+        "DEPENDENCE_NECESSITY_REPORT.json",
+        "JOINT_SCENARIO_ADMISSION.json"
+      ],
+      "acceptance": [
+        "同步/互斥相同边际可区分joint事件。",
+        "加性固定排程期望损失不因相关性虚假改变。",
+        "缺成员身份不编造联合真值；不可拼不同灾害最坏片段。"
+      ],
+      "release_gate": "非可加任务与真实联合资料均通过后才启用。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    },
+    {
+      "id": "C19",
+      "title": "有界影子与规则应用验证",
+      "status": "planned_not_executed",
+      "phase": "conditional",
+      "lane": "prospective",
+      "dependencies": [
+        "C15",
+        "C16"
+      ],
+      "permission": "explicit_bounded_prospective_and_human_contact_authorization",
+      "optional": true,
+      "default_first_batch": false,
+      "implementation": [
+        "注册短期有限采集站点/端点/频率/结束时间/总请求与存储上限。",
+        "先保存预测与准备建议、后结算；只记录不干预公众。",
+        "需要专家规则审查时单独授权，审核规则/典型情形而非LLM逐题Gold。"
+      ],
+      "deliverables": [
+        "SHADOW_CAPTURE_SPEC.json",
+        "PROSPECTIVE_COMMITS.jsonl",
+        "RULE_REVIEW_PROTOCOL_CN.md",
+        "SHADOW_BOUNDARY_REPORT.json"
+      ],
+      "acceptance": [
+        "first_seen只代表本采集器。",
+        "无长期后台/无公众通知/无自动实际动作。",
+        "历史知识污染不凭事件匿名化消除。"
+      ],
+      "release_gate": "明确的新授权和冻结协议；不阻塞历史主研究。",
+      "failure_policy": "保留失败与旧产物；记录明确阻塞，不用合成样本替代真实资料；继续独立工作包。"
+    }
+  ]
+}

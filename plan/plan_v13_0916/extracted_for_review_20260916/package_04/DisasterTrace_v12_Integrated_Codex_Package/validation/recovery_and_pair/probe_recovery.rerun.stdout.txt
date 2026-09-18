@@ -1,0 +1,41 @@
+{
+  "scope": "isolated upstream function boundary; base spool and JSON publisher are test doubles",
+  "network_calls": 0,
+  "new_weather_experiments": 0,
+  "production_files_modified": false,
+  "source_manifest": {
+    "siliconflow_worker.py": {
+      "sha1": "7d2efb6dce9d35f2904c454ab44098bd51e6d9ff",
+      "expected": "7d2efb6dce9d35f2904c454ab44098bd51e6d9ff",
+      "matched": true,
+      "bytes": 5561
+    },
+    "production.py": {
+      "sha1": "cb5a8c7897bd2e08432e48498b151bc54f52d50b",
+      "expected": "cb5a8c7897bd2e08432e48498b151bc54f52d50b",
+      "matched": true,
+      "bytes": 4802
+    }
+  },
+  "cases": [
+    {
+      "fault_injected": false,
+      "transport_send_count": 1,
+      "original_publication_error": null,
+      "response_exists": true,
+      "failure_receipt_preserved": false,
+      "resolve_succeeded": true,
+      "resolve_error": null
+    },
+    {
+      "fault_injected": true,
+      "transport_send_count": 1,
+      "original_publication_error": "injected response publication failure after durable capture",
+      "response_exists": true,
+      "failure_receipt_preserved": true,
+      "resolve_succeeded": false,
+      "resolve_error": "Original worker failed; execution reservation remains unknown"
+    }
+  ],
+  "finding": "A durable successful response can be reconstructed, but an existing failure marker still unconditionally blocks ProductionSpoolBackend.resolve."
+}

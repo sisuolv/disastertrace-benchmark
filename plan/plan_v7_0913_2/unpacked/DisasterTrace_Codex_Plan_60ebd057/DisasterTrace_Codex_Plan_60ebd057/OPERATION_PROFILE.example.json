@@ -1,0 +1,70 @@
+{
+  "schema": "disastertrace.proposed.operational_profile.example.v1",
+  "implementation_status": "proposed_schema_example_not_current_repository_interface",
+  "profile_id": "toy_local_prep_20min_v1",
+  "scope": "local",
+  "provenance": "research_assumption",
+  "not_an_operational_recommendation": true,
+  "practitioner_review": null,
+  "rule_source_refs": [
+    "CODEX_PLAN_CN.md#4"
+  ],
+  "site_id": "synthetic_site_A",
+  "resources": [
+    {
+      "resource_id": "toy_crew_1",
+      "kind": "crew",
+      "capacity": 1,
+      "site_id": "synthetic_site_A"
+    }
+  ],
+  "allowed_actions": [
+    "WAIT",
+    "START_PREP",
+    "CANCEL_PREP",
+    "RELEASE"
+  ],
+  "preparation_duration": {
+    "value": 1200,
+    "unit": "seconds"
+  },
+  "hold_duration": {
+    "value": 3600,
+    "unit": "seconds"
+  },
+  "cleanup_duration": {
+    "value": 0,
+    "unit": "seconds"
+  },
+  "cancel_policy": "no_refund_for_spent_cost",
+  "retained_progress_policy": "zero",
+  "clock_internal_unit": "UTC_integer_microseconds",
+  "coverage_interval_convention": "[start,end)",
+  "cost_components": {
+    "unit": "dimensionless_research_loss_units",
+    "start_cost": 2,
+    "event_unprepared_penalty": 10
+  },
+  "cost_interpretation": "Toy setup cost charged once. No separate false-alarm charge for the same cost. Not currency or measured avoided loss.",
+  "resource_occupancy_rule": "The toy crew is occupied only during preparation; this example has no READY-stage equipment. Other profiles must declare their hold-stage resource needs.",
+  "travel": "not_allowed",
+  "parameter_selection": "declared analytic example, not chosen from model performance",
+  "validity_period": {
+    "start": "2024-01-01T00:00:00Z",
+    "end": "2024-01-02T00:00:00Z"
+  },
+  "capabilities": [
+    "toy_readiness"
+  ],
+  "cooldown": {
+    "value": 0,
+    "unit": "seconds"
+  },
+  "parameter_grid_id": "analytic_single_step_demo_not_empirical_tuning",
+  "loss_definition": {
+    "formula": "sum(start_cost_per_started_job) + sum(miss_penalty * Y * (1 - on_time_ready))",
+    "ready_effect": "binary mitigation in a research loss model; does not alter physical weather",
+    "missing_outcome_rule": "keep known start cost and report bounded unknown hazard penalty"
+  },
+  "profile_hash": "c3d4d9ef7d33c4ad78949889592484141610ed09c585ed1553323292781cd05e"
+}

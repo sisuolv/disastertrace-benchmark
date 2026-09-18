@@ -1,0 +1,128 @@
+{
+  "scope": "Independent rerun in this answer of supplied isolated probes against bundled source copies; not a full checkout, not FormalSession/real-spool integrated regression and not a re-execution of private weather runs. Pair probe is an exact function excerpt, not an imported repository module. Source behavior cross-checked by connected GitHub reads at pinned HEAD.",
+  "reference_commit": "1eba36dd272c72573d1309c78d45dbe97dd8af12",
+  "production_modified": false,
+  "new_model_calls": 0,
+  "private_confirmation_read": false,
+  "commands": [
+    {
+      "script": "boundary_suite/review_checks.py",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/dt_review_validation/network_blocked_runner.py",
+        "/mnt/data/dt_review_validation/boundary_suite/review_checks.py"
+      ],
+      "exit_code": 0,
+      "start_utc": "2026-09-16T03:59:52.234637+00:00",
+      "script_sha256": "eddba7de57a793524e5081b104677ed4450e722204930cc7d21591ac86315a3b",
+      "stdout_file": "boundary_suite/review_checks.rerun.stdout.txt",
+      "stderr_file": "boundary_suite/review_checks.rerun.stderr.txt"
+    },
+    {
+      "script": "recovery_and_pair/probe_recovery.py",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/dt_review_validation/network_blocked_runner.py",
+        "/mnt/data/dt_review_validation/recovery_and_pair/probe_recovery.py"
+      ],
+      "exit_code": 0,
+      "start_utc": "2026-09-16T03:59:53.552527+00:00",
+      "script_sha256": "9b79439efd755ac0c234ebec182b4ffd9abc01687e6d6644b3b49e2343b4e99a",
+      "stdout_file": "recovery_and_pair/probe_recovery.rerun.stdout.txt",
+      "stderr_file": "recovery_and_pair/probe_recovery.rerun.stderr.txt"
+    },
+    {
+      "script": "recovery_and_pair/probe_pair_provenance.py",
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/dt_review_validation/network_blocked_runner.py",
+        "/mnt/data/dt_review_validation/recovery_and_pair/probe_pair_provenance.py"
+      ],
+      "exit_code": 0,
+      "start_utc": "2026-09-16T03:59:54.586280+00:00",
+      "script_sha256": "b7de5dece7dbad04d1a054b6f172f5b96179a2d9f022fc837b169100998c728c",
+      "stdout_file": "recovery_and_pair/probe_pair_provenance.rerun.stdout.txt",
+      "stderr_file": "recovery_and_pair/probe_pair_provenance.rerun.stderr.txt"
+    }
+  ],
+  "boundary_observations": 28,
+  "normal_or_guard_observations": 22,
+  "counterexample_observations": 6,
+  "observations_reproduced": true,
+  "recovery_cases": [
+    {
+      "fault_injected": false,
+      "transport_send_count": 1,
+      "original_publication_error": null,
+      "response_exists": true,
+      "failure_receipt_preserved": false,
+      "resolve_succeeded": true,
+      "resolve_error": null
+    },
+    {
+      "fault_injected": true,
+      "transport_send_count": 1,
+      "original_publication_error": "injected response publication failure after durable capture",
+      "response_exists": true,
+      "failure_receipt_preserved": true,
+      "resolve_succeeded": false,
+      "resolve_error": "Original worker failed; execution reservation remains unknown"
+    }
+  ],
+  "pair_provenance_flags": [
+    {
+      "reference": "FOLLOW",
+      "candidate": "LLM_SELECTOR",
+      "bank_difference_involved": false
+    },
+    {
+      "reference": "F_COMMON",
+      "candidate": "LLM_SELECTOR",
+      "bank_difference_involved": true
+    },
+    {
+      "reference": "F_BASE_ONLY",
+      "candidate": "LLM_SELECTOR",
+      "bank_difference_involved": false
+    }
+  ],
+  "missing_bounds_controls": [
+    {
+      "reference": "FOLLOW",
+      "enumerated": [
+        -0.007499999999999944,
+        0.2591666666666667
+      ],
+      "reported": [
+        -0.007499999999999951,
+        0.2591666666666667
+      ],
+      "matches": true
+    },
+    {
+      "reference": "F_COMMON",
+      "enumerated": [
+        0.010633333333333309,
+        0.13063333333333327
+      ],
+      "reported": [
+        0.010633333333333309,
+        0.13063333333333327
+      ],
+      "matches": true
+    },
+    {
+      "reference": "F_BASE_ONLY",
+      "enumerated": [
+        -0.06853333333333333,
+        0.1114666666666666
+      ],
+      "reported": [
+        -0.06853333333333333,
+        0.11146666666666662
+      ],
+      "matches": true
+    }
+  ],
+  "warning": "Successful probe exit means expected existing behavior was reproduced, including defects. It does NOT mean these defects are fixed or production is qualified. Counts must not be added to the repository 628/750 counts."
+}

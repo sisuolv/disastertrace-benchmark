@@ -1,0 +1,5 @@
+# DisasterTrace v12 整合包
+
+先阅读 DisasterTrace_v12_Integrated_Next_Plan_CN.md；交给Codex首批范围用 START_HERE_CODEX_CN.md。BACKLOG.json 是有依赖和验收的未执行工单，不是launcher。SOURCE_CROSSWALK 保留8个ZIP和独立MD的原编号映射；SOURCES与ATTACHMENT_MANIFEST记录依据。validation仅为本次局部探针复现，不是生产修复。
+
+本次没有修改远端仓库或新运行真实模型/天气实验，也没有打开确认集。需要执行时，以当前真实HEAD与有效授权为准。负结果允许交付；不得以修格式为理由洗白旧回复。

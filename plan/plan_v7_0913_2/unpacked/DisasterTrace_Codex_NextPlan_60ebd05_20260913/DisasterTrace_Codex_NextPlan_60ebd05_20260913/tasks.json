@@ -1,0 +1,655 @@
+{
+  "schema": "disastertrace.codex_plan.tasks.proposal.v1",
+  "base_commit": "60ebd05723f9483590611976d379da2e4edd85b0",
+  "created_on": "2026-09-13",
+  "instructions": "工单定义与输出名均为计划，不代表存在或已通过。每项执行证据写独立记录。",
+  "existing_scientific_scope": {
+    "version": "v7",
+    "contributions": [
+      "C1",
+      "C2",
+      "C3"
+    ],
+    "hazards": 16,
+    "groups": 6,
+    "experiments": [
+      "X00",
+      "X01",
+      "X02",
+      "X03",
+      "X04",
+      "X05",
+      "X06",
+      "X07",
+      "X08",
+      "X09"
+    ],
+    "X09_original_meaning": "联合目标推理扩展"
+  },
+  "tasks": [
+    {
+      "id": "NP00",
+      "title": "起点核对、旧结果保全与本机复现",
+      "status": "planned",
+      "depends_on": [],
+      "legacy_workpackages": [
+        "W0"
+      ],
+      "legacy_experiments": [
+        "X00"
+      ],
+      "batch": "A",
+      "plan_section": "6/NP00",
+      "run_modes": [
+        "offline_cpu"
+      ],
+      "proposed_outputs": [
+        "BASELINE_AUDIT.md",
+        "baseline_inventory.json",
+        "preserved_hashes.json",
+        "blocked_items.json"
+      ],
+      "acceptance_criteria": [
+        "本机HEAD与工作区差异记录",
+        "旧冻结产物hash无意外变化",
+        "实际复现与仓库声称数量分开"
+      ],
+      "stop_or_degrade_rules": [
+        "本地缺少原始资料只阻塞相应真实数据任务"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP01",
+      "title": "类型、head、支持语义与状态桥接",
+      "status": "planned",
+      "depends_on": [
+        "NP00"
+      ],
+      "legacy_workpackages": [
+        "W2"
+      ],
+      "legacy_experiments": [
+        "X00",
+        "X02",
+        "X03"
+      ],
+      "batch": "A",
+      "plan_section": "6/NP01",
+      "run_modes": [
+        "offline_cpu"
+      ],
+      "proposed_outputs": [
+        "MIGRATION_DECISIONS.md",
+        "HEAD_CONTRACT_TESTS.json",
+        "STATE_COMPATIBILITY_REPORT.json"
+      ],
+      "acceptance_criteria": [
+        "旧回归保持",
+        "明确非航空head与引用政策",
+        "E/F分母独立",
+        "双协议与时间边界通过"
+      ],
+      "stop_or_degrade_rules": [
+        "未解决的接口语义阻塞后续真实评分"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP02",
+      "title": "场景登记、来源资格与强基线",
+      "status": "planned",
+      "depends_on": [
+        "NP00"
+      ],
+      "legacy_workpackages": [
+        "W1A",
+        "W1B",
+        "W1C"
+      ],
+      "legacy_experiments": [
+        "X00",
+        "X06"
+      ],
+      "batch": "A",
+      "plan_section": "6/NP02",
+      "run_modes": [
+        "offline_cpu",
+        "authorized_bounded_data"
+      ],
+      "proposed_outputs": [
+        "missions/",
+        "SOURCE_ADMISSION.json",
+        "baseline_registry.json",
+        "training_manifest.json",
+        "split_manifest.json",
+        "DATA_GAPS.md"
+      ],
+      "acceptance_criteria": [
+        "站点日期先登记",
+        "专业与研究基线分轨",
+        "来源时间与统计支持有证据",
+        "数据与方法选择不看确认结果"
+      ],
+      "stop_or_degrade_rules": [
+        "LAMP高频结果不齐只阻塞原生15分钟子轨",
+        "许可或物理支持不齐不假装准入"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP03",
+      "title": "真实固定证据×预测器对照",
+      "status": "planned",
+      "depends_on": [
+        "NP01",
+        "NP02"
+      ],
+      "legacy_workpackages": [
+        "W3"
+      ],
+      "legacy_experiments": [
+        "X00",
+        "X04"
+      ],
+      "batch": "B",
+      "plan_section": "6/NP03",
+      "run_modes": [
+        "offline_cpu",
+        "authorized_model_pilot"
+      ],
+      "proposed_outputs": [
+        "FIXED_EVIDENCE_MATRIX.json",
+        "F_ONLY_REAL_RUN_STATUS.json",
+        "raw_head_responses/",
+        "failure_examples.jsonl"
+      ],
+      "acceptance_criteria": [
+        "真实独立F-only",
+        "三类证据条件共同目标与掩膜",
+        "程序与LLM同包对比",
+        "新推理与重放分开"
+      ],
+      "stop_or_degrade_rules": [
+        "没有本轮模型授权则准备配置并标未运行",
+        "严重提示/解析错误先修复再扩展"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP04",
+      "title": "区域会话、动作目录与真实费用",
+      "status": "planned",
+      "depends_on": [
+        "NP01",
+        "NP02"
+      ],
+      "legacy_workpackages": [
+        "W2",
+        "W4"
+      ],
+      "legacy_experiments": [
+        "X01",
+        "X02",
+        "X07"
+      ],
+      "batch": "A-B",
+      "plan_section": "6/NP04",
+      "run_modes": [
+        "offline_cpu",
+        "authorized_bounded_data"
+      ],
+      "proposed_outputs": [
+        "action_catalog.json",
+        "cost_calibration.json",
+        "mission_events.jsonl",
+        "resource_receipts.jsonl",
+        "opportunity_ledger.jsonl"
+      ],
+      "acceptance_criteria": [
+        "完整机会不因STOP或失败消失",
+        "共享物理费用守恒",
+        "在计算期间公共基线照常更新",
+        "严格预算和失败已花费用留存"
+      ],
+      "stop_or_degrade_rules": [
+        "费用或时间不可核对时不能发布真实运行收益"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP05",
+      "title": "完整checkpoint与真实分支重跑",
+      "status": "planned",
+      "depends_on": [
+        "NP04"
+      ],
+      "legacy_workpackages": [
+        "W2",
+        "W3"
+      ],
+      "legacy_experiments": [
+        "X02",
+        "X03",
+        "X04"
+      ],
+      "batch": "B",
+      "plan_section": "6/NP05",
+      "run_modes": [
+        "offline_cpu",
+        "authorized_model_pilot"
+      ],
+      "proposed_outputs": [
+        "checkpoint.schema.json",
+        "branch_plan.json",
+        "branch_results.jsonl",
+        "BRANCH_REPLAY_REPORT.md"
+      ],
+      "acceptance_criteria": [
+        "原路径恢复与不分支一致",
+        "无在途与在途资格分开",
+        "各分支预算缓存权限隔离",
+        "私有未来结果改变不影响策略前缀"
+      ],
+      "stop_or_degrade_rules": [
+        "没有真实替代响应标unavailable_branch",
+        "无法恢复在途则只支持安全边界"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP06",
+      "title": "E支持、联合可达性与F结果连接",
+      "status": "planned",
+      "depends_on": [
+        "NP01",
+        "NP02",
+        "NP05"
+      ],
+      "legacy_workpackages": [
+        "W3",
+        "W4"
+      ],
+      "legacy_experiments": [
+        "X03",
+        "X04"
+      ],
+      "batch": "B",
+      "plan_section": "6/NP06",
+      "run_modes": [
+        "offline_cpu"
+      ],
+      "proposed_outputs": [
+        "E_REFERENCE_SCOPE.json",
+        "joint_witnesses/",
+        "E_TO_F_DIAGNOSTICS.jsonl"
+      ],
+      "acceptance_criteria": [
+        "小图与独立穷举一致",
+        "初始资源和并发与真实会话相符",
+        "原图不作精确事实",
+        "E参照不优化F标签"
+      ],
+      "stop_or_degrade_rules": [
+        "超求解范围明确not_applicable或上下界"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP07",
+      "title": "强程序、一步两步与LLM资料工具选择",
+      "status": "planned",
+      "depends_on": [
+        "NP03",
+        "NP05",
+        "NP06"
+      ],
+      "legacy_workpackages": [
+        "W4"
+      ],
+      "legacy_experiments": [
+        "X01",
+        "X07"
+      ],
+      "batch": "C",
+      "plan_section": "6/NP07",
+      "run_modes": [
+        "offline_cpu",
+        "authorized_training",
+        "authorized_model_pilot"
+      ],
+      "proposed_outputs": [
+        "POLICY_COMPARISON.json",
+        "RESOURCE_FACTORIAL.json",
+        "policy_training_manifest.json",
+        "frozen_policies/"
+      ],
+      "acceptance_criteria": [
+        "所有方法同权限同工具",
+        "固定selector的2×2先行",
+        "规划成本计入",
+        "风险学习不读测试未获取值或标签",
+        "X09不被工具选择挪用"
+      ],
+      "stop_or_degrade_rules": [
+        "无训练支持保留规则不伪造lookahead",
+        "负结果不得通过调贵成本修饰"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP08",
+      "title": "第二物理过程与原生多模态",
+      "status": "planned",
+      "depends_on": [
+        "NP02",
+        "NP04"
+      ],
+      "legacy_workpackages": [
+        "W1B",
+        "W1C",
+        "W2"
+      ],
+      "legacy_experiments": [
+        "X05",
+        "X06"
+      ],
+      "batch": "B-C",
+      "plan_section": "6/NP08",
+      "run_modes": [
+        "offline_cpu",
+        "authorized_bounded_data",
+        "authorized_model_pilot"
+      ],
+      "proposed_outputs": [
+        "SECOND_PROCESS_STATUS.json",
+        "domain_provider_reports/",
+        "MM_REPRESENTATION_REGISTRY.json",
+        "native_input_receipts/"
+      ],
+      "acceptance_criteria": [
+        "温度工程与极端任务分级",
+        "水文物理支持核准后评分",
+        "雷达与日累计分轨",
+        "同源表示和新增信息分开",
+        "所有方法平等用专业工具"
+      ],
+      "stop_or_degrade_rules": [
+        "来源不齐只阻塞该路线",
+        "不按模型胜负择第二领域"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP09",
+      "title": "内部复核清单与受控提醒价值",
+      "status": "planned",
+      "depends_on": [
+        "NP04"
+      ],
+      "legacy_workpackages": [
+        "W4"
+      ],
+      "legacy_experiments": [
+        "X00",
+        "X07"
+      ],
+      "batch": "C",
+      "plan_section": "6/NP09",
+      "run_modes": [
+        "offline_cpu"
+      ],
+      "proposed_outputs": [
+        "advisory_records.jsonl",
+        "decision_policy.yaml",
+        "DECISION_VALUE_REPORT.md"
+      ],
+      "acceptance_criteria": [
+        "同一规则比较各预测器",
+        "误报负担和漏报随提前量一起报告",
+        "提醒阈值不影响主预测分",
+        "不声称实际挽回经济或生命损失"
+      ],
+      "stop_or_degrade_rules": [
+        "缺真实人员使用研究不宣称提高值班效率"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP10",
+      "title": "独立确认与原X矩阵",
+      "status": "planned",
+      "depends_on": [
+        "NP03",
+        "NP05",
+        "NP06",
+        "NP07",
+        "NP08",
+        "NP09"
+      ],
+      "legacy_workpackages": [
+        "W5"
+      ],
+      "legacy_experiments": [
+        "X00",
+        "X01",
+        "X02",
+        "X03",
+        "X04",
+        "X05",
+        "X06",
+        "X07",
+        "X08",
+        "X09"
+      ],
+      "batch": "D",
+      "plan_section": "6/NP10",
+      "run_modes": [
+        "offline_cpu",
+        "authorized_confirmation"
+      ],
+      "proposed_outputs": [
+        "CONFIRMATION_PREREG.yaml",
+        "X00_X09_RESULTS_INDEX.json",
+        "CLAIMS_AND_EVIDENCE.md",
+        "grouped_uncertainty/"
+      ],
+      "acceptance_criteria": [
+        "方法与主要比较先冻结",
+        "过程与来源谱系分组隔离",
+        "完整日历缺失有记录",
+        "X08/X09可明确未完成不强凑",
+        "跨单位不直接平均MAE"
+      ],
+      "stop_or_degrade_rules": [
+        "独立性或主要合同不成立不升级确认资格",
+        "不能看到显著性再延长到获胜"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP11",
+      "title": "有界真实前瞻影子运行",
+      "status": "planned",
+      "depends_on": [
+        "NP02",
+        "NP04",
+        "NP09"
+      ],
+      "legacy_workpackages": [
+        "W5"
+      ],
+      "legacy_experiments": [
+        "X08"
+      ],
+      "batch": "D",
+      "plan_section": "6/NP11",
+      "run_modes": [
+        "offline_cpu",
+        "authorized_shadow"
+      ],
+      "proposed_outputs": [
+        "shadow_run_config.yaml",
+        "submission_receipts.jsonl",
+        "mature_outcomes.jsonl",
+        "SHADOW_STATUS.md"
+      ],
+      "acceptance_criteria": [
+        "本轮授权且有终止时间",
+        "真实预测提前提交证据",
+        "first_seen不冒充最早发布时间",
+        "成熟结果再评分",
+        "无公众预警与永久后台任务"
+      ],
+      "stop_or_degrade_rules": [
+        "无前瞻授权只实现代码和离线测试",
+        "未成熟窗口pending不补结果"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    },
+    {
+      "id": "NP12",
+      "title": "分级发布、复现与16类维护",
+      "status": "planned",
+      "depends_on": [
+        "NP00"
+      ],
+      "legacy_workpackages": [
+        "W5"
+      ],
+      "legacy_experiments": [
+        "X00",
+        "X06",
+        "X08"
+      ],
+      "batch": "continuous",
+      "plan_section": "6/NP12",
+      "run_modes": [
+        "offline_cpu"
+      ],
+      "proposed_outputs": [
+        "REPRODUCE_CN.md",
+        "FINAL_REPORT_CN.md",
+        "NEXT_ACTIONS.md",
+        "HAZARD_STATUS_16.json",
+        "CLAIMS_AND_EVIDENCE.md",
+        "ARTIFACT_MANIFEST.json"
+      ],
+      "acceptance_criteria": [
+        "工程、机制、确认、前瞻资格分开",
+        "失败与负结果保留",
+        "受限数据和凭据不出包",
+        "实际生成文件与命令可恢复",
+        "不自动远端推送"
+      ],
+      "stop_or_degrade_rules": [
+        "许可不明就只给恢复说明不再分发"
+      ],
+      "implementation_status": {
+        "implemented": false,
+        "unit_validated": false,
+        "real_data_validated": false,
+        "development_evaluated": false,
+        "independently_confirmed": false
+      },
+      "scientific_admitted": false,
+      "evidence_refs": []
+    }
+  ]
+}

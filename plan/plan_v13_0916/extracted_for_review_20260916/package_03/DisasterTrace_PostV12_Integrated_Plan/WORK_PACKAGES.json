@@ -1,0 +1,535 @@
+{
+  "schema": "disastertrace.post_v12.integrated_plan.v1",
+  "reference_commit": "1eba36dd272c72573d1309c78d45dbe97dd8af12",
+  "input_sources": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I"
+  ],
+  "execution_authorized": false,
+  "planning_does_not_launch_jobs": true,
+  "first_batch": "R0",
+  "first_batch_limits": {
+    "new_source_http": 0,
+    "new_api_calls": 0,
+    "new_benchmark_model_calls": 0,
+    "gpu": 0,
+    "fit": 0,
+    "confirmation_access": false
+  },
+  "candidate_additional_cpu": {
+    "max_jobs": 1,
+    "cpu": 16,
+    "ram_GiB": 64,
+    "requires_separate_resource_permission": true
+  },
+  "terminal_statuses": [
+    "completed",
+    "failed",
+    "blocked",
+    "not_evaluable",
+    "not_attempted"
+  ],
+  "gate_rule": "Only an explicit per-track passed receipt can release that dependency; terminal merely permits scope closeout. Authorization remains independent.",
+  "tasks": [
+    {
+      "id": "R00",
+      "stage": "R0",
+      "purpose": "Refresh actual source/result identity, preserve index, reconcile test scope",
+      "depends_on": [],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "deliverables": [
+        "EXECUTION_BASELINE.json",
+        "TEST_SCOPE_DIFF.json"
+      ]
+    },
+    {
+      "id": "R01",
+      "stage": "R0",
+      "purpose": "Verify exact C2 reports, aliases and call-level traces before deriving complete comparison",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "deliverables": [
+        "C2_ANALYSIS_INTEGRITY.json",
+        "C2_HISTORICAL_IMPACT.json"
+      ]
+    },
+    {
+      "id": "R02",
+      "stage": "R0",
+      "purpose": "Derive pair provenance from actual consumer/bank, not arm name",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "deliverables": [
+        "METHOD_CONSUMER_MANIFEST.json",
+        "PAIR_PROVENANCE_IMPACT.json"
+      ]
+    },
+    {
+      "id": "R03",
+      "stage": "R0",
+      "purpose": "Join final dispatch permission, capture integrity, immutable reconciliation and production consumption",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "deliverables": [
+        "API_DISPATCH_QUALIFICATION.json",
+        "CAPTURE_INTEGRITY.json",
+        "RECOVERY_CONSUMER_PROOF.json"
+      ]
+    },
+    {
+      "id": "R04",
+      "stage": "R0",
+      "purpose": "Offline strict query-only v2 contract with fixed forecast schedule",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "deliverables": [
+        "QUERY_ONLY_V2_CONTRACT.json",
+        "SELECTOR_V2_OFFLINE_MATRIX.json"
+      ],
+      "output_keys": [
+        "query_order",
+        "forecast_handles"
+      ],
+      "forecast_handles_const": []
+    },
+    {
+      "id": "R05",
+      "stage": "R0",
+      "purpose": "Version remaining-new acquisition semantics, retain v1 replay",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "deliverables": [
+        "NEW_ACTION_SEMANTICS.json",
+        "RESIDUAL_V1_IMPACT.json"
+      ]
+    },
+    {
+      "id": "R06",
+      "stage": "R0",
+      "purpose": "Audit fit/application clocks, lawful information and source-role exposure without fitting",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "deliverables": [
+        "CLOCK_INFORMATION_SUPPORT_AUDIT.json",
+        "ROLE_AND_EXPOSURE_LEDGER.json"
+      ]
+    },
+    {
+      "id": "R07",
+      "stage": "R0",
+      "purpose": "Public action census and existing consumer traces, no new counterfactual experiment",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "deliverables": [
+        "ACTION_SPACE_CENSUS.json"
+      ]
+    },
+    {
+      "id": "R08",
+      "stage": "R0",
+      "purpose": "Close attempted scoped work with separate pass/fail/blocked qualification axes",
+      "depends_on": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "dependency_mode": "all_terminal_not_all_passed",
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "deliverables": [
+        "SCOPE_ACCEPTANCE.json",
+        "HISTORICAL_IMPACT.json",
+        "NEXT_ACTION.md",
+        "STOP_RECEIPT.json"
+      ]
+    },
+    {
+      "id": "R10",
+      "stage": "R1",
+      "purpose": "Freeze existing-bank reuse or a separately authorized limited clock-aligned candidate",
+      "depends_on": [
+        "R06",
+        "R07"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "external_gates": [
+        "fresh R1 scope authorization",
+        "actual bank/source/role manifest"
+      ],
+      "fit_default": 0,
+      "optional_new_bank_candidates_max": 1
+    },
+    {
+      "id": "R11",
+      "stage": "R1",
+      "purpose": "Complete-calendar annual-bank program comparison with exact-identity reuse",
+      "depends_on": [
+        "R10",
+        "R01",
+        "R02"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "external_gates": [
+        "fresh CPU run registration"
+      ],
+      "candidate_trajectory_ceiling": 840,
+      "candidate_method_independent_opportunities": 12096,
+      "model_calls": 0,
+      "arms": [
+        "FOLLOW",
+        "F_COMMON",
+        "F_BASE_ONLY",
+        "B11_BATCH",
+        "B11_COVERAGE"
+      ]
+    },
+    {
+      "id": "R12",
+      "stage": "R1",
+      "purpose": "Multiple public-source-state GET branches under frozen bank",
+      "depends_on": [
+        "R10",
+        "R01",
+        "R05"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "external_gates": [
+        "fresh C2 registration",
+        "actual qualified parent availability"
+      ],
+      "max_unique_parents": 12,
+      "max_get_interventions": 48,
+      "max_parent_reconstructions": 12,
+      "max_noop_continuations": 12,
+      "model_calls": 0,
+      "positive_gain_required": false
+    },
+    {
+      "id": "R13",
+      "stage": "R1",
+      "purpose": "Qualify real TAF PROCESS alternatives and consumer propagation",
+      "depends_on": [
+        "R10",
+        "R01"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "external_gates": [
+        "real archived processing alternative or separately authorized extractor scope"
+      ],
+      "max_existing_input_cases": 24,
+      "network_model_default": 0,
+      "missing_alternative_status": "PROCESS_NOT_EXECUTED"
+    },
+    {
+      "id": "R20",
+      "stage": "R2_qualification",
+      "purpose": "Bounded real-weather strict-interface qualification, not model advantage",
+      "depends_on": [
+        "R03",
+        "R04"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "external_gates": [
+        "fresh API authorization with price/token/time ceilings",
+        "frozen exact request IDs and offline proof"
+      ],
+      "max_total_api_requests": 24,
+      "extra_unregistered_compatibility": 0,
+      "retries": 0,
+      "all_registered_contracts_pass_required": true
+    },
+    {
+      "id": "R21",
+      "stage": "R2_comparison",
+      "purpose": "One frozen query-only model against strong same-condition programs",
+      "depends_on": [
+        "R11",
+        "R12",
+        "R20",
+        "R02"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "external_gates": [
+        "fresh model trial authorization",
+        "fixed bank/prompt/schema/failure/cost contract"
+      ],
+      "max_sessions": 12,
+      "max_decisions_per_session": 24,
+      "max_formal_requests": 288,
+      "retries": 0,
+      "model_roles": [
+        "query_selector"
+      ],
+      "nonconstant_hindsight_best_action_required": false
+    },
+    {
+      "id": "R30",
+      "stage": "R3_design",
+      "purpose": "Specify C1/C2 populations, dependence, precision and comparison family without opening holdout",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      }
+    },
+    {
+      "id": "R31",
+      "stage": "R3",
+      "purpose": "Run frozen C1 confirmation",
+      "depends_on": [
+        "R21",
+        "R30"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "external_gates": [
+        "fresh confirmation authorization",
+        "methods frozen",
+        "joint two-track preregistration before shared-calendar opening"
+      ],
+      "confirmation_access_default": false
+    },
+    {
+      "id": "R32",
+      "stage": "R3",
+      "purpose": "Run frozen C2 mechanism confirmation independently of model superiority",
+      "depends_on": [
+        "R12",
+        "R30"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "conditional_dependencies": {
+        "if_PROCESS_claimed": [
+          "R13"
+        ]
+      },
+      "external_gates": [
+        "fresh confirmation authorization",
+        "selected diagnostic mechanisms frozen",
+        "joint freeze before shared-calendar opening or isolated calendar"
+      ],
+      "confirmation_access_default": false
+    },
+    {
+      "id": "T01",
+      "stage": "parallel_temperature",
+      "purpose": "Dynamic target/prompt, raw-vs-ECC scope, real member lineage and DWD outcome qualification",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "blocks_only": [
+        "new_temperature_runs"
+      ]
+    },
+    {
+      "id": "M01",
+      "stage": "parallel_MM",
+      "purpose": "Qualify at most 24 metadata-selected existing native image pairs",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "max_pairs": 24,
+      "new_source_http_default": 0,
+      "model_calls_default": 0,
+      "external_gates": [
+        "separate permission for missing assets or VLM"
+      ]
+    },
+    {
+      "id": "H01",
+      "stage": "parallel_second_chain",
+      "purpose": "Qualify one H07/H08 same-target physical active chain",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "new_source_http_default": 0,
+      "external_gates": [
+        "per-source contract and acquisition permission"
+      ]
+    },
+    {
+      "id": "P01",
+      "stage": "parallel_portability",
+      "purpose": "Formal/legacy explicit labels first; targeted role/content manifest relocation",
+      "depends_on": [
+        "R00"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "limits": {
+        "new_source_http": 0,
+        "new_api_calls": 0,
+        "new_benchmark_model_calls": 0,
+        "gpu": 0,
+        "fit": 0,
+        "confirmation_access": false
+      },
+      "blocks_only": [
+        "claims_of_current_source_formal_relocation"
+      ]
+    },
+    {
+      "id": "D01",
+      "stage": "later",
+      "purpose": "Existing D scenario extension, no new core contribution requirement",
+      "depends_on": [
+        "R11"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "external_gates": [
+        "scenario card",
+        "preference-blind weather head",
+        "separate execution scope"
+      ]
+    },
+    {
+      "id": "O01",
+      "stage": "later",
+      "purpose": "Prospective program predictions and later separately frozen model",
+      "depends_on": [
+        "R10"
+      ],
+      "status": "proposed_for_review",
+      "execution_authorized": false,
+      "external_gates": [
+        "fresh online-source and run scope",
+        "pre-outcome durable submissions"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "schema": "disastertrace.review_delta.v1",
+  "reviewed_commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "preserve": [
+    "v9",
+    "C1",
+    "C2",
+    "C3",
+    "E",
+    "F",
+    "D",
+    "MM",
+    "X00-X09",
+    "N1-N5"
+  ],
+  "historical_namespace": "W00-W19 and earlier CP/DS remain historical; not reset",
+  "pause_preserved": true,
+  "current_turn_actions": "read, local checks, review artifact only",
+  "first_wave": [
+    "N1.delta",
+    "N3.calibration_audit",
+    "N3.E_compose",
+    "N2.lineage"
+  ],
+  "new_api_gpu_authorization": false,
+  "tasks": [
+    {
+      "id": "N1.delta",
+      "title_cn": "当前状态与有限生产回归",
+      "status": "proposed_not_executed",
+      "depends_on": [],
+      "mode": "cpu_local",
+      "outputs": [
+        "CURRENT_DELTA.json",
+        "REGRESSION_SCOPE.json",
+        "HISTORICAL_IMPACT.json"
+      ],
+      "acceptance_cn": [
+        "不覆盖旧冻结；核实际HEAD差异",
+        "切分helper与生产入口分别验证",
+        "失败/未评估保留，不将局部探针泛化"
+      ]
+    },
+    {
+      "id": "N2.lineage",
+      "title_cn": "完整输入依赖与分组",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N1.delta"
+      ],
+      "mode": "cpu_local",
+      "outputs": [
+        "INPUT_DEPENDENCY_DELTA.json",
+        "ROLE_CONFLICTS.json",
+        "BLOCK_SENSITIVITY.json"
+      ],
+      "acceptance_cn": [
+        "包括实际查询与共同产品版本、父资产、缓存和参考",
+        "同源共享不得跨训练/评价静默复用",
+        "块数不称天气系统真值"
+      ]
+    },
+    {
+      "id": "N2.next_calendar",
+      "title_cn": "下一批开发/确认日历",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N2.lineage"
+      ],
+      "mode": "design_then_explicitly_authorized_data",
+      "outputs": [
+        "NEXT_DATA_PREREG.json"
+      ],
+      "acceptance_cn": [
+        "自然集与稀有集分离",
+        "日期选择不以模型表现为依据",
+        "保留确认周，样本效力不按调用数计算"
+      ]
+    },
+    {
+      "id": "N3.calibration_audit",
+      "title_cn": "内容、mask和后处理归因",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N1.delta"
+      ],
+      "mode": "cpu_existing_records",
+      "outputs": [
+        "CALIBRATION_ATTRIBUTION.json",
+        "PRIOR_MASS_REPORT.json",
+        "NO_TAF_EVIDENCE_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "逐预测标明raw score与calibrator家族",
+        "统计K、真实权重、2K、正例与回退",
+        "旧BANK和评分不更改；无信息论保证"
+      ]
+    },
+    {
+      "id": "N3.baseline_v2",
+      "title_cn": "强同信息后端",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N3.calibration_audit",
+        "N2.lineage"
+      ],
+      "mode": "cpu_fit_on_declared_periods",
+      "outputs": [
+        "PREDICTOR_SPEC.json",
+        "BASELINE_V2_VALIDATION.json"
+      ],
+      "acceptance_cn": [
+        "只在训练/校准选择参数",
+        "内容与mask对照",
+        "明确no_taf备用方案及原银行回归"
+      ]
+    },
+    {
+      "id": "N3.E_compose",
+      "title_cn": "模型逐槽与确定性汇总",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N1.delta"
+      ],
+      "mode": "cpu_existing_records_then_separate_model_freeze",
+      "outputs": [
+        "E_COMPOSED_DIAGNOSTIC.json",
+        "E_PIPELINE_CONTRACT.json"
+      ],
+      "acceptance_cn": [
+        "原模型分数保留",
+        "不使用Gold修复模型slots",
+        "无效和未提交保留；真实例子复核"
+      ]
+    },
+    {
+      "id": "N4.fixed_matrix",
+      "title_cn": "证据×预测器小矩阵",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N3.baseline_v2",
+        "N3.E_compose"
+      ],
+      "mode": "cpu_then_new_authorized_model_batch",
+      "outputs": [
+        "MATRIX_FREEZE.json",
+        "MATRIX_RESULTS.json"
+      ],
+      "acceptance_cn": [
+        "统一实际证据、时间和权限",
+        "固定包与端到端区分",
+        "同源原生程序作为强基线，不强迫概率修订"
+      ]
+    },
+    {
+      "id": "N4.persistent",
+      "title_cn": "持续覆盖与COPY比较",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N1.delta"
+      ],
+      "mode": "cpu_then_separate_authorized_model",
+      "outputs": [
+        "REVISION_FUNNEL.json",
+        "PROTOCOL_PAIRED_REPORT.json"
+      ],
+      "acceptance_cn": [
+        "候选与wrapper状态分离",
+        "费用使用各自真实/声明时间不改旧回执",
+        "全机会封存与旧期限不被免费刷新"
+      ]
+    },
+    {
+      "id": "N4.resources",
+      "title_cn": "获取和处理预算公平对照",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N3.baseline_v2",
+        "N2.lineage"
+      ],
+      "mode": "cpu_then_bounded_authorized_execution",
+      "outputs": [
+        "RESOURCE_CONTRACT.json",
+        "RESOURCE_FACTORIAL_RESULTS.json"
+      ],
+      "acceptance_cn": [
+        "受控槽位与真实服务轨分离",
+        "固定selector先分配×授权，再比较selector",
+        "API客户端等待不冒充服务器算力"
+      ]
+    },
+    {
+      "id": "N5.temperature",
+      "title_cn": "已有温度流上的补证和模型",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N1.delta",
+        "N2.lineage"
+      ],
+      "mode": "cpu_then_new_authorized_model_or_data",
+      "outputs": [
+        "TEMPERATURE_BUDGETED_SESSION.json",
+        "TEMPERATURE_DENOMINATOR_DELTA.json"
+      ],
+      "acceptance_cn": [
+        "不重复192条COPY当新进度",
+        "完整共同成员产品免费、三日保同成员",
+        "no extra evidence时仅放行F轨，仍无C1主张"
+      ]
+    },
+    {
+      "id": "N5.D",
+      "title_cn": "固定F配对与完整取证反馈",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N1.delta"
+      ],
+      "mode": "cpu_then_separate_authorized_extension",
+      "outputs": [
+        "DECISION_PROFILE_PAIRING.json",
+        "FULL_FEEDBACK_TRACE.json"
+      ],
+      "acceptance_cn": [
+        "F和D资源/分数分表",
+        "固定证据偏好隔离与自适应配对区别",
+        "没有归档的分支不生成假结果；仅研究性损失"
+      ],
+      "stage_dependencies": {
+        "fixed_forecast": [
+          "N1.delta"
+        ],
+        "full_feedback": [
+          "N4.fixed_matrix"
+        ]
+      }
+    },
+    {
+      "id": "N5.MM_breadth",
+      "title_cn": "第二波与16类资格增补",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N1.delta"
+      ],
+      "mode": "source_review_then_authorized_data",
+      "outputs": [
+        "HAZARD_ADMISSION_DELTA.json",
+        "MM_INPUT_CONTRACT.json"
+      ],
+      "acceptance_cn": [
+        "累计物理支持先核",
+        "共有HEFS不重新计为新证据",
+        "D/MM/F/确认分级，不阻塞核心"
+      ]
+    },
+    {
+      "id": "N5.core_confirm",
+      "title_cn": "核心独立确认",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N2.next_calendar",
+        "N4.fixed_matrix",
+        "N4.resources"
+      ],
+      "mode": "design_then_explicit_confirmation_authorization",
+      "outputs": [
+        "CORE_CONFIRMATION_PREREG.json",
+        "CORE_CONFIRMATION_RESULTS.json"
+      ],
+      "acceptance_cn": [
+        "主方法指标数据先冻结",
+        "不依赖D/MM/X09或完整16类",
+        "块级配对、统一缺失、无显著性追加"
+      ]
+    },
+    {
+      "id": "N5.delivery",
+      "title_cn": "分级交付与停止",
+      "status": "proposed_not_executed",
+      "depends_on": [
+        "N1.delta"
+      ],
+      "mode": "local_packaging",
+      "outputs": [
+        "RELEASE_SCOPE.json",
+        "NEXT_DECISIONS_CN.md"
+      ],
+      "acceptance_cn": [
+        "原始输入回答失败保留",
+        "加速审计与原评分器对照",
+        "有限阅读包不宣称完整复现；批末停止"
+      ]
+    }
+  ]
+}

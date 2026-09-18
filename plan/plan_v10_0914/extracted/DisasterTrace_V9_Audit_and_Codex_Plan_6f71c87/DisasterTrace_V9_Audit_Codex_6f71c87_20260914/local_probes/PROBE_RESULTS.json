@@ -1,0 +1,170 @@
+{
+  "commit": "6f71c8799ff69439a18f645e63b8c966ca21eec4",
+  "scope": "three full stdlib modules; calibration no-TAF path dependency import omitted; all input fixtures synthetic",
+  "full_repository_tests_run": false,
+  "historical_runs_recomputed": false,
+  "model_calls": 0,
+  "network_calls": 0,
+  "source_hashes": [
+    {
+      "file": "regional_calibration.py",
+      "bytes": 1834,
+      "blob_sha1": "6236493c86c31e0f3b7c605692601146e716bbbf",
+      "expected": "6236493c86c31e0f3b7c605692601146e716bbbf",
+      "exact": true,
+      "sha256": "31c09523376c20978188f86fcb1f66ee4ac82c83903b1ca898c02bf576ffe4d2"
+    },
+    {
+      "file": "selection.py",
+      "bytes": 2764,
+      "blob_sha1": "c79decdbee12db2e2e4ae70dfb2a70d3174c37dd",
+      "expected": "c79decdbee12db2e2e4ae70dfb2a70d3174c37dd",
+      "exact": true,
+      "sha256": "c80df98b1cd03700b54953ab9d8119ae4ad9541f371b8e6367180b98f6f89060"
+    },
+    {
+      "file": "evidence_diagnostic.py",
+      "bytes": 5780,
+      "blob_sha1": "40e7668e76862b4b3f61f31d5c77f6fde6d34578",
+      "expected": "40e7668e76862b4b3f61f31d5c77f6fde6d34578",
+      "exact": true,
+      "sha256": "3461cdb1ab75b2981b1363a94df3b4dfa8f84bf92790d57d377f41a715941a3e"
+    },
+    {
+      "file": "calibration.py",
+      "bytes": 2402,
+      "blob_sha1": "6c5cf91e7513bd7674f558ea1f474c58168db6b4",
+      "expected": "6c5cf91e7513bd7674f558ea1f474c58168db6b4",
+      "exact": true,
+      "sha256": "8f85df1644c45b27bc17d9c0eef3a12a7150e7326d281c8989bd815f689945c2"
+    }
+  ],
+  "probe_groups": 17,
+  "results": [
+    {
+      "name": "E_aggregate_exhaustive_bounded",
+      "observed": {
+        "input_combinations": 340,
+        "all_match_declared_conflict_first_rule": true
+      },
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_empty_and_bad_state_rejected",
+      "observed": true,
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_strict_upper_open",
+      "observed": "true",
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_strict_upper_closed",
+      "observed": "unknown",
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_at_threshold_point",
+      "observed": "false",
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_right_censored",
+      "observed": "false",
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_negative_witness_does_not_close_unread_slot",
+      "observed": {
+        "slots": {
+          "q0": "false",
+          "q1": "unknown"
+        },
+        "fact_truth": "unknown"
+      },
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_future_completion_not_visible",
+      "observed": true,
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_newer_disclosed_version_replaces_old",
+      "observed": true,
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_same_version_inconsistency_not_vacuous_truth",
+      "observed": true,
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_duplicate_JSON_key_rejected",
+      "observed": true,
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "E_semantically_inconsistent_answer_retained_for_scoring",
+      "observed": {
+        "model_fact_truth": "false",
+        "reducer_from_model_slots": "unknown"
+      },
+      "interpretation": "intentional_diagnostic_not_parser_bug"
+    },
+    {
+      "name": "selector_valid_and_duplicate_handles",
+      "observed": true,
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "selector_duplicate_JSON_key_silently_accepted",
+      "observed": {
+        "query_order": [
+          "q1"
+        ],
+        "forecast_handles": [
+          "t0"
+        ]
+      },
+      "interpretation": "confirmed_local_parser_hardening_gap_no_historical_incidence_claim"
+    },
+    {
+      "name": "PAV_monotonicity_and_probability_range",
+      "observed": {
+        "synthetic_fits": 40,
+        "grid_per_fit": 101
+      },
+      "interpretation": "expected_contract"
+    },
+    {
+      "name": "PAV_per_distinct_probability_prior_sensitivity",
+      "observed": {
+        "100_identical_negative_samples": 0.00980392156862745,
+        "100_tiny_distinct_negative_probabilities": 0.3333333333333333
+      },
+      "interpretation": "documented_estimator_design_sensitivity_not_test_leak_or_arithmetic_bug"
+    },
+    {
+      "name": "same_raw_cell_different_postcalibration_family",
+      "observed": {
+        "without_query": {
+          "probability": 0.1,
+          "cell_key": "[1000,\"no_taf\"]",
+          "n": 98,
+          "mapping_version": "synthetic_probe",
+          "kind": "research_calibrated_taf_projection"
+        },
+        "with_nonempty_missing_query": {
+          "probability": 0.4,
+          "cell_key": "[1000,\"no_taf\"]",
+          "n": 98,
+          "mapping_version": "synthetic_probe",
+          "kind": "research_calibrated_taf_projection"
+        }
+      },
+      "interpretation": "synthetic_no_TAF_path_isolation; not_evidence_of_real_data_influence; not_asserting_missingness_is_uninformative"
+    }
+  ]
+}

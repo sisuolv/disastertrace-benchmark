@@ -1,3 +1,9 @@
+# Workspace update: 2026-09-18
+
+[Latest directory synchronization and scope](publication/workspace_sync_20260918/README_CN.md) | [Completed v13 experiment results](LATEST_PROGRESS_V13_CN.md) | [Original plans and reviews](plan)
+
+---
+
 # Latest: v13 completed experiments and results (2026-09-17)
 
 Start with [current progress](LATEST_PROGRESS_V13_CN.md), [review instructions](publication/v13_completed_20260917/REVIEW_FOR_CHATGPT_PRO_CN.md), or [the code and evidence ZIP](publication/v13_completed_20260917/DisasterTrace_v13_completed_results.zip). B00, C00, B02 and M01 are complete. Model gains over all strong programs are not established. Earlier entries below retain their historical scope.

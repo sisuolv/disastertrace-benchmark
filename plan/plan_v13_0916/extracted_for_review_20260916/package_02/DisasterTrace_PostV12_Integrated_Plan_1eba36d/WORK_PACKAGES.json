@@ -1,0 +1,719 @@
+{
+  "schema": "disastertrace.integrated_followup_plan.v1",
+  "plan_name": "post_v12_integrated_1eba36d",
+  "reference_commit": "1eba36dd272c72573d1309c78d45dbe97dd8af12",
+  "plan_status": "proposed_for_user_review",
+  "execution_authorized": false,
+  "source_package_count": 8,
+  "standalone_markdown_count": 1,
+  "framework_preserved": [
+    "C1",
+    "C2",
+    "C3",
+    "E",
+    "F",
+    "D",
+    "MM",
+    "16-hazard roadmap"
+  ],
+  "default_experiment_permissions": {
+    "source_http": false,
+    "api": false,
+    "model": false,
+    "gpu": false,
+    "training": false,
+    "confirmation": false,
+    "git_push": false
+  },
+  "recommended_first_batch": [
+    "IP00",
+    "IP01",
+    "IP02",
+    "IP03",
+    "IP04",
+    "IP05",
+    "IP06"
+  ],
+  "authorization_note": "Tasks, budgets and paths are proposals, not consumed launchers or approvals. Every new experiment scope requires actual valid authorization. Tool reads and planning in this review are not benchmark execution.",
+  "acceptance_semantics": {
+    "local": [
+      "passed",
+      "failed",
+      "blocked_external",
+      "not_applicable",
+      "not_run"
+    ],
+    "no_default_pass": true,
+    "partial_scope_must_be_labelled": true,
+    "future_outputs_are_not_existing_receipts": true
+  },
+  "resource_policy": {
+    "phase_A_gpu": 0,
+    "phase_A_new_source_http": 0,
+    "phase_A_api": 0,
+    "phase_A_new_fit": 0,
+    "phase_A_confirmation": false,
+    "suggested_optional_cpu_job": {
+      "cpus": 16,
+      "ram_gib": 64,
+      "requires_live_quota_check": true,
+      "authorization_required": true
+    },
+    "max_local_h100_later_if_authorized": 4,
+    "no_time_to_completion_promise": true
+  },
+  "pilot_budget_modes": {
+    "default": {
+      "interface_requests": 24,
+      "selector_requests": 288,
+      "combined_ceiling": 312
+    },
+    "optional_exclusive_interface_ablation": {
+      "paired_prompt_cases": 24,
+      "requests": 48,
+      "selector_requests": 288,
+      "combined_ceiling": 336,
+      "needs_separate_authorization": true
+    }
+  },
+  "notes": [
+    "Do not count 8 reviewer packages or their probes as independent weather evidence.",
+    "Do not require favorable hindsight-best actions or LLM wins for admission.",
+    "No-op continuation is not the stop-query treatment.",
+    "Existing v1 data and prior responses retain their original semantics."
+  ],
+  "work_packages": [
+    {
+      "id": "IP00",
+      "title": "当前身份、完成范围和保护清单",
+      "phase": "A",
+      "depends_on": [],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "LATEST_PROGRESS_V12_CN.md",
+        "plans/v12_execution_20260915_01/FINAL_VERIFICATION_01.json",
+        "plans/v12_execution_20260915_01/RESULT_SUMMARY.json",
+        "disastertrace-starter/AGENTS.md"
+      ],
+      "actions": [
+        "读取真实HEAD与工作区/索引，不reset；区分发布HEAD、开发HEAD、实际冻结执行源码。",
+        "逐项记录已经关闭或继续运行的旧身份；旧窗口不自动延长。",
+        "建立测试nodeid集合差异及来源暴露账；更新短入口，不要求文件包含自身最终commit hash。"
+      ],
+      "acceptance": [
+        "原始数据、银行、回复、失败、账本、STOP、journal和checkpoint保护清单明确。",
+        "无缺失材料被默认为成功；新产物路径与旧结果分开。"
+      ],
+      "proposed_outputs": [
+        "EXECUTION_BASELINE.json",
+        "PROTECTED_INPUTS.json",
+        "TEST_SCOPE_DIFF.json",
+        "EXPOSURE_LEDGER_DELTA.json"
+      ],
+      "capabilities_required": [
+        "local_read",
+        "metadata_read"
+      ],
+      "notes": "外部元数据回读与新气象来源下载分别计数；本计划并不授予任何执行权限。"
+    },
+    {
+      "id": "IP01",
+      "title": "C2派生完整性与消费者身份",
+      "phase": "A",
+      "depends_on": [
+        "IP00"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "plans/v12_execution_20260915_01/analyze_branches.py",
+        "plans/v12_execution_20260915_01/analyze_stage_c.py",
+        "plans/v12_execution_20260915_01/C2_BRANCH_ROSTER.json"
+      ],
+      "actions": [
+        "从冻结roster和alias映射核验每个父、臂、call/机会、报告、trace和正式评分身份；禁止按现存glob定义分母。",
+        "修复缺报告continue和trace交集静默缩小；检测重复ID、文件hash改变与错误alias。",
+        "将FOLLOW、common、values的实际预测器/银行/映射/时钟分别标记。",
+        "仅重算派生报告，扫描旧24分支和36配对；原预测不再生成。"
+      ],
+      "acceptance": [
+        "缺1份/全部报告、缺应有trace、重复ID及错误alias不能获得完整C2机制通过。",
+        "完整F评分、机制trace完整性、合法失败回退与真正不完整分别报告；trace不足不自动使所有F无效。",
+        "完整旧输入的原F/Y/掩膜/loss不变；实际消费者差异不靠方法名猜测。"
+      ],
+      "proposed_outputs": [
+        "C2_ANALYSIS_INTEGRITY.json",
+        "PREDICTOR_PROVENANCE.json",
+        "HISTORICAL_IMPACT.json",
+        "PAIRED_REPORT_REVISION_CN.md"
+      ],
+      "capabilities_required": [
+        "local_code_write",
+        "offline_test",
+        "derived_rescore"
+      ]
+    },
+    {
+      "id": "IP02",
+      "title": "生产API发送、捕获、恢复一体化修复",
+      "phase": "A",
+      "depends_on": [
+        "IP00"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "plans/v12_execution_20260915_01/siliconflow_worker.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/production.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/spool_backend.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/execution.py"
+      ],
+      "actions": [
+        "把最终本地许可接到实际发送路径：绑定request/execution、正式停止身份、真实wall截止、一次派发身份。",
+        "原始捕获前缀、是否截断、原始字节数与hash在脱敏前记录；脱敏展示另有hash/长度/变换身份。",
+        "恢复检查原捕获完整性；以不可变恢复回执连接failure与response，修复消费者无条件failure优先。",
+        "不自动重发未知请求，不删除failure，不回填旧时刻，不重开STOP；迟到结果可记账但不能追溯计入预测。"
+      ],
+      "acceptance": [
+        "入口/claim/凭据读取/持久化后越过许可截止或许可前STOP：零新发送。",
+        "许可后STOP区分已在途，不承诺服务器exactly-once；两个worker至多消费一个本地派发身份。",
+        "capture/worker/response各断点和重复恢复、hash冲突、脱敏截断、无效UTF-8、缺usage、时钟异常有实际导入路径测试。",
+        "成功恢复可以经production.resolve、控制器、账本和评分资格正确消费；旧288请求影响单列且不重发。"
+      ],
+      "proposed_outputs": [
+        "API_TRANSPORT_QUALIFICATION.json",
+        "RECOVERY_CONSUMER_QUALIFICATION.json",
+        "API_HISTORICAL_IMPACT.json"
+      ],
+      "capabilities_required": [
+        "local_code_write",
+        "offline_fault_injection"
+      ],
+      "new_http_requests": 0
+    },
+    {
+      "id": "IP03",
+      "title": "版本化query-only接口与真实请求形状离线验证",
+      "phase": "A",
+      "depends_on": [
+        "IP00"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/selection.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/policies.py",
+        "plans/v12_execution_20260915_01/siliconflow_worker.py",
+        "plans/v12_execution_20260915_01/SELECTOR_INTERFACE_V2_PROPOSAL_CN.md"
+      ],
+      "actions": [
+        "短期采用最小兼容双键query_order + 空forecast_handles，统一生成prompt/schema/parser；单键另列可选版本，不同时并行实现。",
+        "支持时使用provider json_schema，但本地仍验证句柄、重复键、额外字段、权限、长度和动作容量。",
+        "动态enum仅来自当次合法公开目录；固定public_slots，模型不能另选预测目标。",
+        "使用已有真实公开请求构建长短上下文、空目录、预算耗尽、版本变更等离线fixture；不调用模型。"
+      ],
+      "acceptance": [
+        "空/全/子集/排序均可表达且不预设正确动作；schema不含未来标签、推荐动作或未读事实。",
+        "旧v1回复/旧失败不被重新归类；新提示与schema同时变化时只称接口组合修复。",
+        "schema关键字不支持时不能静默降级；输出模式、解析器、token上限和生成参数可绑定。"
+      ],
+      "proposed_outputs": [
+        "SELECTOR_CONTRACT_V2.json",
+        "OFFLINE_WEATHER_INTERFACE_RESULT.json",
+        "WEATHER_PREFLIGHT_PROPOSAL.json"
+      ],
+      "capabilities_required": [
+        "local_code_write",
+        "offline_test"
+      ],
+      "new_model_calls": 0
+    },
+    {
+      "id": "IP04",
+      "title": "年度bank时点、信息支持与动作空间审计",
+      "phase": "A",
+      "depends_on": [
+        "IP00"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "plans/v12_execution_20260915_01/fit_annual.py",
+        "plans/v10_execution_20260914_01/scripts/fit_native_feature_bank.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/native_feature_forecast.py",
+        "plans/v12_execution_20260915_01/stage_C/INTENT.json"
+      ],
+      "actions": [
+        "固定旧bank，比较fit cutoff-600秒与实际public_slots；分别核TAF版本、合法query集合、已取得事实、age/lead/mask和值。",
+        "拆分同合法资产只改时钟、同一时刻更换合法证据、真实时间推进三类诊断，禁止后到资料回填早时刻。",
+        "普查所有已捕获288决策（含无效与fallback）的合法动作空间、授权、缓存、预算、服务目标及公开特征。",
+        "仅在有来源/状态支持时登记有限新反事实重算；首批不自动枚举整批新科学分支。"
+      ],
+      "acceptance": [
+        "不把时点差异直接认定泄漏或低分原因；漂移不强制触发重拟合。",
+        "不同合法动作的存在和消费链可检查即可；不要求事后最佳动作非all/none、非零regret或正收益。",
+        "训练合法子集已存在，不再提议从零补mask训练；保持每个基础目标视图总权重语义。"
+      ],
+      "proposed_outputs": [
+        "CLOCK_INFORMATION_AUDIT.json",
+        "ACTION_SPACE_CENSUS.json",
+        "FEATURE_SUPPORT_REPORT_CN.md",
+        "COUNTERFACTUAL_SCOPE_PROPOSAL.json"
+      ],
+      "capabilities_required": [
+        "offline_analysis"
+      ],
+      "new_fit": 0
+    },
+    {
+      "id": "IP05",
+      "title": "来源语义、残余查询v2与多截止注册设计",
+      "phase": "A",
+      "depends_on": [
+        "IP00"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "disastertrace-starter/src/disastertrace/monitoring_v1/residual_query_plan.py",
+        "disastertrace-starter/src/disastertrace/monitoring_v1/formal_session.py",
+        "plans/v12_execution_20260915_01/run_branches.py",
+        "plans/v11_execution_20260915_01/fullweek.py"
+      ],
+      "actions": [
+        "保留v1 first/second/all的相关可见槽语义；新增first_new/second_new/all_new时独立版本、完整inventory和排除原因。",
+        "按payer+授权检查已缓存/已请求，不能只按query_id全局删除私有资料。预算/迟到可行性在执行时再验证，失败留在分母。",
+        "建立GET、PROCESS、WAIT三种诊断与F消费者字段映射；只改E标签列负控制。",
+        "核对已有multi-cutoff实现和回执；设计同一target_hash多个截止的有限修订任务，不把每日重置lead1h当一周持续修订。"
+      ],
+      "acceptance": [
+        "v1旧记录完全可回放；新的新增查询语义不追溯改变旧24分支。",
+        "有充分记录才恢复父状态；新bank从会话起点构造新父，不换旧checkpoint里的bank。",
+        "source状态分层与自然日历主样本分开；C2与修订实验范围只登记、不启动。"
+      ],
+      "proposed_outputs": [
+        "QUERY_PLAN_SEMANTICS_V2.json",
+        "GET_PROCESS_WAIT_CONTRACT.json",
+        "C2_PARENT_SELECTION_PROPOSAL.json",
+        "FIXED_TARGET_REVISION_PROPOSAL.json"
+      ],
+      "capabilities_required": [
+        "local_code_write",
+        "offline_test",
+        "design_only"
+      ]
+    },
+    {
+      "id": "IP06",
+      "title": "首批分轨验收与停止",
+      "phase": "A",
+      "depends_on": [
+        "IP00"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "IP00—IP05实际产物"
+      ],
+      "actions": [
+        "定向失败→修复→通过后做一次相关当前回归；从JUnit真实nodeid去重，说明旧750与628未覆盖部分。",
+        "保留局部完成、外部缺件与不适用；只验收真实实施范围，不等未授权温度/MM。",
+        "用适用的冻结小包核对原算术；新源迁移与旧源复算分开，不要求本批重构整个可搬迁系统。"
+      ],
+      "acceptance": [
+        "没有实际证据不得填passed；blocked_external节点使相应完整结论未通过，但不抹掉其他局部交付。",
+        "保护清单核对且气象来源HTTP/API/模型/GPU/拟合/确认访问均为0。"
+      ],
+      "proposed_outputs": [
+        "PHASE_A_LOCAL_ACCEPTANCE.json",
+        "NEXT_BATCH_SCOPE.json",
+        "STOP_RECEIPT.json"
+      ],
+      "capabilities_required": [
+        "offline_test",
+        "local_artifact_write"
+      ],
+      "partial_results_allowed": true,
+      "observes_tasks": [
+        "IP01",
+        "IP02",
+        "IP03",
+        "IP04",
+        "IP05"
+      ],
+      "run_condition": "all observed tasks are terminal/explicitly blocked, or the separately registered batch stop condition is met",
+      "phase_complete_gate": "all required implemented scope has passing evidence; blocked/not_run is never converted to passed"
+    },
+    {
+      "id": "IP07",
+      "title": "年度bank完整日历程序桥接",
+      "phase": "B",
+      "depends_on": [
+        "IP01",
+        "IP04"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "plans/v12_execution_20260915_01/annual_stage_B/fit/BANK_FREEZE.json",
+        "plans/v11_execution_20260915_01/fullweek_02/PLAN.json",
+        "plans/v12_execution_20260915_01/FULLWEEK_FINDINGS_CN.md"
+      ],
+      "actions": [
+        "优先用冻结年度bank在原已暴露12区域周、两个阈值、五臂上建立新条件：FOLLOW/F_COMMON/F_BASE_ONLY/B11_BATCH/B11_COVERAGE。",
+        "按完整输入/代码/银行/日程/预算/失败协议身份复用完全等价已评分单元；不复用身份已变的缓存。",
+        "保留日重置、48查询、原lead1h、共同TAF、原预测slots与1ms情景；新身份不称旧实验重跑。"
+      ],
+      "acceptance": [
+        "最多168日阈值条件×5臂=840程序轨迹；准确实际新运行/复用/失败由roster计算。",
+        "理论全量12096方法无关机会/60480方法行只是校验上限；缺件/失败显式，不能补造。",
+        "同日历旧新bank桥接，含正负贡献/最差块/缺失界；不跨表直接比较.0339与.00775。"
+      ],
+      "proposed_outputs": [
+        "BANK_CALENDAR_BRIDGE.json",
+        "ANNUAL_FULLCALENDAR_PROGRAM_REPORT_CN.md",
+        "PROGRAM_RESOURCES.json"
+      ],
+      "capabilities_required": [
+        "bounded_cpu_experiment"
+      ],
+      "requires_new_scope_authorization": true,
+      "max_program_trajectories": 840,
+      "new_model_calls": 0,
+      "new_source_http": 0
+    },
+    {
+      "id": "IP08",
+      "title": "条件性时点对齐后端与训练侧简单价值模型",
+      "phase": "B",
+      "depends_on": [
+        "IP04"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "plans/v12_execution_20260915_01/annual_stage_B/fit/REGISTRATION.json",
+        "plans/v12_execution_20260915_01/EXPOSURE_LEDGER.json"
+      ],
+      "actions": [
+        "只在审计显示支持问题或开发机制需要时新注册；原年度v1保留。",
+        "优先一对clock-aligned common/values，不做无界架构/特征搜索；额外锚定残差另批。",
+        "2023内blocked/cross-fit选择，2024Jan—Nov只做选定配置最终校准，Dec继续隔离；2025永久开发。",
+        "多时点/多mask不得重复增加基础目标权重；策略诱导缺证分布与均匀子集另报。"
+      ],
+      "acceptance": [
+        "无授权不拟合；若不需要改bank，产出not_needed及依据，不阻塞IP07。",
+        "新bank先冻结再评估；新bank下重新生成父会话，不替换旧历史。"
+      ],
+      "proposed_outputs": [
+        "BANK_REVISION_DECISION.json",
+        "BANK_V2_REGISTRATION.json",
+        "BANK_V2_FREEZE.json"
+      ],
+      "capabilities_required": [
+        "new_fit"
+      ],
+      "conditional": true,
+      "default_enabled": false
+    },
+    {
+      "id": "IP09",
+      "title": "24请求真实天气接口资格",
+      "phase": "B",
+      "depends_on": [
+        "IP02",
+        "IP03"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "SELECTOR_CONTRACT_V2.json",
+        "WEATHER_PREFLIGHT_PROPOSAL.json"
+      ],
+      "actions": [
+        "新授权后固定24个实际天气公开视图与call ID；同一模型、参数、token上限、schema、失败政策。",
+        "默认每视图一次、不重试；接口资格不依赖C2科学结果、不依赖模型胜负。",
+        "需要schema单独因果效果时另选24对文本/schema=48请求方案，与24方案二选一且单独授权，不额外叠加。"
+      ],
+      "acceptance": [
+        "建议固定24/24满足技术合同、原始捕获和身份记账100%、非法动作执行0；这是有限兼容性门槛，不是总体可靠性统计保证。",
+        "任何不满足条件保留原结果并停止该版本放行；不边改边补满通过数。",
+        "许可与恢复失败无免费重试；空/全查询有效，不要求子集或概率改变。"
+      ],
+      "proposed_outputs": [
+        "WEATHER_INTERFACE_REGISTRATION.json",
+        "WEATHER_INTERFACE_RESULT.json"
+      ],
+      "capabilities_required": [
+        "new_api_calls"
+      ],
+      "requires_new_scope_authorization": true,
+      "max_api_requests": 24,
+      "alternative_exclusive_max_api_requests": 48,
+      "automatic_retries": 0
+    },
+    {
+      "id": "IP10",
+      "title": "有限GET分支、多状态开发与正式归因",
+      "phase": "C",
+      "depends_on": [
+        "IP01",
+        "IP05"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "C2_PARENT_SELECTION_PROPOSAL.json",
+        "选定冻结bank和当前合法源"
+      ],
+      "actions": [
+        "新注册最多12个去重父状态，元数据/公开来源状态固定选样，覆盖不止一个日期块；不保证其天然独立。",
+        "最多12次原策略续行控制和48个GET分支；前缀材料化最多12条单列计算账；旧6父不重新生成。",
+        "每个分支继承已花/预留、授权、cache、pending、基线、override和时钟；同时报告选中目标和整个余下会话。",
+        "有限计划总效果与固定后续策略gamma的单步效果分别注册；旧stop语义不改。"
+      ],
+      "acceptance": [
+        "exact roster/alias/失败/不适用不静默删除；新增费用不重置。",
+        "记录字段、特征、候选概率、生效概率和丢失作用环节；无变化本身合法。",
+        "若切换bank，必须使用新父来源；未运行新拟合时可以原年度bank开发，不依赖IP08必选。"
+      ],
+      "proposed_outputs": [
+        "C2_PARENT_MANIFEST_V2.json",
+        "C2_GET_EFFECTS_V2.json",
+        "C2_PROCESS_SUPPORT_CN.md"
+      ],
+      "capabilities_required": [
+        "bounded_cpu_experiment"
+      ],
+      "requires_new_scope_authorization": true,
+      "max_unique_parents": 12,
+      "max_prefix_materializations": 12,
+      "max_noop_continuations": 12,
+      "max_get_branches": 48
+    },
+    {
+      "id": "IP11",
+      "title": "真实TAF处理与时效诊断",
+      "phase": "C",
+      "depends_on": [
+        "IP01",
+        "IP05"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "GET_PROCESS_WAIT_CONTRACT.json",
+        "原合法TAF/已读METAR及真实处理器"
+      ],
+      "actions": [
+        "同原文、同已读观测做处理器/表示/版本选择对照，不篡改天气事实或删除raw/projection守卫。",
+        "程序替代处理可以作为接口机制测试；只有已捕获模型输出才称真实模型错误，合成错误单列。",
+        "首批最多6个配对案例、每案原生与一个可部署程序处理路径，共12个PROCESS路径；WAIT至多6个独立匹配控制，单列授权，不借用GET额度。",
+        "公开可部署修复与使用评估侧正确字段的特权修复分开。"
+      ],
+      "acceptance": [
+        "实际F适配器确实消费处理字段；只改E布尔标签的不变性不被当作处理能力结论。",
+        "同逻辑时刻/同基线的字段作用与真实耗时/版本更新总作用分开。",
+        "缺少合法处理入口时交付blocked_consumer，不为了成功绕开数据合同。"
+      ],
+      "proposed_outputs": [
+        "TAF_PROCESS_QUALIFICATION.json",
+        "PROCESS_WAIT_EFFECTS.json"
+      ],
+      "capabilities_required": [
+        "bounded_cpu_experiment"
+      ],
+      "requires_new_scope_authorization": true,
+      "max_processing_paths": 12,
+      "max_wait_controls": 6,
+      "new_model_calls": 0
+    },
+    {
+      "id": "IP12",
+      "title": "共享预算、强策略和固定目标修订矩阵",
+      "phase": "C",
+      "depends_on": [
+        "IP07",
+        "IP05"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "年度完整日历结果",
+        "现有2x2、multi-cutoff、base_bound/persistent实现"
+      ],
+      "actions": [
+        "先固定coverage重跑所需2x2，随后同B11比较batch/round-robin/risk/coverage与有限训练侧价值策略；不要求全RL。",
+        "预算曲线先由公开slate和部署约束登记少量档位，不按确认赢家调预算。",
+        "核对同一target_hash多截止的现有回执；修订价值研究仅在真正同目标合同下用新小范围比较FOLLOW/KEEP/COPY/两协议。",
+        "冻结相同后端、公共资料、阈值、slots及总资源约束，源查询预算与实测总成本分表。"
+      ],
+      "acceptance": [
+        "forecast机会、基础天气目标、会话和过程块分别计数；lead改变后后端资格重新核验。",
+        "若多时距来源/训练支持不够先报告资格缺口，不用单lead结果宣称完整持续修订价值。",
+        "事后best action仅评估侧有限参照；没有收益仍完成。"
+      ],
+      "proposed_outputs": [
+        "MECHANISM_MATRIX_REGISTRATION.json",
+        "SHARED_BUDGET_RESULTS.json",
+        "FIXED_TARGET_REVISION_QUALIFICATION.json"
+      ],
+      "capabilities_required": [
+        "bounded_cpu_experiment"
+      ],
+      "requires_new_scope_authorization": true,
+      "scope_must_be_frozen_before_launch": true
+    },
+    {
+      "id": "IP13",
+      "title": "一个模型、一个角色的有界selector比较",
+      "phase": "C",
+      "depends_on": [
+        "IP07",
+        "IP09"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "选定冻结bank",
+        "WEATHER_INTERFACE_RESULT.json",
+        "同日程强程序结果",
+        "ACTION_SPACE_CENSUS.json"
+      ],
+      "actions": [
+        "新注册最多12开发日会话×24决策；优先已验证Flash接口，不自动切换235B或model sweep。",
+        "选样从公开元数据预定，避免再次无理由集中各周首日；不同日期不自动等于独立过程。",
+        "固定原生提取、预测器、slots、成本与失败规则，模型只选查询。",
+        "保留全部288机会决策的有效/无效/空/取得/消费/采用状态；无效通常不新查但既定程序仍可用旧合法cache预测，不误标一律FOLLOW。"
+      ],
+      "acceptance": [
+        "最大288请求是上限，不要求耗尽；一模型一角色，原288身份不复用。",
+        "各公共候选与真实消费可以检查，不要求预先观测LLM正收益或非all/none最优。",
+        "不把valid-only表当主榜，不把跨bank优势写成获取收益。"
+      ],
+      "proposed_outputs": [
+        "SELECTOR_V2_REGISTRATION.json",
+        "SELECTOR_V2_FULL_RESULTS_CN.md",
+        "MODEL_BEHAVIOR_TO_LOSS.json"
+      ],
+      "capabilities_required": [
+        "new_api_calls_or_separately_authorized_local_model"
+      ],
+      "requires_new_scope_authorization": true,
+      "max_model_requests": 288,
+      "automatic_retries": 0,
+      "max_h100_if_separately_authorized": 4,
+      "default_local_h100": 0
+    },
+    {
+      "id": "IP14",
+      "title": "双确认设计、冻结与一次性执行",
+      "phase": "D",
+      "depends_on": [
+        "IP07",
+        "IP10",
+        "IP11",
+        "IP13"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "当前训练/开发暴露账",
+        "独立过程分组草案",
+        "最终方法及接口"
+      ],
+      "actions": [
+        "设计草案可以从IP00起并行；执行必须等C1模型增量与C2核心机制同时冻结，或用隔离确认日历。",
+        "预定主比较家族、两个阈值、多时点权重、最小关心效应、精度、最大连续日历和停止规则。",
+        "Bay一周只承担窄范围；历史未读不是预训练未见；无需为了历史确认等待新天气。",
+        "共用结果标签与嵌套阈值的缺失敏感性联合处理；过程聚类/不足支持如实报告。"
+      ],
+      "acceptance": [
+        "未授权前不读确认输入载荷/结果，元数据规划也不能泄露天气标签。",
+        "无显著差异不自动叫无价值；若主张等效，需预定等效界与足够精度。",
+        "不根据确认结果追加有利日期或更换模型；精度不足可以终止但不能转开发调参后复称确认。"
+      ],
+      "proposed_outputs": [
+        "DUAL_CONFIRMATION_PROTOCOL.json",
+        "FINAL_FREEZE_MANIFEST.json",
+        "CONFIRMATION_REPORT_CN.md"
+      ],
+      "capabilities_required": [
+        "confirmation_access",
+        "separately_budgeted_execution"
+      ],
+      "requires_new_scope_authorization": true,
+      "design_can_start_after": [
+        "IP00"
+      ],
+      "confirmation_scope_note": "C2 hypotheses cover only predeclared qualified mechanisms. A blocked PROCESS track cannot support a PROCESS claim; a narrower GET-only scope must be frozen before opening any confirmation data."
+    },
+    {
+      "id": "IP15",
+      "title": "第二过程、原生多模态与发布",
+      "phase": "parallel",
+      "depends_on": [
+        "IP00"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "温度现有EUPP/DWD/EMOS/ECC",
+        "H07/H08既有资格表",
+        "已拥有原生影像资产"
+      ],
+      "actions": [
+        "温度只校验所消费变量的raw入口，ECC仍要求联合成员/起报谱系；动态prompt与事件结果政策一致。",
+        "没有历史发布证明的DWD最终档案仅作结果，不赋予收费补证资格。",
+        "H07/H08择一先对齐物理量/窗口/空间和业务基线；不同时开16条深链。",
+        "原生MM先清点最多24个已有资产配对的合法性，不自动下载或运行VLM；E/F与视觉gold严格隔离。",
+        "小型current-source capsule用身份映射验证适用范围；全量FormalManifest重构后置，许可与再分发逐资产核验。"
+      ],
+      "acceptance": [
+        "温度不阻塞H15；支线无资料明确blocked_source，不造已下载。",
+        "C3逐E/F/GET/PROCESS/MM/D/online分项，不把F-only叫主动获取跨灾种确认。"
+      ],
+      "proposed_outputs": [
+        "SECOND_CHAIN_READINESS.json",
+        "MM_ASSET_QUALIFICATION.json",
+        "SCOPED_RELEASE_CARD_CN.md"
+      ],
+      "capabilities_required": [
+        "design_only",
+        "separately_authorized_local_or_source_work"
+      ],
+      "max_mm_asset_pairs": 24,
+      "new_model_calls_in_qualification": 0
+    },
+    {
+      "id": "IP16",
+      "title": "D情景行动和prospective shadow",
+      "phase": "later",
+      "depends_on": [
+        "IP12"
+      ],
+      "status": "proposed_not_started",
+      "execution_authorized": false,
+      "source_inputs": [
+        "既有D/online路线"
+      ],
+      "actions": [
+        "D保留原扩展地位，不新增核心编号；先Scenario Card、程序基线和偏好不影响固定F的测试。",
+        "prospective先有界程序提交/首次发现/结果成熟分离，再另批加入模型；不是修历史first_seen的补造工具。"
+      ],
+      "acceptance": [
+        "没有提前封存预测不能称在线预测；情景代理收益不等于真实社会减灾。",
+        "不得由本计划自动创建周期任务或启动监测。"
+      ],
+      "proposed_outputs": [
+        "DECISION_SCENARIO_PROPOSAL.json",
+        "PROSPECTIVE_SHADOW_PROPOSAL.json"
+      ],
+      "capabilities_required": [
+        "later_explicit_authorization"
+      ],
+      "default_enabled": false
+    }
+  ]
+}
