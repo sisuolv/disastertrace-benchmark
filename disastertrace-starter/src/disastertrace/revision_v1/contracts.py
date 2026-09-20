@@ -181,6 +181,12 @@ def classify_report_status(
 
     Missing reports are NOT negative outcomes - they are a distinct status.
 
+    R4 fix (contracts.py issue): For event_probability targets, the report_value
+    MUST be exactly 0 or 1 (int). Any other value (including floats like 0.2,
+    booleans, or non-binary values) is invalid and raises ValueError. Invalid
+    binary values must NOT silently fall through to scalar branch and be
+    labeled as positive.
+
     Args:
         target: The target being evaluated.
         report_value: The outcome value (0 or 1 for events, or None).
@@ -188,15 +194,25 @@ def classify_report_status(
 
     Returns:
         One of: "missing", "settled_negative", "settled_positive"
+
+    Raises:
+        ValueError: If report_value is invalid for the target's output_kind.
     """
     if not report_filed or report_value is None:
         return "missing"
 
     # For event_probability targets, 0 = event did not occur, 1 = event occurred
     if target.output_kind == "event_probability":
+        # R4 fix: Validate that report_value is exactly 0 or 1 (as int)
+        # Reject booleans (which are subclass of int), floats, and non-binary values
+        if type(report_value) is not int or report_value not in (0, 1):
+            raise ValueError(
+                f"Invalid binary outcome for event_probability target: {report_value!r}. "
+                f"Expected int 0 or 1, got {type(report_value).__name__}."
+            )
         if report_value == 0:
             return "settled_negative"
-        elif report_value == 1:
+        else:  # report_value == 1
             return "settled_positive"
 
     # For scalar targets, we don't have a simple positive/negative distinction

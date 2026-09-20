@@ -328,7 +328,14 @@ def identify_policy(commits: list[dict], ledger: list[dict]) -> str:
     Returns one of `POLICY_NAMES`, or `AMBIGUOUS` if the trajectory does not
     uniquely match exactly one policy given this ledger (e.g. the ledger
     lacks enough kind diversity to distinguish policies that only disagree
-    on a kind absent from it).
+    on a kind absent from it, or a single/short trace that could match
+    multiple policies).
+
+    R4 fix (issue #1/#4): A single UPDATE trajectory or a short trace with
+    only UPDATE operations on kinds that all table-driven policies handle
+    identically cannot uniquely identify a policy. Such traces are AMBIGUOUS
+    because multiple policies (ORACLE_LEDGER, LATEST_MENTION, DOUBLE_COUNT,
+    ALWAYS_UPDATE) would all produce the same output.
     """
     if not commits:
         return AMBIGUOUS
@@ -336,12 +343,47 @@ def identify_policy(commits: list[dict], ledger: list[dict]) -> str:
     kind_by_source = {entry["source_id"]: entry["kind"] for entry in ledger}
     ops = [c["operation"] for c in commits]
 
+    # R4 fix: Collect the kinds that appear in this trajectory
+    observed_kinds = set()
+    for commit in commits:
+        for ev_id in commit.get("evidence_ids", []):
+            kind = kind_by_source.get(ev_id)
+            if kind:
+                observed_kinds.add(kind)
+
     # Content-independent policies: every operation identical, and that
     # single operation isn't reachable via any table (since FOLLOW_ONLY /
     # ALWAYS_UPDATE never look at kind at all).
     if all(op == "FOLLOW_BASELINE" for op in ops):
         return "FOLLOW_ONLY"
+
+    # R4 fix (issue #1/#4): For all-UPDATE trajectories, we need to check
+    # if the observed kinds are sufficient to distinguish ALWAYS_UPDATE from
+    # table-driven policies. If all observed kinds would map to UPDATE in
+    # every table-driven policy, we cannot uniquely identify ALWAYS_UPDATE.
     if all(op == "UPDATE" for op in ops):
+        # Check if any observed kind would NOT map to UPDATE in some table
+        # (i.e., check if we have discriminating evidence)
+        has_discriminating_kind = False
+        for kind in observed_kinds:
+            # These kinds map to HOLD in ORACLE_LEDGER (and some others)
+            if kind in ("lossless_duplicate", "mirror", "late_superseded", "no_change_reissue"):
+                has_discriminating_kind = True
+                break
+            # baseline_update maps to FOLLOW_BASELINE in ORACLE_LEDGER
+            if kind == "baseline_update":
+                has_discriminating_kind = True
+                break
+            # amendment_supersedes/correction map to HOLD in IGNORE_AMD
+            if kind in ("amendment_supersedes", "correction"):
+                has_discriminating_kind = True
+                break
+
+        if not has_discriminating_kind:
+            # All observed kinds map to UPDATE in all table policies,
+            # so we cannot distinguish ALWAYS_UPDATE from them
+            return AMBIGUOUS
+
         return "ALWAYS_UPDATE"
 
     # Table-driven policies (ORACLE_LEDGER / LATEST_MENTION / DOUBLE_COUNT /
@@ -376,20 +418,37 @@ def identify_policy(commits: list[dict], ledger: list[dict]) -> str:
 def amendment_compliance_input(commits: list[dict], ledger: list[dict]) -> list[dict]:
     """Build P0-04 `compute_amendment_compliance_rate()` input, amendments/corrections only.
 
-    An amendment_supersedes/correction package is "properly_adopted" if the
-    policy emitted UPDATE for it (adopted the amended/corrected content).
+    R4 fix (issue #2): An amendment_supersedes/correction package is "properly_adopted"
+    only if the policy both:
+    1. Emitted UPDATE for it (operation token)
+    2. Actually included fact_updates or forecast_updates that reference the evidence
+
+    An empty UPDATE (operation=UPDATE but no actual content updates) does NOT
+    constitute proper adoption - it's just a token that proves nothing about
+    whether the amended/corrected content was actually incorporated.
 
     Returns:
         List of {"source_id": ..., "properly_adopted": bool} for every
         amendment_supersedes/correction entry in `ledger`.
     """
-    op_by_source = {
-        ev_id: c["operation"] for c in commits for ev_id in c.get("evidence_ids", [])
-    }
+    # Build mapping: source_id -> (operation, has_content_updates)
+    adoption_by_source: dict[str, tuple[str, bool]] = {}
+    for commit in commits:
+        op = commit.get("operation", "")
+        fact_updates = commit.get("fact_updates", [])
+        forecast_updates = commit.get("forecast_updates", [])
+        has_content = bool(fact_updates or forecast_updates)
+
+        for ev_id in commit.get("evidence_ids", []):
+            adoption_by_source[ev_id] = (op, has_content)
+
     return [
         {
             "source_id": entry["source_id"],
-            "properly_adopted": op_by_source.get(entry["source_id"]) == "UPDATE",
+            "properly_adopted": (
+                adoption_by_source.get(entry["source_id"], ("", False))[0] == "UPDATE"
+                and adoption_by_source.get(entry["source_id"], ("", False))[1]
+            ),
         }
         for entry in ledger
         if entry["kind"] in ("amendment_supersedes", "correction")

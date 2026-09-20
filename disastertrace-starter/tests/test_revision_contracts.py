@@ -878,3 +878,139 @@ class TestEdgeCases:
         registry.register(target)
 
         assert registry.get("point-001").support_kind == "point"
+
+
+# ---------------------------------------------------------------------------
+# R4 Tests: classify_report_status validation
+# ---------------------------------------------------------------------------
+
+
+class TestR4ClassifyReportStatusValidation:
+    """R4 fix: classify_report_status rejects invalid binary values."""
+
+    def test_invalid_float_outcome_raises_valueerror(self):
+        """Float outcomes like 0.2 should raise ValueError, not silently pass."""
+        from disastertrace.revision_v1.contracts import classify_report_status
+
+        t0 = us("2026-09-20T00:00:00Z")
+        hour = 3_600_000_000
+
+        target = make_target(
+            target_id="test-001",
+            physical_start=t0,
+            physical_end=t0 + 6 * hour,
+        )
+
+        with pytest.raises(ValueError, match="Invalid binary outcome"):
+            classify_report_status(
+                target,
+                report_value=0.2,  # Invalid: not 0 or 1
+                report_filed=True,
+            )
+
+    def test_invalid_bool_true_outcome_raises_valueerror(self):
+        """Boolean True should raise ValueError (bools are subclass of int)."""
+        from disastertrace.revision_v1.contracts import classify_report_status
+
+        t0 = us("2026-09-20T00:00:00Z")
+        hour = 3_600_000_000
+
+        target = make_target(
+            target_id="test-001",
+            physical_start=t0,
+            physical_end=t0 + 6 * hour,
+        )
+
+        with pytest.raises(ValueError, match="Invalid binary outcome"):
+            classify_report_status(
+                target,
+                report_value=True,  # Invalid: bool, not int
+                report_filed=True,
+            )
+
+    def test_invalid_bool_false_outcome_raises_valueerror(self):
+        """Boolean False should raise ValueError."""
+        from disastertrace.revision_v1.contracts import classify_report_status
+
+        t0 = us("2026-09-20T00:00:00Z")
+        hour = 3_600_000_000
+
+        target = make_target(
+            target_id="test-001",
+            physical_start=t0,
+            physical_end=t0 + 6 * hour,
+        )
+
+        with pytest.raises(ValueError, match="Invalid binary outcome"):
+            classify_report_status(
+                target,
+                report_value=False,  # Invalid: bool, not int
+                report_filed=True,
+            )
+
+    def test_valid_int_zero_outcome_succeeds(self):
+        """Integer 0 is valid for binary outcome."""
+        from disastertrace.revision_v1.contracts import classify_report_status
+
+        t0 = us("2026-09-20T00:00:00Z")
+        hour = 3_600_000_000
+
+        target = make_target(
+            target_id="test-001",
+            physical_start=t0,
+            physical_end=t0 + 6 * hour,
+        )
+
+        status = classify_report_status(
+            target,
+            report_value=0,  # Valid int
+            report_filed=True,
+        )
+        assert status == "settled_negative"
+
+    def test_valid_int_one_outcome_succeeds(self):
+        """Integer 1 is valid for binary outcome."""
+        from disastertrace.revision_v1.contracts import classify_report_status
+
+        t0 = us("2026-09-20T00:00:00Z")
+        hour = 3_600_000_000
+
+        target = make_target(
+            target_id="test-001",
+            physical_start=t0,
+            physical_end=t0 + 6 * hour,
+        )
+
+        status = classify_report_status(
+            target,
+            report_value=1,  # Valid int
+            report_filed=True,
+        )
+        assert status == "settled_positive"
+
+    def test_out_of_range_int_outcome_raises_valueerror(self):
+        """Integer values outside [0, 1] should raise ValueError."""
+        from disastertrace.revision_v1.contracts import classify_report_status
+
+        t0 = us("2026-09-20T00:00:00Z")
+        hour = 3_600_000_000
+
+        target = make_target(
+            target_id="test-001",
+            physical_start=t0,
+            physical_end=t0 + 6 * hour,
+        )
+
+        with pytest.raises(ValueError, match="Invalid binary outcome"):
+            classify_report_status(
+                target,
+                report_value=2,  # Invalid: not 0 or 1
+                report_filed=True,
+            )
+
+        with pytest.raises(ValueError, match="Invalid binary outcome"):
+            classify_report_status(
+                target,
+                report_value=-1,  # Invalid: not 0 or 1
+                report_filed=True,
+            )

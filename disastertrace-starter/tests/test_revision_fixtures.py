@@ -831,3 +831,187 @@ class TestFixtureImportability:
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
+
+# ---------------------------------------------------------------------------
+# R4 Tests: Extended fork tests with CommitStore state preservation
+# ---------------------------------------------------------------------------
+
+
+class TestR4ExtendedForkCommitStore:
+    """R4 Issue #8: Extend fork/no-op tests to cover CommitStore and ledger state.
+
+    The original fork tests (P0-06) verify AdmissionEngine export consistency.
+    R4 extends this to verify that:
+    1. CommitStore state is preserved across fork
+    2. Ledger view state is consistent between parent and fork
+    3. Forked processing maintains byte-identical results on same input
+    """
+
+    def test_commit_store_state_preserved_in_fork(self):
+        """CommitStore effective state should be identical in parent and fork."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        # Set up parent store with some commits
+        parent_store = CommitStore()
+        parent_processor = CommitProcessor(parent_store)
+
+        # Process a commit
+        commit = {
+            "schema_version": "disastertrace.belief_commit.v14-draft",
+            "episode_id": "fork-test-ep",
+            "target_id": "fork-test-target",
+            "parent_commit_id": None,
+            "as_of": "2026-09-19T00:00:00Z",
+            "operation": "UPDATE",
+            "evidence_ids": ["ev-001"],
+            "fact_updates": [],
+            "forecast_updates": [
+                {"target_id": "fork-test-target", "event_probability": 0.6}
+            ],
+            "next_action": {"kind": "WAIT", "until_or_args": ""},
+        }
+
+        result = parent_processor.process(commit)
+        assert result["accepted"]
+
+        # Get parent effective state
+        parent_state = parent_store.get_effective_state("fork-test-ep")
+
+        # Fork: Create a new CommitStore with same initial state
+        # (In a real fork scenario, this would be done via deepcopy or snapshot)
+        import copy
+        fork_store = CommitStore()
+        # Copy internal state
+        fork_store._effective_states = copy.deepcopy(parent_store._effective_states)
+        fork_store._raw_commits = copy.deepcopy(parent_store._raw_commits)
+        fork_store._effective_at_commit = copy.deepcopy(parent_store._effective_at_commit)
+        fork_store._latest_commit = copy.deepcopy(parent_store._latest_commit)
+        fork_store._attempt_log = copy.deepcopy(parent_store._attempt_log)
+        fork_store._last_as_of = copy.deepcopy(parent_store._last_as_of)
+
+        fork_state = fork_store.get_effective_state("fork-test-ep")
+
+        # States should be identical
+        assert fork_state == parent_state
+        assert fork_state["forecasts"]["fork-test-target"] == 0.6
+
+    def test_fork_store_isolation(self):
+        """Operations on forked store should not affect parent store."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+        import copy
+
+        # Set up parent store
+        parent_store = CommitStore()
+        parent_processor = CommitProcessor(parent_store)
+
+        # Process initial commit
+        commit1 = {
+            "schema_version": "disastertrace.belief_commit.v14-draft",
+            "episode_id": "fork-test-ep",
+            "target_id": "fork-test-target",
+            "parent_commit_id": None,
+            "as_of": "2026-09-19T00:00:00Z",
+            "operation": "UPDATE",
+            "evidence_ids": ["ev-001"],
+            "fact_updates": [],
+            "forecast_updates": [
+                {"target_id": "fork-test-target", "event_probability": 0.6}
+            ],
+            "next_action": {"kind": "WAIT", "until_or_args": ""},
+        }
+
+        result1 = parent_processor.process(commit1)
+        assert result1["accepted"]
+        parent_original_state = copy.deepcopy(parent_store.get_effective_state("fork-test-ep"))
+
+        # Fork the store
+        fork_store = CommitStore()
+        fork_store._effective_states = copy.deepcopy(parent_store._effective_states)
+        fork_store._raw_commits = copy.deepcopy(parent_store._raw_commits)
+        fork_store._effective_at_commit = copy.deepcopy(parent_store._effective_at_commit)
+        fork_store._latest_commit = copy.deepcopy(parent_store._latest_commit)
+        fork_store._attempt_log = copy.deepcopy(parent_store._attempt_log)
+        fork_store._last_as_of = copy.deepcopy(parent_store._last_as_of)
+
+        fork_processor = CommitProcessor(fork_store)
+
+        # Process additional commit on fork only
+        commit2 = {
+            "schema_version": "disastertrace.belief_commit.v14-draft",
+            "episode_id": "fork-test-ep",
+            "target_id": "fork-test-target",
+            "parent_commit_id": result1["commit_id"],
+            "as_of": "2026-09-19T01:00:00Z",
+            "operation": "UPDATE",
+            "evidence_ids": ["ev-002"],
+            "fact_updates": [],
+            "forecast_updates": [
+                {"target_id": "fork-test-target", "event_probability": 0.8}
+            ],
+            "next_action": {"kind": "WAIT", "until_or_args": ""},
+        }
+
+        result2 = fork_processor.process(commit2)
+        assert result2["accepted"]
+
+        # Fork state should be updated
+        fork_state = fork_store.get_effective_state("fork-test-ep")
+        assert fork_state["forecasts"]["fork-test-target"] == 0.8
+
+        # Parent state should be unchanged
+        parent_state = parent_store.get_effective_state("fork-test-ep")
+        assert parent_state == parent_original_state
+        assert parent_state["forecasts"]["fork-test-target"] == 0.6
+
+    def test_deterministic_replay_on_same_ledger_view(self):
+        """Replaying same commits on same ledger produces identical results."""
+        from disastertrace.revision_v1.trap_policies import apply_policy
+
+        episode = make_episode_with_all_kinds()
+        ledger = episode["ledger"]
+        values = episode["evidence_values"]
+
+        # Apply policy twice
+        commits1 = apply_policy(
+            "ORACLE_LEDGER",
+            episode_id="replay-test",
+            target_id="target-001",
+            ledger=ledger,
+            evidence_values=values,
+        )
+
+        commits2 = apply_policy(
+            "ORACLE_LEDGER",
+            episode_id="replay-test",
+            target_id="target-001",
+            ledger=ledger,
+            evidence_values=values,
+        )
+
+        # Should be byte-identical (deterministic)
+        assert len(commits1) == len(commits2)
+        for c1, c2 in zip(commits1, commits2):
+            assert c1["commit_id"] == c2["commit_id"]
+            assert c1["operation"] == c2["operation"]
+            assert c1["fact_updates"] == c2["fact_updates"]
+            assert c1["forecast_updates"] == c2["forecast_updates"]
+
+    def test_ledger_view_consistency_for_fork_scenarios(self):
+        """Ledger view at same cutoff produces identical visible entries."""
+        from disastertrace.revision_v1.ledger import visible_at
+
+        episode = make_episode_with_all_kinds()
+        ledger = episode["ledger"]
+
+        # Get view at a specific cutoff
+        cutoff = T0 + 8 * HOUR
+        view1 = visible_at(ledger, cutoff=cutoff)
+        view2 = visible_at(ledger, cutoff=cutoff)
+
+        # Views should be identical
+        assert len(view1) == len(view2)
+        for e1, e2 in zip(view1, view2):
+            assert e1["source_id"] == e2["source_id"]
+            assert e1["kind"] == e2["kind"]
+            assert e1["available_at"] == e2["available_at"]
