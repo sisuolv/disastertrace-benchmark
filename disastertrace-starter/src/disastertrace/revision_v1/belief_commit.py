@@ -420,6 +420,7 @@ class CommitProcessor:
         store: CommitStore,
         *,
         target_validator: Callable[[str], bool] | None = None,
+        target_resolver: Callable[[str], Any] | None = None,
         baseline_provider: Callable[[str, str], float] | None = None,
         evidence_visibility_checker: Callable[[str, int], bool] | None = None,
         fallback_operation: str = "HOLD",
@@ -429,12 +430,15 @@ class CommitProcessor:
         Args:
             store: The CommitStore for raw and effective state storage.
             target_validator: Callback to validate target_id (returns True if valid).
+            target_resolver: Callback to resolve target_id to Target object (for cutoff validation).
+                R2-FIX Gap #2: Required for as_of cutoff/forecast-window binding.
             baseline_provider: Callback to get baseline forecast (target_id, as_of) -> prob.
             evidence_visibility_checker: Callback to check evidence visibility (id, as_of) -> bool.
             fallback_operation: Operation to use for invalid commits (default HOLD).
         """
         self._store = store
         self._target_validator = target_validator or (lambda tid: True)
+        self._target_resolver = target_resolver
         self._baseline_provider = baseline_provider
         self._evidence_checker = evidence_visibility_checker
         self._fallback_operation = fallback_operation
@@ -543,6 +547,31 @@ class CommitProcessor:
             last_as_of = self._store.get_last_as_of(episode_id)
             if last_as_of is not None and as_of < last_as_of:
                 validation_error = f"as_of must be monotonically increasing: {as_of} < {last_as_of}"
+                accepted = False
+
+        # R2-FIX Gap #2: Validate as_of against Target's cutoff/forecast-window logic
+        if accepted and self._target_resolver:
+            target_id = commit.get("target_id")
+            target = self._target_resolver(target_id)
+            if target is not None:
+                as_of_str = commit.get("as_of", "")
+                try:
+                    from ..monitoring_v1.targets import utc_us
+                    as_of_us = utc_us(as_of_str)
+                    # Target.check_cutoff validates as_of against temporal semantics
+                    target.check_cutoff(as_of_us)
+                except ValueError as e:
+                    validation_error = f"as_of violates target cutoff semantics: {e}"
+                    accepted = False
+                except Exception:
+                    # If we can't parse as_of, the ISO validation should have caught it
+                    pass
+
+        # R2-FIX Gap #4: Validate forecast_op field if present
+        if accepted and "forecast_op" in commit:
+            forecast_op = commit.get("forecast_op")
+            if forecast_op not in VALID_FORECAST_OPS:
+                validation_error = f"Invalid forecast_op: {forecast_op}. Must be one of {VALID_FORECAST_OPS}"
                 accepted = False
 
         # Step 4: Hash chain integrity (only if still valid)
@@ -665,8 +694,37 @@ class CommitProcessor:
         elif operation == "UPDATE":
             # UPDATE: apply all updates
             if accepted:
+                # R2-FIX Gap #4: Apply fact_updates independently (orthogonal to forecast_op)
                 self._apply_fact_updates(effective, commit.get("fact_updates", []))
-                self._apply_forecast_updates(effective, commit.get("forecast_updates", []))
+
+                # R2-FIX Gap #4: Handle forecast_op for probability-layer processing
+                forecast_op = commit.get("forecast_op")
+
+                if forecast_op == "KEEP_PROBABILITY":
+                    # KEEP_PROBABILITY: carry forward parent probability unchanged
+                    # Don't apply any forecast_updates - keep parent state as-is
+                    pass
+                elif forecast_op == "COPY_BASELINE_SNAPSHOT":
+                    # COPY_BASELINE_SNAPSHOT: copy from baseline provider
+                    if self._baseline_provider:
+                        as_of = commit.get("as_of", "")
+                        target_id = commit.get("target_id")
+                        if target_id:
+                            baseline_prob = self._baseline_provider(target_id, as_of)
+                            effective["forecasts"][target_id] = baseline_prob
+                        # Also handle any additional targets in forecast_updates
+                        for update in commit.get("forecast_updates", []):
+                            nested_target = update.get("target_id")
+                            if nested_target and nested_target != target_id:
+                                baseline_prob = self._baseline_provider(nested_target, as_of)
+                                effective["forecasts"][nested_target] = baseline_prob
+                elif forecast_op == "SET_PROBABILITY":
+                    # SET_PROBABILITY: apply explicit probability from forecast_updates
+                    self._apply_forecast_updates(effective, commit.get("forecast_updates", []))
+                else:
+                    # No forecast_op specified (backward compat) or unrecognized:
+                    # fall back to old behavior - apply forecast_updates directly
+                    self._apply_forecast_updates(effective, commit.get("forecast_updates", []))
 
         return effective
 

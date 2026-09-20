@@ -79,9 +79,10 @@ def make_valid_commit(
     fact_updates=None,
     forecast_updates=None,
     next_action=None,
+    forecast_op=None,
 ):
     """Create a valid commit payload for testing."""
-    return {
+    commit = {
         "schema_version": "disastertrace.belief_commit.v14-draft",
         "episode_id": episode_id,
         "target_id": target_id,
@@ -93,6 +94,10 @@ def make_valid_commit(
         "forecast_updates": forecast_updates or [],
         "next_action": next_action or {"kind": "WAIT", "until_or_args": ""},
     }
+    # R2-FIX Gap #4: Add forecast_op field if provided
+    if forecast_op is not None:
+        commit["forecast_op"] = forecast_op
+    return commit
 
 
 # ---------------------------------------------------------------------------
@@ -1373,3 +1378,499 @@ class TestR2Issue9FactStateSemantics:
         fact = state["facts"]["test_slot"]
         assert fact["is_valid"] is None  # Unknown
         assert fact["is_retracted"] is False
+
+
+# ---------------------------------------------------------------------------
+# Test: R2-FIX Gap #2 - as_of cutoff/forecast binding
+# ---------------------------------------------------------------------------
+
+
+class TestR2FixGap2AsOfCutoffBinding:
+    """R2-FIX Gap #2: as_of must be validated against Target's cutoff/forecast-window logic."""
+
+    def test_as_of_violating_target_cutoff_is_rejected(self):
+        """Commit with as_of that violates Target's check_cutoff is rejected.
+
+        The as_of is monotonically fine (increasing), but the Target says
+        as_of >= physical_start is invalid for future_physical semantics.
+        """
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+        from disastertrace.revision_v1.contracts import ContractRegistry
+
+        t0 = us("2026-09-20T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Target: future_physical with physical_start at t0+6h
+        # cutoff must be < physical_start, i.e., < t0+6h
+        target = make_target(
+            target_id="target-cutoff",
+            physical_start=t0 + 6 * hour,
+            physical_end=t0 + 12 * hour,
+            temporal_semantics="future_physical",
+        )
+
+        registry = ContractRegistry()
+        registry.register(target)
+
+        store = CommitStore()
+        processor = CommitProcessor(
+            store,
+            target_validator=lambda tid: registry.get(tid) is not None,
+            target_resolver=lambda tid: registry.get(tid),
+        )
+
+        # First commit at t0+5h is valid (as_of < physical_start)
+        commit1 = make_valid_commit(
+            episode_id="ep-cutoff",
+            target_id="target-cutoff",
+            parent_commit_id=None,
+            as_of="2026-09-20T05:00:00Z",  # t0 + 5h < physical_start
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True, "First commit should be accepted"
+
+        # Second commit at t0+7h violates Target's cutoff
+        # (as_of >= physical_start is invalid for future_physical)
+        # It's monotonically increasing (07:00 > 05:00) but violates Target semantics
+        commit2 = make_valid_commit(
+            episode_id="ep-cutoff",
+            target_id="target-cutoff",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T07:00:00Z",  # t0 + 7h >= physical_start -> invalid cutoff
+        )
+        r2 = processor.process(commit2)
+
+        assert r2["accepted"] is False, "Commit violating Target cutoff should be rejected"
+        assert r2["error"] is not None
+        assert "cutoff" in r2["error"].lower() or "target" in r2["error"].lower()
+
+    def test_as_of_valid_on_both_monotonicity_and_cutoff_is_accepted(self):
+        """Commit with as_of valid on BOTH monotonicity AND cutoff binding is accepted."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+        from disastertrace.revision_v1.contracts import ContractRegistry
+
+        t0 = us("2026-09-20T00:00:00Z")
+        hour = 3_600_000_000
+
+        target = make_target(
+            target_id="target-valid",
+            physical_start=t0 + 12 * hour,  # 12:00:00Z
+            physical_end=t0 + 18 * hour,
+            temporal_semantics="future_physical",
+        )
+
+        registry = ContractRegistry()
+        registry.register(target)
+
+        store = CommitStore()
+        processor = CommitProcessor(
+            store,
+            target_validator=lambda tid: registry.get(tid) is not None,
+            target_resolver=lambda tid: registry.get(tid),
+        )
+
+        # Commit at 10:00 < physical_start (12:00) - valid cutoff
+        commit1 = make_valid_commit(
+            episode_id="ep-valid",
+            target_id="target-valid",
+            parent_commit_id=None,
+            as_of="2026-09-20T10:00:00Z",
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True
+
+        # Commit at 11:00 < physical_start (12:00) - valid cutoff and monotonically increasing
+        commit2 = make_valid_commit(
+            episode_id="ep-valid",
+            target_id="target-valid",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T11:00:00Z",
+        )
+        r2 = processor.process(commit2)
+        assert r2["accepted"] is True
+
+    def test_monotonicity_tests_still_pass(self):
+        """Existing monotonicity tests still work (regression check)."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # Forward commits work
+        commit1 = make_valid_commit(
+            episode_id="ep-mono-check",
+            parent_commit_id=None,
+            as_of="2026-09-20T10:00:00Z",
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True
+
+        commit2 = make_valid_commit(
+            episode_id="ep-mono-check",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T11:00:00Z",
+        )
+        r2 = processor.process(commit2)
+        assert r2["accepted"] is True
+
+        # Backward commit still rejected
+        commit3 = make_valid_commit(
+            episode_id="ep-mono-check",
+            parent_commit_id=r2["commit_id"],
+            as_of="2026-09-20T09:00:00Z",
+        )
+        r3 = processor.process(commit3)
+        assert r3["accepted"] is False
+        assert "monoton" in r3["error"].lower()
+
+    def test_cutoff_violation_adds_to_failed_attempt_chain(self):
+        """Commit violating cutoff is added to failed attempt chain (denominator)."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+        from disastertrace.revision_v1.contracts import ContractRegistry
+
+        t0 = us("2026-09-20T00:00:00Z")
+        hour = 3_600_000_000
+
+        target = make_target(
+            target_id="target-chain",
+            physical_start=t0 + 6 * hour,
+            physical_end=t0 + 12 * hour,
+            temporal_semantics="future_physical",
+        )
+
+        registry = ContractRegistry()
+        registry.register(target)
+
+        store = CommitStore()
+        processor = CommitProcessor(
+            store,
+            target_validator=lambda tid: registry.get(tid) is not None,
+            target_resolver=lambda tid: registry.get(tid),
+        )
+
+        # Valid commit
+        commit1 = make_valid_commit(
+            episode_id="ep-chain-check",
+            target_id="target-chain",
+            parent_commit_id=None,
+            as_of="2026-09-20T05:00:00Z",
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True
+
+        # Invalid commit (violates cutoff)
+        commit2 = make_valid_commit(
+            episode_id="ep-chain-check",
+            target_id="target-chain",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T07:00:00Z",
+        )
+        r2 = processor.process(commit2)
+        assert r2["accepted"] is False
+
+        # Verify the failed commit is stored (in attempt log, not accepted chain)
+        raw = store.get_raw_commit(r2["commit_id"])
+        assert raw is not None
+        assert raw["accepted"] is False
+        assert raw["validation_error"] is not None
+
+
+# ---------------------------------------------------------------------------
+# Test: R2-FIX Gap #4 - forecast_op / fact_patch orthogonal processing
+# ---------------------------------------------------------------------------
+
+
+class TestR2FixGap4ForecastOpProcessing:
+    """R2-FIX Gap #4: forecast_op must be processed as independent field."""
+
+    def test_invalid_forecast_op_is_rejected(self):
+        """Commit with invalid forecast_op value is rejected with clear error."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        commit = make_valid_commit(
+            episode_id="ep-forecast-op",
+            forecast_op="INVALID_FORECAST_OP",  # Invalid value
+        )
+
+        result = processor.process(commit)
+        assert result["accepted"] is False
+        assert result["error"] is not None
+        assert "forecast_op" in result["error"].lower() or "invalid" in result["error"].lower()
+
+    def test_keep_probability_carries_forward_parent(self):
+        """KEEP_PROBABILITY carries forward parent probability unchanged."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # First commit sets probability to 0.40
+        commit1 = make_valid_commit(
+            episode_id="ep-keep",
+            parent_commit_id=None,
+            as_of="2026-09-20T10:00:00Z",
+            operation="UPDATE",
+            forecast_updates=[{"target_id": "t-001", "event_probability": 0.40}],
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True
+
+        # Second commit uses KEEP_PROBABILITY - should carry forward 0.40
+        commit2 = make_valid_commit(
+            episode_id="ep-keep",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T11:00:00Z",
+            operation="UPDATE",
+            forecast_op="KEEP_PROBABILITY",
+            forecast_updates=[],  # Empty, but KEEP_PROBABILITY carries forward
+        )
+        r2 = processor.process(commit2)
+        assert r2["accepted"] is True
+
+        effective = store.get_effective_state("ep-keep")
+        assert effective["forecasts"]["t-001"] == 0.40
+
+    def test_set_probability_applies_explicit_value(self):
+        """SET_PROBABILITY applies the commit's explicit probability."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # First commit sets probability to 0.40
+        commit1 = make_valid_commit(
+            episode_id="ep-set",
+            parent_commit_id=None,
+            as_of="2026-09-20T10:00:00Z",
+            operation="UPDATE",
+            forecast_updates=[{"target_id": "t-001", "event_probability": 0.40}],
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True
+
+        # Second commit uses SET_PROBABILITY with explicit 0.75
+        commit2 = make_valid_commit(
+            episode_id="ep-set",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T11:00:00Z",
+            operation="UPDATE",
+            forecast_op="SET_PROBABILITY",
+            forecast_updates=[{"target_id": "t-001", "event_probability": 0.75}],
+        )
+        r2 = processor.process(commit2)
+        assert r2["accepted"] is True
+
+        effective = store.get_effective_state("ep-set")
+        assert effective["forecasts"]["t-001"] == 0.75
+
+    def test_copy_baseline_snapshot_copies_from_baseline(self):
+        """COPY_BASELINE_SNAPSHOT copies probability from baseline provider."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(
+            store,
+            target_validator=lambda tid: True,
+            baseline_provider=lambda tid, at: 0.25,  # Baseline says 0.25
+        )
+
+        # First commit sets probability to 0.80
+        commit1 = make_valid_commit(
+            episode_id="ep-copy",
+            target_id="target-001",
+            parent_commit_id=None,
+            as_of="2026-09-20T10:00:00Z",
+            operation="UPDATE",
+            forecast_updates=[{"target_id": "target-001", "event_probability": 0.80}],
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True
+
+        # Second commit uses COPY_BASELINE_SNAPSHOT
+        commit2 = make_valid_commit(
+            episode_id="ep-copy",
+            target_id="target-001",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T11:00:00Z",
+            operation="UPDATE",
+            forecast_op="COPY_BASELINE_SNAPSHOT",
+            forecast_updates=[],  # Empty, COPY_BASELINE_SNAPSHOT gets from provider
+        )
+        r2 = processor.process(commit2)
+        assert r2["accepted"] is True
+
+        effective = store.get_effective_state("ep-copy")
+        # Should be baseline value 0.25, not the previous 0.80
+        assert effective["forecasts"]["target-001"] == 0.25
+
+    def test_forecast_op_and_fact_patch_independent_keep_prob_with_fact(self):
+        """KEEP_PROBABILITY + fact_patch: updates facts without touching probability."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # First commit sets both fact and probability
+        commit1 = make_valid_commit(
+            episode_id="ep-indep-keep",
+            parent_commit_id=None,
+            as_of="2026-09-20T10:00:00Z",
+            operation="UPDATE",
+            fact_updates=[{
+                "slot": "taf_version",
+                "operation": "SET",
+                "support_status": "supported",
+                "value": "v1",
+                "source_ids": [],
+            }],
+            forecast_updates=[{"target_id": "t-001", "event_probability": 0.50}],
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True
+
+        # Second commit: KEEP_PROBABILITY (keep prob) + fact_patch (update fact)
+        commit2 = make_valid_commit(
+            episode_id="ep-indep-keep",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T11:00:00Z",
+            operation="UPDATE",
+            forecast_op="KEEP_PROBABILITY",
+            fact_updates=[{
+                "slot": "taf_version",
+                "operation": "SET",
+                "support_status": "supported",
+                "value": "v2",  # Changed fact
+                "source_ids": [],
+            }],
+            forecast_updates=[],  # Empty, KEEP_PROBABILITY handles it
+        )
+        r2 = processor.process(commit2)
+        assert r2["accepted"] is True
+
+        effective = store.get_effective_state("ep-indep-keep")
+        # Fact should be updated to v2
+        assert effective["facts"]["taf_version"]["value"] == "v2"
+        # Probability should still be 0.50 (carried forward)
+        assert effective["forecasts"]["t-001"] == 0.50
+
+    def test_forecast_op_and_fact_patch_independent_set_prob_no_fact(self):
+        """SET_PROBABILITY with no fact_patch: updates probability without touching facts."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # First commit sets fact
+        commit1 = make_valid_commit(
+            episode_id="ep-indep-set",
+            parent_commit_id=None,
+            as_of="2026-09-20T10:00:00Z",
+            operation="UPDATE",
+            fact_updates=[{
+                "slot": "metar_version",
+                "operation": "SET",
+                "support_status": "supported",
+                "value": "METAR-001",
+                "source_ids": [],
+            }],
+            forecast_updates=[{"target_id": "t-001", "event_probability": 0.30}],
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True
+
+        # Second commit: SET_PROBABILITY (update prob) + no fact_patch
+        commit2 = make_valid_commit(
+            episode_id="ep-indep-set",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T11:00:00Z",
+            operation="UPDATE",
+            forecast_op="SET_PROBABILITY",
+            fact_updates=[],  # Empty - don't touch facts
+            forecast_updates=[{"target_id": "t-001", "event_probability": 0.90}],
+        )
+        r2 = processor.process(commit2)
+        assert r2["accepted"] is True
+
+        effective = store.get_effective_state("ep-indep-set")
+        # Fact should still be METAR-001 (unchanged)
+        assert effective["facts"]["metar_version"]["value"] == "METAR-001"
+        # Probability should be updated to 0.90
+        assert effective["forecasts"]["t-001"] == 0.90
+
+    def test_old_vocabulary_compat_update_works(self):
+        """Old vocabulary (UPDATE without forecast_op) still works."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # Commit using old UPDATE operation without forecast_op
+        commit = make_valid_commit(
+            episode_id="ep-old-update",
+            operation="UPDATE",
+            # No forecast_op field
+            forecast_updates=[{"target_id": "t-001", "event_probability": 0.65}],
+        )
+        result = processor.process(commit)
+        assert result["accepted"] is True
+
+        effective = store.get_effective_state("ep-old-update")
+        assert effective["forecasts"]["t-001"] == 0.65
+
+    def test_old_vocabulary_compat_hold_works(self):
+        """Old vocabulary (HOLD without forecast_op) still works."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # First commit
+        commit1 = make_valid_commit(
+            episode_id="ep-old-hold",
+            parent_commit_id=None,
+            as_of="2026-09-20T10:00:00Z",
+            operation="UPDATE",
+            forecast_updates=[{"target_id": "t-001", "event_probability": 0.35}],
+        )
+        r1 = processor.process(commit1)
+        assert r1["accepted"] is True
+
+        # Second commit using old HOLD operation
+        commit2 = make_valid_commit(
+            episode_id="ep-old-hold",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T11:00:00Z",
+            operation="HOLD",
+            # No forecast_op
+        )
+        r2 = processor.process(commit2)
+        assert r2["accepted"] is True
+
+        effective = store.get_effective_state("ep-old-hold")
+        assert effective["forecasts"]["t-001"] == 0.35
+
+    def test_old_vocabulary_compat_follow_baseline_works(self):
+        """Old vocabulary (FOLLOW_BASELINE without forecast_op) still works."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(
+            store,
+            target_validator=lambda tid: True,
+            baseline_provider=lambda tid, at: 0.20,
+        )
+
+        commit = make_valid_commit(
+            episode_id="ep-old-follow",
+            target_id="target-001",
+            operation="FOLLOW_BASELINE",
+            # No forecast_op
+        )
+        result = processor.process(commit)
+        assert result["accepted"] is True
+
+        effective = store.get_effective_state("ep-old-follow")
+        assert effective["forecasts"]["target-001"] == 0.20
