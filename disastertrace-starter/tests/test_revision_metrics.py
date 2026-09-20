@@ -674,3 +674,409 @@ class TestEffectiveStateIntegration:
         assert effective_at_from_commits("t0", commits, 20, fallback) == 0.7
         # At t=30: HOLD from t=15
         assert effective_at_from_commits("t0", commits, 30, fallback) == 0.7
+
+
+# ---------------------------------------------------------------------------
+# R3 tests: Grid validation, cohort fingerprint, missing-Y bounds
+# ---------------------------------------------------------------------------
+
+
+class TestR3GridValidation:
+    """R3 Issue #2: Test strict finite/unique/sorted grid validation."""
+
+    def test_nan_checkpoint_time_rejected(self):
+        """NaN checkpoint time must raise ValueError."""
+        from disastertrace.revision_v1.metrics import trajectory_score_Q
+
+        with pytest.raises(ValueError, match="non-finite"):
+            trajectory_score_Q(
+                commits=[],
+                grid={"t0": [(float("nan"), 1.0)]},
+                outcomes={"t0": 0},
+                fallback={"t0": 0.3},
+            )
+
+    def test_inf_checkpoint_time_rejected(self):
+        """Infinity checkpoint time must raise ValueError."""
+        from disastertrace.revision_v1.metrics import trajectory_score_Q
+
+        with pytest.raises(ValueError, match="non-finite"):
+            trajectory_score_Q(
+                commits=[],
+                grid={"t0": [(float("inf"), 1.0)]},
+                outcomes={"t0": 0},
+                fallback={"t0": 0.3},
+            )
+
+    def test_duplicate_checkpoint_times_rejected(self):
+        """Duplicate checkpoint times must raise ValueError."""
+        from disastertrace.revision_v1.metrics import validate_scoring_grid
+
+        with pytest.raises(ValueError, match="duplicate"):
+            validate_scoring_grid({"t0": [(10, 0.5), (10, 0.5)]})
+
+    def test_unsorted_checkpoint_times_rejected(self):
+        """Unsorted checkpoint times must raise ValueError."""
+        from disastertrace.revision_v1.metrics import validate_scoring_grid
+
+        with pytest.raises(ValueError, match="not sorted"):
+            validate_scoring_grid({"t0": [(20, 0.5), (10, 0.5)]})
+
+    def test_valid_grid_accepted(self):
+        """Valid finite/unique/sorted grid must pass validation."""
+        from disastertrace.revision_v1.metrics import validate_scoring_grid
+
+        # Should not raise
+        validate_scoring_grid({
+            "t0": [(10, 0.5), (20, 0.5)],
+            "t1": [(5, 0.25), (15, 0.25), (25, 0.5)],
+        })
+
+
+class TestR3CohortFingerprint:
+    """R3 Issue #2: Test cohort fingerprint for reproducibility."""
+
+    def test_same_grid_same_fingerprint(self):
+        """Same grid must produce same fingerprint."""
+        from disastertrace.revision_v1.metrics import compute_cohort_fingerprint
+
+        grid = {"t0": [(10, 0.5), (20, 0.5)], "t1": [(15, 1.0)]}
+        outcomes = {"t0": 1, "t1": 0}
+
+        fp1 = compute_cohort_fingerprint(grid, outcomes)
+        fp2 = compute_cohort_fingerprint(grid, outcomes)
+
+        assert fp1 == fp2
+        assert len(fp1) == 64  # SHA256 hex
+
+    def test_different_grid_different_fingerprint(self):
+        """Different grids must produce different fingerprints."""
+        from disastertrace.revision_v1.metrics import compute_cohort_fingerprint
+
+        grid1 = {"t0": [(10, 1.0)]}
+        grid2 = {"t0": [(20, 1.0)]}
+        outcomes = {"t0": 1}
+
+        assert compute_cohort_fingerprint(grid1, outcomes) != compute_cohort_fingerprint(grid2, outcomes)
+
+
+class TestR3MissingYBounds:
+    """R3 Issue #2 / Section 4: Test missing-Y sensitivity bounds."""
+
+    def test_missing_y_bounds_hand_calculated(self):
+        """Hand-calculated example with missing outcome.
+
+        Setup:
+        - Target t0: settled Y=1, checkpoint at t=10, w=1.0, p_eff=0.8
+        - Target t1: missing Y, checkpoint at t=10, w=1.0, p_eff=0.6
+
+        For t0: L(0.8, 1) = 0.04
+        For t1 with Y=0: L(0.6, 0) = 0.36
+        For t1 with Y=1: L(0.6, 1) = 0.16
+
+        Q settled = 0.04 (just t0)
+        Q lower = (0.04 + 0.16) / 2 = 0.10  (t1 with Y=1, better case)
+        Q upper = (0.04 + 0.36) / 2 = 0.20  (t1 with Y=0, worse case)
+        """
+        from disastertrace.revision_v1.metrics import trajectory_score_Q_with_bounds
+
+        commits = [
+            {"target_id": "t0", "effective_at": 5, "probability": 0.8},
+            {"target_id": "t1", "effective_at": 5, "probability": 0.6},
+        ]
+        grid = {
+            "t0": [(10, 1.0)],
+            "t1": [(10, 1.0)],
+        }
+        outcomes = {"t0": 1, "t1": None}  # t1 is missing
+        fallback = {"t0": 0.5, "t1": 0.5}
+
+        result = trajectory_score_Q_with_bounds(commits, grid, outcomes, fallback)
+
+        assert result["settled_count"] == 1
+        assert result["missing_count"] == 1
+        assert math.isclose(result["coverage"], 0.5, rel_tol=1e-9)
+        assert math.isclose(result["q_settled"], 0.04, rel_tol=1e-9)
+        assert math.isclose(result["q_lower_bound"], 0.10, rel_tol=1e-9)
+        assert math.isclose(result["q_upper_bound"], 0.20, rel_tol=1e-9)
+        assert "cohort_fingerprint" in result
+        assert "sensitivity" in result["interpretation"].lower()
+
+    def test_all_settled_bounds_equal(self):
+        """When all outcomes are settled, bounds equal the settled Q."""
+        from disastertrace.revision_v1.metrics import trajectory_score_Q_with_bounds
+
+        commits = [{"target_id": "t0", "effective_at": 5, "probability": 0.8}]
+        grid = {"t0": [(10, 1.0)]}
+        outcomes = {"t0": 1}
+        fallback = {"t0": 0.5}
+
+        result = trajectory_score_Q_with_bounds(commits, grid, outcomes, fallback)
+
+        assert result["missing_count"] == 0
+        assert result["q_settled"] == result["q_lower_bound"] == result["q_upper_bound"]
+
+
+class TestR3FutureInvalidProbability:
+    """R3 fix: Future invalid probabilities don't affect earlier views."""
+
+    def test_future_nan_does_not_affect_earlier_view(self):
+        """A future commit with NaN probability should not crash earlier queries."""
+        from disastertrace.revision_v1.metrics import effective_at_from_commits
+
+        commits = [
+            {"target_id": "t0", "effective_at": 5, "probability": 0.4},
+            {"target_id": "t0", "effective_at": 100, "probability": float("nan")},
+        ]
+
+        # Query at t=10 should return 0.4 without validating the future NaN
+        result = effective_at_from_commits("t0", commits, 10, fallback=0.5)
+        assert result == 0.4
+
+
+# ---------------------------------------------------------------------------
+# R3 tests: Invalid reference duration with uncorrected references
+# ---------------------------------------------------------------------------
+
+
+class TestR3InvalidReferenceDuration:
+    """R3 Issue #5: Uncorrected references charge to observation end."""
+
+    def test_uncorrected_reference_uses_right_censor(self):
+        """Reference with corrected_at=None charges to right_censor_at."""
+        from disastertrace.revision_v1.metrics import compute_invalid_reference_duration
+
+        references = [
+            {"evidence_id": "e1", "superseded_at": 10,
+             "corrected_at": None, "right_censor_at": 100},
+        ]
+
+        duration = compute_invalid_reference_duration(references)
+        assert duration == 90  # 100 - 10
+
+    def test_mixed_corrected_and_uncorrected(self):
+        """Both corrected and uncorrected references are handled."""
+        from disastertrace.revision_v1.metrics import compute_invalid_reference_duration
+
+        references = [
+            {"evidence_id": "e1", "superseded_at": 10, "corrected_at": 30},
+            {"evidence_id": "e2", "superseded_at": 50,
+             "corrected_at": None, "right_censor_at": 100},
+        ]
+
+        duration = compute_invalid_reference_duration(references)
+        assert duration == 70  # (30-10) + (100-50)
+
+    def test_uncorrected_without_censor_raises(self):
+        """Uncorrected reference without right_censor_at must raise."""
+        from disastertrace.revision_v1.metrics import compute_invalid_reference_duration
+
+        references = [
+            {"evidence_id": "e1", "superseded_at": 10, "corrected_at": None},
+        ]
+
+        with pytest.raises(ValueError, match="right_censor_at is missing"):
+            compute_invalid_reference_duration(references)
+
+
+# ---------------------------------------------------------------------------
+# R3 tests: Full-slot denominator for fact layer correctness
+# ---------------------------------------------------------------------------
+
+
+class TestR3FactLayerCorrectness:
+    """R3 Issue #7: KEEP_UNKNOWN uses full required-slot denominator."""
+
+    def test_unaddressed_slots_count_as_errors(self):
+        """Unaddressed required slots should hurt correctness rate."""
+        from disastertrace.revision_v1.metrics import compute_fact_layer_correctness
+
+        operations = [
+            {"slot": "slot_a", "operation": "SET", "was_correct": True},
+            # slot_b and slot_c not addressed
+        ]
+        required_slots = {"slot_a", "slot_b", "slot_c"}
+
+        result = compute_fact_layer_correctness(operations, required_slots)
+
+        assert result["addressed_count"] == 1
+        assert result["required_count"] == 3
+        assert result["unaddressed_count"] == 2
+        assert result["correct_count"] == 1
+        # Correctness rate = 1/3 (not 1/1)
+        assert math.isclose(result["correctness_rate"], 1/3, rel_tol=1e-9)
+
+    def test_all_slots_addressed_correctly(self):
+        """All required slots addressed correctly gives 100% rate."""
+        from disastertrace.revision_v1.metrics import compute_fact_layer_correctness
+
+        operations = [
+            {"slot": "slot_a", "operation": "SET", "was_correct": True},
+            {"slot": "slot_b", "operation": "KEEP_UNKNOWN", "was_correct": True},
+        ]
+        required_slots = {"slot_a", "slot_b"}
+
+        result = compute_fact_layer_correctness(operations, required_slots)
+
+        assert result["correctness_rate"] == 1.0
+        assert result["unaddressed_count"] == 0
+
+
+# ---------------------------------------------------------------------------
+# R3 tests: Resampling-based noise floor estimation
+# ---------------------------------------------------------------------------
+
+
+class TestR3NoiseFloorEstimation:
+    """R3 Issue #4: Resampling-based noise floor for O."""
+
+    def test_estimate_noise_floor_from_deltas(self):
+        """Estimate noise floor from identity-identity branch deltas."""
+        from disastertrace.revision_v1.metrics import estimate_conditional_noise_floor
+
+        # Simulated deltas from identity branches
+        deltas = [0.02, 0.01, 0.03, 0.02, 0.015, 0.025, 0.01, 0.02]
+
+        result = estimate_conditional_noise_floor(deltas)
+
+        assert "mean" in result
+        assert "std" in result
+        assert "interval" in result
+        assert result["count"] == 8
+        assert result["mean"] == sum(deltas) / len(deltas)
+
+    def test_compare_overreaction_to_interval(self):
+        """Compare agent O to noise interval with equivalence tolerance."""
+        from disastertrace.revision_v1.metrics import (
+            estimate_conditional_noise_floor,
+            compare_overreaction_to_noise_interval,
+        )
+
+        noise_deltas = [0.01, 0.02, 0.015, 0.018, 0.022]
+        noise_estimate = estimate_conditional_noise_floor(noise_deltas)
+
+        # Agent O within interval
+        result_within = compare_overreaction_to_noise_interval(0.015, noise_estimate)
+        assert not result_within["exceeds_interval"]
+
+        # Agent O exceeds interval
+        result_exceeds = compare_overreaction_to_noise_interval(0.05, noise_estimate)
+        assert result_exceeds["exceeds_interval"]
+
+    def test_empty_deltas_raises(self):
+        """Empty delta list must raise ValueError."""
+        from disastertrace.revision_v1.metrics import estimate_conditional_noise_floor
+
+        with pytest.raises(ValueError, match="empty"):
+            estimate_conditional_noise_floor([])
+
+
+# ---------------------------------------------------------------------------
+# R3 tests: Censoring-aware timeliness
+# ---------------------------------------------------------------------------
+
+
+class TestR3TimelinessCensored:
+    """R3 Issue #6: Proper right-censored handling for timeliness."""
+
+    def test_censored_timeliness_with_bounds(self):
+        """Censored observations provide bounds, not just a side-count."""
+        from disastertrace.revision_v1.metrics import compute_timeliness_censored
+
+        amendments = [
+            {"source_id": "a1", "available_at": 100, "first_compliant_commit_at": 150},
+            {"source_id": "a2", "available_at": 200, "first_compliant_commit_at": None,
+             "censor_at": 300},  # Censored at 300
+        ]
+
+        result = compute_timeliness_censored(amendments)
+
+        assert result["observed_count"] == 1
+        assert result["censored_count"] == 1
+        assert result["total_count"] == 2
+        assert math.isclose(result["censoring_rate"], 0.5, rel_tol=1e-9)
+        assert result["observed_mean"] == 50.0  # 150 - 100
+        # Upper bound includes censored time: (50 + 100) / 2 = 75
+        assert result["upper_bound_mean"] == 75.0
+
+    def test_all_observed(self):
+        """No censoring gives exact mean."""
+        from disastertrace.revision_v1.metrics import compute_timeliness_censored
+
+        amendments = [
+            {"source_id": "a1", "available_at": 100, "first_compliant_commit_at": 150},
+            {"source_id": "a2", "available_at": 200, "first_compliant_commit_at": 220},
+        ]
+
+        result = compute_timeliness_censored(amendments)
+
+        assert result["censored_count"] == 0
+        assert result["censoring_rate"] == 0.0
+        assert result["observed_mean"] == 35.0  # (50 + 20) / 2
+
+
+# ---------------------------------------------------------------------------
+# R3 tests: Brier by strata (renamed from calibration)
+# ---------------------------------------------------------------------------
+
+
+class TestR3BrierByStrata:
+    """R3 Issue #8: brier_by_strata is the correct name."""
+
+    def test_brier_by_strata_basic(self):
+        """brier_by_strata computes Brier metrics per stratum."""
+        from disastertrace.revision_v1.metrics import brier_by_strata
+
+        rows = [
+            {"opportunity_id": "op1", "base": 0.5, "prediction": 0.8, "outcome": 1,
+             "lead_time": "1h"},
+            {"opportunity_id": "op2", "base": 0.5, "prediction": 0.3, "outcome": 0,
+             "lead_time": "1h"},
+            {"opportunity_id": "op3", "base": 0.5, "prediction": 0.6, "outcome": 1,
+             "lead_time": "3h"},
+        ]
+
+        result = brier_by_strata(rows, stratum_key="lead_time")
+
+        assert "1h" in result
+        assert "3h" in result
+        assert result["1h"]["opportunities"] == 2
+        assert result["3h"]["opportunities"] == 1
+
+
+# ---------------------------------------------------------------------------
+# R3 tests: Effective state adapter
+# ---------------------------------------------------------------------------
+
+
+class TestR3EffectiveStateAdapter:
+    """R3 Issue #1: Adapter for belief_commit effective state."""
+
+    def test_adapter_from_forecasts_dict(self):
+        """Adapter extracts commits from forecasts dict structure."""
+        from disastertrace.revision_v1.metrics import commits_from_effective_states
+
+        effective_states = [
+            {"effective_at": 10, "forecasts": {"t0": 0.3, "t1": 0.7}},
+            {"effective_at": 20, "forecasts": {"t0": 0.5}},
+        ]
+
+        commits = commits_from_effective_states(effective_states)
+
+        assert len(commits) == 3
+        t0_commits = [c for c in commits if c["target_id"] == "t0"]
+        assert len(t0_commits) == 2
+
+    def test_adapter_from_flat_records(self):
+        """Adapter handles already-flat records."""
+        from disastertrace.revision_v1.metrics import commits_from_effective_states
+
+        flat_records = [
+            {"target_id": "t0", "effective_at": 10, "probability": 0.4},
+            {"target_id": "t0", "effective_at": 20, "probability": 0.6},
+        ]
+
+        commits = commits_from_effective_states(flat_records)
+
+        assert len(commits) == 2
+        assert commits[0]["probability"] == 0.4
