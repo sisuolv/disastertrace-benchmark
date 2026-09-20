@@ -993,3 +993,613 @@ class TestEdgeCases:
         assert len(ledger) == 1
         # NIL is a valid new observation (no prior to supersede)
         assert ledger[0]["kind"] == "new_observation"
+
+
+# ---------------------------------------------------------------------------
+# Test: Issue #1 - Future-mirror semantic hash leakage
+# ---------------------------------------------------------------------------
+
+
+class TestFutureMirrorLeakage:
+    """Issue #1: Future mirror cannot relabel visible prefix.
+
+    The online/live view must be insensitive to ANY future suffix.
+    """
+
+    def test_future_mirror_does_not_relabel_visible_prefix(self):
+        """Adding a future record must not alter prior agent-visible metadata."""
+        from disastertrace.revision_v1.ledger import compile_ledger, visible_at
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Original product
+        original = make_product(
+            source_id="nws-original",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content={"body": "content"},
+        )
+
+        # Future mirror with same semantic hash
+        future_mirror = make_product(
+            source_id="mirror-copy",
+            issued_at=t0 + 5 * hour,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content={"body": "content"},  # Same content
+        )
+
+        # Compile ledger WITHOUT future record
+        ledger_before = compile_ledger([original], declared_lag_us=0)
+        view_before = visible_at(ledger_before, cutoff=t0 + 2 * hour)
+
+        # Compile ledger WITH future record
+        ledger_after = compile_ledger([original, future_mirror], declared_lag_us=0)
+        view_after = visible_at(ledger_after, cutoff=t0 + 2 * hour)
+
+        # The view at the SAME cutoff must be IDENTICAL
+        assert view_before == view_after, "Future records must not alter prior agent-visible metadata"
+
+    def test_future_suffix_insensitivity_property(self):
+        """Property test: any historical prefix produces byte-identical output.
+
+        This is the core canary property from the review's acceptance principle:
+        Take any historical prefix of events up to some view time, compute the
+        ledger classification for that prefix; then append arbitrary future events
+        and recompute for the SAME view time - the output for all prior records
+        must be byte-identical regardless of what was appended later.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger, visible_at
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Create a series of products
+        products = [
+            make_product(
+                source_id="nws-p1",
+                issued_at=t0,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+            ),
+            make_product(
+                source_id="nws-p2",
+                issued_at=t0 + hour,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+                amendment_kind="AMD",
+                semantic_content={"body": "amd-1"},
+            ),
+            make_product(
+                source_id="nws-p3",
+                issued_at=t0 + 2 * hour,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+                amendment_kind="AMD",
+                semantic_content={"body": "amd-2"},
+            ),
+        ]
+
+        view_time = t0 + 3 * hour
+        ledger_prefix = compile_ledger(products, declared_lag_us=0)
+        view_prefix = visible_at(ledger_prefix, cutoff=view_time)
+
+        # Append arbitrary future events
+        future_events = [
+            make_product(
+                source_id="nws-future-1",
+                issued_at=t0 + 10 * hour,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+                semantic_content={"body": "future-1"},
+            ),
+            make_product(
+                source_id="mirror-future",
+                issued_at=t0 + 11 * hour,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+                semantic_content={"body": "amd-2"},  # Same as p3
+            ),
+            make_product(
+                source_id="dup-future",
+                issued_at=t0 + 12 * hour,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+                semantic_content=products[0]["semantic_content"],  # Same as p1
+            ),
+        ]
+
+        extended_products = products + future_events
+        ledger_extended = compile_ledger(extended_products, declared_lag_us=0)
+        view_extended = visible_at(ledger_extended, cutoff=view_time)
+
+        # Output must be byte-identical
+        assert view_prefix == view_extended, \
+            "Online view must be insensitive to any future suffix"
+
+    def test_compile_ledger_at_view_produces_stable_classification(self):
+        """compile_ledger_at_view guarantees no future influence."""
+        from disastertrace.revision_v1.ledger import compile_ledger_at_view
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        products = [
+            make_product(
+                source_id="nws-1",
+                issued_at=t0,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+                semantic_content={"body": "content-1"},
+            ),
+            make_product(
+                source_id="aviationweather-1",
+                issued_at=t0 + 10 * hour,  # Future
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+                semantic_content={"body": "content-1"},  # Same content - would be mirror
+            ),
+        ]
+
+        view_time = t0 + 3 * hour
+        ledger = compile_ledger_at_view(
+            products,
+            view_cutoff=view_time,
+            declared_lag_us=0,
+        )
+
+        # Only the visible product should be in the ledger
+        assert len(ledger) == 1
+        assert ledger[0]["source_id"] == "nws-1"
+        assert ledger[0]["kind"] == "new_observation"  # Not mirror
+
+
+# ---------------------------------------------------------------------------
+# Test: Issue #2 - Cross-window supersession
+# ---------------------------------------------------------------------------
+
+
+class TestCrossWindowSupersession:
+    """Issue #2: Supersession should work across differing validity windows."""
+
+    def test_overlapping_validity_windows_form_lineage(self):
+        """Products with overlapping windows should be in same lineage."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Two products with overlapping validity windows
+        products = [
+            make_product(
+                source_id="nws-1",
+                issued_at=t0,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+            ),
+            make_product(
+                source_id="nws-2",
+                issued_at=t0 + hour,
+                valid_start=t0 + 2 * hour,  # Different window but overlapping
+                valid_end=t0 + 8 * hour,
+                amendment_kind="AMD",
+                semantic_content={"body": "extended"},
+            ),
+        ]
+
+        ledger = compile_ledger(products, declared_lag_us=0)
+
+        # The AMD should recognize it's amending a related product
+        amd_entry = next(e for e in ledger if e["source_id"] == "nws-2")
+        # While exact window match isn't required, the relationship is tracked
+        assert amd_entry["version_relationship"] in ("supersedes", "first")
+
+
+# ---------------------------------------------------------------------------
+# Test: Issue #3 - late_superseded direction
+# ---------------------------------------------------------------------------
+
+
+class TestLateSupersededDirection:
+    """Issue #3: Late-arriving old versions should be SUPERSEDED BY newer, not reverse."""
+
+    def test_late_old_record_is_superseded_by_newer_not_reverse(self):
+        """Late old evidence is superseded BY the new record."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Setup: old issued first, new issued second, but old arrives AFTER new
+        old = make_product(
+            source_id="nws-old",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content={"body": "old-content"},
+        )
+        new = make_product(
+            source_id="nws-new",
+            issued_at=t0 + hour,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+            semantic_content={"body": "new-content"},
+        )
+
+        collector_times = {
+            "nws-old": t0 + 3 * hour,  # Arrived late
+            "nws-new": t0 + hour + 2 * 60_000_000,  # Arrived on time
+        }
+
+        ledger = compile_ledger(
+            [old, new],
+            declared_lag_us=0,
+            collector_first_seen=collector_times,
+        )
+
+        old_entry = next(e for e in ledger if e["source_id"] == "nws-old")
+
+        # Issue #3 fix: old record should NOT have new record in its "supersedes" field
+        assert "nws-new" not in (old_entry.get("supersedes") or []), \
+            "Late old evidence should not claim to supersede newer record"
+
+        # Instead, it should have "superseded_by" field
+        assert old_entry.get("superseded_by") == ["nws-new"] or \
+               old_entry["version_relationship"] == "superseded_by", \
+            "Late old evidence should be superseded_by the newer record"
+
+    def test_late_superseded_has_correct_direction_field(self):
+        """late_superseded entries should have superseded_by, not supersedes."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        products = [
+            make_product(
+                source_id="nws-early",
+                issued_at=t0,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+            ),
+            make_product(
+                source_id="nws-late",
+                issued_at=t0 + 30 * 60_000_000,  # Issued later
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+                semantic_content={"body": "late-content"},
+            ),
+            make_product(
+                source_id="nws-newest",
+                issued_at=t0 + hour,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+                amendment_kind="AMD",
+                semantic_content={"body": "newest-content"},
+            ),
+        ]
+
+        collector_times = {
+            "nws-early": t0,
+            "nws-newest": t0 + hour + 2 * 60_000_000,
+            "nws-late": t0 + 2 * hour,  # Arrived after nws-newest
+        }
+
+        ledger = compile_ledger(
+            products,
+            declared_lag_us=0,
+            collector_first_seen=collector_times,
+        )
+
+        late_entry = next(e for e in ledger if e["source_id"] == "nws-late")
+
+        # Should be late_superseded with correct direction
+        assert late_entry["kind"] == "late_superseded"
+        assert late_entry["superseded_by"] is not None
+        assert "nws-newest" in late_entry["superseded_by"]
+        assert late_entry["supersedes"] is None
+
+
+# ---------------------------------------------------------------------------
+# Test: Issue #4 - Explicit provenance fields
+# ---------------------------------------------------------------------------
+
+
+class TestProvenanceFields:
+    """Issue #4: Provenance should use explicit fields, not string parsing."""
+
+    def test_explicit_provider_field_used_for_mirror_detection(self):
+        """When provider field is present, use it instead of source_id parsing."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        shared_content = {"body": "shared-content"}
+
+        # Two products with explicit provider fields
+        p1 = make_product(
+            source_id="some-random-id-1",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content=shared_content,
+        )
+        p1["provider"] = "nws"
+
+        p2 = make_product(
+            source_id="another-random-id-2",
+            issued_at=t0 + 1_000_000,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content=shared_content,
+        )
+        p2["provider"] = "aviationweather"  # Different provider = mirror
+
+        ledger = compile_ledger([p1, p2], declared_lag_us=0)
+        p2_entry = next(e for e in ledger if e["source_id"] == "another-random-id-2")
+
+        # Should be classified as mirror due to different provider
+        assert p2_entry["kind"] == "mirror"
+
+    def test_same_provider_explicit_is_not_mirror(self):
+        """Same explicit provider should not be classified as mirror."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        shared_content = {"body": "shared-content"}
+
+        # Two products with same explicit provider
+        p1 = make_product(
+            source_id="id-1",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content=shared_content,
+        )
+        p1["provider"] = "nws"
+
+        p2 = make_product(
+            source_id="id-2",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content=shared_content,
+        )
+        p2["provider"] = "nws"  # Same provider = duplicate, not mirror
+
+        ledger = compile_ledger([p1, p2], declared_lag_us=0)
+        p2_entry = next(e for e in ledger if e["source_id"] == "id-2")
+
+        # Should be lossless_duplicate, not mirror
+        assert p2_entry["kind"] == "lossless_duplicate"
+
+
+# ---------------------------------------------------------------------------
+# Test: Issue #5 - verified_publication as real input
+# ---------------------------------------------------------------------------
+
+
+class TestVerifiedPublication:
+    """Issue #5: verified_publication should be a real availability input."""
+
+    def test_verified_publication_determines_availability(self):
+        """When verified_publication is present, it should be used."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+        lag = 2 * 60_000_000
+
+        p = make_product(
+            source_id="nws-1",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+        )
+        p["verified_publication"] = t0 + 5 * 60_000_000  # 5 minutes after issuance
+
+        ledger = compile_ledger([p], declared_lag_us=lag)
+
+        # Should use verified_publication
+        assert ledger[0]["availability_basis"] == "verified_publication"
+        assert ledger[0]["available_at"] == t0 + 5 * 60_000_000
+
+    def test_collector_first_seen_overrides_verified_publication_if_later(self):
+        """If collector saw it later than verified_publication, use that."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        p = make_product(
+            source_id="nws-1",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+        )
+        p["verified_publication"] = t0 + 5 * 60_000_000
+
+        collector_times = {
+            "nws-1": t0 + 10 * 60_000_000,  # Later than verified
+        }
+
+        ledger = compile_ledger([p], declared_lag_us=0, collector_first_seen=collector_times)
+
+        # Should use collector_first_seen since it's later
+        assert ledger[0]["availability_basis"] == "collector_first_seen"
+        assert ledger[0]["available_at"] == t0 + 10 * 60_000_000
+
+
+# ---------------------------------------------------------------------------
+# Test: Issue #6 - Dimension separation (kind derived from dimensions)
+# ---------------------------------------------------------------------------
+
+
+class TestDimensionSeparation:
+    """Issue #6: Kind should be derived from separate dimensions."""
+
+    def test_ledger_entries_have_dimension_fields(self):
+        """Ledger entries should have the new dimension fields."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        products = [
+            make_product(
+                source_id="nws-1",
+                issued_at=t0,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+            ),
+        ]
+
+        ledger = compile_ledger(products, declared_lag_us=0)
+
+        assert "arrival_relationship" in ledger[0]
+        assert "version_relationship" in ledger[0]
+        assert "information_utility" in ledger[0]
+
+    def test_baseline_does_not_override_amd_cor(self):
+        """baseline_update should not override AMD/COR semantics."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Baseline product with AMD marker
+        original = make_product(
+            source_id="nws-orig",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+        )
+        original["is_baseline"] = True
+
+        amended = make_product(
+            source_id="nws-amd",
+            issued_at=t0 + hour,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+            semantic_content={"body": "amended"},
+        )
+        amended["is_baseline"] = True
+
+        ledger = compile_ledger([original, amended], declared_lag_us=0)
+
+        amd_entry = next(e for e in ledger if e["source_id"] == "nws-amd")
+
+        # Should be amendment_supersedes, NOT baseline_update
+        assert amd_entry["kind"] == "amendment_supersedes"
+
+
+# ---------------------------------------------------------------------------
+# Test: Issue #7 - no_change_reissue information utility
+# ---------------------------------------------------------------------------
+
+
+class TestNoChangeReissueInformation:
+    """Issue #7: no_change_reissue should track actual information deltas."""
+
+    def test_reissue_with_extended_validity_is_informative(self):
+        """A reissue with extended validity period has information."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        shared_content = {"body": "content"}
+
+        original = make_product(
+            source_id="nws-1",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content=shared_content,
+        )
+
+        reissue = make_product(
+            source_id="nws-2",
+            issued_at=t0 + 2 * hour,
+            valid_start=t0,
+            valid_end=t0 + 12 * hour,  # Extended validity
+            semantic_content=shared_content,
+        )
+
+        ledger = compile_ledger([original, reissue], declared_lag_us=0)
+        reissue_entry = next(e for e in ledger if e["source_id"] == "nws-2")
+
+        # Should track extension
+        assert reissue_entry["kind"] == "no_change_reissue"
+        assert reissue_entry["information_utility"] == "extension"
+
+    def test_reissue_with_confirmation_count_is_informative(self):
+        """A reissue with increased confirmation count has information."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        shared_content = {"body": "content"}
+
+        original = make_product(
+            source_id="nws-1",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content=shared_content,
+        )
+        original["confirmation_count"] = 1
+
+        reissue = make_product(
+            source_id="nws-2",
+            issued_at=t0 + 2 * hour,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            semantic_content=shared_content,
+        )
+        reissue["confirmation_count"] = 2  # Increased
+
+        ledger = compile_ledger([original, reissue], declared_lag_us=0)
+        reissue_entry = next(e for e in ledger if e["source_id"] == "nws-2")
+
+        # Should track confirmation
+        assert reissue_entry["kind"] == "no_change_reissue"
+        assert reissue_entry["information_utility"] == "confirmation"
+
+
+# ---------------------------------------------------------------------------
+# Test: New superseded_by field
+# ---------------------------------------------------------------------------
+
+
+class TestSupersededByField:
+    """The new superseded_by field should be present and correct."""
+
+    def test_superseded_by_field_present_in_entries(self):
+        """All ledger entries should have superseded_by field."""
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        products = [
+            make_product(
+                source_id="nws-1",
+                issued_at=t0,
+                valid_start=t0,
+                valid_end=t0 + 6 * hour,
+            ),
+        ]
+
+        ledger = compile_ledger(products, declared_lag_us=0)
+
+        assert "superseded_by" in ledger[0]
+        assert ledger[0]["superseded_by"] is None  # First entry has nothing superseding it
