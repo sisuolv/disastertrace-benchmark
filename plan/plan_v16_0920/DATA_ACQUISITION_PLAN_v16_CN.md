@@ -271,6 +271,10 @@
 
 同 §1.3,额外记录 `station`、`year_month`、`taf_variant`("original"/"amendment_chain"/"cancellation" 等,视实际服务参数而定)。
 
+### 5.7 2026-09-20 修订说明
+
+实际执行本节时,下载会话走了 §4.3 提到的备用端点(`taf.py` CSV 服务),产出的分解式 CSV 与本仓库 `episode_compiler.py`/`aviation.py::parse_taf()` 需要的完整原始报文文本不兼容(CSV 缺少整份公报的有效期窗口字段,不可逆恢复)。TAF **原始文本**的重新获取现已在 `DL3R_REDOWNLOAD_PROMPT_CN.md` 中单独规定,应优先使用 §4.2 的首选路径(`afos/retrieve.py`,已在 DL-0 验证可达)而非本节 §4.3 的备用路径。§5.1-§5.5 的验收标准、修订密度审计逻辑、holdout 规则本身继续有效,不受此修订影响。
+
 ---
 
 ## 6. DL-4 LAMP LAV 公报(D11:仅作为基线用途)
@@ -378,6 +382,10 @@ D02 selection 原文:"H15 为唯一主试点领域(sole primary pilot domain);NH
 
 - 单次(每小时)运行:请求数 ≤ 20(3-5 站点 × 2-3 种产品),单请求响应体上限 5MB,单次运行总字节数 ≤ 20MB。
 - 由于是持续运行,不设总预算上限,但**每次运行必须独立声明自己的 run_id 和当次预算**(复用 §1.3 的 manifest 格式,run_id 里含具体的采集小时,如 `20260921T0300Z_forward`)。
+
+### 8.5.1 2026-09-20 修订说明
+
+`forward_capture.py` 的实际实现在脚本自身 docstring 里把每小时请求数进一步收紧到 ≤6(硬编码只覆盖冻结站点里的前 3 个,`stations[:3]`),导致第 4 个冻结站点 KORD 被结构性排除在前向采集之外。经用户明确授权,该实现层面的每小时上限已提高到 ≤8(覆盖全部 4 个冻结站点 × TAF/METAR 2 种产品),纳入 KORD。这**仍在本节声明的 ≤20 请求/次硬上限之内**,不构成对本合同预算条款的突破。具体执行步骤见 `DL3R_REDOWNLOAD_PROMPT_CN.md` Part B(DL-6R)。
 
 ### 8.6 回执格式
 
