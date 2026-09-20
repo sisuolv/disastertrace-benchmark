@@ -1005,3 +1005,371 @@ class TestEdgeCases:
         # Invalid format
         bad = make_valid_commit(as_of="not-a-timestamp")
         assert validate_commit_schema(bad)["valid"] is False
+
+
+# ---------------------------------------------------------------------------
+# Test: R2 Issue #1 - Nested target and source validation
+# ---------------------------------------------------------------------------
+
+
+class TestR2Issue1NestedValidation:
+    """R2 Issue #1: Validate nested targets in forecast_updates and source_ids in fact_updates."""
+
+    def test_nested_forecast_target_is_validated(self):
+        """forecast_updates[].target_id must be validated, not just outer target_id."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        # Only accept target-001, reject unregistered targets
+        processor = CommitProcessor(store, target_validator=lambda tid: tid == "target-001")
+
+        commit = make_valid_commit(
+            target_id="target-001",  # Valid outer target
+            forecast_updates=[{"target_id": "unregistered-target", "event_probability": 0.5}],
+        )
+
+        result = processor.process(commit)
+        assert result["accepted"] is False
+        assert "nested" in result["error"].lower() or "target" in result["error"].lower()
+
+    def test_fact_source_ids_are_visibility_checked(self):
+        """fact_updates[].source_ids must pass evidence visibility check."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        # Visibility checker that rejects "future-evidence"
+        processor = CommitProcessor(
+            store,
+            target_validator=lambda tid: True,
+            evidence_visibility_checker=lambda eid, at: eid != "future-evidence",
+        )
+
+        commit = make_valid_commit(
+            evidence_ids=[],  # Empty top-level, but hidden in fact_updates
+            fact_updates=[{
+                "slot": "test_slot",
+                "operation": "SET",
+                "support_status": "supported",
+                "value": "test_value",
+                "source_ids": ["future-evidence"],  # Should be caught
+            }],
+        )
+
+        result = processor.process(commit)
+        assert result["accepted"] is False
+        assert "source" in result["error"].lower() or "visible" in result["error"].lower()
+
+
+# ---------------------------------------------------------------------------
+# Test: R2 Issue #2 - as_of monotonicity
+# ---------------------------------------------------------------------------
+
+
+class TestR2Issue2AsOfMonotonicity:
+    """R2 Issue #2: as_of must be monotonically increasing (not backward)."""
+
+    def test_nonmonotone_commit_time_is_rejected(self):
+        """Commit with as_of earlier than previous commit is rejected."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # First commit at 12:02
+        commit1 = make_valid_commit(
+            episode_id="ep-mono",
+            parent_commit_id=None,
+            as_of="2026-09-20T12:02:00Z",
+        )
+        result1 = processor.process(commit1)
+        assert result1["accepted"] is True
+
+        # Second commit at 12:01 (earlier!) should be rejected
+        commit2 = make_valid_commit(
+            episode_id="ep-mono",
+            parent_commit_id=result1["commit_id"],
+            as_of="2026-09-20T12:01:00Z",  # Goes backward
+        )
+        result2 = processor.process(commit2)
+        assert result2["accepted"] is False
+        assert "monoton" in result2["error"].lower()
+
+
+# ---------------------------------------------------------------------------
+# Test: R2 Issue #3 - Bool and NaN probability rejection
+# ---------------------------------------------------------------------------
+
+
+class TestR2Issue3BoolNaNRejection:
+    """R2 Issue #3: Schema must reject bool and NaN probabilities before hashing."""
+
+    def test_bool_probability_rejected(self):
+        """Boolean values are not valid probabilities."""
+        from disastertrace.revision_v1.belief_commit import validate_commit_schema
+
+        for bad_val in [True, False]:
+            commit = make_valid_commit(
+                forecast_updates=[{"target_id": "t-001", "event_probability": bad_val}],
+            )
+            result = validate_commit_schema(commit)
+            assert result["valid"] is False, f"bool {bad_val} should be rejected"
+            assert "bool" in result["error"].lower()
+
+    def test_nan_probability_rejected(self):
+        """NaN is not a valid probability."""
+        from disastertrace.revision_v1.belief_commit import validate_commit_schema
+        import math
+
+        commit = make_valid_commit(
+            forecast_updates=[{"target_id": "t-001", "event_probability": float("nan")}],
+        )
+        result = validate_commit_schema(commit)
+        assert result["valid"] is False
+        assert "finite" in result["error"].lower() or "nan" in result["error"].lower()
+
+    def test_infinity_probability_rejected(self):
+        """Infinity is not a valid probability."""
+        from disastertrace.revision_v1.belief_commit import validate_commit_schema
+
+        for inf_val in [float("inf"), float("-inf")]:
+            commit = make_valid_commit(
+                forecast_updates=[{"target_id": "t-001", "event_probability": inf_val}],
+            )
+            result = validate_commit_schema(commit)
+            assert result["valid"] is False
+
+
+# ---------------------------------------------------------------------------
+# Test: R2 Issue #5 - FOLLOW_BASELINE semantics
+# ---------------------------------------------------------------------------
+
+
+class TestR2Issue5FollowBaseline:
+    """R2 Issue #5: FOLLOW_BASELINE requires provider, no dummy probability needed."""
+
+    def test_follow_without_provider_is_rejected(self):
+        """FOLLOW_BASELINE without baseline_provider is rejected."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+        # No baseline_provider configured
+
+        commit = make_valid_commit(operation="FOLLOW_BASELINE")
+        result = processor.process(commit)
+
+        assert result["accepted"] is False
+        assert "baseline" in result["error"].lower() and "provider" in result["error"].lower()
+
+    def test_follow_baseline_works_without_dummy_probability(self):
+        """FOLLOW_BASELINE copies to declared target without forecast_updates."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(
+            store,
+            target_validator=lambda tid: True,
+            baseline_provider=lambda tid, at: 0.75,  # Returns 0.75 for any target
+        )
+
+        commit = make_valid_commit(
+            target_id="target-001",
+            operation="FOLLOW_BASELINE",
+            forecast_updates=[],  # Empty! No dummy probability
+        )
+        result = processor.process(commit)
+
+        assert result["accepted"] is True
+        effective = store.get_effective_state("ep-001")
+        assert effective["forecasts"]["target-001"] == 0.75
+
+
+# ---------------------------------------------------------------------------
+# Test: R2 Issue #7 - Mutable store getters
+# ---------------------------------------------------------------------------
+
+
+class TestR2Issue7MutableGetters:
+    """R2 Issue #7: Storage getters must return deep copies (immutable views)."""
+
+    def test_effective_state_mutation_does_not_affect_store(self):
+        """Mutating returned effective state does not change stored state."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        commit = make_valid_commit(
+            forecast_updates=[{"target_id": "t-001", "event_probability": 0.30}],
+        )
+        result = processor.process(commit)
+
+        # Get state and mutate it
+        returned = store.get_effective_state("ep-001")
+        returned["forecasts"]["t-001"] = 0.99
+
+        # Original should be unchanged
+        assert store.get_effective_state("ep-001")["forecasts"]["t-001"] == 0.30
+        assert store.get_effective_state_at(result["commit_id"])["forecasts"]["t-001"] == 0.30
+
+    def test_raw_commit_mutation_does_not_affect_store(self):
+        """Mutating returned raw commit does not change stored commit."""
+        from disastertrace.revision_v1.belief_commit import CommitStore
+
+        store = CommitStore()
+        store.store_raw_commit("test-id", {"key": "original"})
+
+        # Get and mutate
+        returned = store.get_raw_commit("test-id")
+        returned["payload"]["key"] = "mutated"
+
+        # Original should be unchanged
+        assert store.get_raw_commit("test-id")["payload"]["key"] == "original"
+
+
+# ---------------------------------------------------------------------------
+# Test: R2 Issue #8 - Attempt chain and malformed handling
+# ---------------------------------------------------------------------------
+
+
+class TestR2Issue8AttemptChain:
+    """R2 Issue #8: All attempts stored; malformed submissions handled gracefully."""
+
+    def test_malformed_submission_does_not_crash(self):
+        """Non-dict submission is handled gracefully, not an uncaught exception."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # Process various malformed inputs
+        for bad_input in ["not-a-dict", 123, None, ["list", "not", "dict"]]:
+            result = processor.process(bad_input)
+            assert result["accepted"] is False
+            assert result["commit_id"] is not None
+            assert "dict" in result["error"].lower()
+
+    def test_invalid_commits_tracked_separately_from_accepted(self):
+        """Invalid commits are stored but don't advance the latest chain."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # Valid commit
+        valid = make_valid_commit(episode_id="ep-chain")
+        r1 = processor.process(valid)
+        assert r1["accepted"] is True
+        latest_after_valid = store.get_latest_commit_id("ep-chain")
+
+        # Invalid commit (bad operation)
+        invalid = {**make_valid_commit(episode_id="ep-chain", parent_commit_id=r1["commit_id"]),
+                   "operation": "INVALID"}
+        r2 = processor.process(invalid)
+        assert r2["accepted"] is False
+
+        # Latest should still be the valid commit, not the invalid one
+        assert store.get_latest_commit_id("ep-chain") == latest_after_valid
+
+        # But the invalid attempt is still stored
+        raw = store.get_raw_commit(r2["commit_id"])
+        assert raw is not None
+        assert raw["accepted"] is False
+
+
+# ---------------------------------------------------------------------------
+# Test: R2 Issue #9 - Fact state semantics
+# ---------------------------------------------------------------------------
+
+
+class TestR2Issue9FactStateSemantics:
+    """R2 Issue #9: SET/RETRACT/KEEP_UNKNOWN have clear valid-state semantics."""
+
+    def test_set_marks_fact_as_valid(self):
+        """SET operation marks the fact as currently valid."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        commit = make_valid_commit(
+            fact_updates=[{
+                "slot": "test_slot",
+                "operation": "SET",
+                "support_status": "supported",
+                "value": "test_value",
+                "source_ids": [],
+            }],
+        )
+        processor.process(commit)
+
+        state = store.get_effective_state("ep-001")
+        fact = state["facts"]["test_slot"]
+        assert fact["is_valid"] is True
+        assert fact["is_retracted"] is False
+        assert fact["value"] == "test_value"
+
+    def test_retract_marks_fact_as_invalid(self):
+        """RETRACT operation marks the fact as explicitly invalid/withdrawn."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        # First SET a value
+        commit1 = make_valid_commit(
+            episode_id="ep-retract",
+            fact_updates=[{
+                "slot": "test_slot",
+                "operation": "SET",
+                "support_status": "supported",
+                "value": "original_value",
+                "source_ids": [],
+            }],
+        )
+        r1 = processor.process(commit1)
+
+        # Then RETRACT it
+        commit2 = make_valid_commit(
+            episode_id="ep-retract",
+            parent_commit_id=r1["commit_id"],
+            as_of="2026-09-20T13:00:00Z",
+            fact_updates=[{
+                "slot": "test_slot",
+                "operation": "RETRACT",
+                "support_status": "refuted",
+                "value": None,
+                "source_ids": [],
+            }],
+        )
+        processor.process(commit2)
+
+        state = store.get_effective_state("ep-retract")
+        fact = state["facts"]["test_slot"]
+        assert fact["is_valid"] is False
+        assert fact["is_retracted"] is True
+        assert fact["value"] is None  # Retracted, no current value
+        assert fact["previous_value"] == "original_value"
+
+    def test_keep_unknown_marks_no_claim(self):
+        """KEEP_UNKNOWN means no claim is made (distinct from SET and RETRACT)."""
+        from disastertrace.revision_v1.belief_commit import CommitProcessor, CommitStore
+
+        store = CommitStore()
+        processor = CommitProcessor(store, target_validator=lambda tid: True)
+
+        commit = make_valid_commit(
+            fact_updates=[{
+                "slot": "test_slot",
+                "operation": "KEEP_UNKNOWN",
+                "support_status": "undetermined",
+                "value": None,
+                "source_ids": [],
+            }],
+        )
+        processor.process(commit)
+
+        state = store.get_effective_state("ep-001")
+        fact = state["facts"]["test_slot"]
+        assert fact["is_valid"] is None  # Unknown
+        assert fact["is_retracted"] is False

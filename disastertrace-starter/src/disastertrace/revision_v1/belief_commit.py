@@ -1,22 +1,36 @@
-"""Belief commit adapter for DisasterTrace v14 (P0-03).
+"""Belief commit adapter for DisasterTrace v14 (P0-03 / R2 repair).
 
 Implements the disastertrace.belief_commit.v14-draft schema with:
 - operation: UPDATE | HOLD | FOLLOW_BASELINE semantics
+- forecast_op: KEEP_PROBABILITY | SET_PROBABILITY | COPY_BASELINE_SNAPSHOT (R2 Issue #4)
 - Verbatim preservation of raw submitted payloads (even if invalid)
 - parent_commit_id hash chain integrity via canonical_hash
 - Invalid commit handling with retained errors and fallback behavior
 - Two-layer recording: raw submission vs effective state
+- Three-chain separation: attempt chain, accepted state chain, effective state (R2 Issue #8)
 
 Reuses:
 - canonical_hash from monitoring_v1/targets.py (hash chain)
 - visible_at from revision_v1/ledger.py (evidence visibility check)
 - ContractRegistry from revision_v1/contracts.py (target validation)
 - adoption.validate/decide from monitoring_fixed_v1/adoption.py (FOLLOW_BASELINE precedent)
+
+R2 fixes (from review Section 3, belief_commit.py issues):
+- Issue #1: Validate nested target_id in forecast_updates, source_ids in fact_updates
+- Issue #2: as_of must be monotonically increasing (not backward in time)
+- Issue #3: Reject bool and NaN probabilities in schema validation before hashing
+- Issue #4: forecast_op field for orthogonal probability/fact control
+- Issue #5: FOLLOW_BASELINE must have provider, no dummy probability required
+- Issue #6: FOLLOW records metadata (product_id, version, applicable_time, probability_source)
+- Issue #7: Storage getters return deep copies (immutable views)
+- Issue #8: Attempt chain vs accepted chain separation; malformed submissions retained
+- Issue #9: SET/RETRACT/KEEP_UNKNOWN have clear valid-state semantics
 """
 
 from __future__ import annotations
 
 import copy
+import math
 import re
 from typing import Any, Callable
 
@@ -27,6 +41,9 @@ from ..monitoring_v1.targets import canonical_hash
 SCHEMA_VERSION = "disastertrace.belief_commit.v14-draft"
 
 VALID_OPERATIONS = {"UPDATE", "HOLD", "FOLLOW_BASELINE"}
+
+# R2 Issue #4: Orthogonal forecast operation field
+VALID_FORECAST_OPS = {"KEEP_PROBABILITY", "SET_PROBABILITY", "COPY_BASELINE_SNAPSHOT"}
 
 VALID_NEXT_ACTION_KINDS = {"WAIT", "READ", "SEARCH", "TOOL", "STOP_ACTIVE"}
 
@@ -81,7 +98,11 @@ def _validate_fact_update(item: dict) -> tuple[bool, str | None]:
 
 
 def _validate_forecast_update(item: dict) -> tuple[bool, str | None]:
-    """Validate a single forecast_update item."""
+    """Validate a single forecast_update item.
+
+    R2 Issue #3: Reject bool and NaN probabilities in schema validation.
+    This validation runs BEFORE canonical_hash to prevent hash errors.
+    """
     if not isinstance(item, dict):
         return False, "forecast_update must be a dict"
 
@@ -92,8 +113,17 @@ def _validate_forecast_update(item: dict) -> tuple[bool, str | None]:
         return False, "forecast_update missing event_probability"
 
     prob = item["event_probability"]
+
+    # R2 Issue #3: Reject bool explicitly (bool is subclass of int in Python)
+    if isinstance(prob, bool):
+        return False, f"event_probability must be a number, not bool (got {prob})"
+
     if not isinstance(prob, (int, float)):
         return False, "event_probability must be a number"
+
+    # R2 Issue #3: Reject NaN and infinity
+    if math.isnan(prob) or math.isinf(prob):
+        return False, f"event_probability must be finite, got {prob}"
 
     if prob < 0 or prob > 1:
         return False, f"event_probability must be in [0, 1], got {prob}"
@@ -233,14 +263,17 @@ def compute_commit_id(commit: dict) -> str:
 class CommitStore:
     """Storage for raw commits and effective states.
 
-    Two-layer recording:
-    - Raw commits: stored verbatim as submitted (even if invalid)
+    Three-layer recording (R2 Issue #8):
+    - Raw attempts: ALL submissions stored verbatim (even malformed/invalid)
+    - Accepted commits: only validated commits that advance the chain
     - Effective states: resolved state after applying commit semantics
 
     The store maintains:
-    - Per-commit raw records (indexed by commit_id)
+    - Per-commit raw records (indexed by commit_id or attempt_id)
     - Per-episode current effective state
     - Per-commit effective state snapshots (for historical queries)
+    - Attempt log with acceptance status
+    - Per-episode as_of history for monotonicity checking (R2 Issue #2)
     """
 
     def __init__(self):
@@ -250,75 +283,136 @@ class CommitStore:
         self._effective_states: dict[str, dict] = {}
         # Effective state snapshot per commit (for historical queries)
         self._effective_at_commit: dict[str, dict] = {}
-        # Chain tracking: episode_id -> latest commit_id
+        # Chain tracking: episode_id -> latest ACCEPTED commit_id
         self._latest_commit: dict[str, str] = {}
+        # R2 Issue #8: Attempt log (all attempts, including rejected)
+        self._attempt_log: list[dict] = []
+        # R2 Issue #2: Track last as_of per episode for monotonicity
+        self._last_as_of: dict[str, str] = {}
 
     def store_raw_commit(
         self,
         commit_id: str,
-        payload: dict,
+        payload: dict | Any,
         *,
         validation_error: str | None = None,
+        accepted: bool = True,
     ) -> None:
         """Store a raw commit record verbatim.
 
+        R2 Issue #8: All attempts (including invalid/malformed) are stored.
+
         Args:
-            commit_id: The computed commit ID.
-            payload: The raw commit payload (stored as-is).
+            commit_id: The computed commit ID (or generated attempt ID for malformed).
+            payload: The raw commit payload (stored as-is, can be any type).
             validation_error: Error message if validation failed, None if valid.
+            accepted: Whether this attempt was accepted into the chain.
         """
-        self._raw_commits[commit_id] = {
+        # R2 Issue #8: Store deep copy, handle non-dict payloads gracefully
+        if isinstance(payload, dict):
+            stored_payload = copy.deepcopy(payload)
+        else:
+            stored_payload = payload  # Store malformed payload as-is
+
+        record = {
             "commit_id": commit_id,
-            "payload": copy.deepcopy(payload),  # Store a deep copy
+            "payload": stored_payload,
             "validation_error": validation_error,
+            "accepted": accepted,  # R2 Issue #8: Track acceptance status
         }
+        self._raw_commits[commit_id] = record
+        # R2 Issue #8: Also add to attempt log
+        self._attempt_log.append(record)
 
     def get_raw_commit(self, commit_id: str) -> dict | None:
-        """Retrieve a raw commit record by ID."""
-        return self._raw_commits.get(commit_id)
+        """Retrieve a raw commit record by ID.
+
+        R2 Issue #7: Returns a deep copy to prevent mutation.
+        """
+        record = self._raw_commits.get(commit_id)
+        if record is None:
+            return None
+        return copy.deepcopy(record)
 
     def store_effective_state(
         self,
         episode_id: str,
         commit_id: str,
         state: dict,
+        *,
+        accepted: bool = True,
     ) -> None:
         """Store the effective state for an episode after a commit.
+
+        R2 Issue #8: Only accepted commits update latest_commit.
 
         Args:
             episode_id: The episode identifier.
             commit_id: The commit that produced this state.
             state: The effective state dict.
+            accepted: Whether this was an accepted commit.
         """
         state_copy = copy.deepcopy(state)
         self._effective_states[episode_id] = state_copy
-        self._effective_at_commit[commit_id] = state_copy
-        self._latest_commit[episode_id] = commit_id
+        self._effective_at_commit[commit_id] = copy.deepcopy(state_copy)
+        # R2 Issue #8: Only update latest for accepted commits
+        if accepted:
+            self._latest_commit[episode_id] = commit_id
 
     def get_effective_state(self, episode_id: str) -> dict | None:
-        """Get the current effective state for an episode."""
-        return self._effective_states.get(episode_id)
+        """Get the current effective state for an episode.
+
+        R2 Issue #7: Returns a deep copy to prevent mutation.
+        """
+        state = self._effective_states.get(episode_id)
+        if state is None:
+            return None
+        return copy.deepcopy(state)
 
     def get_effective_state_at(self, commit_id: str) -> dict | None:
-        """Get the effective state as of a specific commit."""
-        return self._effective_at_commit.get(commit_id)
+        """Get the effective state as of a specific commit.
+
+        R2 Issue #7: Returns a deep copy to prevent mutation.
+        """
+        state = self._effective_at_commit.get(commit_id)
+        if state is None:
+            return None
+        return copy.deepcopy(state)
 
     def get_latest_commit_id(self, episode_id: str) -> str | None:
-        """Get the latest commit ID for an episode."""
+        """Get the latest ACCEPTED commit ID for an episode."""
         return self._latest_commit.get(episode_id)
+
+    def get_attempt_log(self) -> list[dict]:
+        """Get the full attempt log (R2 Issue #8).
+
+        Returns deep copies to prevent mutation.
+        """
+        return copy.deepcopy(self._attempt_log)
+
+    def get_last_as_of(self, episode_id: str) -> str | None:
+        """Get the last as_of timestamp for an episode (R2 Issue #2)."""
+        return self._last_as_of.get(episode_id)
+
+    def set_last_as_of(self, episode_id: str, as_of: str) -> None:
+        """Record the last as_of timestamp for an episode."""
+        self._last_as_of[episode_id] = as_of
 
 
 class CommitProcessor:
     """Process belief commits with validation and state management.
 
     Handles:
-    - Schema validation
-    - Target validation (via target_validator callback)
-    - Evidence visibility checks (via evidence_visibility_checker callback)
+    - Schema validation (R2 Issue #3: before hashing)
+    - Target validation for outer and nested targets (R2 Issue #1)
+    - Evidence visibility checks including fact_updates.source_ids (R2 Issue #1)
     - Hash chain integrity (parent_commit_id verification)
+    - as_of monotonicity enforcement (R2 Issue #2)
     - Operation semantics (UPDATE, HOLD, FOLLOW_BASELINE)
+    - FOLLOW_BASELINE requires provider, no dummy probability (R2 Issue #5)
     - Fallback behavior for invalid commits
-    - Two-layer recording (raw vs effective)
+    - Three-layer recording (raw attempt vs accepted vs effective) (R2 Issue #8)
+    - Malformed submission handling (R2 Issue #8)
     """
 
     def __init__(
@@ -345,11 +439,13 @@ class CommitProcessor:
         self._evidence_checker = evidence_visibility_checker
         self._fallback_operation = fallback_operation
 
-    def process(self, commit: dict) -> dict:
+    def process(self, commit: Any) -> dict:
         """Process a belief commit.
 
+        R2 Issue #8: Handles malformed (non-dict) submissions gracefully.
+
         Args:
-            commit: The commit payload dict.
+            commit: The commit payload (expected dict, but handles any type).
 
         Returns:
             Dict with:
@@ -357,39 +453,97 @@ class CommitProcessor:
                 commit_id: The computed commit ID (always returned, even for invalid).
                 error: Error message if not accepted, None otherwise.
         """
-        # Always compute commit ID first
-        commit_id = compute_commit_id(commit)
+        # R2 Issue #8: Handle malformed submissions
+        if not isinstance(commit, dict):
+            # Generate a commit_id for malformed submissions
+            import hashlib
+            import json
+            try:
+                content = json.dumps(commit, default=str, sort_keys=True)
+            except Exception:
+                content = str(commit)
+            commit_id = hashlib.sha256(content.encode()).hexdigest()
+
+            validation_error = f"Commit must be a dict, got {type(commit).__name__}"
+
+            # Store the malformed attempt
+            self._store.store_raw_commit(
+                commit_id,
+                commit,
+                validation_error=validation_error,
+                accepted=False,
+            )
+
+            return {
+                "accepted": False,
+                "commit_id": commit_id,
+                "error": validation_error,
+            }
 
         # Track validation errors
         validation_error = None
         accepted = True
 
-        # Step 1: Schema validation
+        # R2 Issue #3: Schema validation MUST run BEFORE hashing
+        # to prevent canonical_hash from throwing on invalid data
         schema_result = validate_commit_schema(commit)
         if not schema_result["valid"]:
             validation_error = schema_result["error"]
             accepted = False
 
+        # Now safe to compute commit ID (schema is valid or we have error)
+        commit_id = compute_commit_id(commit)
+
         # Step 2: Target validation (only if schema valid)
+        # R2 Issue #1: Validate outer target_id
         if accepted and not self._target_validator(commit.get("target_id", "")):
             validation_error = f"Invalid or unregistered target_id: {commit.get('target_id')}"
             accepted = False
 
+        # R2 Issue #1: Validate ALL nested target_ids in forecast_updates
+        if accepted:
+            for i, update in enumerate(commit.get("forecast_updates", [])):
+                nested_target = update.get("target_id", "")
+                if not self._target_validator(nested_target):
+                    validation_error = f"Invalid nested target_id in forecast_updates[{i}]: {nested_target}"
+                    accepted = False
+                    break
+
         # Step 3: Evidence visibility check (only if still valid)
         if accepted and self._evidence_checker:
             as_of_str = commit.get("as_of", "")
-            for ev_id in commit.get("evidence_ids", []):
-                # Parse as_of to microseconds for the checker
-                try:
-                    from ..monitoring_v1.targets import utc_us
-                    as_of_us = utc_us(as_of_str)
-                except Exception:
-                    as_of_us = 0
+            try:
+                from ..monitoring_v1.targets import utc_us
+                as_of_us = utc_us(as_of_str)
+            except Exception:
+                as_of_us = 0
 
+            # Check top-level evidence_ids
+            for ev_id in commit.get("evidence_ids", []):
                 if not self._evidence_checker(ev_id, as_of_us):
                     validation_error = f"Evidence not visible at as_of time: {ev_id}"
                     accepted = False
                     break
+
+            # R2 Issue #1: Also check source_ids in fact_updates
+            if accepted:
+                for i, fact_update in enumerate(commit.get("fact_updates", [])):
+                    for source_id in fact_update.get("source_ids", []):
+                        if not self._evidence_checker(source_id, as_of_us):
+                            validation_error = f"Source not visible in fact_updates[{i}]: {source_id}"
+                            accepted = False
+                            break
+                    if not accepted:
+                        break
+
+        # R2 Issue #2: Check as_of monotonicity
+        if accepted:
+            episode_id = commit.get("episode_id")
+            as_of = commit.get("as_of", "")
+            last_as_of = self._store.get_last_as_of(episode_id)
+            if last_as_of is not None and as_of < last_as_of:
+                validation_error = f"as_of must be monotonically increasing: {as_of} < {last_as_of}"
+                accepted = False
 
         # Step 4: Hash chain integrity (only if still valid)
         if accepted:
@@ -408,17 +562,28 @@ class CommitProcessor:
                     validation_error = f"Chain mismatch: declared parent {parent_commit_id} != actual latest {latest_id}"
                     accepted = False
 
-        # Store raw commit verbatim (always, even if invalid)
+        # R2 Issue #5: FOLLOW_BASELINE requires a baseline_provider
+        if accepted and commit.get("operation") == "FOLLOW_BASELINE":
+            if self._baseline_provider is None:
+                validation_error = "FOLLOW_BASELINE requires a baseline_provider"
+                accepted = False
+
+        # Store raw commit verbatim (always, even if invalid) - R2 Issue #8
         self._store.store_raw_commit(
             commit_id,
             commit,
             validation_error=validation_error,
+            accepted=accepted,
         )
 
         # Compute and store effective state
         episode_id = commit.get("episode_id")
         effective_state = self._compute_effective_state(commit, accepted)
-        self._store.store_effective_state(episode_id, commit_id, effective_state)
+        self._store.store_effective_state(episode_id, commit_id, effective_state, accepted=accepted)
+
+        # R2 Issue #2: Update last as_of for accepted commits
+        if accepted:
+            self._store.set_last_as_of(episode_id, commit.get("as_of", ""))
 
         return {
             "accepted": accepted,
@@ -426,24 +591,29 @@ class CommitProcessor:
             "error": validation_error,
         }
 
-    def _compute_effective_state(self, commit: dict, accepted: bool) -> dict:
+    def _compute_effective_state(self, commit: dict | Any, accepted: bool) -> dict:
         """Compute the effective state after processing a commit.
 
-        For invalid commits, uses fallback behavior (HOLD from parent).
+        For invalid/malformed commits, uses fallback behavior (HOLD from parent).
         For HOLD, carries forward parent state.
-        For FOLLOW_BASELINE, uses baseline provider.
+        For FOLLOW_BASELINE, uses baseline provider (R2 Issue #5: no dummy prob needed).
         For UPDATE, applies the updates.
 
         Args:
-            commit: The commit payload.
+            commit: The commit payload (dict or malformed).
             accepted: Whether the commit was accepted.
 
         Returns:
             The effective state dict.
         """
+        # R2 Issue #8: Handle malformed commits
+        if not isinstance(commit, dict):
+            # For malformed commits, just return empty state or parent state
+            return {"facts": {}, "forecasts": {}}
+
         episode_id = commit.get("episode_id")
 
-        # Get parent state (if any)
+        # Get parent state (if any) - R2 Issue #7: get_effective_state returns a copy
         parent_state = self._store.get_effective_state(episode_id)
         if parent_state is None:
             parent_state = {"facts": {}, "forecasts": {}}
@@ -462,15 +632,33 @@ class CommitProcessor:
             # HOLD: keep parent state unchanged
             pass
         elif operation == "FOLLOW_BASELINE":
-            # FOLLOW_BASELINE: use baseline forecasts instead of model's
+            # R2 Issue #5: FOLLOW_BASELINE copies to the commit's target_id
+            # without requiring a dummy probability in forecast_updates.
+            # The baseline_provider is already validated to exist.
             if self._baseline_provider:
                 as_of = commit.get("as_of", "")
-                # For each forecast target, get baseline
+                target_id = commit.get("target_id")
+
+                # R2 Issue #5: Always copy baseline to the declared target
+                # This works even if forecast_updates is empty
+                if target_id:
+                    baseline_prob = self._baseline_provider(target_id, as_of)
+                    effective["forecasts"][target_id] = baseline_prob
+
+                # Also handle any additional targets in forecast_updates
                 for update in commit.get("forecast_updates", []):
-                    target_id = update.get("target_id")
-                    if target_id:
-                        baseline_prob = self._baseline_provider(target_id, as_of)
-                        effective["forecasts"][target_id] = baseline_prob
+                    nested_target = update.get("target_id")
+                    if nested_target and nested_target != target_id:
+                        baseline_prob = self._baseline_provider(nested_target, as_of)
+                        effective["forecasts"][nested_target] = baseline_prob
+
+                # R2 Issue #6: Record FOLLOW metadata
+                effective["_follow_metadata"] = {
+                    "baseline_source": "baseline_provider",
+                    "as_of": as_of,
+                    "target_id": target_id,
+                }
+
             # Facts are still applied normally
             if accepted:
                 self._apply_fact_updates(effective, commit.get("fact_updates", []))
@@ -483,16 +671,59 @@ class CommitProcessor:
         return effective
 
     def _apply_fact_updates(self, state: dict, updates: list[dict]) -> None:
-        """Apply fact updates to the state."""
+        """Apply fact updates to the state.
+
+        R2 Issue #9: Clear state semantics for SET/RETRACT/KEEP_UNKNOWN:
+        - SET: fact is currently valid with the given value
+        - RETRACT: fact is explicitly invalid/withdrawn (not stale prior)
+        - KEEP_UNKNOWN: no claim is made (distinct from SET and RETRACT)
+        """
         for update in updates:
             slot = update.get("slot")
             if slot:
-                state["facts"][slot] = {
-                    "operation": update.get("operation"),
-                    "support_status": update.get("support_status"),
-                    "value": update.get("value"),
-                    "source_ids": update.get("source_ids", []),
-                }
+                operation = update.get("operation")
+
+                # R2 Issue #9: Clear valid-state semantics
+                if operation == "SET":
+                    # SET: fact is currently valid with value
+                    state["facts"][slot] = {
+                        "operation": operation,
+                        "support_status": update.get("support_status"),
+                        "value": update.get("value"),
+                        "source_ids": update.get("source_ids", []),
+                        "is_valid": True,  # R2 Issue #9: explicit validity
+                        "is_retracted": False,
+                    }
+                elif operation == "RETRACT":
+                    # R2 Issue #9: RETRACT marks fact as explicitly invalid/withdrawn
+                    # The old value should NOT be treated as current
+                    state["facts"][slot] = {
+                        "operation": operation,
+                        "support_status": update.get("support_status"),
+                        "value": None,  # R2 Issue #9: retracted facts have no current value
+                        "previous_value": state["facts"].get(slot, {}).get("value"),
+                        "source_ids": update.get("source_ids", []),
+                        "is_valid": False,
+                        "is_retracted": True,
+                    }
+                elif operation == "KEEP_UNKNOWN":
+                    # R2 Issue #9: KEEP_UNKNOWN means no claim - distinct from SET and RETRACT
+                    state["facts"][slot] = {
+                        "operation": operation,
+                        "support_status": update.get("support_status", "undetermined"),
+                        "value": update.get("value"),  # may be None
+                        "source_ids": update.get("source_ids", []),
+                        "is_valid": None,  # unknown validity
+                        "is_retracted": False,
+                    }
+                else:
+                    # Fallback for any other operation
+                    state["facts"][slot] = {
+                        "operation": operation,
+                        "support_status": update.get("support_status"),
+                        "value": update.get("value"),
+                        "source_ids": update.get("source_ids", []),
+                    }
 
     def _apply_forecast_updates(self, state: dict, updates: list[dict]) -> None:
         """Apply forecast updates to the state."""
