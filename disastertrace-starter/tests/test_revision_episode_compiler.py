@@ -1514,9 +1514,13 @@ class TestRealAfosIntegration:
         with open(REAL_AFOS_PATH, "r") as f:
             stream_text = f.read()
 
-        # The probe file is from October 2025 per DL-0 investigation
+        # DL0_VERDICTS.json records this probe's request URL as
+        # sdate=2024-01-01T00:00Z&edate=2024-01-08T00:00Z, and the bulletin's
+        # own header is "KSFO 072320Z" (day 07, 23:20Z) - so the true issuance
+        # date is 2024-01-07T23:20Z, not any 2025 date. reference_month must
+        # match the real request window since AFOS bulletins carry no year.
         packages, skipped = compile_afos_taf_stream(
-            stream_text, station="KSFO", reference_month="2025-10"
+            stream_text, station="KSFO", reference_month="2024-01"
         )
 
         # Known to have exactly 1 bulletin
@@ -1531,7 +1535,10 @@ class TestRealAfosIntegration:
         assert "native_semantics_sha256" in pkg
         assert pkg["issued_at"] > 0
 
-        # Verify issued_at is sane (should be in October 2025)
+        # Verify issued_at matches the real bulletin header exactly:
+        # KSFO 072320Z within the 2024-01-01..2024-01-08 probe window
+        # => 2024-01-07T23:20:00Z
         issued_dt = datetime.fromtimestamp(pkg["issued_at"] / 1_000_000, tz=timezone.utc)
-        assert issued_dt.year == 2025
-        assert issued_dt.month == 10
+        assert issued_dt == datetime(2024, 1, 7, 23, 20, tzinfo=timezone.utc), (
+            f"Expected 2024-01-07T23:20:00Z, got {issued_dt.isoformat()}"
+        )
