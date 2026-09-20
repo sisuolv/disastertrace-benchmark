@@ -8,9 +8,16 @@ d) Out-of-order arrival (earlier issued_at arriving after later one)
 e) Exact duplicate report arriving twice
 f) Revision-density audit with hand-computed expected counts
 g) End-to-end test feeding compiler output into real ledger.py
+
+T2 additions:
+h) METAR observation parsing from ASOS CSV
+i) METAR outcomes compilation with ternary logic
+j) AFOS raw-text stream splitting and TAF compilation
+k) Integration tests against real downloaded data
 """
 
 import pytest
+from datetime import datetime, timezone
 
 from disastertrace.monitoring_v1.targets import utc_us
 from disastertrace.revision_v1.episode_compiler import (
@@ -961,3 +968,570 @@ class TestAvailabilityBasis:
 
         # collector_first_seen is LATER, so it should be used
         assert ledger[0]["availability_basis"] == "collector_first_seen"
+
+
+# ---------------------------------------------------------------------------
+# T2: METAR observation compilation tests
+# ---------------------------------------------------------------------------
+
+
+from disastertrace.monitoring_v1.providers.aviation import MetarReport
+from disastertrace.monitoring_v1.support import Interval
+from disastertrace.monitoring_v1.targets import TargetSpec
+from disastertrace.revision_v1.episode_compiler import (
+    compile_asos_csv_to_observations,
+    compile_metar_outcomes,
+    split_afos_stream,
+    compile_afos_taf_stream,
+)
+
+
+# Real ASOS CSV header as observed in data_real_v16
+ASOS_CSV_HEADER = "station,valid,lon,lat,elevation,tmpf,dwpf,relh,drct,sknt,p01i,alti,mslp,vsby,gust,skyc1,skyc2,skyc3,skyc4,skyl1,skyl2,skyl3,skyl4,wxcodes,ice_accretion_1hr,ice_accretion_3hr,ice_accretion_6hr,peak_wind_gust,peak_wind_drct,peak_wind_time,feel,metar,snowdepth"
+
+
+def make_asos_row(
+    station: str = "SFO",
+    valid: str = "2025-10-01 00:56",
+    vsby: str = "10.00",
+    metar: str = "KSFO 010056Z 21010KT 10SM FEW018 BKN090 BKN120 20/14 A2999 RMK AO2 SLP156 T02000144 $",
+) -> str:
+    """Generate a synthetic ASOS CSV row matching real format."""
+    return f"{station},{valid},-122.3749,37.6190,5.00,68.00,58.00,70.38,210.00,10.00,0.00,29.99,1015.60,{vsby},M,FEW,BKN,BKN,M,1800.00,9000.00,12000.00,M,M,M,M,M,M,M,M,68.00,{metar},M"
+
+
+class TestCompileAsosCsvToObservations:
+    """Tests for compile_asos_csv_to_observations()."""
+
+    def test_parse_single_valid_row(self):
+        """A single valid ASOS CSV row should parse successfully."""
+        csv_text = ASOS_CSV_HEADER + "\n" + make_asos_row()
+        observations, skipped = compile_asos_csv_to_observations(csv_text, station="KSFO")
+
+        assert len(observations) == 1
+        assert len(skipped) == 0
+        assert observations[0].station == "KSFO"
+        assert observations[0].visibility is not None
+
+    def test_parse_multiple_rows(self):
+        """Multiple valid rows should all be parsed."""
+        rows = [
+            make_asos_row(valid="2025-10-01 00:56", metar="KSFO 010056Z 21010KT 10SM FEW018 BKN090 BKN120 20/14 A2999 RMK AO2 SLP156 T02000144 $"),
+            make_asos_row(valid="2025-10-01 01:56", metar="KSFO 010156Z 22008KT 10SM FEW018 BKN085 BKN120 19/14 A2999 RMK AO2 SLP156 T01940144 $"),
+            make_asos_row(valid="2025-10-01 02:56", metar="KSFO 010256Z 22009KT 10SM FEW018 SCT075 BKN090 19/14 A2999 RMK AO2 SLP157 53001 $"),
+        ]
+        csv_text = ASOS_CSV_HEADER + "\n" + "\n".join(rows)
+        observations, skipped = compile_asos_csv_to_observations(csv_text, station="KSFO")
+
+        assert len(observations) == 3
+        assert len(skipped) == 0
+        # Verify timestamps are in order
+        times = [obs.observation_time for obs in observations]
+        assert times == sorted(times)
+
+    def test_missing_metar_collected_in_skipped(self):
+        """Rows with missing/blank metar should be collected in skipped, not crash."""
+        rows = [
+            make_asos_row(metar="KSFO 010056Z 21010KT 10SM FEW018 BKN090 BKN120 20/14 A2999 RMK AO2 $"),
+            make_asos_row(valid="2025-10-01 01:56", metar=""),  # Blank
+            make_asos_row(valid="2025-10-01 02:56", metar="M"),  # IEM 'M' missing marker
+        ]
+        csv_text = ASOS_CSV_HEADER + "\n" + "\n".join(rows)
+        observations, skipped = compile_asos_csv_to_observations(csv_text, station="KSFO")
+
+        assert len(observations) == 1
+        assert len(skipped) == 2
+        # Skipped entries have diagnostic info
+        assert skipped[0]["row_index"] == 1
+        assert skipped[1]["row_index"] == 2
+        assert "Missing" in skipped[0]["error"]
+
+    def test_unparseable_metar_collected_in_skipped(self):
+        """Rows with invalid metar text should be collected in skipped."""
+        rows = [
+            make_asos_row(metar="KSFO 010056Z 21010KT 10SM FEW018 BKN090 BKN120 20/14 A2999 RMK AO2 $"),
+            # Garbled metar - timestamp mismatch or bad format
+            make_asos_row(valid="2025-10-01 01:56", metar="KSFO BADFORMAT NOTREAL"),
+        ]
+        csv_text = ASOS_CSV_HEADER + "\n" + "\n".join(rows)
+        observations, skipped = compile_asos_csv_to_observations(csv_text, station="KSFO")
+
+        assert len(observations) == 1
+        assert len(skipped) == 1
+        assert skipped[0]["row_index"] == 1
+        assert "error" in skipped[0]
+
+    def test_station_filter_works(self):
+        """Only rows matching the station filter should be included."""
+        rows = [
+            make_asos_row(valid="2025-10-01 00:56", metar="KSFO 010056Z 21010KT 10SM FEW018 BKN090 BKN120 20/14 A2999 RMK AO2 $"),
+            # Note: KJFK METAR has 010156Z = 01:56, so valid must match
+            make_asos_row(valid="2025-10-01 01:56", metar="KJFK 010156Z 25010KT 10SM SCT025 19/12 A3000 RMK AO2 $"),
+        ]
+        csv_text = ASOS_CSV_HEADER + "\n" + "\n".join(rows)
+
+        # Filter for KSFO
+        obs_sfo, skipped_sfo = compile_asos_csv_to_observations(csv_text, station="KSFO")
+        assert len(obs_sfo) == 1
+        assert obs_sfo[0].station == "KSFO"
+
+        # Filter for KJFK
+        obs_jfk, skipped_jfk = compile_asos_csv_to_observations(csv_text, station="KJFK")
+        assert len(obs_jfk) == 1
+        assert obs_jfk[0].station == "KJFK"
+
+    def test_visibility_extracted_correctly(self):
+        """Visibility should be extracted from metar text."""
+        row = make_asos_row(metar="KSFO 010056Z 21010KT 3SM BR FEW018 20/14 A2999 RMK AO2 $")
+        csv_text = ASOS_CSV_HEADER + "\n" + row
+        observations, _ = compile_asos_csv_to_observations(csv_text, station="KSFO")
+
+        assert len(observations) == 1
+        vis = observations[0].visibility
+        assert vis is not None
+        # 3SM = 3 statute miles = 4828.032 meters (approx)
+        assert 4800 < vis.lower < 4900
+
+
+class TestCompileMetarOutcomes:
+    """Tests for compile_metar_outcomes() with full ternary logic coverage."""
+
+    def _make_target(
+        self,
+        target_id: str,
+        station: str,
+        physical_start: int,
+        physical_end: int,
+        event_operator: str,
+        threshold: float,
+    ) -> TargetSpec:
+        """Create a TargetSpec for testing."""
+        return TargetSpec(
+            target_id=target_id,
+            entity=station,
+            variable="visibility",
+            units="m",
+            event_operator=event_operator,
+            threshold=threshold,
+            spatial_support="point",
+            physical_start=physical_start,
+            physical_end=physical_end,
+            report_policy="first_available",
+            outcome_kind="binary",
+            temporal_semantics="future_physical",
+        )
+
+    def _make_metar(
+        self,
+        station: str,
+        observation_time: int,
+        visibility_lower: float,
+        visibility_upper: float | None = None,
+    ) -> MetarReport:
+        """Create a MetarReport with specified visibility interval."""
+        if visibility_upper is None:
+            visibility_upper = visibility_lower
+        return MetarReport(
+            station=station,
+            observation_time=observation_time,
+            report_type="routine",
+            visibility=Interval(visibility_lower, visibility_upper),
+            temperature_c=20.0,
+            dewpoint_c=14.0,
+            weather=(),
+            quality_flags=(),
+            raw=f"{station} 010056Z 21010KT 10SM FEW018 20/14 A2999",
+        )
+
+    def test_no_observations_returns_none(self):
+        """No observations in window -> outcome is None."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + HOUR, "lt", 1000.0)
+
+        outcomes = compile_metar_outcomes([], [target])
+
+        assert outcomes["t1"] is None
+
+    def test_gt_fully_above_threshold_returns_1(self):
+        """Interval fully > threshold with gt operator -> 1."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + HOUR, "gt", 5000.0)
+        obs = self._make_metar("KSFO", t0 + 30 * MINUTE, 10000.0, 10000.0)
+
+        outcomes = compile_metar_outcomes([obs], [target])
+
+        assert outcomes["t1"] == 1
+        assert type(outcomes["t1"]) is int  # Strict int, not bool
+
+    def test_gt_fully_below_threshold_returns_0(self):
+        """Interval fully <= threshold with gt operator -> 0."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + HOUR, "gt", 5000.0)
+        obs = self._make_metar("KSFO", t0 + 30 * MINUTE, 3000.0, 3000.0)
+
+        outcomes = compile_metar_outcomes([obs], [target])
+
+        assert outcomes["t1"] == 0
+        assert type(outcomes["t1"]) is int
+
+    def test_gt_straddling_threshold_returns_none(self):
+        """Interval straddling threshold with gt operator -> None."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + HOUR, "gt", 5000.0)
+        # Interval [4000, 6000] straddles 5000
+        obs = self._make_metar("KSFO", t0 + 30 * MINUTE, 4000.0, 6000.0)
+
+        outcomes = compile_metar_outcomes([obs], [target])
+
+        assert outcomes["t1"] is None
+
+    def test_ge_at_boundary_returns_1(self):
+        """Interval exactly at threshold with ge operator -> 1."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + HOUR, "ge", 5000.0)
+        obs = self._make_metar("KSFO", t0 + 30 * MINUTE, 5000.0, 5000.0)
+
+        outcomes = compile_metar_outcomes([obs], [target])
+
+        assert outcomes["t1"] == 1
+        assert type(outcomes["t1"]) is int
+
+    def test_lt_fully_below_threshold_returns_1(self):
+        """Interval fully < threshold with lt operator -> 1."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + HOUR, "lt", 5000.0)
+        obs = self._make_metar("KSFO", t0 + 30 * MINUTE, 3000.0, 3000.0)
+
+        outcomes = compile_metar_outcomes([obs], [target])
+
+        assert outcomes["t1"] == 1
+
+    def test_lt_fully_above_threshold_returns_0(self):
+        """Interval fully >= threshold with lt operator -> 0."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + HOUR, "lt", 5000.0)
+        obs = self._make_metar("KSFO", t0 + 30 * MINUTE, 10000.0, 10000.0)
+
+        outcomes = compile_metar_outcomes([obs], [target])
+
+        assert outcomes["t1"] == 0
+
+    def test_le_at_boundary_returns_1(self):
+        """Interval exactly at threshold with le operator -> 1."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + HOUR, "le", 5000.0)
+        obs = self._make_metar("KSFO", t0 + 30 * MINUTE, 5000.0, 5000.0)
+
+        outcomes = compile_metar_outcomes([obs], [target])
+
+        assert outcomes["t1"] == 1
+
+    def test_multiple_targets_independent(self):
+        """Multiple targets should be evaluated independently."""
+        t0 = us("2025-10-01T00:00:00Z")
+        targets = [
+            self._make_target("t1", "KSFO", t0, t0 + HOUR, "gt", 5000.0),
+            self._make_target("t2", "KSFO", t0, t0 + HOUR, "lt", 5000.0),
+        ]
+        obs = self._make_metar("KSFO", t0 + 30 * MINUTE, 10000.0, 10000.0)
+
+        outcomes = compile_metar_outcomes([obs], targets)
+
+        assert outcomes["t1"] == 1  # > 5000 is satisfied
+        assert outcomes["t2"] == 0  # < 5000 is not satisfied
+
+    def test_missing_visibility_returns_none(self):
+        """MetarReport with visibility=None -> outcome is None."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + HOUR, "gt", 5000.0)
+        obs = MetarReport(
+            station="KSFO",
+            observation_time=t0 + 30 * MINUTE,
+            report_type="routine",
+            visibility=None,  # Missing visibility
+            temperature_c=20.0,
+            dewpoint_c=14.0,
+            weather=(),
+            quality_flags=("visibility_missing",),
+            raw="KSFO 010056Z 21010KT M FEW018 20/14 A2999",
+        )
+
+        outcomes = compile_metar_outcomes([obs], [target])
+
+        assert outcomes["t1"] is None
+
+    def test_uses_last_observation_in_window(self):
+        """When multiple observations in window, uses the last one."""
+        t0 = us("2025-10-01T00:00:00Z")
+        target = self._make_target("t1", "KSFO", t0, t0 + 2 * HOUR, "gt", 5000.0)
+        # First obs: visibility 10000 (would satisfy gt 5000)
+        obs1 = self._make_metar("KSFO", t0 + 30 * MINUTE, 10000.0, 10000.0)
+        # Second obs (later): visibility 3000 (would NOT satisfy gt 5000)
+        obs2 = self._make_metar("KSFO", t0 + 90 * MINUTE, 3000.0, 3000.0)
+
+        outcomes = compile_metar_outcomes([obs1, obs2], [target])
+
+        # Should use obs2 (later), which has vis 3000, not satisfying gt 5000
+        assert outcomes["t1"] == 0
+
+
+# ---------------------------------------------------------------------------
+# T2: AFOS stream ingestion tests
+# ---------------------------------------------------------------------------
+
+
+class TestSplitAfosStream:
+    """Tests for split_afos_stream()."""
+
+    def test_empty_stream_returns_empty_list(self):
+        """Empty input should return empty list."""
+        assert split_afos_stream("") == []
+        assert split_afos_stream("   ") == []
+
+    def test_single_frame(self):
+        """Single framed bulletin should be extracted."""
+        frame = """\x01
+878
+FTUS46 KMTR 072320
+TAFSFO
+TAF
+KSFO 072320Z 0800/0906 31015G20KT P6SM FEW200
+     FM081000 VRB05KT P6SM FEW200=
+
+\x03"""
+        frames = split_afos_stream(frame)
+
+        assert len(frames) == 1
+        assert "FTUS46 KMTR 072320" in frames[0]
+        assert "KSFO" in frames[0]
+
+    def test_multiple_frames(self):
+        """Multiple framed bulletins should all be extracted."""
+        stream = """\x01
+001
+FTUS46 KMTR 071200
+TAFSFO
+TAF
+KSFO 071200Z 0712/0812 25010KT P6SM SCT020=
+
+\x03\x01
+002
+FTUS46 KMTR 071500
+TAFSFO
+TAF AMD
+KSFO 071500Z 0715/0812 27015KT P6SM FEW020=
+
+\x03"""
+        frames = split_afos_stream(stream)
+
+        assert len(frames) == 2
+        assert "071200Z" in frames[0]
+        assert "071500Z" in frames[1]
+        assert "AMD" in frames[1]
+
+    def test_handles_missing_etx(self):
+        """Frame without ETX should still be captured if it has content."""
+        partial = """\x01
+001
+FTUS46 KMTR 071200
+TAF
+KSFO 071200Z 0712/0812 25010KT P6SM SCT020"""
+        frames = split_afos_stream(partial)
+
+        assert len(frames) == 1
+        assert "KSFO" in frames[0]
+
+
+class TestCompileAfosTafStream:
+    """Tests for compile_afos_taf_stream()."""
+
+    def test_single_taf_bulletin(self):
+        """Single TAF bulletin should compile to one evidence package."""
+        stream = """\x01
+878
+FTUS46 KMTR 072320
+TAFSFO
+TAF
+KSFO 072320Z 0800/0906 31015G20KT P6SM FEW200
+     FM081000 VRB05KT P6SM FEW200
+     FM090000 29009KT P6SM VCSH SCT030 BKN050=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2025-10"
+        )
+
+        assert len(packages) == 1
+        assert len(skipped) == 0
+        assert packages[0]["station"] == "KSFO"
+        assert packages[0]["amendment_kind"] == "original"
+        assert packages[0]["status"] == "active"
+
+    def test_amd_bulletin_detected(self):
+        """AMD bulletin should have amendment_kind='AMD'."""
+        stream = """\x01
+002
+FTUS46 KMTR 071500
+TAFSFO
+TAF AMD
+KSFO 071500Z 0715/0812 27015KT P6SM FEW020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2025-10"
+        )
+
+        assert len(packages) == 1
+        assert packages[0]["amendment_kind"] == "AMD"
+
+    def test_multiple_bulletins_compiled(self):
+        """Multiple bulletins in stream should all be compiled."""
+        stream = """\x01
+001
+FTUS46 KMTR 071200
+TAFSFO
+TAF
+KSFO 071200Z 0712/0812 25010KT P6SM SCT020=
+
+\x03\x01
+002
+FTUS46 KMTR 071500
+TAFSFO
+TAF AMD
+KSFO 071500Z 0715/0812 27015KT P6SM FEW020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2025-10"
+        )
+
+        assert len(packages) == 2
+        assert packages[0]["amendment_kind"] == "original"
+        assert packages[1]["amendment_kind"] == "AMD"
+
+    def test_malformed_frame_in_skipped(self):
+        """Malformed frame should go to skipped, not crash."""
+        stream = """\x01
+001
+FTUS46 KMTR 071200
+TAFSFO
+TAF
+KSFO 071200Z 0712/0812 25010KT P6SM SCT020=
+
+\x03\x01
+GARBAGE FRAME WITHOUT PROPER STRUCTURE
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2025-10"
+        )
+
+        assert len(packages) == 1
+        assert len(skipped) == 1
+        assert "error" in skipped[0]
+
+    def test_empty_stream_returns_empty(self):
+        """Empty stream should return empty lists."""
+        packages, skipped = compile_afos_taf_stream(
+            "", station="KSFO", reference_month="2025-10"
+        )
+
+        assert packages == []
+        assert skipped == []
+
+    def test_issued_at_extracted_from_wmo_header(self):
+        """issued_at should be extracted from WMO header DDHHMM."""
+        stream = """\x01
+001
+FTUS46 KMTR 152345
+TAFSFO
+TAF
+KSFO 152345Z 1600/1706 25010KT P6SM SCT020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2025-10"
+        )
+
+        assert len(packages) == 1
+        # issued_at should correspond to 2025-10-15 23:45Z
+        issued_dt = datetime.fromtimestamp(
+            packages[0]["issued_at"] / 1_000_000, tz=timezone.utc
+        )
+        assert issued_dt.day == 15
+        assert issued_dt.hour == 23
+        assert issued_dt.minute == 45
+
+
+# ---------------------------------------------------------------------------
+# T2: Integration tests against real data files
+# ---------------------------------------------------------------------------
+
+
+import os
+
+REAL_ASOS_PATH = "/mnt/afs/260010168/extreme_weather_benchmark/data_real_v16/asos/KSFO/2025-10/20260920T084508Z_9e9bfff606c8/asos-sfo-202510.body"
+REAL_AFOS_PATH = "/mnt/afs/260010168/extreme_weather_benchmark/data_real_v16/config/20260920T083047Z_99c64d8d2cfe/probe1-afos-retrieve.body"
+
+
+@pytest.mark.skipif(
+    not os.path.exists(REAL_ASOS_PATH),
+    reason=f"Real ASOS data file not found: {REAL_ASOS_PATH}"
+)
+class TestRealAsosIntegration:
+    """Integration tests against real downloaded ASOS data."""
+
+    def test_real_asos_csv_parses_successfully(self):
+        """Real ASOS CSV should parse with many successful observations."""
+        with open(REAL_ASOS_PATH, "r") as f:
+            csv_text = f.read()
+
+        observations, skipped = compile_asos_csv_to_observations(csv_text, station="KSFO")
+
+        # Should have many successful parses
+        assert len(observations) > 100, f"Expected >100 observations, got {len(observations)}"
+        # Should have few skipped (ideally zero or very small)
+        skip_rate = len(skipped) / (len(observations) + len(skipped)) if observations else 1
+        assert skip_rate < 0.1, f"Skip rate too high: {skip_rate:.1%}"
+
+        # All observations should be for KSFO
+        for obs in observations:
+            assert obs.station == "KSFO"
+
+        # Observations should have visibility (most of them)
+        vis_present = sum(1 for obs in observations if obs.visibility is not None)
+        assert vis_present / len(observations) > 0.9, "Most observations should have visibility"
+
+
+@pytest.mark.skipif(
+    not os.path.exists(REAL_AFOS_PATH),
+    reason=f"Real AFOS data file not found: {REAL_AFOS_PATH}"
+)
+class TestRealAfosIntegration:
+    """Integration tests against real downloaded AFOS data."""
+
+    def test_real_afos_stream_parses_successfully(self):
+        """Real AFOS stream should parse to 1 evidence package (known to have 1 bulletin)."""
+        with open(REAL_AFOS_PATH, "r") as f:
+            stream_text = f.read()
+
+        # The probe file is from October 2025 per DL-0 investigation
+        packages, skipped = compile_afos_taf_stream(
+            stream_text, station="KSFO", reference_month="2025-10"
+        )
+
+        # Known to have exactly 1 bulletin
+        assert len(packages) == 1, f"Expected 1 package, got {len(packages)}"
+        assert len(skipped) == 0, f"Unexpected skipped frames: {skipped}"
+
+        # Verify package contents
+        pkg = packages[0]
+        assert pkg["station"] == "KSFO"
+        assert pkg["amendment_kind"] in ("original", "AMD", "COR")
+        assert pkg["status"] in ("active", "nil", "canceled")
+        assert "native_semantics_sha256" in pkg
+        assert pkg["issued_at"] > 0
+
+        # Verify issued_at is sane (should be in October 2025)
+        issued_dt = datetime.fromtimestamp(pkg["issued_at"] / 1_000_000, tz=timezone.utc)
+        assert issued_dt.year == 2025
+        assert issued_dt.month == 10
