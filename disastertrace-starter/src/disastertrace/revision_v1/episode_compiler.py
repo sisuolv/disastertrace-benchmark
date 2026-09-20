@@ -424,8 +424,13 @@ def compile_asos_csv_to_observations(
 
         # Check station filter - the station column in IEM ASOS is typically the
         # 3-letter code (e.g., "SFO"), but the metar text starts with ICAO (e.g., "KSFO")
-        # We check if the metar starts with the requested station code
-        if not raw_metar.strip().startswith(station):
+        # We check if the metar contains the requested station code.
+        # Note: METAR may start with "SPECI " prefix before the station code.
+        raw_stripped = raw_metar.strip()
+        metar_station_text = raw_stripped
+        if metar_station_text.startswith("SPECI "):
+            metar_station_text = metar_station_text[6:]  # Strip "SPECI " prefix
+        if not metar_station_text.startswith(station):
             # Row is for a different station, skip silently (not an error)
             continue
 
@@ -448,11 +453,22 @@ def compile_asos_csv_to_observations(
             continue
 
         # Parse the METAR using aviation.py's parse_metar
+        # Detect SPECI prefix to set correct report_type.
+        # Note: Real archived METAR text commonly omits the SPECI prefix even for
+        # special observations (this is a known IEM archive characteristic), so
+        # report_type on the resulting object should NOT be relied upon by any
+        # downstream "is this the routine/hourly report" logic - that determination
+        # needs a different, timestamp-based method.
         try:
+            raw_stripped = raw_metar.strip()
+            if raw_stripped.startswith("SPECI "):
+                report_type = "special"
+            else:
+                report_type = "routine"
             metar_report = parse_metar(
-                raw=raw_metar.strip(),
+                raw=raw_stripped,
                 observation_time=observation_time_iso,
-                report_type="routine",  # Default to routine; SPECI handled inside parser
+                report_type=report_type,
             )
             observations.append(metar_report)
         except Exception as e:
@@ -675,21 +691,25 @@ def compile_afos_taf_stream(
         try:
             # Parse the frame structure:
             # Line 0: sequence number (e.g., "878")
-            # Line 1: WMO header "TTAAII CCCC DDHHMM" (e.g., "FTUS46 KMTR 072320")
+            # Line 1: WMO header "TTAAII CCCC DDHHMM [BBB]" (e.g., "FTUS46 KMTR 072320" or
+            #         "FTUS46 KMTR 312100 AAA" with amendment suffix)
             # Line 2: PIL (e.g., "TAFSFO")
             # Line 3+: Product body (TAF...) ending with "="
 
             lines = frame.strip().split("\n")
 
-            # Find the WMO header line (pattern: TTAAII CCCC DDHHMM)
+            # Find the WMO header line (pattern: TTAAII CCCC DDHHMM [BBB])
+            # BBB is the optional amendment/correction indicator (AAA, AAB, CCA, etc.)
             wmo_header_line = None
             wmo_line_idx = None
-            wmo_pattern = re.compile(r"^[A-Z]{4}\d{2}\s+[A-Z]{4}\s+(\d{6})$")
+            wmo_bbb = None
+            wmo_pattern = re.compile(r"^[A-Z]{4}\d{2}\s+[A-Z]{4}\s+(\d{6})(?:\s+([A-Z]{3}))?$")
             for i, line in enumerate(lines):
                 match = wmo_pattern.match(line.strip())
                 if match:
                     wmo_header_line = line.strip()
                     wmo_line_idx = i
+                    wmo_bbb = match.group(2)  # None if no BBB suffix
                     break
 
             if wmo_header_line is None:
@@ -698,9 +718,32 @@ def compile_afos_taf_stream(
             # Extract DDHHMM from WMO header for issued_at
             wmo_match = wmo_pattern.match(wmo_header_line)
             ddhhmm = wmo_match.group(1)
+            day = int(ddhhmm[:2])
+            hour = int(ddhhmm[2:4])
+            minute = int(ddhhmm[4:6])
 
-            # Use day_time() to get full datetime
-            issued_dt = day_time(ddhhmm, reference_dt)
+            # Resolve the DDHHMM to a full timestamp within the known reference_month.
+            # We do NOT use day_time() here because its "nearest month" heuristic can
+            # resolve day-31 headers into the wrong month when the reference is mid-month
+            # (e.g., day 31 with reference Jan 15 would incorrectly resolve to Dec 31).
+            # Instead, we construct the datetime directly using the caller-supplied
+            # reference_month, which is known to be the actual calendar month these
+            # bulletins were retrieved for (see sibling receipt .json for evidence:
+            # params_used.sdate/edate confirm the retrieval window).
+            try:
+                issued_dt = datetime(
+                    int(ref_year), int(ref_month), day, hour, minute, tzinfo=timezone.utc
+                )
+            except ValueError:
+                # Day is not valid for this month (e.g., day 31 in a 30-day month,
+                # or day 29+ in February of a non-leap year).
+                skipped.append({
+                    "frame_index": frame_index,
+                    "raw_frame": frame[:200] + ("..." if len(frame) > 200 else ""),
+                    "error": f"wmo_day_outside_reference_month: day {day} not valid in {ref_year}-{ref_month}",
+                })
+                continue
+
             issued_at_us = utc_us(issued_dt.isoformat())
             issued_at_iso = issued_dt.isoformat().replace("+00:00", "Z")
 
@@ -750,6 +793,10 @@ def compile_afos_taf_stream(
                 product_series=product_series,
                 **passthrough,
             )
+            # Add WMO BBB (amendment/correction indicator) to the package.
+            # This is extracted from the WMO header line (e.g., "AAA" for first
+            # amendment, "CCA" for first correction). None if no BBB suffix.
+            package["wmo_bbb"] = wmo_bbb
             evidence_packages.append(package)
 
         except Exception as e:

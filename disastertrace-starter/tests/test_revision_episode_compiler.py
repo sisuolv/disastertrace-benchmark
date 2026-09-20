@@ -1542,3 +1542,363 @@ class TestRealAfosIntegration:
         assert issued_dt == datetime(2024, 1, 7, 23, 20, tzinfo=timezone.utc), (
             f"Expected 2024-01-07T23:20:00Z, got {issued_dt.isoformat()}"
         )
+
+
+# ---------------------------------------------------------------------------
+# T1 measure-prep: Tests for D1 (BBB suffix), D2 (day-31), D3 (SPECI prefix)
+# ---------------------------------------------------------------------------
+
+
+class TestWmoBbbSuffix:
+    """Test case for D1: WMO header BBB amendment suffix support."""
+
+    def test_bbb_aaa_suffix_compiles_successfully(self):
+        """WMO header with AAA suffix should compile and populate wmo_bbb field."""
+        # AAA is the standard first-amendment suffix
+        stream = """\x01
+001
+FTUS46 KMTR 152345 AAA
+TAFSFO
+TAF AMD
+KSFO 152345Z 1600/1706 25010KT P6SM SCT020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2025-10"
+        )
+
+        assert len(packages) == 1
+        assert len(skipped) == 0
+        assert packages[0]["wmo_bbb"] == "AAA"
+        # AAA suffix correlates with AMD amendment kind
+        assert packages[0]["amendment_kind"] == "AMD"
+
+    def test_bbb_cca_suffix_compiles_successfully(self):
+        """WMO header with CCA suffix should compile and populate wmo_bbb field."""
+        # CCA is the standard first-correction suffix
+        stream = """\x01
+001
+FTUS46 KMTR 152345 CCA
+TAFSFO
+TAF COR
+KSFO 152345Z 1600/1706 25010KT P6SM SCT020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2025-10"
+        )
+
+        assert len(packages) == 1
+        assert len(skipped) == 0
+        assert packages[0]["wmo_bbb"] == "CCA"
+        # CCA suffix correlates with COR amendment kind
+        assert packages[0]["amendment_kind"] == "COR"
+
+    def test_no_bbb_suffix_has_none(self):
+        """WMO header without BBB suffix should have wmo_bbb=None."""
+        stream = """\x01
+001
+FTUS46 KMTR 152345
+TAFSFO
+TAF
+KSFO 152345Z 1600/1706 25010KT P6SM SCT020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2025-10"
+        )
+
+        assert len(packages) == 1
+        assert len(skipped) == 0
+        assert packages[0]["wmo_bbb"] is None
+        assert packages[0]["amendment_kind"] == "original"
+
+
+class TestDay31Resolution:
+    """Test case for D2: Day-31 WMO header date resolution within reference_month."""
+
+    def test_day31_resolves_to_reference_month_january(self):
+        """Day-31 header with reference_month=2023-01 should resolve to 2023-01-31.
+
+        Regression test: The old day_time() helper with mid-month reference would
+        incorrectly resolve to 2022-12-31 because Dec 31 is closer to Jan 15 than
+        Jan 31 (15 days vs 16 days). The fix constructs the datetime directly
+        within the known reference month.
+        """
+        # Day 31 at 21:00Z
+        stream = """\x01
+001
+FTUS46 KMTR 312100
+TAFSFO
+TAF
+KSFO 312100Z 0100/0206 25010KT P6SM SCT020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2023-01"
+        )
+
+        assert len(packages) == 1
+        assert len(skipped) == 0
+
+        issued_dt = datetime.fromtimestamp(
+            packages[0]["issued_at"] / 1_000_000, tz=timezone.utc
+        )
+        # Should be January 31, 2023, NOT December 31, 2022
+        assert issued_dt.year == 2023, f"Wrong year: {issued_dt.year}"
+        assert issued_dt.month == 1, f"Wrong month: {issued_dt.month}"
+        assert issued_dt.day == 31, f"Wrong day: {issued_dt.day}"
+
+    def test_day31_invalid_in_april_goes_to_skipped(self):
+        """Day-31 header with reference_month=2023-04 should be skipped (April has 30 days).
+
+        The fix routes frames with invalid days to skipped with a descriptive
+        error class 'wmo_day_outside_reference_month'.
+        """
+        # Day 31 - invalid for April
+        stream = """\x01
+001
+FTUS46 KMTR 312100
+TAFSFO
+TAF
+KSFO 312100Z 0100/0206 25010KT P6SM SCT020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2023-04"
+        )
+
+        assert len(packages) == 0
+        assert len(skipped) == 1
+        assert "wmo_day_outside_reference_month" in skipped[0]["error"]
+
+    def test_day29_invalid_in_non_leap_february(self):
+        """Day-29 header with reference_month=2023-02 should be skipped (non-leap year).
+
+        2023 is not a leap year, so February only has 28 days.
+        """
+        stream = """\x01
+001
+FTUS46 KMTR 291200
+TAFSFO
+TAF
+KSFO 291200Z 0100/0206 25010KT P6SM SCT020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2023-02"
+        )
+
+        assert len(packages) == 0
+        assert len(skipped) == 1
+        assert "wmo_day_outside_reference_month" in skipped[0]["error"]
+
+    def test_day29_valid_in_leap_february(self):
+        """Day-29 header with reference_month=2024-02 should compile (leap year)."""
+        stream = """\x01
+001
+FTUS46 KMTR 291200
+TAFSFO
+TAF
+KSFO 291200Z 2912/0112 25010KT P6SM SCT020=
+
+\x03"""
+        packages, skipped = compile_afos_taf_stream(
+            stream, station="KSFO", reference_month="2024-02"
+        )
+
+        assert len(packages) == 1
+        assert len(skipped) == 0
+        issued_dt = datetime.fromtimestamp(
+            packages[0]["issued_at"] / 1_000_000, tz=timezone.utc
+        )
+        assert issued_dt == datetime(2024, 2, 29, 12, 0, tzinfo=timezone.utc)
+
+
+class TestSpeciPrefixDetection:
+    """Test case for D3: SPECI prefix detection in METAR parsing."""
+
+    def test_speci_prefix_parsed_with_special_report_type(self):
+        """METAR row with literal 'SPECI ' prefix should parse with report_type='special'.
+
+        Previously this would raise ValueError because report_type='routine' was
+        hardcoded, conflicting with the SPECI prefix in the raw text.
+        """
+        # Note the SPECI prefix in the metar column
+        row = make_asos_row(
+            valid="2025-10-01 01:56",
+            metar="SPECI KSFO 010156Z 21010KT 1/2SM FG VV002 18/17 A2999 RMK AO2 $"
+        )
+        csv_text = ASOS_CSV_HEADER + "\n" + row
+        observations, skipped = compile_asos_csv_to_observations(csv_text, station="KSFO")
+
+        # Should parse successfully, not go to skipped
+        assert len(observations) == 1
+        assert len(skipped) == 0
+        assert observations[0].report_type == "special"
+        assert observations[0].station == "KSFO"
+
+    def test_routine_metar_has_routine_report_type(self):
+        """Normal METAR (no SPECI prefix) should have report_type='routine'."""
+        row = make_asos_row(
+            valid="2025-10-01 00:56",
+            metar="KSFO 010056Z 21010KT 10SM FEW018 BKN090 BKN120 20/14 A2999 RMK AO2 $"
+        )
+        csv_text = ASOS_CSV_HEADER + "\n" + row
+        observations, skipped = compile_asos_csv_to_observations(csv_text, station="KSFO")
+
+        assert len(observations) == 1
+        assert observations[0].report_type == "routine"
+
+
+# ---------------------------------------------------------------------------
+# T1 measure-prep: Real-data integration test against KSFO_202301 TAF data
+# ---------------------------------------------------------------------------
+
+
+REAL_TAF_DL3R_PATH = "/mnt/afs/260010168/extreme_weather_benchmark/data_real_v16/taf/20260920T134949Z_1bbe63aedc00_dl3rbulk/KSFO_202301.body"
+REAL_TAF_DL3R_RECEIPT = "/mnt/afs/260010168/extreme_weather_benchmark/data_real_v16/taf/20260920T134949Z_1bbe63aedc00_dl3rbulk/KSFO_202301.json"
+
+
+@pytest.mark.skipif(
+    not os.path.exists(REAL_TAF_DL3R_PATH),
+    reason=f"Real TAF data file not found: {REAL_TAF_DL3R_PATH}"
+)
+class TestRealDl3rKsfoIntegration:
+    """Integration tests against real downloaded KSFO 2023-01 TAF data (DL-3R bulk).
+
+    Real-data-derived constants (run by T1 agent on 2026-09-20, do not edit without re-running):
+    - frame_count_etx from receipt: 303
+    - frames with BBB suffix: 179 (discovered via grep)
+    - reference_month for this file: 2023-01 (from receipt params_used.sdate)
+    """
+
+    def test_frame_count_matches_receipt(self):
+        """Total frame count should match the sibling receipt's frame_count_etx field."""
+        import json
+
+        with open(REAL_TAF_DL3R_RECEIPT, "r") as f:
+            receipt = json.load(f)
+
+        with open(REAL_TAF_DL3R_PATH, "r") as f:
+            stream_text = f.read()
+
+        frames = split_afos_stream(stream_text)
+        expected_count = receipt["frame_count_etx"]
+
+        assert len(frames) == expected_count, (
+            f"Frame count mismatch: got {len(frames)}, expected {expected_count}"
+        )
+
+    def test_all_frames_compile_zero_skipped(self):
+        """All frames should compile successfully with zero frames in skipped.
+
+        This validates the D1 fix (BBB suffix) and D2 fix (day-31 resolution)
+        against real production data.
+        """
+        with open(REAL_TAF_DL3R_PATH, "r") as f:
+            stream_text = f.read()
+
+        packages, skipped = compile_afos_taf_stream(
+            stream_text, station="KSFO", reference_month="2023-01"
+        )
+
+        # Real-data-derived constant: 303 frames total, zero skipped
+        assert len(skipped) == 0, f"Unexpected skipped frames: {skipped[:3]}"
+        assert len(packages) == 303, f"Expected 303 packages, got {len(packages)}"
+
+    def test_amendment_kind_distribution(self):
+        """Verify the amendment/correction kind distribution matches real data.
+
+        Real-data-derived constants (observed from KSFO 2023-01 on 2026-09-20):
+        - original: 124 (frames without BBB suffix)
+        - AMD: 171 (frames with BBB suffix starting with 'AA')
+        - COR: 8 (frames with BBB suffix starting with 'CC')
+        Total: 303 = 124 + 171 + 8
+        """
+        with open(REAL_TAF_DL3R_PATH, "r") as f:
+            stream_text = f.read()
+
+        packages, _ = compile_afos_taf_stream(
+            stream_text, station="KSFO", reference_month="2023-01"
+        )
+
+        kind_counts = {}
+        for pkg in packages:
+            k = pkg["amendment_kind"]
+            kind_counts[k] = kind_counts.get(k, 0) + 1
+
+        # Real-data-derived constants
+        assert kind_counts.get("original", 0) == 124, f"original count: {kind_counts}"
+        assert kind_counts.get("AMD", 0) == 171, f"AMD count: {kind_counts}"
+        assert kind_counts.get("COR", 0) == 8, f"COR count: {kind_counts}"
+
+    def test_all_dates_within_reference_month(self):
+        """All resolved issued_at dates should fall within 2023-01.
+
+        This specifically validates the D2 fix: no dates should incorrectly
+        resolve to December 2022 due to the old day_time() nearest-month bug.
+        """
+        with open(REAL_TAF_DL3R_PATH, "r") as f:
+            stream_text = f.read()
+
+        packages, _ = compile_afos_taf_stream(
+            stream_text, station="KSFO", reference_month="2023-01"
+        )
+
+        for pkg in packages:
+            issued_dt = datetime.fromtimestamp(
+                pkg["issued_at"] / 1_000_000, tz=timezone.utc
+            )
+            assert issued_dt.year == 2023, f"Wrong year: {issued_dt}"
+            assert issued_dt.month == 1, f"Wrong month: {issued_dt}"
+
+    def test_wmo_bbb_distribution(self):
+        """Verify wmo_bbb field distribution matches BBB suffix counts from real data.
+
+        Real-data-derived constants (discovered via grep):
+        - Frames with BBB suffix: 179
+        - Frames without BBB suffix: 124 (303 - 179)
+        """
+        with open(REAL_TAF_DL3R_PATH, "r") as f:
+            stream_text = f.read()
+
+        packages, _ = compile_afos_taf_stream(
+            stream_text, station="KSFO", reference_month="2023-01"
+        )
+
+        with_bbb = sum(1 for pkg in packages if pkg.get("wmo_bbb") is not None)
+        without_bbb = sum(1 for pkg in packages if pkg.get("wmo_bbb") is None)
+
+        # Real-data-derived constants
+        assert with_bbb == 179, f"Packages with wmo_bbb: {with_bbb}"
+        assert without_bbb == 124, f"Packages without wmo_bbb: {without_bbb}"
+
+    def test_duplicate_source_id_count(self):
+        """Count duplicate source_ids in the real data (if any).
+
+        source_id is auto-generated as station-issued_at-hash_prefix, so
+        duplicates would indicate multiple TAFs with identical issuance time
+        and semantic content (true duplicates in the archive).
+
+        Real-data-derived constant (observed from KSFO 2023-01 on 2026-09-20):
+        1 duplicate source_id found - two TAFs with identical issuance timestamp
+        and semantic hash: 'KSFO-1673880900000000-8cdfa38768c2' (appears twice).
+        This represents a legitimate archive duplicate (same bulletin recorded
+        twice), not a parsing error.
+        """
+        with open(REAL_TAF_DL3R_PATH, "r") as f:
+            stream_text = f.read()
+
+        packages, _ = compile_afos_taf_stream(
+            stream_text, station="KSFO", reference_month="2023-01"
+        )
+
+        source_ids = [pkg["source_id"] for pkg in packages]
+        unique_count = len(set(source_ids))
+        duplicate_count = len(source_ids) - unique_count
+
+        # Real-data-derived constant: 1 exact duplicate in this file
+        assert duplicate_count == 1, (
+            f"Expected 1 duplicate source_id, found {duplicate_count}"
+        )
