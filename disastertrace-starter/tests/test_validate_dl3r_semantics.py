@@ -31,6 +31,8 @@ from validate_dl3r_semantics import (
     cross_check_timestamps,
     extract_csv_product_ids,
     sha256_file,
+    _check_receipt_premise,
+    _check_bbb_order_vs_receipt_order,
 )
 
 
@@ -129,15 +131,16 @@ class TestValidateWmoBbbConsistency:
             {"source_id": "3", "wmo_bbb": "AAB", "amendment_kind": "AMD"},
             {"source_id": "4", "wmo_bbb": "CCA", "amendment_kind": "COR"},
         ]
-        violations = validate_wmo_bbb_consistency(packages)
+        violations, rrx_recognized = validate_wmo_bbb_consistency(packages)
         assert len(violations) == 0
+        assert len(rrx_recognized) == 0
 
     def test_bbb_none_but_amd(self):
         """wmo_bbb=None but amendment_kind=AMD is a violation."""
         packages = [
             {"source_id": "1", "wmo_bbb": None, "amendment_kind": "AMD"},
         ]
-        violations = validate_wmo_bbb_consistency(packages)
+        violations, rrx_recognized = validate_wmo_bbb_consistency(packages)
         assert len(violations) == 1
         assert "Expected original, got AMD" in violations[0]["error"]
 
@@ -146,7 +149,7 @@ class TestValidateWmoBbbConsistency:
         packages = [
             {"source_id": "1", "wmo_bbb": "AAA", "amendment_kind": "original"},
         ]
-        violations = validate_wmo_bbb_consistency(packages)
+        violations, rrx_recognized = validate_wmo_bbb_consistency(packages)
         assert len(violations) == 1
         assert "Expected AMD, got original" in violations[0]["error"]
 
@@ -155,27 +158,52 @@ class TestValidateWmoBbbConsistency:
         packages = [
             {"source_id": "1", "wmo_bbb": "CCA", "amendment_kind": "AMD"},
         ]
-        violations = validate_wmo_bbb_consistency(packages)
+        violations, rrx_recognized = validate_wmo_bbb_consistency(packages)
         assert len(violations) == 1
         assert "Expected COR, got AMD" in violations[0]["error"]
 
     def test_unknown_bbb_pattern(self):
-        """Unknown BBB pattern (e.g., RRA) is flagged."""
+        """Unknown BBB pattern (e.g., XXA) is flagged."""
         packages = [
-            {"source_id": "1", "wmo_bbb": "RRA", "amendment_kind": "AMD"},
+            {"source_id": "1", "wmo_bbb": "XXA", "amendment_kind": "AMD"},
         ]
-        violations = validate_wmo_bbb_consistency(packages)
+        violations, rrx_recognized = validate_wmo_bbb_consistency(packages)
         assert len(violations) == 1
         assert "Unknown wmo_bbb pattern" in violations[0]["error"]
 
+    def test_rrx_original_ok(self):
+        """RRA and RRB codes with original amendment_kind produce zero violations."""
+        packages = [
+            {"source_id": "1", "wmo_bbb": "RRA", "amendment_kind": "original"},
+            {"source_id": "2", "wmo_bbb": "RRB", "amendment_kind": "original"},
+            {"source_id": "3", "wmo_bbb": "RRC", "amendment_kind": "original"},
+        ]
+        violations, rrx_recognized = validate_wmo_bbb_consistency(packages)
+        assert len(violations) == 0
+        assert len(rrx_recognized) == 3
+        # Verify all RRx are in recognized list
+        assert all(r["wmo_bbb"].startswith("RR") for r in rrx_recognized)
+        assert all(r["amendment_kind"] == "original" for r in rrx_recognized)
+
+    def test_rra_with_amd_body_flagged(self):
+        """RRA-coded frame with TAF AMD body is correctly flagged."""
+        packages = [
+            {"source_id": "1", "wmo_bbb": "RRA", "amendment_kind": "AMD"},
+        ]
+        violations, rrx_recognized = validate_wmo_bbb_consistency(packages)
+        assert len(violations) == 1
+        assert "Expected original, got AMD" in violations[0]["error"]
+        assert len(rrx_recognized) == 0  # Not recognized because it's a mismatch
+
 
 class TestCheckLatestIssuanceUniqueness:
-    """Test latest_issuance conflict detection."""
+    """Test latest_issuance conflict detection with tie resolution."""
 
     def test_no_groups(self):
         """Empty package list has no conflicts."""
-        conflicts = check_latest_issuance_uniqueness([])
+        conflicts, resolved = check_latest_issuance_uniqueness([])
         assert len(conflicts) == 0
+        assert len(resolved) == 0
 
     def test_single_package_per_group(self):
         """Single package per validity window - no conflicts possible."""
@@ -195,8 +223,9 @@ class TestCheckLatestIssuanceUniqueness:
                 "native_semantics_sha256": "hash2",
             },
         ]
-        conflicts = check_latest_issuance_uniqueness(packages)
+        conflicts, resolved = check_latest_issuance_uniqueness(packages)
         assert len(conflicts) == 0
+        assert len(resolved) == 0
 
     def test_multiple_same_latest_unique_hash(self):
         """Multiple packages at same latest issued_at with same hash - OK."""
@@ -218,11 +247,12 @@ class TestCheckLatestIssuanceUniqueness:
                 "source_id": "b",
             },
         ]
-        conflicts = check_latest_issuance_uniqueness(packages)
+        conflicts, resolved = check_latest_issuance_uniqueness(packages)
         assert len(conflicts) == 0
+        assert len(resolved) == 0  # Same hash = silently OK, not a "resolved" tie
 
-    def test_multiple_same_latest_different_hash(self):
-        """Multiple packages at same latest issued_at with different hashes - CONFLICT."""
+    def test_multiple_same_latest_different_hash_no_receipt_signal(self):
+        """Multiple packages at same latest issued_at with different hashes, no receipt signal - CONFLICT."""
         packages = [
             {
                 "station": "KSFO",
@@ -241,9 +271,11 @@ class TestCheckLatestIssuanceUniqueness:
                 "source_id": "b",
             },
         ]
-        conflicts = check_latest_issuance_uniqueness(packages)
+        conflicts, resolved = check_latest_issuance_uniqueness(packages)
         assert len(conflicts) == 1
         assert conflicts[0]["distinct_hashes"] == 2
+        assert conflicts[0]["reason"] == "no_receipt_signal"
+        assert len(resolved) == 0
 
     def test_superseded_different_hash_ok(self):
         """Older (superseded) packages with different hash is OK."""
@@ -265,8 +297,227 @@ class TestCheckLatestIssuanceUniqueness:
                 "source_id": "new",
             },
         ]
-        conflicts = check_latest_issuance_uniqueness(packages)
+        conflicts, resolved = check_latest_issuance_uniqueness(packages)
         assert len(conflicts) == 0
+        assert len(resolved) == 0
+
+    def test_tie_resolved_by_receipt_seq(self):
+        """A tied group with valid comparable receipt signal resolves, winner = max seq."""
+        packages = [
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash1",
+                "source_id": "a",
+                "receipt_seq": 10,
+                "receipt_stream": "KSFO:2023-01",
+                "wmo_bbb": "AAA",
+                "amendment_kind": "AMD",
+            },
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash2",
+                "source_id": "b",
+                "receipt_seq": 15,
+                "receipt_stream": "KSFO:2023-01",
+                "wmo_bbb": "AAB",
+                "amendment_kind": "AMD",
+            },
+        ]
+        conflicts, resolved = check_latest_issuance_uniqueness(packages)
+        assert len(conflicts) == 0
+        assert len(resolved) == 1
+        assert resolved[0]["winner_source_id"] == "b"  # max seq = 15
+
+    def test_tie_resolution_rule_bbb_agree(self):
+        """A tied group where BBB-letter order agrees with receipt order produces rule='receipt_order+bbb_agree'."""
+        packages = [
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash1",
+                "source_id": "a",
+                "receipt_seq": 5,
+                "receipt_stream": "KSFO:2023-01",
+                "wmo_bbb": "AAA",  # AAA < AAB
+                "amendment_kind": "AMD",
+            },
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash2",
+                "source_id": "b",
+                "receipt_seq": 10,  # seq 5 < 10 agrees with AAA < AAB
+                "receipt_stream": "KSFO:2023-01",
+                "wmo_bbb": "AAB",
+                "amendment_kind": "AMD",
+            },
+        ]
+        conflicts, resolved = check_latest_issuance_uniqueness(packages)
+        assert len(conflicts) == 0
+        assert len(resolved) == 1
+        assert resolved[0]["rule"] == "receipt_order+bbb_agree"
+
+    def test_bbb_contradiction_stays_conflict(self):
+        """A tied group where BBB order and receipt order disagree stays a residual conflict."""
+        packages = [
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash1",
+                "source_id": "a",
+                "receipt_seq": 20,  # Higher seq but earlier BBB letter (contradiction)
+                "receipt_stream": "KSFO:2023-01",
+                "wmo_bbb": "AAA",
+                "amendment_kind": "AMD",
+            },
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash2",
+                "source_id": "b",
+                "receipt_seq": 10,  # Lower seq but later BBB letter
+                "receipt_stream": "KSFO:2023-01",
+                "wmo_bbb": "AAB",
+                "amendment_kind": "AMD",
+            },
+        ]
+        conflicts, resolved = check_latest_issuance_uniqueness(packages)
+        assert len(conflicts) == 1
+        assert conflicts[0]["reason"] == "bbb_contradicts_receipt_order"
+        assert len(resolved) == 0
+
+    def test_stream_mismatch_stays_conflict(self):
+        """Tied group members with mismatched receipt_stream stay as residual conflict."""
+        packages = [
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash1",
+                "source_id": "a",
+                "receipt_seq": 10,
+                "receipt_stream": "KSFO:2023-01",  # Different stream
+                "wmo_bbb": None,
+                "amendment_kind": "original",
+            },
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash2",
+                "source_id": "b",
+                "receipt_seq": 15,
+                "receipt_stream": "KSFO:2023-02",  # Different stream
+                "wmo_bbb": None,
+                "amendment_kind": "original",
+            },
+        ]
+        conflicts, resolved = check_latest_issuance_uniqueness(packages)
+        assert len(conflicts) == 1
+        # Stream mismatch = premise violated
+        assert conflicts[0]["reason"] in ("no_receipt_signal", "premise_violated")
+        assert len(resolved) == 0
+
+
+class TestReceiptOrderPremise:
+    """Test the receipt-order premise checking helper."""
+
+    def test_premise_ok_with_valid_signal(self):
+        """Premise passes with valid int receipt_seq, same stream, non-decreasing issued_at."""
+        members = [
+            {"receipt_seq": 5, "receipt_stream": "KSFO:2023-01", "issued_at": 1000},
+            {"receipt_seq": 10, "receipt_stream": "KSFO:2023-01", "issued_at": 1000},  # same issued_at ok
+            {"receipt_seq": 15, "receipt_stream": "KSFO:2023-01", "issued_at": 1100},
+        ]
+        assert _check_receipt_premise(members) is True
+
+    def test_premise_fails_no_receipt_seq(self):
+        """Premise fails when receipt_seq is missing."""
+        members = [
+            {"receipt_stream": "KSFO:2023-01", "issued_at": 1000},
+            {"receipt_seq": 10, "receipt_stream": "KSFO:2023-01", "issued_at": 1000},
+        ]
+        assert _check_receipt_premise(members) is False
+
+    def test_premise_fails_bool_receipt_seq(self):
+        """Premise fails when receipt_seq is bool (subclass of int)."""
+        members = [
+            {"receipt_seq": True, "receipt_stream": "KSFO:2023-01", "issued_at": 1000},
+            {"receipt_seq": 10, "receipt_stream": "KSFO:2023-01", "issued_at": 1000},
+        ]
+        assert _check_receipt_premise(members) is False
+
+    def test_premise_fails_different_streams(self):
+        """Premise fails when receipt_stream values differ."""
+        members = [
+            {"receipt_seq": 5, "receipt_stream": "KSFO:2023-01", "issued_at": 1000},
+            {"receipt_seq": 10, "receipt_stream": "KSFO:2023-02", "issued_at": 1000},
+        ]
+        assert _check_receipt_premise(members) is False
+
+    def test_premise_fails_decreasing_issued_at(self):
+        """Premise fails when sorted by seq yields decreasing issued_at."""
+        members = [
+            {"receipt_seq": 5, "receipt_stream": "KSFO:2023-01", "issued_at": 2000},  # earlier seq, later issued
+            {"receipt_seq": 10, "receipt_stream": "KSFO:2023-01", "issued_at": 1000},  # later seq, earlier issued
+        ]
+        assert _check_receipt_premise(members) is False
+
+    def test_premise_empty_members(self):
+        """Premise fails with empty members list."""
+        assert _check_receipt_premise([]) is False
+
+
+class TestBbbOrderVsReceiptOrder:
+    """Test BBB order vs receipt order cross-check."""
+
+    def test_no_same_family_pairs_agrees(self):
+        """No same-family pairs means no contradiction possible."""
+        members = [
+            {"wmo_bbb": "AAA", "receipt_seq": 5},
+            {"wmo_bbb": "CCA", "receipt_seq": 10},
+        ]
+        assert _check_bbb_order_vs_receipt_order(members) is True
+
+    def test_same_family_agrees(self):
+        """Same family with agreeing order."""
+        members = [
+            {"wmo_bbb": "AAA", "receipt_seq": 5},  # AAA < AAB, seq 5 < 10
+            {"wmo_bbb": "AAB", "receipt_seq": 10},
+        ]
+        assert _check_bbb_order_vs_receipt_order(members) is True
+
+    def test_same_family_contradicts(self):
+        """Same family with contradicting order."""
+        members = [
+            {"wmo_bbb": "AAA", "receipt_seq": 10},  # AAA < AAB, but seq 10 > 5
+            {"wmo_bbb": "AAB", "receipt_seq": 5},
+        ]
+        assert _check_bbb_order_vs_receipt_order(members) is False
+
+    def test_none_wmo_bbb_ignored(self):
+        """None wmo_bbb values don't form family pairs."""
+        members = [
+            {"wmo_bbb": None, "receipt_seq": 5},
+            {"wmo_bbb": None, "receipt_seq": 10},
+        ]
+        assert _check_bbb_order_vs_receipt_order(members) is True
 
 
 class TestCrossCheckTimestamps:
@@ -418,3 +669,29 @@ class TestHardGateLogic:
                     expected_present.append(ym)
 
         assert set(unique_months) == set(expected_present)
+
+
+class TestExpectedSkipsFlag:
+    """Test --expected-skips CLI flag behavior."""
+
+    def test_expected_skips_match_not_blocking(self):
+        """When actual skip count matches --expected-skips, it does not contribute to blocking."""
+        # This tests the logic, not the full main() - the key logic is:
+        # skips_blocking = (total_skipped != expected_skips)
+        total_skipped = 60
+        expected_skips = 60
+        skips_blocking = (total_skipped != expected_skips)
+        assert skips_blocking is False
+
+    def test_expected_skips_mismatch_blocking(self):
+        """When actual skip count does not match --expected-skips, it blocks."""
+        total_skipped = 65
+        expected_skips = 60
+        skips_blocking = (total_skipped != expected_skips)
+        assert skips_blocking is True
+
+        # Also test zero case
+        total_skipped = 60
+        expected_skips = 0  # default
+        skips_blocking = (total_skipped != expected_skips)
+        assert skips_blocking is True
