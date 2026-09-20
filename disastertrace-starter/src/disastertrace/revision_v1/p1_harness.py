@@ -952,3 +952,185 @@ def create_default_baseline_registry() -> BaselineRegistry:
     registry.register(FollowMappingBaseline())
     registry.register(ValuesBankBaseline())
     return registry
+
+
+# ---------------------------------------------------------------------------
+# Trap policy adapter: per-step method callable from trap_policies.py
+# ---------------------------------------------------------------------------
+
+
+class TrapPolicyMethodAdapter:
+    """Adapter that converts a trap policy to a per-step method callable.
+
+    This enables trap policies from trap_policies.py to be used with
+    MethodArmRunner.run_arm() by providing the method signature:
+        method(evidence_entry, arm_type, history, state) -> commit
+
+    The adapter reuses trap_policies.py's exported pieces read-only:
+    - KIND_OPERATION_TABLES for table-driven policies
+    - POLICY_NAMES for validation
+
+    Policy classification (from trap_policies.py):
+    - Table-driven: ORACLE_LEDGER, LATEST_MENTION, DOUBLE_COUNT, IGNORE_AMD
+    - Sequential: STALE_HOLD (UPDATE on first, HOLD thereafter)
+    - Uniform: FOLLOW_ONLY (always FOLLOW_BASELINE), ALWAYS_UPDATE (always UPDATE)
+
+    Note: ORACLE_LEDGER is the reference/correct policy. The genuine trap/failure
+    policies are LATEST_MENTION, DOUBLE_COUNT, IGNORE_AMD, STALE_HOLD, FOLLOW_ONLY,
+    and ALWAYS_UPDATE.
+    """
+
+    # Uniform policies: every kind maps to the same operation
+    _UNIFORM_POLICIES = {
+        "FOLLOW_ONLY": "FOLLOW_BASELINE",
+        "ALWAYS_UPDATE": "UPDATE",
+    }
+
+    def __init__(
+        self,
+        policy_name: str,
+        *,
+        episode_id: str,
+        target_id: str,
+        evidence_values: dict[str, float] | None = None,
+        fact_slot: str = "event_status",
+    ):
+        """Initialize the adapter.
+
+        Args:
+            policy_name: One of the 7 policy names from trap_policies.POLICY_NAMES.
+            episode_id: Episode identifier for emitted commits.
+            target_id: Target identifier for emitted commits.
+            evidence_values: Optional mapping source_id -> probability [0, 1].
+            fact_slot: Fact slot name for fact_updates (default "event_status").
+        """
+        # Import here to avoid circular imports and to use exported constants
+        from .trap_policies import POLICY_NAMES, KIND_OPERATION_TABLES
+        from .belief_commit import SCHEMA_VERSION, compute_commit_id
+
+        if policy_name not in POLICY_NAMES:
+            raise ValueError(f"Unknown policy: {policy_name!r}, expected one of {POLICY_NAMES}")
+
+        self._policy_name = policy_name
+        self._episode_id = episode_id
+        self._target_id = target_id
+        self._evidence_values = evidence_values or {}
+        self._fact_slot = fact_slot
+
+        # Cache imported constants
+        self._kind_operation_tables = KIND_OPERATION_TABLES
+        self._schema_version = SCHEMA_VERSION
+        self._compute_commit_id = compute_commit_id
+
+        # State for sequential policies (STALE_HOLD)
+        self._step_count = 0
+        self._parent_commit_id: str | None = None
+
+    def _us_to_iso(self, value_us: int) -> str:
+        """Convert a microsecond epoch timestamp to an ISO-8601 UTC string."""
+        from datetime import datetime, timezone
+        dt = datetime.fromtimestamp(value_us / 1_000_000, tz=timezone.utc)
+        return dt.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
+
+    def _operation_for(self, kind: str, index: int) -> str:
+        """Determine the operation for a given evidence kind at a given step index.
+
+        Args:
+            kind: The ledger entry's kind (e.g., "new_observation", "amendment_supersedes").
+            index: The 0-based step index (only STALE_HOLD depends on this).
+
+        Returns:
+            One of "UPDATE", "HOLD", or "FOLLOW_BASELINE".
+        """
+        # Uniform policies: same operation for all kinds
+        if self._policy_name in self._UNIFORM_POLICIES:
+            return self._UNIFORM_POLICIES[self._policy_name]
+
+        # Sequential policy: STALE_HOLD
+        if self._policy_name == "STALE_HOLD":
+            return "UPDATE" if index == 0 else "HOLD"
+
+        # Table-driven policies
+        table = self._kind_operation_tables.get(self._policy_name)
+        if table is None:
+            raise ValueError(f"Unknown policy: {self._policy_name}")
+        # Default to UPDATE for unknown kinds (matching trap_policies.py behavior)
+        return table.get(kind, "UPDATE")
+
+    def __call__(
+        self,
+        evidence: dict,
+        arm_type: ArmType,
+        history: list[dict] | None,
+        state: dict | None,
+    ) -> dict:
+        """Process a single evidence entry and return a commit.
+
+        This is the method signature expected by MethodArmRunner.run_arm().
+
+        Args:
+            evidence: The current ledger entry.
+            arm_type: Which arm representation is being used.
+            history: For APPEND arm, the full history (ignored by this adapter).
+            state: For STRUCTURED arm, the current state (ignored by this adapter).
+
+        Returns:
+            A commit dict matching the disastertrace.belief_commit.v14-draft schema.
+        """
+        source_id = evidence["source_id"]
+        kind = evidence.get("kind", "new_observation")
+        as_of_us = evidence.get("available_at", 0)
+        probability = self._evidence_values.get(source_id, 0.5)
+
+        operation = self._operation_for(kind, self._step_count)
+
+        # Build commit matching the exact shape from trap_policies.py
+        if operation == "HOLD":
+            fact_updates: list[dict] = []
+            forecast_updates: list[dict] = []
+        else:
+            if kind == "cancellation":
+                fact_op, support_status, value = "RETRACT", "undetermined", None
+            else:
+                fact_op, support_status, value = "SET", "supported", probability
+            fact_updates = [
+                {
+                    "slot": self._fact_slot,
+                    "operation": fact_op,
+                    "support_status": support_status,
+                    "value": value,
+                    "source_ids": [source_id],
+                }
+            ]
+            forecast_updates = [
+                {"target_id": self._target_id, "event_probability": probability}
+            ]
+
+        commit = {
+            "schema_version": self._schema_version,
+            "episode_id": self._episode_id,
+            "target_id": self._target_id,
+            "parent_commit_id": self._parent_commit_id,
+            "as_of": self._us_to_iso(as_of_us),
+            "operation": operation,
+            "evidence_ids": [source_id],
+            "fact_updates": fact_updates,
+            "forecast_updates": forecast_updates,
+            "next_action": {"kind": "WAIT", "until_or_args": ""},
+        }
+        commit["commit_id"] = self._compute_commit_id(commit)
+
+        # Update state for hash chain and sequential policies
+        self._parent_commit_id = commit["commit_id"]
+        self._step_count += 1
+
+        return commit
+
+    def reset(self) -> None:
+        """Reset the adapter state for a new run.
+
+        Call this before running through a new episode to reset step count
+        and parent_commit_id chain.
+        """
+        self._step_count = 0
+        self._parent_commit_id = None
