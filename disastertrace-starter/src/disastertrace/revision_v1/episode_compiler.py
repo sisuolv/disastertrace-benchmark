@@ -651,11 +651,41 @@ def compile_afos_taf_stream(
 
     Returns:
         Tuple of (evidence_packages, skipped):
-            - evidence_packages: List of dicts ready for compile_ledger
+            - evidence_packages: List of dicts ready for compile_ledger, each with:
+                - source_id: unique identifier (collision-free within this stream)
+                - station, issued_at, valid_start, valid_end, amendment_kind, status
+                - native_semantics_sha256: semantic content hash
+                - wmo_bbb: WMO amendment/correction indicator (or None)
+                - receipt_seq: int position in AFOS archive (higher = newer/later received)
+                - receipt_stream: str "{station}:{reference_month}" for cross-stream guard
             - skipped: List of dicts describing frames that failed to parse, each with:
                 - frame_index: 0-based index of the frame
                 - raw_frame: The raw frame text (truncated for display)
                 - error: Exception message
+
+    Direction contract (receipt_seq):
+        AFOS .body archives are stored newest-first. receipt_seq increases with
+        issuance/receipt time: first frame in file (newest) gets len(frames)-1,
+        last frame (oldest) gets 0. This direction is verified at compile time
+        via the reverse-chronology premise gate.
+
+    Premise gate (reverse-chronology):
+        After compiling all frames, verifies that issued_at is non-increasing in
+        file order (ties allowed). If violated, receipt_seq and receipt_stream
+        are stripped from ALL packages (all-or-nothing fail-safe), and the legacy
+        behavior (no receipt ordering) applies.
+
+    Collision-free source_id:
+        When the premise gate passes (packages carry receipt_seq), source_id
+        collisions are resolved by suffixing: the earliest-received twin (min
+        receipt_seq) keeps the original id; later twins get "-r{seq:06d}" suffix.
+        This guarantees uniqueness within one stream; direct callers of
+        compile_raw_taf_to_evidence are outside this guarantee.
+
+    Hash safety:
+        native_semantics_sha256 is computed from the parsed TafProduct BEFORE
+        receipt_seq/receipt_stream are attached, so these keys cannot affect
+        the frozen hash contract.
 
     Notes:
         - Uses split_afos_stream() to extract individual bulletin frames.
@@ -797,6 +827,15 @@ def compile_afos_taf_stream(
             # This is extracted from the WMO header line (e.g., "AAA" for first
             # amendment, "CCA" for first correction). None if no BBB suffix.
             package["wmo_bbb"] = wmo_bbb
+
+            # Attach receipt ordering keys (D1).
+            # receipt_seq: position in archive, computed from total frame count
+            # (including skipped frames to preserve monotonicity across gaps).
+            # Direction: file's first/newest frame gets highest seq; last/oldest gets 0.
+            # receipt_stream: deterministic cross-stream guard.
+            package["receipt_seq"] = len(frames) - 1 - frame_index
+            package["receipt_stream"] = f"{station}:{reference_month}"
+
             evidence_packages.append(package)
 
         except Exception as e:
@@ -805,5 +844,50 @@ def compile_afos_taf_stream(
                 "raw_frame": frame[:200] + ("..." if len(frame) > 200 else ""),
                 "error": str(e),
             })
+
+    # -------------------------------------------------------------------------
+    # D1 Premise gate: verify reverse-chronology (issued_at non-increasing in file order)
+    # -------------------------------------------------------------------------
+    premise_violated = False
+    if len(evidence_packages) >= 2:
+        # Packages were appended in file order, so we check adjacent pairs
+        for i in range(1, len(evidence_packages)):
+            prev_issued = evidence_packages[i - 1]["issued_at"]
+            curr_issued = evidence_packages[i]["issued_at"]
+            if curr_issued > prev_issued:
+                # Forward-chronological detected - premise violated
+                premise_violated = True
+                break
+
+    if premise_violated:
+        # Strip receipt_seq and receipt_stream from ALL packages (all-or-nothing)
+        for pkg in evidence_packages:
+            pkg.pop("receipt_seq", None)
+            pkg.pop("receipt_stream", None)
+    else:
+        # -------------------------------------------------------------------------
+        # D3 Collision-free source_id: resolve duplicates by receipt_seq
+        # -------------------------------------------------------------------------
+        # Group packages by source_id
+        from collections import defaultdict
+        sid_groups: dict[str, list[dict]] = defaultdict(list)
+        for pkg in evidence_packages:
+            sid_groups[pkg["source_id"]].append(pkg)
+
+        # For collision groups, suffix all but the earliest-received (min receipt_seq)
+        for sid, group in sid_groups.items():
+            if len(group) > 1:
+                # Sort by receipt_seq ascending (earliest-received first)
+                group.sort(key=lambda p: p["receipt_seq"])
+                # First one (min seq) keeps original id; rest get suffixed
+                for pkg in group[1:]:
+                    pkg["source_id"] = f"{sid}-r{pkg['receipt_seq']:06d}"
+
+        # Assert uniqueness after suffixing
+        all_sids = [pkg["source_id"] for pkg in evidence_packages]
+        assert len(set(all_sids)) == len(all_sids), (
+            f"source_id collision persists after suffixing: {len(all_sids)} ids, "
+            f"{len(set(all_sids))} unique"
+        )
 
     return evidence_packages, skipped
