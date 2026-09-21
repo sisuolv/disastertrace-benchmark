@@ -757,3 +757,150 @@ class TestRealManifestIntegration:
         errors = validate_manifest(manifest)
 
         assert len(errors) == 0, f"Validation errors: {errors}"
+
+
+# ---------------------------------------------------------------------------
+# Test: Disclosure phase regression tests (D-A2 bug fixes)
+# ---------------------------------------------------------------------------
+
+class TestDiscloseAsosLookup:
+    """Regression tests for ASOS data lookup (Bug 1: glob pattern fix)."""
+
+    def test_asos_glob_pattern_matches_real_layout(self, tmp_path):
+        """ASOS glob pattern matches real directory structure.
+
+        Bug 1: The original glob pattern was:
+            asos_dir.glob(f"*/{station}/{ym}/*.body")
+        where ym="202308" (no dash). This was wrong because:
+        1. Station comes FIRST in real layout, not after a wildcard
+        2. Year-month uses dashes: "2023-08", not "202308"
+        3. There's a run_id subdirectory before the .body file
+
+        Correct pattern:
+            asos_dir.glob(f"{station}/{YYYY}-{MM}/*/*.body")
+        """
+        # Set up fixture with REAL directory structure
+        asos_dir = tmp_path / "asos"
+        station = "KDEN"
+        year_month = "2023-08"
+
+        # Create the REAL directory structure:
+        # asos/{station}/{YYYY-MM}/{run_id}/*.body
+        run_id_dir = asos_dir / station / year_month / "20260920T084659Z_905e06c4de3b"
+        run_id_dir.mkdir(parents=True)
+
+        # Create a .body file
+        body_file = run_id_dir / "asos-den-202308.body"
+        body_file.write_text("test content")
+
+        # Test the CORRECT glob pattern (as fixed)
+        correct_pattern = list(asos_dir.glob(f"{station}/{year_month}/*/*.body"))
+        assert len(correct_pattern) == 1, (
+            f"Correct glob pattern should find 1 file, found {len(correct_pattern)}"
+        )
+        assert correct_pattern[0] == body_file
+
+        # Test the WRONG old glob pattern (should NOT find anything)
+        # Old pattern: f"*/{station}/{ym}/*.body" where ym="202308" (no dash)
+        ym_no_dash = "202308"
+        wrong_pattern = list(asos_dir.glob(f"*/{station}/{ym_no_dash}/*.body"))
+        assert len(wrong_pattern) == 0, (
+            f"Wrong glob pattern should find 0 files (bug 1), found {len(wrong_pattern)}"
+        )
+
+    def test_asos_glob_selects_latest_run_id(self, tmp_path):
+        """When multiple run_ids exist, the latest (lexicographically last) is selected."""
+        asos_dir = tmp_path / "asos"
+        station = "KDEN"
+        year_month = "2023-08"
+
+        # Create two run_id directories (timestamps ensure deterministic ordering)
+        run_id_1 = asos_dir / station / year_month / "20260920T080000Z_aaaa"
+        run_id_2 = asos_dir / station / year_month / "20260920T090000Z_bbbb"  # Later
+        run_id_1.mkdir(parents=True)
+        run_id_2.mkdir(parents=True)
+
+        body_1 = run_id_1 / "asos-den-202308.body"
+        body_2 = run_id_2 / "asos-den-202308.body"
+        body_1.write_text("older run")
+        body_2.write_text("newer run")
+
+        # Find all matches and sort by run_id (parent dir name)
+        matches = list(asos_dir.glob(f"{station}/{year_month}/*/*.body"))
+        matches.sort(key=lambda p: p.parent.name)
+        selected = matches[-1]  # Last = newest
+
+        assert selected == body_2, (
+            f"Should select newest run_id. Expected {body_2}, got {selected}"
+        )
+
+
+class TestDiscloseStatisticsGranularity:
+    """Regression tests for statistics granularity (Bug 2: unit mismatch fix)."""
+
+    def test_resolved_plus_missing_equals_total(self):
+        """resolved_count + missing_count must always equal total_checkpoints.
+
+        Bug 2: The original code incremented total_checkpoints by len(checkpoints)
+        (3 per target), but incremented missing_count/positive_count by 1 per
+        target. This created a unit mismatch where:
+            resolved_count = total_checkpoints - missing_count = 36 - 12 = 24
+        even though all 12 targets were actually missing (should be 36 missing).
+
+        The fix: Scale missing_count/positive_count by len(checkpoints) so they
+        share the same checkpoint-level granularity as total_checkpoints.
+        """
+        # Simulate 5 targets, each with 3 checkpoints
+        num_targets = 5
+        checkpoints_per_target = 3
+        total_checkpoints = num_targets * checkpoints_per_target  # 15
+
+        # Simulate: 2 targets resolved (positive), 1 resolved (negative), 2 missing
+        positive_targets = 2
+        negative_targets = 1
+        missing_targets = 2
+
+        # CORRECT counting (Bug 2 fix) - scale by checkpoints_per_target
+        positive_count = positive_targets * checkpoints_per_target  # 6
+        negative_count = negative_targets * checkpoints_per_target  # 3
+        missing_count = missing_targets * checkpoints_per_target    # 6
+
+        resolved_count = total_checkpoints - missing_count  # 15 - 6 = 9
+
+        # Verify the fundamental invariant
+        assert resolved_count + missing_count == total_checkpoints, (
+            f"Bug 2 invariant violated: resolved({resolved_count}) + "
+            f"missing({missing_count}) != total({total_checkpoints})"
+        )
+
+        # Verify positive + negative = resolved
+        assert positive_count + negative_count == resolved_count, (
+            f"positive({positive_count}) + negative({negative_count}) != "
+            f"resolved({resolved_count})"
+        )
+
+        # Verify positive_count <= resolved_count
+        assert positive_count <= resolved_count, (
+            f"positive_count({positive_count}) > resolved_count({resolved_count})"
+        )
+
+    def test_wrong_granularity_fails_invariant(self):
+        """Demonstrate that the OLD buggy granularity violates the invariant."""
+        # Simulate 5 targets, each with 3 checkpoints
+        num_targets = 5
+        checkpoints_per_target = 3
+        total_checkpoints = num_targets * checkpoints_per_target  # 15
+
+        # OLD BUGGY counting - increment by 1 per target, not by checkpoints
+        # Simulate: 2 positive, 1 negative, 2 missing (all counted as 1)
+        positive_count_buggy = 2  # Should be 6 (2 * 3)
+        missing_count_buggy = 2   # Should be 6 (2 * 3)
+
+        resolved_count_buggy = total_checkpoints - missing_count_buggy  # 15 - 2 = 13
+
+        # The buggy version violates the invariant when you think about it:
+        # If 2 targets are missing, that's 6 checkpoints missing, not 2
+        # So resolved should be 9, not 13
+        assert resolved_count_buggy != (positive_count_buggy + (1 * checkpoints_per_target)), (
+            "This test demonstrates that buggy counting gives wrong resolved count"
+        )

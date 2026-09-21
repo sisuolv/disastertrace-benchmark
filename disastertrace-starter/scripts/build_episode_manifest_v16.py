@@ -284,6 +284,17 @@ def run_disclose(
     lines.append(f"- Event operator: lt (visibility < threshold)")
     lines.append("")
 
+    # Per-lead eligibility note (D-A2 spec gap)
+    lines.append("## Per-Lead Eligibility Note")
+    lines.append("")
+    lines.append("Per-lead-time eligibility reporting is DEFERRED. The codebase (outcome_wiring.py,")
+    lines.append("episode_compiler.py) does not currently expose a TAF-side-computable notion of")
+    lines.append("checkpoint/lead eligibility distinct from the target's final Y outcome. Adding")
+    lines.append("such a primitive would require designing new semantics beyond the scope of this")
+    lines.append("disclosure-phase bug fix. Per the Missing-Y Contract (PATCH_LOG.md R3), all")
+    lines.append("checkpoints for a target share the same imputed Y - not independent per checkpoint.")
+    lines.append("")
+
     # Target details
     lines.append("## Target Details")
     lines.append("")
@@ -294,9 +305,18 @@ def run_disclose(
     # This is where we actually read outcome data
     asos_dir = Path("/mnt/afs/260010168/extreme_weather_benchmark/data_real_v16/asos")
 
+    # Statistics counters - all at checkpoint granularity (3 per target) for Bug 2 fix
     total_checkpoints = 0
-    positive_count = 0
-    missing_count = 0
+
+    # 5km threshold statistics
+    positive_count_5km = 0
+    negative_count_5km = 0
+    missing_count_5km = 0
+
+    # 1km threshold statistics (Bug 3 fix: add nested 1km threshold)
+    positive_count_1km = 0
+    negative_count_1km = 0
+    missing_count_1km = 0
 
     for target in targets:
         target_id = target.get("target_id")
@@ -307,6 +327,7 @@ def run_disclose(
         validity_end_us = target.get("validity_end_us")
         checkpoints = target.get("checkpoints", [])
         signals = target.get("selection_signals", {})
+        num_checkpoints = len(checkpoints)
 
         lines.append(f"### {target_id}")
         lines.append("")
@@ -325,20 +346,27 @@ def run_disclose(
             lines.append(f"  - T{offset_min:+d}min: {cp.get('time')} (weight={cp.get('weight')})")
         lines.append("")
 
-        total_checkpoints += len(checkpoints)
+        total_checkpoints += num_checkpoints
 
         # Try to load ASOS data for this target to compute outcome statistics
         # Extract year-month from validity_start
         if validity_start:
             dt = datetime.fromisoformat(validity_start.replace("Z", "+00:00"))
-            ym = f"{dt.year:04d}{dt.month:02d}"
+            # Bug 1 fix: Use dashed year-month format and correct directory structure
+            # Real layout: asos/{station}/{YYYY-MM}/{run_id}/*.body
+            ym_dashed = f"{dt.year:04d}-{dt.month:02d}"
 
-            # Look for ASOS data
-            asos_pattern = list(asos_dir.glob(f"*/{station}/{ym}/*.body"))
+            # Bug 1 fix: Correct glob pattern - station first, then dashed year-month,
+            # then run_id directory, then .body files
+            asos_pattern = list(asos_dir.glob(f"{station}/{ym_dashed}/*/*.body"))
+
             if asos_pattern:
+                # If multiple run_ids exist, pick the lexicographically-last (newest)
+                # run_id directory name format is timestamp-based (e.g. 20260920T084659Z_...)
+                asos_pattern.sort(key=lambda p: p.parent.name)
+                asos_body = asos_pattern[-1]  # Last = newest run_id
+
                 try:
-                    # Use first available ASOS file
-                    asos_body = asos_pattern[0]
                     content, provenance = load_asos_with_provenance(str(asos_body))
 
                     # Parse observations
@@ -348,62 +376,130 @@ def run_disclose(
                     routine_obs, _ = select_routine_observations(observations, station=station)
 
                     # Create target for 5km threshold
-                    h15_target = make_h15_visibility_target(
+                    h15_target_5km = make_h15_visibility_target(
                         station=station,
                         slot_start_us=validity_start_us,
                         threshold_m=5000.0,
                     )
 
-                    # Resolve outcome
-                    records = resolve_h15_outcomes(
+                    # Bug 3 fix: Create target for 1km threshold (nested threshold)
+                    h15_target_1km = make_h15_visibility_target(
+                        station=station,
+                        slot_start_us=validity_start_us,
+                        threshold_m=1000.0,
+                    )
+
+                    # Resolve outcomes for both thresholds
+                    records_5km = resolve_h15_outcomes(
                         routine_obs,
-                        [h15_target],
+                        [h15_target_5km],
+                        provenance=provenance,
+                        resolution_version="disclosure_v1",
+                    )
+                    records_1km = resolve_h15_outcomes(
+                        routine_obs,
+                        [h15_target_1km],
                         provenance=provenance,
                         resolution_version="disclosure_v1",
                     )
 
-                    if records:
-                        record = records[0]
+                    # Process 5km outcome
+                    outcome_5km_str = "ERROR"
+                    if records_5km:
+                        record = records_5km[0]
                         value = record.get("value")
                         status = record.get("status")
 
                         if status == "missing" or value is None:
-                            missing_count += 1
-                            lines.append(f"Outcome (5km): MISSING")
+                            # Bug 2 fix: Scale by num_checkpoints to match total_checkpoints granularity
+                            missing_count_5km += num_checkpoints
+                            outcome_5km_str = "MISSING"
                         elif value == 1:
-                            positive_count += 1
-                            lines.append(f"Outcome (5km): POSITIVE (vis < 5km)")
+                            positive_count_5km += num_checkpoints
+                            outcome_5km_str = "POSITIVE (vis < 5km)"
                         else:
-                            lines.append(f"Outcome (5km): NEGATIVE (vis >= 5km)")
+                            negative_count_5km += num_checkpoints
+                            outcome_5km_str = "NEGATIVE (vis >= 5km)"
+
+                    # Process 1km outcome (Bug 3 fix)
+                    outcome_1km_str = "ERROR"
+                    if records_1km:
+                        record = records_1km[0]
+                        value = record.get("value")
+                        status = record.get("status")
+
+                        if status == "missing" or value is None:
+                            missing_count_1km += num_checkpoints
+                            outcome_1km_str = "MISSING"
+                        elif value == 1:
+                            positive_count_1km += num_checkpoints
+                            outcome_1km_str = "POSITIVE (vis < 1km)"
+                        else:
+                            negative_count_1km += num_checkpoints
+                            outcome_1km_str = "NEGATIVE (vis >= 1km)"
+
+                    lines.append(f"Outcome (5km): {outcome_5km_str}")
+                    lines.append(f"Outcome (1km): {outcome_1km_str}")
+
                 except Exception as e:
                     lines.append(f"Outcome: Could not resolve ({e})")
-                    missing_count += 1
+                    missing_count_5km += num_checkpoints
+                    missing_count_1km += num_checkpoints
             else:
-                lines.append(f"Outcome: ASOS data not available for {ym}")
-                missing_count += 1
+                lines.append(f"Outcome: ASOS data not available for {ym_dashed}")
+                missing_count_5km += num_checkpoints
+                missing_count_1km += num_checkpoints
 
         lines.append("")
 
-    # Statistics
+    # Statistics - now with correct granularity (Bug 2 fix)
     lines.append("## Disclosure Statistics")
     lines.append("")
 
-    resolved_count = total_checkpoints - missing_count
-    if resolved_count > 0:
-        positive_rate = positive_count / resolved_count
+    # 5km threshold statistics
+    resolved_count_5km = total_checkpoints - missing_count_5km
+    if resolved_count_5km > 0:
+        positive_rate_5km = positive_count_5km / resolved_count_5km
     else:
-        positive_rate = 0.0
+        positive_rate_5km = 0.0
 
     if total_checkpoints > 0:
-        missingness_rate = missing_count / total_checkpoints
+        missingness_rate_5km = missing_count_5km / total_checkpoints
     else:
-        missingness_rate = 0.0
+        missingness_rate_5km = 0.0
 
+    lines.append("### 5km Threshold Statistics")
+    lines.append("")
     lines.append(f"- Total checkpoints evaluated: {total_checkpoints}")
-    lines.append(f"- Resolved (non-missing): {resolved_count}")
-    lines.append(f"- Missing/undetermined: {missing_count}")
-    lines.append(f"- Natural positive rate: {positive_rate:.2%} ({positive_count}/{resolved_count if resolved_count > 0 else 1})")
-    lines.append(f"- Missingness rate: {missingness_rate:.2%} ({missing_count}/{total_checkpoints if total_checkpoints > 0 else 1})")
+    lines.append(f"- Resolved (non-missing): {resolved_count_5km}")
+    lines.append(f"- Missing/undetermined: {missing_count_5km}")
+    lines.append(f"- Positive (vis < 5km): {positive_count_5km}")
+    lines.append(f"- Negative (vis >= 5km): {negative_count_5km}")
+    lines.append(f"- Natural positive rate: {positive_rate_5km:.2%} ({positive_count_5km}/{resolved_count_5km if resolved_count_5km > 0 else 1})")
+    lines.append(f"- Missingness rate: {missingness_rate_5km:.2%} ({missing_count_5km}/{total_checkpoints if total_checkpoints > 0 else 1})")
+    lines.append("")
+
+    # 1km threshold statistics (Bug 3 fix)
+    resolved_count_1km = total_checkpoints - missing_count_1km
+    if resolved_count_1km > 0:
+        positive_rate_1km = positive_count_1km / resolved_count_1km
+    else:
+        positive_rate_1km = 0.0
+
+    if total_checkpoints > 0:
+        missingness_rate_1km = missing_count_1km / total_checkpoints
+    else:
+        missingness_rate_1km = 0.0
+
+    lines.append("### 1km Threshold Statistics (Nested)")
+    lines.append("")
+    lines.append(f"- Total checkpoints evaluated: {total_checkpoints}")
+    lines.append(f"- Resolved (non-missing): {resolved_count_1km}")
+    lines.append(f"- Missing/undetermined: {missing_count_1km}")
+    lines.append(f"- Positive (vis < 1km): {positive_count_1km}")
+    lines.append(f"- Negative (vis >= 1km): {negative_count_1km}")
+    lines.append(f"- Natural positive rate: {positive_rate_1km:.2%} ({positive_count_1km}/{resolved_count_1km if resolved_count_1km > 0 else 1})")
+    lines.append(f"- Missingness rate: {missingness_rate_1km:.2%} ({missing_count_1km}/{total_checkpoints if total_checkpoints > 0 else 1})")
     lines.append("")
 
     # Label maturity confirmation
@@ -421,8 +517,8 @@ def run_disclose(
     print(f"Disclosure report written successfully!")
     print(f"  Total targets: {queue_summary.get('total_count', 0)}")
     print(f"  Total checkpoints: {total_checkpoints}")
-    print(f"  Natural positive rate: {positive_rate:.2%}")
-    print(f"  Missingness rate: {missingness_rate:.2%}")
+    print(f"  5km - Natural positive rate: {positive_rate_5km:.2%}, Missingness: {missingness_rate_5km:.2%}")
+    print(f"  1km - Natural positive rate: {positive_rate_1km:.2%}, Missingness: {missingness_rate_1km:.2%}")
     print(f"  Output: {disclosure_path}")
 
     return 0
