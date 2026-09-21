@@ -1,0 +1,171 @@
+# DisasterTrace v17 Decision Table
+# Records the relationship to D01-D12 from RESEARCH_DECISIONS_v14_20260919.yaml (all APPROVED)
+# This file does NOT modify the original v14 decisions; it documents v17 treatment.
+
+meta:
+  version: v17-candidate-20260921
+  prior_decisions: plan/plan_v14_0919/RESEARCH_DECISIONS_v14_20260919.yaml
+  prior_status: All D01-D12 APPROVED (2026-09-20)
+  codex_audit: codex_audit_v16/FINDINGS.md (2026-09-21)
+  purpose: Document how v17 inherits, refines, or replaces each prior decision
+
+decisions:
+
+  - decision_id: D01
+    original_question: Main problem line (fixed future target + semantic ledger + probability revision + fact maintenance)
+    relation: inherit
+    rationale: >
+      The v17 plan (section 3.1) explicitly adopts the same core problem formulation.
+      The narrowed contribution statement from Codex FINDINGS section 0 is compatible:
+      "a benchmark for distinguishing operational evidence maintenance from probabilistic
+      forecasting skill under real weather-product revisions." No change to the fundamental
+      research question is needed.
+    v17_treatment: >
+      Continue with fixed-target probability trajectory + fact maintenance as main problem.
+      Attribution remains explanatory layer. Query budget remains controlled ablation.
+
+  - decision_id: D02
+    original_question: First domain and fixed target definition (H15 sole primary; NHC data qualification only)
+    relation: inherit
+    rationale: >
+      V17 plan section 4 recommends H15 airport low-visibility as primary domain with
+      no changes to scope. NHC remains isolated data-qualification only (QN branch).
+      The Codex audit confirms this is appropriate given current archive limitations.
+    v17_treatment: >
+      H15 remains sole primary pilot domain. NHC qualification (QN) activated only
+      if V17-03 census determines H15 transition density is insufficient.
+
+  - decision_id: D03
+    original_question: Checkpoint grid and weights (T-60/T-40/T-20 min, equal weights)
+    relation: refine
+    rationale: >
+      The original decision specifies T-60/T-40/T-20 minutes but does not clarify the
+      reference point. V17 plan section 4 clarifies: lead time is relative to target
+      WINDOW START, not physical lead time to actual report occurrence. This is a
+      semantic clarification, not a change in the numerical grid.
+    v17_treatment: >
+      Retain T-60/T-40/T-20 checkpoint grid with equal weights. Explicitly document
+      that these times are relative to the target hour's start (e.g., for target
+      hour 12:00-13:00, checkpoints are at 11:00, 11:20, 11:40), NOT relative to
+      the actual observation timestamp. V17-03 census verifies achievability given
+      real evidence receipt patterns.
+
+  - decision_id: D04
+    original_question: Agent role (Role D = acquire + maintain state + emit probability)
+    relation: inherit
+    rationale: >
+      V17 plan section 3.1 explicitly adopts Role D as main agent role. No changes
+      to role definition or hierarchy are proposed.
+    v17_treatment: >
+      Role D remains main agent role. Role B (probability correction) as numerical
+      endpoint. Role C (tool calls) allowed. Role A (direct atmosphere prediction)
+      diagnostic only, not required expenditure.
+
+  - decision_id: D05
+    original_question: Multi-lead numerical backend deferral (3/6h deferred; 1h only)
+    relation: inherit
+    rationale: >
+      V17 plan maintains focus on last-hour pilot without expanding to 3/6h leads.
+      The Codex audit confirms no existing data role for other leads. The 20/40
+      minute checkpoints are relative timing within the 1h lead, not new lead times.
+    v17_treatment: >
+      Continue deferring 3/6h backend training/registration. Use frozen 1h predictor
+      as comparison baseline. New postprocessing methods for shorter remaining leads
+      must be explicitly registered and qualified separately.
+
+  - decision_id: D06
+    original_question: Natural track safety cap and Controlled budget grid
+    relation: inherit
+    rationale: >
+      V17 plan sections 6.1 and 7 (V17-07) maintain the Natural/Controlled distinction
+      with safety caps and B1/B2/B3 budget grid. No changes proposed.
+    v17_treatment: >
+      Natural track with declared safety cap, rate limits, hard deadlines, and
+      cap-hit rate reporting. Controlled track with fixed B1/B2/B3 budget grid.
+      Quality-cost frontier analysis required.
+
+  - decision_id: D07
+    original_question: Intervention and continuation semantics (evidence withhold/delay/replace; commit actual/masked/edited)
+    relation: inherit
+    rationale: >
+      V17 plan sections 5.2 (Fresh/Transcript/Structured) and 7 (V17-07) maintain
+      the intervention semantics. The distinction between direct exposure vs lineage
+      closure interventions is preserved.
+    v17_treatment: >
+      Preserve intervention taxonomy. Freeze full parent state and policy function
+      before evaluating intervention effects. Deterministic replay and API resampling
+      handled separately.
+
+  - decision_id: D08
+    original_question: Primary estimator, sample rules, and stopping rules (Q as primary; semantic error as co-primary; small N for instrument only)
+    relation: inherit
+    rationale: >
+      V17 plan section 8 explicitly adopts Q (trajectory Brier on frozen grid) as
+      primary metric with semantic error rate as co-primary. The Codex audit's
+      concern about 8.33% positive rate reinforces the small-N instrument-only
+      limitation. No changes to the statistical framework are proposed.
+    v17_treatment: >
+      Q = (1/N) * sum_j sum_k w_jk * (p_eff[j,k] - Y_j)^2 as primary metric.
+      Independent semantic error rate as co-primary (not substitute). Small N
+      supports instrument validation only, not conclusive inference. Weather-process
+      block inference and multiple comparison rules frozen before sampling.
+
+  - decision_id: D09
+    original_question: Confirmation set and exposure rules (Bay 2025-02-17..23 closed; holdout after methods frozen)
+    relation: inherit
+    rationale: >
+      V17 plan section 2.3 explicitly maintains the holdout closure. Section 6.1
+      (G5) requires methods, grid, scorer, and statistics hash-frozen before opening
+      any confirmation set.
+    v17_treatment: >
+      Bay 2025-02-17..23 confirmation week remains closed. Development calendars
+      remain development. Holdout opened only after V17-10 G5 design freezes all
+      methods and statistics. "Historically unread" and "not seen during model
+      training" verified separately.
+
+  - decision_id: D10
+    original_question: New model/API/GPU/download authorization (none by default)
+    relation: inherit
+    rationale: >
+      V17 plan section 2.3 maintains "no new spend by default" policy. Each batch
+      requires explicit run identity, budget, deadline, and model route. Historical
+      failures do not block isolated new paths.
+    v17_treatment: >
+      No new model/API/GPU/download authorized by default. V17-07 specifies bounded
+      pilot scope. V17-09 specifies prospective scope. Each requires explicit
+      authorization with frozen run specification.
+
+  - decision_id: D11
+    original_question: Professional probability baseline registration (LAMP categorical/probabilistic/conditional separately named)
+    relation: refine
+    rationale: >
+      V17 plan section 4 (professional baseline row) maintains the separation requirement.
+      The Codex audit finding F06 (incomplete LAMP gzip streams) and F15 (guard validates
+      wrapper not semantics) add a quality/label (QL) gating condition. LAMP categorical
+      products must be verified for completeness before use.
+    v17_treatment: >
+      Maintain LAMP categorical/probabilistic/conditional separation. Add QL gating
+      condition: before any LAMP-dependent experiment, verify LAMP stream completeness
+      (distinguish checksum-verified, complete-DEFLATE/unverified-trailer, and
+      incomplete-prefix recovery). Register completeness status and coverage limits.
+      Category values validated at construction/parsing, not just wrapper type check.
+
+  - decision_id: D12
+    original_question: Data and execution location (real-data execution on execution machine; this node for code/fixtures)
+    relation: inherit
+    rationale: >
+      V17 plan section 2.2 maintains the same data/execution separation. This
+      execution machine holds the real archive. Code, fixtures, and analysis stay
+      separate.
+    v17_treatment: >
+      Real-data read-only execution on execution machine. Current node for source
+      code, synthetic fixtures, and hashed development samples. Do not sync/open
+      holdout. Do not blindly copy 11 GB legacy data.
+
+summary:
+  inherit_count: 10
+  refine_count: 2
+  replace_count: 0
+  refinement_details:
+    - D03: Clarify lead time reference (window start, not physical lead)
+    - D11: Add QL gating condition per Codex F06/F15 (LAMP completeness verification)
