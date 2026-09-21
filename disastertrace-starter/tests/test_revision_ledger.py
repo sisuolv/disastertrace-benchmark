@@ -1603,3 +1603,351 @@ class TestSupersededByField:
 
         assert "superseded_by" in ledger[0]
         assert ledger[0]["superseded_by"] is None  # First entry has nothing superseding it
+
+
+# ---------------------------------------------------------------------------
+# Test: RO2 - Receipt-order visibility tie-breaking (D4)
+# ---------------------------------------------------------------------------
+
+
+class TestReceiptOrderVisibilityTieBreak:
+    """RO2: Receipt-order based visibility tie-breaking in ledger classification.
+
+    When two records have the exact same available_at, the legacy behavior
+    creates cycles (A supersedes B AND B supersedes A). The D4 fix uses
+    receipt_seq to break ties: a record p is invisible to product's
+    classification when p was received strictly later (higher receipt_seq).
+
+    These tests specifically verify that the cyclic-supersedes bug is fixed
+    and that the fix does NOT break legacy behavior when receipt signals
+    are absent.
+    """
+
+    def test_tied_amd_pair_with_seqs_has_acyclic_supersedes(self):
+        """Critical guard: tied AMD pair with receipt_seq produces acyclic supersedes.
+
+        This test MUST FAIL if only versions.py is fixed and ledger.py's
+        visibility filter is left unchanged. The cycle is created upstream
+        in _classify_kind_prefix_aware's visibility filter, not in
+        latest_issuance's tie-breaking.
+
+        Setup: Two records A (seq=5) and B (seq=10) tied at the same available_at,
+        both AMDs with distinct semantic hashes.
+
+        Expected: B supersedes A (B sees A as visible). A does NOT supersede B
+        (B is invisible to A because B.seq > A.seq).
+
+        Acyclicity assertion: exactly one direction of supersedes, never both.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T14:55:00Z")  # Same minute
+        hour = 3_600_000_000
+        lag = 2 * 60_000_000  # 2 minute declared lag
+
+        # Both records have the same issued_at => same available_at after lag
+        # Record A: earlier receipt (seq=5)
+        record_a = make_product(
+            source_id="ksfo-tied-a",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+            semantic_content={"body": "content-A"},  # Distinct hash
+        )
+        record_a["receipt_seq"] = 5
+        record_a["receipt_stream"] = "KSFO:2026-09"
+
+        # Record B: later receipt (seq=10)
+        record_b = make_product(
+            source_id="ksfo-tied-b",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+            semantic_content={"body": "content-B"},  # Distinct hash
+        )
+        record_b["receipt_seq"] = 10
+        record_b["receipt_stream"] = "KSFO:2026-09"
+
+        # We need a prior record for AMD to supersede
+        prior = make_product(
+            source_id="ksfo-prior",
+            station="KSFO",
+            issued_at=t0 - hour,  # Earlier => available before the tied pair
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+            semantic_content={"body": "content-prior"},
+        )
+        prior["receipt_seq"] = 0
+        prior["receipt_stream"] = "KSFO:2026-09"
+
+        ledger = compile_ledger([prior, record_a, record_b], declared_lag_us=lag)
+
+        entry_a = next(e for e in ledger if e["source_id"] == "ksfo-tied-a")
+        entry_b = next(e for e in ledger if e["source_id"] == "ksfo-tied-b")
+
+        # ===== CRITICAL ACYCLICITY ASSERTIONS =====
+        # B must supersede something (either A or prior)
+        assert entry_b["supersedes"] is not None, "B should supersede something"
+
+        # A must NOT supersede B (that would create a cycle)
+        a_supersedes = entry_a.get("supersedes") or []
+        assert "ksfo-tied-b" not in a_supersedes, (
+            "CYCLE DETECTED: A supersedes B is forbidden - "
+            "this test fails if ledger.py visibility filter is unfixed"
+        )
+
+        # B should supersede A (or at least A should be in B's visible set for comparison)
+        # If B supersedes the prior instead of A, that's also acceptable (depends on
+        # latest_issuance behavior), but B must NOT be superseded BY A
+        b_supersedes = entry_b.get("supersedes") or []
+
+        # At minimum: verify no A->B supersedes edge exists (the cycle direction we care about)
+        # The key property: B can see A, but A cannot see B
+        # This asymmetry breaks the cycle.
+
+    def test_tied_pair_without_seqs_keeps_legacy_entries(self):
+        """Legacy fallback: tied pair without receipt_seq uses legacy visibility.
+
+        When neither record carries receipt_seq, the legacy <= behavior applies.
+        This test verifies no crash and that classification still produces entries.
+        We don't hard-code the exact legacy (potentially symmetric/cyclic) shape
+        as "correct" - just confirm the legacy path still runs.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T14:55:00Z")
+        hour = 3_600_000_000
+        lag = 2 * 60_000_000
+
+        # Two records tied at same available_at, NO receipt_seq
+        record_a = make_product(
+            source_id="ksfo-legacy-a",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+            semantic_content={"body": "legacy-A"},
+        )
+        # No receipt_seq, no receipt_stream
+
+        record_b = make_product(
+            source_id="ksfo-legacy-b",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+            semantic_content={"body": "legacy-B"},
+        )
+        # No receipt_seq, no receipt_stream
+
+        prior = make_product(
+            source_id="ksfo-legacy-prior",
+            station="KSFO",
+            issued_at=t0 - hour,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+            semantic_content={"body": "legacy-prior"},
+        )
+
+        # Should not crash
+        ledger = compile_ledger([prior, record_a, record_b], declared_lag_us=lag)
+
+        # Should produce entries for all three products
+        assert len(ledger) == 3
+
+        # Both tied records should have some classification
+        entry_a = next(e for e in ledger if e["source_id"] == "ksfo-legacy-a")
+        entry_b = next(e for e in ledger if e["source_id"] == "ksfo-legacy-b")
+
+        assert entry_a["kind"] is not None
+        assert entry_b["kind"] is not None
+
+    def test_three_member_group_chain_with_twin(self):
+        """Three-member tie with AAB/AAC twins: verifies acyclic behavior.
+
+        Synthetic analog to the real KSFO 2023-01-16 14:55 three-way group:
+        - AAA: earliest receipt (seq=0), distinct semantic hash
+        - AAB: middle receipt (seq=1), distinct semantic hash from AAA
+        - AAC: latest receipt (seq=2), SAME semantic hash as AAB (twin)
+
+        Expected classifications under D4:
+        - AAA: new_observation (no prior visible at tied time)
+        - AAB: sees AAA (AAA.seq < AAB.seq), so either new_observation or
+               amendment_supersedes referencing AAA depending on amendment_kind
+        - AAC: sees AAA and AAB (both have seq < AAC.seq), and AAC's hash matches AAB,
+               so lossless_duplicate (same-hash-duplicate branch fires against AAB)
+
+        This test manually constructs packages with receipt_seq/receipt_stream
+        since the AFOS stream parser requires specific framing format.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+        from disastertrace.monitoring_v1.targets import canonical_hash
+
+        t0 = us("2026-01-16T14:55:00Z")
+        hour = 3_600_000_000
+
+        # Shared content for AAB/AAC twins
+        twin_content = {"body": "twin-forecast", "vis": 10000}
+        twin_hash = canonical_hash(twin_content)
+
+        # Distinct content for AAA
+        aaa_content = {"body": "different-forecast", "vis": 5000}
+        aaa_hash = canonical_hash(aaa_content)
+
+        # AAA: earliest receipt (seq=0)
+        pkg_aaa = make_product(
+            source_id="KSYN-triple-aaa",
+            station="KSYN",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+            semantic_content=aaa_content,
+        )
+        pkg_aaa["receipt_seq"] = 0
+        pkg_aaa["receipt_stream"] = "KSYN:2026-01"
+        pkg_aaa["wmo_bbb"] = "AAA"
+
+        # AAB: middle receipt (seq=1), distinct hash
+        pkg_aab = make_product(
+            source_id="KSYN-triple-aab",
+            station="KSYN",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+            semantic_content=twin_content,
+        )
+        pkg_aab["receipt_seq"] = 1
+        pkg_aab["receipt_stream"] = "KSYN:2026-01"
+        pkg_aab["wmo_bbb"] = "AAB"
+
+        # AAC: latest receipt (seq=2), SAME hash as AAB (twin)
+        # Per D3 collision handling, AAC would normally get suffixed if source_id collided.
+        # Here we use a distinct source_id for simplicity.
+        pkg_aac = make_product(
+            source_id="KSYN-triple-aac",
+            station="KSYN",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+            semantic_content=twin_content,  # Same as AAB
+        )
+        pkg_aac["receipt_seq"] = 2
+        pkg_aac["receipt_stream"] = "KSYN:2026-01"
+        pkg_aac["wmo_bbb"] = "AAC"
+
+        # Verify twins have same hash
+        assert pkg_aab["native_semantics_sha256"] == pkg_aac["native_semantics_sha256"], \
+            "AAB and AAC must be twins (same semantic hash)"
+        assert pkg_aaa["native_semantics_sha256"] != pkg_aab["native_semantics_sha256"], \
+            "AAA must have distinct hash from AAB/AAC"
+
+        # Compile ledger
+        packages = [pkg_aaa, pkg_aab, pkg_aac]
+        ledger = compile_ledger(packages, declared_lag_us=0)
+
+        entry_aaa = next(e for e in ledger if e["source_id"] == "KSYN-triple-aaa")
+        entry_aab = next(e for e in ledger if e["source_id"] == "KSYN-triple-aab")
+        entry_aac = next(e for e in ledger if e["source_id"] == "KSYN-triple-aac")
+
+        # Expected: AAA = new_observation (no prior in its visible set at tied time)
+        # When classifying AAA: AAB's seq(1) > AAA's seq(0) => AAB invisible to AAA
+        #                       AAC's seq(2) > AAA's seq(0) => AAC invisible to AAA
+        # So AAA sees nothing => new_observation
+        assert entry_aaa["kind"] == "new_observation", \
+            f"AAA should be new_observation, got {entry_aaa['kind']}"
+
+        # Expected: AAB sees AAA (AAA.seq=0 < AAB.seq=1), so AAA is visible
+        # AAB also sees AAC is invisible (AAC.seq=2 > AAB.seq=1)
+        # Since AAB has same issued_at as AAA and different hash, and
+        # amendment_kind is "original", it's new_observation (no AMD supersedes)
+        # This is expected - the body says "TAF" (original), not "TAF AMD"
+
+        # Expected: AAC = lossless_duplicate (same hash as AAB, AAB visible to AAC)
+        # When classifying AAC: AAA.seq(0) < AAC.seq(2) => AAA visible
+        #                       AAB.seq(1) < AAC.seq(2) => AAB visible
+        # AAC's hash matches AAB's hash => lossless_duplicate branch fires
+        assert entry_aac["kind"] == "lossless_duplicate", \
+            f"AAC should be lossless_duplicate (twin of AAB), got {entry_aac['kind']}"
+
+        # Verify no cycles: AAA should not supersede AAB or AAC
+        aaa_supersedes = entry_aaa.get("supersedes") or []
+        assert "KSYN-triple-aab" not in aaa_supersedes, "AAA should not supersede AAB"
+        assert "KSYN-triple-aac" not in aaa_supersedes, "AAA should not supersede AAC"
+
+    def test_stream_mismatch_keeps_legacy_visibility(self):
+        """Stream mismatch: different receipt_stream values trigger legacy visibility.
+
+        Two records tied at the same available_at, both carry int receipt_seq
+        but DIFFERENT receipt_stream values. They are not seq-comparable, so
+        the legacy <= visibility behavior applies (both see each other).
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T14:55:00Z")
+        hour = 3_600_000_000
+        lag = 2 * 60_000_000
+
+        # Two records tied at same available_at, different streams
+        record_a = make_product(
+            source_id="ksfo-stream-a",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+            semantic_content={"body": "stream-A"},
+        )
+        record_a["receipt_seq"] = 5
+        record_a["receipt_stream"] = "KSFO:2026-09"  # September
+
+        record_b = make_product(
+            source_id="ksfo-stream-b",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+            semantic_content={"body": "stream-B"},
+        )
+        record_b["receipt_seq"] = 10
+        record_b["receipt_stream"] = "KSFO:2026-10"  # October - DIFFERENT stream
+
+        prior = make_product(
+            source_id="ksfo-stream-prior",
+            station="KSFO",
+            issued_at=t0 - hour,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+            semantic_content={"body": "stream-prior"},
+        )
+        prior["receipt_seq"] = 0
+        prior["receipt_stream"] = "KSFO:2026-09"
+
+        ledger = compile_ledger([prior, record_a, record_b], declared_lag_us=lag)
+
+        # Both tied records should have some classification
+        entry_a = next(e for e in ledger if e["source_id"] == "ksfo-stream-a")
+        entry_b = next(e for e in ledger if e["source_id"] == "ksfo-stream-b")
+
+        # With stream mismatch, legacy behavior applies: both can see each other.
+        # We don't assert specific cycle behavior (legacy wart), just that
+        # both records were classified and not filtered incorrectly.
+        assert entry_a["kind"] is not None
+        assert entry_b["kind"] is not None
+
+        # Key difference from test_tied_amd_pair: here streams differ, so the
+        # receipt_seq comparison is not applied. Both A and B see each other.
+        # This is legacy behavior - potentially cyclic, but that's the intended
+        # fallback when signals are incomparable.

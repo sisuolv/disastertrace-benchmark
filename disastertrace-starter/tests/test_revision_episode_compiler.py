@@ -1875,17 +1875,21 @@ class TestRealDl3rKsfoIntegration:
         assert without_bbb == 124, f"Packages without wmo_bbb: {without_bbb}"
 
     def test_duplicate_source_id_count(self):
-        """Count duplicate source_ids in the real data (if any).
+        """Verify all source_ids are unique after D3 collision-free suffixing.
 
-        source_id is auto-generated as station-issued_at-hash_prefix, so
-        duplicates would indicate multiple TAFs with identical issuance time
-        and semantic content (true duplicates in the archive).
+        Policy change (2026-09-20, v16-receipt-order-v1 round):
+        Prior to D3, two TAFs with identical issuance timestamp and semantic hash
+        would produce duplicate source_ids. The twin pair was:
+        - Base id: 'KSFO-1673880900000000-8cdfa38768c2'
+        - Issued at: 2023-01-16T14:55:00Z
+        - WMO BBB: AAB (receipt_seq=167) and AAC (receipt_seq=168)
 
-        Real-data-derived constant (observed from KSFO 2023-01 on 2026-09-20):
-        1 duplicate source_id found - two TAFs with identical issuance timestamp
-        and semantic hash: 'KSFO-1673880900000000-8cdfa38768c2' (appears twice).
-        This represents a legitimate archive duplicate (same bulletin recorded
-        twice), not a parsing error.
+        After D3, the earlier-received twin (AAB, seq=167) keeps the original id,
+        and the later twin (AAC, seq=168) gets suffixed:
+        - Original: 'KSFO-1673880900000000-8cdfa38768c2' (AAB)
+        - Suffixed: 'KSFO-1673880900000000-8cdfa38768c2-r000168' (AAC)
+
+        This test now asserts zero duplicates (all 303 source_ids unique).
         """
         with open(REAL_TAF_DL3R_PATH, "r") as f:
             stream_text = f.read()
@@ -1898,7 +1902,80 @@ class TestRealDl3rKsfoIntegration:
         unique_count = len(set(source_ids))
         duplicate_count = len(source_ids) - unique_count
 
-        # Real-data-derived constant: 1 exact duplicate in this file
-        assert duplicate_count == 1, (
-            f"Expected 1 duplicate source_id, found {duplicate_count}"
+        # Post-D3: all source_ids unique (collision-free suffixing applied)
+        assert duplicate_count == 0, (
+            f"Expected 0 duplicate source_ids after D3 suffixing, found {duplicate_count}"
+        )
+
+        # Verify the expected suffixed id exists
+        suffixed_id = "KSFO-1673880900000000-8cdfa38768c2-r000168"
+        assert suffixed_id in source_ids, f"Expected suffixed id {suffixed_id} not found"
+
+    def test_receipt_seq_real_monotonic(self):
+        """All 303 real KSFO 2023-01 packages satisfy receipt ordering invariants.
+
+        Verifies:
+        1. All packages have type(receipt_seq) is int
+        2. Sorted by receipt_seq ascending, issued_at is non-decreasing
+        3. Max-seq package corresponds to the file's first (newest) frame
+        """
+        with open(REAL_TAF_DL3R_PATH, "r") as f:
+            stream_text = f.read()
+
+        packages, _ = compile_afos_taf_stream(
+            stream_text, station="KSFO", reference_month="2023-01"
+        )
+
+        # All 303 packages carry int receipt_seq
+        assert len(packages) == 303
+        for pkg in packages:
+            assert type(pkg["receipt_seq"]) is int, f"receipt_seq is {type(pkg['receipt_seq'])}"
+
+        # Sorted by receipt_seq ascending, issued_at should be non-decreasing
+        sorted_by_seq = sorted(packages, key=lambda p: p["receipt_seq"])
+        for i in range(1, len(sorted_by_seq)):
+            prev_issued = sorted_by_seq[i - 1]["issued_at"]
+            curr_issued = sorted_by_seq[i]["issued_at"]
+            assert curr_issued >= prev_issued, (
+                f"issued_at decreased: seq={sorted_by_seq[i-1]['receipt_seq']} "
+                f"has {prev_issued}, seq={sorted_by_seq[i]['receipt_seq']} has {curr_issued}"
+            )
+
+        # Max-seq package should be first in file (idx=0)
+        max_seq_pkg = max(packages, key=lambda p: p["receipt_seq"])
+        assert max_seq_pkg["receipt_seq"] == 302  # len(frames)-1 = 302
+
+        # First package in result list should have max seq (file order preserved)
+        assert packages[0]["receipt_seq"] == 302
+
+    def test_semantic_hash_multiset_unchanged(self):
+        """The 303-hash multiset is bit-identical to the pre-D1/D3 baseline.
+
+        This is the explicit before/after gate for the frozen hash contract.
+        The expected digest was computed from the pre-modification code on
+        commit 3d9214b37 (v16-measure-prep-v1) before any RO1 changes.
+
+        If this test fails, receipt_seq/receipt_stream keys have polluted the
+        semantic hash computation, which would break the frozen hash contract.
+        """
+        import hashlib
+
+        with open(REAL_TAF_DL3R_PATH, "r") as f:
+            stream_text = f.read()
+
+        packages, _ = compile_afos_taf_stream(
+            stream_text, station="KSFO", reference_month="2023-01"
+        )
+
+        # Compute multiset digest: sha256 of sorted newline-joined hashes
+        hashes = sorted([pkg["native_semantics_sha256"] for pkg in packages])
+        multiset_digest = hashlib.sha256("\n".join(hashes).encode()).hexdigest()
+
+        # Pre-change baseline (computed before any RO1 modifications)
+        expected_digest = "c2970d85a9eafcbb73db27b7770037bd153cfcf363cb03f3f1c1490a223931d1"
+
+        assert multiset_digest == expected_digest, (
+            f"Hash multiset changed! This indicates receipt keys polluted semantic hash.\n"
+            f"Expected: {expected_digest}\n"
+            f"Got:      {multiset_digest}"
         )

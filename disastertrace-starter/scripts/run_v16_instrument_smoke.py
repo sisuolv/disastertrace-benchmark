@@ -31,7 +31,7 @@ def main():
         "--output",
         type=Path,
         default=None,
-        help="Output report path. Default: dev root INSTRUMENT_SMOKE_KSFO_2023-01_v16.md",
+        help="Output report path. Default: dev root INSTRUMENT_SMOKE_KSFO_2023-01_v16r2.md",
     )
     args = parser.parse_args()
 
@@ -56,7 +56,7 @@ def main():
 
     output_path = args.output
     if output_path is None:
-        output_path = dev_root / "INSTRUMENT_SMOKE_KSFO_2023-01_v16.md"
+        output_path = dev_root / "INSTRUMENT_SMOKE_KSFO_2023-01_v16r2.md"
 
     # Import modules from the project
     import sys
@@ -142,13 +142,22 @@ def main():
     log(f"- amendment_kind distribution: {dict(kind_counter)}")
 
     # =========================================================================
-    # Step 2: Deduplicate known duplicate source_id
+    # Step 2: Duplicate source_id guard (RO1/D3 collision-free source_id)
     # =========================================================================
     log("")
-    log("## Step 2: Deduplicate Packages")
+    log("## Step 2: Duplicate source_id Guard")
     log("")
+    log(
+        "NOTE: prior to RO1, this step actively deduplicated a known duplicate "
+        "source_id (303 -> 302 unique). RO1's collision-free source_id "
+        "suffixing at compile time (episode_compiler.py D3) means the twin "
+        "package now gets a distinct suffixed source_id, so the historical "
+        "duplicate no longer exists. This step now asserts that invariant "
+        "(0 duplicates among 303) instead of silently dropping anything; the "
+        "dedup code path is retained below and is expected to be a no-op."
+    )
 
-    # Find duplicates
+    # Find duplicates (dedup code path retained as a guard, not an active step)
     source_id_map: dict[str, list[dict]] = {}
     for p in packages:
         sid = p["source_id"]
@@ -165,7 +174,9 @@ def main():
             # Dedup policy: keep first occurrence (by index in original list)
             log(f"    - Keeping first occurrence, discarding {len(plist)-1} duplicate(s)")
 
-    # Build deduplicated list (keep first occurrence per source_id)
+    # Build deduplicated list (keep first occurrence per source_id). Retained
+    # as a code path (not deleted) so the guard below is a real assertion
+    # against actual dedup behavior, not just a count comparison.
     seen_ids: set[str] = set()
     deduped_packages: list[dict] = []
     for p in packages:
@@ -174,7 +185,20 @@ def main():
             seen_ids.add(sid)
             deduped_packages.append(p)
 
-    log(f"- Packages after dedup: {len(deduped_packages)}")
+    log(f"- Packages after dedup (no-op expected): {len(deduped_packages)}")
+
+    # ASSERTION (RO4 invariant, D3): 0 duplicate source_id among the packages,
+    # i.e. dedup must be a no-op. A real duplicate reappearing here is a hard
+    # error, not a silent pass -- it would mean RO1's collision-free
+    # source_id suffixing regressed.
+    if len(duplicates) != 0 or len(deduped_packages) != len(packages):
+        raise ValueError(
+            f"STOP: expected 0 duplicate source_id among {len(packages)} "
+            f"packages (RO1 collision-free source_id invariant), found "
+            f"{len(duplicates)} duplicate source_id(s); dedup would drop "
+            f"{len(packages) - len(deduped_packages)} package(s)."
+        )
+    log(f"- Assertion (0 duplicates among {len(packages)} packages): PASS")
 
     # =========================================================================
     # Step 3: Build Ledger
@@ -545,7 +569,10 @@ def main():
     log("")
     log(f"- TAF body SHA256: `{taf_receipt['sha256']}`")
     log(f"- ASOS body SHA256: `{asos_provenance.sha256}`")
-    log(f"- TAF packages compiled: 303 (1 duplicate removed = 302 unique)")
+    log(
+        f"- TAF packages compiled: {len(packages)} "
+        f"({len(duplicates)} duplicates, {len(deduped_packages)} unique source_ids)"
+    )
     log(f"- ASOS observations compiled: 801")
     log(f"- Routine observations: {len(routine_obs)} (modal minute 56)")
     log("")

@@ -254,8 +254,38 @@ def _classify_kind_prefix_aware(
         # Issue #1: Only consider products that are visible at the time
         # we're classifying this product (i.e., available before product's available_at
         # OR available before view_cutoff, whichever is relevant)
-        if p_available <= product_available_at:
+        #
+        # D4 (RO2): Equal available_at tie-breaking via receipt_seq.
+        # Among records tied at the exact same available_at, a record p stays
+        # INVISIBLE to product's classification only when p was received STRICTLY
+        # LATER than product (comparable via matching receipt_stream + int seqs).
+        # This breaks the cyclic-supersedes bug: two-member tie A(seq=5)/B(seq=10)
+        # => A's visible set excludes B (B.seq > A.seq), B's visible set includes A
+        # => only B can supersede A, never the reverse.
+        if p_available < product_available_at:
             visible_products.append(p)
+        elif p_available == product_available_at:
+            # Equal-time visibility: include p UNLESS p was received strictly later
+            # than product (both have comparable receipt ordering signals).
+            p_seq = p.get("receipt_seq")
+            product_seq = product.get("receipt_seq")
+            p_stream = p.get("receipt_stream")
+            product_stream = product.get("receipt_stream")
+
+            # Comparability requires: both seqs are int (not bool, not None),
+            # both streams match and are not None, and seqs differ.
+            if (
+                type(p_seq) is int
+                and type(product_seq) is int
+                and p_stream is not None
+                and p_stream == product_stream
+                and p_seq > product_seq
+            ):
+                # p received strictly later than product => p invisible to product
+                pass
+            else:
+                # Fallback: legacy behavior (include p)
+                visible_products.append(p)
 
     # Build semantic hash index from visible products only
     semantic_hash_index = defaultdict(list)
