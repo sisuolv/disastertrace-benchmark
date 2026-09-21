@@ -141,31 +141,46 @@ This means:
 5. **Coverage**: 98% of slots have evidence - NEAR-COMPLETE CALENDAR
 6. **Integrity**: 140/140 files verified - NO GAPS
 
-### Addressing Codex Audit Statistical Power Concern
+### Scope Clarification: G1 Evidence-Existence vs. Codex Statistical Power Concern
 
-The Codex audit noted that with only 3 positive labels across 36 checkpoints (8.33%), paired-diagnostic experiments may be statistically underpowered.
+The G1 gate criterion asks: "Does verifiable target-relevant evidence exist, in sufficient volume, to support state-maintenance/revision evaluation?" This is an evidence-existence question about TAF-side data availability.
 
-This census reveals:
-- **121,885** evidence changes, not 36
-- **17,064** slots with changes, not 12
-- **4,264** independent process groups, not 3
+The Codex audit concern (codex_audit_v16/FINDINGS.md section 0) is a separate question: the H15 paired-diagnostic experiment had only 3 positive labels across 36 checkpoints (8.33% positive-label rate), raising statistical power concerns about whether the experiment can reliably detect meaningful differences.
 
-The previously-disclosed manifest's 8.33% rate (3/36) referred to SELECTED checkpoints with specific characteristics (high revision count + tie events), not the underlying population. The full archive shows:
-- 97.86% of ALL changes are AMD type
-- 98.0% of ALL slots have pre-deadline changes
-- Evidence changes are the NORM, not the exception
+**These are distinct questions:**
+
+| Question | Domain | What it measures | Answered by census? |
+|----------|--------|------------------|---------------------|
+| G1 evidence-existence | TAF-side (X) | Do evidence changes exist? | YES |
+| Codex statistical power | Outcome-side (Y) | Is positive-label rate adequate for H15 power? | NO |
+
+This census is Y-blind by design (see Verification Limitations above). The 121,885 evidence changes, 17,064 slots, and 4,264 process groups demonstrate abundant TAF-side evidence but cannot speak to the positive-label rate of the H15 paired-diagnostic, which depends on how often those TAF changes correlate with actual outcome-label differences. Evidence-change volume and positive-label rate are uncorrelated in general: you could have abundant TAF churn with a persistently low positive-label rate if amendments rarely flip the ground-truth outcome.
+
+**G1 finding (evidence-existence):** The evidence-existence question is answered YES. Target-relevant TAF revisions exist in sufficient volume (121,885 changes), with near-complete calendar coverage (98%), adequate independent process groups (4,264), zero TAF-side classification disputes, and full file integrity (140/140).
+
+**Codex concern (statistical power):** REMAINS OPEN. The positive-label-rate question requires a future outcome-side (Y-permissioned) analysis that measures how often evidence changes actually correlate with outcome-label differences. This is out of scope for the Y-blind census and for Batch A.
+
+### TAF-Side Classification vs. Outcome-Label Reliability
+
+Similarly, the "0% dispute rate" finding refers specifically to TAF-side classification:
+- **TAF-side classification dispute rate**: 0% (all AMD/COR/mirror classifications resolved without ambiguity)
+- **Outcome-label reliability**: PENDING_HUMAN_VERIFICATION per LABEL_QUALIFICATION_v17.md
+
+These are separate. The census demonstrates that the ledger's AMD/COR classification logic produces consistent, unambiguous results. It does not demonstrate that the ASOS/outcome-derived labels themselves are correct, which remains pending human domain expert verification.
 
 ### G1 Recommendation
 
-**RECOMMENDATION: PROCEED WITH H15 AS CURRENTLY SCOPED**
+**RECOMMENDATION: PROCEED WITH H15 EVIDENCE-EXISTENCE GATE**
 
-The evidence base supports evaluation of state-maintenance-vs-revision with:
-- Sufficient volume for paired comparisons
+The evidence base satisfies the G1 evidence-existence criterion:
+- Sufficient volume for paired comparisons (121,885 changes)
 - Sufficient independence for block-based inference (4,264 station-day groups)
-- Zero unresolved conflicts in change classification
+- Zero unresolved TAF-side classification disputes
 - Complete file integrity (140/140)
 
-No adjustment to the contract or entry into QN (NHC fallback) is warranted at this gate.
+**Open follow-up item:** The Codex audit's positive-label statistical-power concern is NOT addressed by this census and remains open. Before the H15 paired-diagnostic experiment's results can be trusted, a properly-scoped outcome-side (Y-permissioned) analysis must assess whether the positive-label rate provides adequate statistical power. This analysis is out of scope for Batch A and should be assigned to a future batch with Y access.
+
+No adjustment to the contract's evidence-existence claims or entry into QN (NHC fallback) is warranted at this gate. The contract items relying solely on evidence-existence (C01 transition density, C04 checkpoint feasibility) remain valid on their own narrower terms.
 
 ## Files Produced
 

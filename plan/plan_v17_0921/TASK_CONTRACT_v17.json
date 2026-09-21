@@ -6,7 +6,7 @@
     "prior_decisions": "RESEARCH_DECISIONS_v14_20260919.yaml (D01-D12 all APPROVED)",
     "codex_audit": "codex_audit_v16/FINDINGS.md section 0",
     "candidate_contribution": "A benchmark for distinguishing operational evidence maintenance from probabilistic forecasting skill under real weather-product revisions",
-    "statistical_power_note_updated": "V17-03 census revealed 121,885 pre-deadline evidence changes across 17,064 slots (vs. 36 checkpoints in pilot selection). The underlying base rate (97.9% AMD, 2.1% COR) is much higher than the pilot's 8.33% positive rate, which was an artifact of selective sampling. With 4,264 independent station-day process groups, statistical power concerns are substantially addressed.",
+    "statistical_power_note_updated": "V17-03 census revealed 121,885 pre-deadline evidence changes across 17,064 slots (vs. 36 checkpoints in pilot selection). This answers the G1 evidence-existence question (sufficient TAF-side volume: YES) but NOT the Codex statistical-power concern about H15's positive-label rate. Evidence-change volume and positive-label rate are distinct: the census is Y-blind by design and cannot measure how often TAF changes correlate with outcome-label differences. The Codex concern (3/36 = 8.33% positive rate in pilot) remains open and requires a future outcome-side (Y-permissioned) analysis before the H15 paired-diagnostic experiment's results can be trusted. See TRANSITION_CENSUS_v17.md Scope Clarification section.",
     "g1_gate_status": "PASSED - proceed with H15 as scoped",
     "g1_assessment_date": "2026-09-21"
   },
@@ -17,9 +17,10 @@
       "open_details": [],
       "resolved_details": [
         "Real transition density: 121,885 pre-deadline changes across 17,064 slots (98% coverage)",
-        "Label reliability: 0% dispute rate, all classifications resolved (PENDING_HUMAN_VERIFICATION for sampling)",
+        "TAF-side classification consistency: 0% dispute rate in AMD/COR/mirror classification (ledger semantics verified)",
         "Independent weather processes: 4,264 station-day groups, sufficient for block inference"
       ],
+      "open_details_note": "Outcome-label reliability (ASOS-derived Y labels) remains PENDING_HUMAN_VERIFICATION per LABEL_QUALIFICATION_v17.md. The 0% dispute rate refers to TAF-side classification, not outcome-label correctness.",
       "owner": "V17-03 census (completed)",
       "closing_evidence": "TRANSITION_CENSUS_v17.md demonstrates adequate transition coverage (121,885 changes), zero disputed classifications, and 4,264 independent process groups. G1 gate PASSED.",
       "blocked_by": []
@@ -263,6 +264,17 @@
     "AC4_output_no_conflict": {
       "description": "Output contract contains no internally conflicting fields",
       "verification": "C07_output_format defines orthogonal operations; C08 defines explicit state layers; no field can simultaneously mean two things"
+    }
+  },
+  "open_risks": {
+    "OR1_positive_label_statistical_power": {
+      "status": "OPEN",
+      "description": "The Codex audit concern (codex_audit_v16/FINDINGS.md section 0) about the H15 paired-diagnostic experiment's positive-label rate (3/36 = 8.33% in pilot) remains unresolved. The V17-03 census demonstrates abundant TAF-side evidence volume but cannot address positive-label rate because it is Y-blind by design.",
+      "why_not_resolved_by_census": "Evidence-change volume (121,885 TAF changes) and positive-label rate (fraction of outcome-labeled episodes where revision verdict is warranted) are distinct metrics. The census measures evidence existence (TAF-side, X-dependent), not how often TAF changes correlate with actual outcome-label differences (outcome-side, Y-dependent).",
+      "required_resolution": "A future outcome-side (Y-permissioned) analysis must measure the actual positive-label rate in the H15 experiment design before its results can be trusted. This analysis requires Y access and is out of scope for Batch A.",
+      "owner": "Future batch with Y access (post-G1)",
+      "blocked_by": ["G1 passage", "Y access authorization"],
+      "blocker_for": ["Final H15 paired-diagnostic experiment interpretation"]
     }
   }
 }
