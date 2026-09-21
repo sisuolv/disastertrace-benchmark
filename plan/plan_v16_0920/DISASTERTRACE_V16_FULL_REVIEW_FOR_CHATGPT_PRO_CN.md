@@ -1,10 +1,193 @@
-# DisasterTrace v14–v16：完整研究复核材料与 Living Benchmark 目标问题
+# DisasterTrace：导师反馈 × 最新研究重审 × Living 目标 × v14–v16 审计完整交接
 
 整理日期：2026-09-21（UTC）。用途：交给 ChatGPT Pro 做独立、深入的研究定位与实验设计分析。
 
-这是一份自包含的分析交接文档：正文整理项目、审计结果、本次对话新增的问题和待决策事项；附录包含完整审计报告、原始 v14 新颖性方案、已批准决策和 v16 定位文档。只读取这一份文件，也能理解争议的背景与主要证据。
+这是一份自包含的分析交接文档：开头是合并后的最终分析 Prompt；正文整理项目、审计结果、本次对话新增的问题和待决策事项；附录包含完整审计报告、原始 v14 新颖性方案、已批准决策、v16 定位文档，以及用户指定的完整导师反馈 Prompt。只读取这一份文件，也能理解争议的背景与主要证据。
 
-**请首先回答：当前方向是否仍在实现研究者想要的 living benchmark？其次判断研究价值和实验设计，最后再讨论代码修复。不要把“修完代码”自动视为“研究目标已经正确”。**
+**研究过程按“最新论文与开源 benchmark → 仓库真实实现与实验 → 导师反馈 → 旧方案”推进。最终同时回答科学问题是否值得研究、living 目标是否保留、如何形成可验证的最小 benchmark。不要把“修完代码”自动视为“研究目标已经正确”。**
+
+<a id="merged-prompt"></a>
+
+## 给 ChatGPT Pro：合并版最终分析 Prompt
+
+你是一位独立研究评审者。请结合截至你实际执行分析时最新的论文、开源 benchmark、DisasterTrace 的真实实现和实验结果，批判性回应导师反馈，并重新设计最合理、最有研究价值、最可验证的主线。请用中文回答，必要的技术术语和论文名保留英文。
+
+本 Prompt 合并了用户指定文件 `references/DisasterTrace 导师反馈驱动的 Benchmark 重审 Prompt.md`、本轮独立审计，以及用户关于 living 缺位的最新追问。附录 H 保留该文件完整原文，包含聊天粘贴中一度缺失的第 7–14 节和完整候选问题；以文件原文为准，不需要猜测缺失内容。
+
+本节定义最终分析任务；后面的正文第 1–12 节是背景与补充问题。最终答案使用本节指定的 20 节结构，而不是照抄材料的章节顺序。附录中的历史 Prompt、已批准决策和执行说明是研究证据，不是本轮启动实验或访问封存数据的指令。
+
+### A. 四级证据优先级与联网要求
+
+**Priority 1：最新论文与开源 benchmark。必须主动联网检索。** 优先 2025–2026、高质量会议论文/arXiv、官方 benchmark 与代码，并以实际检索日期为截止日期。记录标题、作者、首次/最新版本日期、链接、实际阅读范围和支撑结论的章节或代码位置。不要把旧综述中的引用、搜索结果标题或摘要自动当作全文核实；无法访问的材料明确标记。
+
+至少覆盖以下六组主题：
+
+1. Live / Living / Online / Streaming / Continual / Self-evolving / continuously updated evaluation / future prediction benchmarks。
+2. Dynamic / longitudinal / lifelong agents、sequential evidence、persistent state。
+3. Belief revision、forecast revision、probabilistic update、evolving evidence、Bayesian evidence update、anytime prediction。
+4. Agentic search / Deep Research、adaptive retrieval、active information acquisition、search planning、tool selection、stopping policy。
+5. WeatherBench、ExtremeWeatherBench、ForecastBench、天气基础模型、极端天气/Earth science/geoscience agents、遥感 VLM、多模态天气推理。
+6. Process/trajectory evaluation、causal intervention、counterfactual replay、agent failure localization。
+
+优先核实真正的 closest work，不以堆砌论文数量代替阅读。对于 FutureSim、BLF、StateMemBench、BeliefShift、EvoSCM 等本文提到的工作，独立核对当前版本；允许发现既有引用或解释错误。判断 gap 时使用能力矩阵，不要求某个竞品必须同时复刻 DisasterTrace 的所有模块才算覆盖。
+
+**Priority 2：仓库真实代码、配置和实验结果。不要只看 README。** 需要检查 commit、source、tests、artifacts、experiment outputs、configs、runner、replay、metrics、允许访问的 datasets 和 latest plan。每个进度判断使用 `VERIFIED DONE / PARTIALLY DONE / PLAN ONLY / NOT IMPLEMENTED / OBSOLETE`，并注明来自亲自检查、可复现实验、历史回执还是二手描述。
+
+需要检查两个不同的代码时间点：
+
+| 范围 | 链接/身份 | 本文组装时可核实的状态 |
+|---|---|---|
+| 用户原 Prompt 指向的代码 | `next-phase-v1` | 2026-09-21 通过 GitHub API 获取的 HEAD 为 `fc3ff3c4333915d10062ca6eaeb3163235cc111c`，提交时间 2026-09-18T02:20:45Z |
+| 后续 v14–v16 累计实现 | `v16-manifest-v1`，审计基线 `58ff8120aa779c68b7cb902f782c5c66ca3e1833` | 附录 A 的 15 项发现和测试统计绑定此提交 |
+| 本交接文档 | `audit/v16-living-review-20260921` | 在审计基线之后添加文档，不代表源码修复 |
+
+入口：<https://github.com/sisuolv/disastertrace-benchmark/tree/next-phase-v1>；后续实现：<https://github.com/sisuolv/disastertrace-benchmark/tree/v16-manifest-v1>。请重新核对分析时的最新 HEAD，区分旧分支、审计快照与后来可能出现的修复。不要把 `next-phase-v1` 的缺失功能误当作 v16 也不存在，也不要把新文档分支误当作已运行的新实验。私有仓库无法访问时，明确证据上限，并使用本文附录，不能声称看过未读取的代码。
+
+**Priority 3：导师反馈。** 将其视为需要认真回答的约束和可检验问题，逐条评价 `Agree / Partially Agree / Disagree`，同时给出 literature evidence、repository evidence 和 recommended action。不要因为老师提出就默认正确。
+
+**Priority 4：旧方案与既有审计判断。** 已投入的工程、批准过的方向和 Codex 的结论都不能自动证明价值。可以提出改变旧决策的建议，并说明理由与影响；研究建议不等于已获得新执行授权。不要为沉没成本辩护。
+
+### B. 必须逐条回应的导师反馈
+
+下表忠实整理原文件中的要求，完整表述见附录 H。请将复合意见拆成可回答的条目，避免对每位老师只给一句总体赞同。
+
+| 老师 | 需要判断的问题 |
+|---|---|
+| 费奔 | 评测对象是否混淆了下一份公告、未来真实天气、检索、工具调用、预测解释和风险判断？完整定义 `Input → Information Stream → Agent → Action → Output → Ground Truth → Metric`。提前几分钟是否足够重要，timeliness 应是核心问题还是评价维度？专业预报与成熟观测如何分工？为什么必须 Live 才能研究所选问题？是否应先停止跨灾种、多模态和大 taxonomy 扩张？如何使周报持续关闭上次问题？ |
+| 郭子杰 | 当前一次搜索后回答是否真的 Online？是否应以 `S0 → E1 → S1 → E2 → S2` 的持续状态维护为核心？搜索多少、何时停止是否本身就是能力？Natural Agent 与 Controlled Budget 两条轨道怎样设计？predictor 的来源、输入、输出、训练、质量与影响必须讲清楚。 |
+| 李昊波 | Benchmark 具体测什么能力？比较 Role A 直接天气预测、Role B 解读/调整专业预测、Role C 自主搜索和调用天气模型、Role D 证据获取/状态维护/信念修订/预警决策。依据真实模型能力选择，不假定通用 LLM 可以替代 NWP。tokens、time、cost、tool calls、compute 应如何进入 Quality × Timeliness × Cost 的 Pareto 评价？ |
+| 零丰华 | task definition 是否存在实质混合？“LLM 找工具得到更好预报”是否只是一般 tool use？动态评价、信息选择和持续维护 prediction/warning state 是否能形成明确的 `Adaptive Revision under Evolving Evidence` 科学问题？ |
+| 庄培钦 | 必须从具体 related work 的真实限制推出 gap；不能泛称“现有 benchmark 都是 static”。构建能力矩阵，并给出 closest benchmark 无法评估的能力及其重要性，避免先堆系统再找 novelty。 |
+
+必须构建两张表：
+
+```text
+Feedback | Agree / Partially Agree / Disagree | Literature Evidence
+         | Repository Evidence | Recommended Action
+
+Work | Task | Static/Live | Streaming Evidence | Revision | Search
+     | Tool Use | Persistent State | Ground Truth | Limitation
+```
+
+对每个“没有某能力”的文献判断提供阅读依据；未发现不等于不存在。可以增加评估时点、训练污染处理、版本语义、配对干预、可复现性等列，但不要用项目自定义术语人为排除近邻。
+
+### C. 本次审计与 Living 追问带来的关键约束
+
+用户明确追问：**“我原计划中的 living benchmark 的 living 体现在哪里？”** 请独立判断合理分阶段推进与研究目标偏移的界限，不能预设 Codex 的“living 外层＋语义诊断内层”建议就是最终答案。
+
+至少区分五个维度：
+
+- 数据集/题库随现实时间持续更新。
+- 单个 episode 中的流式证据与持续状态修订。
+- 结果出现前提交预测、结果成熟后结算的前瞻评价。
+- 当前数据或任务分布变化下的纵向比较与版本可比性。
+- continual learning/在线参数更新；是否允许，以及它与有记忆但参数固定的 agent 有何不同。
+
+`E0 → S0 → E1 → A1 → S1 → ... → Y` 可以由固定历史资料离线回放实现。因此这条轨迹本身不能证明系统正在进行前瞻 Live 评测。持续下载资料也不能代替事前预测封存和事后结算。请回答哪些结论必须依赖真实前瞻运行，哪些用严格历史回放就足够，为什么。
+
+当前审计的实证限制必须进入设计：十二目标只有一个正例事件，三个正例 checkpoint 是重复标签；两种阈值也命中同一事件。漂移诊断不依赖正例 Y，不能直接据此认定无功效，但没有独立天气过程和正确配对同样不能确认泛化。LAMP 只有类别产品；当前 FOLLOW/ValuesBank scaffold 的状态不能由历史旧分数替代。NHC 需要资格验证，不能用“同机构 best track”或“缺本地 LICENSE”直接否定。
+
+必须重新审查而非机械接受附录 A 的 F01–F15：跨窗口 supersession、评分后修订参与选择、目标合同不完整、方法臂信息不等、runner 绕过验证、holdout 入口、噪声区间、gzip 完整性、refreeze/exposure、hash 语义、无效输出分母、冲突排序、结果唯一性、删失、slot 分母、trap 歧义和 D11 字段边界。明确哪些是已复现错误、哪些受接口使用前提限制、哪些属于尚未实现的研究功能。
+
+源码错误会破坏测量；源码修复本身不会自动产生论文贡献。618＋56 项测试通过与这些复现问题同时成立。请设计能鉴别研究假设的证据，而不是仅要求更多同类合成测试。
+
+### D. 三个真正不同的候选科学问题
+
+必须比较原文件的三个候选，也允许用有充分理由的更好候选替换：
+
+| 候选 | 科学问题 | 必须区分的对象 |
+|---|---|---|
+| A — Living Forecast Revision | Can general-purpose agents maintain and correctly revise extreme-event beliefs as heterogeneous evidence evolves over time? | 持续维护/修订能力，与重复从头回答、仅换提示词有什么实证区别？ |
+| B — Value of Information / When to Update | Can agents determine when newly arriving evidence is sufficiently informative to justify changing an existing extreme-event forecast? | 新信息、冗余、矛盾、订正、迟到与噪声；正确 HOLD 与漏掉必要修订怎样定义？ |
+| C — Adaptive Evidence Acquisition | Can agents decide what evidence to acquire, when to acquire it, and when to stop under evolving extreme-event conditions? | 获取/调度策略与后端 predictor 质量如何分离，何时搜索/等待/停止是否可评？ |
+
+每个候选逐项回答：Why important、Closest work、Existing benchmark limitation、Novelty、Falsifiable hypothesis、MVP、Required engineering、Reviewer attack、Publication potential。不能只换措辞；应对应不同 estimand、关键对照和失败条件。最后选一个明确主线，并说明另两者作为诊断、消融或后续工作的地位。
+
+### E. 必须完成的任务、指标与因果设计
+
+**任务合同。** 定义固定目标、实体/时空支持、变量/阈值/单位、信息宇宙、隐藏信息、issue/valid/available 时间、模型角色、可执行动作、提交/生效状态、外生评分网格、成熟结果和结算版本。解释滚动产生新目标与在同一固定目标内修订的区别。`SEARCH / READ / RETRIEVE / TOOL / WEATHER_MODEL / UPDATE / HOLD / WAIT / STOP` 是否都需要，按主问题裁剪。
+
+**专业预测、predictor 与 Y。** 指明每个 predictor 的来源、输入、输出、训练和校准划分、资格范围、选择理由、缺测和性能影响。专业预报可作输入与 baseline，成熟观测作结果；若任务是预测公告，也应另立合同，不能同时据公告自身声称超越其真实天气准确度。对 warning decision 明确决策损失/效用和验证对象，避免只换输出名字。
+
+**何时不更新。** 对 important/redundant/contradictory/corrected/stale/noisy evidence，分别规定合法判定依据；不要把任何新包到达都设为应更新，也不要仅凭最终 Y 就断言某次事前概率调整是理性的或不理性的。事实失效修复与概率变化需要可分开测量；信息等价需考虑来源权威、有效期、确认价值与可靠性。
+
+**指标。** 正式化 trajectory proper score、calibration、fact compliance、beneficial/harmful revision、correct hold/missed revision/overreaction/stale hold、time-to-beneficial-revision。审视 `RV_t = L(S_{t-1}, Y) - L(S_t, Y)` 的先例和局限：求和会望远镜消去，不能仅靠累计 RV 代替路径质量；事后描述也不自动构成因果贡献。固定时间权重与分母，避免按提交次数奖励频繁更新。正确处理缺失 Y、重复 checkpoint、nested thresholds、右删失与多个 weather-process block。
+
+**配对与功效。** 针对同父状态、同外部时间的 identity/duplicate 等分支，绑定模型、prompt、seed/draw 与干预身份，估计真正的配对效果。身份分支的单次样本百分位不是平均效果的置信区间。预先定义实际等价界限、precision/power 设计、多重比较与停止规则，区分“效果足够小”与“样本不足”。不得编造所需 N 或以不显著自动宣告失败。
+
+**Natural 与 Controlled。** 评估让 agent 自主搜索、调用工具、等待、停止、修订是否更符合主能力；报告 quality/timeliness/token/latency/tool/cost/compute 的联合表现和 Pareto，而不默认一种任意预算最公平。Natural 也需要明确执行上限和 cap-hit 记录；Controlled 的 `B1/B2/B3` 用于解释资源影响。状态携带消融应同合法信息；信息获取实验允许因行动而出现不同已获信息，但需要共同来源宇宙和相应的 estimand，不能混用两种比较。
+
+**Intervention attribution。** 评估 `do(Evidence=e)`、`do(Retrieval=r)`、`do(ToolOutput=t)`、`do(Interpretation=i)` 等能识别什么。明确同父重放、可行替代、后续策略、时钟与预算；有 no-op、placebo、oracle 等对照。区分对 agent 行为/预测的条件效应与对真实天气世界的因果效应。不能仅凭手工 taxonomy 或模型自解释宣称归因；若两个原因不可区分，应承认不可识别。
+
+### F. MVP、工程取舍和论文主张
+
+从现有数据中选 **1 个主 domain＋最多 1 个辅助 domain**，比较机场能见度、hurricane/typhoon、severe convection、flood 的更新密度、时间戳、结果、可获取性、许可、代码支持、重放难度和成本。先让 MVP 判定核心假设，再决定扩张；扩更多灾种/模态/地区属于什么证据层次应明确。
+
+Novelty 分成五层，不列一串同等分量的卖点：`Core Novelty / Diagnostic Contribution / Evaluation Innovation / Validation Breadth / Engineering Contribution`。每项写最近先例、实际增量、必要实验和被否定后的收缩表述。
+
+对现有 folder/script/module/experiment/artifact 做 `KEEP / REFRAME / ABLATION / PAUSE / REMOVE`，说明依据、依赖、旧结果保存方式和机会成本。REMOVE 是研究/工程建议，不授权本轮删除历史。不要因为工程量大替旧方向辩护，也不要为了重构而无理由抛弃已可复用的测量组件。
+
+Reviewer stress test 至少覆盖以下 12 条，每条必须指定**能回答它的实验/证据与失败后果**：
+
+1. Live benchmark 本身已经有人做。
+2. 这只是 Weather + Web Agent。
+3. LLM 不应该做天气预测。
+4. 专业天气模型已经比 LLM 强得多。
+5. Search 不是 novelty。
+6. Tool Use 不是 novelty。
+7. 不断重新 prompt 不等于 belief revision。
+8. Failure attribution 只是 error taxonomy。
+9. Replay 不是真实 deployment。
+10. Cross-hazard 只是数据规模。
+11. Resource budget 是人为设置。
+12. Ground truth / professional forecast 定义混乱。
+
+请额外回应本轮审计暴露的测量有效性、弱基线、低独立样本、后见选择、信息不公平和前向模型/数据时间绑定问题，不用口头论证代替实验。
+
+### G. Roadmap、会议汇报与执行边界
+
+研究 roadmap 使用以下阶段，并明确每阶段放行或停止的证据：
+
+`P0 Related Work Gap Validation → P1 Scientific Question Freeze → P2 Task Contract → P3 Minimal Live Replay → P4 Natural Agent Evaluation → P5 Intervention Attribution → P6 Generalization`。
+
+这里的 P3 必须进一步区分最小历史重放 episode 和真正事前提交/事后结算的前瞻 episode；可以安排为 P3a/P3b，但不能用命名把 replay 宣称为 live deployment。
+
+另给供 Codex 执行的工程任务组 P0/P1/P2，与研究 roadmap 建立映射，避免重名混淆。每个 task 写 `files / modifications / tests / acceptance criteria / dependencies`，并标出现有 bug 修复、合同冻结、分析/仪器验证、需要后续授权的真实运行各自边界。先验证 gap 和 task definition，避免在核心问题未冻结时大规模扩数据、训练或跑模型。
+
+最后给 3–5 页 PPT 信息量的汇报，固定逻辑为：Slide 1 上次问题→本次实际回答；Slide 2 最新 related-work gap；Slide 3 修订后的 scientific question；Slide 4 task/episode 图；Slide 5 当前进度与立即下一步。为每个关键导师问题记录“证据—结论—仍未解决—下次验证”，避免每周只增加内容而不关闭问题。
+
+整个分析阶段保持只读。不要访问或列出 `quarantine_holdout/` 或实际封存区间数据，不写 `data_real_v16/`，不自行调用付费模型/GPU、训练、重新下载天气数据或删除旧结果。联网检索论文/官方代码用于研究证据，与启动新的 benchmark 实验是不同范围。现有 D01–D12 可以被研究建议挑战，但改变执行边界需要明确后续决定。
+
+<a id="required-output"></a>
+
+### H. 最终答案严格使用以下 20 节
+
+1. **Executive Diagnosis**：一句话指出最大问题，再给研究价值、living 目标、测量有效性三方面结论。
+2. **Advisor Feedback Matrix**：逐条反馈、Agree/Partially Agree/Disagree、文献、仓库证据、建议动作。
+3. **Current Repository Reality**：两个代码时间点及其差异，用五种状态标明实际进展，明确未独立验证之处。
+4. **Latest Related Work**：以实际检索日期为准，重点 2025–2026，给可靠来源与阅读范围。
+5. **Related Work Gap Matrix**：完整能力矩阵，突出 closest work 的真实限制。
+6. **Which Advisor Concerns Are Valid?**：明确成立、部分成立和不成立之处；同时挑战 Codex 的判断。
+7. **Three Candidate Scientific Questions**：至少三个不同问题，每个完成九项比较。
+8. **Recommended Core Scientific Question**：选定主线、必要性、可证伪假设、living 的角色及另外候选的地位。
+9. **Revised Benchmark Architecture**：最小闭环及历史回放/前瞻运行/诊断的关系。
+10. **Formal Task Contract**：完整输入、信息流、状态、动作、输出、隐藏信息、目标、时间与结算政策。
+11. **Ground Truth & Professional Baseline**：Y 与专业预报分工、predictor 资格、强基线、公平条件、缺失处理。
+12. **Metrics**：路径评分、事实层、修订/HOLD、时效和资源、正确配对统计及各指标解释边界。
+13. **Novelty Audit**：分 Core Novelty、Diagnostic Contribution、Evaluation Innovation、Validation Breadth、Engineering Contribution。
+14. **Existing Code**：KEEP / REFRAME / ABLATION / PAUSE / REMOVE，尽可能定位具体路径、实验和 artifact。
+15. **MVP**：一个主 domain、最多一个辅助 domain，纳入规则、最小证据、停止扩张条件。
+16. **Experiments Needed**：每项明确 “Which claim does this experiment validate?”，并列对照、单位、估计量、通过/失败/不确定标准。
+17. **Reviewer Stress Test**：至少十二条质疑，每条有能回答的实验及失败后应收缩什么主张。
+18. **Step-by-Step Roadmap**：P0–P6、依赖、阶段出口、持续关闭导师问题的方法。
+19. **Codex Implementation Plan**：工程 P0/P1/P2 任务的 files、modifications、tests、acceptance criteria、dependencies，并映射研究阶段。
+20. **Next Meeting Presentation**：严格控制为上述 3–5 页 PPT 的信息量；不要把计划汇报成已完成结果。
+
+最终优化目标是 **Scientific importance × novelty × verifiability × reproducibility × implementation feasibility**，不追求最多 feature。必须明确回答：现有 benchmark 无法评价什么重要能力，为什么 DisasterTrace 能评价，什么证据会推翻这个判断。如果 gap 不成立，可以重构或建议收缩；若只是证据不足，请明确说不确定。
+
+---
+
+以下开始背景、审计证据与原文附录，供执行上述任务时参考。
 
 ## 阅读说明与证据等级
 
@@ -26,6 +209,7 @@
 4. 用户进一步追问：**“等等，我原计划中的living benchmark的living体现在哪里？我感觉好像没有？”**
 5. Codex 回看早期方案和后续决策后指出：当前主线是历史回放中的动态证据修订；虽然另有前向采集，但尚未形成持续生成未来任务、事前预测、事后结算的完整 living 评测闭环。
 6. 用户要求：**“帮我将当前的所有内容和问题都整理到一个md文件吧，并上传GitHub，我让chatgpt pro详细分析一下。”** 本文即该交接材料。
+7. 用户随后提供完整的导师反馈驱动重审 Prompt，并要求合并。该原文以指定本地文件为准，完整收录于附录 H；最新文献优先级、五位老师反馈、候选问题、20 节输出和会议汇报要求已进入文首最终任务。
 
 这一追问提出的是目标一致性问题，重要性不低于代码正确性。Pro 应同时审查“收窄后的研究是否值得做”和“这种收窄是否保留了用户原本要做的东西”。
 
@@ -252,7 +436,9 @@ Codex 的暂定判断是：**作为一个具体领域的 benchmark 有值得继�
 
 请使用能力矩阵比较，而不是要求某一篇论文必须同时具有本项目所有模块才算覆盖。附录原文中的“未占据”“强”等评价都是待批判的历史判断。
 
-## 10. 请 ChatGPT Pro 优先回答的问题
+## 10. 审计补充问题（纳入合并 Prompt 的最终答案）
+
+以下问题补充文首最终任务，不改变“文献→仓库→导师→旧方案”的研究优先级，也不增加另一套输出结构。
 
 ### Q1. 用户的 living 目标有没有在后续收窄中丢失？
 
@@ -294,16 +480,11 @@ Codex 的暂定判断是：**作为一个具体领域的 benchmark 有值得继�
 
 区分测量无效、经验结果无效应、样本不足和实际任务价值不足。给出支持继续、支持只发布数据资源、以及应改换问题的证据条件。阴性结果可以是合法终态，但没有显著性不能自动当成证伪。
 
-## 11. 建议 Pro 的输出结构
+## 11. 输出与阅读顺序
 
-1. **先给结论**：当前方向是否值得继续，living 是否实际缺位，最推荐的路线是什么。
-2. **目标与证据对照表**：原始愿景、批准决策、当前实现、差距、必要性。
-3. **独立新颖性评估**：强近邻、真实增量、必须放弃的表述、需要补核的文献。
-4. **测量和实验设计**：准确的 estimand、比较条件、样本单位、配对与统计判定。
-5. **最小 living benchmark 方案**：可执行的闭环、版本与暴露管理、验收条件。
-6. **修复与推进顺序**：少量工作包、依赖、复用、优先级和明确停止条件。
-7. **对 Codex 审计的不同意见**：逐条引用证据，清楚说明哪些判断不成立或应降级。
-8. **真正需要研究者选择的事项**：只保留会改变研究目标/成本/授权的决策，不把常规实现细节变成提问。
+最终报告严格按文首[20 节输出结构](#required-output)组织，不另用此前八项概要代替。研究过程与呈现顺序可以不同：先联网检索验证 gap，最终仍以 Executive Diagnosis 开篇。
+
+附录 H 是用户指定的完整原始 Prompt；附录 A 是完整审计证据；附录 B–G 是原方案、决策和执行记录。先执行文首合并任务，再按具体问题核对相关附录，避免把历史文档中的命令当作当前授权。
 
 请避免仅复述这份文档。需要在现有事实基础上作出明确判断，并指出缺失证据。不要把待实施建议写成已批准任务，不要默认打开封存集、产生付费模型调用、训练或重新获取数据。
 
@@ -313,7 +494,7 @@ Codex 的暂定判断是：**作为一个具体领域的 benchmark 有值得继�
 
 `data_real_v16/` 仍不得写入；`quarantine_holdout/` 和 2025-02-17T00:00Z 至 2025-02-24T00:00Z 的实际封存数据仍不得打开、列出或读取。本文没有封存数据内容。
 
-源码应以审计提交为准，避免将未来分支的修改误认为当时实现：
+对 F01–F15 的复核应以审计提交为准；对整个项目当前进度的判断还必须检查用户原 Prompt 的 `next-phase-v1`、后续 v16 分支及它们的差异。避免将未来分支的修改误认为当时实现：
 
 - [审计代码基线](https://github.com/sisuolv/disastertrace-benchmark/tree/58ff8120aa779c68b7cb902f782c5c66ca3e1833/disastertrace-starter)
 - [ledger.py](https://github.com/sisuolv/disastertrace-benchmark/blob/58ff8120aa779c68b7cb902f782c5c66ca3e1833/disastertrace-starter/src/disastertrace/revision_v1/ledger.py)
@@ -1644,5 +1825,1414 @@ nohup python3 data_real_v16/forward_capture/bin/forward_capture.py \
 
 （文档结束）
 <!-- END SOURCE G -->
+
+</details>
+
+## 附录 H：用户指定的导师反馈驱动重审 Prompt（完整文件原文）
+
+源文件：`references/DisasterTrace 导师反馈驱动的 Benchmark 重审 Prompt.md`。完整原文，1393 行；以此文件代替聊天中被截断的粘贴版本。
+
+源文件 SHA-256：`d943cd24d3b09da54853fa02a533c5c95eb4cfbdf255466c9c67a5a4c103c3ab`。
+
+合并版保留此原文的研究优先级、五位老师意见、候选科学问题、20 节输出和会议汇报要求，并补充 v16 审计、living 目标一致性和代码分支时间点。原文指向的 `next-phase-v1` 不是本次 v16 审计的 HEAD，区别已在文首说明。
+
+<details>
+<summary>展开完整导师反馈与原始 Prompt</summary>
+
+<!-- BEGIN SOURCE H -->
+我正在构建一个面向极端事件 / 极端天气的 benchmark：**DisasterTrace**。
+
+当前仓库：
+
+https://github.com/sisuolv/disastertrace-benchmark/tree/next-phase-v1
+
+我已经进行了较多数据、代码、实验和 benchmark 设计工作，但最近一次组会中，多位老师对当前 benchmark 的 **task definition、scientific question、novelty、ground truth、Live/Online 定义、resource budget 设计以及 related-work positioning** 提出了重要意见。
+
+请把下面这些导师反馈视为需要认真回应的 **research constraints / questions**，但不要把导师意见直接当成正确答案。
+
+你的任务不是“按照老师说的修改”，而是：
+
+> **结合截至当前最新的相关论文、开源 benchmark、当前仓库真实实现和实验结果，独立判断老师提出的问题是否成立，并重新设计 DisasterTrace 最合理、最有 novelty、最可验证的研究主线。**
+
+---
+
+# 0. 分析优先级
+
+请严格按照：
+
+## Priority 1
+### 截至当前最新的相关论文与开源 benchmark
+
+尤其优先：
+
+- 2025–2026；
+- 顶会 / 高质量 arXiv；
+- Live / Living / Online / Streaming / Continual benchmark；
+- Dynamic agent evaluation；
+- Deep Research / Tool-using agent；
+- Sequential evidence；
+- Belief revision；
+- Extreme weather / Earth science benchmark；
+- Agent trajectory evaluation；
+- Counterfactual / intervention-based evaluation。
+
+必须主动联网检索。
+
+---
+
+## Priority 2
+### 当前 DisasterTrace 仓库的真实代码和实验结果
+
+检查：
+
+https://github.com/sisuolv/disastertrace-benchmark/tree/next-phase-v1
+
+不要只看 README。
+
+请检查：
+
+- 最新 commit；
+- source code；
+- tests；
+- artifacts；
+- experiment outputs；
+- configs；
+- benchmark runner；
+- replay；
+- metrics；
+- datasets；
+- latest plan。
+
+严格区分：
+
+- VERIFIED DONE；
+- PARTIALLY DONE；
+- PLAN ONLY；
+- NOT IMPLEMENTED；
+- OBSOLETE。
+
+---
+
+## Priority 3
+### 最近导师反馈
+
+下面会完整列出。
+
+---
+
+## Priority 4
+### 我此前提出的旧方案
+
+旧方案只能作为历史设计参考。
+
+不要因为某个 idea 是我以前提出的，就认为它：
+- 正确；
+- 必须保留；
+- 仍具有 novelty。
+
+如果最新工作已经覆盖，请直接指出。
+
+---
+
+# 1. 当前方案的大致背景
+
+DisasterTrace 原本希望回答：
+
+> 当专业预报和多源观测不断更新时，LLM / VLM / Agent 能否通过自主获取资料、调用工具和综合分析，相对于同期专业预报产生有意义的增量价值？
+
+此前大致形成过三层研究问题：
+
+## A. Incremental Value
+
+研究 agent 是否能够：
+
+- 更早发现风险；
+- 提高预测质量；
+- 更有效利用补充资料；
+- 在专业预报更新之前产生价值；
+- 用合理 token / tool / latency 成本完成任务。
+
+---
+
+## B. Failure Attribution
+
+如果最终预测没有改善，希望进一步定位：
+
+- acquisition failure；
+- retrieval failure；
+- tool failure；
+- interpretation failure；
+- reasoning failure；
+- timing failure；
+- revision/adoption failure；
+- overreaction。
+
+而不是简单依赖模型自己解释失败原因。
+
+---
+
+## C. Generalization
+
+进一步研究这些能力和失败模式是否：
+
+- 跨灾种；
+- 跨地区；
+- 跨年份；
+- 跨模型；
+- 跨数据源；
+- 跨模态
+
+成立。
+
+---
+
+# 2. 费奔老师的主要意见
+
+请认真分析以下反馈。
+
+## 2.1 核心 scientific question 尚未定义清楚
+
+费老师不断追问：
+
+> benchmark 到底评测什么？
+
+当前设计中容易混淆：
+
+- 预测下一份专业公告；
+- 预测未来真实天气；
+- 搜索资料；
+- 调用专业天气模型；
+- 分析已有预测；
+- 产生风险判断。
+
+这些实际上是不同 task。
+
+因此必须重新明确：
+
+> **Input → Information Stream → Agent → Action → Output → Ground Truth → Metric**
+
+---
+
+## 2.2 “比专业公告更快”可以做，但不够重要
+
+原方案强调：
+
+> 如果 agent 比下一份专业公告提前几分钟产生类似结论，就是一种 incremental value。
+
+费老师认为：
+
+- 这个事情可能成立；
+- 也可以评价；
+- 但不够重要；
+- 更快、更少 token、更少 resource 不足以成为整个 benchmark 最核心的 scientific contribution。
+
+因此请判断：
+
+### Timeliness 到底应该是：
+- main scientific question；
+还是
+- evaluation dimension？
+
+---
+
+## 2.3 “比专业公告更准确”的 Ground Truth 存在逻辑问题
+
+如果：
+
+> 下一份官方专业公告 = ground truth
+
+那么很难同时声称：
+
+> agent 比官方公告本身“更准确”。
+
+因此请重新设计：
+
+### Professional Forecast
+
+与：
+
+### Ground Truth
+
+的关系。
+
+可能需要严格区分：
+
+> Professional forecast = baseline / evidence source
+
+而：
+
+> post-event authoritative observation = ground truth。
+
+请结合天气预测文献判断这种设计是否合理。
+
+---
+
+## 2.4 Live Benchmark 是一个值得继续研究的技术方向
+
+费老师认为：
+
+> Live Benchmark 本身是目前比较前沿的一条技术线。
+
+但真正的问题是：
+
+> **在这条技术线上究竟解决什么 scientific problem？**
+
+所以不要只回答：
+
+> “我们做一个 Live Benchmark。”
+
+而必须回答：
+
+> **为什么一定需要 Live 才能研究这个问题？**
+
+---
+
+## 2.5 暂时不要过早扩展
+
+费老师建议暂时不要把重点放在：
+
+- 跨灾种；
+- 多模态；
+- 大规模 failure taxonomy；
+- 大范围 benchmark expansion。
+
+这些可以后续扩展。
+
+首先应该：
+
+> 把 core benchmark 的 scientific question 定清楚。
+
+---
+
+## 2.6 周报和研究推进需要更加连续
+
+之后的工作应该形成：
+
+> 上周老师提出的问题  
+> → 本周针对性调研 / 实验  
+> → 得到什么回答  
+> → 什么仍未解决  
+> → 下一步怎么验证。
+
+而不是每周增加很多新内容，但旧问题没有被关闭。
+
+---
+
+# 3. 郭子杰老师的主要意见
+
+## 3.1 当前所谓 Online 可能还不是真正的 Online
+
+如果只是：
+
+> 当前资料 → 搜索 → 比专业公告更快给答案
+
+这不一定构成真正意义上的 Online Benchmark。
+
+更值得研究的 Online / Live 应该是：
+
+> 新证据不断进入系统，模型不断重新评估当前判断，并持续更新预测。
+
+即：
+
+\[
+S_0
+\rightarrow E_1
+\rightarrow S_1
+\rightarrow E_2
+\rightarrow S_2
+\rightarrow ...
+\]
+
+其中：
+
+- \(S_t\) = 当前 belief / forecast state；
+- \(E_t\) = 新到达的 evidence。
+
+模型像真实业务人员一样：
+
+> 一直观察、一直维护状态、必要时动态调整。
+
+请判断这是否应该成为新版 DisasterTrace 的核心。
+
+---
+
+## 3.2 Search 数量本身可能就是模型能力
+
+原方案曾考虑：
+
+> 给所有模型固定相同的 search / tool budget，从而公平比较。
+
+郭老师指出：
+
+不同 agent 本身可能具有不同的信息获取策略：
+
+- 有些模型会主动获取很多资料；
+- 有些模型快速停止；
+- 有些模型会长时间推理；
+- 有些模型会认为当前证据已经足够。
+
+因此：
+
+> **how much to search / when to stop**
+
+本身可能就是 agent capability。
+
+请重新考虑是否应该设计：
+
+### Natural Agent Track
+
+agent 自主决定：
+
+- 搜不搜索；
+- 查多少；
+- 调什么工具；
+- 什么时候停止。
+
+再报告：
+
+- accuracy；
+- timeliness；
+- token；
+- latency；
+- tool calls；
+- cost。
+
+以及另设：
+
+### Controlled Budget Track
+
+作为公平 controlled experiment / ablation。
+
+---
+
+## 3.3 Predictor 必须明确
+
+不能再出现：
+
+> predictor 只是一个简单模型，所以不重要。
+
+必须明确：
+
+- predictor 是什么；
+- 来源是什么；
+- 输入是什么；
+- 输出是什么；
+- 是否训练；
+- 为什么选择它；
+- predictor quality 是否影响实验结论。
+
+---
+
+# 4. 李昊波老师的主要意见
+
+## 4.1 Benchmark 首先要明确“测试模型什么能力”
+
+李老师最核心的问题是：
+
+> **Benchmark 是测模型能力的，那么 DisasterTrace 到底在测什么能力？**
+
+请区分至少以下角色。
+
+---
+
+### Role A
+
+LLM 直接：
+
+> observations → weather prediction。
+
+---
+
+### Role B
+
+专业天气模型先预测：
+
+> NWP / weather model → numerical forecast
+
+然后 LLM：
+
+> analyze / interpret / adjust。
+
+---
+
+### Role C
+
+Agent 自主：
+
+> search + tool use + weather model invocation + evidence integration。
+
+---
+
+### Role D
+
+Agent 不直接承担 numerical weather prediction，而负责：
+
+> evidence acquisition  
+> + state maintenance  
+> + belief revision  
+> + warning decision。
+
+请结合当前模型真实能力和最新 literature 判断：
+
+> 哪个角色最科学、最可验证、最有 benchmark 价值？
+
+---
+
+## 4.2 不要默认 LLM 能够替代专业天气模型
+
+李老师对：
+
+> 普通 LLM 根据当前天气资料直接预测未来复杂极端天气
+
+表示明显怀疑。
+
+其他老师也表达类似观点。
+
+因此请重点调研：
+
+> 当前 state-of-the-art LLM / VLM / Agent 实际能否完成这类任务？
+
+不要凭想象设计 benchmark。
+
+---
+
+## 4.3 Token / 时间 / Cost 更适合作为评价维度
+
+李老师建议：
+
+不要一开始就强制所有模型使用完全相同资源。
+
+可以让 agent 自然运行，然后单独报告：
+
+- tokens；
+- latency；
+- tool calls；
+- cost；
+- compute。
+
+请判断是否应该采用：
+
+> Quality × Timeliness × Cost
+
+的 Pareto evaluation。
+
+---
+
+# 5. 零丰华老师的主要意见
+
+## 5.1 当前最大问题还是：“到底在评测什么？”
+
+零老师同样没有立即理解：
+
+> 当前 benchmark 要测什么能力。
+
+这说明 task definition 不仅是表述问题，很可能本身就存在概念混合。
+
+---
+
+## 5.2 “LM 找工具 → 得到更好的预报”本身不够形成问题
+
+如果 benchmark 只是：
+
+> LLM 使用 search / tool，然后产生更好的 forecast，
+
+零老师认为：
+
+> 这个问题目前不是特别 make sense，也没有清楚解释到底解决了什么。
+
+请结合 agentic search / deep research benchmarks 判断：
+
+> Tool Use 本身是否早已不是 novelty？
+
+---
+
+## 5.3 真正有价值的是动态环境中的持续更新
+
+零老师更认可：
+
+> 极端事件发展过程中，每一个时刻都有新的观测进入。
+
+然后模型：
+
+- 动态评价；
+- 动态选择信息；
+- 动态更新当前判断；
+- 持续优化整个 prediction / warning state。
+
+因此请重点研究：
+
+> **Adaptive Revision under Evolving Evidence**
+
+是否应该成为 DisasterTrace 的核心 scientific problem。
+
+---
+
+# 6. 庄培钦老师的主要意见
+
+这是本次分析非常重要的约束。
+
+## 6.1 不要脱离 Related Work 谈 novelty
+
+庄老师认为：
+
+直接讨论：
+
+> “这个问题重要不重要？”
+
+很难得到客观答案。
+
+更加合理的研究逻辑是：
+
+> Existing Work  
+> → 已经解决什么  
+> → 存在哪个明确 limitation  
+> → 为什么这个 limitation 重要  
+> → DisasterTrace 补什么。
+
+---
+
+## 6.2 必须用具体论文证明 gap
+
+不能简单说：
+
+> “现有 benchmark 大部分都是 static。”
+
+必须：
+
+- 找出具体论文；
+- 阅读它们的 benchmark setting；
+- 找出真实 limitation；
+- 证明它们确实无法评价你关心的问题。
+
+因此请构建：
+
+| Work | Task | Static/Live | Streaming Evidence | Revision | Search | Tool Use | Persistent State | Ground Truth | Limitation |
+|---|---|---|---|---|---|---|---|---|---|
+
+---
+
+## 6.3 以终为始考虑论文 Related Work
+
+最终论文一定需要回答：
+
+> 与 closest benchmark 有什么不同？
+
+所以 scientific question 应该从：
+
+> **现有工作未解决的问题**
+
+中推出。
+
+而不是：
+
+> 先做完 benchmark，再尝试寻找 novelty。
+
+---
+
+# 7. 请先判断老师意见是否正确
+
+非常重要：
+
+不要机械接受以上意见。
+
+对于每位老师的重要建议，请输出：
+
+| Feedback | Agree / Partially Agree / Disagree | Literature Evidence | Repository Evidence | Recommended Action |
+|---|---|---|---|---|
+
+如果最新论文或实验事实说明某项导师判断并不成立，请明确指出。
+
+---
+
+# 8. 请重点检索最新 Related Work
+
+至少覆盖：
+
+## A. Live / Living / Dynamic Benchmarks
+
+搜索：
+
+- live benchmark；
+- living benchmark；
+- self-evolving benchmark；
+- future prediction benchmark；
+- continuously updated evaluation；
+- dynamic benchmark。
+
+---
+
+## B. Streaming / Continual Agents
+
+搜索：
+
+- streaming agent；
+- continual agent；
+- sequential evidence；
+- persistent agent state；
+- longitudinal benchmark；
+- lifelong agent。
+
+---
+
+## C. Belief Revision / Forecast Revision
+
+尤其重要。
+
+搜索：
+
+- belief revision；
+- forecast revision；
+- sequential forecasting；
+- dynamic prediction；
+- probabilistic forecast update；
+- evolving evidence；
+- Bayesian evidence update；
+- anytime prediction。
+
+重点判断：
+
+> DisasterTrace 是否应该从 “search benchmark” 重构成 “evolving-evidence belief revision benchmark”。
+
+---
+
+## D. Agentic Search / Deep Research
+
+研究：
+
+- active information acquisition；
+- adaptive retrieval；
+- information gathering；
+- search planning；
+- stopping policy；
+- tool selection。
+
+确认：
+
+> “自主搜索资料”本身还有没有 novelty。
+
+---
+
+## E. Weather / Extreme Event Benchmarks
+
+检索：
+
+- WeatherBench；
+- ExtremeWeatherBench；
+- ForecastBench；
+- weather foundation models；
+- extreme-weather AI；
+- disaster benchmark；
+- geoscience agent；
+- Earth observation VLM；
+- multimodal weather reasoning。
+
+---
+
+## F. Failure Attribution
+
+检索：
+
+- process-level evaluation；
+- trajectory evaluation；
+- agent failure attribution；
+- causal intervention；
+- counterfactual replay；
+- error localization。
+
+重点判断：
+
+> Replay + Intervention 是否可以比普通 error analysis 更进一步。
+
+---
+
+# 9. 重新定义真正的 Live Benchmark
+
+请认真研究下面这个候选结构：
+
+\[
+E_0
+\rightarrow S_0
+\rightarrow E_1
+\rightarrow A_1
+\rightarrow S_1
+\rightarrow E_2
+\rightarrow A_2
+\rightarrow S_2
+\rightarrow ...
+\rightarrow Y
+\]
+
+其中：
+
+### \(E_t\)
+截至时间 \(t\) 新进入系统的 evidence。
+
+可能包括：
+
+- station observation；
+- radar；
+- satellite；
+- forecast；
+- bulletin；
+- warning；
+- numerical weather model；
+- disaster report。
+
+### \(S_t\)
+当前 agent belief/state。
+
+例如：
+
+- event probability；
+- intensity；
+- location；
+- confidence；
+- structured factual state。
+
+### \(A_t\)
+模型行为：
+
+- SEARCH；
+- READ；
+- RETRIEVE；
+- TOOL；
+- WEATHER_MODEL；
+- UPDATE；
+- HOLD；
+- WAIT；
+- STOP。
+
+### \(Y\)
+最终真实结果。
+
+请判断：
+
+> 这种结构是否真正形成一个有价值的 Live benchmark。
+
+---
+
+# 10. 一个特别重要的问题：什么时候“不更新”才是正确行为？
+
+不要默认：
+
+> 新信息来了 → 模型就应该更新。
+
+真正的系统应该能够区分：
+
+### Important evidence
+应该显著修正 belief。
+
+### Redundant evidence
+不需要更新。
+
+### Contradictory evidence
+需要判断可信度。
+
+### Correction / Amendment
+旧 evidence 已经失效。
+
+### Stale evidence
+不应该继续依赖。
+
+### Noise
+不应该过度反应。
+
+因此 benchmark 或许应该评价：
+
+> **WHEN TO UPDATE**
+
+而不仅是：
+
+> HOW TO UPDATE。
+
+请重点判断这是否能形成 stronger scientific question。
+
+---
+
+# 11. 重新审视 Incremental Value
+
+旧版主要考虑：
+
+> Faster / More Accurate / Lower Cost。
+
+请判断是否应该升级为：
+
+### Revision Value
+
+\[
+RV_t =
+L(S_{t-1},Y)-L(S_t,Y)
+\]
+
+衡量一次 state revision 是否真正改善最终预测。
+
+进一步可以评价：
+
+### Beneficial Revision
+
+### Harmful Revision
+
+### Correct Hold
+
+### Missed Revision
+
+### Overreaction
+
+### Stale Hold
+
+请结合相关论文重新正式化。
+
+---
+
+# 12. Failure Attribution 是否可以成为强 contribution？
+
+我原本希望区分：
+
+- Acquisition Failure；
+- Retrieval Failure；
+- Tool Failure；
+- Interpretation Failure；
+- Reasoning Failure；
+- Revision Failure；
+- Timing Failure；
+- Overreaction。
+
+请不要只给 taxonomy。
+
+研究：
+
+> 是否可以通过对同一个 historical state 进行 replay / intervention：
+
+例如：
+
+\[
+do(Evidence=e)
+\]
+
+\[
+do(Retrieval=r)
+\]
+
+\[
+do(ToolOutput=t)
+\]
+
+\[
+do(Interpretation=i)
+\]
+
+观察最终 prediction 的改变。
+
+从而定位：
+
+> 哪一步真正造成了结果变化？
+
+请判断这能否与已有 process evaluation 工作形成明显区别。
+
+---
+
+# 13. Shared Budget 重新定位
+
+请判断是否应该变成：
+
+## Main Track — Natural Agent
+
+模型自主决定：
+
+- search；
+- tool；
+- stop；
+- wait；
+- revision。
+
+评价：
+
+- forecast quality；
+- calibration；
+- revision quality；
+- timeliness；
+- tokens；
+- cost；
+- tool calls；
+- latency。
+
+---
+
+## Controlled Track
+
+统一：
+
+\[
+B \in \{B_1,B_2,B_3\}
+\]
+
+用于：
+
+- controlled comparison；
+- causal analysis；
+- ablation。
+
+而不是把 shared budget 本身包装成主要 novelty。
+
+---
+
+# 14. Cross-Hazard / Multimodal 应该是什么地位？
+
+请明确判断：
+
+### Cross-hazard
+
+到底是：
+
+- novelty；
+还是
+- generalization validation。
+
+### Multimodal
+
+到底是：
+
+- scientific contribution；
+还是
+- benchmark scope。
+
+不要为了增加 contribution 数量而强行包装。
+
+---
+
+# 15. 请提出至少 3 个候选 Scientific Questions
+
+必须是真正不同的问题，而不是改写措辞。
+
+例如但不限于：
+
+---
+
+## Candidate A — Living Forecast Revision
+
+> Can general-purpose agents maintain and correctly revise extreme-event beliefs as heterogeneous evidence evolves over time?
+
+---
+
+## Candidate B — Value of Information
+
+> Can agents determine when newly arriving evidence is sufficiently informative to justify changing an existing extreme-event forecast?
+
+---
+
+## Candidate C — Adaptive Evidence Acquisition
+
+> Can agents decide what evidence to acquire, when to acquire it, and when to stop under evolving extreme-event conditions?
+
+---
+
+也可以提出更好的版本。
+
+每个候选必须分析：
+
+- Why important；
+- Closest work；
+- Existing benchmark limitation；
+- Novelty；
+- Falsifiable hypothesis；
+- MVP；
+- Required engineering；
+- Reviewer attack；
+- Publication potential。
+
+最后选择一个推荐主线。
+
+---
+
+# 16. 最终 Novelty 请严格分层
+
+不要简单列 5–10 个 novelty。
+
+尝试整理成：
+
+## Core Novelty
+
+真正不可替代的 scientific contribution。
+
+---
+
+## Diagnostic Novelty
+
+例如：
+
+> intervention-based failure attribution。
+
+---
+
+## Evaluation Innovation
+
+例如：
+
+- revision value；
+- overreaction；
+- stale hold；
+- time-to-beneficial-revision。
+
+---
+
+## Validation Breadth
+
+例如：
+
+- cross-hazard；
+- cross-region；
+- multimodal；
+- multi-model。
+
+---
+
+## Engineering Contribution
+
+例如：
+
+- 真实时间 replay；
+- data adapters；
+- timestamp alignment；
+- reproducibility infrastructure。
+
+请避免把工程量误称为 research novelty。
+
+---
+
+# 17. Minimum Viable Benchmark
+
+导师明确希望先把核心点做扎实，而不是继续扩很多灾种。
+
+因此请从当前已有数据中选择：
+
+> 1 个主 domain + 最多 1 个辅助 domain
+
+作为 MVP。
+
+候选例如：
+
+- airport visibility；
+- hurricane / typhoon；
+- severe convection；
+- flood。
+
+依据：
+
+- evidence update frequency；
+- timestamp quality；
+- ground truth；
+- data availability；
+- licensing；
+- current repo support；
+- replay difficulty；
+- cost。
+
+设计一个：
+
+> 如果 MVP 都无法证明核心 hypothesis，就暂停扩张
+
+的实验。
+
+---
+
+# 18. Current Repository：KEEP / REFRAME / ABLATION / PAUSE / REMOVE
+
+根据当前真实代码逐项给出：
+
+## KEEP
+
+新版主线直接需要。
+
+## REFRAME
+
+代码有用，但 scientific interpretation 要变化。
+
+## ABLATION
+
+保留作为 controlled experiment。
+
+## PAUSE
+
+暂时停止继续扩展。
+
+## REMOVE
+
+如果确实没有价值，明确建议移除。
+
+尽可能具体到：
+
+- folder；
+- script；
+- module；
+- experiment；
+- artifact。
+
+---
+
+# 19. Reviewer Stress Test
+
+模拟至少 12 条严格 reviewer criticism。
+
+必须包括：
+
+1. “Live benchmark 本身已经有人做。”
+2. “这只是 Weather + Web Agent。”
+3. “LLM 不应该做天气预测。”
+4. “专业天气模型已经比 LLM 强得多。”
+5. “Search 不是 novelty。”
+6. “Tool Use 不是 novelty。”
+7. “不断重新 prompt 不等于 belief revision。”
+8. “Failure attribution 只是 error taxonomy。”
+9. “Replay 不是真实 deployment。”
+10. “Cross-hazard 只是数据规模。”
+11. “Resource budget 是人为设置。”
+12. “Ground truth / professional forecast 定义混乱。”
+
+对每一条都提出：
+
+> **必须通过什么实验才能回答 reviewer。**
+
+---
+
+# 20. 最后请形成明确 Roadmap
+
+请按照：
+
+## P0 — Related Work Gap Validation
+
+首先证明：
+
+> gap 是否真的存在。
+
+---
+
+## P1 — Scientific Question Freeze
+
+冻结核心 claim。
+
+---
+
+## P2 — Task Contract
+
+明确：
+
+- input；
+- output；
+- action；
+- hidden information；
+- professional forecast；
+- ground truth；
+- metric。
+
+---
+
+## P3 — Minimal Live Replay
+
+构建最小真实 Live episode。
+
+---
+
+## P4 — Natural Agent Evaluation
+
+测试：
+
+> agent 是否真的能够持续维护和修订 state。
+
+---
+
+## P5 — Intervention Attribution
+
+进行 counterfactual / controlled replay。
+
+---
+
+## P6 — Generalization
+
+最后再扩：
+
+- multi-hazard；
+- multimodal；
+- cross-region；
+- more models。
+
+---
+
+# 21. 输出格式
+
+最终严格按照：
+
+## 1. Executive Diagnosis
+
+一句话告诉我：
+
+> 当前 DisasterTrace 最大的问题到底是什么。
+
+---
+
+## 2. Advisor Feedback Matrix
+
+逐条分析五位老师意见。
+
+---
+
+## 3. Current Repository Reality
+
+真实代码进度。
+
+---
+
+## 4. Latest Related Work
+
+重点 2025–2026。
+
+---
+
+## 5. Related Work Gap Matrix
+
+---
+
+## 6. Which Advisor Concerns Are Valid?
+
+---
+
+## 7. Three Candidate Scientific Questions
+
+---
+
+## 8. Recommended Core Scientific Question
+
+---
+
+## 9. Revised Benchmark Architecture
+
+---
+
+## 10. Formal Task Contract
+
+---
+
+## 11. Ground Truth & Professional Baseline
+
+---
+
+## 12. Metrics
+
+---
+
+## 13. Novelty Audit
+
+严格区分：
+
+- Core Novelty；
+- Diagnostic Contribution；
+- Evaluation Innovation；
+- Validation Breadth；
+- Engineering Contribution。
+
+---
+
+## 14. Existing Code
+
+KEEP / REFRAME / ABLATION / PAUSE / REMOVE。
+
+---
+
+## 15. MVP
+
+---
+
+## 16. Experiments Needed
+
+每个实验必须写：
+
+> **Which claim does this experiment validate?**
+
+---
+
+## 17. Reviewer Stress Test
+
+---
+
+## 18. Step-by-Step Roadmap
+
+---
+
+## 19. Codex Implementation Plan
+
+把 engineering 工作转换成：
+
+- P0；
+- P1；
+- P2；
+
+每个 task 提供：
+
+- files；
+- modifications；
+- tests；
+- acceptance criteria；
+- dependencies。
+
+---
+
+## 20. Next Meeting Presentation
+
+最后再给我一个非常简洁的导师汇报版本。
+
+控制在约 3–5 页 PPT 的信息量。
+
+逻辑必须是：
+
+### Slide 1
+Last meeting questions → 本周回答了什么。
+
+### Slide 2
+Latest related-work gap。
+
+### Slide 3
+Revised scientific question。
+
+### Slide 4
+Benchmark task / episode diagram。
+
+### Slide 5
+Current progress + immediate next steps。
+
+---
+
+# 22. 最重要的原则
+
+整个分析过程中始终遵守：
+
+> **不要因为我已经投入很多工程工作，就替旧方案辩护。**
+
+> **不要因为导师提出了一个方向，就默认导师一定正确。**
+
+> **不要因为 Live 听起来新，就默认 Live 本身构成 novelty。**
+
+> **不要用“我们支持更多灾种/更多数据”代替 scientific contribution。**
+
+> **不要把更快、更省 token、更少 tool calls 单独包装成核心 scientific novelty。**
+
+> **不要在 task definition 尚未冻结时继续大规模扩数据和跑实验。**
+
+> **先通过最新论文证明 gap，再冻结 scientific question，再设计 benchmark。**
+
+最终我希望得到的不是一个越来越复杂的系统，而是：
+
+> **一个明确回答“现有 benchmark 无法评价什么重要能力，而 DisasterTrace 为什么能够评价”的研究方案。**
+
+如果最终调研发现原来的方案 novelty 不够，请直接重构。
+
+如果发现某个旧模块已经没有价值，也可以放弃。
+
+最终优化目标是：
+
+> **Scientific importance × novelty × verifiability × reproducibility × implementation feasibility**
+
+而不是：
+
+> feature 数量最多。
+<!-- END SOURCE H -->
 
 </details>
