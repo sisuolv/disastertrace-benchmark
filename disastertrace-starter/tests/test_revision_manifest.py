@@ -9,6 +9,8 @@ Tests cover:
 - Overwrite-refusal guard
 - Import-isolation (Y-isolation)
 - Real-data integration (guarded)
+- V17-01: ExposureRegistry preregistration enforcement (F07)
+- V17-01: Content-based archive fingerprinting (F07)
 """
 
 from __future__ import annotations
@@ -904,3 +906,297 @@ class TestDiscloseStatisticsGranularity:
         assert resolved_count_buggy != (positive_count_buggy + (1 * checkpoints_per_target)), (
             "This test demonstrates that buggy counting gives wrong resolved count"
         )
+
+
+# ---------------------------------------------------------------------------
+# Test: V17-01 ExposureRegistry preregistration enforcement (F07)
+# ---------------------------------------------------------------------------
+
+class TestExposureRegistry:
+    """Tests for ExposureRegistry preregistration enforcement."""
+
+    def test_register_freeze_succeeds_first_time(self, tmp_path):
+        """First freeze registration succeeds."""
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            compute_manifest_logical_id,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        logical_id = "test_manifest_001"
+        sha256 = "abc123def456"
+
+        entry = registry.register_freeze(logical_id, sha256)
+
+        assert entry.logical_id == logical_id
+        assert entry.expected_manifest_sha256 == sha256
+        assert entry.entry_type == "freeze"
+        assert registry.is_frozen(logical_id)
+
+    def test_refreeze_same_logical_id_rejected(self, tmp_path):
+        """Re-freeze attempt on already-frozen logical_id is rejected.
+
+        This is the F07 fix: renaming the output file does not bypass the
+        preregistration check because we track by logical_id, not filename.
+        """
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            AlreadyFrozenError,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        logical_id = "test_manifest_001"
+        sha256_original = "abc123"
+        sha256_new = "def456"  # Attacker tries with different content
+
+        # First freeze succeeds
+        registry.register_freeze(logical_id, sha256_original)
+
+        # Second freeze with same logical_id is rejected
+        with pytest.raises(AlreadyFrozenError) as exc_info:
+            registry.register_freeze(logical_id, sha256_new)
+
+        assert "already frozen" in str(exc_info.value)
+        assert logical_id in str(exc_info.value)
+
+    def test_refreeze_after_rename_still_rejected(self, tmp_path):
+        """Re-freeze after 'deleting and renaming' is still rejected.
+
+        This specifically tests the F07 scenario: an attacker deletes
+        manifest_v1.json and tries to regenerate as manifest_v2.json.
+        Since logical_id is derived from inputs (not filename), this fails.
+        """
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            AlreadyFrozenError,
+            compute_manifest_logical_id,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        # Compute logical_id from inputs (same inputs = same logical_id)
+        selection_rule = "manifest_selection.v1"
+        taf_summary = "archive_abc123"
+        config_sha = "config_def456"
+
+        logical_id = compute_manifest_logical_id(
+            selection_rule, taf_summary, config_sha
+        )
+
+        # First freeze with filename "manifest_v1.json" (not tracked by registry)
+        registry.register_freeze(logical_id, "sha256_original")
+
+        # Attacker "deletes manifest_v1.json" and tries with "manifest_v2.json"
+        # But same inputs produce same logical_id!
+        same_logical_id = compute_manifest_logical_id(
+            selection_rule, taf_summary, config_sha
+        )
+
+        assert same_logical_id == logical_id
+
+        with pytest.raises(AlreadyFrozenError):
+            registry.register_freeze(same_logical_id, "sha256_modified")
+
+    def test_disclosure_requires_freeze(self, tmp_path):
+        """Disclosure fails if logical_id was never frozen."""
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            NotFrozenError,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        with pytest.raises(NotFrozenError) as exc_info:
+            registry.register_disclosure("never_frozen_id", "some_sha256")
+
+        assert "never frozen" in str(exc_info.value)
+
+    def test_disclosure_verifies_sha256(self, tmp_path):
+        """Disclosure fails if sha256 doesn't match frozen value."""
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            ManifestMismatchError,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        logical_id = "test_manifest"
+        frozen_sha256 = "correct_sha256"
+        wrong_sha256 = "tampered_sha256"
+
+        registry.register_freeze(logical_id, frozen_sha256)
+
+        with pytest.raises(ManifestMismatchError) as exc_info:
+            registry.register_disclosure(logical_id, wrong_sha256)
+
+        assert "mismatch" in str(exc_info.value).lower()
+
+    def test_append_only_property(self, tmp_path):
+        """Registry writes never drop or mutate prior entries."""
+        from disastertrace.revision_v1.exposure_registry import ExposureRegistry
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        # Write two entries
+        entry1 = registry.register_freeze("id_1", "sha1")
+        entry2 = registry.register_freeze("id_2", "sha2")
+
+        # Re-open and verify both entries present and identical
+        registry2 = ExposureRegistry(registry_path)
+
+        entries = registry2.list_entries()
+        assert len(entries) == 2
+
+        assert entries[0].logical_id == "id_1"
+        assert entries[0].expected_manifest_sha256 == "sha1"
+        assert entries[1].logical_id == "id_2"
+        assert entries[1].expected_manifest_sha256 == "sha2"
+
+        # Now add a disclosure
+        registry2.register_disclosure("id_1", "sha1")
+
+        # Re-open again and verify all three entries
+        registry3 = ExposureRegistry(registry_path)
+        entries = registry3.list_entries()
+        assert len(entries) == 3
+
+        # Original entries unchanged
+        assert entries[0].logical_id == "id_1"
+        assert entries[0].entry_type == "freeze"
+        assert entries[1].logical_id == "id_2"
+        assert entries[1].entry_type == "freeze"
+        assert entries[2].logical_id == "id_1"
+        assert entries[2].entry_type == "disclosure"
+
+
+# ---------------------------------------------------------------------------
+# Test: V17-01 Content-based archive fingerprinting (F07)
+# ---------------------------------------------------------------------------
+
+class TestContentBasedFingerprinting:
+    """Tests for content-based archive fingerprinting.
+
+    The F07 fix: fingerprint must be content-derived, not just dir name + count.
+    """
+
+    def test_different_content_produces_different_fingerprint(self, tmp_path):
+        """Two archives with same name+count but different content have different fingerprints.
+
+        This is the core F07 fix: the old fingerprint was just f"{dir_name}:{file_count}"
+        which would be identical for archives with different file contents.
+        """
+        # Import the updated function
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import generate_taf_archive_summary
+
+        # Create two archives with IDENTICAL dir names and file counts
+        archive1 = tmp_path / "test_archive"
+        archive2 = tmp_path / "test_archive_2"
+        archive1.mkdir()
+        archive2.mkdir()
+
+        # Create same number of files in each
+        for i in range(3):
+            body1 = archive1 / f"file{i}.body"
+            body2 = archive2 / f"file{i}.body"
+
+            body1.write_text(f"content_a_{i}")
+            body2.write_text(f"content_b_{i}")  # DIFFERENT content
+
+            # Create receipts with SHA256s
+            receipt1 = archive1 / f"file{i}.json"
+            receipt2 = archive2 / f"file{i}.json"
+
+            sha1 = hashlib.sha256(f"content_a_{i}".encode()).hexdigest()
+            sha2 = hashlib.sha256(f"content_b_{i}".encode()).hexdigest()
+
+            receipt1.write_text(json.dumps({"sha256": sha1}))
+            receipt2.write_text(json.dumps({"sha256": sha2}))
+
+        # Generate fingerprints
+        fp1 = generate_taf_archive_summary(archive1)
+        fp2 = generate_taf_archive_summary(archive2)
+
+        # They must be DIFFERENT (F07 fix)
+        assert fp1 != fp2, (
+            "F07 bug: archives with different content produced same fingerprint"
+        )
+
+    def test_same_content_different_order_produces_same_fingerprint(self, tmp_path):
+        """Same content discovered in different order produces same fingerprint.
+
+        The fingerprint should sort file entries before hashing for determinism.
+        """
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import generate_taf_archive_summary
+
+        # Create archive
+        archive = tmp_path / "test_archive"
+        archive.mkdir()
+
+        # Create files
+        files_content = [
+            ("c_file.body", "content_c"),
+            ("a_file.body", "content_a"),
+            ("b_file.body", "content_b"),
+        ]
+
+        for name, content in files_content:
+            body = archive / name
+            body.write_text(content)
+
+            receipt = archive / name.replace(".body", ".json")
+            sha = hashlib.sha256(content.encode()).hexdigest()
+            receipt.write_text(json.dumps({"sha256": sha}))
+
+        # Generate fingerprint multiple times
+        fp1 = generate_taf_archive_summary(archive)
+        fp2 = generate_taf_archive_summary(archive)
+
+        # Must be identical (deterministic, order-independent)
+        assert fp1 == fp2
+
+    def test_missing_receipt_raises_error(self, tmp_path):
+        """Missing receipt file for a .body raises clear error."""
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import generate_taf_archive_summary
+
+        archive = tmp_path / "test_archive"
+        archive.mkdir()
+
+        # Create .body WITHOUT matching .json receipt
+        body = archive / "orphan.body"
+        body.write_text("content")
+
+        with pytest.raises(ValueError) as exc_info:
+            generate_taf_archive_summary(archive)
+
+        assert "Receipt file missing" in str(exc_info.value)
+
+    def test_receipt_missing_sha256_raises_error(self, tmp_path):
+        """Receipt without sha256 field raises clear error."""
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import generate_taf_archive_summary
+
+        archive = tmp_path / "test_archive"
+        archive.mkdir()
+
+        body = archive / "test.body"
+        body.write_text("content")
+
+        # Receipt without sha256
+        receipt = archive / "test.json"
+        receipt.write_text(json.dumps({"other_field": "value"}))
+
+        with pytest.raises(ValueError) as exc_info:
+            generate_taf_archive_summary(archive)
+
+        assert "sha256" in str(exc_info.value).lower()

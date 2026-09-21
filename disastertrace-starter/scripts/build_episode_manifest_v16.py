@@ -9,6 +9,11 @@ Two-phase design:
     reads ASOS/outcome data to compute and write disclosure statistics.
     Produces EPISODE_MANIFEST_v16_DISCLOSURE.md.
 
+V17-01 / F04+F07 enhancements:
+  - AccessPolicy enforcement before any ASOS file discovery
+  - ExposureRegistry for preregistration enforcement
+  - Content-based archive fingerprinting (not just dir name + count)
+
 Usage:
   python scripts/build_episode_manifest_v16.py           # Phase 1: freeze
   python scripts/build_episode_manifest_v16.py --disclose  # Phase 2: disclose
@@ -17,6 +22,7 @@ Exit codes:
   0 - Success
   1 - Validation errors or runtime issues
   2 - Manifest already exists (freeze mode only)
+  3 - ExposureRegistry rejection (logical_id already frozen)
 """
 
 from __future__ import annotations
@@ -39,8 +45,23 @@ from disastertrace.revision_v1.manifest import (
     load_stations_calendar,
     verify_manifest_integrity,
     validate_manifest,
+    get_holdout_window,
+    windows_overlap,
+    compute_self_sha256,
 )
 from disastertrace.revision_v1.episode_compiler import compile_afos_taf_stream
+from disastertrace.revision_v1.access_policy import (
+    AccessPolicy,
+    AccessPolicyViolation,
+    make_policy_for_real_v16,
+)
+from disastertrace.revision_v1.exposure_registry import (
+    ExposureRegistry,
+    AlreadyFrozenError,
+    NotFrozenError,
+    ManifestMismatchError,
+    compute_manifest_logical_id,
+)
 
 
 # Default paths
@@ -56,6 +77,9 @@ DEFAULT_MANIFEST_PATH = Path(
 )
 DEFAULT_DISCLOSURE_PATH = Path(
     _project / "data_contracts" / "EPISODE_MANIFEST_v16_DISCLOSURE.md"
+)
+DEFAULT_EXPOSURE_REGISTRY_PATH = Path(
+    _project / "data_contracts" / "exposure_registry_v17.json"
 )
 
 
@@ -107,19 +131,105 @@ def compile_all_taf_packages(
 
 
 def generate_taf_archive_summary(bulk_dir: Path) -> str:
-    """Generate summary hash of TAF archive state."""
-    # Hash the directory name plus file count
-    file_count = len(list(bulk_dir.glob("*.body")))
-    summary_str = f"{bulk_dir.name}:{file_count}"
-    return hashlib.sha256(summary_str.encode()).hexdigest()[:16]
+    """Generate content-based summary hash of TAF archive state.
+
+    V17-01 / F07 fix: Now uses content-based fingerprinting instead of just
+    directory name + file count. The fingerprint is derived from:
+    1. For each .body file, get its SHA256 from its sibling .json receipt
+    2. Sort (filename, sha256) pairs deterministically
+    3. Hash the sorted concatenation
+
+    This ensures that two archives with the same name and file count but
+    different file contents will produce different fingerprints.
+
+    Raises:
+        ValueError: If any .body file is missing its .json receipt with sha256.
+    """
+    body_files = sorted(bulk_dir.glob("*.body"))
+
+    if not body_files:
+        # Empty archive - hash just the directory name as fallback
+        return hashlib.sha256(f"empty:{bulk_dir.name}".encode()).hexdigest()[:16]
+
+    # Collect (filename, sha256) pairs from receipts
+    file_hashes = []
+
+    for body_file in body_files:
+        receipt_path = body_file.with_suffix(".json")
+
+        if not receipt_path.exists():
+            raise ValueError(
+                f"Receipt file missing for {body_file.name}. "
+                f"Content-based fingerprinting requires all .body files to have "
+                f"a sibling .json receipt with a sha256 field."
+            )
+
+        with open(receipt_path, "r") as f:
+            receipt = json.load(f)
+
+        sha256 = receipt.get("sha256")
+        if not sha256:
+            raise ValueError(
+                f"Receipt for {body_file.name} missing sha256 field. "
+                f"Content-based fingerprinting requires sha256 in all receipts."
+            )
+
+        file_hashes.append((body_file.name, sha256))
+
+    # Sort deterministically by filename (already sorted from glob, but be explicit)
+    file_hashes.sort(key=lambda x: x[0])
+
+    # Build concatenated string for final hash
+    concat = "\n".join(f"{name}:{sha256}" for name, sha256 in file_hashes)
+
+    return hashlib.sha256(concat.encode()).hexdigest()[:16]
+
+
+def verify_stations_calendar_sha256_match(
+    config_path: Path,
+    manifest: dict,
+) -> None:
+    """Cross-verify stations_calendar sha256 against manifest record.
+
+    V17-01 / F07 fix: The manifest records stations_calendar_sha256 at freeze
+    time. At disclosure time, we re-verify the config and cross-check that
+    the current sidecar sha256 matches what was recorded.
+
+    Raises:
+        ValueError: If sha256 values don't match.
+    """
+    from disastertrace.revision_v1.manifest import verify_config_sha256
+
+    # Get current sha256 from sidecar
+    current_sha256 = verify_config_sha256(config_path)
+
+    # Get recorded sha256 from manifest
+    recorded_sha256 = manifest.get("input_fingerprints", {}).get("stations_calendar_sha256")
+
+    if not recorded_sha256:
+        raise ValueError(
+            "Manifest missing stations_calendar_sha256 in input_fingerprints"
+        )
+
+    if current_sha256 != recorded_sha256:
+        raise ValueError(
+            f"stations_calendar SHA256 mismatch. "
+            f"Manifest recorded: {recorded_sha256}, "
+            f"Current sidecar: {current_sha256}. "
+            f"The config may have been modified after manifest freeze."
+        )
 
 
 def run_freeze(
     config_path: Path,
     bulk_dir: Path,
     manifest_path: Path,
+    exposure_registry_path: Path,
 ) -> int:
     """Phase 1: Freeze episode selection.
+
+    V17-01 / F07 fix: Now registers freeze in ExposureRegistry to prevent
+    re-freezing under a different filename.
 
     Returns exit code.
     """
@@ -127,21 +237,55 @@ def run_freeze(
     print(f"  Config: {config_path}")
     print(f"  TAF bulk: {bulk_dir}")
     print(f"  Output: {manifest_path}")
+    print(f"  Exposure registry: {exposure_registry_path}")
     print()
+
+    # Load config early to get sha256 for logical_id computation
+    config, config_sha256 = load_stations_calendar(config_path)
+    stations = [s["icao"] for s in config.get("stations", [])]
+
+    # Generate archive summary early for logical_id
+    try:
+        taf_archive_summary = generate_taf_archive_summary(bulk_dir)
+    except ValueError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        return 1
+
+    # Compute logical_id for this freeze attempt
+    logical_id = compute_manifest_logical_id(
+        SELECTION_RULE_VERSION,
+        taf_archive_summary,
+        config_sha256,
+    )
+
+    # Check ExposureRegistry BEFORE checking output file
+    # This closes F07: re-freeze is rejected even under a new filename
+    registry = ExposureRegistry(exposure_registry_path)
+    if registry.is_frozen(logical_id):
+        freeze_entry = registry.get_freeze_entry(logical_id)
+        print(f"ERROR: This manifest was already frozen.", file=sys.stderr)
+        print(f"  Logical ID: {logical_id}", file=sys.stderr)
+        print(f"  Frozen at: {freeze_entry.frozen_at}", file=sys.stderr)
+        print(f"  Expected SHA256: {freeze_entry.expected_manifest_sha256}", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("Re-freezing the same selection under a different filename is not allowed.", file=sys.stderr)
+        print("This protects preregistration integrity. If you need to modify the", file=sys.stderr)
+        print("selection, you must use a different selection_rule_version or config,", file=sys.stderr)
+        print("which will produce a different logical_id.", file=sys.stderr)
+        return 3
 
     # Check if manifest already exists - REFUSE to overwrite
     if manifest_path.exists():
         print(f"ERROR: Manifest already exists at {manifest_path}", file=sys.stderr)
         print("This script refuses to overwrite frozen manifests.", file=sys.stderr)
-        print("Delete the existing manifest manually if you want to regenerate.", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("If this is the same selection that was already frozen (same logical_id),", file=sys.stderr)
+        print("the manifest content should be identical. If you believe the existing", file=sys.stderr)
+        print("file is corrupt, verify its self_sha256 first.", file=sys.stderr)
         return 2
 
     # Create output directory if needed
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
-
-    # Load config to get stations
-    config, _ = load_stations_calendar(config_path)
-    stations = [s["icao"] for s in config.get("stations", [])]
 
     # Generate year-months (excluding Feb 2025 holdout)
     year_months = []
@@ -166,9 +310,6 @@ def run_freeze(
     print(f"  Frames skipped: {compile_summary['frames_skipped']}")
     print()
 
-    # Generate archive summary
-    taf_archive_summary = generate_taf_archive_summary(bulk_dir)
-
     print(f"Building manifest...")
 
     # Freeze manifest
@@ -186,6 +327,17 @@ def run_freeze(
             print(f"  - {error}", file=sys.stderr)
         return 1
 
+    # Register freeze in ExposureRegistry BEFORE writing manifest
+    manifest_sha256 = manifest.get("self_sha256")
+    try:
+        registry.register_freeze(logical_id, manifest_sha256)
+        print(f"  Registered freeze in exposure registry")
+        print(f"    Logical ID: {logical_id}")
+    except AlreadyFrozenError as e:
+        # This shouldn't happen since we checked above, but handle it
+        print(f"ERROR: {e}", file=sys.stderr)
+        return 3
+
     # Write manifest
     with open(manifest_path, "w") as f:
         json.dump(manifest, f, indent=2)
@@ -199,6 +351,8 @@ def run_freeze(
     print(f"  Total targets: {queue_summary.get('total_count', 0)}")
     print(f"  Frozen at: {manifest.get('frozen_at')}")
     print(f"  Self SHA256: {manifest.get('self_sha256')[:16]}...")
+    print(f"  Logical ID: {logical_id}")
+    print(f"  TAF archive summary: {taf_archive_summary}")
     print(f"  Output: {manifest_path}")
 
     return 0
@@ -208,14 +362,19 @@ def run_disclose(
     manifest_path: Path,
     disclosure_path: Path,
     config_path: Path,
+    exposure_registry_path: Path,
 ) -> int:
     """Phase 2: Disclose statistics (reads outcome data).
+
+    V17-01 / F04 fix: Now enforces AccessPolicy BEFORE ASOS file discovery.
+    V17-01 / F07 fix: Registers disclosure in ExposureRegistry after integrity check.
 
     Returns exit code.
     """
     print(f"Phase 2: Disclose episode statistics")
     print(f"  Manifest: {manifest_path}")
     print(f"  Output: {disclosure_path}")
+    print(f"  Exposure registry: {exposure_registry_path}")
     print()
 
     # Check manifest exists
@@ -238,6 +397,81 @@ def run_disclose(
         print("Cannot proceed with disclosure - manifest may have been tampered.", file=sys.stderr)
         return 1
 
+    # V17-01 / F07 fix: Cross-verify stations_calendar sha256
+    print(f"Verifying stations_calendar SHA256...")
+    try:
+        verify_stations_calendar_sha256_match(config_path, manifest)
+        print(f"  stations_calendar SHA256 check PASSED")
+    except ValueError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        return 1
+
+    # Load config for AccessPolicy and stations
+    config, config_sha256 = load_stations_calendar(config_path)
+    stations_config = {s["icao"]: s for s in config.get("stations", [])}
+
+    # V17-01 / F04 fix: Create AccessPolicy for boundary enforcement
+    # Build allowed year-months list (excluding holdout)
+    allowed_year_months = set()
+    for year in [2023, 2024, 2025]:
+        for month in range(1, 13):
+            ym = f"{year:04d}-{month:02d}"
+            allowed_year_months.add(ym)
+    # Remove holdout month
+    allowed_year_months.discard("2025-02")
+
+    access_policy = make_policy_for_real_v16(
+        config,
+        allowed_year_months=frozenset(allowed_year_months),
+    )
+    print(f"  AccessPolicy configured with {len(allowed_year_months)} allowed months")
+
+    # V17-01 / F04 fix: Check all target checkpoints against holdout BEFORE any ASOS access
+    print(f"Pre-validating target checkpoints against holdout window...")
+    holdout_start_us, holdout_end_us = get_holdout_window(config)
+    targets = manifest.get("targets", [])
+
+    for target in targets:
+        target_id = target.get("target_id")
+        validity_start_us = target.get("validity_start_us")
+        validity_end_us = target.get("validity_end_us")
+        checkpoints = target.get("checkpoints", [])
+
+        # Check target validity window
+        if windows_overlap(validity_start_us, validity_end_us, holdout_start_us, holdout_end_us):
+            print(f"ERROR: Target {target_id} validity window overlaps holdout", file=sys.stderr)
+            return 1
+
+        # Check each checkpoint
+        for cp in checkpoints:
+            cp_time_us = cp.get("time_us")
+            if holdout_start_us <= cp_time_us < holdout_end_us:
+                print(f"ERROR: Target {target_id} checkpoint {cp_time_us} falls in holdout", file=sys.stderr)
+                return 1
+
+    print(f"  All {len(targets)} targets pass holdout boundary check")
+
+    # V17-01 / F07 fix: Register disclosure in ExposureRegistry
+    manifest_sha256 = manifest.get("self_sha256")
+    taf_archive_summary = manifest.get("input_fingerprints", {}).get("taf_archive_summary", "")
+    logical_id = compute_manifest_logical_id(
+        manifest.get("selection_rule_version", SELECTION_RULE_VERSION),
+        taf_archive_summary,
+        config_sha256,
+    )
+
+    registry = ExposureRegistry(exposure_registry_path)
+    print(f"Registering disclosure in exposure registry...")
+    try:
+        registry.register_disclosure(logical_id, manifest_sha256)
+        print(f"  Disclosure registered for logical_id: {logical_id}")
+    except NotFrozenError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        return 1
+    except ManifestMismatchError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        return 1
+
     # Now we're allowed to import outcome_wiring (only in disclose phase)
     # This is the ONLY place outcome data should be read
     from disastertrace.revision_v1.outcome_wiring import (
@@ -248,10 +482,6 @@ def run_disclose(
         FROZEN_THRESHOLDS_M,
     )
     from disastertrace.revision_v1.episode_compiler import compile_asos_csv_to_observations
-
-    # Load config for stations
-    config, _ = load_stations_calendar(config_path)
-    stations_config = {s["icao"]: s for s in config.get("stations", [])}
 
     # Build disclosure report
     lines = []
@@ -356,9 +586,31 @@ def run_disclose(
             # Real layout: asos/{station}/{YYYY-MM}/{run_id}/*.body
             ym_dashed = f"{dt.year:04d}-{dt.month:02d}"
 
+            # V17-01 / F04 fix: Check year-month against AccessPolicy BEFORE glob
+            try:
+                access_policy._check_holdout_window(year_month=ym_dashed)
+                access_policy._check_allowed_year_months(ym_dashed)
+            except AccessPolicyViolation as e:
+                lines.append(f"Outcome: REJECTED by AccessPolicy ({e})")
+                missing_count_5km += num_checkpoints
+                missing_count_1km += num_checkpoints
+                lines.append("")
+                continue
+
             # Bug 1 fix: Correct glob pattern - station first, then dashed year-month,
             # then run_id directory, then .body files
             asos_pattern = list(asos_dir.glob(f"{station}/{ym_dashed}/*/*.body"))
+
+            # V17-01 / F04 fix: Filter out any paths that fail AccessPolicy
+            allowed_paths = []
+            for p in asos_pattern:
+                try:
+                    access_policy.assert_allowed(p)
+                    allowed_paths.append(p)
+                except AccessPolicyViolation:
+                    pass  # Silently filter out disallowed paths
+
+            asos_pattern = allowed_paths
 
             if asos_pattern:
                 # If multiple run_ids exist, pick the lexicographically-last (newest)
@@ -367,7 +619,11 @@ def run_disclose(
                 asos_body = asos_pattern[-1]  # Last = newest run_id
 
                 try:
-                    content, provenance = load_asos_with_provenance(str(asos_body))
+                    # V17-01 / F04 fix: Pass access_policy to load_asos_with_provenance
+                    content, provenance = load_asos_with_provenance(
+                        str(asos_body),
+                        access_policy=access_policy,
+                    )
 
                     # Parse observations
                     observations, _ = compile_asos_csv_to_observations(content, station=station)
@@ -558,13 +814,29 @@ def main():
         default=DEFAULT_DISCLOSURE_PATH,
         help=f"Path to disclosure MD (default: {DEFAULT_DISCLOSURE_PATH})",
     )
+    parser.add_argument(
+        "--exposure-registry",
+        type=Path,
+        default=DEFAULT_EXPOSURE_REGISTRY_PATH,
+        help=f"Path to exposure registry JSON (default: {DEFAULT_EXPOSURE_REGISTRY_PATH})",
+    )
 
     args = parser.parse_args()
 
     if args.disclose:
-        return run_disclose(args.manifest, args.disclosure, args.config)
+        return run_disclose(
+            args.manifest,
+            args.disclosure,
+            args.config,
+            args.exposure_registry,
+        )
     else:
-        return run_freeze(args.config, args.bulk_dir, args.manifest)
+        return run_freeze(
+            args.config,
+            args.bulk_dir,
+            args.manifest,
+            args.exposure_registry,
+        )
 
 
 if __name__ == "__main__":

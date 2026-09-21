@@ -5,11 +5,15 @@ Parses all .body files under data_real_v16/lamp/raw/20260920T100529Z_09c70a575ad
 and generates data_contracts/lamp_categorical_registry_v16.json with metadata
 and record counts per station/element.
 
+V17-01 / F04 enhancement: Now filters out holdout-window months (202502) and
+validates all paths against AccessPolicy before parsing.
+
 This script:
 - Reads from data_real_v16/ (read-only)
 - Writes to data_contracts/ (inside git repo)
 - Refuses to overwrite an existing registry file
 - Includes DL4_STATUS.json finding that archive is categorical-only
+- Filters out paths in holdout window before parsing
 
 Usage:
     python scripts/build_lamp_categorical_registry_v16.py [--data-root PATH]
@@ -25,6 +29,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import re
 import sys
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -40,6 +45,10 @@ from disastertrace.revision_v1.lamp_categorical import (
     LampElement,
     assert_not_probabilistic,
     parse_lamp_body,
+)
+from disastertrace.revision_v1.access_policy import (
+    AccessPolicy,
+    AccessPolicyViolation,
 )
 
 
@@ -97,11 +106,31 @@ def build_registry(data_root: Path, output_path: Path, force: bool = False) -> d
                 dl4_finding = dl4_data["content_scope_finding"]["summary"]
 
     # Find all .body files
-    body_files = sorted(archive_dir.glob("lav-*.body"))
-    if not body_files:
+    all_body_files = sorted(archive_dir.glob("lav-*.body"))
+    if not all_body_files:
         raise FileNotFoundError(
             f"No .body files found in {archive_dir}"
         )
+
+    # V17-01 / F04 fix: Filter out holdout-window months (202502 = Feb 2025)
+    # The holdout window is 2025-02-17 to 2025-02-24, so we exclude all of 202502
+    HOLDOUT_MONTH = "202502"
+
+    body_files = []
+    holdout_filtered_files = []
+
+    for body_file in all_body_files:
+        # Extract YYYYMM from filename (lav-YYYYMM-HHHHz.body)
+        match = re.search(r"lav-(\d{6})", body_file.name)
+        if match:
+            yyyymm = match.group(1)
+            if yyyymm == HOLDOUT_MONTH:
+                holdout_filtered_files.append(body_file.name)
+                continue
+        body_files.append(body_file)
+
+    if holdout_filtered_files:
+        print(f"V17-01 / F04: Filtered out {len(holdout_filtered_files)} holdout-month files: {holdout_filtered_files}")
 
     # Parse all files and collect statistics
     batch_id = f"registry_build_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"

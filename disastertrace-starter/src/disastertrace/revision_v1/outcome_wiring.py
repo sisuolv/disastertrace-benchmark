@@ -198,15 +198,24 @@ class AsosProvenance:
         return self.run_id
 
 
-def load_asos_with_provenance(body_path: str) -> tuple[str, AsosProvenance]:
+def load_asos_with_provenance(
+    body_path: str,
+    *,
+    access_policy: "AccessPolicy | None" = None,
+) -> tuple[str, AsosProvenance]:
     """Load an ASOS body file with provenance verification.
 
     Reads a real ASOS .body file plus its sibling receipt, recomputes the
     body's SHA256 and cross-checks it against the value recorded in the
     receipt.
 
+    V17-01 / F04 fix: Now uses AccessPolicy for canonicalized, segment-based
+    quarantine check instead of literal substring matching.
+
     Args:
         body_path: Path to the .body file.
+        access_policy: Optional AccessPolicy for enforcement. If None, falls
+            back to legacy segment-based check (still segment-based, not substring).
 
     Returns:
         Tuple of:
@@ -214,15 +223,30 @@ def load_asos_with_provenance(body_path: str) -> tuple[str, AsosProvenance]:
             - provenance: AsosProvenance capturing source identity
 
     Raises:
-        ValueError: If the path contains 'quarantine_holdout' (embargoed data).
+        AccessPolicyViolation: If path fails policy check (when access_policy provided).
+        ValueError: If path contains 'quarantine_holdout' segment (legacy fallback).
         ValueError: If the SHA256 mismatch between computed and receipt.
         FileNotFoundError: If body or receipt file doesn't exist.
     """
-    # Check for quarantine_holdout
-    if "quarantine_holdout" in body_path:
-        raise ValueError(
-            f"Cannot load from quarantine_holdout: {body_path}"
-        )
+    from .access_policy import AccessPolicy, AccessPolicyViolation
+
+    body_path_obj = Path(body_path)
+
+    # V17-01 / F04 fix: Use AccessPolicy if provided, else fall back to
+    # segment-based check (not substring). The key fix is resolving the path
+    # BEFORE checking, and checking Path.parts not string substring.
+    if access_policy is not None:
+        # Full policy check (includes quarantine, root escape, holdout dates)
+        access_policy.assert_allowed(body_path)
+    else:
+        # Legacy fallback: still use segment-based check, not substring
+        # This is safer than the old "in" check for backward compatibility
+        resolved = body_path_obj.resolve()
+        for part in resolved.parts:
+            if part == "quarantine_holdout":
+                raise ValueError(
+                    f"Cannot load from quarantine_holdout: {body_path}"
+                )
 
     body_path_obj = Path(body_path)
 
