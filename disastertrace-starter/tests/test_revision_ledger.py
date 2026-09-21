@@ -1951,3 +1951,236 @@ class TestReceiptOrderVisibilityTieBreak:
         # receipt_seq comparison is not applied. Both A and B see each other.
         # This is legacy behavior - potentially cyclic, but that's the intended
         # fallback when signals are incomparable.
+
+
+# ---------------------------------------------------------------------------
+# V17-02 / F01: Cross-window supersession with ProductLineage tests
+# ---------------------------------------------------------------------------
+
+
+class TestF01CrossWindowSupersession:
+    """V17-02 / F01: Test cross-window supersession using ProductLineage.
+
+    The F01 fix changes AMD/COR supersession detection from exact-window-match
+    to lineage-based matching. Products in the same lineage (station + provider
+    + product_series) with overlapping/adjacent validity windows can supersede
+    each other, not just products with identical (valid_start, valid_end).
+    """
+
+    def test_amd_supersedes_overlapping_window(self):
+        """AMD supersedes original with overlapping (not identical) validity window.
+
+        Example: Original TAF covers 00:00-12:00, AMD covers 06:00-18:00.
+        The windows overlap (06:00-12:00), so the AMD should supersede.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Original: 00:00-12:00
+        original = make_product(
+            source_id="prov-original",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 12 * hour,
+            amendment_kind="original",
+        )
+
+        # AMD: 06:00-18:00 (overlaps with original)
+        amd = make_product(
+            source_id="prov-amd",
+            station="KSFO",
+            issued_at=t0 + hour,
+            valid_start=t0 + 6 * hour,
+            valid_end=t0 + 18 * hour,
+            amendment_kind="AMD",
+        )
+
+        ledger = compile_ledger([original, amd])
+
+        amd_entry = next(e for e in ledger if e["source_id"] == "prov-amd")
+
+        # F01 fix: AMD should supersede the original via lineage match
+        assert amd_entry["kind"] == "amendment_supersedes"
+        assert amd_entry["supersedes"] == ["prov-original"]
+
+    def test_cor_supersedes_adjacent_window(self):
+        """COR supersedes original with adjacent (not overlapping) validity window.
+
+        Example: Original covers 00:00-06:00, COR covers 06:00-12:00.
+        The windows are adjacent (06:00 is end of one and start of other).
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Original: 00:00-06:00
+        original = make_product(
+            source_id="prov-original",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+        )
+
+        # COR: 06:00-12:00 (adjacent to original)
+        cor = make_product(
+            source_id="prov-cor",
+            station="KSFO",
+            issued_at=t0 + hour,
+            valid_start=t0 + 6 * hour,
+            valid_end=t0 + 12 * hour,
+            amendment_kind="COR",
+        )
+
+        ledger = compile_ledger([original, cor])
+
+        cor_entry = next(e for e in ledger if e["source_id"] == "prov-cor")
+
+        # F01 fix: COR should supersede via adjacent window match
+        assert cor_entry["kind"] == "correction"
+        assert cor_entry["supersedes"] == ["prov-original"]
+
+    def test_different_provider_no_supersession(self):
+        """Products from different providers don't supersede each other.
+
+        Even with overlapping windows, products from different providers
+        are in different lineages and should not supersede each other.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Original from provider A
+        original_a = make_product(
+            source_id="provA-original",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+        )
+        original_a["provider"] = "PROVIDER_A"
+        original_a["product_series"] = "default"
+
+        # AMD from provider B (different provider, same station/window)
+        amd_b = make_product(
+            source_id="provB-amd",
+            station="KSFO",
+            issued_at=t0 + hour,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+        )
+        amd_b["provider"] = "PROVIDER_B"
+        amd_b["product_series"] = "default"
+
+        ledger = compile_ledger([original_a, amd_b])
+
+        amd_entry = next(e for e in ledger if e["source_id"] == "provB-amd")
+
+        # Different provider = different lineage = no supersession
+        # AMD from provider B is a new_observation, not amendment_supersedes
+        assert amd_entry["kind"] == "new_observation"
+        assert amd_entry["supersedes"] is None
+
+    def test_non_overlapping_windows_no_supersession(self):
+        """Products with non-overlapping, non-adjacent windows don't supersede.
+
+        Even with same provider, if windows don't overlap or touch,
+        the later product is a new_observation not a supersession.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Original: 00:00-06:00
+        original = make_product(
+            source_id="prov-original",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+        )
+
+        # AMD: 12:00-18:00 (gap from 06:00-12:00, not overlapping or adjacent)
+        amd = make_product(
+            source_id="prov-amd",
+            station="KSFO",
+            issued_at=t0 + hour,
+            valid_start=t0 + 12 * hour,  # Gap: original ends at 06:00
+            valid_end=t0 + 18 * hour,
+            amendment_kind="AMD",
+        )
+
+        ledger = compile_ledger([original, amd])
+
+        amd_entry = next(e for e in ledger if e["source_id"] == "prov-amd")
+
+        # Gap between windows = no supersession
+        # Without priors in lineage with overlapping windows, this is new_observation
+        # (Note: this depends on exact ledger behavior - the key test is that
+        # non-overlapping windows don't match via lineage)
+        assert amd_entry["supersedes"] is None or amd_entry["kind"] == "new_observation"
+
+
+class TestF01ProductLineage:
+    """V17-02 / F01: Test ProductLineage dataclass directly."""
+
+    def test_product_lineage_from_product(self):
+        """ProductLineage.from_product extracts correct lineage."""
+        from disastertrace.revision_v1.ledger import ProductLineage, Provenance
+
+        product = {
+            "station": "KSFO",
+            "provider": "AFOS",
+            "product_series": "TAF",
+            "source_id": "afos-12345",
+        }
+
+        provenance = Provenance.from_source_id(product["source_id"], product)
+        lineage = ProductLineage.from_product(product, provenance)
+
+        assert lineage.station == "KSFO"
+        assert lineage.provider == "AFOS"
+        assert lineage.product_series == "TAF"
+
+    def test_product_lineage_equality(self):
+        """ProductLineage equality based on (station, provider, product_series)."""
+        from disastertrace.revision_v1.ledger import ProductLineage
+
+        lineage1 = ProductLineage(station="KSFO", provider="AFOS", product_series="TAF")
+        lineage2 = ProductLineage(station="KSFO", provider="AFOS", product_series="TAF")
+        lineage3 = ProductLineage(station="KLAX", provider="AFOS", product_series="TAF")
+
+        assert lineage1 == lineage2
+        assert lineage1 != lineage3
+
+    def test_validity_windows_overlap_or_adjacent(self):
+        """Test _validity_windows_overlap_or_adjacent helper."""
+        from disastertrace.revision_v1.ledger import _validity_windows_overlap_or_adjacent
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Overlapping
+        a = {"valid_start": t0, "valid_end": t0 + 6 * hour}
+        b = {"valid_start": t0 + 3 * hour, "valid_end": t0 + 9 * hour}
+        assert _validity_windows_overlap_or_adjacent(a, b) is True
+
+        # Adjacent
+        c = {"valid_start": t0, "valid_end": t0 + 6 * hour}
+        d = {"valid_start": t0 + 6 * hour, "valid_end": t0 + 12 * hour}
+        assert _validity_windows_overlap_or_adjacent(c, d) is True
+
+        # Gap (not adjacent, not overlapping)
+        e = {"valid_start": t0, "valid_end": t0 + 6 * hour}
+        f = {"valid_start": t0 + 12 * hour, "valid_end": t0 + 18 * hour}
+        assert _validity_windows_overlap_or_adjacent(e, f) is False

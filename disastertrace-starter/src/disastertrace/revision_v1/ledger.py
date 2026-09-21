@@ -76,7 +76,7 @@ class Provenance:
         )
 
 
-@dataclass
+@dataclass(frozen=True)
 class ProductLineage:
     """Track product lineage for cross-window version replacement (Issue #2).
 
@@ -84,6 +84,9 @@ class ProductLineage:
     - Same station
     - Same provider/product_series
     - Overlapping or adjacent validity windows (not just exact match)
+
+    V17-02 / F01: Made frozen=True so it can be used as a dictionary key
+    for lineage-based grouping.
     """
     station: str
     provider: str
@@ -292,14 +295,38 @@ def _classify_kind_prefix_aware(
     for p in visible_products:
         semantic_hash_index[p["native_semantics_sha256"]].append(p)
 
-    # Group by station and validity from visible products
+    # V17-02 / F01 fix: Use lineage-based grouping instead of exact window match.
+    # Group visible products by ProductLineage (station + provider + product_series)
+    # for cross-window supersession detection.
+    product_provenance = Provenance.from_source_id(source_id, product)
+    product_lineage = ProductLineage.from_product(product, product_provenance)
+
+    # Build lineage index from visible products
+    lineage_groups: dict[ProductLineage, list[dict]] = defaultdict(list)
+    for p in visible_products:
+        p_provenance = Provenance.from_source_id(p["source_id"], p)
+        p_lineage = ProductLineage.from_product(p, p_provenance)
+        lineage_groups[p_lineage].append(p)
+
+    # Find predecessors in the same lineage with overlapping/adjacent validity windows
+    # This replaces the exact-window-match lookup
+    prior_in_lineage = []
+    for p in lineage_groups.get(product_lineage, []):
+        if _validity_windows_overlap_or_adjacent(product, p):
+            prior_in_lineage.append(p)
+
+    # Also build exact-window group for backward compatibility with some paths
     station_validity_groups = defaultdict(list)
     for p in visible_products:
         key = (p["station"], p.get("valid_start"), p.get("valid_end"))
         station_validity_groups[key].append(p)
 
     group_key = (product["station"], product.get("valid_start"), product.get("valid_end"))
-    prior_in_group = station_validity_groups.get(group_key, [])
+    prior_in_exact_window = station_validity_groups.get(group_key, [])
+
+    # V17-02 / F01: Use lineage-based prior for AMD/COR supersession
+    # Filter to only same-provider products within the lineage
+    prior_in_group = prior_in_lineage
 
     # Check for baseline update (Issue #6: don't let this override AMD/COR/CNL)
     if is_baseline:
@@ -347,11 +374,17 @@ def _classify_kind_prefix_aware(
             return "no_change_reissue", [first_with_hash["source_id"]], None, extra_fields
 
     # Check if this is a late arrival (Issue #3: fix supersedes direction)
+    # V17-02 / F01: Also check same provider/lineage for late-arrival detection
     if collector_first_seen:
         # Find products in the same lineage that were issued AFTER but became available BEFORE
         newer_already_visible = []
         for other in visible_products:
             if other["station"] != product["station"]:
+                continue
+            # V17-02 / F01: Check same provider/lineage (not just same station)
+            other_provenance = Provenance.from_source_id(other["source_id"], other)
+            other_lineage = ProductLineage.from_product(other, other_provenance)
+            if other_lineage != product_lineage:
                 continue
             # Same lineage check (relaxed from exact validity match per Issue #2)
             if not _validity_windows_overlap_or_adjacent(product, other):

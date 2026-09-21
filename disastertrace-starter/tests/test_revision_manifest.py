@@ -1200,3 +1200,322 @@ class TestContentBasedFingerprinting:
             generate_taf_archive_summary(archive)
 
         assert "sha256" in str(exc_info.value).lower()
+
+
+# ---------------------------------------------------------------------------
+# V17-02 / F02: Pre-deadline revision count filtering tests
+# ---------------------------------------------------------------------------
+
+
+class TestF02PreDeadlineFiltering:
+    """V17-02 / F02: Test pre-deadline filtering of revision counts.
+
+    The F02 fix ensures that revision_count, tie_event_count, and
+    evidence_change_count only count packages issued BEFORE the target's
+    validity_start (the "deadline"). Packages issued during the validity
+    window are counted separately in the *_whole_window fields.
+    """
+
+    def test_candidate_has_both_filtered_and_whole_window_counts(self):
+        """CandidateTarget has both pre-deadline and whole-window count fields."""
+        from disastertrace.revision_v1.manifest import CandidateTarget
+
+        hour = 3_600_000_000  # 1 hour in microseconds
+        t0 = 1700000000000000  # arbitrary base time
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=3,
+            tie_event_count=1,
+            evidence_change_count=2,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=5,
+            tie_event_count_whole_window=2,
+            evidence_change_count_whole_window=4,
+            source_packages=[],
+        )
+
+        # Filtered counts (pre-deadline)
+        assert candidate.revision_count == 3
+        assert candidate.tie_event_count == 1
+        assert candidate.evidence_change_count == 2
+
+        # Whole-window counts
+        assert candidate.revision_count_whole_window == 5
+        assert candidate.tie_event_count_whole_window == 2
+        assert candidate.evidence_change_count_whole_window == 4
+
+    def test_build_manifest_includes_both_count_types(self):
+        """build_manifest includes both pre-deadline and whole-window counts."""
+        from disastertrace.revision_v1.manifest import CandidateTarget, build_manifest
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=2,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=4,
+            tie_event_count_whole_window=1,
+            evidence_change_count_whole_window=3,
+            source_packages=[],
+        )
+
+        manifest = build_manifest(
+            changed_queue=[candidate],
+            unchanged_queue=[],
+            config_sha256="a" * 64,
+            taf_archive_summary="test",
+        )
+
+        target = manifest["targets"][0]
+        signals = target["selection_signals"]
+
+        # Pre-deadline counts
+        assert signals["revision_count"] == 2
+        assert signals["tie_event_count"] == 0
+        assert signals["evidence_change_count"] == 1
+
+        # Whole-window counts
+        assert signals["revision_count_whole_window"] == 4
+        assert signals["tie_event_count_whole_window"] == 1
+        assert signals["evidence_change_count_whole_window"] == 3
+
+
+class TestF02OutcomeContract:
+    """V17-02 / F02: Test outcome_contract in manifest schema."""
+
+    def test_manifest_v2_schema_includes_outcome_contract(self):
+        """v2 schema manifest includes outcome_contract field."""
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            DEFAULT_OUTCOME_CONTRACT,
+            build_manifest,
+        )
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        manifest = build_manifest(
+            changed_queue=[candidate],
+            unchanged_queue=[],
+            config_sha256="a" * 64,
+            taf_archive_summary="test",
+        )
+
+        assert manifest["schema"] == "disastertrace.episode_manifest.v2"
+        assert "outcome_contract" in manifest
+
+        oc = manifest["outcome_contract"]
+        assert "thresholds_m" in oc
+        assert "report_policy" in oc
+        assert "checkpoint_weights" in oc
+        assert "support_window_hours" in oc
+
+    def test_default_outcome_contract_values(self):
+        """DEFAULT_OUTCOME_CONTRACT has expected frozen values."""
+        from disastertrace.revision_v1.manifest import DEFAULT_OUTCOME_CONTRACT
+
+        assert DEFAULT_OUTCOME_CONTRACT["thresholds_m"] == [5000.0, 1000.0]
+        assert DEFAULT_OUTCOME_CONTRACT["report_policy"] == "iem_routine_unique_hour.v1"
+        assert DEFAULT_OUTCOME_CONTRACT["support_window_hours"] == 1.0
+        assert DEFAULT_OUTCOME_CONTRACT["checkpoint_weights"] == [1.0, 1.0, 1.0]
+        assert DEFAULT_OUTCOME_CONTRACT["checkpoint_offsets_minutes"] == [-60, -40, -20]
+
+    def test_custom_outcome_contract_preserved(self):
+        """Custom outcome_contract passed to build_manifest is used."""
+        from disastertrace.revision_v1.manifest import CandidateTarget, build_manifest
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        custom_contract = {
+            "thresholds_m": [3000.0],
+            "report_policy": "custom.v1",
+            "support_window_hours": 2.0,
+            "checkpoint_weights": [0.5, 0.3, 0.2],
+        }
+
+        manifest = build_manifest(
+            changed_queue=[candidate],
+            unchanged_queue=[],
+            config_sha256="a" * 64,
+            taf_archive_summary="test",
+            outcome_contract=custom_contract,
+        )
+
+        assert manifest["outcome_contract"]["thresholds_m"] == [3000.0]
+        assert manifest["outcome_contract"]["report_policy"] == "custom.v1"
+
+    def test_empty_weights_raises(self):
+        """Empty checkpoint_weights raises ValueError."""
+        from disastertrace.revision_v1.manifest import CandidateTarget, build_manifest
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        invalid_contract = {
+            "thresholds_m": [5000.0],
+            "report_policy": "test.v1",
+            "support_window_hours": 1.0,
+            "checkpoint_weights": [],  # Empty!
+        }
+
+        with pytest.raises(ValueError) as exc_info:
+            build_manifest(
+                changed_queue=[candidate],
+                unchanged_queue=[],
+                config_sha256="a" * 64,
+                taf_archive_summary="test",
+                outcome_contract=invalid_contract,
+            )
+
+        assert "empty" in str(exc_info.value).lower()
+
+
+class TestF02ManifestValidation:
+    """V17-02 / F02: Test validate_manifest accepts both v1 and v2 schemas."""
+
+    def test_validate_manifest_accepts_v2_schema(self):
+        """validate_manifest accepts v2 schema with outcome_contract."""
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            build_manifest,
+            compute_self_sha256,
+            validate_manifest,
+        )
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        manifest = build_manifest(
+            changed_queue=[candidate],
+            unchanged_queue=[],
+            config_sha256="a" * 64,
+            taf_archive_summary="test",
+        )
+        manifest["self_sha256"] = compute_self_sha256(manifest)
+
+        errors = validate_manifest(manifest)
+        assert errors == [], f"Validation errors: {errors}"
+
+    def test_validate_manifest_rejects_v2_missing_outcome_contract(self):
+        """v2 schema without outcome_contract is rejected."""
+        manifest = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "selection_rule_version": "manifest_selection.v2",
+            "targets": [],
+            "queue_summary": {"changed_count": 0, "unchanged_count": 0, "total_count": 0},
+            "frozen_at": "2023-01-01T00:00:00Z",
+            "input_fingerprints": {},
+            "self_sha256": "",
+        }
+
+        errors = validate_manifest(manifest)
+        assert any("outcome_contract" in e for e in errors)
+
+    def test_validate_manifest_rejects_v2_missing_whole_window_counts(self):
+        """v2 schema without whole-window counts in selection_signals is rejected."""
+        from disastertrace.revision_v1.manifest import DEFAULT_OUTCOME_CONTRACT
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        manifest = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "selection_rule_version": "manifest_selection.v2",
+            "outcome_contract": DEFAULT_OUTCOME_CONTRACT.copy(),
+            "targets": [
+                {
+                    "target_id": "test",
+                    "station": "KSFO",
+                    "validity_start": "2023-01-01T00:00:00Z",
+                    "validity_start_us": t0,
+                    "validity_end": "2023-01-01T06:00:00Z",
+                    "validity_end_us": t0 + 6 * hour,
+                    "queue": "changed",
+                    "checkpoints": [
+                        {"time_us": t0 - 60 * 60_000_000, "time": "X", "weight": 1.0},
+                        {"time_us": t0 - 40 * 60_000_000, "time": "X", "weight": 1.0},
+                        {"time_us": t0 - 20 * 60_000_000, "time": "X", "weight": 1.0},
+                    ],
+                    "selection_signals": {
+                        "revision_count": 1,
+                        "tie_event_count": 0,
+                        "evidence_change_count": 1,
+                        "lead_time_coverage_hours": 6.0,
+                        # Missing *_whole_window fields!
+                    },
+                }
+            ],
+            "queue_summary": {"changed_count": 1, "unchanged_count": 0, "total_count": 1},
+            "frozen_at": "2023-01-01T00:00:00Z",
+            "input_fingerprints": {},
+            "self_sha256": "",
+        }
+
+        errors = validate_manifest(manifest)
+        assert any("revision_count_whole_window" in e for e in errors)

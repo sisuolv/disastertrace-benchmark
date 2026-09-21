@@ -304,6 +304,53 @@ QUALITY_NO_REPORT_IN_SLOT = "no_routine_report_in_slot"
 QUALITY_VISIBILITY_UNDETERMINED = "visibility_undetermined_or_interval"
 
 
+def _fold_duplicate_observations(
+    observations: list[MetarReport],
+) -> list[MetarReport]:
+    """V17-02 / F11: Fold same-timestamp observations by native_semantics_sha256.
+
+    When multiple observations share the same observation_time and the same
+    native_semantics_sha256, they are semantically identical duplicates.
+    We keep only one representative from each (timestamp, semantics) group,
+    choosing the one with the lexicographically smallest raw text for
+    deterministic selection.
+
+    This folding happens BEFORE "last-in-slot" selection, so duplicates
+    don't influence which observation is chosen as the resolving one.
+
+    Args:
+        observations: List of METAR observations to fold.
+
+    Returns:
+        List with duplicates removed (one representative per semantic group).
+    """
+    if not observations:
+        return []
+
+    # Group by (observation_time, native_semantics_sha256)
+    from collections import defaultdict
+
+    groups: dict[tuple, list[MetarReport]] = defaultdict(list)
+    for obs in observations:
+        # MetarReport may not have native_semantics_sha256; use raw as fallback
+        semantics_key = getattr(obs, "native_semantics_sha256", None)
+        if semantics_key is None:
+            # Hash the raw text as a fallback semantic key
+            semantics_key = hashlib.sha256(obs.raw.encode()).hexdigest()
+
+        key = (obs.observation_time, semantics_key)
+        groups[key].append(obs)
+
+    # Pick one representative per group: lexicographically smallest raw text
+    folded = []
+    for key in sorted(groups.keys()):  # Sort keys for determinism
+        group = groups[key]
+        representative = min(group, key=lambda o: o.raw)
+        folded.append(representative)
+
+    return folded
+
+
 def resolve_h15_outcomes(
     observations: list[MetarReport],
     targets: list[Target],
@@ -313,6 +360,10 @@ def resolve_h15_outcomes(
     resolved_at: int | None = None,
 ) -> list[dict]:
     """Resolve H15 visibility outcomes for targets against observations.
+
+    V17-02 / F11 fix: Now folds duplicate observations (same timestamp and
+    native_semantics_sha256) before picking "last-in-slot", and returns
+    records in stable target_id order for deterministic output.
 
     For each target, determines the outcome via ternary visibility classification
     against the pre-filtered routine observations, then builds one outcome
@@ -330,25 +381,28 @@ def resolve_h15_outcomes(
             the provenance's fetch timestamp (never wall-clock).
 
     Returns:
-        List of outcome record dicts, one per target. Each record is shaped
-        identically regardless of registration mode (legacy_compatible or
-        formal_provider_bound).
+        List of outcome record dicts, one per target, sorted by target_id
+        for stable ordering. Each record is shaped identically regardless
+        of registration mode (legacy_compatible or formal_provider_bound).
     """
     if resolved_at is None:
         resolved_at = provenance.fetch_timestamp_us
 
+    # V17-02 / F11: Process targets in sorted order for deterministic output
+    sorted_targets = sorted(targets, key=lambda t: t.target_id)
+
     records = []
 
-    for target in targets:
-        # Find observation in this target's slot
-        matching_obs = [
+    for target in sorted_targets:
+        # Find observations in this target's slot
+        slot_obs = [
             obs
             for obs in observations
             if obs.station == target.entity
             and target.physical_start <= obs.observation_time < target.physical_end
         ]
 
-        if not matching_obs:
+        if not slot_obs:
             # No report in slot -> missing
             record = build_outcome_record(
                 target=target,
@@ -370,12 +424,18 @@ def resolve_h15_outcomes(
                 # reference_kind required by validate_resolution even for missing
                 reference_kind="final_archived_routine_report_not_continuous_physical_truth",
             )
+            # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+            record["target_id"] = target.target_id
             records.append(record)
             continue
 
-        # Use last observation in slot (sorted by time)
-        matching_obs.sort(key=lambda o: o.observation_time)
-        obs = matching_obs[-1]
+        # V17-02 / F11: Fold duplicates BEFORE selecting last-in-slot
+        # This prevents duplicates from influencing which observation resolves
+        folded_obs = _fold_duplicate_observations(slot_obs)
+
+        # Use last observation in slot (sorted by time, then raw for tie-break)
+        folded_obs.sort(key=lambda o: (o.observation_time, o.raw))
+        obs = folded_obs[-1]
 
         # H15 reference kind for all records
         h15_reference_kind = "final_archived_routine_report_not_continuous_physical_truth"
@@ -402,6 +462,8 @@ def resolve_h15_outcomes(
                 references=[{"raw": obs.raw}],
                 reference_kind=h15_reference_kind,
             )
+            # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+            record["target_id"] = target.target_id
             records.append(record)
             continue
 
@@ -438,6 +500,8 @@ def resolve_h15_outcomes(
                 references=[{"raw": obs.raw}],
                 reference_kind=h15_reference_kind,
             )
+            # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+            record["target_id"] = target.target_id
             records.append(record)
             continue
 
@@ -463,6 +527,8 @@ def resolve_h15_outcomes(
             references=[{"raw": obs.raw}],
             reference_kind="final_archived_routine_report_not_continuous_physical_truth",
         )
+        # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+        record["target_id"] = target.target_id
         records.append(record)
 
     return records
@@ -492,7 +558,10 @@ def register_h15_outcomes(
 
     success_flags = []
     for record in records:
-        result = registry.register(record)
+        # V17-02 / F11: Strip target_id before registering (not in OUTCOME_FIELDS)
+        # This field is added for logging/debugging but not part of the canonical record
+        record_for_registry = {k: v for k, v in record.items() if k != "target_id"}
+        result = registry.register(record_for_registry)
         success_flags.append(result)
 
     return registry, success_flags
