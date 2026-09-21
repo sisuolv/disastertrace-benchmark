@@ -302,6 +302,8 @@ def load_asos_with_provenance(
 # Quality codes for missing outcomes
 QUALITY_NO_REPORT_IN_SLOT = "no_routine_report_in_slot"
 QUALITY_VISIBILITY_UNDETERMINED = "visibility_undetermined_or_interval"
+# V17-02 / F11 (Gap 1 fix): Genuine same-timestamp conflict with different content
+QUALITY_CONFLICTING_AT_TIMESTAMP = "conflicting_reports_same_timestamp"
 
 
 def _fold_duplicate_observations(
@@ -433,9 +435,46 @@ def resolve_h15_outcomes(
         # This prevents duplicates from influencing which observation resolves
         folded_obs = _fold_duplicate_observations(slot_obs)
 
-        # Use last observation in slot (sorted by time, then raw for tie-break)
-        folded_obs.sort(key=lambda o: (o.observation_time, o.raw))
-        obs = folded_obs[-1]
+        # V17-02 / F11 (Gap 1 fix): Check for genuine same-timestamp conflicts
+        # After folding true duplicates, if multiple observations remain at the
+        # SAME timestamp with DIFFERENT semantic content, we have an unresolvable
+        # conflict. Do NOT pick a winner by raw-text sort order - that's order-
+        # dependent behavior. Emit a missing record with explicit conflict status.
+        max_time = max(o.observation_time for o in folded_obs)
+        obs_at_max_time = [o for o in folded_obs if o.observation_time == max_time]
+
+        if len(obs_at_max_time) > 1:
+            # Genuine conflict: same timestamp, different semantic content
+            # Emit missing with QUALITY_CONFLICTING_AT_TIMESTAMP
+            h15_reference_kind = "final_archived_routine_report_not_continuous_physical_truth"
+            # Include all conflicting raw reports in references for debugging
+            conflict_refs = [{"raw": o.raw} for o in sorted(obs_at_max_time, key=lambda x: x.raw)]
+            record = build_outcome_record(
+                target=target,
+                resolution_version=resolution_version,
+                status="missing",
+                value=None,
+                source_revision=provenance.source_revision,
+                source_sha256=None,
+                observed_at=max_time,
+                published_at=None,
+                fetched_at=provenance.fetch_timestamp_us,
+                resolved_at=resolved_at,
+                quality_status=QUALITY_CONFLICTING_AT_TIMESTAMP,
+                availability_basis="declared_archive_scenario",
+                resolution_policy="h15_routine_archive.v1",
+                provider="IEM",
+                provider_version="native_h15_snapshot.v1",
+                references=conflict_refs,
+                reference_kind=h15_reference_kind,
+            )
+            # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+            record["target_id"] = target.target_id
+            records.append(record)
+            continue
+
+        # Single observation at max time - use it
+        obs = obs_at_max_time[0]
 
         # H15 reference kind for all records
         h15_reference_kind = "final_archived_routine_report_not_continuous_physical_truth"

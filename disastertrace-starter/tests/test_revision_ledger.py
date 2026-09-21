@@ -1193,8 +1193,18 @@ class TestCrossWindowSupersession:
 
         # The AMD should recognize it's amending a related product
         amd_entry = next(e for e in ledger if e["source_id"] == "nws-2")
-        # While exact window match isn't required, the relationship is tracked
-        assert amd_entry["version_relationship"] in ("supersedes", "first")
+        # V17-02 / F01 (Gap 2 fix): With lineage-based supersession, an AMD
+        # issued after an original with overlapping validity windows (in the
+        # same lineage: station=KJFK, provider=nws, default product_series)
+        # must have version_relationship="supersedes", not "first".
+        # Derivation: nws-1 (issued t0, valid t0-t0+6h) and nws-2 (issued t0+hour,
+        # valid t0+2h-t0+8h, AMD) overlap from t0+2h to t0+6h, same provider prefix.
+        # nws-2's available_at > nws-1's available_at, so nws-1 is visible when
+        # classifying nws-2. nws-2 is AMD with prior_in_lineage=[nws-1], so it
+        # supersedes nws-1.
+        assert amd_entry["version_relationship"] == "supersedes"
+        assert amd_entry["kind"] == "amendment_supersedes"
+        assert amd_entry["supersedes"] == ["nws-1"]
 
 
 # ---------------------------------------------------------------------------

@@ -1182,12 +1182,16 @@ class TestF11DuplicateFolding:
         # 10000m > 5000m threshold => value=0 (not below threshold)
         assert records[0]["value"] == 0
 
-    def test_different_semantic_content_not_folded(self):
-        """Observations with different content at same time are NOT folded.
+    def test_different_semantic_content_yields_conflict(self):
+        """Observations with different content at same time yield conflict.
 
-        If the raw text differs, they have different semantic hashes and
-        should not be folded together.
+        V17-02 / F11 (Gap 1 fix): When multiple observations share the same
+        timestamp but have DIFFERENT semantic content, we have an unresolvable
+        conflict. Instead of picking a winner by raw-text sort order (which is
+        order-dependent), we emit a missing record with explicit conflict status.
         """
+        from disastertrace.revision_v1.outcome_wiring import QUALITY_CONFLICTING_AT_TIMESTAMP
+
         t0 = us("2023-01-15T00:00:00Z")
         target = make_h15_visibility_target(
             station="KSFO", slot_start_us=t0, threshold_m=5000.0
@@ -1219,7 +1223,7 @@ class TestF11DuplicateFolding:
 
         provenance = make_provenance()
 
-        # With different semantic content, both stay (pick later by raw order)
+        # With different semantic content at same timestamp: CONFLICT
         records = resolve_h15_outcomes(
             [obs1, obs2],
             [target],
@@ -1227,8 +1231,88 @@ class TestF11DuplicateFolding:
             resolution_version="f11_test_v2",
         )
 
-        # Still one record per target - the last-in-slot picker chooses one
+        # One record per target
         assert len(records) == 1
+        record = records[0]
+
+        # F11 (Gap 1 fix): Must be missing with conflict status, NOT a resolved value
+        assert record["status"] == "missing"
+        assert record["value"] is None
+        assert record["quality_status"] == QUALITY_CONFLICTING_AT_TIMESTAMP
+
+        # References should include both conflicting reports
+        assert "references" in record
+        assert len(record["references"]) == 2
+
+    def test_conflict_is_permutation_invariant(self):
+        """Same conflicting observations in different order produce identical record.
+
+        V17-02 / F11 (Gap 1 fix): The conflict detection must be order-independent.
+        Regardless of input observation order, the output record must be identical.
+        """
+        from disastertrace.revision_v1.outcome_wiring import QUALITY_CONFLICTING_AT_TIMESTAMP
+
+        t0 = us("2023-01-15T00:00:00Z")
+        target = make_h15_visibility_target(
+            station="KSFO", slot_start_us=t0, threshold_m=5000.0,
+            target_id="test_permutation_target",
+        )
+
+        # Two conflicting observations
+        obs_a = MetarReport(
+            station="KSFO",
+            observation_time=us("2023-01-15T00:56:00Z"),
+            report_type="routine",
+            visibility=Interval(10000.0, 10000.0),
+            temperature_c=12,
+            dewpoint_c=8,
+            weather=(),
+            quality_flags=(),
+            raw="AAAA observation one",
+        )
+        obs_b = MetarReport(
+            station="KSFO",
+            observation_time=us("2023-01-15T00:56:00Z"),
+            report_type="routine",
+            visibility=Interval(3000.0, 3000.0),
+            temperature_c=12,
+            dewpoint_c=8,
+            weather=(),
+            quality_flags=(),
+            raw="ZZZZ observation two",
+        )
+
+        provenance = make_provenance()
+
+        # Order 1: [a, b]
+        records_ab = resolve_h15_outcomes(
+            [obs_a, obs_b], [target], provenance=provenance,
+            resolution_version="permutation_test_v1",
+        )
+
+        # Order 2: [b, a]
+        records_ba = resolve_h15_outcomes(
+            [obs_b, obs_a], [target], provenance=provenance,
+            resolution_version="permutation_test_v1",
+        )
+
+        # Both must produce identical records
+        assert len(records_ab) == 1
+        assert len(records_ba) == 1
+
+        rec_ab = records_ab[0]
+        rec_ba = records_ba[0]
+
+        # Same status and quality
+        assert rec_ab["status"] == rec_ba["status"] == "missing"
+        assert rec_ab["value"] == rec_ba["value"] == None
+        assert rec_ab["quality_status"] == rec_ba["quality_status"] == QUALITY_CONFLICTING_AT_TIMESTAMP
+
+        # Same target_id
+        assert rec_ab["target_id"] == rec_ba["target_id"] == "test_permutation_target"
+
+        # Same references (sorted, so order-independent)
+        assert rec_ab["references"] == rec_ba["references"]
 
 
 class TestF11StableOutputOrdering:
