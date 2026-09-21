@@ -294,6 +294,9 @@ def resolve_h15_outcomes(
     against the pre-filtered routine observations, then builds one outcome
     record dict per target.
 
+    Note: classify()'s "inconsistent" result is mapped to missing (same as
+    "undetermined"), not to a fabricated value=0 refuted outcome.
+
     Args:
         observations: Pre-filtered routine METAR observations.
         targets: List of Target objects to resolve.
@@ -379,11 +382,19 @@ def resolve_h15_outcomes(
             continue
 
         # Classify visibility against threshold
-        # classify() returns "supported", "refuted", or "undetermined"
+        # classify() returns "supported", "refuted", "undetermined", or
+        # "inconsistent" (the latter when its internal support is None).
         classification = classify(obs.visibility, target.event_operator, target.threshold)
 
-        if classification == "undetermined":
-            # Interval straddles threshold -> ambiguous
+        # "inconsistent" is treated the same as "undetermined": both mean the
+        # classifier could not determine an outcome, not that it determined a
+        # negative (refuted) one. classify() can structurally return
+        # "inconsistent" (support is None) even though that branch is not
+        # currently reachable from real data paths here; without this check
+        # it would silently fall through to the value=0 branch below, which
+        # would be a hard "refuted" outcome fabricated from a non-answer.
+        if classification in ("undetermined", "inconsistent"):
+            # Interval straddles threshold, or support is inconsistent -> ambiguous
             record = build_outcome_record(
                 target=target,
                 resolution_version=resolution_version,
