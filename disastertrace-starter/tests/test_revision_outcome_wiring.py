@@ -17,6 +17,7 @@ import os
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
@@ -25,7 +26,10 @@ from disastertrace.monitoring_fixed_v1.outcomes import OUTCOME_FIELDS, OutcomeRe
 from disastertrace.monitoring_v1.providers.aviation import MetarReport
 from disastertrace.monitoring_v1.support import Interval
 from disastertrace.monitoring_v1.targets import utc_us
-from disastertrace.revision_v1.episode_compiler import compile_asos_csv_to_observations
+from disastertrace.revision_v1.episode_compiler import (
+    compile_asos_csv_to_observations,
+    compile_metar_outcomes,
+)
 from disastertrace.revision_v1.outcome_wiring import (
     FROZEN_THRESHOLDS_M,
     QUALITY_NO_REPORT_IN_SLOT,
@@ -967,3 +971,144 @@ class TestProvenanceLoader:
             computed = hashlib.sha256(f.read()).hexdigest()
 
         assert provenance.sha256 == computed
+
+
+# ---------------------------------------------------------------------------
+# Test: Cross-path equivalence with episode_compiler.compile_metar_outcomes
+# ---------------------------------------------------------------------------
+#
+# resolve_h15_outcomes (this module) and compile_metar_outcomes
+# (episode_compiler.py) are two independent paths that both wire real METAR
+# observations into visibility outcomes via the same classify() ternary
+# logic. They must agree on outcome value (1 / 0 / missing) for any shared
+# input, even though resolve_h15_outcomes returns full outcome record dicts
+# (value=None for missing) and compile_metar_outcomes returns a plain
+# target_id -> outcome dict (also None for missing).
+
+
+class TestCrossPathEquivalence:
+    """resolve_h15_outcomes and compile_metar_outcomes must agree per-target."""
+
+    def _outcome_via_resolve(self, obs_list, target, provenance):
+        """Return resolve_h15_outcomes' outcome value for a single target."""
+        records = resolve_h15_outcomes(
+            obs_list,
+            [target],
+            provenance=provenance,
+            resolution_version="cross_path_v1",
+        )
+        assert len(records) == 1
+        return records[0]["value"]
+
+    def _outcome_via_compile(self, obs_list, target):
+        """Return compile_metar_outcomes' outcome value for a single target."""
+        outcomes = compile_metar_outcomes(obs_list, [target])
+        return outcomes[target.target_id]
+
+    def _assert_agree(self, obs_list, target, provenance, expected):
+        resolve_value = self._outcome_via_resolve(obs_list, target, provenance)
+        compile_value = self._outcome_via_compile(obs_list, target)
+
+        assert resolve_value == expected, (
+            f"resolve_h15_outcomes produced {resolve_value!r}, expected {expected!r}"
+        )
+        assert compile_value == expected, (
+            f"compile_metar_outcomes produced {compile_value!r}, expected {expected!r}"
+        )
+        assert resolve_value == compile_value, (
+            f"Cross-path disagreement: resolve_h15_outcomes={resolve_value!r} "
+            f"vs compile_metar_outcomes={compile_value!r}"
+        )
+
+    def test_empty_slot_no_routine_report(self):
+        """No observation in the slot -> both paths agree on missing (None)."""
+        t0 = us("2023-01-15T00:00:00Z")
+        target = make_h15_visibility_target(
+            station="KSFO", slot_start_us=t0, threshold_m=5000.0
+        )
+        provenance = make_provenance()
+
+        self._assert_agree([], target, provenance, expected=None)
+
+    def test_none_visibility(self):
+        """Observation exists but visibility is None -> both agree on missing."""
+        t0 = us("2023-01-15T00:00:00Z")
+        target = make_h15_visibility_target(
+            station="KSFO", slot_start_us=t0, threshold_m=5000.0
+        )
+        obs = make_metar("KSFO", "2023-01-15T00:56:00Z", visibility_m=None)
+        provenance = make_provenance()
+
+        self._assert_agree([obs], target, provenance, expected=None)
+
+    def test_visibility_straddles_interval_boundary(self):
+        """Interval straddling the threshold -> both agree on missing (undetermined)."""
+        t0 = us("2023-01-15T00:00:00Z")
+        target = make_h15_visibility_target(
+            station="KSFO", slot_start_us=t0, threshold_m=5000.0
+        )
+        # [4000, 6000] straddles the 5000m threshold -> undetermined
+        obs = make_metar("KSFO", "2023-01-15T00:56:00Z", visibility_m=(4000.0, 6000.0))
+        provenance = make_provenance()
+
+        self._assert_agree([obs], target, provenance, expected=None)
+
+    def test_clear_value_1(self):
+        """Visibility clearly below threshold -> both agree on 1."""
+        t0 = us("2023-01-15T00:00:00Z")
+        target = make_h15_visibility_target(
+            station="KSFO", slot_start_us=t0, threshold_m=5000.0
+        )
+        obs = make_metar("KSFO", "2023-01-15T00:56:00Z", visibility_m=2000.0)
+        provenance = make_provenance()
+
+        self._assert_agree([obs], target, provenance, expected=1)
+
+    def test_clear_value_0(self):
+        """Visibility clearly above threshold -> both agree on 0."""
+        t0 = us("2023-01-15T00:00:00Z")
+        target = make_h15_visibility_target(
+            station="KSFO", slot_start_us=t0, threshold_m=5000.0
+        )
+        obs = make_metar("KSFO", "2023-01-15T00:56:00Z", visibility_m=10000.0)
+        provenance = make_provenance()
+
+        self._assert_agree([obs], target, provenance, expected=0)
+
+
+class TestInconsistentClassification:
+    """classify() returning 'inconsistent' must map to missing, not value=0.
+
+    classify() can structurally return "inconsistent" (its internal support
+    is None), but that branch is not reachable via any real data path
+    exercised in this test module (support is always non-None here). We
+    force it via patching to exercise the mapping directly.
+    """
+
+    def test_inconsistent_maps_to_missing(self):
+        """Patched classify()='inconsistent' -> resolve_h15_outcomes produces missing."""
+        t0 = us("2023-01-15T00:00:00Z")
+        target = make_h15_visibility_target(
+            station="KSFO", slot_start_us=t0, threshold_m=5000.0
+        )
+        # Visibility value itself is irrelevant since classify() is patched,
+        # but it must be non-None to reach the classify() call.
+        obs = make_metar("KSFO", "2023-01-15T00:56:00Z", visibility_m=2000.0)
+        provenance = make_provenance()
+
+        with patch(
+            "disastertrace.revision_v1.outcome_wiring.classify",
+            return_value="inconsistent",
+        ):
+            records = resolve_h15_outcomes(
+                [obs],
+                [target],
+                provenance=provenance,
+                resolution_version="inconsistent_test_v1",
+            )
+
+        assert len(records) == 1
+        record = records[0]
+        assert record["status"] == "missing"
+        assert record["value"] is None
+        assert record["quality_status"] == QUALITY_VISIBILITY_UNDETERMINED
