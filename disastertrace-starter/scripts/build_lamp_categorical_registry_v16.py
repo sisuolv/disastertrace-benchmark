@@ -50,27 +50,33 @@ OUTPUT_PATH = REPO_ROOT / "data_contracts" / "lamp_categorical_registry_v16.json
 DL4_STATUS_SUBPATH = "lamp/DL4_STATUS.json"
 
 
-def build_registry(data_root: Path, output_path: Path) -> dict:
+def build_registry(data_root: Path, output_path: Path, force: bool = False) -> dict:
     """Build the LAMP categorical registry from the real archive.
 
     Args:
         data_root: Path to data_real_v16 directory
         output_path: Path where registry JSON will be written
+        force: If True, allow overwriting an existing registry file. This is
+            a deliberate, narrow escape hatch for correcting a known bug in
+            an already-generated registry within the same working round,
+            before the artifact is considered frozen for downstream use. It
+            does not change any other refusal behavior.
 
     Returns:
         Registry dict that was written
 
     Raises:
-        FileExistsError: If output_path already exists
+        FileExistsError: If output_path already exists and force is False
         FileNotFoundError: If archive directory doesn't exist
     """
-    # Check output doesn't exist (refuse to overwrite)
-    if output_path.exists():
+    # Check output doesn't exist (refuse to overwrite) unless --force
+    if output_path.exists() and not force:
         raise FileExistsError(
             f"Registry file already exists at {output_path}. "
             f"This script refuses to overwrite existing registry files to "
-            f"preserve historical artifacts. Remove the file manually if you "
-            f"need to regenerate."
+            f"preserve historical artifacts. Remove the file manually, or "
+            f"pass --force if you are deliberately correcting a known bug in "
+            f"this same working round, to regenerate."
         )
 
     # Verify archive directory exists
@@ -111,8 +117,19 @@ def build_registry(data_root: Path, output_path: Path) -> dict:
     station_counts: dict[str, int] = defaultdict(int)
     element_counts: dict[str, int] = defaultdict(int)
 
-    # Track skipped files (corrupt/truncated from failed downloads)
-    skipped_files: list[tuple[str, str]] = []
+    # Track files in two DISTINCT failure modes -- these must not be conflated:
+    #   - corrupt_files: the .body file itself is genuinely corrupt (bad gzip
+    #     header, or a deflate stream zlib cannot decode). parse_lamp_body's
+    #     decompression tolerates a missing/incomplete end-of-stream trailer
+    #     (a download cut off right at the very end, after real content was
+    #     already written), so this should be empty in practice; anything
+    #     landing here is real, unrecovered corruption.
+    #   - empty_download_files: the .body file is a genuine 0-byte input
+    #     (documented failed download, e.g. curl timeout / http_status=0 in
+    #     DL4_STATUS.json). These decompress cleanly to "" and contribute 0
+    #     records -- that is correct, expected behavior, not a parse failure.
+    corrupt_files: list[tuple[str, str]] = []
+    empty_download_files: list[str] = []
 
     print(f"Processing {len(body_files)} .body files from {archive_dir}")
 
@@ -126,14 +143,22 @@ def build_registry(data_root: Path, output_path: Path) -> dict:
             month_str = parts[1][:6]  # YYYYMM
             months_covered.add(f"{month_str[:4]}-{month_str[4:]}")
 
-        # Parse file (skip corrupt/truncated files from failed downloads)
+        is_zero_byte_input = body_file.stat().st_size == 0
+
+        # Parse file (skip files that are genuinely corrupt, not merely
+        # missing their gzip trailer -- parse_lamp_body/_decompress_body
+        # already recovers the missing-trailer case internally)
         try:
             records = list(parse_lamp_body(body_file, batch_id, FROZEN_STATIONS))
         except (EOFError, gzip.BadGzipFile) as e:
-            # Skip corrupt files - these are documented failed downloads in DL4_STATUS.json
-            skipped_files.append((body_file.name, str(e)))
+            corrupt_files.append((body_file.name, str(e)))
             print(f"  SKIPPED (corrupt): {body_file.name}")
             continue
+
+        if is_zero_byte_input:
+            empty_download_files.append(body_file.name)
+            print(f"  EMPTY (genuine failed download, 0 bytes): {body_file.name}")
+
         all_records.extend(records)
 
         # Compute source hash (will be same for all records from this file)
@@ -176,10 +201,24 @@ def build_registry(data_root: Path, output_path: Path) -> dict:
             for station, elements in sorted(station_element_counts.items())
         },
         "source_files_count": len(body_files),
-        "source_files_parsed": len(body_files) - len(skipped_files),
-        "source_files_skipped": len(skipped_files),
-        "skipped_files_detail": [
-            {"file": name, "reason": reason} for name, reason in skipped_files
+        "source_files_parsed": len(body_files) - len(corrupt_files),
+        "source_files_corrupt": len(corrupt_files),
+        "corrupt_files_detail": [
+            {"file": name, "reason": reason} for name, reason in corrupt_files
+        ],
+        "source_files_empty_download": len(empty_download_files),
+        "empty_download_files_detail": [
+            {
+                "file": name,
+                "reason": (
+                    "genuine 0-byte failed download (documented in "
+                    "DL4_STATUS.json formal_download_phase.failed_requests_detail, "
+                    "http_status=0); decompresses to empty content and "
+                    "correctly contributes 0 records -- not a parse failure, "
+                    "and not recoverable (no real data exists behind it)"
+                ),
+            }
+            for name in empty_download_files
         ],
         "source_file_hashes": dict(sorted(source_hashes.items())),
     }
@@ -195,9 +234,16 @@ def build_registry(data_root: Path, output_path: Path) -> dict:
     print(f"\nRegistry written to {output_path}")
     print(f"  Total records: {len(all_records)}")
     print(f"  Months covered: {len(months_covered)}")
-    print(f"  Source files: {len(body_files)} ({len(body_files) - len(skipped_files)} parsed, {len(skipped_files)} skipped)")
-    if skipped_files:
-        print(f"  Skipped files: {[f[0] for f in skipped_files]}")
+    print(
+        f"  Source files: {len(body_files)} "
+        f"({len(body_files) - len(corrupt_files)} parsed, "
+        f"{len(corrupt_files)} corrupt, "
+        f"{len(empty_download_files)} of the parsed are genuine empty downloads)"
+    )
+    if corrupt_files:
+        print(f"  Corrupt files: {[f[0] for f in corrupt_files]}")
+    if empty_download_files:
+        print(f"  Genuine empty-download files: {empty_download_files}")
     print(f"  Records by station: {dict(station_counts)}")
     print(f"  Records by element: {dict(element_counts)}")
 
@@ -220,11 +266,22 @@ def main():
         default=OUTPUT_PATH,
         help=f"Output registry path (default: {OUTPUT_PATH})",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help=(
+            "Allow overwriting an existing registry file. This is a narrow, "
+            "deliberate escape hatch for correcting a known bug in an "
+            "already-generated registry within the same working round, "
+            "before the artifact is considered frozen for downstream use. "
+            "It does not change any other overwrite-refusal behavior."
+        ),
+    )
 
     args = parser.parse_args()
 
     try:
-        build_registry(args.data_root, args.output)
+        build_registry(args.data_root, args.output, force=args.force)
         return 0
     except FileExistsError as e:
         print(f"ERROR: {e}", file=sys.stderr)

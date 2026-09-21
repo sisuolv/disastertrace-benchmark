@@ -24,6 +24,7 @@ from __future__ import annotations
 import gzip
 import hashlib
 import re
+import zlib
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from enum import Enum
@@ -103,12 +104,67 @@ def _compute_file_sha256(file_path: Path) -> str:
 def _decompress_body(file_path: Path) -> str:
     """Decompress a gzip .body file and return the text content.
 
+    Uses the standard library's strict gzip reader first (validates the
+    gzip header, deflate stream, and the trailing CRC32/ISIZE footer).
+
+    Some archived downloads in this project were cut off right at the very
+    end of the transfer, after essentially all real content had already been
+    written to disk -- the deflate stream itself is intact, but the 8-byte
+    gzip trailer (CRC32 + ISIZE) is missing or incomplete. The strict reader
+    raises EOFError for these files even though the real content is fully
+    recoverable. When that happens, this function falls back to tolerant
+    streaming decompression (see `_decompress_truncated_gzip`) that recovers
+    whatever complete content was produced, without trailer verification.
+
+    This fallback is intentionally narrow: it only engages on EOFError (a
+    stream that ran out of bytes before completing), not on other forms of
+    gzip corruption, which continue to raise gzip.BadGzipFile as before.
+
     Raises:
-        gzip.BadGzipFile: If file is not valid gzip
-        EOFError: If gzip stream is truncated
+        gzip.BadGzipFile: If file is not valid gzip, or if the fallback path
+            determines the deflate stream itself is corrupt (not merely
+            missing its trailer).
     """
-    with gzip.open(file_path, "rt", encoding="ascii", errors="replace") as f:
-        return f.read()
+    try:
+        with gzip.open(file_path, "rt", encoding="ascii", errors="replace") as f:
+            return f.read()
+    except EOFError:
+        return _decompress_truncated_gzip(file_path)
+
+
+def _decompress_truncated_gzip(file_path: Path) -> str:
+    """Tolerant fallback for a gzip stream missing its end-of-stream trailer.
+
+    Streams the raw file bytes through a gzip-mode zlib decompressor and
+    accepts whatever complete decompressed content it produced, even though
+    the stream never reached a clean end-of-stream marker (i.e. the trailing
+    CRC32/ISIZE bytes are missing or incomplete, so no checksum verification
+    happens here).
+
+    This is only reached after the strict `gzip` module raised EOFError, and
+    it still requires zlib to accept the bytes as a structurally valid
+    deflate/gzip stream: if zlib itself rejects the data (bad header, or a
+    deflate stream that cannot be decoded), that indicates genuine
+    corruption -- not just a missing tail -- and is raised as
+    gzip.BadGzipFile rather than silently swallowed.
+
+    Recovered content still has to pass the normal bulletin-line regexes in
+    `_parse_bulletin`/`parse_lamp_body` to contribute any records, which
+    provides an additional guard against treating garbage bytes as real
+    station data.
+    """
+    raw = file_path.read_bytes()
+    decompressor = zlib.decompressobj(wbits=zlib.MAX_WBITS | 16)
+    try:
+        decompressed = decompressor.decompress(raw)
+        decompressed += decompressor.flush()
+    except zlib.error as e:
+        raise gzip.BadGzipFile(
+            f"{file_path.name}: gzip stream is corrupt, not just missing its "
+            f"end-of-stream trailer ({e})"
+        ) from e
+
+    return decompressed.decode("ascii", errors="replace")
 
 
 def _parse_bulletin(

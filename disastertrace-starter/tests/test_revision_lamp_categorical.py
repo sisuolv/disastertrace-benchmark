@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import dataclasses
 import gzip
+import io
 import json
 import tempfile
 from datetime import datetime, timezone
@@ -245,6 +246,96 @@ class TestGzipHandling:
 
         with pytest.raises(FileNotFoundError):
             list(parse_lamp_body(body_file, "test_batch"))
+
+    def test_truncated_trailer_recovers_real_content(self, tmp_path: Path):
+        """A gzip stream missing its end-of-stream trailer still parses.
+
+        Regression test for the RA3-fix bug: two real archive files
+        (lav-202505-0000z.body and lav-202505-0600z_proxy.body) were
+        downloads cut off right at the very end -- the deflate stream is
+        intact and contains real content, but the 8-byte gzip trailer
+        (CRC32 + ISIZE) is missing, which made the strict stdlib `gzip`
+        reader raise EOFError and caused the build script to wrongly label
+        these files "corrupt" and skip them, discarding real, recoverable
+        data. This synthetic fixture reproduces the same failure mode: a
+        complete gzip stream with its trailer chopped off.
+        """
+        full_gzip_bytes = gzip.compress(SYNTHETIC_LAV_CONTENT.encode("ascii"))
+
+        # Sanity check: the strict stdlib gzip reader really does reject
+        # this input with EOFError once the trailer is removed, confirming
+        # the fixture reproduces the actual bug being fixed.
+        truncated_bytes = full_gzip_bytes[:-8]
+        with pytest.raises(EOFError):
+            with gzip.open(io.BytesIO(truncated_bytes)) as f:
+                f.read()
+
+        body_file = tmp_path / "lav-202505-0000z.body"
+        body_file.write_bytes(truncated_bytes)
+
+        # The parser must recover the real content instead of raising or
+        # silently returning nothing.
+        records = list(parse_lamp_body(body_file, "test_batch"))
+
+        assert len(records) == 36
+        stations = {r.station for r in records}
+        assert stations == {"KJFK", "KORD", "KSFO", "KDEN"}
+
+    def test_truncated_trailer_full_content_matches_untruncated(self, tmp_path: Path):
+        """Recovered content from a missing-trailer file matches the clean file."""
+        full_gzip_bytes = gzip.compress(SYNTHETIC_LAV_CONTENT.encode("ascii"))
+
+        clean_file = tmp_path / "lav-202505-clean.body"
+        clean_file.write_bytes(full_gzip_bytes)
+        truncated_file = tmp_path / "lav-202505-truncated.body"
+        truncated_file.write_bytes(full_gzip_bytes[:-8])
+
+        clean_records = list(parse_lamp_body(clean_file, "test_batch"))
+        truncated_records = list(parse_lamp_body(truncated_file, "test_batch"))
+
+        clean_tuples = sorted(
+            (r.station, r.element, r.value, r.cycle_time, r.valid_time)
+            for r in clean_records
+        )
+        truncated_tuples = sorted(
+            (r.station, r.element, r.value, r.cycle_time, r.valid_time)
+            for r in truncated_records
+        )
+        assert clean_tuples == truncated_tuples
+
+    def test_genuinely_corrupt_middle_of_stream_still_errors(self, tmp_path: Path):
+        """A gzip file with a corrupted (not just truncated) header still errors.
+
+        This is the negative case: the improved decompression path must not
+        become unconditionally permissive. A file whose gzip magic/header
+        bytes are themselves invalid should still raise, not be silently
+        accepted as recovered content.
+        """
+        full_gzip_bytes = gzip.compress(SYNTHETIC_LAV_CONTENT.encode("ascii"))
+        corrupted = bytearray(full_gzip_bytes)
+        # Corrupt the gzip magic header bytes themselves -- zlib will refuse
+        # to treat this as a gzip/deflate stream at all.
+        corrupted[0] ^= 0xFF
+        corrupted[1] ^= 0xFF
+
+        body_file = tmp_path / "lav-202505-corrupt.body"
+        body_file.write_bytes(bytes(corrupted))
+
+        with pytest.raises(gzip.BadGzipFile):
+            list(parse_lamp_body(body_file, "test_batch"))
+
+    def test_zero_byte_file_yields_no_records_not_an_error(self, tmp_path: Path):
+        """A genuinely empty (0-byte) input still parses as 0 records, no error.
+
+        This must remain distinguishable from a truncated-trailer file: an
+        empty file has NO recoverable content, and should not be treated as
+        an error condition by the new tolerant decompression path.
+        """
+        body_file = tmp_path / "lav-202505-0600z.body"
+        body_file.write_bytes(b"")
+
+        records = list(parse_lamp_body(body_file, "test_batch"))
+        assert records == []
 
 
 # ============================================================================
@@ -593,6 +684,61 @@ class TestRealDataIntegration:
                 assert record.value in valid_obv, (
                     f"Unexpected OBV value: {record.value}"
                 )
+
+    def test_previously_mislabeled_truncated_files_now_parse(self):
+        """RA3-fix regression: the two missing-trailer May 2025 files parse.
+
+        lav-202505-0000z.body and lav-202505-0600z_proxy.body are real,
+        successfully-downloaded data (http_status=200, on-disk bytes match
+        the sidecar receipt's `bytes` field exactly) whose gzip stream is
+        missing its final end-of-stream trailer -- the download was cut off
+        right at the very end. The old strict decompression path raised
+        EOFError on both and the build script mislabeled them "corrupt",
+        discarding real May 2025 0000z/0600z data. Both must now parse with
+        real (>0) record counts.
+
+        This is a genuinely different failure mode than the two files that
+        actually failed to download (lav-202505-0000z_proxy.body and
+        lav-202505-0600z.body, both 0 bytes / http_status=0 in
+        DL4_STATUS.json) -- those remain a legitimate, disclosed data gap
+        and are NOT expected to produce records.
+        """
+        for filename in [
+            "lav-202505-0000z.body",
+            "lav-202505-0600z_proxy.body",
+        ]:
+            body_file = REAL_ARCHIVE_PATH / filename
+            if not body_file.exists():
+                pytest.skip(f"Test file not found: {body_file}")
+
+            records = list(parse_lamp_body(body_file, "real_data_test"))
+            assert len(records) > 0, (
+                f"{filename} should now recover real records (missing gzip "
+                f"trailer, not genuine corruption/empty download)"
+            )
+
+    def test_genuinely_failed_downloads_still_yield_no_records(self):
+        """The two genuinely-failed (0-byte) May 2025 downloads stay empty.
+
+        lav-202505-0000z_proxy.body and lav-202505-0600z.body are real 0-byte
+        network failures (http_status=0, documented in DL4_STATUS.json).
+        There is no real data behind them, and the fix must not attempt to
+        "recover" anything for these -- 0 records remains correct.
+        """
+        for filename in [
+            "lav-202505-0000z_proxy.body",
+            "lav-202505-0600z.body",
+        ]:
+            body_file = REAL_ARCHIVE_PATH / filename
+            if not body_file.exists():
+                pytest.skip(f"Test file not found: {body_file}")
+
+            assert body_file.stat().st_size == 0, (
+                f"{filename} is expected to be a genuine 0-byte failed "
+                f"download per DL4_STATUS.json"
+            )
+            records = list(parse_lamp_body(body_file, "real_data_test"))
+            assert records == []
 
 
 # ============================================================================

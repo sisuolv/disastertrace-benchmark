@@ -2,8 +2,8 @@
   "baseline_class": "categorical",
   "d11_note": "This registry contains ONLY categorical LAMP elements (CIG/VIS/OBV). Per DL4_STATUS.json, the real archived LAMP LAV product has no probabilistic or conditional-probability elements. The directories lamp/probabilistic/ and lamp/conditional/ exist but are empty. Per project decision D11, LAMP product types must be registered separately and never conflated.",
   "dl4_status_finding": "The real archived LAMP LAV Text Messages product contains only categorical elements (CIG/VIS/OBV with a 3-hour lookahead). It does NOT contain separate probabilistic or conditional-probability elements as originally anticipated in the v16 plan's three-way lamp/{probabilistic,categorical,conditional} directory split.",
-  "generation_timestamp": "2026-09-21T04:58:24.565899+00:00",
-  "batch_id": "registry_build_20260921T045800Z",
+  "generation_timestamp": "2026-09-21T05:16:15.238469+00:00",
+  "batch_id": "registry_build_20260921T051551Z",
   "source_archive": "/mnt/afs/260010168/extreme_weather_benchmark/data_real_v16/lamp/raw/20260920T100529Z_09c70a575ad2",
   "months_covered": [
     "2023-01",
@@ -48,51 +48,53 @@
     "KORD",
     "KSFO"
   ],
-  "total_records": 150696,
+  "total_records": 152325,
   "records_by_station": {
-    "KJFK": 37674,
-    "KORD": 37674,
-    "KDEN": 37674,
-    "KSFO": 37674
+    "KJFK": 38088,
+    "KORD": 38079,
+    "KDEN": 38079,
+    "KSFO": 38079
   },
   "records_by_element": {
-    "CIG": 50232,
-    "VIS": 50232,
-    "OBV": 50232
+    "CIG": 50775,
+    "VIS": 50775,
+    "OBV": 50775
   },
   "records_by_station_element": {
     "KDEN": {
-      "CIG": 12558,
-      "VIS": 12558,
-      "OBV": 12558
+      "CIG": 12693,
+      "VIS": 12693,
+      "OBV": 12693
     },
     "KJFK": {
-      "CIG": 12558,
-      "VIS": 12558,
-      "OBV": 12558
+      "CIG": 12696,
+      "VIS": 12696,
+      "OBV": 12696
     },
     "KORD": {
-      "CIG": 12558,
-      "VIS": 12558,
-      "OBV": 12558
+      "CIG": 12693,
+      "VIS": 12693,
+      "OBV": 12693
     },
     "KSFO": {
-      "CIG": 12558,
-      "VIS": 12558,
-      "OBV": 12558
+      "CIG": 12693,
+      "VIS": 12693,
+      "OBV": 12693
     }
   },
   "source_files_count": 142,
-  "source_files_parsed": 140,
-  "source_files_skipped": 2,
-  "skipped_files_detail": [
+  "source_files_parsed": 142,
+  "source_files_corrupt": 0,
+  "corrupt_files_detail": [],
+  "source_files_empty_download": 2,
+  "empty_download_files_detail": [
     {
-      "file": "lav-202505-0000z.body",
-      "reason": "Compressed file ended before the end-of-stream marker was reached"
+      "file": "lav-202505-0000z_proxy.body",
+      "reason": "genuine 0-byte failed download (documented in DL4_STATUS.json formal_download_phase.failed_requests_detail, http_status=0); decompresses to empty content and correctly contributes 0 records -- not a parse failure, and not recoverable (no real data exists behind it)"
     },
     {
-      "file": "lav-202505-0600z_proxy.body",
-      "reason": "Compressed file ended before the end-of-stream marker was reached"
+      "file": "lav-202505-0600z.body",
+      "reason": "genuine 0-byte failed download (documented in DL4_STATUS.json formal_download_phase.failed_requests_detail, http_status=0); decompresses to empty content and correctly contributes 0 records -- not a parse failure, and not recoverable (no real data exists behind it)"
     }
   ],
   "source_file_hashes": {
@@ -204,6 +206,8 @@
     "lav-202504-0600z.body": "e042013e47f11d3b8c5e0b84bd9d5b1d44ee89e6dd9a85610ba104eb30c0d63e",
     "lav-202504-1200z.body": "4af1b868fee292c36c7e6454ade85d54bbae0a32817d407c13b3a703eaede301",
     "lav-202504-1800z.body": "0a63a6cfb363e02a55b69610246db5f057d67e0a77a17d5ef20121f1ace10d85",
+    "lav-202505-0000z.body": "14c9bb6807b9294ba21f86dcecde2c4df3203f1136cebdcfec08de58970d10b4",
+    "lav-202505-0600z_proxy.body": "532d1f61c5c8e86a0b1b45577b54b8c22f49b665d39535b3b6814a7611193493",
     "lav-202505-1200z.body": "1bd13e366559c47c690ccbae2bf4080ba51bf1b14b8faeef49288dd0eb7a05cf",
     "lav-202505-1800z.body": "35be8c4601b27734e1dd64dfa7a8fe920dd1a041fa179333879bb914b4e19c4e",
     "lav-202506-0000z.body": "84e309b6c1f57c1fc9e81d9752926e2196979af6176233548b2d59b3fa34beba",
