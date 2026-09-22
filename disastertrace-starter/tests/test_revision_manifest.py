@@ -9,6 +9,8 @@ Tests cover:
 - Overwrite-refusal guard
 - Import-isolation (Y-isolation)
 - Real-data integration (guarded)
+- V17-01: ExposureRegistry preregistration enforcement (F07)
+- V17-01: Content-based archive fingerprinting (F07)
 """
 
 from __future__ import annotations
@@ -904,3 +906,814 @@ class TestDiscloseStatisticsGranularity:
         assert resolved_count_buggy != (positive_count_buggy + (1 * checkpoints_per_target)), (
             "This test demonstrates that buggy counting gives wrong resolved count"
         )
+
+
+# ---------------------------------------------------------------------------
+# Test: V17-01 ExposureRegistry preregistration enforcement (F07)
+# ---------------------------------------------------------------------------
+
+class TestExposureRegistry:
+    """Tests for ExposureRegistry preregistration enforcement."""
+
+    def test_register_freeze_succeeds_first_time(self, tmp_path):
+        """First freeze registration succeeds."""
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            compute_manifest_logical_id,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        logical_id = "test_manifest_001"
+        sha256 = "abc123def456"
+
+        entry = registry.register_freeze(logical_id, sha256)
+
+        assert entry.logical_id == logical_id
+        assert entry.expected_manifest_sha256 == sha256
+        assert entry.entry_type == "freeze"
+        assert registry.is_frozen(logical_id)
+
+    def test_refreeze_same_logical_id_rejected(self, tmp_path):
+        """Re-freeze attempt on already-frozen logical_id is rejected.
+
+        This is the F07 fix: renaming the output file does not bypass the
+        preregistration check because we track by logical_id, not filename.
+        """
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            AlreadyFrozenError,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        logical_id = "test_manifest_001"
+        sha256_original = "abc123"
+        sha256_new = "def456"  # Attacker tries with different content
+
+        # First freeze succeeds
+        registry.register_freeze(logical_id, sha256_original)
+
+        # Second freeze with same logical_id is rejected
+        with pytest.raises(AlreadyFrozenError) as exc_info:
+            registry.register_freeze(logical_id, sha256_new)
+
+        assert "already frozen" in str(exc_info.value)
+        assert logical_id in str(exc_info.value)
+
+    def test_refreeze_after_rename_still_rejected(self, tmp_path):
+        """Re-freeze after 'deleting and renaming' is still rejected.
+
+        This specifically tests the F07 scenario: an attacker deletes
+        manifest_v1.json and tries to regenerate as manifest_v2.json.
+        Since logical_id is derived from inputs (not filename), this fails.
+        """
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            AlreadyFrozenError,
+            compute_manifest_logical_id,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        # Compute logical_id from inputs (same inputs = same logical_id)
+        selection_rule = "manifest_selection.v1"
+        taf_summary = "archive_abc123"
+        config_sha = "config_def456"
+
+        logical_id = compute_manifest_logical_id(
+            selection_rule, taf_summary, config_sha
+        )
+
+        # First freeze with filename "manifest_v1.json" (not tracked by registry)
+        registry.register_freeze(logical_id, "sha256_original")
+
+        # Attacker "deletes manifest_v1.json" and tries with "manifest_v2.json"
+        # But same inputs produce same logical_id!
+        same_logical_id = compute_manifest_logical_id(
+            selection_rule, taf_summary, config_sha
+        )
+
+        assert same_logical_id == logical_id
+
+        with pytest.raises(AlreadyFrozenError):
+            registry.register_freeze(same_logical_id, "sha256_modified")
+
+    def test_disclosure_requires_freeze(self, tmp_path):
+        """Disclosure fails if logical_id was never frozen."""
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            NotFrozenError,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        with pytest.raises(NotFrozenError) as exc_info:
+            registry.register_disclosure("never_frozen_id", "some_sha256")
+
+        assert "never frozen" in str(exc_info.value)
+
+    def test_disclosure_verifies_sha256(self, tmp_path):
+        """Disclosure fails if sha256 doesn't match frozen value."""
+        from disastertrace.revision_v1.exposure_registry import (
+            ExposureRegistry,
+            ManifestMismatchError,
+        )
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        logical_id = "test_manifest"
+        frozen_sha256 = "correct_sha256"
+        wrong_sha256 = "tampered_sha256"
+
+        registry.register_freeze(logical_id, frozen_sha256)
+
+        with pytest.raises(ManifestMismatchError) as exc_info:
+            registry.register_disclosure(logical_id, wrong_sha256)
+
+        assert "mismatch" in str(exc_info.value).lower()
+
+    def test_append_only_property(self, tmp_path):
+        """Registry writes never drop or mutate prior entries."""
+        from disastertrace.revision_v1.exposure_registry import ExposureRegistry
+
+        registry_path = tmp_path / "registry.json"
+        registry = ExposureRegistry(registry_path)
+
+        # Write two entries
+        entry1 = registry.register_freeze("id_1", "sha1")
+        entry2 = registry.register_freeze("id_2", "sha2")
+
+        # Re-open and verify both entries present and identical
+        registry2 = ExposureRegistry(registry_path)
+
+        entries = registry2.list_entries()
+        assert len(entries) == 2
+
+        assert entries[0].logical_id == "id_1"
+        assert entries[0].expected_manifest_sha256 == "sha1"
+        assert entries[1].logical_id == "id_2"
+        assert entries[1].expected_manifest_sha256 == "sha2"
+
+        # Now add a disclosure
+        registry2.register_disclosure("id_1", "sha1")
+
+        # Re-open again and verify all three entries
+        registry3 = ExposureRegistry(registry_path)
+        entries = registry3.list_entries()
+        assert len(entries) == 3
+
+        # Original entries unchanged
+        assert entries[0].logical_id == "id_1"
+        assert entries[0].entry_type == "freeze"
+        assert entries[1].logical_id == "id_2"
+        assert entries[1].entry_type == "freeze"
+        assert entries[2].logical_id == "id_1"
+        assert entries[2].entry_type == "disclosure"
+
+
+# ---------------------------------------------------------------------------
+# Test: V17-01 Content-based archive fingerprinting (F07)
+# ---------------------------------------------------------------------------
+
+class TestContentBasedFingerprinting:
+    """Tests for content-based archive fingerprinting.
+
+    The F07 fix: fingerprint must be content-derived, not just dir name + count.
+    """
+
+    def test_different_content_produces_different_fingerprint(self, tmp_path):
+        """Two archives with same name+count but different content have different fingerprints.
+
+        This is the core F07 fix: the old fingerprint was just f"{dir_name}:{file_count}"
+        which would be identical for archives with different file contents.
+        """
+        # Import the updated function
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import generate_taf_archive_summary
+
+        # Create two archives with IDENTICAL dir names and file counts
+        archive1 = tmp_path / "test_archive"
+        archive2 = tmp_path / "test_archive_2"
+        archive1.mkdir()
+        archive2.mkdir()
+
+        # Create same number of files in each
+        for i in range(3):
+            body1 = archive1 / f"file{i}.body"
+            body2 = archive2 / f"file{i}.body"
+
+            body1.write_text(f"content_a_{i}")
+            body2.write_text(f"content_b_{i}")  # DIFFERENT content
+
+            # Create receipts with SHA256s
+            receipt1 = archive1 / f"file{i}.json"
+            receipt2 = archive2 / f"file{i}.json"
+
+            sha1 = hashlib.sha256(f"content_a_{i}".encode()).hexdigest()
+            sha2 = hashlib.sha256(f"content_b_{i}".encode()).hexdigest()
+
+            receipt1.write_text(json.dumps({"sha256": sha1}))
+            receipt2.write_text(json.dumps({"sha256": sha2}))
+
+        # Generate fingerprints
+        fp1 = generate_taf_archive_summary(archive1)
+        fp2 = generate_taf_archive_summary(archive2)
+
+        # They must be DIFFERENT (F07 fix)
+        assert fp1 != fp2, (
+            "F07 bug: archives with different content produced same fingerprint"
+        )
+
+    def test_same_content_different_order_produces_same_fingerprint(self, tmp_path):
+        """Same content discovered in different order produces same fingerprint.
+
+        The fingerprint should sort file entries before hashing for determinism.
+        """
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import generate_taf_archive_summary
+
+        # Create archive
+        archive = tmp_path / "test_archive"
+        archive.mkdir()
+
+        # Create files
+        files_content = [
+            ("c_file.body", "content_c"),
+            ("a_file.body", "content_a"),
+            ("b_file.body", "content_b"),
+        ]
+
+        for name, content in files_content:
+            body = archive / name
+            body.write_text(content)
+
+            receipt = archive / name.replace(".body", ".json")
+            sha = hashlib.sha256(content.encode()).hexdigest()
+            receipt.write_text(json.dumps({"sha256": sha}))
+
+        # Generate fingerprint multiple times
+        fp1 = generate_taf_archive_summary(archive)
+        fp2 = generate_taf_archive_summary(archive)
+
+        # Must be identical (deterministic, order-independent)
+        assert fp1 == fp2
+
+    def test_missing_receipt_raises_error(self, tmp_path):
+        """Missing receipt file for a .body raises clear error."""
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import generate_taf_archive_summary
+
+        archive = tmp_path / "test_archive"
+        archive.mkdir()
+
+        # Create .body WITHOUT matching .json receipt
+        body = archive / "orphan.body"
+        body.write_text("content")
+
+        with pytest.raises(ValueError) as exc_info:
+            generate_taf_archive_summary(archive)
+
+        assert "Receipt file missing" in str(exc_info.value)
+
+    def test_receipt_missing_sha256_raises_error(self, tmp_path):
+        """Receipt without sha256 field raises clear error."""
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import generate_taf_archive_summary
+
+        archive = tmp_path / "test_archive"
+        archive.mkdir()
+
+        body = archive / "test.body"
+        body.write_text("content")
+
+        # Receipt without sha256
+        receipt = archive / "test.json"
+        receipt.write_text(json.dumps({"other_field": "value"}))
+
+        with pytest.raises(ValueError) as exc_info:
+            generate_taf_archive_summary(archive)
+
+        assert "sha256" in str(exc_info.value).lower()
+
+
+# ---------------------------------------------------------------------------
+# V17-02 / F02: Pre-deadline revision count filtering tests
+# ---------------------------------------------------------------------------
+
+
+class TestF02PreDeadlineFiltering:
+    """V17-02 / F02: Test pre-deadline filtering of revision counts.
+
+    The F02 fix ensures that revision_count, tie_event_count, and
+    evidence_change_count only count packages issued BEFORE the target's
+    validity_start (the "deadline"). Packages issued during the validity
+    window are counted separately in the *_whole_window fields.
+    """
+
+    def test_candidate_has_both_filtered_and_whole_window_counts(self):
+        """CandidateTarget has both pre-deadline and whole-window count fields."""
+        from disastertrace.revision_v1.manifest import CandidateTarget
+
+        hour = 3_600_000_000  # 1 hour in microseconds
+        t0 = 1700000000000000  # arbitrary base time
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=3,
+            tie_event_count=1,
+            evidence_change_count=2,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=5,
+            tie_event_count_whole_window=2,
+            evidence_change_count_whole_window=4,
+            source_packages=[],
+        )
+
+        # Filtered counts (pre-deadline)
+        assert candidate.revision_count == 3
+        assert candidate.tie_event_count == 1
+        assert candidate.evidence_change_count == 2
+
+        # Whole-window counts
+        assert candidate.revision_count_whole_window == 5
+        assert candidate.tie_event_count_whole_window == 2
+        assert candidate.evidence_change_count_whole_window == 4
+
+    def test_build_manifest_includes_both_count_types(self):
+        """build_manifest includes both pre-deadline and whole-window counts."""
+        from disastertrace.revision_v1.manifest import CandidateTarget, build_manifest
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=2,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=4,
+            tie_event_count_whole_window=1,
+            evidence_change_count_whole_window=3,
+            source_packages=[],
+        )
+
+        manifest = build_manifest(
+            changed_queue=[candidate],
+            unchanged_queue=[],
+            config_sha256="a" * 64,
+            taf_archive_summary="test",
+        )
+
+        target = manifest["targets"][0]
+        signals = target["selection_signals"]
+
+        # Pre-deadline counts
+        assert signals["revision_count"] == 2
+        assert signals["tie_event_count"] == 0
+        assert signals["evidence_change_count"] == 1
+
+        # Whole-window counts
+        assert signals["revision_count_whole_window"] == 4
+        assert signals["tie_event_count_whole_window"] == 1
+        assert signals["evidence_change_count_whole_window"] == 3
+
+
+class TestF02OutcomeContract:
+    """V17-02 / F02: Test outcome_contract in manifest schema."""
+
+    def test_manifest_v2_schema_includes_outcome_contract(self):
+        """v2 schema manifest includes outcome_contract field."""
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            DEFAULT_OUTCOME_CONTRACT,
+            build_manifest,
+        )
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        manifest = build_manifest(
+            changed_queue=[candidate],
+            unchanged_queue=[],
+            config_sha256="a" * 64,
+            taf_archive_summary="test",
+        )
+
+        assert manifest["schema"] == "disastertrace.episode_manifest.v2"
+        assert "outcome_contract" in manifest
+
+        oc = manifest["outcome_contract"]
+        assert "thresholds_m" in oc
+        assert "report_policy" in oc
+        assert "checkpoint_weights" in oc
+        assert "support_window_hours" in oc
+
+    def test_default_outcome_contract_values(self):
+        """DEFAULT_OUTCOME_CONTRACT has expected frozen values."""
+        from disastertrace.revision_v1.manifest import DEFAULT_OUTCOME_CONTRACT
+
+        assert DEFAULT_OUTCOME_CONTRACT["thresholds_m"] == [5000.0, 1000.0]
+        assert DEFAULT_OUTCOME_CONTRACT["report_policy"] == "iem_routine_unique_hour.v1"
+        assert DEFAULT_OUTCOME_CONTRACT["support_window_hours"] == 1.0
+        assert DEFAULT_OUTCOME_CONTRACT["checkpoint_weights"] == [1.0, 1.0, 1.0]
+        assert DEFAULT_OUTCOME_CONTRACT["checkpoint_offsets_minutes"] == [-60, -40, -20]
+
+    def test_custom_outcome_contract_preserved(self):
+        """A2-4: a custom outcome_contract is explicitly REJECTED, not silently used.
+
+        Withdrawn claim: this test previously asserted that build_manifest silently
+        adopted an arbitrary custom outcome_contract (different thresholds, report
+        policy, support window, weights) without validating it against anything.
+        That behavior let a manifest carry a contract that nothing downstream
+        (compute_checkpoints, make_h15_visibility_target) actually honored end to
+        end. A2-4 makes this batch support exactly one outcome profile
+        (H15_DEFAULT_PROFILE); anything else must raise UnsupportedOutcomeProfile.
+        """
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            UnsupportedOutcomeProfile,
+            build_manifest,
+        )
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        custom_contract = {
+            "thresholds_m": [3000.0],
+            "report_policy": "custom.v1",
+            "support_window_hours": 2.0,
+            "checkpoint_weights": [0.5, 0.3, 0.2],
+        }
+
+        with pytest.raises(UnsupportedOutcomeProfile):
+            build_manifest(
+                changed_queue=[candidate],
+                unchanged_queue=[],
+                config_sha256="a" * 64,
+                taf_archive_summary="test",
+                outcome_contract=custom_contract,
+            )
+
+    def test_default_profile_generates_matching_checkpoints(self):
+        """A2-4: H15_DEFAULT_PROFILE's offsets/weights drive compute_checkpoints,
+        and build_manifest's per-target checkpoints match calling compute_checkpoints
+        directly with the same profile.
+        """
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            H15_DEFAULT_PROFILE,
+            build_manifest,
+            compute_checkpoints,
+        )
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        manifest = build_manifest(
+            changed_queue=[candidate],
+            unchanged_queue=[],
+            config_sha256="a" * 64,
+            taf_archive_summary="test",
+        )
+
+        expected = compute_checkpoints(t0, profile=H15_DEFAULT_PROFILE)
+        actual = manifest["targets"][0]["checkpoints"]
+
+        assert len(actual) == len(expected)
+        for actual_cp, expected_cp in zip(actual, expected):
+            assert actual_cp["time_us"] == expected_cp.time_us
+            assert actual_cp["weight"] == expected_cp.weight
+
+    def test_inconsistent_manifest_rejected(self):
+        """A2-4: an outcome_contract missing a required field (here,
+        checkpoint_offsets_minutes) is rejected by validate_outcome_profile even
+        though its checkpoint_weights alone would pass _validate_checkpoint_weights.
+        """
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            UnsupportedOutcomeProfile,
+            build_manifest,
+        )
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        # Non-empty, non-negative weights -- passes _validate_checkpoint_weights --
+        # but missing checkpoint_offsets_minutes entirely, and thresholds_m/
+        # support_window_hours differ from H15_DEFAULT_PROFILE.
+        inconsistent_contract = {
+            "thresholds_m": [5000.0],
+            "report_policy": "iem_routine_unique_hour.v1",
+            "support_window_hours": 1.0,
+            "checkpoint_weights": [1.0, 1.0, 1.0],
+        }
+
+        with pytest.raises(UnsupportedOutcomeProfile) as exc_info:
+            build_manifest(
+                changed_queue=[candidate],
+                unchanged_queue=[],
+                config_sha256="a" * 64,
+                taf_archive_summary="test",
+                outcome_contract=inconsistent_contract,
+            )
+
+        assert "checkpoint_offsets_minutes" in str(exc_info.value)
+
+    def test_validate_outcome_profile_accepts_h15_default(self):
+        """A2-4: validate_outcome_profile is a no-op for H15_DEFAULT_PROFILE itself."""
+        from disastertrace.revision_v1.manifest import (
+            H15_DEFAULT_PROFILE,
+            validate_outcome_profile,
+        )
+
+        # Should not raise.
+        validate_outcome_profile(H15_DEFAULT_PROFILE)
+        validate_outcome_profile(H15_DEFAULT_PROFILE.copy())
+
+    def test_empty_weights_raises(self):
+        """Empty checkpoint_weights raises ValueError."""
+        from disastertrace.revision_v1.manifest import CandidateTarget, build_manifest
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        invalid_contract = {
+            "thresholds_m": [5000.0],
+            "report_policy": "test.v1",
+            "support_window_hours": 1.0,
+            "checkpoint_weights": [],  # Empty!
+        }
+
+        with pytest.raises(ValueError) as exc_info:
+            build_manifest(
+                changed_queue=[candidate],
+                unchanged_queue=[],
+                config_sha256="a" * 64,
+                taf_archive_summary="test",
+                outcome_contract=invalid_contract,
+            )
+
+        assert "empty" in str(exc_info.value).lower()
+
+
+class TestA2_4DiscloseOutcomeContractResolution:
+    """A2-4: resolve_disclose_outcome_contract's branching, tested directly
+    (no manifest_path/config_path/exposure_registry plumbing, no ASOS access --
+    this is a pure function of a manifest dict, exercised entirely synthetically
+    per hard boundary #9/#10: real freeze/disclose is not run this round).
+    """
+
+    def _import(self):
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import resolve_disclose_outcome_contract
+        return resolve_disclose_outcome_contract
+
+    def test_v1_schema_takes_legacy_branch(self):
+        """A v1-schema manifest (no outcome_contract key at all) resolves to
+        DEFAULT_OUTCOME_CONTRACT via the explicit legacy_v1 branch."""
+        from disastertrace.revision_v1.manifest import DEFAULT_OUTCOME_CONTRACT
+
+        resolve_disclose_outcome_contract = self._import()
+
+        v1_manifest = {
+            "schema": "disastertrace.episode_manifest.v1",
+            "targets": [],
+        }
+
+        resolved = resolve_disclose_outcome_contract(v1_manifest)
+        assert resolved == DEFAULT_OUTCOME_CONTRACT
+
+    def test_missing_outcome_contract_takes_legacy_branch_regardless_of_schema(self):
+        """Any manifest with outcome_contract=None (missing entirely) takes the
+        legacy branch, even if its schema string happens to say v2 -- absence of
+        the field is what matters, not the label."""
+        from disastertrace.revision_v1.manifest import DEFAULT_OUTCOME_CONTRACT
+
+        resolve_disclose_outcome_contract = self._import()
+
+        manifest_no_contract = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "targets": [],
+        }
+
+        resolved = resolve_disclose_outcome_contract(manifest_no_contract)
+        assert resolved == DEFAULT_OUTCOME_CONTRACT
+
+    def test_v2_schema_with_default_profile_passes(self):
+        """A v2-schema manifest whose outcome_contract exactly matches
+        H15_DEFAULT_PROFILE is accepted and returned unchanged."""
+        from disastertrace.revision_v1.manifest import H15_DEFAULT_PROFILE
+
+        resolve_disclose_outcome_contract = self._import()
+
+        v2_manifest = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "outcome_contract": dict(H15_DEFAULT_PROFILE),
+            "targets": [],
+        }
+
+        resolved = resolve_disclose_outcome_contract(v2_manifest)
+        assert resolved == H15_DEFAULT_PROFILE
+
+    def test_v2_schema_with_unsupported_profile_raises(self):
+        """A v2-schema manifest whose outcome_contract deviates from
+        H15_DEFAULT_PROFILE is rejected before any ASOS/outcome access is
+        constructed downstream."""
+        from disastertrace.revision_v1.manifest import UnsupportedOutcomeProfile
+
+        resolve_disclose_outcome_contract = self._import()
+
+        v2_manifest = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "outcome_contract": {
+                "thresholds_m": [3000.0],
+                "report_policy": "custom.v1",
+                "support_window_hours": 2.0,
+                "checkpoint_weights": [0.5, 0.3, 0.2],
+                "checkpoint_offsets_minutes": [-60, -40, -20],
+            },
+            "targets": [],
+        }
+
+        with pytest.raises(UnsupportedOutcomeProfile):
+            resolve_disclose_outcome_contract(v2_manifest)
+
+
+class TestF02ManifestValidation:
+    """V17-02 / F02: Test validate_manifest accepts both v1 and v2 schemas."""
+
+    def test_validate_manifest_accepts_v2_schema(self):
+        """validate_manifest accepts v2 schema with outcome_contract."""
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            build_manifest,
+            compute_self_sha256,
+            validate_manifest,
+        )
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        manifest = build_manifest(
+            changed_queue=[candidate],
+            unchanged_queue=[],
+            config_sha256="a" * 64,
+            taf_archive_summary="test",
+        )
+        manifest["self_sha256"] = compute_self_sha256(manifest)
+
+        errors = validate_manifest(manifest)
+        assert errors == [], f"Validation errors: {errors}"
+
+    def test_validate_manifest_rejects_v2_missing_outcome_contract(self):
+        """v2 schema without outcome_contract is rejected."""
+        manifest = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "selection_rule_version": "manifest_selection.v2",
+            "targets": [],
+            "queue_summary": {"changed_count": 0, "unchanged_count": 0, "total_count": 0},
+            "frozen_at": "2023-01-01T00:00:00Z",
+            "input_fingerprints": {},
+            "self_sha256": "",
+        }
+
+        errors = validate_manifest(manifest)
+        assert any("outcome_contract" in e for e in errors)
+
+    def test_validate_manifest_rejects_v2_missing_whole_window_counts(self):
+        """v2 schema without whole-window counts in selection_signals is rejected."""
+        from disastertrace.revision_v1.manifest import DEFAULT_OUTCOME_CONTRACT
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        manifest = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "selection_rule_version": "manifest_selection.v2",
+            "outcome_contract": DEFAULT_OUTCOME_CONTRACT.copy(),
+            "targets": [
+                {
+                    "target_id": "test",
+                    "station": "KSFO",
+                    "validity_start": "2023-01-01T00:00:00Z",
+                    "validity_start_us": t0,
+                    "validity_end": "2023-01-01T06:00:00Z",
+                    "validity_end_us": t0 + 6 * hour,
+                    "queue": "changed",
+                    "checkpoints": [
+                        {"time_us": t0 - 60 * 60_000_000, "time": "X", "weight": 1.0},
+                        {"time_us": t0 - 40 * 60_000_000, "time": "X", "weight": 1.0},
+                        {"time_us": t0 - 20 * 60_000_000, "time": "X", "weight": 1.0},
+                    ],
+                    "selection_signals": {
+                        "revision_count": 1,
+                        "tie_event_count": 0,
+                        "evidence_change_count": 1,
+                        "lead_time_coverage_hours": 6.0,
+                        # Missing *_whole_window fields!
+                    },
+                }
+            ],
+            "queue_summary": {"changed_count": 1, "unchanged_count": 0, "total_count": 1},
+            "frozen_at": "2023-01-01T00:00:00Z",
+            "input_fingerprints": {},
+            "self_sha256": "",
+        }
+
+        errors = validate_manifest(manifest)
+        assert any("revision_count_whole_window" in e for e in errors)

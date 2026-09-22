@@ -661,3 +661,261 @@ KSFO 151200Z 1512/1612 25010KT P6SM SCT020=
         # Hash should be a 64-char hex string (sha256)
         assert len(original_hash) == 64
         assert all(c in "0123456789abcdef" for c in original_hash)
+
+
+# ---------------------------------------------------------------------------
+# V17-02 / F10: Shared tie resolution module tests
+# ---------------------------------------------------------------------------
+
+
+class TestF10SharedTieResolution:
+    """V17-02 / F10: Test shared tie resolution between runtime and validator.
+
+    The F10 fix ensures that resolve_receipt_tie (runtime) and the validator
+    use the exact same resolution logic via the shared tie_resolution module.
+    """
+
+    def test_shared_check_receipt_premise_accepts_valid(self):
+        """check_receipt_premise accepts valid tied members."""
+        from disastertrace.revision_v1.tie_resolution import check_receipt_premise
+
+        members = [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z")},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z")},
+            {"receipt_seq": 3, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z")},
+        ]
+
+        ok, reason = check_receipt_premise(members)
+        assert ok is True
+        assert reason == "premise_ok"
+
+    def test_shared_check_receipt_premise_rejects_bool_seq(self):
+        """check_receipt_premise rejects bool receipt_seq (type() check)."""
+        from disastertrace.revision_v1.tie_resolution import check_receipt_premise
+
+        members = [
+            {"receipt_seq": True, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z")},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z")},
+        ]
+
+        ok, reason = check_receipt_premise(members)
+        assert ok is False
+        assert reason == "no_receipt_signal"
+
+    def test_shared_check_receipt_premise_rejects_stream_mismatch(self):
+        """check_receipt_premise rejects mismatched receipt_stream."""
+        from disastertrace.revision_v1.tie_resolution import check_receipt_premise
+
+        members = [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z")},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-02", "issued_at": us("2025-01-15T12:00:00Z")},
+        ]
+
+        ok, reason = check_receipt_premise(members)
+        assert ok is False
+        assert reason == "premise_violated_stream_mismatch"
+
+    def test_shared_check_bbb_order_accepts_agreement(self):
+        """check_bbb_order_vs_receipt_order accepts when BBB and receipt agree."""
+        from disastertrace.revision_v1.tie_resolution import check_bbb_order_vs_receipt_order
+
+        # AAA received before AAB (correct WMO order)
+        members = [
+            {"wmo_bbb": "AAA", "receipt_seq": 1},
+            {"wmo_bbb": "AAB", "receipt_seq": 2},
+        ]
+
+        ok, reason = check_bbb_order_vs_receipt_order(members)
+        assert ok is True
+        assert reason == "bbb_agrees"
+
+    def test_shared_check_bbb_order_rejects_contradiction(self):
+        """check_bbb_order_vs_receipt_order rejects BBB vs receipt contradiction."""
+        from disastertrace.revision_v1.tie_resolution import check_bbb_order_vs_receipt_order
+
+        # AAB received before AAA (reversed from WMO order) - contradiction
+        members = [
+            {"wmo_bbb": "AAA", "receipt_seq": 2},  # AAA should be first but has higher seq
+            {"wmo_bbb": "AAB", "receipt_seq": 1},  # AAB received first but should be second
+        ]
+
+        ok, reason = check_bbb_order_vs_receipt_order(members)
+        assert ok is False
+        assert reason == "bbb_contradicts_receipt_order"
+
+    def test_resolve_receipt_tie_strict_full_success(self):
+        """resolve_receipt_tie_strict resolves when all gates pass."""
+        from disastertrace.revision_v1.tie_resolution import resolve_receipt_tie_strict
+
+        rows = [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA"},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAB"},
+        ]
+
+        result = resolve_receipt_tie_strict(rows)
+        assert result.resolved is True
+        assert result.winner is not None
+        assert result.winner["receipt_seq"] == 2  # max seq wins
+        assert result.rule == "receipt_order+bbb_agree"
+
+    def test_resolve_receipt_tie_strict_no_bbb_pairs(self):
+        """resolve_receipt_tie_strict uses receipt_order rule when no BBB pairs."""
+        from disastertrace.revision_v1.tie_resolution import resolve_receipt_tie_strict
+
+        # Different BBB families, so no cross-validation needed
+        rows = [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA"},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "CCA"},
+        ]
+
+        result = resolve_receipt_tie_strict(rows)
+        assert result.resolved is True
+        assert result.winner["receipt_seq"] == 2
+        assert result.rule == "receipt_order"
+
+    def test_runtime_and_validator_use_same_logic(self):
+        """Verify runtime resolve_receipt_tie uses the shared strict resolution.
+
+        This is the core F10 test: the runtime resolver must now use the same
+        strict logic as the validator, rejecting ties that the validator would
+        reject (like BBB contradictions).
+        """
+        from disastertrace.revision_v1.tie_resolution import resolve_receipt_tie_strict
+
+        # Create a case that would PASS loose receipt-only but FAIL strict BBB check
+        rows = [
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA"},
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAB"},
+        ]
+        # BBB order: AAA < AAB
+        # Receipt order: AAB(seq=1) < AAA(seq=2)
+        # This is a CONTRADICTION - AAB should come after AAA
+
+        # Shared strict resolution should reject
+        strict_result = resolve_receipt_tie_strict(rows)
+        assert strict_result.resolved is False
+        assert strict_result.reason == "bbb_contradicts_receipt_order"
+
+        # Runtime resolve_receipt_tie with strict=True should also reject
+        runtime_result = resolve_receipt_tie(rows, strict=True)
+        assert runtime_result is None  # None = unresolved
+
+        # And the new resolve_receipt_tie_with_status exposes the reason
+        from disastertrace.monitoring_v1.providers.versions import resolve_receipt_tie_with_status
+        status = resolve_receipt_tie_with_status(rows)
+        assert status.resolved is False
+        assert status.reason == "bbb_contradicts_receipt_order"
+
+    def test_legacy_strict_false_still_works(self):
+        """With strict=False, legacy receipt-only behavior is preserved.
+
+        This is for backward compatibility. When strict=False, the BBB check
+        is skipped and only receipt_seq ordering is used.
+        """
+        # Same contradicting BBB case
+        rows = [
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA"},
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAB"},
+        ]
+
+        # Legacy mode (strict=False) should resolve to max seq
+        legacy_result = resolve_receipt_tie(rows, strict=False)
+        assert legacy_result is not None
+        assert legacy_result["receipt_seq"] == 2
+
+    def test_tie_resolution_result_dataclass(self):
+        """TieResolutionResult dataclass has all expected fields."""
+        from disastertrace.revision_v1.tie_resolution import TieResolutionResult
+
+        result = TieResolutionResult(
+            resolved=True,
+            winner={"test": "data"},
+            reason="test_reason",
+            rule="test_rule",
+        )
+
+        assert result.resolved is True
+        assert result.winner == {"test": "data"}
+        assert result.reason == "test_reason"
+        assert result.rule == "test_rule"
+
+
+class TestEqualBbbPermutationInvariance:
+    """A2-2 / CE1 regression: equal-BBB ties must not depend on input order.
+
+    Before the fix, check_bbb_order_vs_receipt_order compared a trivially-False
+    bbb_order (bbb_i == bbb_j) against a seq_order that flips depending on
+    which tied member happens to land at index i vs index j -- i.e. on the
+    caller's input list order, not on any property of the tied set itself.
+    A(AAA, seq=1) vs B(AAA, seq=2) resolved to winner B when passed as
+    [A, B], but was rejected as unresolved when passed as [B, A]. These
+    tests pin the fixed behavior: every permutation of a same-BBB tied set
+    gives the identical (resolved, reason) outcome.
+    """
+
+    def _equal_bbb_pair(self):
+        return [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "a"},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "b"},
+        ]
+
+    def test_check_bbb_order_equal_bbb_returns_no_authority(self):
+        """check_bbb_order_vs_receipt_order refuses to claim an order for equal BBB."""
+        from disastertrace.revision_v1.tie_resolution import check_bbb_order_vs_receipt_order
+
+        rows = self._equal_bbb_pair()
+        ok, reason = check_bbb_order_vs_receipt_order(rows)
+        assert ok is False
+        assert reason == "equal_bbb_no_authority"
+
+        ok_reversed, reason_reversed = check_bbb_order_vs_receipt_order(list(reversed(rows)))
+        assert ok_reversed is False
+        assert reason_reversed == "equal_bbb_no_authority"
+
+    def test_resolve_receipt_tie_strict_equal_bbb_all_permutations_agree(self):
+        """resolve_receipt_tie_strict gives the identical result for every permutation."""
+        import itertools
+
+        from disastertrace.revision_v1.tie_resolution import resolve_receipt_tie_strict
+
+        rows = self._equal_bbb_pair()
+        outcomes = set()
+        for perm in itertools.permutations(rows):
+            result = resolve_receipt_tie_strict(list(perm))
+            outcomes.add((result.resolved, result.reason))
+
+        assert outcomes == {(False, "equal_bbb_no_authority")}
+
+    def test_resolve_receipt_tie_strict_three_way_equal_bbb_all_permutations_agree(self):
+        """Same invariant holds for a 3-member equal-BBB tied set."""
+        import itertools
+
+        from disastertrace.revision_v1.tie_resolution import resolve_receipt_tie_strict
+
+        rows = [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "a"},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "b"},
+            {"receipt_seq": 3, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "c"},
+        ]
+        outcomes = set()
+        for perm in itertools.permutations(rows):
+            result = resolve_receipt_tie_strict(list(perm))
+            outcomes.add((result.resolved, result.reason))
+
+        assert outcomes == {(False, "equal_bbb_no_authority")}
+
+    def test_distinct_bbb_still_resolves_regardless_of_order(self):
+        """Sanity check: the fix doesn't disturb the existing distinct-BBB resolved path."""
+        import itertools
+
+        from disastertrace.revision_v1.tie_resolution import resolve_receipt_tie_strict
+
+        rows = [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "a"},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAB", "source_id": "b"},
+        ]
+        for perm in itertools.permutations(rows):
+            result = resolve_receipt_tie_strict(list(perm))
+            assert result.resolved is True
+            assert result.winner["source_id"] == "b"
+            assert result.rule == "receipt_order+bbb_agree"

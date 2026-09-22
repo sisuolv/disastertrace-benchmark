@@ -1,28 +1,58 @@
 """Native issuance selection within one explicitly designated product series."""
 
 from dataclasses import asdict
+from typing import TYPE_CHECKING
 
 from ..targets import canonical_hash
+from ...revision_v1.tie_resolution import (
+    resolve_receipt_tie_strict,
+    TieResolutionResult,
+)
+
+if TYPE_CHECKING:
+    from typing import Any
 
 
-def resolve_receipt_tie(tied_rows):
+def resolve_receipt_tie(tied_rows, *, strict: bool = True):
     """Return the unique latest-received row; signal absence or ambiguity returns None.
 
-    Resolvable iff:
+    V17-02 / F10 fix: Now uses the shared resolve_receipt_tie_strict() which
+    checks both the receipt premise AND BBB order agreement before picking a
+    winner. This aligns runtime behavior with the offline validator.
+
+    When strict=True (default), uses the full validation including BBB order
+    checks. When strict=False, uses legacy behavior (receipt_seq only).
+
+    Resolvable iff (strict mode):
     - Every row has type(row.get("receipt_seq")) is int (bool subclass rejected)
     - All rows share the same receipt_stream
-    - All receipt_seq values are pairwise distinct
+    - Sorting by receipt_seq yields non-decreasing issued_at
+    - BBB letter order agrees with receipt_seq order (when comparable pairs exist)
 
     receipt_seq is not a runtime arrival timestamp but rather the **position within
     the sha256-sealed AFOS archive byte stream** (.body file row index), assigned
     during data-receipt verification. This field is produced by episode_compiler's
-    compile_afos_taf_stream and explicitly opted-in by data sources — monitoring_v1
+    compile_afos_taf_stream and explicitly opted-in by data sources - monitoring_v1
     layers never produce it, so this tie-break does not conflict with admission.py's
     "no authority from arrival order" principle.
+
+    Args:
+        tied_rows: List of product dicts tied at the same issued_at.
+        strict: If True (default), use full validation including BBB checks.
+                If False, use legacy behavior (receipt_seq only, no BBB check).
+
+    Returns:
+        The winning row if resolved, else None.
     """
     if not tied_rows or len(tied_rows) < 2:
         return None
 
+    if strict:
+        # V17-02 / F10 fix: Use shared strict resolution
+        result = resolve_receipt_tie_strict(tied_rows)
+        return result.winner if result.resolved else None
+
+    # Legacy fallback (strict=False): original behavior without BBB check
     # Strict int check (bool is subclass of int, must be rejected)
     for row in tied_rows:
         seq = row.get("receipt_seq")
@@ -41,6 +71,30 @@ def resolve_receipt_tie(tied_rows):
 
     # Winner = max receipt_seq (latest received)
     return max(tied_rows, key=lambda r: r["receipt_seq"])
+
+
+def resolve_receipt_tie_with_status(tied_rows) -> TieResolutionResult:
+    """Return full resolution status including reason for unresolved ties.
+
+    V17-02 / F10 fix: This variant returns a TieResolutionResult with explicit
+    reason for unresolved status, allowing callers (like the ledger) to
+    propagate "unresolved" as a distinct state rather than silently coercing
+    it into a winner.
+
+    Args:
+        tied_rows: List of product dicts tied at the same issued_at.
+
+    Returns:
+        TieResolutionResult with resolved status, winner (if any), and reason.
+    """
+    if not tied_rows or len(tied_rows) < 2:
+        return TieResolutionResult(
+            resolved=False,
+            winner=None,
+            reason="not_a_tie" if tied_rows else "empty_input",
+        )
+
+    return resolve_receipt_tie_strict(tied_rows)
 
 
 def latest_issuance(products):

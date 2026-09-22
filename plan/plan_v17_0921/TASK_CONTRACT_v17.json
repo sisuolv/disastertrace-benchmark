@@ -1,0 +1,335 @@
+{
+  "meta": {
+    "version": "v17-frozen-dev-20260921",
+    "purpose": "Development scientific contract for DisasterTrace v17; items updated based on V17-03 census results and G1 gate assessment",
+    "source_plan": "DISASTERTRACE_V17_EXECUTION_PLAN_CN.md",
+    "prior_decisions": "RESEARCH_DECISIONS_v14_20260919.yaml (D01-D12 all APPROVED)",
+    "codex_audit": "codex_audit_v16/FINDINGS.md section 0",
+    "candidate_contribution": "A benchmark for distinguishing operational evidence maintenance from probabilistic forecasting skill under real weather-product revisions",
+    "statistical_power_note_updated": "V17-03 census revealed 121,885 pre-deadline evidence changes across 17,064 slots (vs. 36 checkpoints in pilot selection). This answers the G1 evidence-existence question (sufficient TAF-side volume: YES) but NOT the Codex statistical-power concern about H15's positive-label rate. Evidence-change volume and positive-label rate are distinct: the census is Y-blind by design and cannot measure how often TAF changes correlate with outcome-label differences. The Codex concern (3/36 = 8.33% positive rate in pilot) remains open and requires a future outcome-side (Y-permissioned) analysis before the H15 paired-diagnostic experiment's results can be trusted. See TRANSITION_CENSUS_v17.md Scope Clarification section.",
+    "g1_gate_status": "PENDING_REVERIFICATION",
+    "g1_assessment_date": "2026-09-21",
+    "g1_reverification_note": "Batch A2 (2026-09-21) found the V17-03 PASSED determination relied on measurements it did not actually perform: the census filtered on issued_at < target_start rather than per-checkpoint available_at (T-60/T-40/T-20 fields were computed but never consumed), 'zero dispute rate' read entry.get('tie_unresolved') -- a field compile_ledger() never emits -- and 4,264 station-day groups were reported as independent processes without a lineage/adjacency justification. See correction_history below and PLAN/BATCH_A2_PROGRESS.md for the active reverification work.",
+    "correction_history": [
+      {
+        "batch": "V17-03 post-hoc self-correction (commit daba7cf3f)",
+        "date": "2026-09-21",
+        "withdrawn_claim_verbatim": "PASSED - proceed with H15 as scoped",
+        "reason_for_withdrawal": "Original V17-03 claimed 121,885 evidence changes 'substantively addressed' the Codex statistical-power (positive-label) concern. This conflated an X-side (TAF evidence volume) measurement with a Y-side (outcome positive-label rate) question; the census is Y-blind by design and structurally cannot answer it."
+      },
+      {
+        "batch": "Batch A2",
+        "date": "2026-09-21",
+        "withdrawn_claim_verbatim": "PASSED - proceed with H15 as scoped",
+        "reason_for_withdrawal": "Independent review (three reviews, findings merged) found the PASSED determination unsupported even for the narrower evidence-existence question: (1) census never consumed the T-60/T-40/T-20 checkpoint fields, so '98% coverage' does not demonstrate per-checkpoint availability; (2) the 'zero dispute rate' read a field the ledger never populates, so it could not have detected any conflict; (3) 4,264 station-day groups were reported as independent weather processes without justification. Status changed to PENDING_REVERIFICATION pending Batch A2 fixes (checkpoint-aware classification, propagated tie/relation status, separated count units)."
+      }
+    ]
+  },
+  "contract_items": {
+    "C01_primary_domain": {
+      "status": "candidate",
+      "value_or_spec": "H15 airport low-visibility: routine observation visibility threshold events at fixed stations, specifically IEM routine unique-hour reports",
+      "open_details": [
+        "Per-checkpoint (T-60/T-40/T-20) evidence availability, not just issued_at < target_start (Batch A2-3)",
+        "Conflict/dispute detection actually wired to the ledger's relation status, not a field the ledger never emits (Batch A2-2)",
+        "Independence justification for station-day process groups, or an honest 'candidate grouping, independence unverified' label (Batch A2-3)"
+      ],
+      "withdrawn_details": [
+        "Real transition density: 121,885 pre-deadline changes across 17,064 slots (98% coverage) -- WITHDRAWN: filter was issued_at < target_start, not checkpoint-aware (available_at vs T-60/T-40/T-20); reported denominator also conflated the 17,078 evidence-eligible slot count with the 17,420 full-calendar slot count.",
+        "TAF-side classification consistency: 0% dispute rate in AMD/COR/mirror classification (ledger semantics verified) -- WITHDRAWN: census read entry.get('tie_unresolved'), a field compile_ledger() never populates; a 0% rate under this check could not have detected any real conflict.",
+        "Independent weather processes: 4,264 station-day groups, sufficient for block inference -- WITHDRAWN: grouping key is (station, issue UTC day) only; no lineage/adjacency analysis was performed to establish independence."
+      ],
+      "open_details_note": "Outcome-label reliability (ASOS-derived Y labels) remains PENDING_HUMAN_VERIFICATION per LABEL_QUALIFICATION_v17.md and is a SEPARATE question from TAF source-label qualification (see OR1c). Neither is currently closed.",
+      "owner": "V17-03 census (completed, claims partially withdrawn) / Batch A2 reverification in progress",
+      "closing_evidence": "PENDING: awaiting Batch A2 checkpoint-aware census (A2-3), propagated relation_status (A2-2), and separated count units (A2-3). See PLAN/BATCH_A2_PROGRESS.md.",
+      "blocked_by": ["A2-1", "A2-2", "A2-3"]
+    },
+    "C02_fixed_future_target": {
+      "status": "candidate",
+      "value_or_spec": {
+        "definition": "Fixed station, fixed future one-hour window, routine-report visibility threshold event per registered outcome policy iem_routine_unique_hour.v1",
+        "immutability": "Target identity frozen before outcome Y resolution; changing station, calendar, or outcome policy creates a new contract version",
+        "clarifications_needed": [
+          "Routine report uniqueness vs correction policy",
+          "Missing observation handling",
+          "Unit standardization (meters vs statute miles)",
+          "Support window exact boundaries"
+        ]
+      },
+      "open_details": [
+        "Report uniqueness and correction authority rules (F11 concern: input reordering changes Y)",
+        "Missing observation fallback policy",
+        "One-hour window support vs continuous physical visibility truth"
+      ],
+      "owner": "V17-02 fix",
+      "closing_evidence": "V17-02 implements deterministic, order-invariant outcome resolution with explicit correction authority; missing/conflict outcomes have explicit terminal states",
+      "blocked_by": ["V17-01"]
+    },
+    "C03_thresholds": {
+      "status": "frozen_dev",
+      "value_or_spec": {
+        "development_thresholds": ["<5 km", "<1 km"],
+        "nesting": "Both thresholds are nested (1 km subset of 5 km); they cannot be treated as independent samples",
+        "confirmation_thresholds": "Main threshold/indicator family predetermined before confirmation; not selected after observing model performance"
+      },
+      "open_details": [
+        "Confirmation-phase main threshold selection (development uses both)"
+      ],
+      "owner": "V17-10 confirmation design",
+      "closing_evidence": "G5 design pre-registers main threshold family with scientific justification, not outcome-driven selection",
+      "blocked_by": []
+    },
+    "C04_scoring_time": {
+      "status": "candidate",
+      "value_or_spec": {
+        "checkpoint_grid": "T-60 / T-40 / T-20 minutes relative to target window start, equal within-target weights",
+        "time_semantics": "Lead time is measured from window start, NOT physical lead time to actual report occurrence",
+        "normalization": "sum_k w_jk = 1 for each target j"
+      },
+      "open_details": [
+        "Checkpoint-consuming classification (INITIAL_PREFIX / INTERVAL_1 / INTERVAL_2 / AFTER_LAST_SCORE / UNKNOWN_AVAILABILITY) implemented and tested against available_at (Batch A2-3)",
+        "available_at vs issued_at distinction propagated into census output with basis reported per record",
+        "Contract enforcement: manifest.py/build_episode_manifest_v16.py now reject any outcome_contract other than the registered profile below, so a manifest cannot silently drift from this contract's checkpoint_grid/thresholds (Batch A2-4) -- code-level and synthetic-test verified only; no real freeze/disclose run this round (hard boundary #10)."
+      ],
+      "withdrawn_details": [
+        "Census verified: 98% of slots have TAF evidence available before T-60 -- WITHDRAWN: census measured issued_at < validity_start (target window start), never checked availability specifically at or before T-60.",
+        "T-60/T-40/T-20 checkpoints fall within legal exposure (issued_at < validity_start filter) -- WITHDRAWN: checkpoint offsets were computed by compute_checkpoints() but classify_changes_for_slot() never consumed them.",
+        "17,064 slots with pre-deadline changes demonstrate checkpoint feasibility -- WITHDRAWN: 'issued before target start' is not the same claim as 'available at a specific scoring checkpoint'; a product issued 10 minutes before target start is counted even though invisible at all three checkpoints."
+      ],
+      "registered_profile_A2_4": {
+        "note": "The single outcome profile manifest.py/outcome_wiring.py enforce end-to-end as of Batch A2-4. Registered here so this contract document and the code's H15_DEFAULT_PROFILE cannot silently diverge. Any outcome_contract that differs in any field raises UnsupportedOutcomeProfile in build_manifest() and (for v2-schema manifests) in build_episode_manifest_v16.py's run_disclose() before any ASOS/outcome data path is constructed. A v1-schema manifest (no outcome_contract field) takes an explicit legacy_v1 branch using the same values below.",
+        "thresholds_m": [5000.0, 1000.0],
+        "report_policy": "iem_routine_unique_hour.v1",
+        "support_window_hours": 1.0,
+        "checkpoint_weights": [1.0, 1.0, 1.0],
+        "checkpoint_offsets_minutes": [-60, -40, -20],
+        "source": "disastertrace.revision_v1.manifest.H15_DEFAULT_PROFILE (== DEFAULT_OUTCOME_CONTRACT)",
+        "verification_status": "Synthetic/unit-test verified only (tests/test_revision_manifest.py::TestF02OutcomeContract, TestA2_4DiscloseOutcomeContractResolution). Not exercised against real data_real_v16/ this round."
+      },
+      "owner": "V17-03 census (completed, claims withdrawn) / Batch A2 reverification in progress",
+      "closing_evidence": "PENDING: A2-3 rewrite of classify_changes_for_slot to consume checkpoint offsets and available_at. See PLAN/BATCH_A2_PROGRESS.md.",
+      "blocked_by": ["A2-3"]
+    },
+    "C05_evidence_definition": {
+      "status": "candidate",
+      "value_or_spec": {
+        "inputs": "TAFs, observations, and qualified professional products available at decision time",
+        "time_authorities": {
+          "issue_time": "Native product issue timestamp",
+          "valid_time": "Product-declared validity period",
+          "received_time": "Archive receipt timestamp (proxy for operational availability)",
+          "available_time": "Conservative estimate of when agent could lawfully access"
+        },
+        "past_vs_future": "Past observations may be used as input; target future outcome Y is hidden until maturation"
+      },
+      "open_details": [
+        "Exact derivation of available_time from received_time (lag assumptions)",
+        "Cross-window TAF validity applicability rules",
+        "Handling of late-arriving evidence that was issued before cutoff"
+      ],
+      "owner": "V17-01 access boundary + V17-02 lineage",
+      "closing_evidence": "V17-01 establishes allow-list and date guards; V17-02 implements lineage with explicit provenance and applicability rules",
+      "blocked_by": []
+    },
+    "C06_wake_trigger": {
+      "status": "candidate",
+      "value_or_spec": {
+        "first_round": "Fixed decision points and evidence exposure schedule",
+        "autonomous_acquisition": "Separate experiment design; main experiment uses fixed schedule, not method-selected wake times",
+        "speci_role": "SPECI triggers wake but does not replace the main scoring grid"
+      },
+      "open_details": [
+        "Whether fixed schedule provides fair comparison across all arms",
+        "Autonomous wait/retrieve policy evaluation deferred to Natural track"
+      ],
+      "owner": "V17-04 harness",
+      "closing_evidence": "V17-04 implements uniform wake schedule across all method arms; differential wake opportunity logged as covariate",
+      "blocked_by": ["V17-01"]
+    },
+    "C07_output_format": {
+      "status": "candidate",
+      "value_or_spec": {
+        "required_outputs": {
+          "target_probability": "Real number in [0,1] for each registered target/threshold",
+          "fact_state": "Structured citation of currently effective evidence sources",
+          "carrier": "Agent self-written state summary (for STRUCTURED_STATE arm)",
+          "structured_action": "Operation type (SET_PROBABILITY, KEEP_PROBABILITY, UPDATE, etc.)"
+        },
+        "orthogonality": "Fact repair and probability update are orthogonal operations; an agent can repair facts without changing probability and vice versa",
+        "fixed_denominator": "Fact slots are predetermined; model cannot select which slots count toward fact compliance"
+      },
+      "open_details": [
+        "Exact JSON schema for valid commit",
+        "Handling of invalid probability values (NaN, boolean, out of range)",
+        "Whether forecast_op must be included in commit identity (F08 concern)"
+      ],
+      "owner": "V17-04 belief_commit fix",
+      "closing_evidence": "V17-04 adds forecast_op to commit identity; validates all field types before hashing; malformed attempts retained in denominator with registered fallback",
+      "blocked_by": []
+    },
+    "C08_effective_validity_semantics": {
+      "status": "candidate",
+      "value_or_spec": {
+        "effective_state": "Uses credible completion/receipt time, unified validation, then effective",
+        "state_layers": {
+          "attempt": "Raw model output before validation",
+          "accepted_commit": "Passed schema/range/deadline validation",
+          "effective_state": "Latest accepted commit's effect on the scored state"
+        },
+        "invalid_handling": "Invalid or late attempts preserved in denominator; fallback to carry-forward per registered policy",
+        "tie_resolution": "Same-moment events have explicit ordering rule; no input-order dependence"
+      },
+      "open_details": [
+        "Exact UTC parsing and normalization (F09: regex accepts invalid dates)",
+        "Same-UTC ordering tie-break rule",
+        "Whether validator and runtime share identical conflict resolution (F10: they differ)"
+      ],
+      "owner": "V17-04 harness unification",
+      "closing_evidence": "V17-04 implements single validated path for all arms; invalid/late attempts retained; validator/runtime policies unified",
+      "blocked_by": ["V17-02"]
+    },
+    "C09_ground_truth_source": {
+      "status": "candidate",
+      "value_or_spec": {
+        "source": "Independent mature routine observation (ASOS/METAR), with settlement version",
+        "maturation": "Wait period before ground truth is considered final",
+        "policies": {
+          "conflict": "Genuine replacements use explicit correction/version authority; unresolved disagreements marked missing/conflict rather than selected by row order (F11)",
+          "missing": "Explicit MISSING terminal state; not forced to negative",
+          "late_correction": "Post-maturation corrections append new settlement version, do not alter original"
+        }
+      },
+      "open_details": [
+        "Maturation wait duration",
+        "Native correction authority derivation for routine reports",
+        "What constitutes semantically identical duplicate (collapse) vs genuine replacement"
+      ],
+      "owner": "V17-02 outcome_wiring fix",
+      "closing_evidence": "V17-02 implements order-invariant outcome resolution with explicit correction authority; permutation test verifies input order does not change Y",
+      "blocked_by": []
+    },
+    "C10_professional_forecast_baseline": {
+      "status": "candidate",
+      "value_or_spec": {
+        "registration": "Each baseline explicitly registered with: target support, thresholds/units, lead time, visible inputs, training/calibration exposure, model version, missing fallback",
+        "product_separation": {
+          "LAMP_categorical": "Native categorical guidance (CIG/VIS/OBV); NOT a calibrated probability",
+          "LAMP_probabilistic": "If available, native probability product",
+          "FOLLOW": "Frozen TAF research mapping (known weak)",
+          "values_bank": "Frozen program predictor (one-hour only)",
+          "derived_probability": "Any probability derived from categorical or point forecasts must be separately named and calibrated"
+        },
+        "weak_baseline_guard": "Comparison against always-zero, naive persistence, or weak FOLLOW alone does not establish meaningful improvement"
+      },
+      "open_details": [
+        "LAMP categorical completeness (F06: truncated gzip streams)",
+        "Whether qualified probabilistic LAMP products exist in archive",
+        "Threshold/support alignment between LAMP categories and H15 targets"
+      ],
+      "owner": "QL conditional branch + V17-06",
+      "closing_evidence": "QL verifies LAMP stream completeness; V17-06 registers at least one strong qualified baseline with aligned support",
+      "blocked_by": ["V17-01", "QL"],
+      "blocked_by_note": "QL only blocks LAMP-consuming baseline registration paths (LAMP_categorical, LAMP_probabilistic). It does NOT block registering or qualifying non-LAMP baselines under C10 (e.g. FOLLOW, values_bank); those may proceed independently of LAMP/QL status."
+    },
+    "C11_inter_episode_state": {
+      "status": "candidate",
+      "value_or_spec": {
+        "initial_state": "Fresh episodes reset self-written state and fixed parameters",
+        "isolation": "Development vs confirmation separation enforced; mature Y feedback explicitly logged and gated (default: not open)",
+        "arms": {
+          "FRESH_FULL_PREFIX": "Current complete legal evidence prefix + shared tool access; no historical model output; recompute from evidence each time",
+          "TRANSCRIPT_STATE": "Same prefix + tools; includes historical public judgments, submissions, notes; thinking chain not required to be hidden",
+          "STRUCTURED_STATE": "Same prefix + tools; model self-written registered-schema state summary"
+        }
+      },
+      "open_details": [
+        "Schema for STRUCTURED_STATE carrier",
+        "Whether TRANSCRIPT_STATE includes all historical model output or only public judgments",
+        "Y feedback gating condition per Codex F06/F15 concerns"
+      ],
+      "owner": "V17-04 harness implementation",
+      "closing_evidence": "V17-04 implements three arms with verified equal external prefix; test shows FRESH does not read old output, TRANSCRIPT contains historical model output, STRUCTURED contains self-written carrier",
+      "blocked_by": ["V17-01"]
+    },
+    "C12_stop_termination": {
+      "status": "candidate",
+      "value_or_spec": {
+        "agent_stop": "Agent may issue STOP to cease further computation for target; does not stop weather, concurrent baselines, or remaining scoring points",
+        "effective_state_continuation": "Formal state continues per contract even after STOP; carry-forward policy applies",
+        "run_stop": "External run termination preserves all attempts and effective states achieved; incomplete run reported with actual coverage"
+      },
+      "open_details": [
+        "STOP semantics for in-flight requests",
+        "Whether STOP counts as a scored decision or a meta-operation",
+        "Cap-hit termination vs explicit STOP distinction"
+      ],
+      "owner": "V17-04 + V17-08",
+      "closing_evidence": "V17-04 defines STOP semantics; V17-08 implements lifecycle with explicit FAILED/MISSING terminal states for all registration outcomes",
+      "blocked_by": []
+    }
+  },
+  "critical_distinctions": {
+    "amd_cor_vs_probability_change": {
+      "description": "The existence of an AMD/COR product does NOT automatically mean probability must change. These are separately falsifiable propositions.",
+      "evidence_state_change": "An AMD may require updating source citations without changing the probability estimate",
+      "probability_change": "A probability change may be warranted by unchanged evidence (new inference) or may not be warranted by changed evidence (unchanged conclusion)",
+      "measurement": "Fact repair and probability update are tracked and scored independently"
+    },
+    "downloader_vs_living_system": {
+      "description": "The current pipeline is a downloader/archival system, NOT a living continuously-updating monitoring system",
+      "current_capability": "Historical archive with batch processing; replay with simulated time",
+      "living_capability": "Real-time ingestion, prospective registration before outcomes, maturation-based settlement, continuous task generation",
+      "c5_requirement": "C5 (prospective evaluation) requires demonstrated living capability, not replay"
+    }
+  },
+  "acceptance_criteria": {
+    "AC1_claim_experiment_mapping": {
+      "description": "Every claim maps to at least one experiment, and every experiment maps back to a claim",
+      "verification": "See CLAIM_EVIDENCE_MATRIX_v17.md for complete bidirectional mapping"
+    },
+    "AC2_amd_probability_distinction": {
+      "description": "Contract does not conflate AMD/COR existence with probability-must-change",
+      "verification": "C07_output_format explicitly states orthogonality; critical_distinctions section elaborates"
+    },
+    "AC3_downloader_living_distinction": {
+      "description": "Contract distinguishes downloader/archival pipeline from living system",
+      "verification": "critical_distinctions section explicitly states current vs living capability; C5 requires demonstrated living capability"
+    },
+    "AC4_output_no_conflict": {
+      "description": "Output contract contains no internally conflicting fields",
+      "verification": "C07_output_format defines orthogonal operations; C08 defines explicit state layers; no field can simultaneously mean two things"
+    }
+  },
+  "open_risks": {
+    "OR1a_positive_label_distribution": {
+      "status": "OPEN",
+      "description": "Original Codex concern: in the 12-target pilot, only 3/36 (8.33%) checkpoint-rows were positive, and all 3 rows corresponded to a single KDEN event (not independent occurrences). The actual Y=1 distribution and unique positive-event count across the full allowed calendar remain unmeasured.",
+      "requires_Y_access": true,
+      "why_not_resolved_by_census": "Evidence-change volume (TAF-side, X-dependent) and positive-label rate (outcome-side, Y-dependent) are distinct metrics. A Y-blind census cannot measure this regardless of how large the X-side count is.",
+      "required_resolution": "A future outcome-side (Y-permissioned) analysis measuring positive-label rate and unique positive-event count across the full allowed calendar. Out of scope for Batch A/A2.",
+      "does_not_block": "C3/X3 equivalent-repetition drift diagnostics -- see OR1_note_y_free_diagnostics_exception below.",
+      "owner": "Future batch with Y access (post-G1)",
+      "blocked_by": ["G1 reverification", "Y access authorization"],
+      "blocker_for": ["Final H15 paired-diagnostic experiment interpretation for outcome-dependent claims (C1, C4)"]
+    },
+    "OR1b_independent_process_and_pairing_precision": {
+      "status": "OPEN",
+      "description": "Codex's core concern was non-independence / block correlation across a small, repeated cohort (the same weather event recurring across checkpoints, targets, and stations), not merely a low percentage. Census candidate groupings (station-day) do not by themselves establish independent-process count or resulting pairing precision for any experiment.",
+      "requires_Y_access": false,
+      "required_resolution": "G3 development-variance estimation and G5 confirmation-precision work must characterize cross-target/cross-station/cross-day correlation before block-inference or sample-size claims can be made.",
+      "owner": "G3 (variance estimation) / G5 (confirmation precision)",
+      "blocked_by": ["A2-3 candidate grouping output", "G3 variance estimation"],
+      "blocker_for": ["Any claim that groups constitute independent samples"]
+    },
+    "OR1c_taf_source_label_qualification": {
+      "status": "OPEN",
+      "description": "LABEL_QUALIFICATION_v17.md's PENDING_HUMAN_VERIFICATION status refers to TAF-side AMD/COR classification and lineage (predecessor) labels -- it does NOT refer to ASOS outcome Y labels. Prior contract/status documents mis-cited this as outcome-label reliability pending; that citation is corrected here. TAF source-label qualification is independent of, and does not require, Y access.",
+      "requires_Y_access": false,
+      "required_resolution": "Independent human review of the Batch A2-7 witness package (target 24-32 items) covering TAF source-relationship judgments. Recorded as PENDING_INDEPENDENT_REVIEW until a reviewer is available.",
+      "owner": "Independent reviewer (not currently online; dependency registered in Batch A2)",
+      "blocked_by": ["A2-7 witness package generation"],
+      "blocker_for": ["Treating TAF AMD/COR/lineage classifications as verified rather than provisional"]
+    },
+    "OR1_note_y_free_diagnostics_exception": "R2/C3-style equivalent-repetition drift diagnostics (experiment X3) do NOT require Y and are NOT blocked by OR1a. They require qualified/diverse parent states, lawful equivalent perturbation, and paired repetition with correct dependency handling -- see CLAIM_EVIDENCE_MATRIX_v17.md C3 row and OR1b. OR1a's Y-dependency must not be read as a blanket precondition for all H15 paired-diagnostic experiments; blocking is per-experiment, not project-wide."
+  }
+}

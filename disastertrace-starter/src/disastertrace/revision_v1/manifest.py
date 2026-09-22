@@ -43,13 +43,78 @@ from typing import Any
 from .episode_compiler import compile_afos_taf_stream
 
 # Selection rule version - increment when selection logic changes
-SELECTION_RULE_VERSION = "manifest_selection.v1"
+# V17-02 / F02: Bumped to v2 for filtered revision counts and outcome_contract
+SELECTION_RULE_VERSION = "manifest_selection.v2"
+
+# V17-02 / F02: Outcome contract constants (import from outcome_wiring for consistency)
+# These define the H15 visibility target scoring parameters
+DEFAULT_OUTCOME_CONTRACT = {
+    "thresholds_m": [5000.0, 1000.0],
+    "report_policy": "iem_routine_unique_hour.v1",
+    "support_window_hours": 1.0,
+    "checkpoint_weights": [1.0, 1.0, 1.0],  # Equal weights, sum = 3.0, normalized per target
+    "checkpoint_offsets_minutes": [-60, -40, -20],
+}
 
 # Checkpoint offsets from validity_start (in minutes, negative = before)
 CHECKPOINT_OFFSETS_MINUTES = [-60, -40, -20]
 
 # Maximum targets in the manifest
 MAX_TARGETS = 12
+
+# A2-4: This batch supports exactly one outcome/scoring profile. H15_DEFAULT_PROFILE
+# is the single source of truth for it (same value as DEFAULT_OUTCOME_CONTRACT --
+# named separately so `validate_outcome_profile` has an unambiguous target to check
+# against, independent of any future change to what a *default* means).
+H15_DEFAULT_PROFILE = DEFAULT_OUTCOME_CONTRACT
+
+# Fields a profile dict must carry, in full, to be accepted by validate_outcome_profile.
+_OUTCOME_PROFILE_REQUIRED_FIELDS = (
+    "thresholds_m",
+    "report_policy",
+    "support_window_hours",
+    "checkpoint_weights",
+    "checkpoint_offsets_minutes",
+)
+
+
+class UnsupportedOutcomeProfile(ValueError):
+    """Raised when an outcome_contract does not match the single supported H15 profile.
+
+    A2-4: prior behavior silently accepted and partially honored any custom
+    outcome_contract dict (see the withdrawn `test_custom_outcome_contract_preserved`
+    claim). This batch supports exactly one profile end-to-end (checkpoints,
+    thresholds, support window); anything else must be rejected explicitly rather
+    than partially applied.
+    """
+
+
+def validate_outcome_profile(contract: dict) -> None:
+    """Validate that `contract` is exactly the single supported H15 profile.
+
+    Args:
+        contract: An outcome_contract-shaped dict to check.
+
+    Raises:
+        UnsupportedOutcomeProfile: if any required field is missing, or any
+            field's value differs from H15_DEFAULT_PROFILE.
+    """
+    missing = [f for f in _OUTCOME_PROFILE_REQUIRED_FIELDS if f not in contract]
+    if missing:
+        raise UnsupportedOutcomeProfile(
+            f"outcome_contract missing required field(s): {missing}"
+        )
+
+    mismatches = [
+        f"{field}: got {contract[field]!r}, only {H15_DEFAULT_PROFILE[field]!r} is supported"
+        for field in _OUTCOME_PROFILE_REQUIRED_FIELDS
+        if contract[field] != H15_DEFAULT_PROFILE[field]
+    ]
+    if mismatches:
+        raise UnsupportedOutcomeProfile(
+            "This batch supports exactly one outcome profile (H15_DEFAULT_PROFILE); "
+            "rejecting unsupported profile:\n" + "\n".join(mismatches)
+        )
 
 
 @dataclass(frozen=True)
@@ -68,11 +133,18 @@ class CandidateTarget:
     validity_start_us: int
     validity_end_us: int
 
-    # TAF-side scoring signals
-    revision_count: int  # AMD/COR packages in validity window
-    tie_event_count: int  # Same-minute issuance ties
-    evidence_change_count: int  # Distinct semantic hashes in window
+    # V17-02 / F02: TAF-side scoring signals - FILTERED to pre-deadline only
+    # These count only packages with issued_at < validity_start_us
+    revision_count: int  # AMD/COR packages issued before target deadline
+    tie_event_count: int  # Same-minute ties issued before deadline
+    evidence_change_count: int  # Distinct semantic hashes issued before deadline
     lead_time_coverage_hours: float  # Hours of TAF coverage before target
+
+    # V17-02 / F02: UNFILTERED counts for comparison/debugging
+    # These count ALL packages in the validity window regardless of issued_at
+    revision_count_whole_window: int  # AMD/COR packages in full validity window
+    tie_event_count_whole_window: int  # Same-minute ties in full window
+    evidence_change_count_whole_window: int  # Distinct hashes in full window
 
     # Source tracking
     source_packages: list[dict]  # Raw TAF packages for this window
@@ -85,12 +157,14 @@ class CandidateTarget:
 
     @property
     def has_revisions(self) -> bool:
-        """True if target saw AMD/COR during validity window."""
+        """True if target saw AMD/COR before deadline (pre-deadline revisions)."""
         return self.revision_count > 0
 
     @property
     def selection_score(self) -> tuple:
         """Score tuple for selection ranking (higher = more interesting).
+
+        V17-02 / F02: Uses pre-deadline revision_count, not whole-window count.
 
         Returns tuple for comparison: (revision_count, tie_event_count,
         evidence_change_count, lead_time_coverage_hours, -station, -validity_start)
@@ -213,22 +287,37 @@ def windows_overlap(
     return start1_us < end2_us and start2_us < end1_us
 
 
-def compute_checkpoints(validity_start_us: int) -> list[Checkpoint]:
-    """Compute 3 checkpoints for a target at T-60, T-40, T-20 minutes.
+def compute_checkpoints(
+    validity_start_us: int,
+    *,
+    profile: dict | None = None,
+) -> list[Checkpoint]:
+    """Compute checkpoints for a target from a profile's offsets/weights.
 
     All checkpoints are strictly earlier than validity_start.
 
     Args:
         validity_start_us: Target validity window start in microseconds.
+        profile: Outcome profile supplying `checkpoint_offsets_minutes` and
+            `checkpoint_weights`. Defaults to H15_DEFAULT_PROFILE, whose values
+            equal the historical hardcoded CHECKPOINT_OFFSETS_MINUTES with
+            weight 1.0 -- so callers that don't pass a profile see unchanged
+            behavior.
 
     Returns:
-        List of 3 Checkpoint objects.
+        List of Checkpoint objects, one per offset.
     """
+    if profile is None:
+        profile = H15_DEFAULT_PROFILE
+
+    offsets_minutes = profile["checkpoint_offsets_minutes"]
+    weights = profile["checkpoint_weights"]
+
     checkpoints = []
-    for offset_min in CHECKPOINT_OFFSETS_MINUTES:
+    for offset_min, weight in zip(offsets_minutes, weights):
         offset_us = offset_min * 60 * 1_000_000
         checkpoint_time = validity_start_us + offset_us
-        checkpoints.append(Checkpoint(time_us=checkpoint_time, weight=1.0))
+        checkpoints.append(Checkpoint(time_us=checkpoint_time, weight=weight))
 
     # Verify all checkpoints are strictly before validity_start
     for cp in checkpoints:
@@ -277,6 +366,11 @@ def build_candidates_from_taf_packages(
     Groups packages by (station, validity_start, validity_end) to identify
     unique target windows, then computes TAF-side scoring signals for each.
 
+    V17-02 / F02 fix: Computes BOTH filtered counts (issued_at < validity_start)
+    and unfiltered whole-window counts. The filtered counts are what matters
+    for scoring (only revisions visible before the deadline), while unfiltered
+    counts are kept for comparison/debugging.
+
     Excludes:
     - Targets overlapping holdout window
     - Targets outside calendar bounds
@@ -312,17 +406,27 @@ def build_candidates_from_taf_packages(
         ):
             continue
 
-        # Count revisions (AMD/COR)
+        # V17-02 / F02: Split packages into pre-deadline and whole-window sets
+        pre_deadline_packages = [
+            pkg for pkg in window_packages
+            if pkg["issued_at"] < valid_start
+        ]
+
+        # FILTERED counts (pre-deadline only) - used for scoring
         revision_count = sum(
+            1 for pkg in pre_deadline_packages
+            if pkg.get("amendment_kind") in ("AMD", "COR")
+        )
+        tie_count = detect_same_minute_ties(pre_deadline_packages)
+        evidence_change_count = count_distinct_semantics(pre_deadline_packages)
+
+        # UNFILTERED counts (whole window) - kept for comparison/debugging
+        revision_count_whole = sum(
             1 for pkg in window_packages
             if pkg.get("amendment_kind") in ("AMD", "COR")
         )
-
-        # Detect same-minute ties
-        tie_count = detect_same_minute_ties(window_packages)
-
-        # Count distinct semantic changes
-        evidence_change_count = count_distinct_semantics(window_packages)
+        tie_count_whole = detect_same_minute_ties(window_packages)
+        evidence_change_count_whole = count_distinct_semantics(window_packages)
 
         # Compute lead-time coverage (hours of TAF packages before target)
         # This is simplified: we count hours between earliest package and target
@@ -337,6 +441,9 @@ def build_candidates_from_taf_packages(
             tie_event_count=tie_count,
             evidence_change_count=evidence_change_count,
             lead_time_coverage_hours=lead_time_hours,
+            revision_count_whole_window=revision_count_whole,
+            tie_event_count_whole_window=tie_count_whole,
+            evidence_change_count_whole_window=evidence_change_count_whole,
             source_packages=window_packages,
         )
         candidates.append(candidate)
@@ -406,29 +513,73 @@ def select_episodes(
     return selected_changed, selected_unchanged
 
 
+def _validate_checkpoint_weights(weights: list[float]) -> None:
+    """V17-02 / F02: Validate that checkpoint weights sum to 1.0 per target.
+
+    The DEFAULT_OUTCOME_CONTRACT uses equal weights [1.0, 1.0, 1.0] which sum to 3.0.
+    When normalized per target (divided by number of checkpoints), each checkpoint
+    contributes 1/3 to the target score.
+
+    Raises:
+        ValueError: If weights are empty or any weight is negative.
+    """
+    if not weights:
+        raise ValueError("Checkpoint weights cannot be empty")
+    if any(w < 0 for w in weights):
+        raise ValueError("Checkpoint weights cannot be negative")
+    # Note: We validate non-negativity and non-emptiness, but the sum need not
+    # be exactly 1.0 - the scorer normalizes by dividing by sum(weights).
+
+
 def build_manifest(
     changed_queue: list[CandidateTarget],
     unchanged_queue: list[CandidateTarget],
     *,
     config_sha256: str,
     taf_archive_summary: str,
+    outcome_contract: dict | None = None,
 ) -> dict:
     """Build the episode manifest JSON structure.
+
+    V17-02 / F02 fix: Now includes outcome_contract in the manifest schema,
+    and reports both pre-deadline (filtered) and whole-window counts.
 
     Args:
         changed_queue: Selected targets with AMD/COR revisions.
         unchanged_queue: Selected targets without revisions.
         config_sha256: Verified SHA256 of stations_calendar config.
         taf_archive_summary: Identifying hash/summary of TAF archive state.
+        outcome_contract: Optional outcome contract. If None, uses DEFAULT_OUTCOME_CONTRACT.
 
     Returns:
         Manifest dict ready for JSON serialization.
     """
+    # Use default outcome contract if not provided
+    if outcome_contract is None:
+        outcome_contract = DEFAULT_OUTCOME_CONTRACT.copy()
+
+    # Validate checkpoint weights first: this preserves the exact "cannot be
+    # empty" / "cannot be negative" messages for contracts that are missing
+    # fields entirely (e.g. a fixture with no checkpoint_offsets_minutes),
+    # before the broader profile-support check below would otherwise fire.
+    _validate_checkpoint_weights(outcome_contract.get("checkpoint_weights", []))
+
+    # A2-4: this batch supports exactly one outcome profile end-to-end. Reject
+    # anything else explicitly rather than partially honoring it (see
+    # UnsupportedOutcomeProfile and the withdrawn "custom contract preserved"
+    # claim in tests/test_revision_manifest.py).
+    validate_outcome_profile(outcome_contract)
+
+    # support_window_hours defines the H15 target_support window from
+    # validity_start; kept here as an explicit, profile-derived field
+    # alongside (not replacing) the TAF-side source_validity window.
+    support_window_us = int(outcome_contract["support_window_hours"] * 3600 * 1_000_000)
+
     targets = []
 
     for queue_name, queue in [("changed", changed_queue), ("unchanged", unchanged_queue)]:
         for candidate in queue:
-            checkpoints = compute_checkpoints(candidate.validity_start_us)
+            checkpoints = compute_checkpoints(candidate.validity_start_us, profile=outcome_contract)
 
             target_entry = {
                 "target_id": candidate.target_id,
@@ -437,6 +588,16 @@ def build_manifest(
                 "validity_start_us": candidate.validity_start_us,
                 "validity_end": _us_to_iso(candidate.validity_end_us),
                 "validity_end_us": candidate.validity_end_us,
+                # A2-4: source_validity is the TAF forecast's own validity
+                # window (identical to validity_start_us/validity_end_us
+                # above, kept for backward compatibility). target_support is
+                # the H15 scoring support window derived from this profile's
+                # support_window_hours, distinct in principle even though it
+                # currently starts at the same instant.
+                "source_validity_start_us": candidate.validity_start_us,
+                "source_validity_end_us": candidate.validity_end_us,
+                "target_support_start_us": candidate.validity_start_us,
+                "target_support_end_us": candidate.validity_start_us + support_window_us,
                 "queue": queue_name,
                 "checkpoints": [
                     {
@@ -446,24 +607,35 @@ def build_manifest(
                     }
                     for cp in checkpoints
                 ],
+                # V17-02 / F02: Include both pre-deadline and whole-window counts
                 "selection_signals": {
+                    # Pre-deadline counts (used for scoring)
                     "revision_count": candidate.revision_count,
                     "tie_event_count": candidate.tie_event_count,
                     "evidence_change_count": candidate.evidence_change_count,
                     "lead_time_coverage_hours": round(candidate.lead_time_coverage_hours, 2),
+                    # Whole-window counts (for comparison/debugging)
+                    "revision_count_whole_window": candidate.revision_count_whole_window,
+                    "tie_event_count_whole_window": candidate.tie_event_count_whole_window,
+                    "evidence_change_count_whole_window": candidate.evidence_change_count_whole_window,
                 },
             }
             targets.append(target_entry)
 
     frozen_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
+    # V17-02 / F02: Determine schema version based on whether outcome_contract is included
+    schema_version = "disastertrace.episode_manifest.v2" if outcome_contract else "disastertrace.episode_manifest.v1"
+
     manifest = {
-        "schema": "disastertrace.episode_manifest.v1",
+        "schema": schema_version,
         "selection_rule_version": SELECTION_RULE_VERSION,
         "input_fingerprints": {
             "stations_calendar_sha256": config_sha256,
             "taf_archive_summary": taf_archive_summary,
         },
+        # V17-02 / F02: Include outcome contract in manifest (hashed into self_sha256)
+        "outcome_contract": outcome_contract,
         "targets": targets,
         "queue_summary": {
             "changed_count": len(changed_queue),
@@ -582,14 +754,54 @@ def freeze_manifest(
 def validate_manifest(manifest: dict) -> list[str]:
     """Validate manifest structure and constraints.
 
+    V17-02 / F02: Now accepts both v1 and v2 schemas. v2 schema includes:
+    - outcome_contract with thresholds, report_policy, weights
+    - whole-window count fields in selection_signals
+
     Returns:
         List of validation errors (empty if valid).
     """
     errors = []
 
-    # Check schema
-    if manifest.get("schema") != "disastertrace.episode_manifest.v1":
-        errors.append(f"Invalid schema: {manifest.get('schema')}")
+    # Check schema - accept both v1 and v2
+    schema = manifest.get("schema")
+    valid_schemas = {
+        "disastertrace.episode_manifest.v1",
+        "disastertrace.episode_manifest.v2",
+    }
+    if schema not in valid_schemas:
+        errors.append(f"Invalid schema: {schema}")
+
+    is_v2 = schema == "disastertrace.episode_manifest.v2"
+
+    # V17-02 / F02: Validate outcome_contract for v2 schema
+    if is_v2:
+        outcome_contract = manifest.get("outcome_contract")
+        if outcome_contract is None:
+            errors.append("v2 schema requires outcome_contract")
+        else:
+            # Validate required fields
+            required_fields = {
+                "thresholds_m",
+                "report_policy",
+                "support_window_hours",
+                "checkpoint_weights",
+            }
+            missing = required_fields - set(outcome_contract.keys())
+            if missing:
+                errors.append(f"outcome_contract missing required fields: {missing}")
+
+            # Validate checkpoint_weights
+            weights = outcome_contract.get("checkpoint_weights", [])
+            if not weights:
+                errors.append("outcome_contract.checkpoint_weights cannot be empty")
+            elif any(w < 0 for w in weights):
+                errors.append("outcome_contract.checkpoint_weights cannot contain negative values")
+
+            # Validate thresholds_m
+            thresholds = outcome_contract.get("thresholds_m", [])
+            if not thresholds:
+                errors.append("outcome_contract.thresholds_m cannot be empty")
 
     targets = manifest.get("targets", [])
 
@@ -616,6 +828,18 @@ def validate_manifest(manifest: dict) -> list[str]:
                         f"Target {target_id}: checkpoint {i} at {cp_time} "
                         f"not before validity_start {validity_start_us}"
                     )
+
+        # V17-02 / F02: For v2 schema, validate whole-window count fields exist
+        if is_v2:
+            signals = target.get("selection_signals", {})
+            whole_window_fields = [
+                "revision_count_whole_window",
+                "tie_event_count_whole_window",
+                "evidence_change_count_whole_window",
+            ]
+            for field in whole_window_fields:
+                if field not in signals:
+                    errors.append(f"Target {target_id}: v2 schema requires {field} in selection_signals")
 
     # Check self_sha256 integrity
     try:

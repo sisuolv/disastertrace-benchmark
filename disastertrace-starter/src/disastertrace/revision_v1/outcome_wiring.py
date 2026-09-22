@@ -50,36 +50,49 @@ def make_h15_visibility_target(
     slot_start_us: int,
     threshold_m: float,
     target_id: str | None = None,
+    allowed_thresholds: frozenset[float] | None = None,
+    support_window_hours: float = 1.0,
 ) -> Target:
     """Build a Target for H15-style visibility outcome.
 
     Creates a Target for "visibility < threshold_m meters during the routine
-    report of the 1-hour slot starting at slot_start_us".
+    report of the support_window_hours-long slot starting at slot_start_us".
 
     Args:
         station: ICAO station code (e.g., "KSFO")
-        slot_start_us: Start of the 1-hour slot in microseconds since epoch
-        threshold_m: Visibility threshold in meters (must be 5000.0 or 1000.0)
+        slot_start_us: Start of the slot in microseconds since epoch
+        threshold_m: Visibility threshold in meters (must be in allowed_thresholds)
         target_id: Optional explicit target_id. If None, generates a
             deterministic, human-legible ID.
+        allowed_thresholds: Thresholds this call accepts. Defaults to
+            FROZEN_THRESHOLDS_M (the historical hardcoded {5000.0, 1000.0}) --
+            A2-4: callers that don't pass this see unchanged behavior; the
+            manifest's outcome profile is the only place a different set
+            would come from, and this batch supports exactly one profile
+            whose thresholds_m equal FROZEN_THRESHOLDS_M.
+        support_window_hours: Length of the target support window in hours.
+            Defaults to 1.0 (the historical hardcoded one-hour slot).
 
     Returns:
         A Target instance configured for H15 visibility evaluation.
 
     Raises:
-        ValueError: If threshold_m is not one of the frozen thresholds.
+        ValueError: If threshold_m is not one of the allowed thresholds.
     """
-    if threshold_m not in FROZEN_THRESHOLDS_M:
+    if allowed_thresholds is None:
+        allowed_thresholds = FROZEN_THRESHOLDS_M
+
+    if threshold_m not in allowed_thresholds:
         raise ValueError(
             f"Invalid threshold {threshold_m}m. "
-            f"Allowed thresholds: {sorted(FROZEN_THRESHOLDS_M)}"
+            f"Allowed thresholds: {sorted(allowed_thresholds)}"
         )
 
-    # One hour in microseconds
-    hour_us = 3_600_000_000
+    # support_window_hours in microseconds
+    support_window_us = int(support_window_hours * 3_600_000_000)
 
-    # Physical end is one hour after start (interval support)
-    slot_end_us = slot_start_us + hour_us
+    # Physical end is support_window_hours after start (interval support)
+    slot_end_us = slot_start_us + support_window_us
 
     # Generate deterministic, human-legible target_id if not provided
     if target_id is None:
@@ -198,15 +211,24 @@ class AsosProvenance:
         return self.run_id
 
 
-def load_asos_with_provenance(body_path: str) -> tuple[str, AsosProvenance]:
+def load_asos_with_provenance(
+    body_path: str,
+    *,
+    access_policy: "AccessPolicy | None" = None,
+) -> tuple[str, AsosProvenance]:
     """Load an ASOS body file with provenance verification.
 
     Reads a real ASOS .body file plus its sibling receipt, recomputes the
     body's SHA256 and cross-checks it against the value recorded in the
     receipt.
 
+    V17-01 / F04 fix: Now uses AccessPolicy for canonicalized, segment-based
+    quarantine check instead of literal substring matching.
+
     Args:
         body_path: Path to the .body file.
+        access_policy: Optional AccessPolicy for enforcement. If None, falls
+            back to legacy segment-based check (still segment-based, not substring).
 
     Returns:
         Tuple of:
@@ -214,15 +236,30 @@ def load_asos_with_provenance(body_path: str) -> tuple[str, AsosProvenance]:
             - provenance: AsosProvenance capturing source identity
 
     Raises:
-        ValueError: If the path contains 'quarantine_holdout' (embargoed data).
+        AccessPolicyViolation: If path fails policy check (when access_policy provided).
+        ValueError: If path contains 'quarantine_holdout' segment (legacy fallback).
         ValueError: If the SHA256 mismatch between computed and receipt.
         FileNotFoundError: If body or receipt file doesn't exist.
     """
-    # Check for quarantine_holdout
-    if "quarantine_holdout" in body_path:
-        raise ValueError(
-            f"Cannot load from quarantine_holdout: {body_path}"
-        )
+    from .access_policy import AccessPolicy, AccessPolicyViolation
+
+    body_path_obj = Path(body_path)
+
+    # V17-01 / F04 fix: Use AccessPolicy if provided, else fall back to
+    # segment-based check (not substring). The key fix is resolving the path
+    # BEFORE checking, and checking Path.parts not string substring.
+    if access_policy is not None:
+        # Full policy check (includes quarantine, root escape, holdout dates)
+        access_policy.assert_allowed(body_path)
+    else:
+        # Legacy fallback: still use segment-based check, not substring
+        # This is safer than the old "in" check for backward compatibility
+        resolved = body_path_obj.resolve()
+        for part in resolved.parts:
+            if part == "quarantine_holdout":
+                raise ValueError(
+                    f"Cannot load from quarantine_holdout: {body_path}"
+                )
 
     body_path_obj = Path(body_path)
 
@@ -278,6 +315,55 @@ def load_asos_with_provenance(body_path: str) -> tuple[str, AsosProvenance]:
 # Quality codes for missing outcomes
 QUALITY_NO_REPORT_IN_SLOT = "no_routine_report_in_slot"
 QUALITY_VISIBILITY_UNDETERMINED = "visibility_undetermined_or_interval"
+# V17-02 / F11 (Gap 1 fix): Genuine same-timestamp conflict with different content
+QUALITY_CONFLICTING_AT_TIMESTAMP = "conflicting_reports_same_timestamp"
+
+
+def _fold_duplicate_observations(
+    observations: list[MetarReport],
+) -> list[MetarReport]:
+    """V17-02 / F11: Fold same-timestamp observations by native_semantics_sha256.
+
+    When multiple observations share the same observation_time and the same
+    native_semantics_sha256, they are semantically identical duplicates.
+    We keep only one representative from each (timestamp, semantics) group,
+    choosing the one with the lexicographically smallest raw text for
+    deterministic selection.
+
+    This folding happens BEFORE "last-in-slot" selection, so duplicates
+    don't influence which observation is chosen as the resolving one.
+
+    Args:
+        observations: List of METAR observations to fold.
+
+    Returns:
+        List with duplicates removed (one representative per semantic group).
+    """
+    if not observations:
+        return []
+
+    # Group by (observation_time, native_semantics_sha256)
+    from collections import defaultdict
+
+    groups: dict[tuple, list[MetarReport]] = defaultdict(list)
+    for obs in observations:
+        # MetarReport may not have native_semantics_sha256; use raw as fallback
+        semantics_key = getattr(obs, "native_semantics_sha256", None)
+        if semantics_key is None:
+            # Hash the raw text as a fallback semantic key
+            semantics_key = hashlib.sha256(obs.raw.encode()).hexdigest()
+
+        key = (obs.observation_time, semantics_key)
+        groups[key].append(obs)
+
+    # Pick one representative per group: lexicographically smallest raw text
+    folded = []
+    for key in sorted(groups.keys()):  # Sort keys for determinism
+        group = groups[key]
+        representative = min(group, key=lambda o: o.raw)
+        folded.append(representative)
+
+    return folded
 
 
 def resolve_h15_outcomes(
@@ -289,6 +375,10 @@ def resolve_h15_outcomes(
     resolved_at: int | None = None,
 ) -> list[dict]:
     """Resolve H15 visibility outcomes for targets against observations.
+
+    V17-02 / F11 fix: Now folds duplicate observations (same timestamp and
+    native_semantics_sha256) before picking "last-in-slot", and returns
+    records in stable target_id order for deterministic output.
 
     For each target, determines the outcome via ternary visibility classification
     against the pre-filtered routine observations, then builds one outcome
@@ -306,25 +396,28 @@ def resolve_h15_outcomes(
             the provenance's fetch timestamp (never wall-clock).
 
     Returns:
-        List of outcome record dicts, one per target. Each record is shaped
-        identically regardless of registration mode (legacy_compatible or
-        formal_provider_bound).
+        List of outcome record dicts, one per target, sorted by target_id
+        for stable ordering. Each record is shaped identically regardless
+        of registration mode (legacy_compatible or formal_provider_bound).
     """
     if resolved_at is None:
         resolved_at = provenance.fetch_timestamp_us
 
+    # V17-02 / F11: Process targets in sorted order for deterministic output
+    sorted_targets = sorted(targets, key=lambda t: t.target_id)
+
     records = []
 
-    for target in targets:
-        # Find observation in this target's slot
-        matching_obs = [
+    for target in sorted_targets:
+        # Find observations in this target's slot
+        slot_obs = [
             obs
             for obs in observations
             if obs.station == target.entity
             and target.physical_start <= obs.observation_time < target.physical_end
         ]
 
-        if not matching_obs:
+        if not slot_obs:
             # No report in slot -> missing
             record = build_outcome_record(
                 target=target,
@@ -346,12 +439,55 @@ def resolve_h15_outcomes(
                 # reference_kind required by validate_resolution even for missing
                 reference_kind="final_archived_routine_report_not_continuous_physical_truth",
             )
+            # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+            record["target_id"] = target.target_id
             records.append(record)
             continue
 
-        # Use last observation in slot (sorted by time)
-        matching_obs.sort(key=lambda o: o.observation_time)
-        obs = matching_obs[-1]
+        # V17-02 / F11: Fold duplicates BEFORE selecting last-in-slot
+        # This prevents duplicates from influencing which observation resolves
+        folded_obs = _fold_duplicate_observations(slot_obs)
+
+        # V17-02 / F11 (Gap 1 fix): Check for genuine same-timestamp conflicts
+        # After folding true duplicates, if multiple observations remain at the
+        # SAME timestamp with DIFFERENT semantic content, we have an unresolvable
+        # conflict. Do NOT pick a winner by raw-text sort order - that's order-
+        # dependent behavior. Emit a missing record with explicit conflict status.
+        max_time = max(o.observation_time for o in folded_obs)
+        obs_at_max_time = [o for o in folded_obs if o.observation_time == max_time]
+
+        if len(obs_at_max_time) > 1:
+            # Genuine conflict: same timestamp, different semantic content
+            # Emit missing with QUALITY_CONFLICTING_AT_TIMESTAMP
+            h15_reference_kind = "final_archived_routine_report_not_continuous_physical_truth"
+            # Include all conflicting raw reports in references for debugging
+            conflict_refs = [{"raw": o.raw} for o in sorted(obs_at_max_time, key=lambda x: x.raw)]
+            record = build_outcome_record(
+                target=target,
+                resolution_version=resolution_version,
+                status="missing",
+                value=None,
+                source_revision=provenance.source_revision,
+                source_sha256=None,
+                observed_at=max_time,
+                published_at=None,
+                fetched_at=provenance.fetch_timestamp_us,
+                resolved_at=resolved_at,
+                quality_status=QUALITY_CONFLICTING_AT_TIMESTAMP,
+                availability_basis="declared_archive_scenario",
+                resolution_policy="h15_routine_archive.v1",
+                provider="IEM",
+                provider_version="native_h15_snapshot.v1",
+                references=conflict_refs,
+                reference_kind=h15_reference_kind,
+            )
+            # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+            record["target_id"] = target.target_id
+            records.append(record)
+            continue
+
+        # Single observation at max time - use it
+        obs = obs_at_max_time[0]
 
         # H15 reference kind for all records
         h15_reference_kind = "final_archived_routine_report_not_continuous_physical_truth"
@@ -378,6 +514,8 @@ def resolve_h15_outcomes(
                 references=[{"raw": obs.raw}],
                 reference_kind=h15_reference_kind,
             )
+            # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+            record["target_id"] = target.target_id
             records.append(record)
             continue
 
@@ -414,6 +552,8 @@ def resolve_h15_outcomes(
                 references=[{"raw": obs.raw}],
                 reference_kind=h15_reference_kind,
             )
+            # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+            record["target_id"] = target.target_id
             records.append(record)
             continue
 
@@ -439,6 +579,8 @@ def resolve_h15_outcomes(
             references=[{"raw": obs.raw}],
             reference_kind="final_archived_routine_report_not_continuous_physical_truth",
         )
+        # V17-02 / F11: Add target_id for logging/debugging (not in OUTCOME_FIELDS)
+        record["target_id"] = target.target_id
         records.append(record)
 
     return records
@@ -468,7 +610,10 @@ def register_h15_outcomes(
 
     success_flags = []
     for record in records:
-        result = registry.register(record)
+        # V17-02 / F11: Strip target_id before registering (not in OUTCOME_FIELDS)
+        # This field is added for logging/debugging but not part of the canonical record
+        record_for_registry = {k: v for k, v in record.items() if k != "target_id"}
+        result = registry.register(record_for_registry)
         success_flags.append(result)
 
     return registry, success_flags

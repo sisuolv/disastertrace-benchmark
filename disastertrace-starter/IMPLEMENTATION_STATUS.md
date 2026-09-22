@@ -2726,3 +2726,24 @@ event-group splits.
 After that, add an explicitly configured provider adapter that records the actual
 requests, model/version, decoding settings, retries, token/cost budget and raw
 responses. Keep acquisition failures and rejected sources in the inventory.
+
+## v17 Batch A2 (2026-09-21): pointer to a separate progress log
+
+This file's prior content (P1-P6) is unrelated to the current v17 H15
+data-qualification work and is preserved unchanged above. Task-boundary
+command/exit-code/result records for v17 Batch A2 (A2-0 through A2-8, all
+DONE as of 2026-09-21T21:00:06Z) are kept in
+`../plan/plan_v17_0921/BATCH_A2_PROGRESS.md`, not here, to avoid interleaving
+with this file's P1-P6 history. See also the corrected
+`../plan/plan_v17_0921/TASK_CONTRACT_v17.json`,
+`../plan/plan_v17_0921/CLAIM_EVIDENCE_MATRIX_v17.md`,
+`../plan/plan_v17_0921/EXECUTION_STATUS_v17.md`,
+`../plan/plan_v17_0921/TRANSITION_CENSUS_v17_A2.md`,
+`../plan/plan_v17_0921/LABEL_QUALIFICATION_v17_A2.md`, and
+`../plan/plan_v17_0921/BATCH_A2_ACCEPTANCE.md`. A prior `PASSED` G1 claim was
+withdrawn (not deleted) at A2-0; after A2-6's real 140-file re-census and
+A2-7's witness package, G1 status is `PENDING_INDEPENDENT_REVIEW` (instrument
+closed and one real, traceable run complete; no human has reviewed the
+witness package yet — not claimed PASSED). Batch A2 executed directly in the
+parent session (Claude Sonnet 5, `claude-sonnet-5`), not delegated to a
+subagent, per this batch's hard constraint against starting additional agents.

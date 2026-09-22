@@ -33,6 +33,11 @@ sys.path.insert(0, str(_project / "src"))
 
 from disastertrace.revision_v1.episode_compiler import compile_afos_taf_stream
 from disastertrace.monitoring_v1.providers.versions import latest_issuance, resolve_receipt_tie
+from disastertrace.revision_v1.tie_resolution import (
+    check_receipt_premise as _shared_check_receipt_premise,
+    check_bbb_order_vs_receipt_order as _shared_check_bbb_order_vs_receipt_order,
+    resolve_receipt_tie_strict,
+)
 
 
 # Expected station-month combinations (35 months x 4 stations = 140)
@@ -245,43 +250,21 @@ def _get_bbb_family(wmo_bbb: str | None) -> str | None:
 def _check_bbb_order_vs_receipt_order(members: list[dict]) -> bool:
     """Check if BBB letter order agrees with receipt_seq order within same family.
 
+    V17-02 / F10 fix: Now uses the shared implementation from tie_resolution.py
+    to ensure validator and runtime use identical logic.
+
     Returns True if no contradiction found (agreement or no comparable pairs).
     Returns False if any same-family pair has BBB order disagreeing with receipt order.
     """
-    # Group by BBB family
-    by_family = defaultdict(list)
-    for m in members:
-        family = _get_bbb_family(m.get("wmo_bbb"))
-        if family:
-            by_family[family].append(m)
-
-    # For each family with >1 member, check order consistency
-    for family, family_members in by_family.items():
-        if len(family_members) < 2:
-            continue
-        # Sort by BBB code lexicographically
-        sorted_by_bbb = sorted(family_members, key=lambda x: x.get("wmo_bbb", ""))
-        # Sort by receipt_seq
-        sorted_by_seq = sorted(family_members, key=lambda x: x.get("receipt_seq", 0))
-
-        # The orders should agree: if AAA < AAB in BBB order, then seq(AAA) < seq(AAB)
-        # i.e., earlier BBB letter = earlier receipt = lower seq
-        for i in range(len(family_members)):
-            for j in range(i + 1, len(family_members)):
-                bbb_i = sorted_by_bbb[i].get("wmo_bbb", "")
-                bbb_j = sorted_by_bbb[j].get("wmo_bbb", "")
-                seq_i = sorted_by_bbb[i].get("receipt_seq", 0)
-                seq_j = sorted_by_bbb[j].get("receipt_seq", 0)
-                # bbb_i < bbb_j lexicographically (by construction of sorted_by_bbb)
-                # So we expect seq_i < seq_j
-                if seq_i > seq_j:
-                    # Contradiction: BBB says i comes before j, but receipt says j comes before i
-                    return False
-    return True
+    ok, _ = _shared_check_bbb_order_vs_receipt_order(members)
+    return ok
 
 
 def _check_receipt_premise(members: list[dict]) -> bool:
     """Check the per-station-month receipt-order premise for tied group members.
+
+    V17-02 / F10 fix: Now uses the shared implementation from tie_resolution.py
+    to ensure validator and runtime use identical logic.
 
     Premise holds iff:
     - All members have type(x) is int for receipt_seq (bool rejected)
@@ -291,27 +274,8 @@ def _check_receipt_premise(members: list[dict]) -> bool:
     This is intentionally redundant with compile_afos_taf_stream's own premise gate
     as defense in depth.
     """
-    if not members:
-        return False
-
-    # Check all have int receipt_seq
-    for m in members:
-        seq = m.get("receipt_seq")
-        if type(seq) is not int:
-            return False
-
-    # Check all share same receipt_stream
-    streams = {m.get("receipt_stream") for m in members}
-    if len(streams) != 1 or None in streams:
-        return False
-
-    # Check sorted by receipt_seq yields non-decreasing issued_at
-    sorted_by_seq = sorted(members, key=lambda x: x["receipt_seq"])
-    for i in range(1, len(sorted_by_seq)):
-        if sorted_by_seq[i]["issued_at"] < sorted_by_seq[i - 1]["issued_at"]:
-            return False
-
-    return True
+    ok, _ = _shared_check_receipt_premise(members)
+    return ok
 
 
 def check_latest_issuance_uniqueness(packages: list[dict]) -> tuple[list[dict], list[dict]]:
@@ -357,28 +321,26 @@ def check_latest_issuance_uniqueness(packages: list[dict]) -> tuple[list[dict], 
         # Now attempt resolution
 
         # Step 2: Check premise for receipt-order resolution
-        premise_ok = _check_receipt_premise(latest_rows)
+        # A2-2 fix: call the shared implementation directly to get its actual
+        # reason string, instead of the bool-only wrapper + a re-derived
+        # heuristic that collapsed premise_violated_duplicate_seq /
+        # premise_violated_stream_mismatch / premise_violated_issued_at_order
+        # into one generic "premise_violated" and discarded the real reason.
+        premise_ok, premise_reason = _shared_check_receipt_premise(latest_rows)
 
         if not premise_ok:
-            # Check why premise failed
-            has_any_seq = any(type(p.get("receipt_seq")) is int for p in latest_rows)
-            if not has_any_seq:
-                reason = "no_receipt_signal"
-            else:
-                reason = "premise_violated"
-
             conflicts.append({
                 "group_key": key,
                 "latest_count": len(latest_rows),
                 "distinct_hashes": len(hashes),
                 "issued_at": latest_rows[0]["issued_at"],
                 "source_ids": [p["source_id"] for p in latest_rows],
-                "reason": reason,
+                "reason": premise_reason,
             })
             continue
 
         # Step 3: Check BBB order vs receipt order
-        bbb_agrees = _check_bbb_order_vs_receipt_order(latest_rows)
+        bbb_agrees, bbb_reason = _shared_check_bbb_order_vs_receipt_order(latest_rows)
 
         if not bbb_agrees:
             conflicts.append({
@@ -387,7 +349,7 @@ def check_latest_issuance_uniqueness(packages: list[dict]) -> tuple[list[dict], 
                 "distinct_hashes": len(hashes),
                 "issued_at": latest_rows[0]["issued_at"],
                 "source_ids": [p["source_id"] for p in latest_rows],
-                "reason": "bbb_contradicts_receipt_order",
+                "reason": bbb_reason,
             })
             continue
 

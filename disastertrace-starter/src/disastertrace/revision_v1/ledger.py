@@ -21,6 +21,20 @@ Relationship dimensions (Issue #6):
 - version_relationship: 'first', 'supersedes', 'superseded_by', 'concurrent'
 - information_utility: 'informative', 'duplicate', 'confirmation', 'extension'
 
+Predecessor-resolution fields (A2-2 / CE2 fix):
+- relation_status: 'resolved', 'unresolved', or 'not_applicable' -- whether an
+        AMD/COR's supersession direction against same-instant candidates could
+        be determined via the shared receipt-order tie resolver. An ambiguous
+        same-instant tie (e.g. two AMDs, no comparable receipt signal) is
+        reported as 'unresolved' (version_relationship='concurrent') rather
+        than guessed in both directions, which previously produced mutual
+        A-supersedes-B / B-supersedes-A cycles.
+- relation_reason: explanation string (e.g. 'strictly_prior', 'resolved',
+        'no_receipt_signal', 'premise_violated_stream_mismatch',
+        'equal_bbb_no_authority', 'no_prior_candidates').
+- candidate_predecessors: source_ids considered as candidates during
+        resolution, regardless of outcome.
+
 The old 9-kind field is retained and correctly derived from the new dimensions.
 
 Reuses:
@@ -36,6 +50,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from ..monitoring_v1.providers.versions import latest_issuance
+from .tie_resolution import resolve_receipt_tie_strict
 
 
 # Default declared lag in microseconds (2 minutes, matching current_taf default)
@@ -76,7 +91,7 @@ class Provenance:
         )
 
 
-@dataclass
+@dataclass(frozen=True)
 class ProductLineage:
     """Track product lineage for cross-window version replacement (Issue #2).
 
@@ -84,6 +99,9 @@ class ProductLineage:
     - Same station
     - Same provider/product_series
     - Overlapping or adjacent validity windows (not just exact match)
+
+    V17-02 / F01: Made frozen=True so it can be used as a dictionary key
+    for lineage-based grouping.
     """
     station: str
     provider: str
@@ -216,6 +234,103 @@ def _compute_information_utility(
     return "duplicate"
 
 
+def _resolve_amendment_predecessors(
+    product: dict,
+    prior_in_group: list[dict],
+) -> tuple[list[str] | None, list[str] | None, str, str, list[str]]:
+    """Determine AMD/COR supersession direction against ambiguous same-instant priors.
+
+    Blindly taking latest_issuance(prior_in_group)'s source_ids as `supersedes`
+    (the old behavior) is only safe when every "latest" candidate strictly
+    precedes product's own issued_at. When a candidate shares product's own
+    issued_at instead (e.g. two same-station AMDs tied at the same instant,
+    with no comparable receipt signal), the equal-time visibility fallback
+    above makes each of the two symmetrically visible to the other, so the
+    same naive logic applied to the other member's own classification finds
+    THIS product as ITS "latest" candidate too -- producing a mutual
+    A-supersedes-B / B-supersedes-A cycle. This helper resolves that
+    ambiguity via the shared receipt-order tie resolver instead of assuming
+    a direction from list order.
+
+    Returns:
+        (supersedes, superseded_by, relation_status, relation_reason, candidate_predecessors)
+    """
+    if not prior_in_group:
+        return None, None, "not_applicable", "no_prior_candidates", []
+
+    latest, _ = latest_issuance(prior_in_group)
+    if not latest:
+        return None, None, "not_applicable", "no_prior_candidates", []
+
+    candidate_predecessors = [p["source_id"] for p in latest]
+
+    # latest_issuance selects the single maximal-issued_at subgroup of
+    # prior_in_group, so every member of `latest` shares the same issued_at
+    # as every other member of `latest` -- checking one member's relation to
+    # product's own issued_at tells us whether ALL of them are same-instant.
+    if latest[0]["issued_at"] < product["issued_at"]:
+        # Unambiguous: candidates strictly precede product.
+        return candidate_predecessors, None, "resolved", "strictly_prior", candidate_predecessors
+
+    # Ambiguous: candidates share product's own issued_at. Resolve via the
+    # shared receipt-order tie resolver rather than assuming product wins
+    # (or loses) just because of where it appears in some input list.
+    tied_set = list(latest) + [product]
+    tie_result = resolve_receipt_tie_strict(tied_set)
+
+    if tie_result.resolved and tie_result.winner is product:
+        return candidate_predecessors, None, "resolved", tie_result.rule or "resolved", candidate_predecessors
+
+    if tie_result.resolved:
+        winner_id = tie_result.winner["source_id"]
+        return None, [winner_id], "resolved", tie_result.rule or "resolved", candidate_predecessors
+
+    return None, None, "unresolved", tie_result.reason, candidate_predecessors
+
+
+def _apply_amendment_resolution(
+    product: dict,
+    prior_in_group: list[dict],
+    amendment_kind: str,
+    extra_fields: dict,
+) -> tuple[str, list[str] | None, list[str] | None]:
+    """Shared AMD/COR classification using ambiguity-aware predecessor resolution.
+
+    Mutates extra_fields in place with version_relationship, relation_status,
+    relation_reason, and candidate_predecessors (new fields, surfaced on the
+    compiled ledger entry alongside the existing dimension fields).
+
+    Returns (kind, supersedes, superseded_by).
+    """
+    winner_kind = "correction" if amendment_kind == "COR" else "amendment_supersedes"
+
+    supersedes, superseded_by, relation_status, relation_reason, candidate_predecessors = (
+        _resolve_amendment_predecessors(product, prior_in_group)
+    )
+    extra_fields["relation_status"] = relation_status
+    extra_fields["relation_reason"] = relation_reason
+    extra_fields["candidate_predecessors"] = candidate_predecessors
+
+    if supersedes:
+        extra_fields["version_relationship"] = "supersedes"
+        return winner_kind, supersedes, None
+
+    if superseded_by:
+        extra_fields["version_relationship"] = "superseded_by"
+        # This record lost an ambiguous same-instant tie to a peer AMD/COR:
+        # it is not the authoritative version, so it must not carry
+        # winner_kind (that would wrongly imply it supersedes something).
+        # Reusing "late_superseded" here is a deliberate approximation: kind
+        # is documented as derived/backward-compatible, and this is the
+        # closest existing kind whose meaning ("superseded by a peer, not
+        # authoritative") matches -- arrival_relationship is left "on_time"
+        # since there is no collector-timing evidence of literal lateness.
+        return "late_superseded", None, superseded_by
+
+    extra_fields["version_relationship"] = "concurrent"
+    return winner_kind, None, None
+
+
 def _classify_kind_prefix_aware(
     product: dict,
     all_products: list[dict],
@@ -292,14 +407,38 @@ def _classify_kind_prefix_aware(
     for p in visible_products:
         semantic_hash_index[p["native_semantics_sha256"]].append(p)
 
-    # Group by station and validity from visible products
+    # V17-02 / F01 fix: Use lineage-based grouping instead of exact window match.
+    # Group visible products by ProductLineage (station + provider + product_series)
+    # for cross-window supersession detection.
+    product_provenance = Provenance.from_source_id(source_id, product)
+    product_lineage = ProductLineage.from_product(product, product_provenance)
+
+    # Build lineage index from visible products
+    lineage_groups: dict[ProductLineage, list[dict]] = defaultdict(list)
+    for p in visible_products:
+        p_provenance = Provenance.from_source_id(p["source_id"], p)
+        p_lineage = ProductLineage.from_product(p, p_provenance)
+        lineage_groups[p_lineage].append(p)
+
+    # Find predecessors in the same lineage with overlapping/adjacent validity windows
+    # This replaces the exact-window-match lookup
+    prior_in_lineage = []
+    for p in lineage_groups.get(product_lineage, []):
+        if _validity_windows_overlap_or_adjacent(product, p):
+            prior_in_lineage.append(p)
+
+    # Also build exact-window group for backward compatibility with some paths
     station_validity_groups = defaultdict(list)
     for p in visible_products:
         key = (p["station"], p.get("valid_start"), p.get("valid_end"))
         station_validity_groups[key].append(p)
 
     group_key = (product["station"], product.get("valid_start"), product.get("valid_end"))
-    prior_in_group = station_validity_groups.get(group_key, [])
+    prior_in_exact_window = station_validity_groups.get(group_key, [])
+
+    # V17-02 / F01: Use lineage-based prior for AMD/COR supersession
+    # Filter to only same-provider products within the lineage
+    prior_in_group = prior_in_lineage
 
     # Check for baseline update (Issue #6: don't let this override AMD/COR/CNL)
     if is_baseline:
@@ -347,11 +486,17 @@ def _classify_kind_prefix_aware(
             return "no_change_reissue", [first_with_hash["source_id"]], None, extra_fields
 
     # Check if this is a late arrival (Issue #3: fix supersedes direction)
+    # V17-02 / F01: Also check same provider/lineage for late-arrival detection
     if collector_first_seen:
         # Find products in the same lineage that were issued AFTER but became available BEFORE
         newer_already_visible = []
         for other in visible_products:
             if other["station"] != product["station"]:
+                continue
+            # V17-02 / F01: Check same provider/lineage (not just same station)
+            other_provenance = Provenance.from_source_id(other["source_id"], other)
+            other_lineage = ProductLineage.from_product(other, other_provenance)
+            if other_lineage != product_lineage:
                 continue
             # Same lineage check (relaxed from exact validity match per Issue #2)
             if not _validity_windows_overlap_or_adjacent(product, other):
@@ -373,28 +518,25 @@ def _classify_kind_prefix_aware(
 
     # Check amendment_kind for AMD/COR (Issue #6: these now take precedence over baseline)
     if amendment_kind == "COR" and prior_in_group:
-        latest, _ = latest_issuance(prior_in_group)
-        supersedes = [p["source_id"] for p in latest]
-        extra_fields["version_relationship"] = "supersedes"
-        return "correction", supersedes, None, extra_fields
+        kind, supersedes, superseded_by = _apply_amendment_resolution(
+            product, prior_in_group, "COR", extra_fields
+        )
+        return kind, supersedes, superseded_by, extra_fields
 
     if amendment_kind == "AMD" and prior_in_group:
-        latest, _ = latest_issuance(prior_in_group)
-        supersedes = [p["source_id"] for p in latest]
-        extra_fields["version_relationship"] = "supersedes"
-        return "amendment_supersedes", supersedes, None, extra_fields
+        kind, supersedes, superseded_by = _apply_amendment_resolution(
+            product, prior_in_group, "AMD", extra_fields
+        )
+        return kind, supersedes, superseded_by, extra_fields
 
     # Check for baseline_update with AMD/COR override
     if is_baseline and amendment_kind in ("AMD", "COR"):
         # Baseline updates with amendments should reflect the amendment
         if prior_in_group:
-            latest, _ = latest_issuance(prior_in_group)
-            supersedes = [p["source_id"] for p in latest]
-            extra_fields["version_relationship"] = "supersedes"
-            if amendment_kind == "COR":
-                return "correction", supersedes, None, extra_fields
-            else:
-                return "amendment_supersedes", supersedes, None, extra_fields
+            kind, supersedes, superseded_by = _apply_amendment_resolution(
+                product, prior_in_group, amendment_kind, extra_fields
+            )
+            return kind, supersedes, superseded_by, extra_fields
 
     # Default: new_observation
     return "new_observation", None, None, extra_fields
@@ -454,6 +596,10 @@ def compile_ledger(
             - arrival_relationship: 'on_time', 'late', 'early' (new dimension)
             - version_relationship: 'first', 'supersedes', 'superseded_by', 'concurrent' (new)
             - information_utility: 'informative', 'duplicate', 'confirmation', 'extension' (new)
+            - relation_status: 'resolved', 'unresolved', 'not_applicable' (new, A2-2)
+            - relation_reason: explanation string for relation_status (new, A2-2)
+            - candidate_predecessors: source_ids considered during AMD/COR
+              predecessor resolution (new, A2-2)
     """
     if not products:
         return []
@@ -492,6 +638,11 @@ def compile_ledger(
             "arrival_relationship": extra_fields.get("arrival_relationship", "on_time"),
             "version_relationship": extra_fields.get("version_relationship", "first"),
             "information_utility": extra_fields.get("information_utility", "informative"),
+            # A2-2 / CE2 fix: exposes the AMD/COR predecessor-resolution outcome.
+            # "not_applicable" for kinds that never call _apply_amendment_resolution.
+            "relation_status": extra_fields.get("relation_status", "not_applicable"),
+            "relation_reason": extra_fields.get("relation_reason", "not_applicable"),
+            "candidate_predecessors": extra_fields.get("candidate_predecessors", []),
         }
         ledger.append(entry)
 

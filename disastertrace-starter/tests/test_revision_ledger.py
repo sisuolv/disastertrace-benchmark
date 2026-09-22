@@ -1193,8 +1193,18 @@ class TestCrossWindowSupersession:
 
         # The AMD should recognize it's amending a related product
         amd_entry = next(e for e in ledger if e["source_id"] == "nws-2")
-        # While exact window match isn't required, the relationship is tracked
-        assert amd_entry["version_relationship"] in ("supersedes", "first")
+        # V17-02 / F01 (Gap 2 fix): With lineage-based supersession, an AMD
+        # issued after an original with overlapping validity windows (in the
+        # same lineage: station=KJFK, provider=nws, default product_series)
+        # must have version_relationship="supersedes", not "first".
+        # Derivation: nws-1 (issued t0, valid t0-t0+6h) and nws-2 (issued t0+hour,
+        # valid t0+2h-t0+8h, AMD) overlap from t0+2h to t0+6h, same provider prefix.
+        # nws-2's available_at > nws-1's available_at, so nws-1 is visible when
+        # classifying nws-2. nws-2 is AMD with prior_in_lineage=[nws-1], so it
+        # supersedes nws-1.
+        assert amd_entry["version_relationship"] == "supersedes"
+        assert amd_entry["kind"] == "amendment_supersedes"
+        assert amd_entry["supersedes"] == ["nws-1"]
 
 
 # ---------------------------------------------------------------------------
@@ -1713,10 +1723,25 @@ class TestReceiptOrderVisibilityTieBreak:
     def test_tied_pair_without_seqs_keeps_legacy_entries(self):
         """Legacy fallback: tied pair without receipt_seq uses legacy visibility.
 
-        When neither record carries receipt_seq, the legacy <= behavior applies.
-        This test verifies no crash and that classification still produces entries.
-        We don't hard-code the exact legacy (potentially symmetric/cyclic) shape
-        as "correct" - just confirm the legacy path still runs.
+        When neither record carries receipt_seq, the legacy <= behavior still
+        makes A and B mutually visible to each other (that pre-existing wart
+        is documented, not fixed, by A2-2 -- it's the *input* to the bug, not
+        the bug itself). This is the exact negative example that used to
+        trigger CE2: before the A2-2 ledger fix, each side's classification
+        independently called latest_issuance(prior_in_group) and took its
+        source_ids as `supersedes` without checking whether the "latest"
+        candidate was actually a same-instant peer rather than a strictly
+        prior record -- producing BOTH an A-supersedes-B edge (from A's
+        classification) AND a B-supersedes-A edge (from B's classification)
+        for this exact fixture.
+
+        A2-2 fix: same-instant ambiguous candidates are now routed through
+        resolve_receipt_tie_strict via _resolve_amendment_predecessors. With
+        no receipt_seq on either record, the shared receipt premise check
+        fails (no_receipt_signal), so the tie is correctly reported as
+        unresolved/concurrent with NO supersedes edge in either direction --
+        closing the mutual-cycle bug while still surfacing that a real
+        ambiguity exists (not silently dropped).
         """
         from disastertrace.revision_v1.ledger import compile_ledger
 
@@ -1769,6 +1794,30 @@ class TestReceiptOrderVisibilityTieBreak:
 
         assert entry_a["kind"] is not None
         assert entry_b["kind"] is not None
+
+        # A2-2 / CE2 regression: the ambiguity is now reported as unresolved/
+        # concurrent, not guessed as a supersession in either direction.
+        assert entry_a["relation_status"] == "unresolved"
+        assert entry_b["relation_status"] == "unresolved"
+        assert entry_a["relation_reason"] == "no_receipt_signal"
+        assert entry_b["relation_reason"] == "no_receipt_signal"
+        assert entry_a["version_relationship"] == "concurrent"
+        assert entry_b["version_relationship"] == "concurrent"
+
+        # CRITICAL ACYCLICITY ASSERTION: no mutual supersede edge. This is
+        # the exact defect CE2 closed -- previously both of the following
+        # would have been true simultaneously (a genuine A<->B cycle).
+        assert entry_a["supersedes"] is None
+        assert entry_b["supersedes"] is None
+        a_supersedes = entry_a.get("supersedes") or []
+        b_supersedes = entry_b.get("supersedes") or []
+        assert "ksfo-legacy-b" not in a_supersedes, "CYCLE: A must not supersede B"
+        assert "ksfo-legacy-a" not in b_supersedes, "CYCLE: B must not supersede A"
+
+        # The ambiguity is still visible (not silently dropped) via
+        # candidate_predecessors, even though no direction was assigned.
+        assert entry_a["candidate_predecessors"] == ["ksfo-legacy-b"]
+        assert entry_b["candidate_predecessors"] == ["ksfo-legacy-a"]
 
     def test_three_member_group_chain_with_twin(self):
         """Three-member tie with AAB/AAC twins: verifies acyclic behavior.
@@ -1890,7 +1939,17 @@ class TestReceiptOrderVisibilityTieBreak:
 
         Two records tied at the same available_at, both carry int receipt_seq
         but DIFFERENT receipt_stream values. They are not seq-comparable, so
-        the legacy <= visibility behavior applies (both see each other).
+        the legacy <= visibility fallback still makes both mutually visible
+        (that pre-existing wart is documented, not fixed, by A2-2). Before
+        the A2-2 ledger fix this was the second latent CE2-vulnerable case:
+        each side's classification independently took latest_issuance's
+        source_ids as `supersedes`, which would have produced BOTH an
+        A-supersedes-B edge and a B-supersedes-A edge for this exact fixture.
+
+        A2-2 fix: the mismatched receipt_stream makes check_receipt_premise
+        fail (premise_violated_stream_mismatch), so the shared tie resolver
+        reports the ambiguity as unresolved/concurrent with no supersedes
+        edge in either direction.
         """
         from disastertrace.revision_v1.ledger import compile_ledger
 
@@ -1941,13 +2000,259 @@ class TestReceiptOrderVisibilityTieBreak:
         entry_a = next(e for e in ledger if e["source_id"] == "ksfo-stream-a")
         entry_b = next(e for e in ledger if e["source_id"] == "ksfo-stream-b")
 
-        # With stream mismatch, legacy behavior applies: both can see each other.
-        # We don't assert specific cycle behavior (legacy wart), just that
-        # both records were classified and not filtered incorrectly.
+        # With stream mismatch, legacy visibility fallback applies: both can
+        # see each other. We don't assert anything about that visibility
+        # wart itself, only that it no longer produces a mutual supersede.
         assert entry_a["kind"] is not None
         assert entry_b["kind"] is not None
 
-        # Key difference from test_tied_amd_pair: here streams differ, so the
-        # receipt_seq comparison is not applied. Both A and B see each other.
-        # This is legacy behavior - potentially cyclic, but that's the intended
-        # fallback when signals are incomparable.
+        # A2-2 / CE2 regression: mismatched receipt_stream makes the pair
+        # non-comparable, so the ambiguity is reported as unresolved/
+        # concurrent rather than guessed as a supersession in either direction.
+        assert entry_a["relation_status"] == "unresolved"
+        assert entry_b["relation_status"] == "unresolved"
+        assert entry_a["relation_reason"] == "premise_violated_stream_mismatch"
+        assert entry_b["relation_reason"] == "premise_violated_stream_mismatch"
+        assert entry_a["version_relationship"] == "concurrent"
+        assert entry_b["version_relationship"] == "concurrent"
+
+        # CRITICAL ACYCLICITY ASSERTION: no mutual supersede edge.
+        assert entry_a["supersedes"] is None
+        assert entry_b["supersedes"] is None
+        a_supersedes = entry_a.get("supersedes") or []
+        b_supersedes = entry_b.get("supersedes") or []
+        assert "ksfo-stream-b" not in a_supersedes, "CYCLE: A must not supersede B"
+        assert "ksfo-stream-a" not in b_supersedes, "CYCLE: B must not supersede A"
+
+
+# ---------------------------------------------------------------------------
+# V17-02 / F01: Cross-window supersession with ProductLineage tests
+# ---------------------------------------------------------------------------
+
+
+class TestF01CrossWindowSupersession:
+    """V17-02 / F01: Test cross-window supersession using ProductLineage.
+
+    The F01 fix changes AMD/COR supersession detection from exact-window-match
+    to lineage-based matching. Products in the same lineage (station + provider
+    + product_series) with overlapping/adjacent validity windows can supersede
+    each other, not just products with identical (valid_start, valid_end).
+    """
+
+    def test_amd_supersedes_overlapping_window(self):
+        """AMD supersedes original with overlapping (not identical) validity window.
+
+        Example: Original TAF covers 00:00-12:00, AMD covers 06:00-18:00.
+        The windows overlap (06:00-12:00), so the AMD should supersede.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Original: 00:00-12:00
+        original = make_product(
+            source_id="prov-original",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 12 * hour,
+            amendment_kind="original",
+        )
+
+        # AMD: 06:00-18:00 (overlaps with original)
+        amd = make_product(
+            source_id="prov-amd",
+            station="KSFO",
+            issued_at=t0 + hour,
+            valid_start=t0 + 6 * hour,
+            valid_end=t0 + 18 * hour,
+            amendment_kind="AMD",
+        )
+
+        ledger = compile_ledger([original, amd])
+
+        amd_entry = next(e for e in ledger if e["source_id"] == "prov-amd")
+
+        # F01 fix: AMD should supersede the original via lineage match
+        assert amd_entry["kind"] == "amendment_supersedes"
+        assert amd_entry["supersedes"] == ["prov-original"]
+
+    def test_cor_supersedes_adjacent_window(self):
+        """COR supersedes original with adjacent (not overlapping) validity window.
+
+        Example: Original covers 00:00-06:00, COR covers 06:00-12:00.
+        The windows are adjacent (06:00 is end of one and start of other).
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Original: 00:00-06:00
+        original = make_product(
+            source_id="prov-original",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+        )
+
+        # COR: 06:00-12:00 (adjacent to original)
+        cor = make_product(
+            source_id="prov-cor",
+            station="KSFO",
+            issued_at=t0 + hour,
+            valid_start=t0 + 6 * hour,
+            valid_end=t0 + 12 * hour,
+            amendment_kind="COR",
+        )
+
+        ledger = compile_ledger([original, cor])
+
+        cor_entry = next(e for e in ledger if e["source_id"] == "prov-cor")
+
+        # F01 fix: COR should supersede via adjacent window match
+        assert cor_entry["kind"] == "correction"
+        assert cor_entry["supersedes"] == ["prov-original"]
+
+    def test_different_provider_no_supersession(self):
+        """Products from different providers don't supersede each other.
+
+        Even with overlapping windows, products from different providers
+        are in different lineages and should not supersede each other.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Original from provider A
+        original_a = make_product(
+            source_id="provA-original",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+        )
+        original_a["provider"] = "PROVIDER_A"
+        original_a["product_series"] = "default"
+
+        # AMD from provider B (different provider, same station/window)
+        amd_b = make_product(
+            source_id="provB-amd",
+            station="KSFO",
+            issued_at=t0 + hour,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="AMD",
+        )
+        amd_b["provider"] = "PROVIDER_B"
+        amd_b["product_series"] = "default"
+
+        ledger = compile_ledger([original_a, amd_b])
+
+        amd_entry = next(e for e in ledger if e["source_id"] == "provB-amd")
+
+        # Different provider = different lineage = no supersession
+        # AMD from provider B is a new_observation, not amendment_supersedes
+        assert amd_entry["kind"] == "new_observation"
+        assert amd_entry["supersedes"] is None
+
+    def test_non_overlapping_windows_no_supersession(self):
+        """Products with non-overlapping, non-adjacent windows don't supersede.
+
+        Even with same provider, if windows don't overlap or touch,
+        the later product is a new_observation not a supersession.
+        """
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Original: 00:00-06:00
+        original = make_product(
+            source_id="prov-original",
+            station="KSFO",
+            issued_at=t0,
+            valid_start=t0,
+            valid_end=t0 + 6 * hour,
+            amendment_kind="original",
+        )
+
+        # AMD: 12:00-18:00 (gap from 06:00-12:00, not overlapping or adjacent)
+        amd = make_product(
+            source_id="prov-amd",
+            station="KSFO",
+            issued_at=t0 + hour,
+            valid_start=t0 + 12 * hour,  # Gap: original ends at 06:00
+            valid_end=t0 + 18 * hour,
+            amendment_kind="AMD",
+        )
+
+        ledger = compile_ledger([original, amd])
+
+        amd_entry = next(e for e in ledger if e["source_id"] == "prov-amd")
+
+        # Gap between windows = no supersession
+        # Without priors in lineage with overlapping windows, this is new_observation
+        # (Note: this depends on exact ledger behavior - the key test is that
+        # non-overlapping windows don't match via lineage)
+        assert amd_entry["supersedes"] is None or amd_entry["kind"] == "new_observation"
+
+
+class TestF01ProductLineage:
+    """V17-02 / F01: Test ProductLineage dataclass directly."""
+
+    def test_product_lineage_from_product(self):
+        """ProductLineage.from_product extracts correct lineage."""
+        from disastertrace.revision_v1.ledger import ProductLineage, Provenance
+
+        product = {
+            "station": "KSFO",
+            "provider": "AFOS",
+            "product_series": "TAF",
+            "source_id": "afos-12345",
+        }
+
+        provenance = Provenance.from_source_id(product["source_id"], product)
+        lineage = ProductLineage.from_product(product, provenance)
+
+        assert lineage.station == "KSFO"
+        assert lineage.provider == "AFOS"
+        assert lineage.product_series == "TAF"
+
+    def test_product_lineage_equality(self):
+        """ProductLineage equality based on (station, provider, product_series)."""
+        from disastertrace.revision_v1.ledger import ProductLineage
+
+        lineage1 = ProductLineage(station="KSFO", provider="AFOS", product_series="TAF")
+        lineage2 = ProductLineage(station="KSFO", provider="AFOS", product_series="TAF")
+        lineage3 = ProductLineage(station="KLAX", provider="AFOS", product_series="TAF")
+
+        assert lineage1 == lineage2
+        assert lineage1 != lineage3
+
+    def test_validity_windows_overlap_or_adjacent(self):
+        """Test _validity_windows_overlap_or_adjacent helper."""
+        from disastertrace.revision_v1.ledger import _validity_windows_overlap_or_adjacent
+
+        t0 = us("2026-09-19T00:00:00Z")
+        hour = 3_600_000_000
+
+        # Overlapping
+        a = {"valid_start": t0, "valid_end": t0 + 6 * hour}
+        b = {"valid_start": t0 + 3 * hour, "valid_end": t0 + 9 * hour}
+        assert _validity_windows_overlap_or_adjacent(a, b) is True
+
+        # Adjacent
+        c = {"valid_start": t0, "valid_end": t0 + 6 * hour}
+        d = {"valid_start": t0 + 6 * hour, "valid_end": t0 + 12 * hour}
+        assert _validity_windows_overlap_or_adjacent(c, d) is True
+
+        # Gap (not adjacent, not overlapping)
+        e = {"valid_start": t0, "valid_end": t0 + 6 * hour}
+        f = {"valid_start": t0 + 12 * hour, "valid_end": t0 + 18 * hour}
+        assert _validity_windows_overlap_or_adjacent(e, f) is False
