@@ -1,3 +1,15 @@
+> **⚠️ SUPERSEDED BY BATCH A2 (2026-09-21).** Three independent reviews found the measurement
+> chain that produced this report was checkpoint-blind (`issued_at < T` only, never consuming
+> T-60/T-40/T-20 or `available_at`), read a `tie_unresolved` field the ledger never emitted
+> (making "0% dispute rate" structurally guaranteed rather than measured), and used a wrong
+> denominator for its coverage percentage. This report's headline conclusions, including the
+> G1 "PROCEED" recommendation below, are **withdrawn** — see `TASK_CONTRACT_v17.json`
+> `meta.correction_history` and `EXECUTION_STATUS_v17.md` Gate Status. The corrected,
+> checkpoint-aware re-census is in **`TRANSITION_CENSUS_v17_A2.md`**. The original text below
+> is preserved unchanged for the record; it is historical, not current.
+
+---
+
 # Transition Census v17: Evidence Change Analysis for H15 Data Qualification
 
 Generated: 2026-09-21T13:35:49Z

@@ -430,9 +430,87 @@ class TestCheckLatestIssuanceUniqueness:
         ]
         conflicts, resolved = check_latest_issuance_uniqueness(packages)
         assert len(conflicts) == 1
-        # Stream mismatch = premise violated
-        assert conflicts[0]["reason"] in ("no_receipt_signal", "premise_violated")
+        # A2-2 fix: check_latest_issuance_uniqueness now propagates the real
+        # reason from the shared check_receipt_premise implementation instead
+        # of collapsing it into a generic "premise_violated" bucket.
+        assert conflicts[0]["reason"] == "premise_violated_stream_mismatch"
         assert len(resolved) == 0
+
+    def test_equal_bbb_stays_conflict_with_precise_reason(self):
+        """Tied group with equal wmo_bbb (no order info) stays a residual conflict.
+
+        A2-2 / CE1 regression test: two same-family members sharing the exact
+        same wmo_bbb carry no lexicographic order information. Before the
+        fix, comparing the (trivially False) bbb_order against seq_order made
+        the result depend on which member landed at index i vs j -- i.e. on
+        caller input order/permutation. The fix returns a dedicated
+        "equal_bbb_no_authority" reason instead, and this test also confirms
+        that reason now reaches the validator's conflict report unmodified
+        (previously it would have been reported as the generic
+        "bbb_contradicts_receipt_order", which is inaccurate -- there was no
+        contradiction to detect, just an absence of order information).
+        """
+        packages = [
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash1",
+                "source_id": "a",
+                "receipt_seq": 5,
+                "receipt_stream": "KSFO:2023-01",
+                "wmo_bbb": "AAA",
+                "amendment_kind": "AMD",
+            },
+            {
+                "station": "KSFO",
+                "valid_start": 1000000,
+                "valid_end": 2000000,
+                "issued_at": 900000,
+                "native_semantics_sha256": "hash2",
+                "source_id": "b",
+                "receipt_seq": 10,
+                "receipt_stream": "KSFO:2023-01",
+                "wmo_bbb": "AAA",  # Same BBB as "a" -- no order info
+                "amendment_kind": "AMD",
+            },
+        ]
+        conflicts, resolved = check_latest_issuance_uniqueness(packages)
+        assert len(conflicts) == 1
+        assert conflicts[0]["reason"] == "equal_bbb_no_authority"
+        assert len(resolved) == 0
+
+    def test_equal_bbb_conflict_is_permutation_invariant(self):
+        """The equal-BBB conflict above must not depend on input list order."""
+        a = {
+            "station": "KSFO",
+            "valid_start": 1000000,
+            "valid_end": 2000000,
+            "issued_at": 900000,
+            "native_semantics_sha256": "hash1",
+            "source_id": "a",
+            "receipt_seq": 5,
+            "receipt_stream": "KSFO:2023-01",
+            "wmo_bbb": "AAA",
+            "amendment_kind": "AMD",
+        }
+        b = {
+            "station": "KSFO",
+            "valid_start": 1000000,
+            "valid_end": 2000000,
+            "issued_at": 900000,
+            "native_semantics_sha256": "hash2",
+            "source_id": "b",
+            "receipt_seq": 10,
+            "receipt_stream": "KSFO:2023-01",
+            "wmo_bbb": "AAA",
+            "amendment_kind": "AMD",
+        }
+        conflicts_ab, resolved_ab = check_latest_issuance_uniqueness([a, b])
+        conflicts_ba, resolved_ba = check_latest_issuance_uniqueness([b, a])
+        assert conflicts_ab[0]["reason"] == conflicts_ba[0]["reason"] == "equal_bbb_no_authority"
+        assert len(resolved_ab) == len(resolved_ba) == 0
 
 
 class TestReceiptOrderPremise:

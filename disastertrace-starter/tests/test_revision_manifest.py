@@ -1344,8 +1344,21 @@ class TestF02OutcomeContract:
         assert DEFAULT_OUTCOME_CONTRACT["checkpoint_offsets_minutes"] == [-60, -40, -20]
 
     def test_custom_outcome_contract_preserved(self):
-        """Custom outcome_contract passed to build_manifest is used."""
-        from disastertrace.revision_v1.manifest import CandidateTarget, build_manifest
+        """A2-4: a custom outcome_contract is explicitly REJECTED, not silently used.
+
+        Withdrawn claim: this test previously asserted that build_manifest silently
+        adopted an arbitrary custom outcome_contract (different thresholds, report
+        policy, support window, weights) without validating it against anything.
+        That behavior let a manifest carry a contract that nothing downstream
+        (compute_checkpoints, make_h15_visibility_target) actually honored end to
+        end. A2-4 makes this batch support exactly one outcome profile
+        (H15_DEFAULT_PROFILE); anything else must raise UnsupportedOutcomeProfile.
+        """
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            UnsupportedOutcomeProfile,
+            build_manifest,
+        )
 
         hour = 3_600_000_000
         t0 = 1700000000000000
@@ -1371,16 +1384,118 @@ class TestF02OutcomeContract:
             "checkpoint_weights": [0.5, 0.3, 0.2],
         }
 
+        with pytest.raises(UnsupportedOutcomeProfile):
+            build_manifest(
+                changed_queue=[candidate],
+                unchanged_queue=[],
+                config_sha256="a" * 64,
+                taf_archive_summary="test",
+                outcome_contract=custom_contract,
+            )
+
+    def test_default_profile_generates_matching_checkpoints(self):
+        """A2-4: H15_DEFAULT_PROFILE's offsets/weights drive compute_checkpoints,
+        and build_manifest's per-target checkpoints match calling compute_checkpoints
+        directly with the same profile.
+        """
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            H15_DEFAULT_PROFILE,
+            build_manifest,
+            compute_checkpoints,
+        )
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
         manifest = build_manifest(
             changed_queue=[candidate],
             unchanged_queue=[],
             config_sha256="a" * 64,
             taf_archive_summary="test",
-            outcome_contract=custom_contract,
         )
 
-        assert manifest["outcome_contract"]["thresholds_m"] == [3000.0]
-        assert manifest["outcome_contract"]["report_policy"] == "custom.v1"
+        expected = compute_checkpoints(t0, profile=H15_DEFAULT_PROFILE)
+        actual = manifest["targets"][0]["checkpoints"]
+
+        assert len(actual) == len(expected)
+        for actual_cp, expected_cp in zip(actual, expected):
+            assert actual_cp["time_us"] == expected_cp.time_us
+            assert actual_cp["weight"] == expected_cp.weight
+
+    def test_inconsistent_manifest_rejected(self):
+        """A2-4: an outcome_contract missing a required field (here,
+        checkpoint_offsets_minutes) is rejected by validate_outcome_profile even
+        though its checkpoint_weights alone would pass _validate_checkpoint_weights.
+        """
+        from disastertrace.revision_v1.manifest import (
+            CandidateTarget,
+            UnsupportedOutcomeProfile,
+            build_manifest,
+        )
+
+        hour = 3_600_000_000
+        t0 = 1700000000000000
+
+        candidate = CandidateTarget(
+            station="KSFO",
+            validity_start_us=t0,
+            validity_end_us=t0 + 6 * hour,
+            revision_count=1,
+            tie_event_count=0,
+            evidence_change_count=1,
+            lead_time_coverage_hours=6.0,
+            revision_count_whole_window=1,
+            tie_event_count_whole_window=0,
+            evidence_change_count_whole_window=1,
+            source_packages=[],
+        )
+
+        # Non-empty, non-negative weights -- passes _validate_checkpoint_weights --
+        # but missing checkpoint_offsets_minutes entirely, and thresholds_m/
+        # support_window_hours differ from H15_DEFAULT_PROFILE.
+        inconsistent_contract = {
+            "thresholds_m": [5000.0],
+            "report_policy": "iem_routine_unique_hour.v1",
+            "support_window_hours": 1.0,
+            "checkpoint_weights": [1.0, 1.0, 1.0],
+        }
+
+        with pytest.raises(UnsupportedOutcomeProfile) as exc_info:
+            build_manifest(
+                changed_queue=[candidate],
+                unchanged_queue=[],
+                config_sha256="a" * 64,
+                taf_archive_summary="test",
+                outcome_contract=inconsistent_contract,
+            )
+
+        assert "checkpoint_offsets_minutes" in str(exc_info.value)
+
+    def test_validate_outcome_profile_accepts_h15_default(self):
+        """A2-4: validate_outcome_profile is a no-op for H15_DEFAULT_PROFILE itself."""
+        from disastertrace.revision_v1.manifest import (
+            H15_DEFAULT_PROFILE,
+            validate_outcome_profile,
+        )
+
+        # Should not raise.
+        validate_outcome_profile(H15_DEFAULT_PROFILE)
+        validate_outcome_profile(H15_DEFAULT_PROFILE.copy())
 
     def test_empty_weights_raises(self):
         """Empty checkpoint_weights raises ValueError."""
@@ -1420,6 +1535,89 @@ class TestF02OutcomeContract:
             )
 
         assert "empty" in str(exc_info.value).lower()
+
+
+class TestA2_4DiscloseOutcomeContractResolution:
+    """A2-4: resolve_disclose_outcome_contract's branching, tested directly
+    (no manifest_path/config_path/exposure_registry plumbing, no ASOS access --
+    this is a pure function of a manifest dict, exercised entirely synthetically
+    per hard boundary #9/#10: real freeze/disclose is not run this round).
+    """
+
+    def _import(self):
+        sys.path.insert(0, str(_project / "scripts"))
+        from build_episode_manifest_v16 import resolve_disclose_outcome_contract
+        return resolve_disclose_outcome_contract
+
+    def test_v1_schema_takes_legacy_branch(self):
+        """A v1-schema manifest (no outcome_contract key at all) resolves to
+        DEFAULT_OUTCOME_CONTRACT via the explicit legacy_v1 branch."""
+        from disastertrace.revision_v1.manifest import DEFAULT_OUTCOME_CONTRACT
+
+        resolve_disclose_outcome_contract = self._import()
+
+        v1_manifest = {
+            "schema": "disastertrace.episode_manifest.v1",
+            "targets": [],
+        }
+
+        resolved = resolve_disclose_outcome_contract(v1_manifest)
+        assert resolved == DEFAULT_OUTCOME_CONTRACT
+
+    def test_missing_outcome_contract_takes_legacy_branch_regardless_of_schema(self):
+        """Any manifest with outcome_contract=None (missing entirely) takes the
+        legacy branch, even if its schema string happens to say v2 -- absence of
+        the field is what matters, not the label."""
+        from disastertrace.revision_v1.manifest import DEFAULT_OUTCOME_CONTRACT
+
+        resolve_disclose_outcome_contract = self._import()
+
+        manifest_no_contract = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "targets": [],
+        }
+
+        resolved = resolve_disclose_outcome_contract(manifest_no_contract)
+        assert resolved == DEFAULT_OUTCOME_CONTRACT
+
+    def test_v2_schema_with_default_profile_passes(self):
+        """A v2-schema manifest whose outcome_contract exactly matches
+        H15_DEFAULT_PROFILE is accepted and returned unchanged."""
+        from disastertrace.revision_v1.manifest import H15_DEFAULT_PROFILE
+
+        resolve_disclose_outcome_contract = self._import()
+
+        v2_manifest = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "outcome_contract": dict(H15_DEFAULT_PROFILE),
+            "targets": [],
+        }
+
+        resolved = resolve_disclose_outcome_contract(v2_manifest)
+        assert resolved == H15_DEFAULT_PROFILE
+
+    def test_v2_schema_with_unsupported_profile_raises(self):
+        """A v2-schema manifest whose outcome_contract deviates from
+        H15_DEFAULT_PROFILE is rejected before any ASOS/outcome access is
+        constructed downstream."""
+        from disastertrace.revision_v1.manifest import UnsupportedOutcomeProfile
+
+        resolve_disclose_outcome_contract = self._import()
+
+        v2_manifest = {
+            "schema": "disastertrace.episode_manifest.v2",
+            "outcome_contract": {
+                "thresholds_m": [3000.0],
+                "report_policy": "custom.v1",
+                "support_window_hours": 2.0,
+                "checkpoint_weights": [0.5, 0.3, 0.2],
+                "checkpoint_offsets_minutes": [-60, -40, -20],
+            },
+            "targets": [],
+        }
+
+        with pytest.raises(UnsupportedOutcomeProfile):
+            resolve_disclose_outcome_contract(v2_manifest)
 
 
 class TestF02ManifestValidation:

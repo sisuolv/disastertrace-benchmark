@@ -41,6 +41,9 @@ sys.path.insert(0, str(_project / "src"))
 
 from disastertrace.revision_v1.manifest import (
     SELECTION_RULE_VERSION,
+    DEFAULT_OUTCOME_CONTRACT,
+    UnsupportedOutcomeProfile,
+    validate_outcome_profile,
     freeze_manifest,
     load_stations_calendar,
     verify_manifest_integrity,
@@ -358,6 +361,34 @@ def run_freeze(
     return 0
 
 
+def resolve_disclose_outcome_contract(manifest: dict) -> dict:
+    """A2-4: Resolve which outcome_contract a disclose run must use, from the
+    manifest alone -- before any ASOS/outcome data path is touched.
+
+    v1-schema manifests (or any manifest with no outcome_contract at all) take
+    an explicit legacy_v1 branch and use DEFAULT_OUTCOME_CONTRACT. v2-schema
+    manifests must carry an outcome_contract that matches the single supported
+    H15_DEFAULT_PROFILE exactly.
+
+    Args:
+        manifest: Loaded manifest dict (already integrity- and sha256-verified
+            by the caller).
+
+    Returns:
+        The outcome_contract dict to use for the rest of disclosure.
+
+    Raises:
+        UnsupportedOutcomeProfile: if a v2 manifest's outcome_contract does not
+            match H15_DEFAULT_PROFILE.
+    """
+    schema = manifest.get("schema")
+    outcome_contract = manifest.get("outcome_contract")
+    if schema == "disastertrace.episode_manifest.v1" or outcome_contract is None:
+        return DEFAULT_OUTCOME_CONTRACT
+    validate_outcome_profile(outcome_contract)
+    return outcome_contract
+
+
 def run_disclose(
     manifest_path: Path,
     disclosure_path: Path,
@@ -403,6 +434,22 @@ def run_disclose(
         verify_stations_calendar_sha256_match(config_path, manifest)
         print(f"  stations_calendar SHA256 check PASSED")
     except ValueError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        return 1
+
+    # A2-4: Validate the manifest's outcome contract BEFORE any ASOS/outcome
+    # data path is constructed below. v1 manifests carry no outcome_contract
+    # at all (pre-F02) and take an explicit legacy_v1 branch using
+    # DEFAULT_OUTCOME_CONTRACT; v2 manifests must match the single supported
+    # H15_DEFAULT_PROFILE exactly, or disclosure is refused.
+    print(f"Validating manifest outcome contract...")
+    try:
+        outcome_contract = resolve_disclose_outcome_contract(manifest)
+        if manifest.get("schema") == "disastertrace.episode_manifest.v1" or manifest.get("outcome_contract") is None:
+            print(f"  Manifest schema is {manifest.get('schema')!r} with no outcome_contract -- legacy_v1 branch, using DEFAULT_OUTCOME_CONTRACT")
+        else:
+            print(f"  outcome_contract PASSED (matches the single supported H15 profile)")
+    except UnsupportedOutcomeProfile as e:
         print(f"ERROR: {e}", file=sys.stderr)
         return 1
 
@@ -631,11 +678,19 @@ def run_disclose(
                     # Select routine observations
                     routine_obs, _ = select_routine_observations(observations, station=station)
 
+                    # A2-4: thresholds/support window come from the validated
+                    # outcome_contract (legacy_v1 branch uses DEFAULT_OUTCOME_CONTRACT,
+                    # which is identical to the previous hardcoded values).
+                    contract_allowed_thresholds = frozenset(outcome_contract["thresholds_m"])
+                    contract_support_window_hours = outcome_contract["support_window_hours"]
+
                     # Create target for 5km threshold
                     h15_target_5km = make_h15_visibility_target(
                         station=station,
                         slot_start_us=validity_start_us,
                         threshold_m=5000.0,
+                        allowed_thresholds=contract_allowed_thresholds,
+                        support_window_hours=contract_support_window_hours,
                     )
 
                     # Bug 3 fix: Create target for 1km threshold (nested threshold)
@@ -643,6 +698,8 @@ def run_disclose(
                         station=station,
                         slot_start_us=validity_start_us,
                         threshold_m=1000.0,
+                        allowed_thresholds=contract_allowed_thresholds,
+                        support_window_hours=contract_support_window_hours,
                     )
 
                     # Resolve outcomes for both thresholds

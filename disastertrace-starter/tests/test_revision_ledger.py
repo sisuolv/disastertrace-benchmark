@@ -1723,10 +1723,25 @@ class TestReceiptOrderVisibilityTieBreak:
     def test_tied_pair_without_seqs_keeps_legacy_entries(self):
         """Legacy fallback: tied pair without receipt_seq uses legacy visibility.
 
-        When neither record carries receipt_seq, the legacy <= behavior applies.
-        This test verifies no crash and that classification still produces entries.
-        We don't hard-code the exact legacy (potentially symmetric/cyclic) shape
-        as "correct" - just confirm the legacy path still runs.
+        When neither record carries receipt_seq, the legacy <= behavior still
+        makes A and B mutually visible to each other (that pre-existing wart
+        is documented, not fixed, by A2-2 -- it's the *input* to the bug, not
+        the bug itself). This is the exact negative example that used to
+        trigger CE2: before the A2-2 ledger fix, each side's classification
+        independently called latest_issuance(prior_in_group) and took its
+        source_ids as `supersedes` without checking whether the "latest"
+        candidate was actually a same-instant peer rather than a strictly
+        prior record -- producing BOTH an A-supersedes-B edge (from A's
+        classification) AND a B-supersedes-A edge (from B's classification)
+        for this exact fixture.
+
+        A2-2 fix: same-instant ambiguous candidates are now routed through
+        resolve_receipt_tie_strict via _resolve_amendment_predecessors. With
+        no receipt_seq on either record, the shared receipt premise check
+        fails (no_receipt_signal), so the tie is correctly reported as
+        unresolved/concurrent with NO supersedes edge in either direction --
+        closing the mutual-cycle bug while still surfacing that a real
+        ambiguity exists (not silently dropped).
         """
         from disastertrace.revision_v1.ledger import compile_ledger
 
@@ -1779,6 +1794,30 @@ class TestReceiptOrderVisibilityTieBreak:
 
         assert entry_a["kind"] is not None
         assert entry_b["kind"] is not None
+
+        # A2-2 / CE2 regression: the ambiguity is now reported as unresolved/
+        # concurrent, not guessed as a supersession in either direction.
+        assert entry_a["relation_status"] == "unresolved"
+        assert entry_b["relation_status"] == "unresolved"
+        assert entry_a["relation_reason"] == "no_receipt_signal"
+        assert entry_b["relation_reason"] == "no_receipt_signal"
+        assert entry_a["version_relationship"] == "concurrent"
+        assert entry_b["version_relationship"] == "concurrent"
+
+        # CRITICAL ACYCLICITY ASSERTION: no mutual supersede edge. This is
+        # the exact defect CE2 closed -- previously both of the following
+        # would have been true simultaneously (a genuine A<->B cycle).
+        assert entry_a["supersedes"] is None
+        assert entry_b["supersedes"] is None
+        a_supersedes = entry_a.get("supersedes") or []
+        b_supersedes = entry_b.get("supersedes") or []
+        assert "ksfo-legacy-b" not in a_supersedes, "CYCLE: A must not supersede B"
+        assert "ksfo-legacy-a" not in b_supersedes, "CYCLE: B must not supersede A"
+
+        # The ambiguity is still visible (not silently dropped) via
+        # candidate_predecessors, even though no direction was assigned.
+        assert entry_a["candidate_predecessors"] == ["ksfo-legacy-b"]
+        assert entry_b["candidate_predecessors"] == ["ksfo-legacy-a"]
 
     def test_three_member_group_chain_with_twin(self):
         """Three-member tie with AAB/AAC twins: verifies acyclic behavior.
@@ -1900,7 +1939,17 @@ class TestReceiptOrderVisibilityTieBreak:
 
         Two records tied at the same available_at, both carry int receipt_seq
         but DIFFERENT receipt_stream values. They are not seq-comparable, so
-        the legacy <= visibility behavior applies (both see each other).
+        the legacy <= visibility fallback still makes both mutually visible
+        (that pre-existing wart is documented, not fixed, by A2-2). Before
+        the A2-2 ledger fix this was the second latent CE2-vulnerable case:
+        each side's classification independently took latest_issuance's
+        source_ids as `supersedes`, which would have produced BOTH an
+        A-supersedes-B edge and a B-supersedes-A edge for this exact fixture.
+
+        A2-2 fix: the mismatched receipt_stream makes check_receipt_premise
+        fail (premise_violated_stream_mismatch), so the shared tie resolver
+        reports the ambiguity as unresolved/concurrent with no supersedes
+        edge in either direction.
         """
         from disastertrace.revision_v1.ledger import compile_ledger
 
@@ -1951,16 +2000,29 @@ class TestReceiptOrderVisibilityTieBreak:
         entry_a = next(e for e in ledger if e["source_id"] == "ksfo-stream-a")
         entry_b = next(e for e in ledger if e["source_id"] == "ksfo-stream-b")
 
-        # With stream mismatch, legacy behavior applies: both can see each other.
-        # We don't assert specific cycle behavior (legacy wart), just that
-        # both records were classified and not filtered incorrectly.
+        # With stream mismatch, legacy visibility fallback applies: both can
+        # see each other. We don't assert anything about that visibility
+        # wart itself, only that it no longer produces a mutual supersede.
         assert entry_a["kind"] is not None
         assert entry_b["kind"] is not None
 
-        # Key difference from test_tied_amd_pair: here streams differ, so the
-        # receipt_seq comparison is not applied. Both A and B see each other.
-        # This is legacy behavior - potentially cyclic, but that's the intended
-        # fallback when signals are incomparable.
+        # A2-2 / CE2 regression: mismatched receipt_stream makes the pair
+        # non-comparable, so the ambiguity is reported as unresolved/
+        # concurrent rather than guessed as a supersession in either direction.
+        assert entry_a["relation_status"] == "unresolved"
+        assert entry_b["relation_status"] == "unresolved"
+        assert entry_a["relation_reason"] == "premise_violated_stream_mismatch"
+        assert entry_b["relation_reason"] == "premise_violated_stream_mismatch"
+        assert entry_a["version_relationship"] == "concurrent"
+        assert entry_b["version_relationship"] == "concurrent"
+
+        # CRITICAL ACYCLICITY ASSERTION: no mutual supersede edge.
+        assert entry_a["supersedes"] is None
+        assert entry_b["supersedes"] is None
+        a_supersedes = entry_a.get("supersedes") or []
+        b_supersedes = entry_b.get("supersedes") or []
+        assert "ksfo-stream-b" not in a_supersedes, "CYCLE: A must not supersede B"
+        assert "ksfo-stream-a" not in b_supersedes, "CYCLE: B must not supersede A"
 
 
 # ---------------------------------------------------------------------------

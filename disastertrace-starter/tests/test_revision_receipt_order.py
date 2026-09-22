@@ -838,3 +838,84 @@ class TestF10SharedTieResolution:
         assert result.winner == {"test": "data"}
         assert result.reason == "test_reason"
         assert result.rule == "test_rule"
+
+
+class TestEqualBbbPermutationInvariance:
+    """A2-2 / CE1 regression: equal-BBB ties must not depend on input order.
+
+    Before the fix, check_bbb_order_vs_receipt_order compared a trivially-False
+    bbb_order (bbb_i == bbb_j) against a seq_order that flips depending on
+    which tied member happens to land at index i vs index j -- i.e. on the
+    caller's input list order, not on any property of the tied set itself.
+    A(AAA, seq=1) vs B(AAA, seq=2) resolved to winner B when passed as
+    [A, B], but was rejected as unresolved when passed as [B, A]. These
+    tests pin the fixed behavior: every permutation of a same-BBB tied set
+    gives the identical (resolved, reason) outcome.
+    """
+
+    def _equal_bbb_pair(self):
+        return [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "a"},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "b"},
+        ]
+
+    def test_check_bbb_order_equal_bbb_returns_no_authority(self):
+        """check_bbb_order_vs_receipt_order refuses to claim an order for equal BBB."""
+        from disastertrace.revision_v1.tie_resolution import check_bbb_order_vs_receipt_order
+
+        rows = self._equal_bbb_pair()
+        ok, reason = check_bbb_order_vs_receipt_order(rows)
+        assert ok is False
+        assert reason == "equal_bbb_no_authority"
+
+        ok_reversed, reason_reversed = check_bbb_order_vs_receipt_order(list(reversed(rows)))
+        assert ok_reversed is False
+        assert reason_reversed == "equal_bbb_no_authority"
+
+    def test_resolve_receipt_tie_strict_equal_bbb_all_permutations_agree(self):
+        """resolve_receipt_tie_strict gives the identical result for every permutation."""
+        import itertools
+
+        from disastertrace.revision_v1.tie_resolution import resolve_receipt_tie_strict
+
+        rows = self._equal_bbb_pair()
+        outcomes = set()
+        for perm in itertools.permutations(rows):
+            result = resolve_receipt_tie_strict(list(perm))
+            outcomes.add((result.resolved, result.reason))
+
+        assert outcomes == {(False, "equal_bbb_no_authority")}
+
+    def test_resolve_receipt_tie_strict_three_way_equal_bbb_all_permutations_agree(self):
+        """Same invariant holds for a 3-member equal-BBB tied set."""
+        import itertools
+
+        from disastertrace.revision_v1.tie_resolution import resolve_receipt_tie_strict
+
+        rows = [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "a"},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "b"},
+            {"receipt_seq": 3, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "c"},
+        ]
+        outcomes = set()
+        for perm in itertools.permutations(rows):
+            result = resolve_receipt_tie_strict(list(perm))
+            outcomes.add((result.resolved, result.reason))
+
+        assert outcomes == {(False, "equal_bbb_no_authority")}
+
+    def test_distinct_bbb_still_resolves_regardless_of_order(self):
+        """Sanity check: the fix doesn't disturb the existing distinct-BBB resolved path."""
+        import itertools
+
+        from disastertrace.revision_v1.tie_resolution import resolve_receipt_tie_strict
+
+        rows = [
+            {"receipt_seq": 1, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAA", "source_id": "a"},
+            {"receipt_seq": 2, "receipt_stream": "KSFO:2025-01", "issued_at": us("2025-01-15T12:00:00Z"), "wmo_bbb": "AAB", "source_id": "b"},
+        ]
+        for perm in itertools.permutations(rows):
+            result = resolve_receipt_tie_strict(list(perm))
+            assert result.resolved is True
+            assert result.winner["source_id"] == "b"
+            assert result.rule == "receipt_order+bbb_agree"

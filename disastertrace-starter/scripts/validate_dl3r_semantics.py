@@ -321,28 +321,26 @@ def check_latest_issuance_uniqueness(packages: list[dict]) -> tuple[list[dict], 
         # Now attempt resolution
 
         # Step 2: Check premise for receipt-order resolution
-        premise_ok = _check_receipt_premise(latest_rows)
+        # A2-2 fix: call the shared implementation directly to get its actual
+        # reason string, instead of the bool-only wrapper + a re-derived
+        # heuristic that collapsed premise_violated_duplicate_seq /
+        # premise_violated_stream_mismatch / premise_violated_issued_at_order
+        # into one generic "premise_violated" and discarded the real reason.
+        premise_ok, premise_reason = _shared_check_receipt_premise(latest_rows)
 
         if not premise_ok:
-            # Check why premise failed
-            has_any_seq = any(type(p.get("receipt_seq")) is int for p in latest_rows)
-            if not has_any_seq:
-                reason = "no_receipt_signal"
-            else:
-                reason = "premise_violated"
-
             conflicts.append({
                 "group_key": key,
                 "latest_count": len(latest_rows),
                 "distinct_hashes": len(hashes),
                 "issued_at": latest_rows[0]["issued_at"],
                 "source_ids": [p["source_id"] for p in latest_rows],
-                "reason": reason,
+                "reason": premise_reason,
             })
             continue
 
         # Step 3: Check BBB order vs receipt order
-        bbb_agrees = _check_bbb_order_vs_receipt_order(latest_rows)
+        bbb_agrees, bbb_reason = _shared_check_bbb_order_vs_receipt_order(latest_rows)
 
         if not bbb_agrees:
             conflicts.append({
@@ -351,7 +349,7 @@ def check_latest_issuance_uniqueness(packages: list[dict]) -> tuple[list[dict], 
                 "distinct_hashes": len(hashes),
                 "issued_at": latest_rows[0]["issued_at"],
                 "source_ids": [p["source_id"] for p in latest_rows],
-                "reason": "bbb_contradicts_receipt_order",
+                "reason": bbb_reason,
             })
             continue
 

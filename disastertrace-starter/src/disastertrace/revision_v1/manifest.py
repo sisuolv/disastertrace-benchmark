@@ -62,6 +62,60 @@ CHECKPOINT_OFFSETS_MINUTES = [-60, -40, -20]
 # Maximum targets in the manifest
 MAX_TARGETS = 12
 
+# A2-4: This batch supports exactly one outcome/scoring profile. H15_DEFAULT_PROFILE
+# is the single source of truth for it (same value as DEFAULT_OUTCOME_CONTRACT --
+# named separately so `validate_outcome_profile` has an unambiguous target to check
+# against, independent of any future change to what a *default* means).
+H15_DEFAULT_PROFILE = DEFAULT_OUTCOME_CONTRACT
+
+# Fields a profile dict must carry, in full, to be accepted by validate_outcome_profile.
+_OUTCOME_PROFILE_REQUIRED_FIELDS = (
+    "thresholds_m",
+    "report_policy",
+    "support_window_hours",
+    "checkpoint_weights",
+    "checkpoint_offsets_minutes",
+)
+
+
+class UnsupportedOutcomeProfile(ValueError):
+    """Raised when an outcome_contract does not match the single supported H15 profile.
+
+    A2-4: prior behavior silently accepted and partially honored any custom
+    outcome_contract dict (see the withdrawn `test_custom_outcome_contract_preserved`
+    claim). This batch supports exactly one profile end-to-end (checkpoints,
+    thresholds, support window); anything else must be rejected explicitly rather
+    than partially applied.
+    """
+
+
+def validate_outcome_profile(contract: dict) -> None:
+    """Validate that `contract` is exactly the single supported H15 profile.
+
+    Args:
+        contract: An outcome_contract-shaped dict to check.
+
+    Raises:
+        UnsupportedOutcomeProfile: if any required field is missing, or any
+            field's value differs from H15_DEFAULT_PROFILE.
+    """
+    missing = [f for f in _OUTCOME_PROFILE_REQUIRED_FIELDS if f not in contract]
+    if missing:
+        raise UnsupportedOutcomeProfile(
+            f"outcome_contract missing required field(s): {missing}"
+        )
+
+    mismatches = [
+        f"{field}: got {contract[field]!r}, only {H15_DEFAULT_PROFILE[field]!r} is supported"
+        for field in _OUTCOME_PROFILE_REQUIRED_FIELDS
+        if contract[field] != H15_DEFAULT_PROFILE[field]
+    ]
+    if mismatches:
+        raise UnsupportedOutcomeProfile(
+            "This batch supports exactly one outcome profile (H15_DEFAULT_PROFILE); "
+            "rejecting unsupported profile:\n" + "\n".join(mismatches)
+        )
+
 
 @dataclass(frozen=True)
 class Checkpoint:
@@ -233,22 +287,37 @@ def windows_overlap(
     return start1_us < end2_us and start2_us < end1_us
 
 
-def compute_checkpoints(validity_start_us: int) -> list[Checkpoint]:
-    """Compute 3 checkpoints for a target at T-60, T-40, T-20 minutes.
+def compute_checkpoints(
+    validity_start_us: int,
+    *,
+    profile: dict | None = None,
+) -> list[Checkpoint]:
+    """Compute checkpoints for a target from a profile's offsets/weights.
 
     All checkpoints are strictly earlier than validity_start.
 
     Args:
         validity_start_us: Target validity window start in microseconds.
+        profile: Outcome profile supplying `checkpoint_offsets_minutes` and
+            `checkpoint_weights`. Defaults to H15_DEFAULT_PROFILE, whose values
+            equal the historical hardcoded CHECKPOINT_OFFSETS_MINUTES with
+            weight 1.0 -- so callers that don't pass a profile see unchanged
+            behavior.
 
     Returns:
-        List of 3 Checkpoint objects.
+        List of Checkpoint objects, one per offset.
     """
+    if profile is None:
+        profile = H15_DEFAULT_PROFILE
+
+    offsets_minutes = profile["checkpoint_offsets_minutes"]
+    weights = profile["checkpoint_weights"]
+
     checkpoints = []
-    for offset_min in CHECKPOINT_OFFSETS_MINUTES:
+    for offset_min, weight in zip(offsets_minutes, weights):
         offset_us = offset_min * 60 * 1_000_000
         checkpoint_time = validity_start_us + offset_us
-        checkpoints.append(Checkpoint(time_us=checkpoint_time, weight=1.0))
+        checkpoints.append(Checkpoint(time_us=checkpoint_time, weight=weight))
 
     # Verify all checkpoints are strictly before validity_start
     for cp in checkpoints:
@@ -489,14 +558,28 @@ def build_manifest(
     if outcome_contract is None:
         outcome_contract = DEFAULT_OUTCOME_CONTRACT.copy()
 
-    # Validate checkpoint weights
+    # Validate checkpoint weights first: this preserves the exact "cannot be
+    # empty" / "cannot be negative" messages for contracts that are missing
+    # fields entirely (e.g. a fixture with no checkpoint_offsets_minutes),
+    # before the broader profile-support check below would otherwise fire.
     _validate_checkpoint_weights(outcome_contract.get("checkpoint_weights", []))
+
+    # A2-4: this batch supports exactly one outcome profile end-to-end. Reject
+    # anything else explicitly rather than partially honoring it (see
+    # UnsupportedOutcomeProfile and the withdrawn "custom contract preserved"
+    # claim in tests/test_revision_manifest.py).
+    validate_outcome_profile(outcome_contract)
+
+    # support_window_hours defines the H15 target_support window from
+    # validity_start; kept here as an explicit, profile-derived field
+    # alongside (not replacing) the TAF-side source_validity window.
+    support_window_us = int(outcome_contract["support_window_hours"] * 3600 * 1_000_000)
 
     targets = []
 
     for queue_name, queue in [("changed", changed_queue), ("unchanged", unchanged_queue)]:
         for candidate in queue:
-            checkpoints = compute_checkpoints(candidate.validity_start_us)
+            checkpoints = compute_checkpoints(candidate.validity_start_us, profile=outcome_contract)
 
             target_entry = {
                 "target_id": candidate.target_id,
@@ -505,6 +588,16 @@ def build_manifest(
                 "validity_start_us": candidate.validity_start_us,
                 "validity_end": _us_to_iso(candidate.validity_end_us),
                 "validity_end_us": candidate.validity_end_us,
+                # A2-4: source_validity is the TAF forecast's own validity
+                # window (identical to validity_start_us/validity_end_us
+                # above, kept for backward compatibility). target_support is
+                # the H15 scoring support window derived from this profile's
+                # support_window_hours, distinct in principle even though it
+                # currently starts at the same instant.
+                "source_validity_start_us": candidate.validity_start_us,
+                "source_validity_end_us": candidate.validity_end_us,
+                "target_support_start_us": candidate.validity_start_us,
+                "target_support_end_us": candidate.validity_start_us + support_window_us,
                 "queue": queue_name,
                 "checkpoints": [
                     {

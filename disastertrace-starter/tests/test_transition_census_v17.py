@@ -74,14 +74,18 @@ class TestCensusImportIsolation:
                 )
 
     def test_census_does_not_import_asos_symbols(self):
-        """Census script must not import any ASOS-related symbols."""
+        """Census script must not read/import ASOS or METAR data in executable
+        code. Every non-blank occurrence of an ASOS/METAR string pattern in
+        the source must be documentation (inside a module/function/class
+        docstring, a '#' comment, or a line stating the prohibition itself
+        via MUST NOT / DO NOT / NEVER) -- never a live path construction,
+        import, or open() call.
+        """
         census_path = _project / "scripts" / "run_transition_census_v17.py"
 
         with open(census_path, "r") as f:
             source = f.read()
 
-        # Check for ASOS string patterns in the source
-        # These patterns would indicate attempts to read ASOS data
         forbidden_strings = [
             "asos/",
             "ASOS",
@@ -91,28 +95,38 @@ class TestCensusImportIsolation:
             "_asos.",
         ]
 
-        for pattern in forbidden_strings:
-            # Allow comments that mention these for documentation
-            lines_with_pattern = [
-                (i, line) for i, line in enumerate(source.split("\n"))
-                if pattern.lower() in line.lower()
-                and not line.strip().startswith("#")
-                and not line.strip().startswith('"""')
-                and "NOT" in line.upper()  # Allow "MUST NOT" style documentation
-            ]
-            # Actually let's be more careful - check all non-comment occurrences
-            for i, line in enumerate(source.split("\n")):
-                line_stripped = line.strip()
-                if (pattern.lower() in line.lower() and
-                    not line_stripped.startswith("#") and
-                    not '"""' in line and
-                    not "'" in line and  # Skip string literals for now
-                    "MUST NOT" not in line.upper() and
-                    "DO NOT" not in line.upper() and
-                    "NEVER" not in line.upper()):
-                    # This would be a non-documentation use of ASOS
-                    # But let's allow it in docstrings for now
-                    pass
+        tree = ast.parse(source)
+        docstring_lines: set[int] = set()
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                doc_node = node.body[0] if node.body else None
+                if (
+                    isinstance(doc_node, ast.Expr)
+                    and isinstance(getattr(doc_node, "value", None), ast.Constant)
+                    and isinstance(doc_node.value.value, str)
+                ):
+                    for lineno in range(doc_node.lineno, doc_node.end_lineno + 1):
+                        docstring_lines.add(lineno)
+
+        violations = []
+        for i, line in enumerate(source.split("\n"), start=1):
+            line_stripped = line.strip()
+            if not line_stripped:
+                continue
+            if not any(pattern.lower() in line.lower() for pattern in forbidden_strings):
+                continue
+            if i in docstring_lines:
+                continue
+            if line_stripped.startswith("#"):
+                continue
+            if any(kw in line.upper() for kw in ("MUST NOT", "DO NOT", "NEVER")):
+                continue
+            violations.append((i, line))
+
+        assert violations == [], (
+            f"Census script has non-documentation ASOS/METAR references: {violations}. "
+            "This violates Y-isolation."
+        )
 
     def test_census_constants_match_validator(self):
         """Census script 140-file constants must match validator."""
@@ -182,9 +196,9 @@ class TestProcessGroupingRule:
                 target_validity_start_us=base_time,
                 target_validity_end_us=base_time + hour_us,
                 change_type="AMD",
-                predecessor_source_id="p1",
+                predecessor_source_ids=["p1"],
                 current_source_id="c1",
-                original_text_sha256="hash1",
+                raw_text_sha256="hash1", native_semantics_sha256="hash1",
                 issued_at_us=base_time + hour_us,  # Jan 1 01:00 UTC
                 dispute_status="none",
             ),
@@ -193,9 +207,9 @@ class TestProcessGroupingRule:
                 target_validity_start_us=base_time,
                 target_validity_end_us=base_time + hour_us,
                 change_type="COR",
-                predecessor_source_id="p2",
+                predecessor_source_ids=["p2"],
                 current_source_id="c2",
-                original_text_sha256="hash2",
+                raw_text_sha256="hash2", native_semantics_sha256="hash2",
                 issued_at_us=base_time + 12 * hour_us,  # Jan 1 12:00 UTC (same day)
                 dispute_status="none",
             ),
@@ -204,9 +218,9 @@ class TestProcessGroupingRule:
                 target_validity_start_us=base_time,
                 target_validity_end_us=base_time + hour_us,
                 change_type="AMD",
-                predecessor_source_id="p3",
+                predecessor_source_ids=["p3"],
                 current_source_id="c3",
-                original_text_sha256="hash3",
+                raw_text_sha256="hash3", native_semantics_sha256="hash3",
                 issued_at_us=base_time + hour_us,  # Jan 1 01:00 UTC
                 dispute_status="none",
             ),
@@ -246,9 +260,9 @@ class TestProcessGroupingRule:
                 target_validity_start_us=base_time,
                 target_validity_end_us=base_time + hour_us,
                 change_type="AMD",
-                predecessor_source_id="p1",
+                predecessor_source_ids=["p1"],
                 current_source_id="c1",
-                original_text_sha256="hash1",
+                raw_text_sha256="hash1", native_semantics_sha256="hash1",
                 issued_at_us=base_time + 12 * hour_us,  # Jan 1 12:00 UTC
                 dispute_status="none",
             ),
@@ -257,9 +271,9 @@ class TestProcessGroupingRule:
                 target_validity_start_us=base_time + day_us,  # Different target
                 target_validity_end_us=base_time + day_us + hour_us,
                 change_type="AMD",
-                predecessor_source_id="p2",
+                predecessor_source_ids=["p2"],
                 current_source_id="c2",
-                original_text_sha256="hash2",
+                raw_text_sha256="hash2", native_semantics_sha256="hash2",
                 issued_at_us=base_time + day_us + 6 * hour_us,  # Jan 2 06:00 UTC
                 dispute_status="none",
             ),
@@ -480,10 +494,11 @@ class TestCalendarSlotGeneration:
         holdout_start = utc_us("2025-02-17T00:00:00Z")
         holdout_end = utc_us("2025-02-24T00:00:00Z")
 
-        slots = generate_continuous_calendar_slots(start, end, holdout_start, holdout_end)
+        slots, exclusions = generate_continuous_calendar_slots(start, end, holdout_start, holdout_end)
 
         # Hand-derived: 4 stations x 4 routine hours = 16 slots per day
         assert len(slots) == 16, f"Expected 16 slots, got {len(slots)}"
+        assert exclusions == [], "no holdout overlap expected for this calendar window"
 
         # Verify all stations are represented
         stations_in_slots = {s.station for s in slots}
@@ -503,7 +518,7 @@ class TestCalendarSlotGeneration:
         holdout_start = utc_us("2025-02-17T00:00:00Z")
         holdout_end = utc_us("2025-02-24T00:00:00Z")
 
-        slots = generate_continuous_calendar_slots(start, end, holdout_start, holdout_end)
+        slots, exclusions = generate_continuous_calendar_slots(start, end, holdout_start, holdout_end)
 
         # Verify no slot overlaps holdout
         for slot in slots:
@@ -511,6 +526,12 @@ class TestCalendarSlotGeneration:
             overlaps = (slot.validity_start_us < holdout_end and
                        slot.validity_end_us > holdout_start)
             assert not overlaps, f"Slot at {slot.validity_start_us} overlaps holdout"
+
+        # The excluded slots must be recorded in the exclusion ledger, not
+        # silently dropped.
+        assert len(exclusions) > 0, "expected at least one protected-window exclusion"
+        for excl in exclusions:
+            assert excl.reason == "protected_window"
 
 
 # ---------------------------------------------------------------------------
@@ -527,14 +548,22 @@ class TestFileVerification:
         sys.path.insert(0, str(_project / "scripts"))
 
         from run_transition_census_v17 import verify_140_files
+        from disastertrace.revision_v1.access_policy import AccessPolicy
 
         with tempfile.TemporaryDirectory() as tmpdir:
             # Create a path with quarantine_holdout
             bad_path = Path(tmpdir) / "quarantine_holdout" / "taf"
             bad_path.mkdir(parents=True)
+            # The quarantine_holdout check fires before policy is ever
+            # consulted, so any validly-constructed policy works here.
+            policy = AccessPolicy(
+                allowed_root=Path(tmpdir).resolve(),
+                holdout_start_us=0,
+                holdout_end_us=0,
+            )
 
             with pytest.raises(RuntimeError, match="BOUNDARY VIOLATION"):
-                verify_140_files(bad_path)
+                verify_140_files(bad_path, policy)
 
     def test_sha256_verification(self):
         """SHA256 verification must match receipt values."""
@@ -556,6 +585,147 @@ class TestFileVerification:
             assert actual == expected
         finally:
             path.unlink()
+
+
+class TestVerify140FilesAccessPolicyIntegration:
+    """A2-1: exercise verify_140_files() through the real AccessPolicy
+    machinery it was rewired to use, not just the isolated AccessPolicy unit
+    tests in test_revision_access_policy.py. In particular: a rejected
+    target must never be opened/read at all (glob/open count == 0), matching
+    the plan's explicit acceptance bar for this task.
+    """
+
+    def _sample_config(self):
+        return {
+            "stations": [{"icao": "KSFO"}],
+            "calendar_start": "2023-01-01T00:00:00Z",
+            "calendar_end": "2025-12-31T23:59:59Z",
+            "holdout_exclusion": {
+                "window_start": "2025-02-17T00:00:00Z",
+                "window_end": "2025-02-24T00:00:00Z",
+            },
+        }
+
+    def test_rejected_target_is_never_opened(self, tmp_path, monkeypatch):
+        """A file that fails the access policy (root escape here) must be
+        bucketed as a rejection WITHOUT any open() call ever happening."""
+        import builtins
+        import hashlib
+        import sys
+        sys.path.insert(0, str(_project / "scripts"))
+
+        from run_transition_census_v17 import verify_140_files, STATIONS, YEAR_MONTHS
+        from disastertrace.revision_v1.access_policy import AccessPolicy
+
+        bulk_dir = tmp_path / "bulk"
+        bulk_dir.mkdir()
+        station, year_month = STATIONS[0], YEAR_MONTHS[0]
+
+        body_path = bulk_dir / f"{station}_{year_month}.body"
+        json_path = bulk_dir / f"{station}_{year_month}.json"
+        body_path.write_text("TAF KSFO 010000Z ...")
+        json_path.write_text(json.dumps({
+            "sha256": hashlib.sha256(body_path.read_bytes()).hexdigest(),
+        }))
+
+        # allowed_root points at a DIFFERENT directory than bulk_dir, so
+        # every real file under bulk_dir fails the root-escape check before
+        # any read is attempted.
+        other_root = tmp_path / "not_bulk"
+        other_root.mkdir()
+        policy = AccessPolicy.from_config(self._sample_config(), allowed_root=other_root)
+
+        real_open = builtins.open
+        open_calls = []
+
+        def counting_open(path, *args, **kwargs):
+            open_calls.append(str(path))
+            return real_open(path, *args, **kwargs)
+
+        monkeypatch.setattr(builtins, "open", counting_open)
+
+        verified, missing, mismatches = verify_140_files(bulk_dir, policy)
+
+        assert open_calls == [], (
+            f"verify_140_files must not open() a rejected file, but opened: {open_calls}"
+        )
+        rejected = [m for m in mismatches if m["file"] == f"{station}_{year_month}.body"]
+        assert len(rejected) == 1, f"Expected the real pair to be rejected, got mismatches={mismatches}"
+        assert "access_policy_violation" in rejected[0]["reason"]
+        assert verified == []
+
+    def test_verifies_real_pair_and_carries_bytes(self, tmp_path):
+        """A correctly-allowed pair must come back as a VerifiedTafFile
+        carrying the exact bytes that were read (no second/implicit read
+        needed by callers)."""
+        import hashlib
+        import sys
+        sys.path.insert(0, str(_project / "scripts"))
+
+        from run_transition_census_v17 import (
+            verify_140_files, STATIONS, YEAR_MONTHS, ALLOWED_YEAR_MONTHS,
+        )
+        from disastertrace.revision_v1.access_policy import AccessPolicy
+
+        bulk_dir = tmp_path / "bulk"
+        bulk_dir.mkdir()
+        station, year_month = STATIONS[0], YEAR_MONTHS[0]
+        body_text = "TAF KSFO 010000Z 0100/0206 09008KT P6SM SCT040"
+
+        body_path = bulk_dir / f"{station}_{year_month}.body"
+        json_path = bulk_dir / f"{station}_{year_month}.json"
+        body_path.write_text(body_text)
+        json_path.write_text(json.dumps({
+            "sha256": hashlib.sha256(body_text.encode()).hexdigest(),
+        }))
+
+        policy = AccessPolicy.from_config(
+            self._sample_config(), allowed_root=bulk_dir, allowed_year_months=ALLOWED_YEAR_MONTHS,
+        )
+
+        verified, missing, mismatches = verify_140_files(bulk_dir, policy)
+
+        matches = [vf for vf in verified if vf.station == station and vf.year_month == year_month]
+        assert len(matches) == 1, f"Expected exactly one verified match, mismatches={mismatches}"
+        vf = matches[0]
+        assert vf.raw_text == body_text
+        assert vf.raw_text_sha256 == hashlib.sha256(body_text.encode()).hexdigest()
+        assert mismatches == []
+
+    def test_tampered_body_is_rejected_as_mismatch_not_missing(self, tmp_path):
+        """A body modified after its receipt was written must fail through
+        the real census entry point, distinct from a missing file."""
+        import hashlib
+        import sys
+        sys.path.insert(0, str(_project / "scripts"))
+
+        from run_transition_census_v17 import (
+            verify_140_files, STATIONS, YEAR_MONTHS, ALLOWED_YEAR_MONTHS,
+        )
+        from disastertrace.revision_v1.access_policy import AccessPolicy
+
+        bulk_dir = tmp_path / "bulk"
+        bulk_dir.mkdir()
+        station, year_month = STATIONS[0], YEAR_MONTHS[0]
+
+        body_path = bulk_dir / f"{station}_{year_month}.body"
+        json_path = bulk_dir / f"{station}_{year_month}.json"
+        body_path.write_text("original content")
+        json_path.write_text(json.dumps({
+            "sha256": hashlib.sha256(b"original content").hexdigest(),
+        }))
+        body_path.write_text("tampered content")  # receipt now stale
+
+        policy = AccessPolicy.from_config(
+            self._sample_config(), allowed_root=bulk_dir, allowed_year_months=ALLOWED_YEAR_MONTHS,
+        )
+
+        verified, missing, mismatches = verify_140_files(bulk_dir, policy)
+
+        assert verified == []
+        rejected = [m for m in mismatches if m["file"] == f"{station}_{year_month}.body"]
+        assert len(rejected) == 1
+        assert "read_verification_error" in rejected[0]["reason"]
 
 
 # ---------------------------------------------------------------------------
@@ -615,3 +785,401 @@ class TestDeDuplication:
         # For census purposes: duplicate should NOT count as an evidence change
         change_kinds = [k for k in kinds.values() if k in ("amendment_supersedes", "correction", "cancellation")]
         assert len(change_kinds) == 0, "Duplicates should not count as changes"
+
+
+# ---------------------------------------------------------------------------
+# Test: Checkpoint-aware classification (A2-3 / CE3 fix)
+# ---------------------------------------------------------------------------
+#
+# CRITICAL: as with the rest of this file, every expected value below is
+# independently hand-derived from the documented contracts of
+# disastertrace.revision_v1.ledger (DEFAULT_DECLARED_LAG_US=120_000_000;
+# available_at = issued_at + declared_lag_us unless verified_publication or
+# collector_first_seen overrides it; visible_at()'s inclusive `<=` cutoff)
+# -- NOT by running run_transition_census_v17.py and copying its output.
+
+
+def _a2_3_pkg(
+    *,
+    source_id,
+    station="KSFO",
+    issued_at,
+    valid_start,
+    valid_end,
+    amendment_kind="original",
+    status="active",
+    semantic_hash,
+    provider="prov1",
+    verified_publication=None,
+):
+    """Minimal synthetic TAF-product dict for A2-3 checkpoint fixtures.
+
+    A fixed explicit `provider` is used (instead of relying on the
+    source_id-hyphen-prefix fallback in ledger.py) so lineage grouping is
+    unambiguous regardless of how source_ids are spelled in a given test.
+    """
+    pkg = {
+        "source_id": source_id,
+        "station": station,
+        "issued_at": issued_at,
+        "valid_start": valid_start,
+        "valid_end": valid_end,
+        "amendment_kind": amendment_kind,
+        "status": status,
+        "native_semantics_sha256": semantic_hash,
+        "provider": provider,
+        "_source_raw_text_sha256": f"raw_{source_id}",
+    }
+    if verified_publication is not None:
+        pkg["verified_publication"] = verified_publication
+    return pkg
+
+
+class TestCheckpointAwareCensus:
+    """A2-3 / CE3 fix: classify_changes_for_slot and _compute_slot_status must
+    classify evidence by WHEN it became visible relative to the T-60/T-40/T-20
+    scoring checkpoints (via available_at through visible_at()), never by
+    comparing issued_at against the target's validity_start. The old
+    checkpoint-blind filter (`issued_at < validity_start`) is CE3: a lone AMD
+    issued at T-10 passed it and was wrongly counted as an in-episode change.
+    """
+
+    HOUR_US = 3600 * 1_000_000
+
+    def _import(self):
+        import sys
+        sys.path.insert(0, str(_project / "scripts"))
+        import run_transition_census_v17 as census
+        return census
+
+    def _slot(self, census, validity_start_us, station="KSFO"):
+        return census.CandidateSlot(
+            station=station,
+            validity_start_us=validity_start_us,
+            validity_end_us=validity_start_us + self.HOUR_US,
+            checkpoint_t60_us=validity_start_us - 60 * 60 * 1_000_000,
+            checkpoint_t40_us=validity_start_us - 40 * 60 * 1_000_000,
+            checkpoint_t20_us=validity_start_us - 20 * 60 * 1_000_000,
+        )
+
+    def test_lone_t10_amd_excluded_from_scoring(self):
+        """A lone AMD issued at T-10 (after all three checkpoints) must be
+        recorded (auditable) but must NOT count as an in-episode change --
+        the plan's literal CE3 counterexample: '唯一 AMD 在 T-10 发布仍计 1
+        条 change'.
+        """
+        census = self._import()
+        vs = 0
+        slot = self._slot(census, vs)
+
+        baseline = _a2_3_pkg(
+            source_id="baseline", issued_at=vs - 3 * self.HOUR_US,
+            valid_start=vs, valid_end=vs + self.HOUR_US, semantic_hash="hashA",
+        )
+        amd10 = _a2_3_pkg(
+            source_id="amd10", issued_at=vs - 10 * 60 * 1_000_000,
+            valid_start=vs, valid_end=vs + self.HOUR_US, amendment_kind="AMD",
+            semantic_hash="hashB",
+        )
+        packages_by_station = {"KSFO": [baseline, amd10]}
+
+        changes = census.classify_changes_for_slot(slot, packages_by_station)
+        by_source = {c.current_source_id: c for c in changes}
+
+        assert by_source["baseline"].checkpoint_classification == census.AVAIL_INITIAL_PREFIX
+        # Hand-derived: amd10 available_at = issued_at + 120_000_000 (2 min
+        # declared lag) = vs - 480_000_000 (8 min before vs), which is AFTER
+        # t20 (vs - 1_200_000_000 = 20 min before vs) -- never visible at any
+        # of the 3 checkpoints.
+        assert by_source["amd10"].checkpoint_classification == census.AVAIL_AFTER_LAST_SCORE
+        assert by_source["amd10"].change_type == "AMD"
+
+        status, _flags = census._compute_slot_status(
+            changes, station_earliest_available_us=None, checkpoint_t60_us=slot.checkpoint_t60_us,
+        )
+        assert status == census.STATUS_INITIAL_ONLY_NO_CHANGE, (
+            "the late AMD must not promote this slot to IN_EPISODE_CHANGE"
+        )
+
+        episode_eligible = [
+            c for c in changes
+            if c.relevance_tier == census.TIER_STRICT_OVERLAP
+            and c.change_type in census.CHANGE_LIKE_TYPES
+            and c.checkpoint_classification in (census.AVAIL_INTERVAL_1, census.AVAIL_INTERVAL_2)
+        ]
+        assert episode_eligible == [], "the T-10 AMD must not be counted as an in-episode change"
+
+    def test_t40_t20_exact_boundary_is_inclusive(self):
+        """visible_at is an inclusive `<=` filter: evidence available AT
+        EXACTLY a checkpoint must land in that checkpoint's view, per the
+        plan's '等于 checkpoint 时先纳入再形成视图' rule.
+        """
+        census = self._import()
+        vs = 0
+        slot = self._slot(census, vs)
+
+        baseline = _a2_3_pkg(
+            source_id="baseline", issued_at=vs - 3 * self.HOUR_US,
+            valid_start=vs, valid_end=vs + self.HOUR_US, semantic_hash="hashA",
+        )
+        # Hand-derived: available_at = issued_at + 120_000_000 == t40 exactly.
+        amd_t40 = _a2_3_pkg(
+            source_id="amd_t40", issued_at=vs - 2_400_000_000 - 120_000_000,
+            valid_start=vs, valid_end=vs + self.HOUR_US, amendment_kind="AMD",
+            semantic_hash="hashB",
+        )
+        # Hand-derived: available_at = issued_at + 120_000_000 == t20 exactly.
+        amd_t20 = _a2_3_pkg(
+            source_id="amd_t20", issued_at=vs - 1_200_000_000 - 120_000_000,
+            valid_start=vs, valid_end=vs + self.HOUR_US, amendment_kind="AMD",
+            semantic_hash="hashC",
+        )
+        packages_by_station = {"KSFO": [baseline, amd_t40, amd_t20]}
+
+        changes = census.classify_changes_for_slot(slot, packages_by_station)
+        by_source = {c.current_source_id: c for c in changes}
+
+        assert by_source["amd_t40"].available_at_us == slot.checkpoint_t40_us
+        assert by_source["amd_t40"].checkpoint_classification == census.AVAIL_INTERVAL_1
+        assert by_source["amd_t20"].available_at_us == slot.checkpoint_t20_us
+        assert by_source["amd_t20"].checkpoint_classification == census.AVAIL_INTERVAL_2
+
+        status, _flags = census._compute_slot_status(
+            changes, station_earliest_available_us=None, checkpoint_t60_us=slot.checkpoint_t60_us,
+        )
+        assert status == census.STATUS_IN_EPISODE_CHANGE
+
+    def test_legally_issued_but_late_available_is_excluded(self):
+        """A product issued well before the target (would pass the OLD
+        checkpoint-blind `issued_at < validity_start` filter) but whose real
+        availability (verified_publication) is delayed past T-20 must still
+        be excluded from scoring -- availability, not issuance time, governs.
+        This is the plan's 'issue 合法但 available 晚到' scenario.
+        """
+        census = self._import()
+        vs = 0
+        slot = self._slot(census, vs)
+
+        baseline = _a2_3_pkg(
+            source_id="baseline", issued_at=vs - 3 * self.HOUR_US,
+            valid_start=vs, valid_end=vs + self.HOUR_US, semantic_hash="hashA",
+        )
+        # Issued 50 minutes before vs (well before validity_start, and even
+        # before t60), but verified_publication delays real availability to
+        # 5 minutes before vs -- after t20.
+        late_amd = _a2_3_pkg(
+            source_id="late_amd", issued_at=vs - 50 * 60 * 1_000_000,
+            valid_start=vs, valid_end=vs + self.HOUR_US, amendment_kind="AMD",
+            semantic_hash="hashB", verified_publication=vs - 5 * 60 * 1_000_000,
+        )
+        packages_by_station = {"KSFO": [baseline, late_amd]}
+
+        changes = census.classify_changes_for_slot(slot, packages_by_station)
+        by_source = {c.current_source_id: c for c in changes}
+
+        assert by_source["late_amd"].availability_basis == "verified_publication"
+        assert by_source["late_amd"].available_at_us == vs - 5 * 60 * 1_000_000
+        assert by_source["late_amd"].checkpoint_classification == census.AVAIL_AFTER_LAST_SCORE
+        assert by_source["late_amd"].change_type == "AMD"
+
+    def test_initial_only_no_change(self):
+        """A single baseline with no subsequent revision must classify as
+        INITIAL_ONLY_NO_CHANGE, not NO_APPLICABLE_EVIDENCE."""
+        census = self._import()
+        vs = 0
+        slot = self._slot(census, vs)
+
+        baseline = _a2_3_pkg(
+            source_id="baseline", issued_at=vs - 3 * self.HOUR_US,
+            valid_start=vs, valid_end=vs + self.HOUR_US, semantic_hash="hashA",
+        )
+        changes = census.classify_changes_for_slot(slot, {"KSFO": [baseline]})
+        assert len(changes) == 1
+        assert changes[0].change_type == "INITIAL_BASELINE"
+        assert changes[0].checkpoint_classification == census.AVAIL_INITIAL_PREFIX
+
+        status, flags = census._compute_slot_status(
+            changes, station_earliest_available_us=None, checkpoint_t60_us=slot.checkpoint_t60_us,
+        )
+        assert status == census.STATUS_INITIAL_ONLY_NO_CHANGE
+        assert flags == []
+
+    def test_adjacent_only_is_no_applicable_evidence(self):
+        """A product whose validity window only TOUCHES the target window
+        (zero-width intersection) is adjacent context, not strict overlap --
+        it must not make the slot look like it has applicable evidence."""
+        census = self._import()
+        vs = 0
+        slot = self._slot(census, vs)
+
+        adjacent = _a2_3_pkg(
+            source_id="adjacent", issued_at=vs - 2 * self.HOUR_US,
+            valid_start=vs - self.HOUR_US, valid_end=vs,  # touches slot start exactly
+            semantic_hash="hashA",
+        )
+        changes = census.classify_changes_for_slot(slot, {"KSFO": [adjacent]})
+        assert len(changes) == 1
+        assert changes[0].relevance_tier == census.TIER_ADJACENT_CONTEXT
+
+        status, flags = census._compute_slot_status(
+            changes, station_earliest_available_us=None, checkpoint_t60_us=slot.checkpoint_t60_us,
+        )
+        assert status == census.STATUS_NO_APPLICABLE_EVIDENCE
+        assert "adjacent_only" in flags
+
+    def test_prefix_coverage_insufficient_flag(self):
+        """When a station's earliest available evidence is not safely before
+        this slot's T-60 (within PREFIX_LOOKBACK_MARGIN_US), a no-change
+        verdict cannot be trusted to reflect genuine absence of prior
+        evidence vs. a coverage gap (e.g. immediately after the excluded
+        2025-02 protected month)."""
+        census = self._import()
+        vs = 0
+        slot = self._slot(census, vs)
+
+        baseline_change = census.EvidenceChange(
+            target_station="KSFO", target_validity_start_us=vs,
+            target_validity_end_us=vs + self.HOUR_US, change_type="INITIAL_BASELINE",
+            predecessor_source_ids=[], current_source_id="baseline",
+            raw_text_sha256="raw", native_semantics_sha256="hashA",
+            issued_at_us=vs - 3 * self.HOUR_US, dispute_status="none",
+            relevance_tier=census.TIER_STRICT_OVERLAP,
+            checkpoint_classification=census.AVAIL_INITIAL_PREFIX,
+        )
+
+        # Station's earliest available evidence is only 1 second before t60:
+        # not safely covered -> flag must fire.
+        status, flags = census._compute_slot_status(
+            [baseline_change],
+            station_earliest_available_us=slot.checkpoint_t60_us - 1_000_000,
+            checkpoint_t60_us=slot.checkpoint_t60_us,
+        )
+        assert status == census.STATUS_INITIAL_ONLY_NO_CHANGE
+        assert "prefix_coverage_insufficient" in flags
+
+        # Station's earliest available evidence is a full margin (24h) plus
+        # one second earlier than t60: safely covered -> flag must be absent.
+        status2, flags2 = census._compute_slot_status(
+            [baseline_change],
+            station_earliest_available_us=(
+                slot.checkpoint_t60_us - census.PREFIX_LOOKBACK_MARGIN_US - 1_000_000
+            ),
+            checkpoint_t60_us=slot.checkpoint_t60_us,
+        )
+        assert status2 == census.STATUS_INITIAL_ONLY_NO_CHANGE
+        assert "prefix_coverage_insufficient" not in flags2
+
+    def test_missing_input_vs_no_applicable_evidence(self):
+        """A station with ZERO packages at all (NO_INPUT, assigned by
+        run_census's caller-side check before classify_changes_for_slot is
+        even invoked, since classify_changes_for_slot has no station to
+        classify against) must be distinguishable from a station that HAS
+        packages but none relevant to this particular slot
+        (NO_APPLICABLE_EVIDENCE, a per-slot verdict from
+        _compute_slot_status)."""
+        census = self._import()
+        vs = 0
+        slot = self._slot(census, vs)
+
+        # No entry for "KSFO" at all -> classify_changes_for_slot has nothing
+        # to classify (this is the precondition run_census's NO_INPUT
+        # short-circuit relies on).
+        assert census.classify_changes_for_slot(slot, {}) == []
+
+        # KSFO has packages, but 10 days away from this slot's window --
+        # irrelevant to it specifically, not a missing-input situation.
+        far_away = _a2_3_pkg(
+            source_id="far", issued_at=vs - 10 * 24 * self.HOUR_US,
+            valid_start=vs - 10 * 24 * self.HOUR_US,
+            valid_end=vs - 10 * 24 * self.HOUR_US + self.HOUR_US,
+            semantic_hash="hashFar",
+        )
+        changes = census.classify_changes_for_slot(slot, {"KSFO": [far_away]})
+        assert changes == []
+        status, _flags = census._compute_slot_status(
+            changes, station_earliest_available_us=None, checkpoint_t60_us=slot.checkpoint_t60_us,
+        )
+        assert status == census.STATUS_NO_APPLICABLE_EVIDENCE
+
+    def test_one_source_multi_target_counts_reconcile(self):
+        """A single wide-validity AMD relevant to TWO target slots must not
+        proliferate in identity counts (n_unique_sources /
+        n_unique_relation_edges dedupe across targets) while still
+        incrementing a per-target association count once per target it was
+        genuinely an in-episode change for -- the plan's '一源多目标不增殖'
+        and '明细与汇总对账' requirements, demonstrated together since they
+        share one fixture.
+        """
+        census = self._import()
+        from disastertrace.revision_v1.ledger import compile_ledger
+
+        vs1 = 0
+        vs2 = 1_800_000_000  # 30 min later than vs1
+        slot1 = self._slot(census, vs1)
+        slot2 = self._slot(census, vs2)
+
+        baseline = _a2_3_pkg(
+            source_id="baseline", issued_at=-20_000_000_000,
+            valid_start=-3_600_000_000, valid_end=5_400_000_000, semantic_hash="hashA",
+        )
+        # Wide validity spanning both slot windows; available_at (hand
+        # computation below) lands in slot1's INTERVAL_2 view AND slot2's
+        # INTERVAL_1 view simultaneously.
+        amd = _a2_3_pkg(
+            source_id="amd", issued_at=-1_500_000_000 - 120_000_000,
+            valid_start=-3_600_000_000, valid_end=5_400_000_000, amendment_kind="AMD",
+            semantic_hash="hashB",
+        )
+        packages_by_station = {"KSFO": [baseline, amd]}
+        # Compile the ledger ONCE over the whole station stream and reuse it
+        # across both slot calls, exactly as run_census's Step 3.5 does
+        # (prefix-stable: neither slot's view can affect the other's).
+        station_ledgers = {"KSFO": compile_ledger(packages_by_station["KSFO"])}
+
+        changes1 = census.classify_changes_for_slot(slot1, packages_by_station, station_ledgers=station_ledgers)
+        changes2 = census.classify_changes_for_slot(slot2, packages_by_station, station_ledgers=station_ledgers)
+
+        by_source1 = {c.current_source_id: c for c in changes1}
+        by_source2 = {c.current_source_id: c for c in changes2}
+        # Hand-derived: amd available_at = issued_at + 120_000_000 = -1_500_000_000
+        # (25 min before vs1). slot1: t40=-2_400_000_000, t20=-1_200_000_000 ->
+        # available_at is after t40 and <= t20 -> INTERVAL_2.
+        assert by_source1["amd"].checkpoint_classification == census.AVAIL_INTERVAL_2
+        # slot2: t60=vs2-3_600_000_000=-1_800_000_000, t40=vs2-2_400_000_000=-600_000_000 ->
+        # available_at is after t60 and <= t40 -> INTERVAL_1.
+        assert by_source2["amd"].checkpoint_classification == census.AVAIL_INTERVAL_1
+
+        all_changes = changes1 + changes2
+        assert len(all_changes) == 4, "2 changes (baseline, amd) x 2 slots = 4 detail records"
+
+        n_unique_sources = len({c.current_source_id for c in all_changes})
+        assert n_unique_sources == 2, "baseline + amd, deduped across both targets"
+
+        change_like = [c for c in all_changes if c.change_type in census.CHANGE_LIKE_TYPES]
+        assert {c.current_source_id for c in change_like} == {"amd"}, (
+            "only 'amd' is change-like; 'baseline' (INITIAL_BASELINE) never counts as a change"
+        )
+        n_target_change_associations = len([
+            c for c in all_changes
+            if c.relevance_tier == census.TIER_STRICT_OVERLAP
+            and c.change_type in census.CHANGE_LIKE_TYPES
+            and c.checkpoint_classification in (census.AVAIL_INTERVAL_1, census.AVAIL_INTERVAL_2)
+        ])
+        assert n_target_change_associations == 2, (
+            "'amd' is a genuine in-episode change for BOTH targets, so the per-target "
+            "association count is 2 even though n_unique_sources counted its identity once"
+        )
+
+        n_unique_relation_edges = len({
+            (c.change_type, c.current_source_id, frozenset(c.candidate_predecessors))
+            for c in all_changes
+        })
+        assert n_unique_relation_edges == 2, (
+            "(INITIAL_BASELINE, baseline, {}) and (AMD, amd, {baseline}) -- each edge is "
+            "identical across both slots' records of the same source, so it dedupes to 1"
+        )
+
+        # Detail-vs-summary reconciliation: the per-slot detail lists must
+        # sum exactly to the aggregate all_changes list used for every count
+        # above -- no record may be silently dropped or double-counted.
+        assert len(changes1) + len(changes2) == len(all_changes)

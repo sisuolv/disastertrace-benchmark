@@ -329,12 +329,14 @@ class TestShortCircuitVerification:
             # Count glob calls AFTER the rejection
             calls_before = len(glob_calls)
 
-            # A well-designed caller should NOT glob after rejection
-            # We verify that assert_allowed itself doesn't do any glob
-            # (It doesn't - it just checks the provided path)
-
-        # The assert_allowed method itself should not call glob
-        # This verifies the design: check first, then glob
+        # assert_allowed() itself must never call glob -- it only inspects
+        # the single path it was given (Path.parts/resolve), it does not
+        # enumerate a directory. This was previously an empty assertion
+        # (comment-only); now actually enforced.
+        assert calls_before == 0, (
+            f"assert_allowed() must not call glob() while rejecting a path, "
+            f"but {calls_before} glob call(s) were observed"
+        )
 
     def test_rejection_prevents_file_read(self, tmp_path, sample_config):
         """When assert_allowed rejects, no file read should occur.
@@ -364,9 +366,13 @@ class TestShortCircuitVerification:
             # After rejection, a well-designed caller should not open
             opens_before_rejection = len(opens)
 
-        # If the caller follows the pattern (check then open),
-        # and check fails, no open should occur
-        # This test documents the expected usage pattern
+        # assert_allowed() itself must never open() a file while rejecting a
+        # path. This was previously an empty assertion (comment-only); now
+        # actually enforced.
+        assert opens_before_rejection == 0, (
+            f"assert_allowed() must not call open() while rejecting a path, "
+            f"but {opens_before_rejection} open() call(s) were observed"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -471,6 +477,226 @@ class TestAllowedYearMonthsFiltering:
 
             # Should not raise
             policy.assert_allowed(test_file)
+
+
+# ---------------------------------------------------------------------------
+# Test: CE4 regression -- explicit as_of_us/year_month must never override
+# what the path itself implies (fail-closed consistency)
+# ---------------------------------------------------------------------------
+
+class TestExplicitParameterCannotOverridePath:
+    """CE4: a path implying a restricted/holdout month must be rejected even
+    when the caller passes an explicit, individually-safe as_of_us or
+    year_month. Before the fix, assert_allowed() only ever attempted to
+    extract the path-implied month when BOTH explicit parameters were
+    absent, so any explicit parameter silently bypassed the path's own
+    signal.
+    """
+
+    def test_explicit_year_month_disagreeing_with_path_is_rejected(self, tmp_path, sample_config):
+        """Path implies one month; caller passes a different, individually-safe year_month."""
+        # Path implies 2025-02 (inside holdout) via dashed directory segment
+        holdout_dir = tmp_path / "KSFO" / "2025-02"
+        holdout_dir.mkdir(parents=True)
+        test_file = holdout_dir / "test.body"
+        test_file.write_text("test")
+
+        policy = AccessPolicy.from_config(sample_config, allowed_root=tmp_path)
+
+        # 2023-06 is individually safe (outside holdout), but disagrees with
+        # the path's own implied month -- must still be rejected.
+        with pytest.raises(AccessPolicyViolation) as exc_info:
+            policy.assert_allowed(test_file, year_month="2023-06")
+
+        assert "disagrees with the path-implied year-month" in str(exc_info.value)
+
+    def test_explicit_as_of_disagreeing_with_path_is_rejected(self, tmp_path, sample_config):
+        """Path implies one month; caller passes a different, individually-safe as_of_us."""
+        holdout_dir = tmp_path / "KSFO" / "2025-02"
+        holdout_dir.mkdir(parents=True)
+        test_file = holdout_dir / "test.body"
+        test_file.write_text("test")
+
+        policy = AccessPolicy.from_config(sample_config, allowed_root=tmp_path)
+
+        # An as_of_us in 2023-06 (safe) but the path says 2025-02 -- must
+        # still be rejected because the two disagree.
+        safe_but_wrong_as_of = us_from_iso("2023-06-15T00:00:00Z")
+
+        with pytest.raises(AccessPolicyViolation) as exc_info:
+            policy.assert_allowed(test_file, as_of_us=safe_but_wrong_as_of)
+
+        assert "disagrees with the path-implied year-month" in str(exc_info.value)
+
+    def test_as_of_us_alone_does_not_bypass_allowlist(self, tmp_path, sample_config):
+        """An as_of_us-only call must not skip the allowed_year_months check.
+
+        Before the fix, supplying as_of_us alone (without year_month) caused
+        path-month extraction to be skipped entirely, which meant
+        effective_year_month stayed None and the allowlist check in step 6
+        never ran -- silently admitting a path in a disallowed month.
+        """
+        # Path implies 2023-08, which is NOT in the allowed set below.
+        disallowed_dir = tmp_path / "KSFO" / "2023-08"
+        disallowed_dir.mkdir(parents=True)
+        test_file = disallowed_dir / "test.body"
+        test_file.write_text("test")
+
+        policy = AccessPolicy.from_config(
+            sample_config,
+            allowed_root=tmp_path,
+            allowed_year_months=frozenset({"2023-06", "2023-07"}),
+        )
+
+        # A safe, non-holdout as_of_us consistent with the path's own month
+        # (2023-08) is used so the consistency check passes and only the
+        # allowlist gap is being tested.
+        as_of_in_path_month = us_from_iso("2023-08-15T00:00:00Z")
+
+        with pytest.raises(AccessPolicyViolation) as exc_info:
+            policy.assert_allowed(test_file, as_of_us=as_of_in_path_month)
+
+        assert "not in allowed set" in str(exc_info.value)
+
+    def test_consistent_explicit_params_do_not_spuriously_reject(self, tmp_path, sample_config):
+        """Explicit params that AGREE with the path-implied month are fine."""
+        allowed_dir = tmp_path / "KSFO" / "2023-08"
+        allowed_dir.mkdir(parents=True)
+        test_file = allowed_dir / "test.body"
+        test_file.write_text("test")
+
+        policy = AccessPolicy.from_config(sample_config, allowed_root=tmp_path)
+
+        # Should not raise: year_month agrees with path
+        policy.assert_allowed(test_file, year_month="2023-08")
+
+        # Should not raise: as_of_us agrees with path (same month)
+        agreeing_as_of = us_from_iso("2023-08-01T00:00:00Z")
+        policy.assert_allowed(test_file, as_of_us=agreeing_as_of)
+
+    def test_allowlist_rejects_when_path_month_unextractable(self, tmp_path, sample_config):
+        """When allowlist is configured, an unextractable path month is
+        rejected (fail-closed) even with a plausible explicit year_month."""
+        # Filename has no extractable year-month pattern at all.
+        opaque_dir = tmp_path / "KSFO"
+        opaque_dir.mkdir(parents=True)
+        opaque_file = opaque_dir / "no_month_here.body"
+        opaque_file.write_text("test")
+
+        policy = AccessPolicy.from_config(
+            sample_config,
+            allowed_root=tmp_path,
+            allowed_year_months=frozenset({"2023-06"}),
+        )
+
+        with pytest.raises(AccessPolicyViolation) as exc_info:
+            policy.assert_allowed(opaque_file, year_month="2023-06")
+
+        assert "could not be extracted" in str(exc_info.value)
+
+
+# ---------------------------------------------------------------------------
+# Test: read_verified_allowed_file shared entry point
+# ---------------------------------------------------------------------------
+
+class TestReadVerifiedAllowedFile:
+    """Test the shared verified-read entry point added in A2-1."""
+
+    def _make_pair(self, tmp_path, *, body_text="TAF KSFO ...", month="2023-06"):
+        import hashlib
+        import json as json_mod
+
+        data_dir = tmp_path / "KSFO" / month
+        data_dir.mkdir(parents=True, exist_ok=True)
+        body_path = data_dir / "test.body"
+        body_path.write_text(body_text)
+        receipt_path = data_dir / "test.json"
+        receipt_path.write_text(json_mod.dumps({
+            "sha256": hashlib.sha256(body_text.encode()).hexdigest(),
+        }))
+        return body_path, receipt_path
+
+    def test_reads_verified_bytes_matching_receipt(self, tmp_path, sample_config):
+        from disastertrace.revision_v1.access_policy import read_verified_allowed_file
+
+        body_path, receipt_path = self._make_pair(tmp_path)
+        policy = AccessPolicy.from_config(sample_config, allowed_root=tmp_path)
+
+        result = read_verified_allowed_file(policy, body_path, receipt_path)
+
+        assert result.body == b"TAF KSFO ..."
+        assert result.size_bytes == len(b"TAF KSFO ...")
+        assert result.raw_text_sha256 == result.receipt_sha256
+
+    def test_rejection_happens_before_any_read(self, tmp_path, sample_config):
+        """A rejected body/receipt pair must never be opened at all."""
+        from disastertrace.revision_v1.access_policy import read_verified_allowed_file
+
+        quarantine_dir = tmp_path / "quarantine_holdout" / "2025-02"
+        quarantine_dir.mkdir(parents=True)
+        body_path = quarantine_dir / "secret.body"
+        body_path.write_text("TOP SECRET")
+        receipt_path = quarantine_dir / "secret.json"
+        receipt_path.write_text('{"sha256": "deadbeef"}')
+
+        policy = AccessPolicy.from_config(sample_config, allowed_root=tmp_path)
+
+        opens = []
+        original_open = open
+
+        def tracking_open(path, *args, **kwargs):
+            opens.append(str(path))
+            return original_open(path, *args, **kwargs)
+
+        with mock.patch('builtins.open', tracking_open):
+            with pytest.raises(AccessPolicyViolation):
+                read_verified_allowed_file(policy, body_path, receipt_path)
+
+        assert len(opens) == 0, (
+            f"read_verified_allowed_file() must reject before opening either "
+            f"file, but observed opens: {opens}"
+        )
+
+    def test_body_modified_receipt_unchanged_fails(self, tmp_path, sample_config):
+        """A body whose bytes no longer match its receipt's sha256 must fail."""
+        from disastertrace.revision_v1.access_policy import (
+            read_verified_allowed_file,
+            ReadVerificationError,
+        )
+
+        body_path, receipt_path = self._make_pair(tmp_path)
+        # Tamper with the body after the receipt was written.
+        body_path.write_text("TAF KSFO ... TAMPERED")
+
+        policy = AccessPolicy.from_config(sample_config, allowed_root=tmp_path)
+
+        with pytest.raises(ReadVerificationError) as exc_info:
+            read_verified_allowed_file(policy, body_path, receipt_path)
+
+        assert "SHA256 mismatch" in str(exc_info.value)
+
+    def test_same_bytes_same_digest(self, tmp_path, sample_config):
+        """Reading identical bytes (from different files) yields the same digest."""
+        from disastertrace.revision_v1.access_policy import read_verified_allowed_file
+
+        body1, receipt1 = self._make_pair(tmp_path, body_text="IDENTICAL CONTENT", month="2023-06")
+
+        data_dir2 = tmp_path / "KDEN" / "2023-07"
+        data_dir2.mkdir(parents=True)
+        body2 = data_dir2 / "other.body"
+        body2.write_text("IDENTICAL CONTENT")
+        receipt2 = data_dir2 / "other.json"
+        import hashlib, json as json_mod
+        receipt2.write_text(json_mod.dumps({
+            "sha256": hashlib.sha256(b"IDENTICAL CONTENT").hexdigest(),
+        }))
+
+        policy = AccessPolicy.from_config(sample_config, allowed_root=tmp_path)
+
+        result1 = read_verified_allowed_file(policy, body1, receipt1)
+        result2 = read_verified_allowed_file(policy, body2, receipt2)
+
+        assert result1.raw_text_sha256 == result2.raw_text_sha256
 
 
 # ---------------------------------------------------------------------------

@@ -136,6 +136,17 @@ def check_bbb_order_vs_receipt_order(members: list[dict]) -> tuple[bool, str]:
             for j in range(i + 1, len(family_members)):
                 bbb_i = family_members[i].get("wmo_bbb", "")
                 bbb_j = family_members[j].get("wmo_bbb", "")
+
+                if bbb_i == bbb_j:
+                    # Equal BBB within a family carries no order information:
+                    # bbb_order below is trivially False regardless of which
+                    # member lands at index i vs j, while seq_order depends on
+                    # the caller's input order (permutation). Comparing the
+                    # two therefore made the result permutation-dependent
+                    # instead of a property of the tied set itself. Refuse to
+                    # claim an order rather than guess one from input position.
+                    return False, "equal_bbb_no_authority"
+
                 seq_i = family_members[i].get("receipt_seq", 0)
                 seq_j = family_members[j].get("receipt_seq", 0)
 
@@ -182,6 +193,11 @@ def resolve_receipt_tie_strict(
             winner=None,
             reason="single_member_not_a_tie",
         )
+
+    # Sort by a stable key before any gate runs. The gates above are proven
+    # permutation-invariant on their own, but this is defense-in-depth against
+    # future changes to those gates re-introducing an order dependency.
+    tied_rows = sorted(tied_rows, key=lambda r: r.get("source_id", ""))
 
     # Gate 1: Check receipt premise
     premise_ok, premise_reason = check_receipt_premise(tied_rows)

@@ -17,6 +17,8 @@ Design rationale (from Codex audit F04):
 
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -35,6 +37,18 @@ class AccessPolicyViolation(Exception):
     This exception indicates that a path or date falls within a protected
     boundary and access is denied. The exception message describes the
     specific violation.
+    """
+    pass
+
+
+class ReadVerificationError(Exception):
+    """Raised when a read-time content-integrity check fails.
+
+    Distinct from AccessPolicyViolation: this is raised AFTER a path has
+    already passed assert_allowed(), when the body bytes do not match the
+    sha256 recorded in the corresponding receipt. Callers can use the
+    distinct exception types to tell a boundary rejection apart from a
+    content-integrity failure.
     """
     pass
 
@@ -118,12 +132,20 @@ class AccessPolicy:
     ) -> None:
         """Check that a date doesn't fall within the holdout window.
 
+        Both checks are independent and both run whenever the corresponding
+        argument is provided (this is NOT an as_of-takes-precedence check):
+        an explicit as_of_us that is safe does not excuse a year_month that
+        overlaps holdout, and vice versa. Callers that want a single
+        consistent check should pass a mutually-consistent (as_of_us,
+        year_month) pair; assert_allowed() enforces that consistency before
+        calling here.
+
         Args:
-            as_of_us: Explicit timestamp in microseconds (takes precedence).
-            year_month: YYYY-MM string to check (used if as_of_us not provided).
+            as_of_us: Explicit timestamp in microseconds.
+            year_month: YYYY-MM string to check.
 
         Raises:
-            AccessPolicyViolation: If the date falls within the holdout window.
+            AccessPolicyViolation: If either date falls within the holdout window.
         """
         if as_of_us is not None:
             # Point-in-time check: treat as a zero-width window
@@ -133,7 +155,7 @@ class AccessPolicy:
                     f"Timestamp {as_of_us} falls within holdout window "
                     f"[{self.holdout_start_us}, {self.holdout_end_us})"
                 )
-        elif year_month is not None:
+        if year_month is not None:
             # Month check: parse YYYY-MM and check if month window overlaps holdout
             match = re.match(r"^(\d{4})-(\d{2})$", year_month)
             if not match:
@@ -198,6 +220,11 @@ class AccessPolicy:
 
         return None
 
+    def _year_month_from_us(self, as_of_us: int) -> str:
+        """Convert a UTC microsecond timestamp to a YYYY-MM string."""
+        dt = datetime.fromtimestamp(as_of_us / 1_000_000, tz=timezone.utc)
+        return f"{dt.year:04d}-{dt.month:02d}"
+
     def assert_allowed(
         self,
         path: str | Path,
@@ -213,15 +240,21 @@ class AccessPolicy:
         1. Resolve the path (canonicalize, follow symlinks)
         2. Check for quarantine_holdout segment
         3. Check for root escape
-        4. Check for holdout window overlap
-        5. Check against allowed year-months (if configured)
+        4. Always attempt to extract year-month from the path itself
+        5. Fail closed if any explicit as_of_us/year_month disagrees with the
+           path-implied month (CE4: an explicit "safe" parameter must never be
+           able to override what the path itself says)
+        6. Check holdout window for as_of_us and year_month independently
+        7. Check against allowed year-months (if configured), using the
+           path-implied month when available; fail closed if the allowlist is
+           configured but the path's month cannot be determined at all
 
         Args:
             path: The path to check (will be resolved).
-            as_of_us: Optional explicit timestamp for holdout check.
-            year_month: Optional explicit YYYY-MM for holdout check.
-                If neither as_of_us nor year_month is provided, attempts to
-                extract year-month from the path itself.
+            as_of_us: Optional explicit timestamp for holdout check. Must be
+                consistent with the path's own implied month, if any.
+            year_month: Optional explicit YYYY-MM for holdout check. Must be
+                consistent with the path's own implied month, if any.
 
         Raises:
             AccessPolicyViolation: If any check fails.
@@ -236,20 +269,52 @@ class AccessPolicy:
         # Step 3: Check for root escape
         self._check_root_escape(resolved)
 
-        # Step 4: Determine year_month for holdout check
-        effective_year_month = year_month
-        if as_of_us is None and effective_year_month is None:
-            effective_year_month = self._extract_year_month_from_path(resolved)
+        # Step 4: ALWAYS extract the path-implied month. This is unconditional
+        # (unlike the prior implementation, which only attempted extraction
+        # when both explicit parameters were absent) so that an explicit
+        # parameter can never silently bypass what the path itself implies.
+        path_year_month = self._extract_year_month_from_path(resolved)
 
-        # Step 5: Check holdout window
+        as_of_year_month = (
+            self._year_month_from_us(as_of_us) if as_of_us is not None else None
+        )
+
+        # Step 5: Fail-closed consistency check. Any explicit signal that
+        # disagrees with the path-implied month is rejected outright -- this
+        # closes CE4 (explicit as_of_us/year_month overriding a
+        # differently-monthed path).
+        for label, candidate in (("year_month", year_month), ("as_of_us", as_of_year_month)):
+            if path_year_month is not None and candidate is not None and candidate != path_year_month:
+                raise AccessPolicyViolation(
+                    f"Explicit {label} implies {candidate}, which disagrees with "
+                    f"the path-implied year-month {path_year_month} for {resolved}. "
+                    f"Refusing (fail-closed): an explicit parameter must never "
+                    f"override the path's own implied date."
+                )
+
+        effective_year_month = path_year_month or year_month or as_of_year_month
+
+        # Step 6: Check holdout window. Run both checks whenever the
+        # corresponding value is available -- _check_holdout_window no longer
+        # treats as_of_us as taking precedence over year_month.
         if as_of_us is not None or effective_year_month is not None:
             self._check_holdout_window(
                 as_of_us=as_of_us,
                 year_month=effective_year_month,
             )
 
-        # Step 6: Check allowed year-months (if configured)
-        if effective_year_month is not None:
+        # Step 7: Check allowed year-months (if configured). Fail closed when
+        # the allowlist is enabled but the path's own month could not be
+        # extracted -- an explicit parameter alone is not sufficient to admit
+        # a path whose real month is unknown.
+        if self.allowed_year_months is not None:
+            if path_year_month is None:
+                raise AccessPolicyViolation(
+                    f"Year-month allowlist is configured but the path's month "
+                    f"could not be extracted: {resolved}. Refusing (fail-closed)."
+                )
+            self._check_allowed_year_months(path_year_month)
+        elif effective_year_month is not None:
             self._check_allowed_year_months(effective_year_month)
 
     def filter_paths(
@@ -293,6 +358,97 @@ class AccessPolicy:
             return False
         except AccessPolicyViolation:
             return True
+
+
+@dataclass(frozen=True)
+class VerifiedInput:
+    """Result of a successful read_verified_allowed_file() call.
+
+    Carries the verified body bytes plus a readset record sufficient to
+    reconstruct exactly what was read, from where, and with what identity --
+    without callers needing to re-open the file themselves.
+    """
+
+    canonical_body_path: str
+    canonical_receipt_path: str
+    size_bytes: int
+    raw_text_sha256: str
+    receipt_sha256: str
+    body: bytes
+
+    def readset_record(self) -> dict:
+        """A JSON-serializable readset entry (excludes raw body bytes)."""
+        return {
+            "canonical_body_path": self.canonical_body_path,
+            "canonical_receipt_path": self.canonical_receipt_path,
+            "size_bytes": self.size_bytes,
+            "raw_text_sha256": self.raw_text_sha256,
+            "receipt_sha256": self.receipt_sha256,
+        }
+
+
+def read_verified_allowed_file(
+    policy: AccessPolicy,
+    body_path: str | Path,
+    receipt_path: str | Path,
+    *,
+    year_month: str | None = None,
+) -> VerifiedInput:
+    """The single shared entry point for reading a real archive file pair.
+
+    MUST be used instead of a direct open() for any (body, receipt) pair
+    under an AccessPolicy-governed root. Order of operations:
+
+    1. assert_allowed() on the body path (boundary/holdout/allowlist checks,
+       fail-closed, run BEFORE any glob or open of either file).
+    2. assert_allowed() on the receipt path (same checks).
+    3. Read the receipt JSON and take its declared sha256.
+    4. Read the body bytes and recompute sha256.
+    5. Raise ReadVerificationError if the recomputed hash does not match the
+       receipt's declared hash (content-integrity failure, distinct from a
+       boundary violation).
+
+    Returns:
+        A VerifiedInput with the body bytes and a readset record.
+
+    Raises:
+        AccessPolicyViolation: If either path fails the access policy.
+        ReadVerificationError: If body bytes do not match the receipt's
+            declared sha256, or the receipt is missing a sha256 field.
+    """
+    policy.assert_allowed(body_path, year_month=year_month)
+    policy.assert_allowed(receipt_path, year_month=year_month)
+
+    body_resolved = Path(body_path).resolve()
+    receipt_resolved = Path(receipt_path).resolve()
+
+    with open(receipt_resolved, "r") as f:
+        receipt = json.load(f)
+
+    expected_sha = receipt.get("sha256")
+    if not expected_sha:
+        raise ReadVerificationError(
+            f"Receipt is missing a sha256 field: {receipt_resolved}"
+        )
+
+    with open(body_resolved, "rb") as f:
+        body_bytes = f.read()
+
+    actual_sha = hashlib.sha256(body_bytes).hexdigest()
+    if actual_sha != expected_sha:
+        raise ReadVerificationError(
+            f"Body SHA256 mismatch for {body_resolved}: "
+            f"receipt declares {expected_sha}, actual content hashes to {actual_sha}"
+        )
+
+    return VerifiedInput(
+        canonical_body_path=str(body_resolved),
+        canonical_receipt_path=str(receipt_resolved),
+        size_bytes=len(body_bytes),
+        raw_text_sha256=actual_sha,
+        receipt_sha256=expected_sha,
+        body=body_bytes,
+    )
 
 
 def make_policy_for_real_v16(

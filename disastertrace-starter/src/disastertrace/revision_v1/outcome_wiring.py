@@ -50,36 +50,49 @@ def make_h15_visibility_target(
     slot_start_us: int,
     threshold_m: float,
     target_id: str | None = None,
+    allowed_thresholds: frozenset[float] | None = None,
+    support_window_hours: float = 1.0,
 ) -> Target:
     """Build a Target for H15-style visibility outcome.
 
     Creates a Target for "visibility < threshold_m meters during the routine
-    report of the 1-hour slot starting at slot_start_us".
+    report of the support_window_hours-long slot starting at slot_start_us".
 
     Args:
         station: ICAO station code (e.g., "KSFO")
-        slot_start_us: Start of the 1-hour slot in microseconds since epoch
-        threshold_m: Visibility threshold in meters (must be 5000.0 or 1000.0)
+        slot_start_us: Start of the slot in microseconds since epoch
+        threshold_m: Visibility threshold in meters (must be in allowed_thresholds)
         target_id: Optional explicit target_id. If None, generates a
             deterministic, human-legible ID.
+        allowed_thresholds: Thresholds this call accepts. Defaults to
+            FROZEN_THRESHOLDS_M (the historical hardcoded {5000.0, 1000.0}) --
+            A2-4: callers that don't pass this see unchanged behavior; the
+            manifest's outcome profile is the only place a different set
+            would come from, and this batch supports exactly one profile
+            whose thresholds_m equal FROZEN_THRESHOLDS_M.
+        support_window_hours: Length of the target support window in hours.
+            Defaults to 1.0 (the historical hardcoded one-hour slot).
 
     Returns:
         A Target instance configured for H15 visibility evaluation.
 
     Raises:
-        ValueError: If threshold_m is not one of the frozen thresholds.
+        ValueError: If threshold_m is not one of the allowed thresholds.
     """
-    if threshold_m not in FROZEN_THRESHOLDS_M:
+    if allowed_thresholds is None:
+        allowed_thresholds = FROZEN_THRESHOLDS_M
+
+    if threshold_m not in allowed_thresholds:
         raise ValueError(
             f"Invalid threshold {threshold_m}m. "
-            f"Allowed thresholds: {sorted(FROZEN_THRESHOLDS_M)}"
+            f"Allowed thresholds: {sorted(allowed_thresholds)}"
         )
 
-    # One hour in microseconds
-    hour_us = 3_600_000_000
+    # support_window_hours in microseconds
+    support_window_us = int(support_window_hours * 3_600_000_000)
 
-    # Physical end is one hour after start (interval support)
-    slot_end_us = slot_start_us + hour_us
+    # Physical end is support_window_hours after start (interval support)
+    slot_end_us = slot_start_us + support_window_us
 
     # Generate deterministic, human-legible target_id if not provided
     if target_id is None:

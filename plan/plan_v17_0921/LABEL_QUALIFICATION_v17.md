@@ -1,3 +1,13 @@
+> **⚠️ SUPERSEDED BY BATCH A2 (2026-09-21).** This report's 15-sample AI-re-read has been
+> superseded by a 30-item byte-identity-traceable witness package built from the corrected
+> checkpoint-aware census (26/26 change-level witnesses resolved to exact byte offsets, all 7
+> structural witness types represented). See **`LABEL_QUALIFICATION_v17_A2.md`**. Both this
+> original report and the A2 report remain honestly `PENDING_HUMAN_VERIFICATION` /
+> `PENDING_INDEPENDENT_REVIEW` respectively — neither claims genuine independent human review
+> has occurred. The original text below is preserved unchanged for the record.
+
+---
+
 # Label Qualification v17: Classification Reliability Assessment
 
 Generated: 2026-09-21
