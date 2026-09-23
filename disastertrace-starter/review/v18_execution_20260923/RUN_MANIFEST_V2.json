@@ -1,0 +1,88 @@
+{
+  "schema": "disastertrace.v18.review_manifest.v2",
+  "run_id": "v18-review-v2-20260923",
+  "generated_at": "2026-09-23",
+  "code_commit": "36082c42a93e11f67d274d8000c87cd1dc098d74",
+  "branch": "next-phase-v1",
+  "working_tree": "dirty before review; existing changes preserved; no reset, commit, push or historical artifact overwrite",
+  "declared_baseline": {
+    "branch": "v17-batch-a-v1",
+    "head": "3d10a6e782239cf9eb54a179b82c5075670c23bf",
+    "available_locally": false,
+    "decision": "CURRENT_V13_PORT"
+  },
+  "execution_status": "PARTIAL_REVIEW_ONLY",
+  "authorization_id": "v18-offline-synthetic-and-bounded-source-20260922",
+  "provider": "offline for this review",
+  "model": "none; no new API call",
+  "scope": {
+    "outcome_accessed": false,
+    "holdout_accessed": false,
+    "protected_window_accessed": false,
+    "network_data_downloaded": false,
+    "historical_results_modified": false,
+    "closed_api_runs_retried": false
+  },
+  "stages": [
+    {
+      "id": "G1",
+      "status": "COMPLETE_BOUNDED_SOURCE_ONLY",
+      "artifact": "G1_DEV_EPISODES_V2.json",
+      "census": "G1_DEV_CENSUS_V2.json",
+      "episodes": 24,
+      "evidence_rows": 48,
+      "new_target_content": 24,
+      "target_content_change": 24
+    },
+    {
+      "id": "G2",
+      "status": "COMPLETE_SYNTHETIC_ADAPTER_ONLY",
+      "artifact": "G2_SYNTHETIC_SCORE_V2.json",
+      "registered_cells": 8,
+      "empirical_brier": null
+    },
+    {
+      "id": "G3",
+      "status": "HARDENED_NO_NEW_RUN",
+      "artifact": "G3_SYNTHETIC_INTERVENTIONS_V2.json",
+      "closed_api_artifacts_preserved": [
+        "G3_API_RUN_INTERRUPTED.json",
+        "G3_API_RUN_02.json",
+        "G3_API_RUN_03.json"
+      ],
+      "new_api_attempts": 0
+    },
+    {
+      "id": "G4",
+      "status": "COMPLETE_SYNTHETIC_TYPED_KERNEL",
+      "artifact": "G4_NATURAL_SYNTHETIC_V2.json",
+      "registered_actions": 7,
+      "model_calls": 0
+    }
+  ],
+  "validation": {
+    "package_unit_tests": 25,
+    "v18_tests": 34,
+    "monitoring_regression_tests": 148,
+    "compileall": "PASS",
+    "unscoped_pytest": "NOT_A_VALID_REPO_GATE_DUE_TO_HISTORICAL_COPY_COLLECTION"
+  },
+  "artifacts": {
+    "G1_DEV_EPISODES_V2.json": "b9ddbaa65dd584615f5e6fd0c142b6dc449807d7bb74006b8771ef180fb22b4e",
+    "G1_DEV_CENSUS_V2.json": "fb30e8f4a1ede1159120c827c5e25ebb84bb91caa222a2c1371f13c083332678",
+    "G2_SYNTHETIC_SCORE_V2.json": "ff012e0178e8245bc0c3bb27993f243d8a3e71d3c11eeeea5051891970613ef6",
+    "G3_SYNTHETIC_INTERVENTIONS_V2.json": "c41f373f015c35b546877a58564da1853e6b37d535e64bc52f83c48cc387a62a",
+    "G4_NATURAL_SYNTHETIC_V2.json": "b59f05967d78c46ea079ae1a95fd83bd36f1d697b4e9aaee4699d77fc511ae02",
+    "SCORER_CONTRACT_V2.md": "41735491055855c9e5b3eb1d9fec095413690cf7b44ff390de04411394ccffb7",
+    "TEST_STATUS_V2.json": "20b7ebc4d2346cf53d8756b7514ba815cdb56888d3748d67c9fba3fc1d73beb2",
+    "CLAIM_STATUS_V2.json": "9ae7016c473dc1b06bba44d00fe39adb022748ad7edb4621cc185620351f406b",
+    "CURRENT_REVIEW_STATUS_V2.md": "9c99529f6ec5ca679231a5777431d170818821cfc0fa2f2b74c88920417fa821"
+  },
+  "claim_boundary": {
+    "empirical_forecast_gain": false,
+    "empirical_brier": null,
+    "calibration_claim": false,
+    "prospective_live_claim": false,
+    "paper_ready": false
+  }
+}

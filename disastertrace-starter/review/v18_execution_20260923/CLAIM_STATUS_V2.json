@@ -1,0 +1,78 @@
+{
+  "schema": "disastertrace.v18.claim_status.v2",
+  "as_of": "2026-09-23",
+  "review_identity": "v18-review-v2-20260923",
+  "claims": [
+    {
+      "id": "C0",
+      "status": "SUPPORTED_BOUNDED_SOURCE_ONLY",
+      "evidence": ["G1_DEV_CENSUS_V2.json", "G1_DEV_EPISODES_V2.json"],
+      "scope": "24-episode January/March 2025 development roster",
+      "limitation": "Availability is a declared replay lag; no outcome or prospective claim."
+    },
+    {
+      "id": "C1",
+      "status": "SUPPORTED_SYNTHETIC_ADAPTER_ONLY",
+      "evidence": ["G2_SYNTHETIC_SCORE_V2.json", "TEST_STATUS_V2.json"],
+      "scope": "Fixed-grid accounting, deterministic carry-forward and shared target-level missing-Y bounds",
+      "limitation": "No real weather Brier or endpoint comparison is bound."
+    },
+    {
+      "id": "C2",
+      "status": "NOT_TESTED_EMPIRICALLY",
+      "evidence": ["G3_API_RUN_03.json"],
+      "scope": "Y-free state/format diagnostic only",
+      "limitation": "No prediction-quality or method-effect claim."
+    },
+    {
+      "id": "C3",
+      "status": "SUPPORTED_SYNTHETIC_ONLY",
+      "evidence": ["G3_SYNTHETIC_INTERVENTIONS_V2.json"],
+      "scope": "Intervention contract and branch isolation",
+      "limitation": "No powered paired API estimate of excess drift."
+    },
+    {
+      "id": "C4",
+      "status": "NOT_TESTED",
+      "evidence": ["G3_API_REPORT.md"],
+      "scope": "No withholding/delay outcome comparison",
+      "limitation": "Real Y and authorized controlled run are missing."
+    },
+    {
+      "id": "C5",
+      "status": "NOT_TESTED",
+      "evidence": ["G3_API_REPORT.md"],
+      "scope": "No repair suffix scored against Y",
+      "limitation": "Fact repair is not treated as forecast improvement."
+    },
+    {
+      "id": "C6",
+      "status": "CONTRACT_HARDENED_EMPIRICAL_QUALITY_UNTESTED",
+      "evidence": ["TEST_STATUS_V2.json", "G3_API_RUN_03.json"],
+      "scope": "HTTP/model identity/typed output diagnostics",
+      "limitation": "The old attempts do not isolate parsing from inference quality."
+    },
+    {
+      "id": "C7",
+      "status": "SUPPORTED_SYNTHETIC_KERNEL_ONLY",
+      "evidence": ["G4_NATURAL_SYNTHETIC_V2.json", "TEST_STATUS_V2.json"],
+      "scope": "Typed action, source, clock and terminal deadline semantics",
+      "limitation": "No natural calendar, provider, model or outcome run."
+    },
+    {
+      "id": "C8",
+      "status": "NOT_TESTED",
+      "evidence": ["CURRENT_REVIEW_STATUS_V2.md"],
+      "scope": "No prospective or second-domain validation",
+      "limitation": "Current evidence is local development replay only."
+    }
+  ],
+  "global_boundary": {
+    "empirical_forecast_gain": false,
+    "outcome_accessed": false,
+    "holdout_accessed": false,
+    "protected_window_accessed": false,
+    "new_model_calls": 0,
+    "historical_results_modified": false
+  }
+}

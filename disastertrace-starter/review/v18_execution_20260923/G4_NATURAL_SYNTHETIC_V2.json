@@ -1,0 +1,87 @@
+{
+  "schema": "disastertrace.v18.natural_synthetic.v2",
+  "synthetic": true,
+  "empirical": false,
+  "public_state": {
+    "clock": 30,
+    "deadline": 60,
+    "read_query_ids": [
+      "q1",
+      "q2"
+    ],
+    "stopped": true,
+    "expired": false,
+    "terminal": true,
+    "action_count": 7
+  },
+  "actions": [
+    {
+      "action": "RETRIEVE",
+      "at": 0,
+      "result": {
+        "status": "unavailable",
+        "query_id": "q1",
+        "available_at": 10
+      }
+    },
+    {
+      "action": "WAIT",
+      "at": 0,
+      "result": {
+        "status": "advanced",
+        "clock": 10
+      }
+    },
+    {
+      "action": "RETRIEVE",
+      "at": 10,
+      "result": {
+        "status": "available",
+        "query_id": "q1",
+        "content": {
+          "visibility_m": 4000
+        }
+      }
+    },
+    {
+      "action": "UPDATE",
+      "at": 10,
+      "result": {
+        "status": "updated",
+        "probability": 0.4,
+        "read_query_ids": [
+          "q1"
+        ]
+      }
+    },
+    {
+      "action": "WAIT",
+      "at": 10,
+      "result": {
+        "status": "advanced",
+        "clock": 30
+      }
+    },
+    {
+      "action": "RETRIEVE",
+      "at": 30,
+      "result": {
+        "status": "available",
+        "query_id": "q2",
+        "content": {
+          "visibility_m": 9000
+        }
+      }
+    },
+    {
+      "action": "STOP",
+      "at": 30,
+      "result": {
+        "status": "stopped",
+        "clock": 30
+      }
+    }
+  ],
+  "outcome_accessed": false,
+  "model_calls": 0
+}

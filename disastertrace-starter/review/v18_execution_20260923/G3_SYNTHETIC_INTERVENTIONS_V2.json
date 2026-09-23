@@ -1,0 +1,110 @@
+{
+  "schema": "disastertrace.v18.synthetic_interventions.v2",
+  "scope": "instrument qualification only; synthetic fixture is not empirical weather evidence",
+  "interventions": [
+    {
+      "intervention": "identity_repeat",
+      "changed_fields": [
+        "stream_length",
+        "duplicate_arrival"
+      ],
+      "held_fields": [
+        "target_start",
+        "target_end",
+        "issued_at"
+      ],
+      "statuses": [
+        "NEW_TARGET_CONTENT",
+        "TARGET_CONTENT_CHANGE",
+        "DUPLICATE"
+      ]
+    },
+    {
+      "intervention": "same_origin_duplicate",
+      "changed_fields": [
+        "stream_length",
+        "source_revision",
+        "relation_status"
+      ],
+      "held_fields": [
+        "target_start",
+        "target_end",
+        "issued_at"
+      ],
+      "statuses": [
+        "NEW_TARGET_CONTENT",
+        "TARGET_CONTENT_CHANGE",
+        "SOURCE_CHANGE_NO_TARGET_CHANGE"
+      ]
+    },
+    {
+      "intervention": "matched_sham",
+      "changed_fields": [
+        "stream_length",
+        "content.length_sham",
+        "source_revision"
+      ],
+      "held_fields": [
+        "target_start",
+        "target_end",
+        "content",
+        "issued_at"
+      ],
+      "statuses": [
+        "NEW_TARGET_CONTENT",
+        "TARGET_CONTENT_CHANGE",
+        "SOURCE_CHANGE_NO_TARGET_CHANGE"
+      ]
+    },
+    {
+      "intervention": "withhold",
+      "changed_fields": [
+        "stream_length",
+        "last_arrival_withheld"
+      ],
+      "held_fields": [
+        "target_start",
+        "target_end",
+        "content",
+        "issued_at"
+      ],
+      "statuses": [
+        "NEW_TARGET_CONTENT"
+      ]
+    },
+    {
+      "intervention": "delay",
+      "changed_fields": [
+        "available_at"
+      ],
+      "held_fields": [
+        "target_start",
+        "target_end",
+        "content",
+        "issued_at"
+      ],
+      "statuses": [
+        "NEW_TARGET_CONTENT",
+        "NOT_YET_AVAILABLE"
+      ]
+    },
+    {
+      "intervention": "repair",
+      "changed_fields": [
+        "parent.content"
+      ],
+      "held_fields": [
+        "target_start",
+        "target_end",
+        "content",
+        "issued_at"
+      ],
+      "statuses": [
+        "NEW_TARGET_CONTENT",
+        "SOURCE_CHANGE_NO_TARGET_CHANGE"
+      ]
+    }
+  ],
+  "model_calls": 0,
+  "outcomes_accessed": false
+}

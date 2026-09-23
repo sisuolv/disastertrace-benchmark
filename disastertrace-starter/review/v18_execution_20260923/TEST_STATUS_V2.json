@@ -1,0 +1,54 @@
+{
+  "schema": "disastertrace.v18.test_status.v2",
+  "generated_at": "2026-09-23",
+  "checks": [
+    {
+      "name": "execution_package_unit_tests",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s <package>/tests -v",
+      "status": "PASS",
+      "exit_code": 0,
+      "result": "25 passed"
+    },
+    {
+      "name": "v18_tests",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_v18_*.py",
+      "status": "PASS",
+      "exit_code": 0,
+      "result": "34 passed"
+    },
+    {
+      "name": "monitoring_regression",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_monitoring_runtime.py tests/test_monitoring_v13_*.py tests/test_monitoring_siliconflow_transport.py tests/test_v18_*.py",
+      "status": "PASS",
+      "exit_code": 0,
+      "result": "148 passed"
+    },
+    {
+      "name": "compileall",
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m compileall -q src/disastertrace/monitoring_v1 scripts",
+      "status": "PASS",
+      "exit_code": 0
+    },
+    {
+      "name": "unscoped_full_pytest",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python -m pytest -q -p no:cacheprovider",
+      "status": "NOT_A_VALID_REPO_GATE",
+      "result": "Recursive collection includes historical artifacts/work copies; optional dependency errors and duplicate test module names occur before a meaningful repository result. The scoped commands above are the reproducible gate."
+    },
+    {
+      "name": "ruff",
+      "status": "NOT_RUN",
+      "reason": "ruff is not installed in the execution environment"
+    },
+    {
+      "name": "secret_hygiene",
+      "status": "PASS_FOR_NEW_ARTIFACTS",
+      "result": "No credential-shaped token was found in the V2 artifacts; the API key remains stdin-only and is not serialized."
+    }
+  ],
+  "holdout_accessed": false,
+  "protected_window_accessed": false,
+  "outcome_accessed": false,
+  "model_calls_for_tests": 0,
+  "historical_artifacts_overwritten": false
+}
