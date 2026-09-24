@@ -1,5 +1,11 @@
 # DisasterTrace starter scaffold
 
+**Current status (branch `codex/v18-repaired-release-20260923`):** the published tree was broken
+(missing files that already-published code imports) and has been fixed — see
+[docs/PLAN_V20_NEXT_STEPS.md](docs/PLAN_V20_NEXT_STEPS.md) for what that was, what it means for
+everything downstream, and the merged next-steps plan (synthesized from three independent reviews,
+itself independently reviewed). Start there before making further changes to the v18/v19 line.
+
 Start the current external review with
 [REVIEW_FOR_CHATGPT_PRO_P5.md](REVIEW_FOR_CHATGPT_PRO_P5.md), a detailed Chinese
 handoff covering the research design, code, P1-P5 evidence, limitations and next
