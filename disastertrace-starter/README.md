@@ -4,7 +4,9 @@
 (missing files that already-published code imports) and has been fixed — see
 [docs/PLAN_V20_NEXT_STEPS.md](docs/PLAN_V20_NEXT_STEPS.md) for what that was, what it means for
 everything downstream, and the merged next-steps plan (synthesized from three independent reviews,
-itself independently reviewed). Start there before making further changes to the v18/v19 line.
+itself independently reviewed). Start there before making further changes to the v18/v19 line. Then see
+[docs/PLAN_V20_NOVELTY_ALIGNMENT.md](docs/PLAN_V20_NOVELTY_ALIGNMENT.md) for a diagnosis of how that plan
+lines up against the benchmark's actual claimed research contributions, and the resulting Horizon 1.5.
 
 Start the current external review with
 [REVIEW_FOR_CHATGPT_PRO_P5.md](REVIEW_FOR_CHATGPT_PRO_P5.md), a detailed Chinese

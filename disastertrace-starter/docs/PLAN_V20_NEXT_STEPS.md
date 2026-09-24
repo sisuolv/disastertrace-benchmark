@@ -1,5 +1,12 @@
 # DisasterTrace v20: next-steps plan (merged from three independent reviews)
 
+> **C1/C2/C3 alignment note (added after `docs/PLAN_V20_NOVELTY_ALIGNMENT.md`'s diagnosis):** every
+> Horizon/Track below is tagged with which of the benchmark's three claimed contributions (C1 active
+> acquisition, C2 mechanism attribution, C3 generalization — see the novelty-alignment document) it
+> serves. Read the tags literally: "substrate" means the work hardens ground truth or infrastructure
+> those contributions would eventually need, not that it demonstrates the contribution itself. See the
+> novelty-alignment document for the full diagnosis and the newly-added Horizon 1.5.
+
 Drafted after three independent ChatGPT Pro review passes of commit `7bb03fbf7` (branch
 `codex/v18-repaired-release-20260923`), each producing its own findings, revised plan, and
 Codex-handoff task list. All three converged on the same top-priority finding — the published
@@ -18,6 +25,8 @@ reproduced by at least two of the three reviews. These are real, verified progre
 
 ## Horizon 0 — release integrity (done)
 
+**[Tag: substrate, no C1/C2/C3 by itself]**
+
 Fixed as commit `f30c3d247`: 16 files (3 source modules, 4 scripts, 9 test files) had never been
 committed at any point in this project's history, breaking imports in already-published code
 (`run_v18_controlled_api.py` imported `agent_view_v18`, which did not exist in the published tree).
@@ -28,7 +37,17 @@ unexamined.
 
 ## Horizon 1 — offline work, no new authorization needed
 
+**[Tag: substrate for all three contributions; demonstrates none by itself.** Every track below hardens
+Controlled-track ground truth (evidence classification, census counting, repair-replay isolation, Y
+settlement, an offline gate) — necessary for C1/C2/C3 to eventually be measured against, but none of it
+is an agent capability that itself performs active acquisition, attributes an acquisition/matching
+failure, or tests generalization. See `docs/PLAN_V20_NOVELTY_ALIGNMENT.md` for the full diagnosis and the
+new Horizon 1.5 this gap led to.]
+
 ### Track B-0 — shared field-classification contract (must land before Track A item 1)
+
+**[Tag: substrate — this classifier is the eventual ground truth a C2 matching-failure probe would grade
+an agent against, but is not itself an agent capability.]**
 
 **New finding an independent Opus 5.5 review caught that all three ChatGPT Pro reviews missed**: the
 bug where content hashing mixes in non-weather metadata fields is not confined to this round's own
@@ -57,6 +76,9 @@ bound on target-content change; replace with four counted categories — `A` (ar
 revision), `C` (genuine content change), `U` (unknown) — each with an explicit denominator.
 
 ### Track A — small deterministic fixes, batched with checkpoints (not one bulk change)
+
+**[Tag: substrate — bug fixes to the Controlled-track pipeline's counting/classification correctness;
+none build active acquisition or a new C2 diagnostic category.]**
 
 **Batch 1** (changes G1 numbers; depends on Track B-0):
 1. Duplicate-detection content hash — rewrite using Track B-0's shared constant.
@@ -91,16 +113,26 @@ what the bug was doing, not a self-report.
 
 **Batch 2** (changes G3 semantics; depends on Track C's ADR settling policy-visibility scope):
 5. `identity_repeat`'s inconsistent result (`records` unchanged but `qualification` reports a phantom
-   `DUPLICATE` row not present in `records`) — pick true-no-op or keep-and-disclose, decided by
-   Track C's ADR on policy visibility.
+   `DUPLICATE` row not present in `records`) — **decided by ADR-001, on pragmatic rather than
+   first-principles grounds**: keep the current phantom-row behavior (two existing pinned tests and G3's
+   committed classification already depend on it; the true no-op would break both) AND add the "disclose"
+   half this item's own wording always called for — an explicit docstring/witness note that
+   `qualification_records` carries a phantom duplicate not reflected in `changed_fields`. See ADR-001's
+   "Batch 2 item 5" section for the full reasoning and the tested numbers behind it.
 6. `delay` intervention's `None`-handling: real timestamps trigger `available_at cannot precede
    issued_at` and crash (not a silently fabricated 24h-later time, as earlier described — only tiny
    synthetic test timestamps make it look like it "works"). The 24h constant itself is fine; only the
    `None` coalescing needs fixing — name the constant, raise or return `NOT_APPLICABLE` on `None`.
 7. Chronology check only compares adjacent pairs, so `[20, None, 10]` passes; check the whole
    sequence.
-8. `_repair` accepts an `as_of` inconsistent with the snapshot's own `clock`, with no target binding —
-   add a consistency check at the entry point.
+8. **Corrected by ADR-001**: this item's own premise was wrong — `_repair` does not currently accept an
+   `as_of` parameter at all (confirmed: it has no such argument), so there is nothing to check for
+   consistency yet. ADR-001 defers the `as_of`-vs-`clock` question entirely (no production code builds a
+   `NaturalKernel` from real evidence records yet, so the two timelines' relationship can't be soundly
+   evaluated), and instead scopes this item down to target binding only: bind `target_start`/`target_end`
+   into the snapshot at `NaturalKernel.snapshot()` time, bumping `SNAPSHOT_SCHEMA` to `.v2` (a real,
+   larger change than one entry-point check — touches `__init__`, `from_snapshot`, and the snapshot key
+   list; see ADR-001 decision 3 for the full scope).
 
 Checkpoint: the three review packages' own executed synthetic-reproduction scripts
 (`/tmp/v20_review/run*/`, ephemeral — regenerate locally as needed) already exist and are free,
@@ -120,27 +152,41 @@ scope than originally assessed):
 
 ### Track C — repair-mechanism architecture decision record (concrete template, not open-ended)
 
-Independent review clarified: the mechanical fix for "policy never observes retrieved content" is
-small — `NaturalKernel.step()` already returns `content`; `replay_suffix` just doesn't forward it into
-`public_state()`, and the kernel's own `self.read` already holds it. The real work is a design
-decision, not a big build.
+**[Tag: substrate for C1 — decisions 1 and 4 are direct prerequisites for any future active-acquisition
+policy (see Horizon 1.5/N2 in `docs/PLAN_V20_NOVELTY_ALIGNMENT.md`), but this track itself builds no
+agent capability.]**
 
-File: `docs/adr/ADR-001-repair-isolation-and-visibility.md`. Must answer these five questions, each
-with a one-line rationale:
-1. Does `public_state()` expose read-cache content, `last_result`, or both?
-2. Is the policy signature `policy(state)` or `policy(state, last_result)`?
-3. Should `_repair` require `as_of == snapshot["clock"]` and bind `target_start`/`target_end` into
-   the snapshot schema (a `SNAPSHOT_SCHEMA` version bump)?
-4. Is process-fork isolation deferred permanently, or gated on a named trigger?
-5. Is `deepcopy` of built policies rejected permanently? (Record the three reviews' reasoning
-   verbatim: functions/closures/client objects aren't truly copied, and in-process forking doesn't
-   clear state a parent process already polluted.)
+**Status: ACCEPTED_WITH_DISCLOSED_LIMITATIONS**, after 4 independent review rounds. Answers, corrected
+from this section's original 5 questions (kept below for history; see
+`docs/adr/ADR-001-repair-isolation-and-visibility.md` for the full reasoning, not just the answers):
+1-2. `public_state()` exposes the kernel's own current `read` cache (deep-copied, computed fresh per
+   call), not `last_result`. Single-argument `policy(state)` signature kept.
+3. **Deferred, not decided** — the original premise (does `_repair`'s `as_of` share a timeline with
+   snapshot `clock`) can't be soundly evaluated with no code yet building a `NaturalKernel` from real
+   evidence records. Target binding (bind `target_start`/`target_end` into the snapshot, `SNAPSHOT_SCHEMA`
+   → `.v2`) proceeds independently of that deferral — see item 8 above, corrected accordingly.
+4. Gated, not permanent, but with no mechanical enforcement added in Batch 2 (a proposed
+   `NotImplementedError` gate was found to break 6 existing regression tests and was withdrawn) — the
+   factory pattern already closes the identity-across-replays leak; class-attribute/module-global/RNG
+   leaks remain open, procedurally (not code-) gated behind "no non-synthetic stateful policy wired into
+   `repair_policy` for a P1 or L2 run without fork isolation."
+5. `deepcopy` remains rejected as a general mechanism — but the reasoning was corrected by direct testing,
+   not recorded verbatim from the three reviews as originally planned: bound methods and plain instance
+   attributes genuinely are separated by `deepcopy`; closures and class attributes are not; most
+   (not all) unpicklable client resources raise `TypeError` rather than being silently, untruly copied.
 
 Include a "what this ADR does not certify" section, mirroring the existing `policy_isolation` witness
 fields in `interventions_v18.py`. Explicitly not doing: `deepcopy` as a quick patch for B-1's
-remaining leak patterns.
+remaining leak patterns. **Unlisted Batch 2 work item, added by the ADR**: exposing `read` via
+`public_state()` (decision 1) is new work this item list never named — it falls out of "what does a
+policy see," which this list does assign to the ADR, but had no explicit line item for the resulting
+code change. Also applies to Horizon 4 (L1/L2), not just Horizon 3: decision 4's fork-isolation
+prerequisite for wiring a stateful `repair_policy` applies to any P1 **or L2** run, not P1 alone.
 
 ### Track D — Y1 settlement adapter (synthetic-only; real Y stays blocked)
+
+**[Tag: substrate for C1 — any future "did active acquisition add value" experiment needs a working Y
+settlement path to grade against; this track builds that path but doesn't itself run such an experiment.]**
 
 A thin adapter mapping the frozen v18 target contract onto the merged
 `revision_v1/outcome_wiring.py`'s Target/OutcomeRegistry structures, reusing its pure resolution
@@ -160,6 +206,8 @@ no real-data adapter exists yet; the adapter may import only pure functions from
 `revision_v1.outcome_wiring`, nothing ASOS-fetch-related.
 
 ### Track E — offline end-to-end acceptance gate (builds on existing infrastructure, not greenfield)
+
+**[Tag: substrate — infra/safety hardening, not an agent capability.]**
 
 `scripts/build_v19_offline_gate.py` (qualify → public_checkpoint → grid) and
 `scripts/offline_guard/sitecustomize.py` (`DISASTERTRACE_OFFLINE=1` network guard) already exist.
@@ -187,6 +235,10 @@ rather than relying on the network guard to catch it after the fact.
 
 ## Horizon 2 — unlock D1 (redefined: not "one number")
 
+**[Tag: substrate for C1/C2 — the A/V(R)/C/U counts on real targets are the ground-truth denominators a
+future C1 baseline comparison or C2 matching-failure probe would need; this Horizon computes them but is
+not itself an active-acquisition or matching experiment.]**
+
 Not "narrow 292–14,803 into a point estimate." Using Track B-0/B-1's frozen contract, compute the
 `A`/`V(R)`/`C`/`U` counts across all 17,088 real targets with explicit denominators and bounded
 unknowns. Preparable now, before D1: freeze the counting protocol itself (three denominators, an
@@ -196,10 +248,18 @@ execution doesn't require on-the-fly methodology design.
 
 ## Horizon 3 — P1 → Y1 (order unchanged; Y1's offline design work already done in Track D)
 
+**[Tag: substrate for C1 — first real dispatch/settlement, still Controlled-track by default; does not
+itself test active acquisition unless paired with Horizon 1.5/N2's future mechanism. Fork-isolation
+prerequisite (ADR-001 decision 4) applies here if `repair` is ever enabled with a stateful policy.]**
+
 First real model dispatch (new run-id, locked budget/model/stop-rule, never touching the 3 closed
 runs); then settle real Y using Track D's adapter.
 
 ## Horizon 4 — L1/L2 (prospective / live data capture)
+
+**[Tag: substrate for C1's "Live" framing (continuous evidence arrival requiring ongoing decisions, not
+"2 minutes faster than professional forecast") — scaffolding only; same fork-isolation prerequisite as
+Horizon 3 applies to any L2 run using `repair` with a stateful policy.]**
 
 Two of three independent reviews pushed back on sequencing this strictly last: L1's scaffolding
 (fake clock, the REGISTER→OPEN→...→SETTLED lifecycle skeleton, fully offline-testable) can proceed
@@ -210,6 +270,11 @@ live-fetch code," do a read-only inventory of collector/forward_capture code out
 repo, in case that premise itself is wrong.
 
 ## Horizon 5 — explicitly parked
+
+**[Tag: this is C3's territory, and per `docs/PLAN_V20_NOVELTY_ALIGNMENT.md`'s diagnosis it is not
+zero-code work — real multimodal (including NHC hurricane-track rendering) and hydrology modules already
+exist, disconnected from this pipeline. Horizon 1.5/N1 inventories them; whether that pulls any part of
+Horizon 5 forward is a decision for after N1's findings, not made here.]**
 
 Multimodal/second-domain generalization, holdout confirmatory analysis.
 
