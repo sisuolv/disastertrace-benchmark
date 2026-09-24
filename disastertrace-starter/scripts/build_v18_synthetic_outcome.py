@@ -37,7 +37,9 @@ def main() -> int:
     ]
     result = score_complete_grid(registrations, submissions)
     payload = {
-        "schema": "disastertrace.v18.synthetic_outcome_score.v2",
+        # v3 (Batch V4): result.report's field meanings changed, see
+        # grid_scoring_v18.py's complete_grid_score.v3 schema note.
+        "schema": "disastertrace.v18.synthetic_outcome_score.v3",
         "synthetic": True,
         "empirical": False,
         "outcome_registry": "fixture-only; no provider-bound weather Y",

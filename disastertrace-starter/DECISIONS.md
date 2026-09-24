@@ -1,4 +1,630 @@
+# v13 registered experiments complete; publication update 2026-09-17
+
+Current entry: `../publication/v13_completed_20260917/RESULTS_CN.md`.
+B00 completes 168 cases / 840 trajectories / 60,480 method rows; C00 completes
+12 parents / 48 GET branches; B02 completes 72 new and 60 reused method-days;
+M01 completes 12 days / 864 opportunities at 2026-09-16 14:47 UTC.
+All scientific batch completion receipts pass. M01 has 275 verified valid HTTP
+responses and 13 pre-send BlockingIOError failures retained in the denominator;
+transport says not_sent while the consumer says unknown_execution. There are
+1,119,368 known provider tokens and 432,640 still-reserved tokens, not a charge.
+The current task publishes existing results, with no experiment or retry launch.
+
+The model is a query selector with a fixed program probability head. It improves
+on batch/coverage in this development subset but does not beat cyclic or hash
+selection; 857 settled opportunities contain only three positives. No independent
+confirmation or full 16-hazard completion is claimed. C00 source strata are all
+full TAF temporal coverage; PROCESS/TIMING and new 3/6-hour predictor support
+remain unfinished. The documented Git index byte mismatch is preserved as false;
+prior frozen sources/bindings match. Earlier entries below are historical.
+
+# v13 sequential M01 execution decisions, 2026-09-16 11:14 UTC
+
+The latest user continuation authorizes the separately registered M01following
+B00/B02. Keep B02's consumed observer unchanged: its M01_READINESS file describes
+the earlier batch boundary; use v13_selector_execution_20260916_01's authorization,
+gate decision and live receipts for the subsequent batch. No old model scope
+or execution claim is reopened.
+
+Use the same12metadata/hash-selected days and fixed annual program to isolate
+query selection. One existing verified DeepSeek-V4-Flash route, at most288calls,
+no retries. Qualification requires complete technical denominators, actual paid
+source consumption and an observed different query/probability trajectory under
+the same predictor. Positive Brier gain is not a gate. C00is an independent
+mechanism track; its completion is not required for this selector comparison.
+Late/invalid/failed replies remain in full scoring, with actual latency charged.
+
+CPU quota, not GPU count, blocked the first create. Preserve active experiments;
+wait for a verified release and reuse the unchanged registered worker command.
+The ordinary submitter checks existing job identity before any new create and
+does not retry ambiguous submissions. Platform retry after a definitive quota
+rejection is distinct from prohibited model-request retries. New resources use
+the authorized CCI/ACP pool. No credential is copied into these artifacts.
+
+# v13 strong program baselines prepared and gated, 2026-09-16 10:30 UTC
+
+Entry: `../plans/v13_strong_baselines_20260916_01/README_CN.md`.
+User approved sequential followup execution with CCI resources. Three versioned
+public query selectors now preserve fixed program forecast slots: cyclic round
+robin, public risk/publication recency, and fixed hash. Legacy selectors retain
+behavior. The combined affected regression passes912unique tests, including all
+previous880;13legacy selector/allocation/authorization configurations produce
+identical reports under old/new code, with exact legacy AST specialization.
+
+A metadata/hash-only roster freezes12days, one per region/week at5000m. Two new
+16CPU ACP jobs pt-fmwdnhyy and pt-gi51ss1f qualify and then wait for full B00
+acceptance. No B02 method-day is claimed completed at this checkpoint. After
+complete B00, formal old-score reconstruction, explicit retained-bank identity
+and public action census, they execute at most72additional program method-days.
+Three selector controls plus three coverage factors complete the2x2 using the
+reverified existing B11reference. All new methods use the same annual raw values
+consumer; no refit, model/API call, weather download or confirmation access.
+The no-refit choice isolates selection; it does not deny measured clock effects.
+
+New STATUS.json and minute-level ordinary Python observer carry execution state;
+FINAL_RESULT.json is the formal completion receipt, not this preparation note.
+Existing B00/C00/M00 workers and consumed freezes remain untouched. Total newly
+requested compute is32CPU/0GPU; including prior jobs the allocation is88CPU/2H100.
+All prior frozen package sources remain unchanged. A git status stat-cache
+refresh changed Git index bytes; see INDEX_REFRESH_RECEIPT.json, which preserves
+the mismatch and verifies the original17staged-addition path set. No staging or
+commit was performed; future Git reads use GIT_OPTIONAL_LOCKS=0.
+
+# v13 followup live checkpoint: M00 passed, 2026-09-16 09:48 UTC
+
+Entry: `../plans/v13_followup_20260916_01/README_CN.md`.
+M00 completes12real API attempts:12valid and consumed,28,880provider tokens,
+0retries/unsettled reservations. Independent capture/publication audit passes.
+All12 choose the entire three-query catalogue in original order: interface
+qualification only, no evidence yet of smarter allocation than batch.
+B00 first168-calendar-unit roster member passes all5arms/360rows and formal
+scores; remaining full roster executes on three CPU shards. C00 waits for each
+selected B00 parent case to qualify, then automatically executes exact original
+continuations and GET-v2 branches. Separate legal-source strata audit is running.
+Latest resources:56CPU/2H100 allocated across five jobs; H100nodes provide CPU
+capacity here, no local-model GPU inference claimed. JOBS_03.json is current.
+Full-case/shard scientific conclusions remain pending. No confirmation/refit or
+formal288model batch is launched. FINAL_RESULT.json will be created by the
+bounded completion process; source-strata result has its own receipt.
+
+# v13 B00/C00/M00 followup running, 2026-09-16
+
+User approved sequential execution after the final A00-A06 review. Entry:
+`../plans/v13_followup_20260916_01/README_CN.md`; live state is STATUS.json.
+B00 freezes168daily cases/840program trajectories with existing annual raw banks;
+three ACP CPU jobs use16+16+8CPU. C00 registers12new-bank legal parents and up to48
+GET-v2 branches. M00 registers12single-attempt initial production-selector ticks;
+it is an interface smoke, not12full model forecast days. A one-H100/8CPU ACP node
+runs the auxiliary CPU/API work; local GPU inference is not claimed.
+
+Source matches the prior880-node regression. This batch's6summary checks and one
+mocked-HTTP production smoke pass. Zero-step parent materialization produces an
+identical first-tick report to direct execution. No new fitting/weather download
+or confirmation access. The first auxiliary job was stopped before any actual API
+or parent attempt (platform SUSPENDED); documented handoff pt-x9wf6mak uses
+resume_m00.py and c00_02.py. Preserve original claims and freezes. B00jobs:
+pt-bgtjydm7, pt-5tgzbejc, pt-npr5eak9. Completion is not yet claimed; the bounded
+finalizer writes FINAL_RESULT.json and RESULT_SUMMARY_CN.md when results arrive.
+
+# v13 final amended closeout, 2026-09-16
+
+Canonical receipt: `../plans/v13_execution_20260916_01/FINAL_RESULT.json`.
+The final source passes880unique tests (793existing+87new),0failure/skip/missing.
+A documented A03/A06 amendment after the first876-node close adds strict query
+prefix execution and complete tail dispositions, including original pending-source
+resume. Four new tests first reproduced the gap. Both sequential16CPU ACP jobs
+finish SUCCEEDED; no model/weather/scientific experiment starts. Use
+STOP_RECEIPT_02.json, TEST_RECEIPTS_02.json and FINAL_PRESERVATION_02.json.
+The first closeout/source receipts and earlier notes below remain historical.
+B00/C00/M00 remain unlaunched proposals; this batch stops for review.
+
+# v13 implementation decisions, 2026-09-16
+
+Execute the reviewed A00-A06 first batch and stop for review. The user's expanded
+resource permission prioritizes CCI resources; use one16CPU/64GiB ACP job for the
+CPU regression. API credential remains outside the repository and is not printed.
+No task in this batch requires H100 inference or provider requests.
+
+Preserve v1 defaults and frozen old scripts. New selector uses only query_order,
+with an explicit empty forecast_handles internal adapter and fixed program slots.
+New residual queries exclude payer-scoped cache and any original request identity.
+API recovery requires a separate trusted receipt, retained failure and verified
+production consumption; late results only reconcile costs, never reopen forecasts.
+
+Preserve failed test/audit attempts. Treat unchanged numerical scores separately
+from84corrected consumer labels. Keep annual banks for the next bridge; measured
+clock differences alone do not prove benefit from refitting or justify Y-based
+selection.12M00 requests,168B00 calendar units and12C00 parent candidates are
+unsent/unlaunched proposals with distinct remaining qualification requirements.
+
 # Decisions
+
+## v12 execution and closeout decisions, 2026-09-15
+
+Complete the registered engineering, annual data and bounded selector comparison
+under the expanded CPU/API authorization, retaining C1/C2/C3 and all scientific
+gates. Use one exact provider-listed DeepSeek-V4-Flash ID; bind the annual banks
+before the 288-request development comparison. The model selects queries only;
+the frozen program produces probabilities. Do not call them direct LLM forecasts.
+
+Retain 217 invalid selector replies and all denominators. The second compatibility
+slot tests strict JSON schema on the same synthetic prompt after the failures;
+this is a posthoc diagnostic, not a repair or rerun of formal model responses.
+Next interface work gets a new identity and remains separate from free-output data.
+
+After 108 method runs finish, stop only the original serial score tail and record
+the platform's SUSPENDED state. Reuse its three completed formal scores and audit
+21 unfinished groups in parallel using the identical frozen scorer. This changes
+verification scheduling, not forecast trajectories, outcomes, or source/model fees.
+Never represent the controlled stop as a successful process exit or restart it.
+
+Report 16 positive opportunities from a single case/day, zero positive C2 parent
+outcomes and a negative-case-only model gain over F_BASE_ONLY. A lower development
+mean alone cannot establish novelty, calibration guarantees, or independent-process
+value. Confirmation and all16-hazard completion remain unclaimed. Next gates are
+described in the batch findings and selector-interface proposal, with no new model
+calls or confirmation opened during closeout.
+
+## v11 execution decisions, 2026-09-15
+
+Continue the weekly-audit priorities: complete exposed seasonal weeks, qualify
+annual source roles, and register a focused C2 design. Do not add a new model
+matrix before these comparisons are interpretable. Use CPU ACP jobs for replay
+and bounded public acquisition; GPU authorization remains available when needed.
+Scripts handle ordinary stage handoffs and status checks without repeated LLM polling.
+
+Preserve the failed fullweek01/F_COMMON preflight and use a fresh fullweek02 freeze.
+The common predictor consumes only common features; it has a distinct bound bank
+and comparison group. Keep all five arms on the same calendar, result mask and
+prediction schedule. Do not attribute a common-versus-values bank difference solely
+to acquisition. The nine-arm replay speed measurement is one-case evidence only.
+
+Freeze432 logical annual catalog slices before retrieval. Validate the fixed
+February2024 three-region sample, then acquire remaining catalogs automatically;
+separate native-body sample preparation from catalog success. Capture padding
+does not grant fitting-role eligibility: the full evidence/reference footprint
+must fit inside a single purged chronological role before any optimization.
+
+C2's72 calendar-selected target prefixes and144 native E tasks are developmental.
+All current coverage examples are full, so do not present construction success
+as evidence of a challenging coverage mechanism. Freeze branch resources, state,
+failure retention and the field-to-feature-to-F chain before actual branches.
+The previously exposed results do not become independent confirmation; Bay stays closed.
+
+## v10 review decisions, 2026-09-14
+
+The new10h authorization resumes work in `../plans/v10_execution_20260914_01/`;
+historical pause records are not reopened or edited. Keep C1/C2/C3 and16 hazards.
+Core scientific priorities are source support, shared resource attribution,
+strong fixed-information predictors, revision/adoption controls and independent
+process confirmation. Increasing model count is not a contribution by itself.
+
+Preserve old banks and scores. Report raw-cell changes and calibration-family
+changes separately. New fixed total-prior calibration and equal-weight monotone
+threshold projection do not read evaluation labels to select parameters.
+Cross-threshold consistency only applies to identical information and support.
+The existing count fuser does not consume final E aggregate; correcting that
+aggregate alone must not be presented as improved F.
+
+New API trials use fixed per-call escrow so concurrent workers do not update a
+global AFS budget JSON. Retain dispatch intents, raw responses, usage, terminal
+failures and append-only reconciliation separately. A pre-HTTP intent is not
+proof that a server processed a request. Unknown charges never become zero.
+Formal new H15 execution requires provider-bound results, production identity,
+lifecycle timing, a complete source manifest and comparison contract. The new
+measurement.v3 order puts policy intervention after sealing but before begin;
+v2 ordering remains unchanged for old journals. The reserved confirmation week
+stays unopened while these development controls are qualified.
+
+The v10 development evidence now includes all12 seasonal region-weeks, matched
+27B/235B feature/temperature tasks, a fixed-backend235B selector and a uniformly
+clarified84-task extraction diagnostic. Preserve all original banks, answers and
+failures. The year-feature ablation uses only originalDec2024 fit/calibration
+roles; seasonal labels do not enter its optimizer. Both ablation and clarification
+are informed by exposed errors, not independent confirmation.
+
+Use a descriptive H15 report-label data card with explicit main-body semantics,
+censoring, visible scope and comparison tolerance. Formatting-only differences
+between current and frozen parser/scorer modules are verified by full AST equality;
+this is not permission to replace experiment source. Full-week positive counts
+cannot be borrowed as the denominator of first-day budget controls.
+
+Separate method gains from backend gains, field accuracy from future skill, and
+source-query equality from total compute equality. The235B selector does not beat
+FOLLOW on the exposed5km winter sample. Future fitting/calibration should each
+cover complete seasons before new fixed-backend active comparisons and confirmation.
+Keep the current registered scope closed; finish audit, reporting and private
+publication. The next performance candidate is reuse within one fully verified
+score call, since nine-arm formal scoring currently invokes19 full journal replays;
+the speedup has not yet been measured or applied to frozen runs.
+
+## v9 follow-up decisions, 2026-09-14
+
+New execution records live in `../plans/v9_followup_execution_20260914_01/`.
+CPU handoff01 preserves18 completed original units and launches only102 remaining
+program units on ACP64CPU/256GiB, zero GPUs; model concurrency and fees stay frozen.
+The original dispatchers are paused and retired only after real child exit status
+is recorded. Frozen model/source/data/config bytes and one-use claims are retained.
+RareJan9 keeps its separate outcome-selected registration and cannot be pooled as
+natural-calendar performance. Corrected E02 is primary; original AFS-failed E01
+remains a transport experiment, including its unresolved fee reservations.
+Posthoc slot/aggregate attribution never replaces the model's original E answer.
+
+Use explicit production_bound_v1 for managed model spools and test_callback_v1
+for transport fixtures. lifecycle_wall_v1 includes all polling/recovery wall gaps
+in delivery delay, never as fabricated provider compute. Legacy receipt timing
+remains explicitly distinct. Unknown executions keep reservations.
+Regional fitting: Dec1-19 2024; calibration: Dec23-29; admit only complete input
+and outcome footprints within each interval, with no cross-role native revision.
+Use conservative global time/asset components and disclose their limitations.
+User authorizes a new bounded DeepSeek trial and optional GLM5.3 exploration;
+this does not reopen consumed experiment launchers. Key remains outside Git.
+
+Formal follow-up API budgets: two compatibility calls/USD0.10, up to1200 E calls/
+USD3, and up to2304 base-bound continuous pilot calls/USD12; no model retries.
+Fees reserve peak tariffs and cache-miss input, retain unknown charges, and are
+conservative upper estimates, not invoices. Use DeepSeek API for this batch;
+official GLM5.3 FP8 weights exceed the authorized four-card memory configuration.
+Static E baseline conflicts are retained as eligibility exclusions. Continuous F
+keeps all72 hourly/site opportunities per registered case. The independent watcher
+starts audits once per completed stage; no model dispatch occurs in analysis.
+Temperature source/control failure01 is preserved; continuation02 reuses16 verified
+FOLLOW trajectories and only reruns48 originally failed COPY trajectories.
+
+
+## v9 results-informed decisions, 2026-09-14
+
+- Preserve C1/C2/C3 and the16-hazard roadmap; v9 integrates reviews and supplies
+  new evidence rather than adding a research concept.
+- Typed COPY_CURRENT and COPY_BASELINE submit fresh OVERRIDE calls with their
+  own identities and costs. They refresh normal expiry and are not KEEP.
+  All future F comparisons retain both controls and Follow.
+- Keep the28 fresh program trajectories separate from historical measured-clock
+  LLM trajectories. Their1ms program/persistence values are declared scenarios.
+  Gains from retaining an older visible probability are not new forecast values.
+- Freeze failure continuation as fail_session_v1 or skip_failed_call_continue_v1.
+  Unknown reservations remain held, and a failed logical request is not retried.
+  Explicit provider result policies do not invent unknown publication times.
+- Qwen3.8-27B uses four independent BF16 H100 replicas,144 E-only development
+  requests plus4 compatibility calls. The independent E diagnostic runs after
+  core/reference qualification while full-day program scoring finishes in
+  parallel; it is not a new F or C1 model comparison.
+- Retain one code-fenced invalid reply and all17 other incorrect final E answers.
+  Slotwise output improves this slice while using more tokens and time. Report
+  all-field accuracy separately and do not infer same-total-budget benefit.
+- Dispatch qualification omits evaluator reference hashes; the final audit
+  reconstructs all144 from bound visible inputs/reducer and records that limit.
+  Future launch freezes must include evaluator-side reference hashes as well.
+- DWD fetched_at comes only from its original real receipt in a new registry.
+  This does not establish historical first-seen or promote archive timing to
+  online evidence. Mature and missing result denominators remain explicit.
+- Finish CPU scoring/documentation after the original window with actual times;
+  do not reopen consumed GPU jobs. Preserve the unopened confirmation week and
+  run process grouping/regional strong baselines before independent confirmation.
+
+## v8 measurement decisions, 2026-09-13
+
+- Keep v8 C1/C2/C3, E/F/D/MM and W00-W19. Measure lawful evidence, reachable
+  acquisition and realized future skill separately; no positive-gain release gate.
+- Retain all1,008 large/small-model benchmark responses and all failures. A235B
+  complete-evidence advantage and partial-evidence regression coexist; architecture,
+  training and quantization differ, so this is not a pure model-size causal effect.
+- Keep the40 original72-query public-schedule program runs separate from the new
+ 52-session48-query actual-model-clock adaptive matrix. Every live method has its
+ own new matched program controls, original requests and shared-budget ledger.
+- Disclose selector/predictor roles and per-forecast model-call fees explicitly.
+  Preserve adaptive_large_01 as zero-inference rejection; only large02 is launched.
+- Keep declared1ms program/source timing distinct from measured model compute and
+  delivery. Do not claim operational speedup or end-to-end cost-efficiency.
+- Source/selector/predictor have separate request identities; worker claim follows
+  durable checkpoint commit. Serial recovery is not physical remote exactly-once.
+- Full professional forecasts designated common information are free; HEFS697
+  product E predicates are therefore not a charged-acquisition main-track gain.
+- All five new H15 calendars are development exposed. Do not count stations,
+  thresholds, leads or adjacent days as independent processes. New regional
+  probability maps require independent training/calibration data before scoring.
+- Keep the Dec2023 Bay frequency bank and disclose temporal transfer. No refit
+  follows from negative2025 scores and no whole-system calibration is asserted.
+- Native MRMS unit/QC/duration qualification does not identify its exact physical
+  time endpoint. Point-temperature tests do not establish multi-day extremes.
+- Official Berus daily TXK/TNK qualify00-24UTC daily references for2017-2018.
+  Actual hourly/six-hour observations miss some native extreme days, so never
+  replace continuous daily extrema with sampled maxima/minima. Native EUPP
+  mx2t6/mn2t6 now supplies a matched daily/multi-day candidate under explicit
+  archival availability; raw member fractions are a research mapping, not a
+  calibration guarantee. The whole1951-2025
+  archive is development-accessible; unanalysed years are not untouched holdout.
+- Daily temperature duration probabilities follow each original member through
+  all three days; do not multiply marginal probabilities. Exclude partially
+  elapsed day0 from full-future scoring and retain outside-reference outcomes.
+  Monthly typed snapshots are not continuous adaptive or full-context comparisons.
+- D-sim is explicitly synthetic, with fixed F and separate research losses.
+  Two-step planning assumes current probabilities constant; it is not globally
+  optimal. The current typed session supports a frozen exogenous D schedule;
+  serial pending source/selector/predictor recovery carries its state and costs.
+  A separate conditional replay now chooses D actions from current admitted F;
+  it preserves a captured program F stream across all D methods. Full-session
+  acquisition/model/D feedback and general concurrency remain unqualified.
+  Original adaptive GPU source remains frozen before this optional D extension.
+- Current AWC capture records collector first-seen and actual native time/version.
+  It is source-only, with a fixed4h/34-request bound; it is not live model scoring.
+- Preserve the original raw Git index snapshot. Verify current staged contents
+  and flags exactly rather than blocking on cache/extension byte refresh alone;
+  frozen experiment files must still match every source/data hash independently.
+- Posthoc evidence witnesses use only the disclosed exact-product intervals;
+  they reproduce576 original E labels. TAF examples retain the original parser
+  reference and are not advertised as a second independent native decoder.
+- X09 uses an explicit shared fixed-information union for both output scopes.
+  Single-target requests also see the whole group; no private-context sharing
+  gain is inferred. Per-call512-token caps imply unequal total output budgets
+  per three-target group. Invalid multi-target replies retain every target and
+  fail all their E answers while F falls back. Count physical batch time once;
+  empty-capture rehearsals have no model metrics. Preserve the frozen protocol.
+
+## v7 typed adaptive development decisions, 2026-09-13
+
+- Preserve v7/C1/C2/C3 and the 16-hazard roadmap. Add one typed adapter to the
+  existing coordinator, not a new scheduling loop. Quiescent snapshots are not
+  in-flight, preparation-state or operational-action recovery claims.
+- Native evidence bundles use actual settled session receipts and entitlements.
+  Static fixed-input bundles remain a separate representation experiment; their
+  archive acquisition assumptions do not establish dynamic acquisition benefit.
+- Keep constant-unknown and unchanged-baseline failures. Compare fresh full and
+  task-focused native input without support labels or hidden annotations. Keep
+  the full common TAF and current state in F-bearing focused inputs.
+- New TAF heads predict product coverage/current version only, with no F score.
+  Native validity-edge tasks use real text and declared target windows; they are
+  not evidence of future physical visibility forecasts. Source IDs/task IDs must
+  not encode evaluator answers. Unsupported and conflicting products stay separate.
+- The 2025-02-03 calendar is chosen before download and includes all 432 hourly
+  opportunities. Zero/rare positives are retained. Use the unchanged Dec 2023
+  bank with explicit temporal transfer; do not fit on the new outcome table.
+- Freeze the new 252-call diagnostic independently of the consumed 108-call
+  batch. Three H100 workers use fresh messages, one repeat, no retries or training.
+  Engineering admission never requires positive LLM gain.
+
+
+## v7 follow-up execution decisions, 2026-09-13
+
+- Reuse one event-clock function for legacy probability, typed admission and
+  synthetic preparation. Historical snapshots/captures retain their frozen source.
+- Formal engineering scores replay registered journals and cutoff states. Whole
+  envelopes, E questions, product revisions and target baseline context are distinct.
+- Initial H15 fallback is the frozen prior-month no-TAF/pooled frequency; never
+  expose a target's later TAF-derived value as its early fallback. The amendment
+  changes no scored cutoff or model output in the completed smoke.
+- Keep the 108-call smoke's unchanged F probabilities and constant-unknown E
+  errors. E-only is excluded from F scoring. Further development needs a new
+  input/prompt/calendar freeze, not selective replacements of these failures.
+- Current quiescent restore covers the original stepped aviation controller;
+  typed adaptive migration and in-flight/D branch snapshots remain separate gates.
+- Scalar archive-latency scenarios and synthetic preparation are engineering
+  qualifications. Neither implies proved publication, operational utility,
+  independent weather processes or sixteen-hazard completion.
+
+## Integrated v7 final execution decisions, 2026-09-13
+
+- Keep original and local statistical maps as separately frozen controls. Local
+  calibration improves 2024 but worsens 2026; do not select years, banks or source
+  windows after inspecting gains. Fewer pooled fallbacks is not a quality proof.
+- Record 720 new actual calls separately from 31,104 audited historical calls.
+  Preserve all filled-example copies and failures; E-only contributes no F score.
+  New independent heads are CPU-ready, not additional F-only model evidence.
+- Reject common-baseline adoption at or beyond the target's legal update upper
+  boundary; retain the rejection journal. A partial-window task may keep an earlier
+  issued baseline. Derived availability must not precede its parent's availability.
+- Keep current code fixes and future head interfaces distinct from the source
+  copies frozen into GPU batches and CPU replay. Do not rewrite historical results.
+- Treat scalar MAE as numerical engineering until lawful submission times, provider
+  support semantics and same-session joint budget graphs are bound explicitly.
+- Use the final report and next plan in `../plans/v7_execution_20260913/` as the
+  current execution handoff; no new scientific admission follows from file counts.
+
+## Integrated v7 execution decisions, 2026-09-13
+
+- Keep v7/C1/C2/C3 and the original sixteen-hazard roadmap. Execute W0--W3 through
+  `../plans/v7_execution_20260913/`; do not replace historical freezes or results.
+- Separate an actual predictor call, selector call, candidate value, chosen action
+  and deadline-effective value. Forcing saved candidates to override is an offline
+  diagnostic, with mixed gains, not a newly executed adaptive policy.
+- Add an immutable fixed-evidence lane before changing the adaptive engine. A
+  scalar temperature target uses its native point support and units; no artificial
+  time interval or probability encoding is introduced.
+- Keep filled-output-example sensitivity and the ensuing explicit-truth head
+  probes as exposed development diagnostics. Never silently replace constant or
+  incorrect outputs, or count E-only calls as submitted F forecasts.
+- Use historical native LAMP bulletin minutes, not normalized IEM runtime, for
+  chronology checks. Native thresholds and 15-minute minimum support stay separate
+  from old 1km/5km hourly-report targets.
+- Admit EUPPBench/DWD to numerical integration only. Keep SEEPS daily-window/QC and
+  CNRFC regulated/unregulated/hourly-support questions explicit; exact timestamps
+  and successful downloads do not prove the physical targets are equivalent.
+
+## Final v7 development decisions, 2026-09-13
+
+- Keep v7/C1/C2/C3 and all 16 hazards; publish the verified engineering and
+  regional development result with conditional scientific acceptance.
+- Retain all zero/negative model gains. Separate native complete TAF input from
+  the Bay-trained research probability mapping transferred to Front Range;
+  distinguish probability loss, ranking and operational warning claims.
+- Use one source-query path for joint E references, with all opportunities in
+  the denominator. Source-only E headroom is not a per-target failure penalty
+  or the objective an F policy must maximize.
+- Preserve unchanged-message E order repeats as post-hoc development probes.
+  All 768 raw answers match their originals; this does not create independent
+  weather evidence or identify a general representation effect.
+- Report actual binding call caps, unused token/compute quotas and cheap bulk
+  transport separately. Account for selector calls in the same model budget.
+- Preserve the original QINE/CFS hydrology chain. Current native Stage/ft
+  samples and official stage thresholds support the next provider preflight;
+  secondary NWPS flow is kcfs. Shared observations are not independent truth,
+  and deterministic stage forecasts are not native exceedance probabilities.
+- Keep source/model archives, local HEAD/index and historical failures intact.
+  Final GitHub publication and readback use separate repositories/indexes and
+  receipts; archive replay does not count as new inference.
+
+## v7 verification decisions, 2026-09-12 21:50 UTC
+
+- Preserve all2024/2026 opportunities, strict-parser failures and original request
+  errors. New source retries have separate receipts; old results are not replaced.
+- Use one unknown binary outcome per target when bounding paired loss across its
+  repeated lead times. Calendar block resampling is a sensitivity assumption,
+  not independent-storm confirmation.
+- Preserve both independent TAF decoder results. Normalize external PROB syntax,
+  but retain native FM minutes where the external implementation truncates them.
+- Compare the two E models on byte-identical96-case inputs. Assisted fact tables
+  and rule examples remain diagnostic conditions, not evidence of active F gain.
+- Offline relocation replays recorded ACP receipts rather than claiming fresh
+  infrastructure checks. No model weights, network or new calls are needed.
+- The bounded four-batch queue owns its one-use launches and validators. Helper
+  hashes are frozen; do not edit them or submit duplicate batches during execution.
+
+## v7 review execution, 2026-09-12
+
+- Keep v7 and C1/C2/C3 fixed. Apply the review through the separate governing
+  amendment at `../plans/v7_review_execution_20260912/PLAN_AMENDMENT_CN.md`.
+- Separate public product/measurement support from model estimates and hidden
+  evaluation labels. Use a nonempty support test, legal revision replacement,
+  unbounded missing intervals and unique weighted spatial coverage.
+- Evaluate jointly reachable target sets using one legal resource/time witness;
+  individual reachability is only a relaxation. Fixed acquisition quotas charge
+  the initiating target in full. First X01 varies request/byte allocation only.
+- Use complete TAF with a separately fitted research probability map. Neither
+  TEMPO nor a task-name match supplies an official event probability. Retain all
+  routine slots, corrections with unknown input chronology, and unresolved results.
+- Preserve negative F gains and E errors. Use fixed calendar expansion to inspect
+  positive-event coverage; do not remove quiet days or select winning tasks.
+- Freeze each GPU batch separately, reconcile actual tokens/costs/entitlements,
+  and keep original failures. User permission covers up to4 H100s concurrently;
+  old consumed GPU and paid API launch scopes remain consumed.
+
+## v7 additional execution decisions, 2026-09-12 20:20 UTC
+
+- Keep strict native TAF projection errors. A verified but unparsed new envelope
+  has its full raw text and a separately identified frozen fallback, preserving
+  target validity and preventing stale old mapping reuse. Windowless NIL/CNL
+  produces a same-station withdrawal until a later legal product arrives.
+- Treat the observed three-station hourly bulk service as a strong cost audit.
+  Preserve original logical prices and separately label physical batch sensitivity;
+  do not infer deployed C1 value from artificial source-slot scarcity.
+- Charge selector and forecaster calls together, show current legal target state
+  and remaining hard resources, and distinguish cheap program updates from model
+  inference. Current-state/action v2 runs remain separate from prior v1 results.
+- Use complete fixed2024 calendars and a separately registered2026 replication,
+  with prior-December calibration. Retain missingness, fallback and all failures;
+  never count multiple leads or neighboring hours as independent weather events.
+
+## Expanded dataset use and publication, 2026-09-12
+
+- Keep all97 entries and16 hazards, assigning each source to professional forecast,
+  reference/proxy, perception diagnostic, event index or conditional extension.
+  A decoded sample is not a formally admitted prediction task.
+- Admit nine recovered sample entries while preserving all partial downloads,
+  failed requests, empty geometries and negative examples. Preserve original
+  registry snapshots and record the new inventory in a separate bundle.
+- Record GWIS/EFFIS as shared-backend delivery entries. Keep the same distinction
+  for USGS/CAMELSH, METAR/IEM, MRMS subproducts and benchmark-derived labels.
+- Exclude unknown SenForFlood label semantics from binary flood scoring. Use the
+  selected Urban positive tile only for exposed development feasibility. Record
+  CEMS EMSR842 as wildfire rather than claiming the planned flood AOI is validated.
+- Publish selected code/reports on the existing private GitHub branch, based on
+  its current remote tip and with an isolated publication index. Preserve the
+  dirty local worktree/index; omit raw large assets, environments and credentials.
+- Continue with historical matched-task qualification and falsifiable N1/N2/N3
+  comparisons; data breadth alone does not establish novelty or acquisition gain.
+
+## Real task-chain feasibility and candidate priority, 2026-09-12
+
+- Use the advisor proposal's priority families for a bounded real-download pilot.
+  Preserve the97-entry access registry and all16 hazard definitions; matching
+  these initial chains does not qualify every source or hazard for formal release.
+- Prefer temperature and US TAF/METAR for the next development qualification.
+  Retain HEFS/USGS as a continuous-flow chain and conditional warning flagship:
+  actual short historical versions are verified, but flood thresholds and multiple
+  independently sampled extremes are not. Keep strict rainfall and UK TAF pending.
+- Retain all34 fixed targets, including suspect-temperature and accumulation
+  failures. The additional Phoenix daytime target belongs to the original heat
+  process. Do not replace exact-time results with7/10-minute near-time diagnostics.
+- Decode native METAR threshold values; do not reconstruct strict metric labels
+  from rounded mile columns. Record19 UK sub-1km reports and11 exact1000m reports,
+  correcting the preserved initial30 count. Keep censoring and conditional TAF
+  segments explicit; prevailing-only extraction is an incomplete projection.
+- Separate asset identity (query URL and bytes) from independent information.
+  Different endpoints, representations and updated products are not automatically
+  independent evidence. Common professional forecast updates remain the primary
+  baseline for later extra-evidence acquisition experiments.
+- Use source-bound public checkpoint/private outcome files for CPU qualification.
+  Controlled release delays do not prove historical availability; file separation
+  does not certify a secure live model runtime. No new model batch is needed for
+  this acquisition task, and no positive novelty follows from successful decoding.
+
+## Advisor-stage research and candidate selection, 2026-09-12
+
+- Prioritize the user's latest request for an advisor discussion packet over
+  continuing exhaustive acquisition or launching another model matrix. Keep the
+  original16-hazard scope with explicit source/target/QC requirements per family.
+- Treat acquisition value, source dependence/representation, and deadline/failure
+  interventions as testable hypotheses. A decoded sample does not prove a full
+  task chain, useful additional information or a novel empirical result.
+- Qualify hydro, station temperature/precipitation and TAF/METAR historical chains
+  before choosing two main families. Hydro is a conditional flagship because its
+  historical business versions, thresholds and extra-evidence utility remain
+  limiting. Keep NHC as an engineering and natural-version control.
+- Propose common latest-legal-professional-forecast updates to every method for
+  the primary extra-evidence comparison. Separately study acquisition of forecast
+  updates themselves. Preserve cheap all-read and strong numerical baselines.
+- GEE access is now verified for the recorded products. Keep it as an acquisition
+  and processing channel with frozen asset identities, never an extra independent
+  source or proof of historical ingestion. Preserve all old failures and QA gaps.
+- Document the97-entry registry snapshot and the retained late undecoded prefixes
+  without upgrading their states. Keep authorization, target completeness,
+  scientific semantics and redistribution conditions distinct.
+- Use historical replay as the main research route, with separate verified-time
+  and prospective conditions. Advisor review of the research design does not add
+  per-item human Gold review. Preserve old experiments and report negative results.
+
+## Hydro data admission and prospective shadow, 2026-09-12
+
+- Advance the already completed ActiveWarning minimum loop with a separate water
+  namespace and fresh prospective registration. Preserve all historical runs;
+  distinguish a working real-data LLM replay from the currently pending online trial.
+- Select nine input-risk-stratified candidates from six regional catalogs; admit
+  seven, run six with two ordinary controls and one coastal context. Do not count
+  gauges/timestamps as independent extreme events or infer population incidence.
+- Bind water-level reference and current minor threshold. Use DNLF1's documented
+  minus0.8ft NAVD88 transform; retain CHLA2's datum mismatch and the empty62614
+  query. Use strict CO-OPS QC and separate provisional from approved observations.
+- Keep HEFS QINE/CFS flow diagnostics separate where official CFS thresholds are
+  missing. Tide Height/MLLW is a distinct variable contract and is not automatically
+  weather-attributed storm surge. Source retransmission is not sensor independence.
+- Freeze18 future targets,72 method opportunities,15 polls/360 logical downloads,
+  four CPU fetch children and no retries. Require actual disk receipts before each
+  target's two-hour deadline. Preserve every poll's outcome version and failures.
+- Run four simple numerical policies first. No new LLM/GPU batch is needed to wait
+  for genuine future observations. Existing up-to-four-H100 permission persists;
+  a later model comparison needs a fresh bounded experiment and useful data.
+
+## ActiveWarning minimum loop, 2026-09-12
+
+- Use NHC/HURDAT2 as the fixed-future-target bridge and HEFS/USGS as a continuous
+  flow pilot. Exclude GEE under the current user instruction. Other authorized
+  source samples enter only after target/time/support/outcome pairing.
+- Select model targets by input-time coverage, not error or result availability.
+  Preserve unresolved targets; distinguish HURDAT2 retrospective analysis from
+  USGS provisional observations and from any future independent sensor claim.
+- Keep controlled release times explicit and separate from captured timestamps;
+  do not imply prospective online performance. No flow warning score without a
+  compatible flow threshold; point-threshold probabilities remain diagnostic.
+- Freeze the same forecasting backend for acquisition comparisons. Treat the
+  canonical view as a combined representation/state diagnostic and budget4
+  all-read as an additional-resource reference. Do not force active policies to win.
+- After17 long-ID copy failures, preserve the entire first matrix and perform
+  one fresh full matrix with short public target handles and an alias registry.
+  Keep both experiments separate; do not repair individual historical answers.
+- Report the negative acquisition result and strong persistence baseline. Further
+  research prioritizes independent extreme processes and useful additional data.
+  Current same-chain canonical reduction is not a general multi-provider lineage
+  model, a full LEAP reproduction or a standalone novelty proof.
 
 ## P6 first offline milestone and supplemental fourth plan
 

@@ -1,3 +1,15 @@
+> **⚠️ PARTIALLY SUPERSEDED BY BATCH V4 (2026-09-23/24).** Under "Repairs made" below, the line
+> "Legacy checkpoint-local outcome conflicts remain explicit in `inconsistent_target_groups` rather
+> than being silently treated as a clean target-level roster" understates what V4 actually closed:
+> conflicting rows are now excluded from every qualified/primary score field, not merely flagged
+> while still contributing to them (see the superseded note atop `SCORER_CONTRACT_V2.md` in this
+> same directory, and `plan/plan_v19_0923/v19_execution_20260923_v4/OPUS_REVIEW_OF_SONNET.md`).
+> Test counts under "Validation" (148/34/25) are also a pre-V4, pre-V3-even snapshot; see
+> `plan/plan_v19_0923/v19_execution_20260923_v4/TEST_RESULTS_V4.json` for current counts. Original
+> text preserved unchanged below.
+
+---
+
 # DisasterTrace v18 review and repair status
 
 Date: 2026-09-23

@@ -33,3 +33,32 @@ def test_census_rejects_duplicate_episode_identity():
             {"episode_id": "e1", "qualifications": [q("DUPLICATE", False, False)]},
             {"episode_id": "e1", "qualifications": [q("DUPLICATE", False, False)]},
         ])
+
+
+def test_census_uses_only_the_last_checkpoint_on_a_v3_roster_not_all_three():
+    # A v3 (T-60/T-40/T-20) episode re-qualifies the same 2-row stream at each
+    # checkpoint, with visibility only growing. Counting every checkpoint
+    # would triple the row denominator for the same underlying evidence; the
+    # census must use only the last (most complete) checkpoint.
+    episode = {
+        "episode_id": "e1",
+        "checkpoints": [
+            {"checkpoint_id": "T-60", "qualifications": [q("NEW_TARGET_CONTENT", True, True)]},
+            {
+                "checkpoint_id": "T-40",
+                "qualifications": [q("NEW_TARGET_CONTENT", True, True), q("NOT_YET_AVAILABLE", False, None, "unknown")],
+            },
+            {
+                "checkpoint_id": "T-20",
+                "qualifications": [q("NEW_TARGET_CONTENT", True, True), q("TARGET_CONTENT_CHANGE", True, True)],
+            },
+        ],
+    }
+    report = evidence_census([episode])
+    assert report["evidence_row_denominator"] == 2  # T-20's row count, not 1+2+2=5
+    assert report["episode_rows"][0]["status_counts"] == {"NEW_TARGET_CONTENT": 1, "TARGET_CONTENT_CHANGE": 1}
+
+
+def test_census_rejects_a_v3_episode_whose_last_checkpoint_has_no_qualifications():
+    with pytest.raises(ValueError, match="Every episode needs qualification rows"):
+        evidence_census([{"episode_id": "e1", "checkpoints": [{"checkpoint_id": "T-20", "qualifications": []}]}])

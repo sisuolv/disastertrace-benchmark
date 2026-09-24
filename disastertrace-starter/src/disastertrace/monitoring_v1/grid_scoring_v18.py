@@ -167,14 +167,41 @@ def score_complete_grid(
     statuses = defaultdict(int)
     for row in rows:
         statuses[row["submission_status"]] += 1
+    # A method comparison is meaningful only on a complete common roster.
+    # Preserve every supplied row for process accounting, but explicitly gate
+    # comparative claims when a target/method cell is absent or its weights
+    # differ from the other methods.
+    target_methods: defaultdict[str, defaultdict[str, set[tuple[int, str]]]] = defaultdict(
+        lambda: defaultdict(set)
+    )
+    target_weights: defaultdict[str, dict[str, dict[int, float]]] = defaultdict(dict)
+    for row in rows:
+        target = str(row["target_id"])
+        method = str(row["method"])
+        target_methods[target][method].add((int(row["checkpoint_index"]), str(row["checkpoint_id"])))
+        target_weights[target].setdefault(method, {})[int(row["checkpoint_index"])] = float(row["score_weight"])
+    comparison_eligible = True
+    for methods in target_methods.values():
+        rosters = list(methods.values())
+        if rosters and any(roster != rosters[0] for roster in rosters[1:]):
+            comparison_eligible = False
+    for methods in target_weights.values():
+        weights = list(methods.values())
+        if weights and any(roster != weights[0] for roster in weights[1:]):
+            comparison_eligible = False
     return {
-        "schema": "disastertrace.v18.complete_grid_score.v2",
+        # v3 (Batch V4): a conflicting target's rows are now excluded from every
+        # qualified/primary field instead of merely being flagged while still
+        # contributing to them; see legacy_all_rows_including_conflicts in the
+        # nested report and OPUS_REVIEW_OF_SONNET.md for the full account.
+        "schema": "disastertrace.v18.complete_grid_score.v3",
         "registered": len(rows),
         "scored": len(rows),
         "submission_status_counts": dict(sorted(statuses.items())),
         "valid_submissions": sum(row["submission_valid"] for row in rows),
         "carry_forward": sum(row["prediction_source"] == "carry_forward" for row in rows),
         "fallback": sum(row["prediction_source"] == "fallback" for row in rows),
+        "comparison_eligible": comparison_eligible,
         "report": report,
         "rows": rows,
     }

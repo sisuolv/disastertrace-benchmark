@@ -89,6 +89,8 @@ class EvidenceRecord:
             raise ValueError("Evidence identity is required")
         _as_int(self.issued_at, "issued_at")
         _as_int(self.available_at, "available_at", required=False)
+        if self.available_at is not None and self.available_at < self.issued_at:
+            raise ValueError("available_at cannot precede issued_at")
         _as_int(self.valid_start, "valid_start", required=False)
         _as_int(self.valid_end, "valid_end", required=False)
         if self.valid_start is not None and self.valid_end is not None:
@@ -159,6 +161,25 @@ def _strip_transport(value: Any) -> Any:
     return value
 
 
+def _project_interval(value: Mapping[str, Any], target_start: int, target_end: int) -> dict[str, Any]:
+    """Clip an overlapping interval so outside-target extensions are ignored."""
+
+    interval = _interval(value)
+    if interval is None:
+        result = _strip_transport(value)
+        return result if isinstance(result, dict) else {"content": result}
+    start, end = interval
+    result = _strip_transport(value)
+    if not isinstance(result, dict):
+        return {"content": result}
+    for left, right in _INTERVAL_KEYS:
+        if left in value and right in value:
+            result[left] = max(start, target_start)
+            result[right] = min(end, target_end)
+            break
+    return result
+
+
 def _project(value: Any, target_start: int, target_end: int) -> Any:
     """Project interval-bearing content onto the target window."""
 
@@ -171,7 +192,7 @@ def _project(value: Any, target_start: int, target_end: int) -> Any:
                 if interval is not None:
                     saw_interval = True
                     if _overlaps(*interval, target_start, target_end):
-                        projected.append(_strip_transport(item))
+                        projected.append(_project_interval(item, target_start, target_end))
                 else:
                     projected.append(_project(item, target_start, target_end))
             else:
@@ -180,7 +201,7 @@ def _project(value: Any, target_start: int, target_end: int) -> Any:
     if isinstance(value, Mapping):
         interval = _interval(value)
         if interval is not None:
-            return _strip_transport(value) if _overlaps(*interval, target_start, target_end) else None
+            return _project_interval(value, target_start, target_end) if _overlaps(*interval, target_start, target_end) else None
         return {
             str(key): _project(item, target_start, target_end)
             for key, item in value.items()
@@ -288,6 +309,7 @@ def qualify_evidence(
     witness = {
         "source_identity": now.identity(),
         "previous_source_identity": None if prior is None else prior.identity(),
+        "relation_status": now.relation_status,
         "issued_at": now.issued_at,
         "available_at": now.available_at,
         "as_of": as_of,
@@ -320,38 +342,36 @@ def qualify_stream(
 ) -> list[EvidenceQualification]:
     """Qualify a chronological stream, retaining every row and its witness."""
 
-    previous: EvidenceRecord | None = None
+    previous_target: EvidenceRecord | None = None
     previous_arrival: EvidenceRecord | None = None
     out: list[EvidenceQualification] = []
     for row in records:
         current = row if isinstance(row, EvidenceRecord) else EvidenceRecord.from_mapping(row)
         if previous_arrival is not None:
-            if current.issued_at < previous_arrival.issued_at:
-                raise ValueError("Evidence stream is not chronological by issued_at")
+            # This API consumes an arrival stream. An old bulletin can arrive
+            # after a newer issuance, so issued_at is metadata rather than
+            # the chronology key. Equal-time arrivals remain auditable.
             if (
-                current.issued_at == previous_arrival.issued_at
-                and current.available_at is not None
+                current.available_at is not None
                 and previous_arrival.available_at is not None
                 and current.available_at < previous_arrival.available_at
             ):
                 raise ValueError("Evidence stream is not chronological by available_at")
             if (
-                current.issued_at == previous_arrival.issued_at
+                current.available_at is not None
                 and current.available_at == previous_arrival.available_at
-                and current.source_id < previous_arrival.source_id
+                and current.issued_at < previous_arrival.issued_at
             ):
-                raise ValueError("Evidence stream is not chronological by source_id tie-break")
+                raise ValueError("Evidence stream is not chronological by issued_at at equal arrival time")
             if (
-                current.issued_at == previous_arrival.issued_at
-                and current.available_at == previous_arrival.available_at
+                current.available_at == previous_arrival.available_at
                 and current.source_id == previous_arrival.source_id
                 and current.identity() != previous_arrival.identity()
                 and current.relation_status not in {"duplicate", "revision", "cancellation"}
             ):
                 raise ValueError("Conflicting evidence arrivals share the same chronology key")
             if (
-                current.issued_at == previous_arrival.issued_at
-                and current.available_at == previous_arrival.available_at
+                current.available_at == previous_arrival.available_at
                 and current.identity() == previous_arrival.identity()
                 and _canonical(current.content) != _canonical(previous_arrival.content)
                 and current.relation_status != "conflict"
@@ -359,13 +379,15 @@ def qualify_stream(
                 raise ValueError("Conflicting content shares the same evidence identity and chronology key")
         result = qualify_evidence(
             current,
-            previous,
+            previous_target,
             target_start=target_start,
             target_end=target_end,
             as_of=as_of,
         )
         out.append(result)
         previous_arrival = current
-        if result.availability in {"available", "known"}:
-            previous = current
+        if result.availability in {"available", "known"} and result.witness.get("current_relevance") == "target":
+            # An irrelevant arrival advances the source stream but cannot
+            # replace the previous target projection.
+            previous_target = current
     return out

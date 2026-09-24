@@ -39,7 +39,8 @@ def main():
     for root, pattern in ((PROJECT / "src", "**/*.py"), (PROJECT / "tests", "**/*.py"),
                           (REPO / "plans", "**/*.md"), (PROJECT / "docs", "**/*.md"),
                           (PROJECT, "README_P[6-9]*.md"), (PROJECT, "README_P1[0-4]*.md"),
-                          (HERE, "*.md"), (HERE, "*.py"), (HERE / "licenses", "*")):
+                          (HERE, "*.md"), (HERE, "*.py"), (HERE / "licenses", "*"),
+                          (HERE / "result_tables_v1", "*")):
         for path in root.glob(pattern):
             if path.is_file() and "__pycache__" not in path.parts:
                 add(path)
@@ -51,7 +52,21 @@ def main():
                 if path.is_file():
                     add(path)
     autonomy = PROJECT / "artifacts/autonomy_10h_v1"
-    for pattern in ("*.md", "*.py", "cohort_stops_01/*.json", "cohort_reviews_01/*.json", "role_reviews_01/*.json"):
+    for pattern in ("*.md", "*.py", "cohort_stops_01/*.json", "cohort_reviews_01/*.json", "role_reviews_01/*.json",
+                    "reviews_continuation_v2/*.json", "*GATES.json",
+                    "p11_examples_v1/*.json", "p11_examples_v1/*.md",
+                    "p11_review_addendum_v1/*.json",
+                    "program_role_prompts_01.json", "CUMULATIVE_EVIDENCE_CHECK_01.json",
+                    "COMPLETED_SUPPLEMENT.json", "dispatch_deadlines_v3.json", "context_censoring_v1.json",
+                    "DISPATCH_V2_TEST_GATE.json", "DISPATCH_V3_TEST_GATE.json", "PUBLICATION_COPY_V2_TEST_GATE.json",
+                    "PUBLICATION_COPY_V2_FINAL_TEST_GATE.json",
+                    "CPU_PUBLICATION_INTERRUPTION_02.json", "publication_reconstruction_02/*.json",
+                    "global_seal_recovery_03/*.json", "global_seal_recovery_03/*.log",
+                    "validation/global_supplement*.json", "validation/global_supplement*.log",
+                    "validation/dispatch*.json", "validation/dispatch*.log",
+                    "validation/publication_copy*.json", "validation/publication_copy*.log",
+                    "pair_coverage_v1.json",
+                    "context_diagnostics_late_v1/*.json", "gpu_snapshots_01/final_accounting_01.json"):
         for path in autonomy.glob(pattern):
             if path.is_file():
                 add(path)

@@ -2,12 +2,14 @@
 
 Start with [the current results entry](../../RESULTS_20260909.md) and the detailed
 [Chinese ChatGPT Pro handoff](../../disastertrace-starter/REVIEW_FOR_CHATGPT_PRO_P6_PLUS.md).
+The concise [benchmark card](BENCHMARK_CARD.md) describes the expanded cohort's
+task, data, conditions, scoring and interpretation boundaries.
 The historical root README and accepted historical documents retain their bytes;
 their older descriptions are not the current phase pointer.
 
 The authorized target is the existing private repository
-`sisuolv/disastertrace-benchmark`, branch `next-phase-v1`. The prior published HEAD
-is `dd5ee358f9708e2eb2f2032db9eaac14fa237adc`. Use the final commit identity when
+`sisuolv/disastertrace-benchmark`, branch `next-phase-v1`; the repository's default
+branch remains `main`. Select `next-phase-v1` and record the concrete commit when
 reviewing. A private URL alone does not give ChatGPT Pro access to the repository.
 
 ## Reading versus reconstruction
@@ -25,6 +27,19 @@ reviewing. A private URL alone does not give ChatGPT Pro access to the repositor
   terminal audits and sealing. Read each archive's manifest for its exact accepted
   scope. An acceptance proves the recorded stopped or completed run is auditable;
   it does not turn a failed GPU job into a successful or fully collected matrix.
+
+The final result table export preserves six model-condition rows and separate
+method, storm, reference-status and transition counts. Read
+`result_tables_v1/TABLES.md` first, then `overall.csv`, `grouped_counts.csv` and
+`summary.json` for the corresponding machine-readable views. These are exports
+of verified analyses, with no new model inference or rescoring.
+
+The autonomous bundle's `pair_coverage_v1.json` supplements the four original
+comparisons with joint and one-sided return counts. It describes collection
+censoring without replacing the primary score or claiming that a selected
+both-returned subset estimates an unbiased role effect. The original model
+window ends at 2026-09-09 02:05:16.104344 UTC; CPU reconstruction and publication
+can finish later without extending that collection window.
 
 Keep this handoff, the notices, and all parts of the relevant evidence package
 together. Model weights, installed environments, credentials, and the unrelated

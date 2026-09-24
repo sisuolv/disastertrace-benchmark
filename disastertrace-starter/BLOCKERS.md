@@ -1,4 +1,595 @@
+# v13 registered experiments complete; publication update 2026-09-17
+
+Current entry: `../publication/v13_completed_20260917/RESULTS_CN.md`.
+B00 completes 168 cases / 840 trajectories / 60,480 method rows; C00 completes
+12 parents / 48 GET branches; B02 completes 72 new and 60 reused method-days;
+M01 completes 12 days / 864 opportunities at 2026-09-16 14:47 UTC.
+All scientific batch completion receipts pass. M01 has 275 verified valid HTTP
+responses and 13 pre-send BlockingIOError failures retained in the denominator;
+transport says not_sent while the consumer says unknown_execution. There are
+1,119,368 known provider tokens and 432,640 still-reserved tokens, not a charge.
+The current task publishes existing results, with no experiment or retry launch.
+
+The model is a query selector with a fixed program probability head. It improves
+on batch/coverage in this development subset but does not beat cyclic or hash
+selection; 857 settled opportunities contain only three positives. No independent
+confirmation or full 16-hazard completion is claimed. C00 source strata are all
+full TAF temporal coverage; PROCESS/TIMING and new 3/6-hour predictor support
+remain unfinished. The documented Git index byte mismatch is preserved as false;
+prior frozen sources/bindings match. Earlier entries below are historical.
+
+# v13 M01 pending resources and qualifications, 2026-09-16 11:14 UTC
+
+Live status: `../plans/v13_selector_execution_20260916_01/STATUS.json`.
+First create was rejected:2GPUcards available but0CPUquota. M01has no accepted
+job at this checkpoint. A detached, tested resource-wait submitter is active;
+it needs no further user action. It will bind an accepted job or report timeout/
+unknown submission by20:00UTC. Actual model requests still depend on scientific
+gates and the23:00UTC API deadline.
+
+B00is102/168verified with no recorded case failures; C00is6/12complete and passed.
+B02still waits for full B00. M01cannot claim predictive advantage before full
+program and model rows exist. The successful12-call M00smoke establishes only
+interface qualification. All twelve chose all three queries in original order.
+
+Current annual bank supports1h target training only; C01with3/6h horizons still
+requires a separately qualified predictor. PROCESS/TIMING, confirmation and
+additional hazard active chains remain separate uncompleted work. Frozen-source
+and result identity checks remain mandatory. The recorded Git index stat-cache
+hash difference will truthfully fail the old byte-preservation predicate; it is
+not to be hidden by rewriting the index or the old finalizer.
+
+# v13 strong program baselines prepared and gated, 2026-09-16 10:30 UTC
+
+Entry: `../plans/v13_strong_baselines_20260916_01/README_CN.md`.
+User approved sequential followup execution with CCI resources. Three versioned
+public query selectors now preserve fixed program forecast slots: cyclic round
+robin, public risk/publication recency, and fixed hash. Legacy selectors retain
+behavior. The combined affected regression passes912unique tests, including all
+previous880;13legacy selector/allocation/authorization configurations produce
+identical reports under old/new code, with exact legacy AST specialization.
+
+A metadata/hash-only roster freezes12days, one per region/week at5000m. Two new
+16CPU ACP jobs pt-fmwdnhyy and pt-gi51ss1f qualify and then wait for full B00
+acceptance. No B02 method-day is claimed completed at this checkpoint. After
+complete B00, formal old-score reconstruction, explicit retained-bank identity
+and public action census, they execute at most72additional program method-days.
+Three selector controls plus three coverage factors complete the2x2 using the
+reverified existing B11reference. All new methods use the same annual raw values
+consumer; no refit, model/API call, weather download or confirmation access.
+The no-refit choice isolates selection; it does not deny measured clock effects.
+
+New STATUS.json and minute-level ordinary Python observer carry execution state;
+FINAL_RESULT.json is the formal completion receipt, not this preparation note.
+Existing B00/C00/M00 workers and consumed freezes remain untouched. Total newly
+requested compute is32CPU/0GPU; including prior jobs the allocation is88CPU/2H100.
+All prior frozen package sources remain unchanged. A git status stat-cache
+refresh changed Git index bytes; see INDEX_REFRESH_RECEIPT.json, which preserves
+the mismatch and verifies the original17staged-addition path set. No staging or
+commit was performed; future Git reads use GIT_OPTIONAL_LOCKS=0.
+
+# v13 followup live checkpoint: M00 passed, 2026-09-16 09:48 UTC
+
+Entry: `../plans/v13_followup_20260916_01/README_CN.md`.
+M00 completes12real API attempts:12valid and consumed,28,880provider tokens,
+0retries/unsettled reservations. Independent capture/publication audit passes.
+All12 choose the entire three-query catalogue in original order: interface
+qualification only, no evidence yet of smarter allocation than batch.
+B00 first168-calendar-unit roster member passes all5arms/360rows and formal
+scores; remaining full roster executes on three CPU shards. C00 waits for each
+selected B00 parent case to qualify, then automatically executes exact original
+continuations and GET-v2 branches. Separate legal-source strata audit is running.
+Latest resources:56CPU/2H100 allocated across five jobs; H100nodes provide CPU
+capacity here, no local-model GPU inference claimed. JOBS_03.json is current.
+Full-case/shard scientific conclusions remain pending. No confirmation/refit or
+formal288model batch is launched. FINAL_RESULT.json will be created by the
+bounded completion process; source-strata result has its own receipt.
+
+# v13 B00/C00/M00 followup running, 2026-09-16
+
+User approved sequential execution after the final A00-A06 review. Entry:
+`../plans/v13_followup_20260916_01/README_CN.md`; live state is STATUS.json.
+B00 freezes168daily cases/840program trajectories with existing annual raw banks;
+three ACP CPU jobs use16+16+8CPU. C00 registers12new-bank legal parents and up to48
+GET-v2 branches. M00 registers12single-attempt initial production-selector ticks;
+it is an interface smoke, not12full model forecast days. A one-H100/8CPU ACP node
+runs the auxiliary CPU/API work; local GPU inference is not claimed.
+
+Source matches the prior880-node regression. This batch's6summary checks and one
+mocked-HTTP production smoke pass. Zero-step parent materialization produces an
+identical first-tick report to direct execution. No new fitting/weather download
+or confirmation access. The first auxiliary job was stopped before any actual API
+or parent attempt (platform SUSPENDED); documented handoff pt-x9wf6mak uses
+resume_m00.py and c00_02.py. Preserve original claims and freezes. B00jobs:
+pt-bgtjydm7, pt-5tgzbejc, pt-npr5eak9. Completion is not yet claimed; the bounded
+finalizer writes FINAL_RESULT.json and RESULT_SUMMARY_CN.md when results arrive.
+
+# v13 final amended closeout, 2026-09-16
+
+Canonical receipt: `../plans/v13_execution_20260916_01/FINAL_RESULT.json`.
+The final source passes880unique tests (793existing+87new),0failure/skip/missing.
+A documented A03/A06 amendment after the first876-node close adds strict query
+prefix execution and complete tail dispositions, including original pending-source
+resume. Four new tests first reproduced the gap. Both sequential16CPU ACP jobs
+finish SUCCEEDED; no model/weather/scientific experiment starts. Use
+STOP_RECEIPT_02.json, TEST_RECEIPTS_02.json and FINAL_PRESERVATION_02.json.
+The first closeout/source receipts and earlier notes below remain historical.
+B00/C00/M00 remain unlaunched proposals; this batch stops for review.
+
+# v13 current limits and next gates, 2026-09-16
+
+Entry: `../plans/v13_execution_20260916_01/NEXT_STEPS_CN.md`.
+The876-node affected regression passes; new query-only, scoped GET and API
+consumer/recovery paths have offline qualification. Earlier v12 implementation
+blockers below remain historical, not a reason to undo this versioned fix.
+
+- Actual provider acceptance of selector v2 is untested; M00's12payloads are unsent.
+- Annual raw-bank full-calendar B00, new12parent/48GET C00 and original-policy
+  continuation qualification are still proposals; do not claim these new results.
+- Old288query requests are cost/age/coverage-degree symmetric. Evaluate actual
+  public information/action diversity before expanding model-effectiveness calls.
+-24bounded clock diagnostics show numeric clock/information effects, not a
+  scientific improvement or validated slot-aligned refit. Preserve the old bank.
+- Historical API captures cannot be retroactively assigned absent final-permit
+  or raw-EOF proof. Single-authority v2 tests do not qualify multi-node AFS locks.
+- Confirmation, multi-cutoff fixed-target revision, second active hazard, native
+  multimodal and16-hazard complete delivery remain separate research gates.
+
 # Blockers
+
+## v12 current scientific gates, 2026-09-15
+
+The v12 batch is closed: annual raw acquisition, all 72 native joins, frozen annual
+banks, 24 finite C2 branches and the 108-run/24-score-group model comparison complete.
+Older running/download-blocked statements below are historical. Current findings:
+
+- Only 71/288 DeepSeek selector replies satisfy the free-output contract. A strict
+  schema passes one synthetic diagnostic; the repaired real-weather interface is
+  not yet implemented or qualified. Preserve all original failures and requests.
+- Valid selector actions are 58 empty and 13 select-all, with no observed proper
+  subset or reordering. Precise adaptive allocation is not demonstrated by this run.
+- The model comparison has 16 positive opportunities, all in Chicago on one day.
+  Its small gain over F_BASE_ONLY is entirely from negative cases; strong coverage
+  and F_COMMON have lower Brier loss. Four calendar blocks are not independent
+  weather-process confirmation, and F_COMMON uses a different fitted bank.
+- The six C2 parents share one date and have zero settled positives. Actual branch
+  effects are established, but positive-event sensitivity and diverse native TAF
+  interventions remain unqualified. All 72 initial TAF coverage tasks were full.
+- Annual fitting uses cutoff minus 600 seconds, while application uses the actual
+  fixed slots near cutoff. This registered time difference needs a separate analysis;
+  existing banks and scores cannot be replaced retroactively.
+- Bay confirmation remains closed. Temperature lineage and eligibility, a second
+  qualified active hazard chain, native multimodal input and full 16-hazard delivery
+  remain separate scientific/data gates.
+
+Entry: `../plans/v12_execution_20260915_01/FINDINGS_AND_NEXT_GATES_CN.md`.
+
+## v11 current execution limits, 2026-09-15
+
+- Fullweek02 passes its real five-arm preflight and exact historical scoring
+  equivalence, but840trajectory execution/audit must finish before scientific claims.
+- Member CPU quota prevented the original third16CPU allocation. Three shards
+  now have16/16/8CPUs; the fourth automatically waits for16CPUs to be released.
+  The explicit quota rejection and original stopped coordinator are retained.
+- Annual432catalog acquisition is active. Three leap-month regional samples pass;
+  their2470 native TAF bodies/full-month joins are a separate active scope. Full
+  annual raw data, purged role qualification, fitting and calibration are not done.
+- ChicagoJanuary2023 KORD catalog acquisition receives429 and then a200 response
+  with curl28 timeout on its registered exact retry. The unit remains incomplete;
+  this is retrieval failure, not established source unavailability. Other units continue.
+- C2 has72 registered prefixes and144 real E construction checks; all coverage
+  references are full. Actual same-state branches and diverse coverage/version/
+  missingness support still require qualification. No independent confirmation run.
+- Formal managed provenance and shape validation do not solve arbitrary execution
+  isolation, full ensemble member lineage, every DWD eligibility rule or every
+  data-card/prompt binding proposal. The two historical capsules have not been
+  rerun as current-code migration checks in this batch.
+- One initial F_COMMON preflight failed and is preserved; its corrected preflight
+  succeeds in a new directory. A first annual KJFK fetch timed out and its declared
+  exact retry succeeds. These failures are retained, not silently replaced.
+- The old hydro shadow record remains an incomplete historical run with a passing
+  available-prefix audit; no observed terminal receipt or reliable exit cause exists.
+- No v11 GitHub publication yet. The development worktree's Git ownership check
+  needs reconciliation at publication; no Git index or global trust setting changed.
+
+
+## Current v10 gates, 2026-09-14
+
+Canonical progress is `../plans/v10_execution_20260914_01/CANONICAL_STATUS.json`.
+The ordinary and Denver v9 F pilots and all 24 temperature months are complete.
+The original E01 retains62 unresolved reservations (USD1.692672 upper allowance).
+Two later API compatibility attempts return402 Insufficient Balance, preserving
+USD0.058368 new unresolved allowance;424 registered benchmark tasks are unattempted
+and are not ranked as model performance. Local27B/235B work can proceed without
+that API balance. The final216-trajectory CPU audit passes; all23 cloud jobs are
+SUCCEEDED, with a four-H100 peak. Local GITHUB_UPLOAD.json records the separate
+publication readback; scientific gates below are not experimental runtime jobs.
+There are 231 probability crossings among 2,084 identical-information nested-
+threshold pairs in the development calibration review. Preserve binary results;
+joint risk/action qualification requires its separately declared coherence control.
+Model temperature and selector experiments now exist; positive model benefits
+and independent confirmation remain unproved. Cross-season fitting/calibration,
+independent natural-process grouping, severe-positive support, qualified historical
+temperature supplements, MRMS/HEFS physical contracts, native multimodal, full D
+feedback and complete16-hazard E/F/D/MM chains remain scientific gates. Current
+seasonal ablation and prompt clarification are error-informed development results.
+The following v9 running/queued statements are historical, not current blockers.
+
+## v9 follow-up active gates, 2026-09-14
+
+Serial cumulative delivery timing and constrained production transport gates have
+passed; arbitrary external exactly-once and concurrent recovery remain separate.
+Regional Dec2024 native acquisition and fit/calibration gates are complete.
+Existing evaluation has3 dependence components at0/24/72h gaps and2 at168h;
+these do not establish independent weather-process generalization. Only Denver
+has strict sub-1km positives. Corrected DeepSeek E02 completes1,008 calls and its
+independent audit; continuous F model scores await the registered pilot. The original
+AFS transport-failed E01 and unknown charge reservations remain explicit.
+GLM5.3 official FP8 config/index are accessible,
+but755.6GBweights exceed four80GB H100s. No unqualified local deployment is started.
+The64-unit temperature program version-stream pilot and canonical audit complete;
+temperature model prediction and C1 remain subsequent. Its sparse positive coverage
+requires expansion using the already available full EUPP/DWD bank.
+CCI2CPU replay throughput is addressed by the64CPU ACP handoff; API concurrency
+remains4. Submission/RUNNING is not a completed F evaluation or job-success claim.
+See `../plans/v9_followup_execution_20260914_01/EXECUTION_STATUS.json`.
+
+
+## Remaining gates after v9, 2026-09-14
+
+The current v9 program/model batch is complete. No additional credential or
+future-weather wait blocks the planned historical development. All577 related
+tests,28 program replays/four score groups and144 Qwen3.8 response audits pass;
+one model reply remains format-invalid under its frozen score contract.
+
+Remaining engineering gates are production identity modes for arbitrary
+callbacks/globals, cumulative multi-poll pending-time accounting, physical
+external reconciliation and arbitrary concurrency. Existing serial recovery and
+explicit skip-failed continuation do not establish those broader properties.
+
+Remaining scientific gates are independent weather-process counts, regional
+B/f(B)/f(B,E) baselines, rare-positive coverage, system-level calibration,
+same-resource E/F value and missing-result sensitivity. TheQwen3.8 result is
+only12 underlying E opportunities on an exposed day; the36/36 focused-slotwise
+cell is not a completed C2 capability claim or a future-weather improvement.
+
+H15 and DWD native result policies pass on real data. Temperature still needs
+continuous sessions/full-common/supplementary contracts, frozen duration/extreme
+definitions and qualified availability assumptions. MRMS physical endpoints and
+HEFS target equivalence remain unresolved; free common HEFS is not paid evidence.
+X09 equal-total-budget, full-session D feedback, native MM, online model forecasts
+and16-hazard end-to-end admission remain subsequent work. Feb17-23 confirmation
+is unopened. Detailed exits: `../plans/v9_integration_execution_20260914_01/NEXT_PHASE_PLAN_CN.md`.
+
+## v8 remaining gates, 2026-09-13
+
+No additional user authorization is needed for this twelve-hour execution.
+The235B/8B fixed-input run and40 full-day program canonical comparisons pass.
+Adaptive235B job `pt-ug2dg5ln` uses four H100s;52 sessions and at most5,376 model
+calls are registered. Actual model execution and independent adaptive scoring
+are pending; submission/RUNNING status alone is not qualification.
+
+The initial adaptive qualifier stopped on a changed raw Git index hash.
+Read-only comparison proves all13,521 staged entries and flags unchanged; the
+original snapshot remains preserved. INDEX_EQUIVALENCE_01.json records this
+non-content change; source/data hashes are still checked without relaxation.
+
+Remaining research gates: severe-event positives, independent weather-process
+counts/grouping, regional training/calibration, fair adaptive results, X09
+same-input joint-target reasoning, MM/D value, and full16-hazard qualification.
+X09 now has a qualified fixed-input protocol and independent evaluator; actual
+inference remains conditional on the original52-session batch/audit finishing
+before the declared latest start. No extra permission is needed for that scope.
+No LLM forecast gain or independent novelty confirmation is claimed. Program
+shared evidence increases E determination but does not improve aggregate F
+on this one development day. Correct E is not a future-forecast upper bound.
+
+W08 qualifies committed source/selector/predictor recovery across local serial
+processes, now also with an exogenous synthetic D schedule on the shared clock.
+Five real local worker/restore boundaries pass on the same27 native opportunities.
+The new current-F adapter passes12 conditional D trajectories and new-process
+continuations on a fixed captured native forecast stream. Arbitrary concurrent
+requests, physical external reconciliation, full-session D/acquisition/model
+feedback and real mitigation value remain; the D scenario is still synthetic.
+
+New regional calendars have actual native downloads but no qualified regional
+probability map. Feb17-23 reserved confirmation is unopened. Point temperatures
+need final multi-day extreme definitions. New Berus daily TXK/TNK and their00-24UTC
+support qualify730 native reference days; existing instant EUPP t2m is not a matched
+daily-extreme forecast. A later EUPP mx2t6/mn2t6 product now supports a real two-year
+daily/duration candidate, independently verified probabilities and480typed snapshot
+replays. Continuous sessions,full common forecasts/supplementary-evidence contracts,
+real publication times,final extreme definitions and independent processes remain.
+Controlled native C2 subsets remain separate from C1/model claims.
+MRMS needs physical endpoints and matched F/MM.
+HEFS QINE/member/regulated-flow/reference-station equivalence is not established;
+its full common forecast E is already freely known. Remaining97-source access
+states are86 decoded samples,7 catalogs,2 without decoded targets,2 authorization
+pending; this execution does not reassert universal current endpoint availability.
+
+Bounded current AWC capture completes34requests and25unique parsed products.
+It is source-only and records actual collector receipts,
+not global first-publication time, and has no submitted live model probabilities.
+
+## Gates after typed adaptive integration, 2026-09-13
+
+The typed quiescent coordinator is now connected: actual session acquisition
+receipts, native support, typed predictions, cutoff sealing and cross-process
+branches verify on two real 27-opportunity sessions. In-flight reservations,
+idempotent asynchronous completion and D state inside branch snapshots remain.
+
+All 97 fresh IEM source requests succeed and parse. The new 432-opportunity
+calendar has zero 1km positives and two 5km positives; download success and a
+fully scored calendar do not establish severe-fog forecasting power. Real TAF
+coverage/version inputs qualify a narrow E task; native unsupported/conflicting
+source model cases remain absent, with these edges tested synthetically only.
+
+The fresh 252-call H100 diagnostic completes and independently replays. E-only
+improves under the focused view (24/36 to 33/36), but TAF coverage remains 6/18
+and all 144 F-bearing replies retain baseline. No adaptive LLM advantage,
+independent weather-process confirmation, MM/D benefit or new full-hazard
+qualification follows. Broader H07/H08, source-availability and 16-hazard gates
+remain as recorded below. No GPU jobs remain active at the final account check.
+
+
+## Gates after follow-up first wave, 2026-09-13
+
+Independent F-only now has real evidence: 36 new calls, plus 36 E-only and
+36 joint calls. All F-bearing replies retain the baseline; E-only always answers
+unknown. This is an observed development failure mode, not an API/data-access
+blocker, and no positive model-gain gate is imposed on engineering admission.
+
+Typed cutoff admission and real native support now work. Remaining integration:
+the full stepped adaptive controller still uses the old aviation probability
+interface. Unify it with typed bundles/head receipts before claiming a fully
+typed adaptive branch system. New TAF coverage/version heads, in-flight and D
+branch snapshots, fresh process calendars and strong fair 2x2 comparisons remain.
+
+Four synthetic D cases do not establish real mitigation. Sixty scalar temperature
+records have declared-latency journal scores but no proved historical publication,
+new supplemental-evidence mechanism, heatwave/coldwave task or MM confirmation.
+H07 continuous product/window/QC and H08 historical QINE support/regulation gates
+remain as previously documented. The sixteen-hazard roadmap is unchanged.
+
+No new credentials or future-weather wait blocks the next authorized historical
+work. Current results and actionable next sequence are under
+`../plans/v7_followup_execution_20260913/`.
+
+## Current handoff after bounded v7 execution, 2026-09-13
+
+The authorized source/interface/model diagnostic is complete: 720 new calls,
+12 terminal H100 jobs, 250 passing related tests and the portable CPU replay.
+No missing user account permission or wait for future weather blocks the next
+historical development phase. Check the new final account receipt for occupancy.
+
+Scientific gates remain: local calibration and all-read gains are inconsistent
+across exposed calendars; several prior-month checks have zero positive events.
+Explicit E truth helps but still makes errors. Independent F-only model execution,
+new process-held-out confirmation and a useful supplemental-evidence comparison
+remain unperformed. None requires inventing a positive-LLM-gain admission rule.
+
+The new fixed lane does not yet bridge generic public_support/solve_joint to its
+provider metadata. paired_scores alone has no submission timestamp: formal scores
+must bind opportunities, cutoffs, legal replay and effective predictions. Existing
+old C2 algorithms are preserved; they are not newly validated across all providers.
+
+LAMP's native thresholds/minimum windows, historical first availability, SEEPS's
+daily support/QC, CNRFC's historical hourly support/regulation/member identity and
+sixteen-hazard/MM scientific qualification retain the source-specific gates below.
+Current source fixes do not retroactively repair frozen model captures. The next
+batch needs a fresh source/prompt/data freeze; no old GPU launch may be reused.
+
+## Integrated v7 current gates, 2026-09-13
+
+No additional account permission blocks this round. Actual LAMP probability text,
+historical LAV, EUPPBench/DWD, SEEPS4ALL and CNRFC historical files are available.
+BUFR local-table decoding fails but the verified native text alternative works.
+
+New fixed-input inference exposes a strong filled-example copying effect and E
+truth-versus-evidence confusion; formatting success alone does not qualify a useful
+predictor. Further large adaptive batches should wait for interpretable outputs
+and stronger same-target local statistical controls. No positive model-gain gate
+is imposed on task admission.
+
+Historical first-public-availability remains unproved for new static sources.
+LAMP native thresholds/windows differ from existing targets; SEEPS lacks verified
+station daily accumulation windows and complete per-record QC reasons. CNRFC
+hourly QINE timestamp joins do not yet resolve physical support or regulation mode,
+historical member identities, flood thresholds, or naturally shared evidence.
+Temperature scalar engineering works, but this is not a second qualified C1/C2
+process, heatwave task, or independent physical multimodal confirmation.
+
+## Current: implementation verified; scientific extension gates, 2026-09-13
+
+All 50 submitted H100 jobs in this window are terminal and verified, totaling
+33,944 actual calls. No user authorization or future-weather waiting blocks the
+completed historical development loop. The final GPU account check is empty;
+do not restart the consumed queues. The current 109-test suite and separate
+13-check supplement pass, and three isolated packaged replay runs are recorded.
+
+C1 positive mean gain remains unsupported on all three complete calendars.
+Probability mapping uses Bay calibration data and explicit regional transfer;
+its rarity/sparsity and cross-year ranking require further checks. Current cheap
+bulk transport and unused token/compute quotas do not establish natural acquisition
+scarcity. E coverage, conditional model understanding and future F loss are
+different measurements; the fixed E order repeats add no independent processes.
+
+H08 now has real deterministic stage forecasts, paired native stage observations
+and current stage thresholds. Historical datum/threshold versions, a probability
+baseline or explicitly deterministic track, continuous independent processes and
+new monitoring-engine integration remain unverified. Missing flow thresholds
+cannot be repaired by applying stage thresholds or deriving an unofficial rating
+curve from a few observed pairs.
+
+Historical first-seen, post-acquisition calibration guarantees, a second distinct
+physical MM process, independent confirmation and all 16 formal monitoring task
+admissions remain open. These are research gates, not missing account permissions.
+Final selected GitHub push/readback receipts follow snapshot preparation in the
+publication directory; consult those receipts for actual remote delivery status.
+
+## Current: v7 full-calendar comparisons and scientific limits, 21:50 UTC
+
+There is no missing user permission or need to wait for future weather.107 tests
+and12,440 independently verified model calls are available. The four-card queue
+continues frozen dual-protocol and2026 comparisons within the authorized window.
+The Bay base-protocol calendar has no positive LLM gain over the shared full-TAF
+research map. Exact E understanding and F improvement remain separate questions.
+
+2026 retains36 unresolved opportunities and6 unparsed-TAF fallback opportunities.
+The independent TAF comparison retains67 minute-level disagreements and6 parser
+quarantines; neither full semantic agreement nor physical truth is claimed.
+Cheap real bulk access weakens a natural-source-scarcity claim for three stations.
+Token/compute caps must be reported alongside actual use and binding constraints.
+
+Independent physical processes, historical first-seen, post-acquisition calibration
+guarantees, broad MM benefits and full16-hazard task admission remain open. A
+prospective receipt observer is bounded evidence collection, not a prerequisite
+for the historical minimum loop or proof of global publication times.
+
+## Current: v7 engineering works; research acceptance remains conditional
+
+See `../plans/v7_review_execution_20260912/EXECUTION_STATUS.json` and the review
+resolution map.99 core tests and1,304 independently reconciled model calls have
+technical evidence. There is no user authorization or future-weather waiting
+blocker. Fresh27-day GPU comparisons and stronger CPU controls are underway.
+
+The first quiet January slice does not test extreme recall. The extended Front
+Range calendar has14 unique sub1km target hours, not14 independent processes;
+6 unresolved opportunities and18 strict-TAF fallback opportunities remain per
+threshold. Four unparsed native products stay visible rather than being repaired.
+
+A real hourly bulk service can remove the tiny station network's logical source
+scarcity. C1 claims must distinguish declared archive costs from actual transport
+and model compute/token constraints. Initial v1 prompts lacked explicit current
+state/action details; v2 is separately frozen. Cheap baselines and null/negative
+results remain primary comparisons. A research mapping of full TAF is not an
+official event probability or a formal post-acquisition calibration guarantee.
+
+Historical first-seen, physical visibility truth, two independent physical MM
+processes, independent confirmation and all16 formal task admissions remain open.
+Same-source thermal panels/numeric summaries are lossy representations. The new
+2026 replication reduces repeated use of2024 development; it does not itself
+prove absence of training contamination, distribution shift or weather dependence.
+
+## Current: nine source gaps recovered; seven access/content gaps remain
+
+See `../plans/all_dataset_utilization_20260912/README_CN.md`. TCIR labels,
+CAMELSH hourly observations, CEMS native vectors, FloodNet image/mask pairs,
+CrisisMMD exact pairs, Urban matched labels, complete SenForFlood components
+and numeric GWIS/EFFIS services now have actual decoded sample evidence.
+
+Remaining access/content gaps are EM-DAT, xBD, HKO-7, ESWD, M4Fog, MSETCD/MSCAR
+and CMA Best Track. The first four require their own access/licence processes;
+the next two lack downloadable author-native packages, and CMA returns468
+challenges. Public illustrations or normalization parameters do not remove these
+gaps. Core work can continue with the explicitly listed alternatives.
+
+Task qualification remains distinct: missing SenForFlood class/band/time metadata,
+GWIS/EFFIS issue/version provenance, negative FloodNet samples, postselected Urban
+tile, CEMS wildfire-versus-flood coverage, TCIR/forecast matching, and CAMELSH
+datum/QC/forecast linkage. Full16-hazard warning chains and positive novelty are
+not established. GitHub reading materials omit large local raw assets; selected
+file verification does not replace full scientific replay.
+
+## Current: real-download pilot complete; formal task and novelty gates remain
+
+`../plans/task_chain_feasibility_20260912/README_CN.md` reports the completed
+72-request pilot,34 targets and96 checkpoints. Temperature, US airport visibility
+and continuous discharge have matched sample chains. Two HEFS issue versions are
+actually verified for three stations; historical TAF is actually verified for
+KSFO/KDEN. Those narrow questions are no longer blocked by missing downloads.
+
+Remaining sample-level limits are concrete: the exact Phoenix original record
+fails temperature QC; New Orleans00Z accumulation condition3 prevents settlement;
+EGLL/EGKK historical TAF queries contain no rows; UK visibility and nearby rain
+references differ from GFS targets by10/7 minutes. They remain unresolved or
+supplementary, not silently admitted. Raw METAR is an archived report and current
+USGS flow is provisional. A preliminary30 UK positives becomes19 under native
+metric parsing because11 rounded-column positives are actually exactly1000m.
+
+Formal research still needs independent extreme/ordinary/near-threshold processes,
+compatible hydrological warning thresholds, useful additional evidence, source
+lineage, full TAF conditional/probability baselines, temporal maturity policies,
+and budget/deadline experiments. Native satellite/radar added value is untested
+in this new bundle. Controlled historical clocks are not verified arrival times;
+the new checkpoint files are not a tested model filesystem sandbox.
+
+No authorization or future-event wait blocks this completed historical delivery.
+The positive N1/N2/N3 hypotheses remain unconfirmed, and the existing LLM pilot's
+no-acquisition-gain finding remains. Earlier prospective-worker status paragraphs
+are dated snapshots; this task does not restart or reschedule that worker.
+
+## Current: advisor proposal ready; remaining limits concern task qualification
+
+The requested initial overall plan and candidate selection are complete locally:
+`../plans/advisor_review_20260912/PROPOSAL_FOR_ADVISOR_CN.md` and
+`CANDIDATE_SELECTION_CN.md`. Their11 document/evidence checks pass. Advisor input
+is a planned research decision, not a missing authorization for this delivery.
+
+GEE authentication is no longer a blocker for the recorded samples. The updated
+97-entry inventory has75 decoded targets,3 partial contents,6 catalogs,8 without
+target samples,4 unresolved authorization/licence processes and1 rendered-only
+product. This does not mean all97 candidates satisfy the future-warning task or
+the novelty hypotheses. Partial/undecoded products can remain optional candidates
+without blocking the three recommended chain pilots.
+
+Important open conditions: hydro historical forecast versions and compatible
+thresholds; matched station/forecast/observation windows and QC; historical TAF;
+extreme/near-threshold independent processes; source dependence; actual useful
+additional evidence; and probability/decision baselines. Several image samples
+are negative, cloudy or fail recommended QA. Reanalysis, event reports, rendered
+maps and different physical variables cannot silently substitute for outcomes.
+
+The completed real LLM minimum loop has no demonstrated active-acquisition gain.
+The proposal retains that finding and requires strong baselines and bounded
+mechanism tests before making a contribution claim. Existing prospective worker
+records below are dated snapshots, not current status observations for this
+advisor packet. No need to wait for a future event to begin historical research.
+
+## Current: prospective hydro shadow running; future results not yet available
+
+Data admission and the first actual capture/submission cycle succeed. Seven of
+nine sampled stations pass; six enter a frozen18-target/72-result program pilot.
+At the07:15 UTC process check on2026-09-12, all18 outcomes remain pending_future.
+PID94018 is alive; collection endsSeptember13 10:00 UTC, followed by an automatic
+independent audit. No extra user authorization or GEE configuration is needed.
+Entry: `../README_HYDRO_SHADOW_PILOT_20260912_CN.md`.
+
+Pending results are a real-time dependency, not a download or implementation
+failure. First24 captures and144 initial/update predictions pass source-based
+reconstruction. This new run contains program policies; the earlier real LLM
+minimum loop has already completed. Do not claim the pending online scores or
+final audit have passed, and do not restart the consumed shadow_01 launcher.
+
+Remaining data limits: CHLA2 datum metadata differ; MLLA1 has no paired full chain;
+HEFS CFS thresholds are missing; strict coastal QC can leave exact targets
+unsettled; the observations are provisional. All18 initial forecasts are below
+minor thresholds, so a positive warning case is not guaranteed by this short run.
+The risk-enriched cohort does not establish event independence, weather attribution
+of tidal high water, calibrated warning utility, or active-acquisition novelty.
+
+## Current: ActiveWarning minimum loop complete; scientific expansion gates remain
+
+No model collection or replay blocker remains for the 2026-09-12 minimum loop.
+Two complete Qwen3-8B matrices finish on eight successful one-H100 ACP jobs,
+at most four concurrent GPUs. All1,120 replies, failures and unresolved targets
+are retained; short-ID protocol revision has400/400 valid forecast submissions.
+Both launch scopes are consumed. Entry:
+`../plans/active_warning_miniloop_20260912/README_CN.md`.
+
+The principal limits are scientific: four exposed storm groups, one quiet flow
+segment, no compatible official flow warning threshold, provisional river outcomes,
+unproved historical public availability and no independent-event confirmation.
+No active-acquisition benefit is observed; all choices query official forecasts.
+Version normalization is stable under repeated stale input but does not uniformly
+improve forecast accuracy. Probability calibration, genuine multimodal increments,
+natural latency effects and realistic early-action utility remain untested.
+
+Before extending the model scoreboard, acquire matched multi-event extreme and
+control sequences; qualify same-variable thresholds and observation QC; preserve
+prospective versions with real first-seen receipts. Multiple forecast providers
+also require explicit product-lineage keys before canonical fusion. These tasks
+can use existing non-GEE sources and do not require renewed GPU permission.
 
 ## Current: P6 offline complete; live engineering and source expansion remain
 

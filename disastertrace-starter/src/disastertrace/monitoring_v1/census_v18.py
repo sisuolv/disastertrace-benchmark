@@ -21,7 +21,21 @@ def evidence_census(episodes: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     evidence_rows = 0
     episode_rows = []
     for episode in rows:
-        qualifications = episode.get("qualifications")
+        checkpoints = episode.get("checkpoints")
+        if isinstance(checkpoints, list) and checkpoints:
+            # The v3 (T-60/T-40/T-20) roster shape: the same evidence stream is
+            # re-qualified once per checkpoint, with visibility only growing
+            # (see build_v18_dev_episodes.py's monotonic-visibility guarantee).
+            # Counting every checkpoint's list would count each row up to 3
+            # times; the last checkpoint is the most complete legitimate view
+            # and is used alone, matching the pre-v3 single-pass semantics.
+            last_checkpoint = checkpoints[-1]
+            qualifications = (
+                last_checkpoint.get("qualifications") if isinstance(last_checkpoint, Mapping) else None
+            )
+        else:
+            # Pre-v3 (flat) episode shape, preserved for backward compatibility.
+            qualifications = episode.get("qualifications")
         if not isinstance(qualifications, list) or not qualifications:
             raise ValueError("Every episode needs qualification rows")
         local = Counter()

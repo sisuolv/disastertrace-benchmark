@@ -1,4 +1,1204 @@
+# v13 registered experiments complete; publication update 2026-09-17
+
+Current entry: `../publication/v13_completed_20260917/RESULTS_CN.md`.
+B00 completes 168 cases / 840 trajectories / 60,480 method rows; C00 completes
+12 parents / 48 GET branches; B02 completes 72 new and 60 reused method-days;
+M01 completes 12 days / 864 opportunities at 2026-09-16 14:47 UTC.
+All scientific batch completion receipts pass. M01 has 275 verified valid HTTP
+responses and 13 pre-send BlockingIOError failures retained in the denominator;
+transport says not_sent while the consumer says unknown_execution. There are
+1,119,368 known provider tokens and 432,640 still-reserved tokens, not a charge.
+The current task publishes existing results, with no experiment or retry launch.
+
+The model is a query selector with a fixed program probability head. It improves
+on batch/coverage in this development subset but does not beat cyclic or hash
+selection; 857 settled opportunities contain only three positives. No independent
+confirmation or full 16-hazard completion is claimed. C00 source strata are all
+full TAF temporal coverage; PROCESS/TIMING and new 3/6-hour predictor support
+remain unfinished. The documented Git index byte mismatch is preserved as false;
+prior frozen sources/bindings match. Earlier entries below are historical.
+
+# v13 M01 executor and resource handoff, 2026-09-16 11:14 UTC
+
+New bundle: `../plans/v13_selector_execution_20260916_01/`. It contains the
+frozen12-day roster/configs,288-call cap, model contract, authorization, formal
+controller, original capture audit, actual NativeFeaturePredictor consumer
+reconstruction and full-denominator paired scoring. Invalid/late/unknown replies
+remain in the original run and ledger. Original historical scripts are unchanged.
+The source is the existing B02frozen376-file package; no core edit in this step.
+
+`prepare.py` exits0. `test_model_run.py` passes14tests in4.88s with mocked HTTP;
+OFFLINE_TESTS_01.xml/log and OFFLINE_RESULT.json preserve results. A real old
+B11report's72program probabilities and96paid asset references reproduce in
+CONSUMER_PREFLIGHT.json; this is not a new weather trajectory. Prior912package
+tests remain prior evidence, not a newly executed total. Frozen prepare.py has
+two harmless unused imports; no claim of a clean lint result is made.
+
+The initial exact ACP create exits70 with429 CPU quota rejection, not success.
+CREATE_ARGUMENTS.json,CREATE.stdout,CREATE.stderr and CREATE_EXIT.json preserve
+the attempt. No job ID was returned. New wait_submit.py is tested using:
+`python -m pytest -q -p no:cacheprovider plans/v13_selector_execution_20260916_01/test_wait_submit.py`.
+All14scheduler tests pass in0.61s; SCHEDULER_TEST_RESULT.json binds the JUnit.
+They cover unknown responses, duplicate create claims, mismatched existing jobs,
+release/deadline conditions and exact quota rejection, with zero real submissions.
+
+Detached ordinary submitter PID216755 and observer PID216756 launch at11:13UTC;
+their respective LAUNCH.json/OBSERVER_LAUNCH.json bind commands and script hashes.
+All7tracked ACP jobs report RUNNING on the first poll; no release/new create yet.
+The target remains computing-cluster-01g-02,1H100/8CPU/128GiB,4case processes;
+this is CPU/API work, not local GPU inference. Platform acceptance and scientific
+gate opening will have separate receipts. B00=102/168,C00=6/12passed at11:14UTC;
+B02waits full B00,M01HTTP=0. Automated status updates carry later progress.
+
+Next: finish B00/B02, qualify and run M01if technical gates pass, then retain
+all model/program outcomes and aggregate known/unknown usage. C00continues
+independently. New-lead C01,PROCESS/TIMING,confirmation and new fits remain
+unexecuted. Git index mismatch from10:14stays recorded; no staging/push occurs.
+
+# v13 strong program baselines prepared and gated, 2026-09-16 10:30 UTC
+
+Entry: `../plans/v13_strong_baselines_20260916_01/README_CN.md`.
+User approved sequential followup execution with CCI resources. Three versioned
+public query selectors now preserve fixed program forecast slots: cyclic round
+robin, public risk/publication recency, and fixed hash. Legacy selectors retain
+behavior. The combined affected regression passes912unique tests, including all
+previous880;13legacy selector/allocation/authorization configurations produce
+identical reports under old/new code, with exact legacy AST specialization.
+
+A metadata/hash-only roster freezes12days, one per region/week at5000m. Two new
+16CPU ACP jobs pt-fmwdnhyy and pt-gi51ss1f qualify and then wait for full B00
+acceptance. No B02 method-day is claimed completed at this checkpoint. After
+complete B00, formal old-score reconstruction, explicit retained-bank identity
+and public action census, they execute at most72additional program method-days.
+Three selector controls plus three coverage factors complete the2x2 using the
+reverified existing B11reference. All new methods use the same annual raw values
+consumer; no refit, model/API call, weather download or confirmation access.
+The no-refit choice isolates selection; it does not deny measured clock effects.
+
+New STATUS.json and minute-level ordinary Python observer carry execution state;
+FINAL_RESULT.json is the formal completion receipt, not this preparation note.
+Existing B00/C00/M00 workers and consumed freezes remain untouched. Total newly
+requested compute is32CPU/0GPU; including prior jobs the allocation is88CPU/2H100.
+All prior frozen package sources remain unchanged. A git status stat-cache
+refresh changed Git index bytes; see INDEX_REFRESH_RECEIPT.json, which preserves
+the mismatch and verifies the original17staged-addition path set. No staging or
+commit was performed; future Git reads use GIT_OPTIONAL_LOCKS=0.
+
+# v13 followup live checkpoint: M00 passed, 2026-09-16 09:48 UTC
+
+Entry: `../plans/v13_followup_20260916_01/README_CN.md`.
+M00 completes12real API attempts:12valid and consumed,28,880provider tokens,
+0retries/unsettled reservations. Independent capture/publication audit passes.
+All12 choose the entire three-query catalogue in original order: interface
+qualification only, no evidence yet of smarter allocation than batch.
+B00 first168-calendar-unit roster member passes all5arms/360rows and formal
+scores; remaining full roster executes on three CPU shards. C00 waits for each
+selected B00 parent case to qualify, then automatically executes exact original
+continuations and GET-v2 branches. Separate legal-source strata audit is running.
+Latest resources:56CPU/2H100 allocated across five jobs; H100nodes provide CPU
+capacity here, no local-model GPU inference claimed. JOBS_03.json is current.
+Full-case/shard scientific conclusions remain pending. No confirmation/refit or
+formal288model batch is launched. FINAL_RESULT.json will be created by the
+bounded completion process; source-strata result has its own receipt.
+
+# v13 B00/C00/M00 followup running, 2026-09-16
+
+User approved sequential execution after the final A00-A06 review. Entry:
+`../plans/v13_followup_20260916_01/README_CN.md`; live state is STATUS.json.
+B00 freezes168daily cases/840program trajectories with existing annual raw banks;
+three ACP CPU jobs use16+16+8CPU. C00 registers12new-bank legal parents and up to48
+GET-v2 branches. M00 registers12single-attempt initial production-selector ticks;
+it is an interface smoke, not12full model forecast days. A one-H100/8CPU ACP node
+runs the auxiliary CPU/API work; local GPU inference is not claimed.
+
+Source matches the prior880-node regression. This batch's6summary checks and one
+mocked-HTTP production smoke pass. Zero-step parent materialization produces an
+identical first-tick report to direct execution. No new fitting/weather download
+or confirmation access. The first auxiliary job was stopped before any actual API
+or parent attempt (platform SUSPENDED); documented handoff pt-x9wf6mak uses
+resume_m00.py and c00_02.py. Preserve original claims and freezes. B00jobs:
+pt-bgtjydm7, pt-5tgzbejc, pt-npr5eak9. Completion is not yet claimed; the bounded
+finalizer writes FINAL_RESULT.json and RESULT_SUMMARY_CN.md when results arrive.
+
+# v13 final amended closeout, 2026-09-16
+
+Canonical receipt: `../plans/v13_execution_20260916_01/FINAL_RESULT.json`.
+The final source passes880unique tests (793existing+87new),0failure/skip/missing.
+A documented A03/A06 amendment after the first876-node close adds strict query
+prefix execution and complete tail dispositions, including original pending-source
+resume. Four new tests first reproduced the gap. Both sequential16CPU ACP jobs
+finish SUCCEEDED; no model/weather/scientific experiment starts. Use
+STOP_RECEIPT_02.json, TEST_RECEIPTS_02.json and FINAL_PRESERVATION_02.json.
+The first closeout/source receipts and earlier notes below remain historical.
+B00/C00/M00 remain unlaunched proposals; this batch stops for review.
+
+# v13 current execution, 2026-09-16
+
+Entry: `../plans/v13_execution_20260916_01/README_CN.md`; implementation and impacts:
+IMPACT_SUMMARY_CN.md. Current production integration changes are confined to
+policies.py, production.py, residual_query_plan.py and session_checkpoint.py,
+with four new modules and four new regression files. Frozen v12 scripts stay intact.
+
+Commands: audit_history.py (first canonical/file-hash mismatch preserved in
+HISTORY_01.log; corrected HISTORY_02.log exits0), diagnose_existing.py exits0,
+prepare_handoff.py exits0, and system-Python validate_schema.py exits0. Targeted
+failures and fixes remain in tests/ and logs/. The new frozen combined regression
+runs `regression.py execute` on one16CPU/64GiB ACP job, eight processes:79modules,
+876unique tests,0failures/skips,793historical+83new. Exact argv,code/test hashes,
+JUnit,exit codes and terminal platform receipt are saved in the execution bundle.
+
+All24C2 branch metrics and108method-session arithmetic reconcile with old scores;
+84FOLLOW-related comparisons get corrected consumer classification.288public
+requests have no cost/age/coverage-degree asymmetry.24public-ID/hash-selected
+clock diagnostics reproduce actual probabilities; all have measurable numerical
+clock effects.290historical API receipts lack the new final-permit/EOF evidence;
+288formal unredacted body hashes match. No hindsight repair of old replies occurs.
+
+Final preservation and task statuses are in RESULT_SUMMARY.json and
+FINAL_PRESERVATION.json when emitted by finalize.py. Next executable preparation
+is B00's fixed annual-raw-bank calendar, then separately qualified C00/M00.
+This batch stops at A06; new model calls/downloads/fits/confirmation/push remain0.
+
 # Implementation Status
+
+## v12 closed execution, 2026-09-15
+
+Current entry: `../plans/v12_execution_20260915_01/README_CN.md`.
+The registered batch closes at 2026-09-15 22:34:09 UTC, about 7h10m after starting,
+within the ten-hour authorization. `RESULT_SUMMARY.json`, `FINAL_REPORT_CN.md`,
+and `FINDINGS_AND_NEXT_GATES_CN.md` separate implementation, development comparisons,
+scientific limitations and next gates.
+
+Stage A completes six actual parent reconstructions and six exact original-policy
+continuations, followed by 24 formal finite-query branches. All 36 pairwise contrasts
+change features and effective probabilities. The parents share one date and all
+settled outcomes are negative: these are engineering/false-alarm diagnostics,
+not extreme-event detection or independent-process confirmation. The old 840-run
+fullweek audit is complete; its derived report retains all 12096 opportunities.
+E summaries correct 718 previously omitted supported method rows without changing
+original forecasts, outcomes, masks or losses. Native feature bank guards and
+annual failure summaries have scoped regressions; old failures remain recorded.
+
+Annual catalogs and native joins complete 72/72. Of 58221 unique source requests,
+5673 verified cached objects are reused and all 52548 missing bodies are acquired.
+Nine retained transport timeouts each receive their single registered retry;
+52557 download attempts complete with no 429 response. Frozen common/values banks
+use 2023 fitting and 2024 January-November calibration; no confirmation is opened.
+
+The 12-session, nine-condition DeepSeek-V4-Flash query-selector comparison completes
+all 108 method runs and 24 formal score groups. All 288 formal HTTP requests return
+200 with stop finish and 738634 provider-reported tokens. Only 71 replies satisfy
+the original selector contract: 192 schema failures and 25 non-JSON responses remain.
+Among valid replies, 58 select nothing and 13 select all three options in original
+order. The 864 registered opportunities include 861 settled, 16 positive, 3 missing;
+all positives are in Chicago on 2025-12-01. Brier: F_COMMON 0.0072363081,
+B11_COVERAGE 0.0077495538, B11_BATCH 0.0080625504, LLM_SELECTOR 0.0085665575,
+F_BASE_ONLY 0.0085985311. LLM's small gain over F_BASE_ONLY is entirely negative-case
+gain; missing-outcome sensitivity spans zero. F_COMMON uses a different bank.
+
+The first synthetic compatibility call fails its one-query instruction. The second,
+posthoc strict-schema synthetic call passes; it does not replace formal replies or
+qualify a repaired weather interface. All request identities remain consumed.
+
+Affected monitoring and API/report/closeout qualification covers 628 unique test
+nodes without failure or skip. Formal-score/report reconciliation passes 108/108.
+The protected-file audit retains 181 original files, identifies seven authorized
+current-code edits and verifies the isolated source snapshot without differences.
+CCI editable-import differences remain distinct from actual ACP frozen bindings.
+
+Eight CPU jobs are used, with no local H100 generation. Seven reach SUCCEEDED.
+After all method runs complete, the serial score tail is explicitly stopped and
+the remaining 21 score groups run in a fresh 12-worker finalizer; three complete
+groups are reused. The original platform state is SUSPENDED, with unknown process
+exit code retained. Closure is CLOSED_WITH_CONTROLLED_AUDIT_HANDOFF; the finalizer
+and automatic closeout exit zero. No jobs remain running, no confirmation is opened,
+and no Git publication occurs in this batch. Do not rerun consumed launchers.
+
+## v11 execution in progress, 2026-09-15
+
+Entry: `../plans/v11_execution_20260915_01/README_CN.md`; machine progress is
+`DASHBOARD_02.json`, with full-calendar coordination in `STATUS_03.json`.
+Historical v10 outputs and Git index remain preserved. This batch makes no new
+model calls and keeps independent confirmation closed.
+
+Current monitoring regression passes585 tests;165 distinct prior supplementary
+tests also pass (750 unique nodes, no failures/errors/skips). Shared temperature
+support validation rejects malformed UTC windows, duplicate/missing days, invalid
+numeric inputs and mismatched member shapes. Visibility lower infinity is rejected;
+legal upper censoring remains supported. This does not establish member lineage.
+Managed formal v2 references bind actual input content, journals, reports, STOP
+receipts, source/data hashes and result-provider policy; explicit legacy rescoring
+remains available. API STOP/deadline checks share a short local dispatch gate.
+These are managed-run checks, not arbitrary-code or distributed-transaction security.
+
+Historical impact scan checks252 feature responses,256 temperature responses,
+256 temperature input checks and11644 full-calendar temperature policy rows:
+no changed eligibility/probability in the checked records. The first scanner
+failed on a metadata/task-roster mismatch; its failure remains alongside the
+successful registered-task scan. The stale September12 hydro run is classified
+as historical incomplete; its available prefix verifies, but full completion
+and original worker-exit cause are not established.
+
+A real five-arm preflight exposed an adapter restriction to values banks.
+The common bank now has an explicit mode that skips paid-record extraction;
+two regressions check lawful common execution and reject paid slot features.
+The original failed preflight remains. Fresh preflight02 completes all five
+arms and audits360 rows. A same-node nine-arm before/after profile verifies
+identical score-file hashes,19 to9 journal replays,1256.0 to554.6 seconds.
+This one-case result includes profiler overhead and uncontrolled filesystem cache.
+
+Fullweek02 freezes168 daily cases,840 trajectories and12096 opportunities across
+the original12 region-weeks, five conditions and48 source queries per daily
+session. The four same-values-bank conditions are scored separately from F_COMMON.
+Three shards are submitted with16/16/8 CPUs and12/12/6 workers. The original third
+16CPU submission was definitively quota-rejected and is preserved; a fresh8CPU
+submission succeeds. `advance_resume.py` queues shard3 for a released16CPU slot,
+then performs the whole-roster audit. No original shard restarts. Scientific
+results are not yet available at this entry's timestamp.
+
+Annual source acquisition registers432 station/month/product slices in72 regional
+months,2023 fit/internal-selection and2024 final-calibration. The fixed leap-month
+sample passes18 catalog/METAR slices and enumerates2470 native TAF originals.
+Remaining catalogs and three full-month native joins run as separate bounded CPU
+jobs. Entire annual native acquisition, purged admission and fitting are unfinished.
+C2 registers72 noon target prefixes and constructs144 real native coverage/revision
+E tasks; all references resolve, and all72 coverage tasks are full. This verifies
+construction only, not coverage diversity, actual branch execution or F improvement.
+Final method/backend/independent-process confirmation remains gated.
+
+## v10 closed execution, 2026-09-14
+
+Current entry: `../plans/v10_execution_20260914_01/README_CN.md` and its
+`CANONICAL_STATUS.json`. The current user authorizes a fresh ten-hour run ending
+2026-09-15 01:56 UTC, CPU jobs and at most four simultaneous H100s.
+All v9 launches and terminal records remain consumed and unchanged.
+
+The complete monitoring scope passes720 tests without failures/errors/skips;
+37 overlapping changed-file checks also pass.187 current Python files pass Ruff.
+Strict duplicate-key rejection, immutable per-call API escrow, nested failure
+capture, provider-bound formal entry and measurement.v3 ordering are implemented.
+Four fresh processes verify serial pending recovery on one native query, with a
+formal marker before worker visibility and a STOP boundary. General distributed
+recovery remains outside this qualification.
+
+Historical coverage/arithmetic rechecks24 temperature months/192 trajectories/
+11644 opportunities/3645 targets and14 aviation cases/196 trajectories. The new
+feature bank audits50112 probability rows. Finite residual-E witnesses cover19
+real prefixes and8 resource configurations. Multicutoff and allocation/sharing
+controls, including COPY/KEEP and strong batch baselines, have actual replays.
+
+All2812 new benchmark responses are captured. Fixed-input valid predictions
+almost entirely copy the baseline.27B and235B temperature predictions do not
+improve this exposed sample. The288-call235B selector completes with no invalid
+selectors but worse5km Brier than FOLLOW. Uniform clarification of all84 native
+extraction tasks improves ordinary visibility agreement25/144 to140/144 while
+the fixed-backend forecast does not improve. All original failures remain.
+
+All12 seasonal region-weeks provide12096 opportunities. Dropping annual sine/
+cosine on originalDec2024 fitting roles is a registered development ablation;
+new seasonal labels never enter its optimizer.216 budgeted seasonal trajectories
+and their final journal audit are complete.70 paired summaries check missing-
+outcome bounds by exhaustive binary completions. In the first-day5km subset,
+all16 positives occur in December, where coverage loses to FOLLOW and batch;
+the slight average gain is not severe-weather improvement.2017/2018 EMOS/ECC
+arithmetic passes, including same-member3day events and the worsened hot-day result.
+
+Two relocated CPU capsules verify818 and1162 manifest members respectively;
+the second contains all212 original235B tasks and reproduces every score file.
+These are scoped rescoring/replay packages, not full training reconstruction or
+new model generation. Current H15 data-card semantics and source equivalence are
+documented under the run's contracts directory. Bay confirmation stays unopened.
+All23 cloud jobs are SUCCEEDED, no owned local experiment watcher remains, and
+peak H100 allocation is four. FINAL_RESULT.json binds the closed audits/calls;
+FINAL_REPORT_CN.md and NEXT_PHASE_PLAN_CN.md are the result and next-step entries.
+
+## v9 follow-up execution active, 2026-09-14
+
+New work: `../plans/v9_followup_execution_20260914_01/`. Serial lifecycle timing
+and managed production spool modes pass 616 monitoring tests (0 failures/errors/skips).
+Real native H15 inputs pass four-process dispatch/two-wait/response recovery for
+predictor, selector and source; source-only corrected configuration uses a fresh
+case after the first source attempt failed before dispatch. Transport test replies
+are synthetic, not model results. Managed binding is not arbitrary Python isolation.
+
+Existing 1h calendars yield 4,176 unique target opportunities, only three sub-1km
+positives (Denver), and3 conservative components at0/24/72h gaps,2 at168h. Those
+blocks are not verified independent synoptic systems. Four-region Dec2024 native
+acquisition completes3,303 requests; purged regional banks fit9,678 and calibrate
+2,780 rows. Evaluation does not select a replacement bank; confirmation stays closed.
+DeepSeek authentication succeeds for deepseek-flash and deepseek-v4-pro. Credentials
+are external/private. Both models complete one original JSON compatibility call;
+these two calls contain no benchmark questions. The formal E/F pipeline is released
+after four real-data program preflights, two direct/step equivalence checks and
+12,084 independent E-reference agreements. Twelve static views have conflicting
+Chicago TAF baselines and remain explicit exclusions, not deleted F opportunities.
+GLM5.3 official ModelScope config and index are accessible: current FP8 weights
+total755,617,140,416bytes, exceeding four80GB H100s before runtime overhead.
+The new64-unit temperature continuous program pilot has completed and independently
+reconstructs7,008 score rows over876 opportunities/280targets. No temperature LLM.
+
+AFS LOCK_EX contention caused original E01 collection failures. Bounded local-lock
+retry and persist-before-settle fixes pass actual4-process/4-thread AFS probes and
+the616-test gate. Corrected E02 runs1,008 fresh registered calls, all settled, with
+independent input/reference/wire/fee audit. E02 peak-fee upper estimateUSD1.35081216.
+Original E01 unknown reservations remain held and its failed collection is not used
+for model ranking. A posthoc E mechanism audit makes no calls or score replacements.
+
+F program replay is moved from the2-core CCI to ACP job `pt-rky4xj1b`,64CPU/256GiB,
+zero GPUs. Original18 program units complete; the102 unlaunched units use32 workers,
+then48 model sessions use the unchanged four-request/API budget limits. Drain logs
+record actual original child exits before retiring paused dispatchers. The separate
+DenverJan9 rare-event variant remains preregistered and runs only after ordinary F.
+See `runtime/cpu_handoff_01` and `scripts/status_followup.py` for live progress.
+
+
+## v9 review integration completed, 2026-09-14
+
+Current entry: `../plans/v9_integration_execution_20260914_01/README_CN.md`.
+The final577-test monitoring matrix passes with zero failures/errors/skips;
+15 changed current source/test files pass Ruff. Frozen historical experiment
+source is preserved separately from these current-source fixes.
+
+Exported outcome/comparison values and backend declarations are copied;
+ordinary settlement cannot release unknown execution reserves; admission checks
+initial/intermediate/final configurations and actual protocol. Numeric overflow
+and observed failure timing are guarded. Explicit typed visible-value program
+predictors and configured failure-continuation modes are implemented. Complete
+cumulative pending waits and production callback/global-state binding remain.
+
+All28 new216-opportunity program trajectories independently replay and score.
+The6048 row losses reconstruct from the original snapshots. COPY_CURRENT under
+persistence improves1km and worsens5km on the exposed Bay day, without producing
+new forecast values. Acquired E is determinate for144/216 opportunities under
+the48-query batch; evidence-mapped F does not beat Follow in any of four groups.
+
+Qwen3.8-27B completes144 benchmark plus4 compatibility calls on four H10080GB
+replicas. Job `pt-xn7x9vev` SUCCEEDED, four worker exits0. Full/direct24/36,
+full/slotwise35/36, focused/direct31/36, focused/slotwise36/36; all144 responses
+are retained including one format-invalid code fence. Independent token/response
+audit and reference reconstruction pass. The12 underlying opportunities remain
+exposed development E tasks; no new F/adaptive/online result follows.
+
+Explicit native outcome policies validate87 H15 targets per threshold and3661
+DWD targets. The3641 mature DWD records are rebound in a new registry to the
+original real download completion receipt;20 missing outcomes remain missing.
+Native values and physical support do not change; historical publication is
+still unknown. Temperature continuous adaptive sessions remain unimplemented.
+
+GPU responses end05:41:43 UTC and program scores06:03:39 UTC, within the original
+04:33:23-06:33:23 window. CPU final analysis/regression/documentation occur later.
+The next phase prioritizes execution identity/wait accounting, process-grouped
+regional baselines, cost-aware E/F diagnostics and continuous native temperature.
+The reserved Feb17-23 confirmation week remains unopened.
+
+## v8 measurement execution, 2026-09-13
+
+Entry: `../plans/v8_measurement_execution_20260913_01/README_CN.md`.
+The user authorizes twelve hours and at most four simultaneous H100s. This
+execution preserves original captures/frozen source and the original Git index
+snapshot. A raw-index byte change is identified as non-staged-content state:
+all13,521 staged paths, object IDs, modes, stages and flags match exactly.
+`INDEX_EQUIVALENCE_01.json` records the read-only check. No stage/commit/push.
+
+485 current related core regressions,5 launch-bound,6 joint-analysis and6 visible-value attribution tests pass
+with zero failures/errors/skips; see `REGRESSION_MATRIX_07.json` and
+`validation/full_joint_targets_24.xml`. The adaptive model batch retains its frozen
+439-test version. Earlier red/failure records remain.
+Native current-version-before-coverage, atomic transactions, canonical outcomes,
+resource/request/backend identities and explicit program/model predictor roles
+are qualified for the registered H15 scope. The selector now explicitly sees
+program forecasts cost zero model calls/tokens and model forecasts cost one call.
+
+All40 original full-day program trajectories and all four independent canonical
+comparison groups pass. The posthoc decomposition matches every original score.
+All four original slow scorer groups also finish and exactly match the optimized
+canonical fields; `reports/original_scorer_comparison_03/VALIDATION.json` records
+the comparison without rerunning the original trajectories.
+At5km/base-bound, fixed-selector private/shared evidence contrasts increase
+E determination from8 to174 under fixed quota and27 to213 under global budget,
+but their future Brier scores are worse than Follow on this one development day.
+W07 has72 source queries and public30s call slots; the new W12 has48 queries
+and measured model delivery. Never pool the batches to infer an LLM effect.
+
+Qwen3-235B-A22B-Instruct-2507-FP8 and fresh8B control each complete504 benchmark
+calls plus1 compatibility call. Four-H100 job `pt-kb7tiwn5` succeeds; all1,008
+benchmark responses independently validate and score. The235B E-only scores are
+43/48 common-only,2/48 one-read,47/48 all-registered;8B scores are48/48,45/48,3/48.
+All288 large-model F proposals keep dispatch baseline;8B changes three. Preserve
+negative results. This is neither adaptive nor independent confirmation.
+
+Fresh adaptive batch `gpu/adaptive_large_02` has52 full-day sessions and a5,376
+model-call ceiling on four H100s; job `pt-ug2dg5ln` is submitted and running.
+No model-result claim follows until its independent auditor finishes. Earlier
+large01 is rejected before inference for the selector-role fee contradiction.
+Two52-session engineering rehearsals and the latest8 affected role/protocol/
+threshold cases independently pass at18 opportunities per session; the actual
+full-day model batch has216 per session. Separately, all240 full-day requests and24 selector
+shape variants fit with max9,782 tokens. Rehearsals make zero model calls.
+
+Source/selector/predictor each pass real-native-data, separate-local-process
+committed-response recovery with27 opportunities. This does not establish
+physical external exactly-once or arbitrary concurrency. Real C2 includes10
+engine-replayed witnesses on3 targets: individually reachable but joint optimum1
+at2 queries, joint3 at3 queries, and0 after a late start. No F-optimality claim.
+
+Five exposed H15 calendars contain12,528 unique cutoff opportunities,4,296
+threshold targets and2,148 station-time windows; independent weather-process
+count is unknown. New York/Chicago/Denver each have3 stations x7 days acquired
+and decoded, but no regional bank fit or model score. Reserved Feb17-23 Bay
+confirmation remains unopened. Missingness and dependence design are written.
+
+Two-year EUPP/DWD point validation has14,600 future opportunities,14,430 settled,
+170 missing and960 scalar admission replays. It is not a heatwave/cold-wave task.
+MRMS12-hour grids have official unit/QC/duration mapping; exact physical endpoints,
+first-seen and matched F/MM remain. HEFS697 common times and2,788 version-E states
+are qualified as native product tasks: a complete common HEFS resolves all697
+for zero extra queries, so charged transport is not a C1 main-track gain.
+The native DWD daily reference additionally qualifies730 days of TXK/TNK with
+official Celsius and00-24UTC support. There are22 hot,114 frost and28 ice days.
+On720 complete paired days, six-hour observations miss8 hot and18 frost days.
+Existing EUPP instant t2m is not a matched daily-extreme forecast; full heatwave
+and cold-wave F remains gated. See TEMPERATURE_DAILY_REFERENCE_CN.md.
+
+The later native-extrema extension resolves the acquisition part of that gap:
+EUPP mx2t6/mn2t6 supplies1,489,200 values and all730init/14,600valid-time coordinates.
+It yields2,920future-day pairs(2,910with reference),2,920three-day event positions
+(2,906with reference),11,680canonical opportunities/3,661targets. Independent
+probability/native-label scoring and480monthly typed snapshot replays pass.
+Availability remains a declared3h scenario; raw member frequencies are uncalibrated.
+The prose noon-run discrepancy is retained against actual00UTC coordinates and
+one native GRIB header sample. This is not a continuous adaptive session or an
+independent confirmation. See TEMPERATURE_DAILY_FORECAST_CN.md and its receipts.
+
+The4h AWC source collector completes17polls/34successfulrequests. All25unique
+products(18METAR,7TAF) parse; no model forecasts were submitted. A separate
+read-only dependence audit finds30shared target contracts and68catalogTAFversions
+between the Bay daily calendars; source-period splitting alone is not independence.
+
+D-sim has6 synthetic scenarios x4 fixed-F policies,24 trajectories and192 demand
+settlements;24 journal replays and24 new-process continuations match. An optional
+exogenous preparation schedule now uses the same typed session clock. Real-native
+source/selector/predictor transport cases pass5 separate-process continuations on
+the same27 opportunities, with one D start and cleanup each, no duplicate costs.
+See `reports/real_preparation_recovery_summary_01/VALIDATION.json`. The two driver
+failures are preserved; successful predictor/selector cases were not repeated.
+The admitted-F decision adapter also passes12 conditional native-F trajectories
+on9 unique targets/27 opportunities, preserving all108 repeated F rows. Each
+journal and new-process continuation matches. It rereads current effective
+forecasts, but uses a captured fixed F stream, not full-session D/acquisition/model
+feedback. General concurrency, model-chosen D and real mitigation remain.
+A bounded4h AWC source-only capture
+is running; its actual TAF/METAR receipts decode, with no live model forecast.
+
+A12.9MB portable subset replays Follow/shared-batch original journals with216
+opportunities each after relocation, Python networking disabled, identical to
+original scores. It is not a raw-acquisition rebuild or a model-token audit.
+See RUN_REPORT_CN.md, NEXT_PHASE_PLAN_CN.md and the current EXECUTION_STATUS.json.
+`EVIDENCE_CASEBOOK_CN.md` adds576 independently calculated disclosed-interval
+witnesses matching the original E scorer,144 bound TAF results and14 deterministic
+posthoc examples. It neither resubmits model calls nor changes the original score.
+
+X09 fixed-information single/three-target output has384 registered requests and
+576 repeated target-answer positions on48 exposed opportunities. The offline
+qualification and independent empty-capture audit pass; the latter has no model
+metrics. A separate one-use four-H100 freeze can launch only after the adaptive
+job succeeds and all52 sessions audit, before01:15UTC. See X09_PROTOCOL_CN.md.
+Both scopes see the same context;512 output tokens per request gives unequal
+group-level output budgets (three single requests versus one multi request).
+Report quality, output limits and input amortization separately. General typed
+session multi-target admission and private/shared causal effects are not claimed.
+
+## v7 typed adaptive next step, 2026-09-13
+
+Execution: `../plans/v7_adaptive_execution_20260913/`. The existing session loop
+now has an opt-in typed admission adapter; it binds acquired native products to
+the actual resource ledger, preserves target permissions, supports TAF withdrawal,
+and exports replayable typed clock advances. No second policy loop was added.
+The legacy probability entry remains the default, with its source baseline saved.
+
+Two real three-hour sessions (27 opportunities each) pass six policy arms and
+four cross-process continuations. Each unchanged continuation equals the full
+uninterrupted report, and each inherited acquisition is charged once. Program
+timing is an explicit 1ms computation/1ms persistence scenario in public 30s slots;
+this is not a measurement of historical compute or public release latency.
+
+313 relevant tests pass with zero failures/errors/skips, plus Ruff. Initial
+missing-module regression failures, the F-only audit denominator correction and
+initial lint logs are retained. The 108 old raw requests/responses re-audit:
+E-only exactly matches always-unknown; all 72 old F-bearing replies keep baseline.
+
+Fresh calendar frozen before acquisition: 2025-02-03, three Bay stations. All
+97 requests succeed (6 catalog/METAR requests, 91 complete native TAF bulletins).
+288 METAR records and 91 TAF products decode, producing 432 opportunities. The
+1km threshold has zero positives and the 5km threshold only two; neither supports
+a strong rare-event performance conclusion. Dedicated TAF coverage/revision E
+contracts include strict real-source inputs and separately tested synthetic edges.
+
+All 252 new calls complete on three H100s: `pt-kpg5z6z7`, `pt-jjeo0oed`,
+`pt-ttdxxo70`, all SUCCEEDED. All responses are timely and parse, without retries.
+E-only improves from 24/36 to 33/36 under the focused native view; joint E moves
+30/36 to 32/36. All 144 F-bearing replies still retain baseline probabilities.
+Native TAF coverage scores 6/18; revision scores 16/18. Preserve all failures.
+
+The relocated, network-disabled, stdlib-only review passes 1,798 bound files,
+36 typed journals, eight controller branches, 252 new and 108 prior captures.
+The account ends with zero active requested GPUs. Next: native time-window
+diagnostics, longer fixed calendars, in-flight/D recovery and full fair resource
+comparisons. No paid API, training or future-weather wait is required.
+
+
+## v7 follow-up first wave completed, 2026-09-13
+
+Entry: `../plans/v7_followup_execution_20260913/FINAL_REPORT_CN.md`.
+The new shared clock, typed journal admission, native H15 support bridge,
+quiescent controller checkpoints and synthetic preparation reducer are implemented.
+The current related suite has 289 passing tests (zero failures/skips); authored
+files pass Ruff. All initial failing tests/lint logs remain in the execution bundle.
+
+Real model execution: 108 new independent Qwen3-8B calls on one H100, ACP job
+`pt-l2on4qb3`, SUCCEEDED. No retries, parse failures or missing responses.
+All 72 F-bearing replies are timely but retain the common baseline exactly;
+E-only is 23/36 correct (all replies unknown), joint E is 26/36. Preserve this
+negative result; it is not a new independent weather-process confirmation.
+Canonical audited report: `reports/model_smoke_02/REPORT.json`. Initial report 01
+and the no-score-change prior-month-fallback amendment remain auditable.
+
+Native support reconstruction passes on 144 bundles/48 exposed opportunities;
+three real TAF version pairs and three shared-budget witness cases are checked.
+At budget two, all three targets are individually reachable but at most two can
+be resolved jointly. TAF coverage/version E has program evidence, no new model
+head or calls. Four real aviation branches recover in separate CPU processes;
+the unchanged continuation equals the uninterrupted complete report. Four
+synthetic D scenarios replay on the typed clock; this is not operational benefit.
+
+EUPP/DWD: 60 positive-lead scalar opportunities/28 valid targets and 120 CPU
+predictions pass admitted MAE reconstruction under an explicit archive-latency
+scenario. Mean/median MAE: 1.426197/1.450817 K. No historical publication time,
+heat/cold-wave task or second shared-evidence mechanism is established.
+
+Next: integrate typed inputs/admission into the full stepped adaptive controller,
+diagnose constant-unknown E, qualify new TAF heads, freeze unexposed development
+calendars, then add in-flight and D branch snapshots. Do not relaunch the consumed
+108-call batch or label all sixteen hazards qualified. No new account permission
+or waiting for future outcomes is required for these historical next steps.
+
+## v7 follow-up CP00/CP01, 2026-09-13
+
+Execution: `../plans/v7_followup_execution_20260913/`. Baseline snapshots and
+32 source/evidence bindings are preserved; the Git index is untouched.
+Shared event-clock extraction and typed durable admission are implemented.
+The new scorer replays complete hash-chained journals, seals each opportunity,
+and rejects late, unbound, invalid or stale candidates. Scalar units remain native.
+
+Baseline run: 250 related tests, exit 0. New admission regression first collected
+with exit 2 (missing module), then 37 passed/1 failed (test used the wrong score
+field), both logs retained. Corrected full run: 267 passed, exit 0; JUnit and log
+are under `validation/admission_green.*`.
+
+`execute_admission.py --output reports/admission_01` exits 0: 12 real archived
+H15 opportunities, 36 newly measured CPU program predictions, four reconstructed
+journals and 48 sealed forecast records. This is a declared archive scenario,
+not retrospective proof of actual 2024 submissions or independent confirmation.
+Next: fresh 108-call local independent E/F/joint smoke and real support bridge.
+
+## GitHub fixed-evidence publication completed, 2026-09-13 07:30 UTC
+
+Private branch `sisuolv/disastertrace-benchmark:next-phase-v1` now contains commit
+`60ebd05723f9483590611976d379da2e4edd85b0`, a fast-forward from `98f28a9`.
+The checked snapshot selects 835 files, including current code, source reports,
+two-year controls, a 2,183,323-byte reading ZIP, the 720-call CPU replay ZIP and
+87,065,178 bytes of complete evidence archives. The latter preserve 12,113 paths,
+including failures; model weights and credentials are absent.
+
+The exported 250-test suite passes without failures, errors or skips after the
+original regional fixture is expanded; the first export's 14 skips remain logged.
+An independent shallow GitHub fetch verifies 11 files, including both complete
+evidence parts, both review/replay ZIPs, reports and current contracts/heads.
+Local HEAD and the original dirty Git index remain unchanged; no force push.
+
+Receipts: `../publication/v7_execution_20260913/PUBLISH_RESULT.json`,
+`GITHUB_READBACK.json`, and `DELIVERY_COMPLETE.json`. This post-publication entry
+and the final network receipts follow the immutable published snapshot. The
+execution-time status bytes remain in its complete evidence archive. Main entry:
+`publication/v7_execution_20260913/REVIEW_FOR_CHATGPT_PRO_CN.md` in GitHub.
+
+## Completed bounded integrated v7 execution, 2026-09-13
+
+Entry: `../plans/v7_execution_20260913/README_CN.md`; read its `FINAL_REPORT_CN.md`,
+`NEXT_PLAN_CN.md`, `EXECUTION_STATUS.json` and `FINAL_VALIDATION.json` together.
+The new work completes W0 audit, bounded W1 source checks and two-year local
+controls, W2 fixed-input/scalar engineering, and W3 prompt/semantic diagnostics.
+W4/W5 and full sixteen-hazard scientific monitoring admission remain open.
+
+W0 reconciles 31,104 old calls in 216 sessions and 72 score groups. This execution
+adds 720 actual Qwen3-8B calls in 12 successful one-H100 jobs, maximum overlap four,
+1,930,215 total tokens. All three batches are consumed. The final account receipt
+records current occupancy separately; never relaunch these historical batches.
+E-only explicit-truth accuracy is 127/144; joint E/F is 114/144. Filled-example
+copying and negative/zero gains remain in the archive, with no F-only model run.
+
+Real Front prior-December downloads yield 633/657 native TAF and 2,089/2,088 METAR
+for 2023/2025. Local maps improve Jan2024 but worsen Jan2026 versus original Bay
+transfer; all-neighbor evidence has no stable benefit. Fixed training/check splits,
+all twelve static cells, missing results and low/zero positive check support remain.
+LAMP historical native minutes/current probability text, EUPP/DWD arrays, SEEPS
+arrays and CNRFC historical archives are decoded. Temperature MAE covers 60 positive
+leads/28 valid targets; hydro and daily rainfall are not scientifically scored.
+
+Current `monitoring_fixed_v1` adds typed point/scalar contracts, immutable visible
+bundles, journal replay, Brier/MAE and separate E-only/F-only/joint CPU interfaces.
+Independent review drives additional baseline/derived-time boundary fixes. Generic
+C2 provider bridging and a cutoff-to-effective-forecast scoring manifest are still
+required. All old monitoring source and preserved artifacts remain unchanged.
+
+Actual final command: `PYTHONPATH=src .venv/bin/python -m pytest
+tests/test_monitoring*.py ../plans/v7_execution_20260913/tests/test_fixed*.py -q`.
+250 related tests pass with zero failures/errors/skips; final targeted Ruff passes.
+W0 nine tests, LAMP seven tests, independent boundary/parser checks and four replay
+negative cases are reported separately. Frozen calibration helpers retain six
+style notices; there is no claim that all repository lint or hosted CI passed.
+
+The 11,352,884-byte CPU replay ZIP reconstructs all 720 captures, 576 applicable F
+scores and 1,930,215 tokens without weights or new inference. Standard-library,
+full-token, relocation and ZIP-restored replay checks agree. Python audit hooks
+block original paths/network/subprocesses; this is not OS-level sandbox isolation.
+No new Git publication, paid model API or training occurs in this execution.
+
+## Historical progress snapshot: integrated v7, 2026-09-13 05:10 UTC
+
+New bundle: `../plans/v7_execution_20260913/`, implementing the already integrated
+`../plans/v7_integrated_20260913/` plan. W0 reconciles 216 historical sessions,
+31,104 real model calls (27,216 predictors / 3,888 selectors), and 72 common-mask
+score tables. Only 10 explicit overrides changed 11 deadline snapshots; zero
+late/parse failures explain the audited main traces. These are old calls, not new
+inference. The frozen-candidate action diagnostic retains mixed/negative results.
+
+The new `monitoring_fixed_v1` lane freezes visible source records, receipts,
+permissions, current state and common baseline; it adds point/scalar contracts,
+typed journal replay and common-mask MAE alongside Brier. Existing monitoring_v1
+source bytes remain unchanged. 124 core/fixed tests and six real-input checks pass.
+Temperature integration scores 60 positive-lead EUPPBench/DWD pairs and reconstructs
+120 typed scalar states; it is not yet an active monitoring task.
+
+Two fresh four-H100 batches complete 432 verified responses. The first 144 copy
+the filled example; a 288-call same-input probe copies the alternate example or,
+without a filled example, copies the baseline. This is a retained prompt/result
+failure, not evidence that the data lack information. A final separately frozen
+288-call E-only/joint explicit-truth diagnostic is submitted; consult its live
+receipts before claiming completion. Old launch records are never reused.
+
+LAMP native historical/category and current probability text products, EUPPBench,
+DWD, SEEPS4ALL and CNRFC historical hourly/daily archives now have fresh scientific
+samples. IEM LAV runtime=00Z matches the native 00:30Z product, so native minutes
+must be retained. CNRFC historical arrays have 43 traces, not today's documented
+44. Physical flow support, historical availability, daily-rain windows and all
+formal monitoring admissions remain separate gates. Full Front prior-December
+calibration acquisition and portable CPU replay are in progress.
+
+## GitHub publication and readback completed, 2026-09-13
+
+Private branch `sisuolv/disastertrace-benchmark:next-phase-v1` now contains commit
+`98f28a9a9f33c28ec2b0236c4aaf47a9173c813e`, a fast-forward from reviewed 63c7769.
+The 1,262 selected files and 5,528,711-byte reading ZIP pass snapshot verification.
+An independent shallow GitHub fetch reads back seven files, including the ZIP,
+manifest, final report and core code; all hashes match. Local HEAD and the original
+dirty index remain unchanged. Receipts: `../publication/v7_review_execution_20260912/`
+`PUBLISH_RESULT.json`, `GITHUB_READBACK.json`, and `DELIVERY_COMPLETE.json`.
+The immutable exported snapshot predates these post-push receipts. Scientific
+limits and next steps remain those recorded in the completed development entry.
+
+## Completed v7 development execution; publication handoff, 2026-09-13
+
+The governing bundle is `../plans/v7_review_execution_20260912/`; read its
+`FINAL_REPORT_CN.md`, `OVERALL_EXECUTION_ROADMAP_CN.md` and `ARTIFACT_INDEX_CN.md`.
+All planned model batches in this window are consumed and independently verified:
+33,944 actual calls, 82,231,506 tokens and 50 successful one-H100 jobs. The final
+account check finds zero active requested GPUs; saved creation-to-completion
+receipts show a maximum overlap of four. No batch may be relaunched.
+
+The combined implementation/analysis suite passes 109 tests (102 core and seven
+analysis/adapter/runtime checks), with no failures, errors or skips. Thirteen
+supplementary ranking, pairing, scanning and local Git-isolation checks remain
+separate, as do the original review packages' eight and six examples. Queue-pinned
+core/helpers remain unchanged throughout these final runs.
+
+All three fixed 27-day calendars have complete dual-protocol model/program
+comparisons: 5,832 opportunities each, with 5,832/5,826/5,796 settled. No model arm
+has positive mean gain over its shared R mapping. Both years' mappings train on
+Bay stations in the previous December; Front Range is a declared regional transfer,
+not locally calibrated native professional probabilities. Missing results, parser
+quarantines, negative gains and fixed-candidate wrapper differences are retained.
+
+The four new execution-order probes complete 768 calls. Every paired raw answer
+and E state equals its original-run counterpart; 8B E-only/fact-table correct
+counts remain 65/51 and 32B counts 81/88 out of 96. These exposed development
+cases are not independent weather samples or new F/MM evidence.
+
+Final CPU commands `analyze_warning_ranking.py`, `analyze_joint_E.py` and
+`analyze_resource_pressure.py` exit zero for the completed replication. The final
+resource report covers 216 model sessions; call limits bind while token/compute
+limits have substantial slack. Two packaged replays each rebuild 5,656 responses
+and 109 tests; a further archive-restored 2026 replay rebuilds 5,184 responses and
+13,184,119 tokens with original project reads/network blocked, no weights or
+new inference. Existing installed dependencies are reused, not freshly installed.
+
+H08 remains a source preflight: 687 provisional flow records match between two
+retrievals. Three official site mappings and current stage thresholds are verified;
+all corresponding flow thresholds are absent. Six more requests retrieve native
+deterministic stage forecasts/observations and USGS 00065 samples: 275 exact-time
+stage pairs agree, four missing NWPS slots remain, and 160 forecast points are
+retained. Historical datum/threshold validity and a new H08 engine task are open.
+
+Thirty-eight evidence units pass full archive-content checks. Selected publication
+uses an alternate index based on remote commit 63c7769, preserving local HEAD and
+the dirty real index. Final push/readback receipts are generated after the snapshot
+under `../publication/v7_review_execution_20260912/`; do not infer a completed push
+from this pre-publication entry alone. Next scientific work: stronger explicit R
+transfer checks, useful legal supplemental evidence, H08 historical contracts,
+independent processes and the original 16-hazard admission gates.
+
+## In progress: v7 review execution, 2026-09-12 21:50 UTC
+
+The amendment and execution bundle remain `../plans/v7_review_execution_20260912/`.
+The latest combined check passes107 tests (100 core and7 analysis/adapter/runtime
+checks), with zero failures or skips. Actual verified model evidence is12,440
+calls,29,226,266 tokens and30 completed GPU jobs. Four further H100 workers run
+the Bay persistent-protocol calendar; a bounded queue owns three later frozen
+four-worker batches. Never launch these again. Consult EXECUTION_STATUS.json and
+actual ACP receipts for newer counts; the queue's prelaunch account count is not
+a live GPU inventory.
+
+Both2024 full-calendar base-protocol matrices pass independent token, entitlement,
+cost and score replay. Cheap dual-protocol controls complete for Bay and Front.
+The balanced96-case E diagnostic has actual8B and32B results: E-only65/96 and81/96,
+respectively. Representation effects differ by model; this is not F gain or
+independent-weather evidence. A copied32B diagnostic replays offline with original
+project reads and network blocked, no weights and no new model calls.
+
+The fixed2026 Front calendar and prior-December2025 mapping now have real native
+inputs.2026 has5,796 settled of5,832 opportunities,42 strict positives/14 unique
+target hours,36 unresolved opportunities and6 unparsed-TAF fallback opportunities.
+The prior-December check is separate from evaluation. Failed429/503/timeouts and
+all unparsed bulletins remain.3,671 new native METAR rows match the independent
+decoder, supplementing the earlier6,120-row check.
+
+Independent AVWX TAF comparison covers2,753 unique bulletins:2,680 agree in the
+checked fields,67 retain72 FM-minute discrepancies, and6 strict-parser products
+remain quarantined. The external parser truncates those FM minutes; native text
+and NWS semantics support retaining our exact minutes. This is not complete
+TAF semantic agreement or proof of historical first-seen.
+
+Next: finish the queued dual-protocol/temporal comparisons, compare complete
+all-opportunity cheap baselines and missingness bounds, complete portable replay,
+and publish selected code/evidence while preserving local HEAD and index.
+
+## In progress: v7 review execution, 2026-09-12 20:20 UTC
+
+The governing amendment is `../plans/v7_review_execution_20260912/PLAN_AMENDMENT_CN.md`.
+The user authorizes work through2026-09-13 02:51:58 UTC, at most4 simultaneous
+H100s. Preserve v7/C1/C2/C3, the16-hazard goal, old freezes and consumed launches.
+
+The new `monitoring_v1` has99 passing regression tests (CORE_VALIDATION_07.xml).
+Support semantics, joint reachability/witnesses, full target identity, versioned
+wrappers, durable resource/event receipts, isolated views and missingness bounds
+are implemented. Actual malformed TAF envelopes now remain public and trigger a
+frozen fallback; they no longer silently leave an old probability mapping active.
+The external reviews'11 issues and5 supplementary actions map to code, tests and
+remaining scientific gates in REVIEW_RESOLUTION.json. Their8+6 examples remain
+separate from implementation tests. Five literature fulltexts have been compared.
+
+Verified GPU evidence currently comprises1,304 actual calls and20 completed jobs:
+16 pilot,576 base-wrapper,576 persistent-wrapper,72 VLM representation calls,
+and64 charged-selector pilot calls. The new selector/current-state verifier also
+passes on the existing64 calls, with no new inference. Four additional H100 jobs
+are running the complete27-day Bay secondary-threshold calendar (maximum5,184
+calls). Front Range strict-threshold inputs are frozen but not yet launched.
+Use EXECUTION_STATUS.json for subsequent receipt counts; received is not verified.
+
+January2024 extensions retain5,832 opportunities per threshold per region.
+Bay has0 strict and159 secondary positive opportunities. Front Range has42 strict
+positives/14 unique target hours,237 secondary positives, and6 unresolved slots
+per threshold;18 opportunities use unparsed-TAF fallback. These counts are not
+independent storm counts.6,120 native METAR rows match the independent open-source
+python-metar decoder at both thresholds, native station and report time.
+
+Actual IEM bulk requests retrieve three stations' hourly observations in944-958
+bytes; one daily request returns72 matching native rows. Logical per-slot prices
+therefore do not establish natural acquisition scarcity. Strong complete-update,
+all-read, persistence and revise/defer CPU controls are running on the same fixed
+calendar. E or F gains, professional-baseline superiority and full16 admission
+remain unproved. Historical first-seen remains an explicit replay assumption.
+
+A separate2026 calendar and prior-December calibration are registered before new
+captures (REPLICATION_2026_METHODS.json); native bulletin downloads are underway.
+Next: validate complete GPU results, execute fresh dual-protocol/temporal runs
+within the four-card cap, compare cheap controls, reproduce source-bound outputs,
+and publish a selected reviewable snapshot without altering the local index/HEAD.
+
+## Completed: expanded all-candidate recovery, 2026-09-12
+
+The complete97-entry usage inventory is at
+`../plans/all_dataset_utilization_20260912/README_CN.md`:84 decoded sample entries,
+6 event/derived catalogs,4 licence/account gaps and3 missing target samples.
+Nine entries improve: TCIR, CAMELSH, CEMS, FloodNet, CrisisMMD, UrbanSARFloods,
+SenForFlood, GWIS and EFFIS. The two fire services share an ECMWF numerical
+backend; they are not independent evidence. All16 hazard families retain explicit
+forecast/reference/extra-evidence candidates and task qualification gaps.
+
+This round makes93 logical data requests and retains975,066,949 response bytes,
+including failures. Final scientific audit has12 records and no decoder failures.
+Independent verification checks1,081 files/4,732,247,209 bytes, including the857
+prior assets, and12 contract categories. CEMS null geometries, negative FloodNet
+pairs, SenForFlood's unresolved mask legend and the development-selected Urban
+positive tile are retained explicitly. TCIR contains4,580 frames and94 storm IDs;
+only six image arrays receive the recorded scientific sample checks.
+
+The user requests GitHub publication; selected code, reports and receipts are
+prepared in `../publication/dataset_review_20260912/`. Large native assets and
+environments stay local. This is a new data-readiness result, with zero new
+model/API/GPU runs or formally admitted tasks. Existing LLM no-acquisition-gain
+findings remain. Next research work is same-event historical source joining and
+predeclared acquisition/representation/deadline comparisons.
+
+## Completed: real downloads and matched task-chain pilot, 2026-09-12
+
+The user's requested real-download feasibility check is complete at
+`../plans/task_chain_feasibility_20260912/README_CN.md`. Eight capture rounds make
+72 logical public-source requests, retaining25,961,766 response-body bytes.
+62 responses finish with HTTP200/206 and curl0; metadata and empty TAF results
+are not counted as scientific admission. All failures and partial files remain.
+Three GFS variable families, native US TAF and HEFS/USGS pairs are decoded.
+One previously downloaded full Scotia HEFS product is explicitly reused after
+this round's corresponding request times out.
+
+Final `derived_04/` contains34 targets,96 checkpoints and192 baseline records.
+Two temperature targets pass NCEI QC; six exact discharge targets have provisional
+USGS observations;24 visibility targets have archived METAR reports. One suspect
+temperature and one ambiguous accumulation remain unresolved. This gives32
+settleable targets under different reference contracts, not32 final-QC truths.
+There is one strict sub-1km airport target, related to Denver snow. Temperature
+and visibility from that process are not independent events.
+
+Native EGKK visibility resolves a preliminary count error:144 records contain19
+strict sub-1km reports and11 reports at exactly1000m. Rounded IEM mile columns
+would misclassify the latter and produce30 positives. The original addendum's30
+is corrected in the report; final native-derived data use19. UK TAF queries stay
+empty. UK GFS/observation and New Orleans rainfall comparisons remain near-time
+diagnostics, not replacements for exact-time outcomes. TAF TEMPO is retained;
+the prevailing-only baseline is not a calibrated or complete TAF forecast.
+
+Validation: `validation_03/COMMANDS.json` records exit0 for Ruff format/check,
+build, nine semantic regression tests and independent verification. The latter
+checks38 source assets,15 raw GRIB arrays,34 references,96 clocks and192 scores
+without importing the builder. The initial summary command failed on an optional
+wind-direction group; its corrected standalone summary exits0, recorded in
+`validation_03/SUMMARY_COMMANDS.json`. All72 capture body hashes pass. Earlier
+lint failures, source snapshots and outputs remain; final output bytes match
+derived_03. `FEASIBILITY_METRICS.json` reports descriptive results and failures.
+
+No new model/API/GPU run, formal release or heldout inference occurs. Historical
+availability uses explicit controlled delays; a live model filesystem sandbox
+is not validated here. The independent prospective hydro worker is untouched.
+Next executable work is an event-grouped development qualification of temperature
+and US TAF/METAR, with strong shared forecast baselines and extra-evidence arms.
+Hydro remains conditional on thresholds/extreme processes; strict rain references
+and UK TAF coverage still need repair in fresh datasets. N1/N2/N3 positive novelty
+remains unconfirmed; the full16-hazard roadmap is retained.
+
+## Completed: candidate selection and advisor discussion packet, 2026-09-12
+
+The user prioritizes selecting candidate datasets and an initial overall research
+plan from the original novelty ideas, before an advisor double check. Deliver
+`../plans/advisor_review_20260912/PROPOSAL_FOR_ADVISOR_CN.md` and
+`CANDIDATE_SELECTION_CN.md`. The proposal preserves all16 hazard definitions,
+recommends hydro, station temperature/precipitation and TAF/METAR as three chains
+to qualify before choosing the first two main families, and retains NHC as an
+implemented engineering/version control. Main hypotheses concern acquisition
+increment, source dependence/representation, and bounded deadline/failure
+diagnostics. Their positive scientific outcomes remain unconfirmed.
+
+The new all-candidate access bundle is documented at
+`../plans/all_candidate_data_validation_20260912/README_CN.md`. Its09:07 UTC
+registry contains97 source/product entries:75 decoded samples,3 partial target
+contents,6 catalogs,8 without a decoded target sample,4 pending authorization
+or licence processes, and1 rendered-only product. These are not97 independent
+datasets. The three new science reports contain16+23+2 decoding records across
+30 source IDs; no new formal task admission or model/GPU run follows from them.
+Previously recorded integrity verification passes857 files/690,671,607 bytes.
+
+GEE authentication and real numerical sampling now succeed for disastertrace-gee;
+the saved receipt is `gee_02/GEE_CHECK.json`. Earlier GEE failures and unsuccessful
+product attempts remain intact. Native NASA/Copernicus authorization results also
+supersede older failures only for the specifically verified products. The late
+captures_11 CEMS partial ZIP and CrisisMMD TAR.GZ prefix have no scientific decode
+and do not change their admission status. Sample access, QA, matched task chains,
+historical availability, independent information and redistribution stay separate.
+
+The advisor packet reports the completed84-target real-data minimum loop and its
+negative active-acquisition result, rather than claiming novelty has succeeded.
+It recommends common latest-legal-professional-forecast updates for the primary
+extra-evidence comparison, with end-to-end forecast acquisition as a separate
+experiment. Historical replay leads the research; the existing bounded shadow
+worker and frozen model launches are not restarted.
+
+Validation from repository root, observed exit0:
+`python plans/advisor_review_20260912/verify_review.py --output
+plans/advisor_review_20260912/REVIEW_VALIDATION_02.json`. All11 consistency checks
+pass, including16 hazard rows, source IDs, local document links, registry/pilot
+claims and94 actual file hashes bound by the new decode records. The packet binds
+26 input files. This is not a new scientific decoder run or novelty certificate.
+All seven packaged user-plan copies also match the original files byte-for-byte.
+The first verification output is preserved. An initial Ruff check returned1 for
+import order; the fixer/formatter and final `ruff check --select E4,E7,E9,F,I` and
+`ruff format --check` on verify_review.py all exit0. No runtime source is changed.
+
+Next research decisions are advisor feedback on the main claim, task families,
+16-hazard depth, historical-availability evidence and acceptable null-result
+contribution. Subsequent execution should qualify complete event chains before
+freezing new model comparisons. This packet is local; no new GitHub push or
+message to the advisor is performed for this documentation step.
+
+## Completed: focused ActiveWarning GitHub review publication, 2026-09-12
+
+The user questions waiting for future observations and requests a GitHub package
+for ChatGPT review. Publish the completed real-data LLM minimum loop, the first
+verified hydro shadow cycle, seven original user idea documents, necessary source
+dependencies, and a focused comparison of historical replay versus prospective
+evaluation. Recommend historical multi-event replay as the main experiment with
+limited prospective supplementation; do not block research review on future data.
+
+The existing private repository `sisuolv/disastertrace-benchmark` is updated on
+`next-phase-v1`, commit39b3e2d998e6e995f13461aae328d14426c6bcb1, based on remote
+6cc625ec6c7c363216fc567a818fefeebcd4a77e. Normal SSH push exits0; remote hash and
+private visibility are verified. Default branch remains main. An isolated sparse
+checkout preserves this working tree's unrelated staged/untracked work.
+
+Entry: `../publication/active_warning_review_20260912/REVIEW_FOR_CHATGPT_PRO_CN.md`;
+root pointer: `../LATEST_PROGRESS_20260912_CN.md`. The122-file selected reading
+ZIP is836,346 bytes, SHA256ac159bafd1f4cf128872a971b07b2138ab876a8f0813f5173adee4d26fc24c7e.
+The GitHub tree also includes complete minimum-loop traces and bound inputs;
+the reading ZIP is a smaller review selection, not a full reconstruction bundle.
+GitHub's prospective status is a first-cycle snapshot, not a live service.
+
+In the actual publishing checkout:142 tests pass, all four deterministic dataset
+files reconstruct byte-for-byte,7,056 program and400 model trajectories reverify
+numerically, and the frozen hydro auditor validates48 source captures/144
+submissions. The payload scan checks4,503 changed files/135,097,530 bytes and123
+archive members with no configured credential, path or size findings.
+The first packaging candidate omitted the frozen shadow verifier; preserve its
+failure and ZIP locally, add the file, regenerate manifests, and verify the final
+candidate successfully before commit. No scientific runtime bytes were changed.
+
+Exact commit/push/remote receipts and verification outputs are under ignored
+`../review-outputs/active-warning-publication-20260912/`. The local bounded CPU
+shadow worker continues independently; its future results and final audit are
+still pending. No new model/GPU/API run is launched for this publication.
+
+## Running: multi-station hydro prospective shadow, 2026-09-12
+
+The user approves the next step after the completed ActiveWarning minimum loop.
+New entry: `../README_HYDRO_SHADOW_PILOT_20260912_CN.md`; detailed data admission,
+download progress, protocol and research limits are in
+`../plans/hydro_shadow_pilot_20260912/README_CN.md`.
+
+Actual source discovery/admission uses 56 requests: 54 received and two national
+catalog query timeouts, all preserved, 15,788,997 response bytes. Six documented
+regional bbox catalogs contain 6,949 distinct gauges. Nine candidates receive
+station/forecast/observation checks; seven pass. CHLA2 retains a 0.03ft datum
+metadata mismatch; MLLA1 lacks a current forecast and a matched primary station ID.
+USGS/NWPS overlap validates transmission and datum compatibility, not independent
+sensors. Coastal Tide Height/MLLW is separate from river Stage/gage datum.
+
+DNLF1 needs the metadata-supported 00065 minus0.8ft conversion to NAVD88; all284
+overlap pairs then agree. Parameter62614 returned an empty sample and stays
+recorded. Strict CO-OPS four-flag QC preserves exclusions and provisional quality.
+Two new actual HEFS samples have29/35 members and1,653/2,135 numerical values;
+571 USGS instantaneous flow observations are read. Their minor CFS thresholds are
+missing, so numerical flow admission does not authorize stage-threshold scoring.
+
+A frozen six-station pilot launches at2026-09-12T06:00:47Z, PID94018, in
+`../plans/hydro_shadow_pilot_20260912/shadow_01/`. Registry SHA256:
+92af07963aa5f4d7f55acf546b7ae702443ed1c011d1ecd144bba6a2ce2d309e.
+Targets: six stations at12:00/18:00 September12 and06:00 September13 UTC;
+18 targets, four program policies,72 fixed result opportunities. Disk-receipted
+submission deadline is target minus2h. Fifteen fixed polls, at most360 logical
+downloads, four concurrent CPU HTTP children,4MiB body/95s per-call parent cap,
+no retries, no GEE, paid/model API, GPU generation, training or human item review.
+End collection atSeptember13 10:00 UTC with15min hard execution grace, then
+automatically run the separately implemented standard-library source/numeric audit.
+The initial launch is consumed: do not restart or overwrite shadow_01.
+
+First poll completes06:01:41 UTC:24/24 HTTP200 captures,4,456,991 bytes, no station
+quarantine. All72 initial and72 first-poll updates are independently reconstructed
+from48 source captures;13 frozen files agree; no late disk submissions.
+`PREFIX_AUDIT_01.json` passes. All18 targets are still pending_future at the
+07:15 UTC process check. The process is alive and next polls begin08:00 UTC.
+Future outcome scoring and final automatic audit are not yet completed.
+
+Tests:142 passed (97 existing related cases plus45 new); the45 new cases pass
+again after adding final audit invocation. Local HTTP capture, full simulated
+scheduler lifecycle, one-use claims, datum/QC changes, late persisted submissions,
+exact target support and failure denominators are covered. Ruff correctness/style
+checks pass. Independent initial-byte reconstruction passes for all seven admitted
+stations. The prior ActiveWarning manifest re-verifies3,968 files/79,987,692 bytes
+with no changes. Both old GPU launch scopes remain consumed and untouched.
+
+Executed commands, from repository root, observed exit0: `PYTHONPATH=disastertrace-starter/src
+disastertrace-starter/.venv/bin/python plans/hydro_shadow_pilot_20260912/audit_inputs.py
+--output plans/hydro_shadow_pilot_20260912/admission_01`; same environment runs
+`audit_flow.py --out plans/hydro_shadow_pilot_20260912/FLOW_ADMISSION.json` and
+`prepare_shadow.py --output plans/hydro_shadow_pilot_20260912/shadow_01 --launch`.
+The separate `shadow_01/verify_shadow.py --root .../shadow_01 --out .../PREFIX_AUDIT_01.json`
+exits0. Exact original requests and hash/time receipts are saved by source bundle;
+status and launch command are documented in the new README and VALIDATION.json.
+
+Next: let the registered future observations arrive; inspect FINAL_AUDIT and the
+last per-cycle SUMMARY/SETTLEMENTS with fixed missing/provisional denominators.
+Then expand genuinely distinct extreme processes and compare useful evidence
+under a fixed model/acquisition budget. This risk-enriched sample has no guaranteed
+future threshold-positive target, and the current new pilot has no LLM experiment.
+The original real-data/LLM/scoring minimum loop is complete, while active-acquisition
+benefit and full research novelty remain unproved.
+
+## Completed: ActiveWarning real-data minimum loop, 2026-09-12
+
+The current user requests a working minimum loop on planned existing sources,
+excluding GEE. New implementation: `src/disastertrace/active_warning_v1/`.
+Entry: `../README_ACTIVE_WARNING_MINILOOP_20260912_CN.md`; detailed results and
+data contracts: `../plans/active_warning_miniloop_20260912/README_CN.md` and
+`DATA_CONTRACT_CN.md`. Historical frozen modules, captures and launches remain
+unchanged. No paid API, training, heldout, human item review or LLM judge is used.
+
+NHC raw-source auditing re-verifies 65 files/8,652,138 bytes, 64 advisories and
+461 forecast rows. The new dataset contains 80 cyclone targets in four exposed
+2024 storm groups (74 retrospective HURDAT2 results, six unresolved), plus four
+SCOC1/USGS-11477000 instantaneous flow targets in one quiet recent segment.
+Both 45-member HEFS versions are read; 169 USGS records are actually downloaded,
+with URL/time/hash receipt. Units, station mapping and exact valid times agree.
+No compatible official flow flood threshold exists for this pilot station.
+
+`dataset_v2/` corrects the first candidate's HEFS capture-time fallback using
+the existing receipt's finished_at. Preserve the superseded `dataset/`; it was
+not GPU-evaluated. Four deterministic dataset files reproduce byte for byte.
+All historical proved-availability fields remain null. This is controlled replay
+(NHC issue+1h, HEFS creation+30min, USGS observation+30min), not prospective online
+evaluation. Tool service latency is 60s; inference time is measured separately.
+
+The outcome-free environment implements a fixed future target, two scheduled
+forecast checkpoints, request-time snapshots, completion/read separation, query
+and concurrency caps, append-only submissions, legal citations and hash-chained
+events. Model views contain no private outcomes or unread payloads. The frozen
+GPU package excludes outcome/scoring files; shared AFS is not an OS security
+sandbox for an arbitrary code-executing agent. CPU settlement keeps unresolved
+targets and applies the declared carry-forward/initial-forecast fallback.
+
+Program matrix `programs_01/`: 84 targets x4 scenarios x3 budgets x7 methods =
+7,056 reconstructed trajectories, 14,112 checkpoint opportunities. Tests cover
+59 existing active_forecast cases, 26 new environment cases and 12 capture-audit
+cases (97 passed). Ruff and actual-tokenizer context checks pass. CPU capture
+replay verifies all saved messages, raw outputs, token IDs and traces; a separate
+standard-library verifier reconstructs point errors, professional means, fallback
+and group-macro MAE for all program and both model results.
+
+Two fresh complete Qwen3-8B matrices use 4x1 H100 each, sequential batches with
+at most four active GPUs. Each has 20 input-selected targets x2 scenarios x5 arms,
+200 trajectories and 560 actual replies; greedy, thinking disabled, bfloat16,
+384 output cap, 8192 context, no retries. All eight ACP jobs finish SUCCEEDED.
+First frozen plan: d7db71d2520e13c4a18500f02c0ff1f9955ebf13289d9fbc3adcaab9587deea7.
+Second plan: f9ecf5d91227c0cdd888c61a4ae6e53bef1ad8515d6c7235fa816dac19323a34.
+The two launches are consumed; never relaunch their submissions or worker claims.
+
+The first run retains 17/400 rejected forecasts caused by copying long opaque
+target IDs incorrectly. A fresh full matrix changes only target IDs to short
+handles with an explicit alias registry; numeric data and protocol are otherwise
+unchanged. The second run has 400/400 valid forecast submissions, no missing
+responses or length finishes. Each run has three unresolved selected cyclone
+targets (60/400 checkpoint opportunities have no scientific result). Keep both
+runs separate; do not select or merge their best answers as repeated test data.
+
+Core result: all160 acquisition choices in each run query the official forecast.
+For active_raw versus fixed_forecast, all40 paired query sequences and all80
+forecast requests/raw replies are identical. No acquisition gain is observed.
+Second-run clean group-macro MAE: cyclone fixed/active raw 6.9792kt, canonical
+7.1875kt, latest professional 7.1875kt; water fixed/active raw15.3738ft3/s,
+canonical15.1763, latest professional15.1763, observation persistence1.8750.
+Stale replay changes two raw cyclone checkpoints, increasing MAE to7.3438kt;
+canonical retains identical inputs/outputs but is not universally more accurate.
+The small numerical gains do not establish significance, generalization or
+superiority over a professional forecast system.
+
+Executed from repository root (all completed with exit0):
+`PYTHONPATH=disastertrace-starter/src disastertrace-starter/.venv/bin/python
+plans/active_warning_miniloop_20260912/build_data.py`;
+the same environment runs `run_programs.py` and the97 related pytest cases.
+The existing mm-vlm Python runs `freeze_gpu.py`, `freeze_short_ids.py` and both
+`collect_models.py` calls; `launch_gpu.py` submits gpu_01 and gpu_02 separately.
+`analyze_results.py` and `verify_numbers.py` run on CPU without generation.
+Exact scopes, command arguments, job IDs, final states, captured requests and
+verification receipts are retained in the bundle's plans/submissions/validation.
+
+Next executable work: qualify multiple extreme/near-threshold water processes
+with compatible thresholds and outcome QC, establish bounded prospective version
+capture before rolling archives expire, and test whether additional real evidence
+helps simple numerical baselines. Then extend product-lineage handling and compare
+same-budget policies on new event groups. GEE is not required for those steps.
+Full novelty, multi-hazard transfer, calibrated warning value and online timing
+remain research questions; this minimum engineering loop does not prove them.
+
+## Completed: Active Forecast v1 evidence kernel, 2026-09-10
+
+The V5 feasibility study is closed. Execute D1-D2 of its final roadmap in the new
+`src/disastertrace/active_forecast/` namespace. Entry and Chinese handoff:
+`artifacts/active_forecast_core_v1/README_CN.md`. This is an engineering migration,
+not another model experiment; no GPU job, paid call, training, heldout inference,
+new upstream acquisition, human item review, LLM judge or Git publication occurs.
+
+Implement strict immutable schemas, UTC instant normalization, distinct calendar
+supports and archive/historical time policies, exact Fraction calculations,
+complete disjoint pixel partitions, deterministic references/certificates/scoring,
+and whitelist public value-track DTOs. Missing historical availability stays null.
+Preserve original issue labels in source snapshots and avoid treating frame/map
+dates or archive markers as product issue instants. Add offline source locators,
+provider-specific frozen imports and schema/validate/public/score/replay CLI.
+
+The canonical compatibility result is `replay_02/COMPATIBILITY.json`: 104 frozen
+development episodes, all 1,296 legal read subsets and 41,600 score cases agree
+with the prototype. All 104 certificate sets and the existing 92 frozen goal/
+certificate pairs match. Exact decision/cost/score comparison is separate from
+the 1e-12 comparison of old displayed float bounds. Source verification binds
+68 files and resolves 1,724 distinct locators. Raw fact checks include repeated
+variants/distractors: NHC 659 wind rows, GHCND 112 rows, SEVIR 118 raster tiles;
+USDM 56 frozen point rows plus source ZIP integrity, without rerunning geometry.
+
+Regression tests precede implementation. Final new suite: 59 passed, exit 0;
+unchanged prototype suite: 10 passed, exit 0. Ruff check and format check pass.
+Four actual offline CLI examples exit 0. Use existing Python 3.10.12/Pydantic
+2.13.5 in `.venv`, with `PYTHONPATH=src`; no dependencies installed or upgraded.
+This does not claim a fresh environment installation or a full legacy test run.
+
+Retain `replay_01/` and `08_replay_01.log`: the first comparator read old float
+reports as Decimal, causing comparison artifacts and a report serialization
+failure. Two failing regression tests are retained in
+`11_replay_regressions_before.log`. Separate prototype-float and core-exact reads,
+and encode JSON before creating the output file; the fresh replay_02 succeeds.
+Do not treat the partial replay_01 COMPATIBILITY.json as an acceptance record.
+
+Actual final commands, run from this package, all exit 0:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python -m pytest tests/active_forecast
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m unittest discover -s ../plans/v5_0910_feasibility_12h_20260910/code -p test_evidence_core.py -v
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python -m disastertrace.active_forecast replay-legacy --bundle ../plans/v5_0910_feasibility_12h_20260910 --output artifacts/active_forecast_core_v1/replay_02
+.venv/bin/python -m ruff check src/disastertrace/active_forecast tests/active_forecast
+.venv/bin/python -m ruff format --check src/disastertrace/active_forecast tests/active_forecast
+```
+
+Next executable task: D2-D3 source admission and stable grouping, separating
+raw/product/capture/delivery/target/outcome objects; then predeclared real-source
+expansion. Existing group tags are not a validated statistical split. Native
+image/tool tracks, acquisition receipts, public-input solvability, the model
+adapter and a fresh frozen GPU matrix remain subsequent work. Existing permission
+for up to four parallel H100s persists; no permission renewal is needed.
 
 ## Completed: P6 first offline milestone, 2026-09-08
 
