@@ -441,7 +441,106 @@ class TestR4UnresolvedSplit:
 # Output wiring
 # ---------------------------------------------------------------------------
 
+class TestUncaughtFailureIsNotConflatedWithCompletedUnresolved:
+    """A crash unrelated to ledger compilation must not silently collapse
+    into exit 1 ('completed with UNRESOLVED slots') -- that would hide a
+    real failure inside what looks like an ordinary, if imperfect, run."""
+
+    STREAM = TestR3LedgerCompileFailureFailsClosed.STREAM
+
+    def _setup(self, tmp_path):
+        bulk = tmp_path / "bulk"
+        _write_pair(bulk, "KSFO", "202301", self.STREAM)
+        cfg = tmp_path / "config.json"
+        cfg.write_text(json.dumps(_config("2023-01-05T00:00:00Z", "2023-01-06T00:00:00Z")))
+        return bulk, cfg
+
+    def test_non_ledger_exception_returns_exit_code_3_not_1(self, tmp_path, monkeypatch):
+        bulk, cfg = self._setup(tmp_path)
+
+        def _boom(*_a, **_k):
+            raise RuntimeError("injected unrelated crash")
+
+        monkeypatch.setattr(census, "generate_continuous_calendar_slots", _boom)
+        monkeypatch.setattr(sys, "argv", [
+            "run_transition_census_v17.py", "--bulk-dir", str(bulk), "--config", str(cfg),
+            "--out", str(tmp_path / "summary.json"),
+        ])
+        assert census.main() == 3
+        assert not (tmp_path / "summary.json").exists()
+
+    def test_crash_writing_the_summary_after_run_census_succeeds_also_returns_3(self, tmp_path, monkeypatch):
+        """The first version of this fix only wrapped the run_census() call
+        itself -- a crash anywhere AFTER it (here: --out pointing at a
+        directory that doesn't exist, so the summary write raises
+        FileNotFoundError) still fell through to Python's default exit 1,
+        colliding with 'completed with UNRESOLVED slots'. Independent review
+        proved this with exactly this reproduction."""
+        bulk, cfg = self._setup(tmp_path)
+        monkeypatch.setattr(sys, "argv", [
+            "run_transition_census_v17.py", "--bulk-dir", str(bulk), "--config", str(cfg),
+            "--out", str(tmp_path / "does_not_exist_dir" / "summary.json"),
+        ])
+        assert census.main() == 3
+
+
 class TestSummaryWiring:
+    def test_run_status_field_reflects_clean_vs_unresolved(self, tmp_path, monkeypatch):
+        bulk = tmp_path / "bulk"
+        _write_pair(bulk, "KSFO", "202301", TestR3LedgerCompileFailureFailsClosed.STREAM)
+        cfg = tmp_path / "config.json"
+        cfg.write_text(json.dumps(_config("2023-01-05T00:00:00Z", "2023-01-06T00:00:00Z")))
+        out = tmp_path / "summary.json"
+        monkeypatch.setattr(sys, "argv", [
+            "run_transition_census_v17.py", "--bulk-dir", str(bulk), "--config", str(cfg),
+            "--out", str(out),
+        ])
+        exit_code = census.main()
+        summary = json.loads(out.read_text())
+        # This fixture only ever writes 1 of the 140 allow-listed files, so the
+        # file-integrity gate legitimately fires (exit 2) -- the point of this
+        # test is only that run_status mirrors whichever exit code actually
+        # happened, not to force a specific one.
+        expected_by_exit_code = {
+            2: "HARD_FAILURE_FILE_INTEGRITY",
+            1: "COMPLETED_WITH_UNRESOLVED",
+            0: "COMPLETED_CLEAN",
+        }
+        assert "run_status" in summary
+        assert summary["run_status"] == expected_by_exit_code[exit_code]
+
+    def test_run_status_field_covers_clean_and_unresolved_not_just_file_integrity(self, tmp_path, monkeypatch):
+        """The test above only ever exercises the file-integrity branch
+        (exit 2), since its fixture is deliberately incomplete -- a
+        realistic all-140-files fixture is too heavy to build just to reach
+        the other two branches. Get a real CensusResult once, then use
+        dataclasses.replace to reach the other two run_status values
+        directly, so all three are actually exercised (independent review
+        finding)."""
+        from dataclasses import replace
+
+        bulk = tmp_path / "bulk"
+        _write_pair(bulk, "KSFO", "202301", TestR3LedgerCompileFailureFailsClosed.STREAM)
+        cfg = tmp_path / "config.json"
+        cfg.write_text(json.dumps(_config("2023-01-05T00:00:00Z", "2023-01-06T00:00:00Z")))
+        real_result = census.run_census(bulk, cfg, artifacts_dir=None)
+
+        for unresolved_count, expected_status, expected_exit in (
+            (0, "COMPLETED_CLEAN", 0),
+            (1, "COMPLETED_WITH_UNRESOLVED", 1),
+        ):
+            fake_result = replace(
+                real_result, files_missing=[], files_hash_mismatch=[],
+                n_targets_with_unresolved=unresolved_count,
+            )
+            monkeypatch.setattr(census, "run_census", lambda *a, **k: fake_result)
+            out = tmp_path / f"summary_{expected_exit}.json"
+            monkeypatch.setattr(sys, "argv", [
+                "run_transition_census_v17.py", "--bulk-dir", str(bulk), "--config", str(cfg),
+                "--out", str(out),
+            ])
+            assert census.main() == expected_exit
+            assert json.loads(out.read_text())["run_status"] == expected_status
     def test_ledger_shared_across_slots_matches_per_slot_fallback(self):
         """Signals are identical whether run_census's shared station ledger
         or the per-slot fallback compile is used."""

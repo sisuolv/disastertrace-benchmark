@@ -682,6 +682,25 @@ def test_main_registers_and_dispatches_every_arm_at_every_checkpoint(monkeypatch
         assert not any(marker in text for marker in NEVER_VISIBLE_MARKERS)
 
 
+def test_main_rejects_a_provider_response_without_request_id(monkeypatch, tmp_path):
+    def missing_request_id(*args):
+        content = json.dumps(
+            {
+                "risk_probability": 0.4,
+                "target_state": {"visibility_m": 4000, "confidence": "medium"},
+                "next_action": "UPDATE",
+            }
+        )
+        envelope = {"model": args[2], "choices": [{"message": {"content": content}}]}
+        return 200, envelope, json.dumps(envelope)
+
+    out = configure_main(monkeypatch, tmp_path, [grid_episode()], missing_request_id)
+    assert api.main() == 0
+    report = json.loads(out.read_text())
+    assert all(attempt["parse_status"] == "provider_request_id_missing" for attempt in report["attempts"])
+    assert report["valid_by_arm"] == {arm: 0 for arm in api.ARMS}
+
+
 def _legacy_flat(episode):
     # The pre-grid shape: one flat list qualified against one shared as_of.
     flat = {key: value for key, value in episode.items() if key != "checkpoints"}
@@ -789,3 +808,79 @@ def test_default_max_calls_is_twelve_episodes_times_three_checkpoints_times_arms
     with pytest.raises(SystemExit, match="registered calls 156 exceed max-calls 144"):
         api.main()
     assert calls == [] and 144 == 12 * len(api.CHECKPOINT_IDS) * len(api.ARMS)
+
+
+# ---------------------------------------------------------------------------
+# Track E (v20 plan): a closed run-id must never be reusable, regardless of
+# --out path -- the prior check only looked at whether --out already existed
+# on disk, which offers zero protection on a fresh clone.
+# ---------------------------------------------------------------------------
+
+def test_main_refuses_any_of_the_three_known_closed_run_ids_before_touching_out(monkeypatch, tmp_path):
+    closed_ids = json.loads(api.CLOSED_RUN_IDS_REGISTRY.read_text())["closed_run_ids"]
+    assert len(closed_ids) == 3  # sanity: this is the registry this test is actually exercising
+    calls = []
+
+    def fake_call(*args):
+        calls.append(1)
+        return good_reply(*args)
+
+    for closed_id in closed_ids:
+        out = configure_main(monkeypatch, tmp_path, [grid_episode()], fake_call, "--run-id", closed_id)
+        assert not out.exists()  # --out path is fresh; only the run-id itself is closed
+        with pytest.raises(SystemExit, match="permanently closed"):
+            api.main()
+        assert not out.exists()  # refused before any artifact was written
+    assert calls == []
+
+
+def test_main_accepts_a_fresh_run_id_not_in_the_closed_registry(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_call(*args):
+        calls.append(1)
+        return good_reply(*args)
+
+    configure_main(monkeypatch, tmp_path, [grid_episode()], fake_call, "--run-id", "v20-genuinely-new-run-id")
+    assert api.main() == 0
+    assert calls
+
+
+@pytest.mark.parametrize("evasive_run_id", [
+    "v18-controlled-yfree-deepseek-v4-flash-20260922 ",  # trailing space
+    " v18-controlled-yfree-deepseek-v4-flash-20260922",  # leading space
+    "v18-controlled-yfree-deepseek-v4-flash-20260922​",  # zero-width space appended
+    "V18-CONTROLLED-YFREE-DEEPSEEK-V4-FLASH-20260922",  # case-folded
+])
+def test_main_rejects_lookalike_variants_of_a_closed_run_id_not_just_exact_matches(monkeypatch, tmp_path, evasive_run_id):
+    """Independent review reproduced: whitespace, a zero-width character, or
+    a case change makes a closed run-id differ as a Python string while
+    looking identical to a human, silently bypassing the exact-match check.
+    All variants must now be rejected up front, before the registry
+    comparison even runs."""
+    calls = []
+
+    def fake_call(*args):
+        calls.append(1)
+        return good_reply(*args)
+
+    out = configure_main(monkeypatch, tmp_path, [grid_episode()], fake_call, "--run-id", evasive_run_id)
+    # Whitespace/zero-width variants are caught by the charset check;
+    # case-folded variants pass the charset check (letters are still valid
+    # characters) but are caught by the registry's case-insensitive
+    # comparison instead -- either rejection is correct, both must refuse.
+    with pytest.raises(SystemExit, match="only letters, digits|permanently closed"):
+        api.main()
+    assert not out.exists()
+    assert calls == []
+
+
+def test_load_closed_run_ids_fails_closed_not_open_on_an_empty_registry(tmp_path):
+    """An empty closed_run_ids list would make every run-id trivially 'not
+    in' an empty set and dispatch unimpeded -- fail-open, not fail-closed.
+    The real registry can only grow (3 known closed runs today); treat
+    anything with fewer than 3 as corrupted, not a legitimate update."""
+    empty_registry = tmp_path / "empty.json"
+    empty_registry.write_text(json.dumps({"closed_run_ids": []}))
+    with pytest.raises(ValueError, match="only 0 entries"):
+        api._load_closed_run_ids(empty_registry)

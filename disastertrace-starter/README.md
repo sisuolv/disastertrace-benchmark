@@ -1,5 +1,15 @@
 # DisasterTrace starter scaffold
 
+## Latest v21 release
+
+The latest organized handoff is [v21 release 2026-09-25](docs/V21_RELEASE_20260925.md).
+It includes the repaired v18/v19 contracts, the v21 Natural selector code and
+tests, and the bounded real-development plus cost-matched GPU evidence. The
+execution receipt is under
+[`artifacts/v21_execution_20260925_04/`](artifacts/v21_execution_20260925_04/).
+Read the release handoff before using older phase notes. It separates engineering
+checks, completed experiments, and claims that remain blocked or inconclusive.
+
 **Current status (branch `codex/v18-repaired-release-20260923`):** the published tree was broken
 (missing files that already-published code imports) and has been fixed — see
 [docs/PLAN_V20_NEXT_STEPS.md](docs/PLAN_V20_NEXT_STEPS.md) for what that was, what it means for

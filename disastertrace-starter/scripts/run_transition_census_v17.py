@@ -50,6 +50,7 @@ import argparse
 import hashlib
 import json
 import sys
+import traceback
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -1382,14 +1383,38 @@ def main():
     )
     args = parser.parse_args()
 
-    # Run census. (R3) A station-wide ledger compile failure is a hard gate
-    # failure (exit 2), never a silently-empty "no evidence" census and
-    # never conflated with exit 1 (completed with UNRESOLVED slots).
     try:
-        result = run_census(args.bulk_dir, args.config, args.artifacts_dir)
+        return _run_census_main_body(args)
     except LedgerCompilationError as exc:
         print(f"\nHARD FAILURE: {exc}", file=sys.stderr)
         return 2
+    except Exception as exc:
+        # Covers a crash anywhere in _run_census_main_body -- run_census()
+        # itself, printing, or summary writing -- never just the first of
+        # those (Track A Batch 3, v20 plan). Print the full traceback, not
+        # just type+message: an uncaught crash at HEAD printed a full
+        # traceback, and this broader catch must not make debugging a real
+        # crash harder than it was before (independent review finding).
+        print(f"\nUNCAUGHT FAILURE (not a completed run): {type(exc).__name__}: {exc}", file=sys.stderr)
+        traceback.print_exc()
+        return 3
+
+
+def _run_census_main_body(args):
+    """The full body of main() after argument parsing. Split out so
+    main() can wrap the ENTIRE thing -- printing, summary writing, exit-
+    code computation, not just the run_census() call -- in one broad
+    except Exception, so a crash anywhere in here reliably returns exit
+    code 3 instead of falling through to Python's default exit 1, which
+    would look identical to a real 'completed with UNRESOLVED slots' run
+    (Track A Batch 3, v20 plan; corrected after independent review proved
+    a FileNotFoundError writing the summary still exited 1 under the
+    first version of this fix, which only wrapped run_census() itself).
+    """
+    # Run census. (R3) A station-wide ledger compile failure is a hard gate
+    # failure (exit 2), never a silently-empty "no evidence" census and
+    # never conflated with exit 1 (completed with UNRESOLVED slots).
+    result = run_census(args.bulk_dir, args.config, args.artifacts_dir)
 
     # Print summary
     print("\n" + "=" * 70)
@@ -1446,9 +1471,19 @@ def main():
 
     # Write summary JSON if requested
     if args.out:
+        # Mirrors the exit-code decision below exactly. A LedgerCompilationError never
+        # reaches here (it returns before any summary is built), so this branch is only
+        # ever about post-hoc file-integrity validation on an otherwise-completed run.
+        run_status = (
+            "HARD_FAILURE_FILE_INTEGRITY"
+            if result.files_missing or result.files_hash_mismatch
+            else "COMPLETED_WITH_UNRESOLVED" if result.n_targets_with_unresolved > 0
+            else "COMPLETED_CLEAN"
+        )
         summary = {
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "census_semantics_version": CENSUS_SEMANTICS_VERSION,
+            "run_status": run_status,
             "review_status": (
                 "AI-reviewed only (R1-R4 corrections); NOT independently "
                 "human-reviewed. Does not establish that G1 passes."

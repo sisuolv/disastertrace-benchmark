@@ -39,6 +39,20 @@ _NON_TARGET_KEYS = {
     "length_sham",
     "raw",
 }
+# Fields kept in weather_content_only()'s output (the agent-visible
+# projection: public_checkpoint/public_prefix send exactly this) but
+# excluded from the SEPARATE comparison basis used to decide
+# TARGET_CONTENT_CHANGE/DUPLICATE and by build_v18_dev_episodes.py's own
+# duplicate-detection hash (Track B-0, v20 plan; corrected after an
+# independent review found the first version of this fix wrongly hid these
+# fields from the agent too, not just from the comparison -- ftype in
+# particular is real TAF group-type information (Observation/Forecast/
+# Temporary/Probability), not administrative noise, and must stay visible).
+_ADMINISTRATIVE_COMPARISON_ONLY_KEYS = {
+    "is_amendment",
+    "ftype",
+    "source_row_is_tempo",
+}
 _INTERVAL_KEYS = (
     ("valid_start", "valid_end"),
     ("start", "end"),
@@ -147,18 +161,51 @@ def _overlaps(start: int, end: int, target_start: int, target_end: int) -> bool:
     return start < target_end and target_start < end
 
 
-def _strip_transport(value: Any) -> Any:
-    """Remove provenance fields while preserving weather semantics."""
+def weather_content_only(value: Any) -> Any:
+    """Remove provenance fields while preserving weather semantics.
+
+    This is what an agent actually sees (public_checkpoint/public_prefix
+    project exactly this) -- it must never drop information a reader would
+    consider part of the weather picture, even if that information is
+    redundant with something else kept (e.g. ftype vs operator). Use
+    comparison_content_only(), not this function, for change-detection
+    hashing, which is allowed to be stricter than what the agent sees.
+    """
 
     if isinstance(value, Mapping):
         return {
-            str(key): _strip_transport(item)
+            str(key): weather_content_only(item)
             for key, item in value.items()
             if key not in _TIME_KEYS and key not in _IDENTITY_KEYS and key not in _NON_TARGET_KEYS
         }
     if isinstance(value, list):
-        return [_strip_transport(item) for item in value]
+        return [weather_content_only(item) for item in value]
     return value
+
+
+def comparison_content_only(value: Any) -> Any:
+    """Strictly narrower than weather_content_only(): also drops fields that
+    are redundant with something already compared (e.g. ftype duplicates
+    operator) or purely administrative (is_amendment, source_row_is_tempo),
+    so a same-weather-content re-issue with only these flipped is correctly
+    judged unchanged. Only for change-detection hashing -- never for
+    anything an agent, or a report, will read as "the evidence".
+    """
+
+    stripped = weather_content_only(value)
+
+    def _drop_administrative(inner: Any) -> Any:
+        if isinstance(inner, Mapping):
+            return {
+                str(key): _drop_administrative(item)
+                for key, item in inner.items()
+                if key not in _ADMINISTRATIVE_COMPARISON_ONLY_KEYS
+            }
+        if isinstance(inner, list):
+            return [_drop_administrative(item) for item in inner]
+        return inner
+
+    return _drop_administrative(stripped)
 
 
 def _project_interval(value: Mapping[str, Any], target_start: int, target_end: int) -> dict[str, Any]:
@@ -166,10 +213,10 @@ def _project_interval(value: Mapping[str, Any], target_start: int, target_end: i
 
     interval = _interval(value)
     if interval is None:
-        result = _strip_transport(value)
+        result = weather_content_only(value)
         return result if isinstance(result, dict) else {"content": result}
     start, end = interval
-    result = _strip_transport(value)
+    result = weather_content_only(value)
     if not isinstance(result, dict):
         return {"content": result}
     for left, right in _INTERVAL_KEYS:
@@ -197,7 +244,7 @@ def _project(value: Any, target_start: int, target_end: int) -> Any:
                     projected.append(_project(item, target_start, target_end))
             else:
                 projected.append(_project(item, target_start, target_end))
-        return projected if saw_interval else [_strip_transport(item) for item in projected]
+        return projected if saw_interval else [weather_content_only(item) for item in projected]
     if isinstance(value, Mapping):
         interval = _interval(value)
         if interval is not None:
@@ -273,9 +320,16 @@ def qualify_evidence(
     )
     current_source_hash = _hash(now.identity())
     previous_source_hash = None if prior is None else _hash(prior.identity())
-    current_projection_hash = _hash(current_projection["content"])
+    # Hashed for change-detection via comparison_content_only(), stricter than
+    # what current_projection["content"] itself holds (the agent-visible
+    # projection, unchanged) -- so a same-weather-content re-issue with only
+    # is_amendment/ftype/source_row_is_tempo flipped doesn't look changed,
+    # without hiding those fields from anything that reads the projection
+    # itself (Track B-0, v20 plan, corrected after independent review).
+    current_projection_hash = _hash(comparison_content_only(current_projection["content"]))
     previous_projection_hash = (
-        None if previous_projection is None else _hash(previous_projection["content"])
+        None if previous_projection is None
+        else _hash(comparison_content_only(previous_projection["content"]))
     )
     availability = _availability(now, as_of)
     source_change = prior is None or now.identity() != prior.identity()
@@ -344,36 +398,40 @@ def qualify_stream(
 
     previous_target: EvidenceRecord | None = None
     previous_arrival: EvidenceRecord | None = None
+    # Unknown availability is a legitimate value, so it cannot be used as a
+    # chronology key. Keep the last known key separately: an unknown row in
+    # between two known rows must not hide a reordering.
+    last_known_available: int | None = None
+    last_known_issued_at: int | None = None
+    latest_by_available: dict[int, EvidenceRecord] = {}
     out: list[EvidenceQualification] = []
     for row in records:
         current = row if isinstance(row, EvidenceRecord) else EvidenceRecord.from_mapping(row)
-        if previous_arrival is not None:
+        if current.available_at is not None:
             # This API consumes an arrival stream. An old bulletin can arrive
             # after a newer issuance, so issued_at is metadata rather than
             # the chronology key. Equal-time arrivals remain auditable.
-            if (
-                current.available_at is not None
-                and previous_arrival.available_at is not None
-                and current.available_at < previous_arrival.available_at
-            ):
+            if last_known_available is not None and current.available_at < last_known_available:
                 raise ValueError("Evidence stream is not chronological by available_at")
             if (
-                current.available_at is not None
-                and current.available_at == previous_arrival.available_at
-                and current.issued_at < previous_arrival.issued_at
+                last_known_available is not None
+                and current.available_at == last_known_available
+                and last_known_issued_at is not None
+                and current.issued_at < last_known_issued_at
             ):
                 raise ValueError("Evidence stream is not chronological by issued_at at equal arrival time")
+            same_time = latest_by_available.get(current.available_at)
             if (
-                current.available_at == previous_arrival.available_at
-                and current.source_id == previous_arrival.source_id
-                and current.identity() != previous_arrival.identity()
+                same_time is not None
+                and current.source_id == same_time.source_id
+                and current.identity() != same_time.identity()
                 and current.relation_status not in {"duplicate", "revision", "cancellation"}
             ):
                 raise ValueError("Conflicting evidence arrivals share the same chronology key")
             if (
-                current.available_at == previous_arrival.available_at
-                and current.identity() == previous_arrival.identity()
-                and _canonical(current.content) != _canonical(previous_arrival.content)
+                same_time is not None
+                and current.identity() == same_time.identity()
+                and _canonical(current.content) != _canonical(same_time.content)
                 and current.relation_status != "conflict"
             ):
                 raise ValueError("Conflicting content shares the same evidence identity and chronology key")
@@ -386,6 +444,10 @@ def qualify_stream(
         )
         out.append(result)
         previous_arrival = current
+        if current.available_at is not None:
+            last_known_available = current.available_at
+            last_known_issued_at = current.issued_at
+            latest_by_available[current.available_at] = current
         if result.availability in {"available", "known"} and result.witness.get("current_relevance") == "target":
             # An irrelevant arrival advances the source stream but cannot
             # replace the previous target projection.

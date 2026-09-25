@@ -5,14 +5,58 @@ from __future__ import annotations
 from dataclasses import dataclass
 import math
 from copy import deepcopy
+import hashlib
+import json
 from typing import Any, Callable, Mapping
 
 
 ACTION_KINDS = {"RETRIEVE", "WAIT", "UPDATE", "STOP"}
 SNAPSHOT_SCHEMA = "disastertrace.v18.natural_kernel_snapshot.v1"
+SNAPSHOT_SCHEMA_V2 = "disastertrace.v21.natural_kernel_snapshot.v2"
 _SNAPSHOT_KEYS = {"schema", "sources", "clock", "deadline", "read", "stopped", "expired", "actions"}
+_SNAPSHOT_KEYS_V2 = _SNAPSHOT_KEYS | {"target"}
 _SOURCE_KEYS = {"query_id", "available_at", "content", "public_schedule"}
 _ACTION_LOG_KEYS = {"action", "at", "result"}
+_TARGET_KEYS = {
+    "entity", "variable", "threshold", "unit", "comparison", "observation_rule",
+    "target_start", "target_end", "contract_version", "contract_hash",
+}
+
+
+def _canonical_target(target: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate and canonicalize the public target identity used by v21.
+
+    The v18 kernel deliberately had no target contract.  v21 kernels must
+    carry a complete identity so two entities or variables sharing a time
+    window cannot be silently mixed during snapshot/fork/repair.
+    """
+    if not isinstance(target, Mapping) or set(target) != _TARGET_KEYS:
+        raise ValueError("v21 target must contain the complete target identity")
+    result = dict(target)
+    for key in ("entity", "variable", "unit", "comparison", "observation_rule", "contract_version", "contract_hash"):
+        if not isinstance(result[key], str) or not result[key].strip():
+            raise ValueError(f"target {key} must be a nonempty string")
+        result[key] = result[key].strip()
+    if result["comparison"] not in {"<", "<=", ">", ">=", "=="}:
+        raise ValueError("target comparison is unsupported")
+    threshold = result["threshold"]
+    if isinstance(threshold, bool) or not isinstance(threshold, (int, float)) or not math.isfinite(threshold):
+        raise ValueError("target threshold must be finite")
+    result["threshold"] = float(threshold)
+    for key in ("target_start", "target_end"):
+        value = result[key]
+        if isinstance(value, bool) or not isinstance(value, int):
+            raise ValueError(f"target {key} must be an integer")
+    if result["target_start"] >= result["target_end"]:
+        raise ValueError("target window must be increasing")
+    canonical_without_hash = dict(result)
+    canonical_without_hash.pop("contract_hash")
+    expected = hashlib.sha256(
+        json.dumps(canonical_without_hash, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    if result["contract_hash"] != expected:
+        raise ValueError("target contract_hash does not match target identity")
+    return result
 
 
 @dataclass(frozen=True)
@@ -95,7 +139,14 @@ class NaturalSource:
 class NaturalKernel:
     """A deterministic active-evidence environment without outcome access."""
 
-    def __init__(self, sources: list[NaturalSource], *, start: int, deadline: int):
+    def __init__(
+        self,
+        sources: list[NaturalSource],
+        *,
+        start: int,
+        deadline: int,
+        target: Mapping[str, Any] | None = None,
+    ):
         if (
             isinstance(start, bool)
             or isinstance(deadline, bool)
@@ -119,6 +170,9 @@ class NaturalKernel:
         }
         self.clock = start
         self.deadline = deadline
+        # ``None`` retains the v18 compatibility contract.  New v21 fixtures
+        # pass a complete target and receive the v2 snapshot/public view.
+        self.target = _canonical_target(target) if target is not None else None
         self.read: dict[str, Mapping[str, Any]] = {}
         self.stopped = False
         self.expired = False
@@ -136,7 +190,14 @@ class NaturalKernel:
         if action.kind == "RETRIEVE":
             source = self.sources.get(action.query_id)
             if source is None:
-                raise ValueError("Unknown query")
+                if self.target is None:
+                    raise ValueError("Unknown query")
+                raise ValueError("Query is not currently visible")
+            if self.target is not None and action.query_id not in self._visible_query_ids():
+                # Hidden and nonexistent handles intentionally share one
+                # rejection path so probing the private roster cannot reveal
+                # which case occurred.
+                raise ValueError("Query is not currently visible")
             if source.available_at > self.clock:
                 # An undisclosed future arrival time is a hidden oracle.  Only
                 # a source explicitly contracted as a public schedule (e.g. a
@@ -166,7 +227,7 @@ class NaturalKernel:
         return deepcopy(result)
 
     def public_state(self) -> dict[str, Any]:
-        return {
+        state = {
             "clock": self.clock,
             "deadline": self.deadline,
             "read_query_ids": sorted(self.read),
@@ -175,6 +236,38 @@ class NaturalKernel:
             "terminal": self.stopped or self.expired,
             "action_count": len(self.actions),
         }
+        if self.target is not None:
+            # The v21 observation view is a deep copy.  A policy can inspect
+            # only content it has actually retrieved; source payloads and
+            # evaluator state never enter this object.
+            state.update(
+                {
+                    "schema": "disastertrace.v21.natural_public_state.v1",
+                    "target": deepcopy(self.target),
+                    "catalogue": self._catalogue(),
+                    "read": deepcopy({key: dict(value) for key, value in self.read.items()}),
+                }
+            )
+        return deepcopy(state)
+
+    def _visible_query_ids(self) -> set[str]:
+        if self.target is None:
+            return set(self.sources)
+        return {
+            query_id
+            for query_id, source in self.sources.items()
+            if source.available_at <= self.clock or source.public_schedule
+        }
+
+    def _catalogue(self) -> list[dict[str, Any]]:
+        rows = []
+        for query_id in sorted(self._visible_query_ids()):
+            source = self.sources[query_id]
+            row: dict[str, Any] = {"query_id": query_id}
+            if source.public_schedule:
+                row["available_at"] = source.available_at
+            rows.append(row)
+        return rows
 
     def snapshot(self) -> dict[str, Any]:
         """Return the complete kernel state as an independent deep copy.
@@ -184,9 +277,8 @@ class NaturalKernel:
         full action log.  Nothing in it aliases the live kernel.
         """
 
-        return deepcopy(
-            {
-                "schema": SNAPSHOT_SCHEMA,
+        payload = {
+                "schema": SNAPSHOT_SCHEMA_V2 if self.target is not None else SNAPSHOT_SCHEMA,
                 "sources": [
                     {
                         "query_id": source.query_id,
@@ -203,7 +295,9 @@ class NaturalKernel:
                 "expired": self.expired,
                 "actions": self.actions,
             }
-        )
+        if self.target is not None:
+            payload["target"] = self.target
+        return deepcopy(payload)
 
     @classmethod
     def from_snapshot(cls, snapshot: Mapping[str, Any]) -> "NaturalKernel":
@@ -217,11 +311,18 @@ class NaturalKernel:
         repair has to be able to represent and then prove wrong.
         """
 
-        if (
-            not isinstance(snapshot, Mapping)
-            or set(snapshot) != _SNAPSHOT_KEYS
-            or snapshot["schema"] != SNAPSHOT_SCHEMA
-        ):
+        if not isinstance(snapshot, Mapping):
+            raise ValueError("Not a natural kernel snapshot")
+        schema = snapshot.get("schema")
+        if schema == SNAPSHOT_SCHEMA:
+            if set(snapshot) != _SNAPSHOT_KEYS:
+                raise ValueError("Not a natural kernel snapshot")
+            target = None
+        elif schema == SNAPSHOT_SCHEMA_V2:
+            if set(snapshot) != _SNAPSHOT_KEYS_V2:
+                raise ValueError("Not a v21 natural kernel snapshot")
+            target = _canonical_target(snapshot["target"])
+        else:
             raise ValueError("Not a natural kernel snapshot")
         data = deepcopy(dict(snapshot))
         clock, deadline = data["clock"], data["deadline"]
@@ -301,6 +402,7 @@ class NaturalKernel:
         kernel.sources = {source.query_id: source for source in sources}
         kernel.clock = clock
         kernel.deadline = deadline
+        kernel.target = target
         kernel.read = {query_id: dict(content) for query_id, content in read.items()}
         kernel.stopped = stopped
         kernel.expired = expired

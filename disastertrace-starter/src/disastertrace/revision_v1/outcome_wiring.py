@@ -40,6 +40,8 @@ from .contracts import build_outcome_record
 if TYPE_CHECKING:
     from typing import Any
 
+    from .access_policy import AccessPolicy
+
 # Frozen project thresholds (in meters)
 FROZEN_THRESHOLDS_M = frozenset({5000.0, 1000.0})
 

@@ -1,0 +1,78 @@
+{
+  "schema": "disastertrace.v21.gpu_job_status.v4",
+  "experiment": "v21_synthetic_gpu_surfaces",
+  "all_succeeded": true,
+  "synthetic": true,
+  "empirical": false,
+  "provider_calls": 0,
+  "groups": {
+    "shared_delay": [
+      {
+        "replica": "5090a",
+        "job_id": "om-9ztw5ypm",
+        "state": "SUCCEEDED",
+        "display_name": "v21-shared-delay-5090a-spot-1",
+        "resource_spec": "1Xn12lp-32GB",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "cells": 144,
+        "n_per_cell": 1000000,
+        "result": "shared_delay_gpu/5090a/result.json"
+      },
+      {
+        "replica": "5090b",
+        "job_id": "om-qolmuk6c",
+        "state": "SUCCEEDED",
+        "display_name": "v21-shared-delay-5090b-spot-1",
+        "resource_spec": "1Xn12lp-32GB",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "cells": 144,
+        "n_per_cell": 1000000,
+        "result": "shared_delay_gpu/5090b/result.json"
+      },
+      {
+        "replica": "h100_share",
+        "job_id": "om-elhqpnle",
+        "state": "SUCCEEDED",
+        "display_name": "v21-shared-delay-h100-share-spot-1",
+        "resource_spec": "1XN6lS-80GB",
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "cells": 144,
+        "n_per_cell": 1000000,
+        "result": "shared_delay_gpu/h100_share/result.json"
+      }
+    ],
+    "cost_matched_adaptive": [
+      {
+        "replica": "5090a",
+        "job_id": "om-2i6w8d3y",
+        "state": "SUCCEEDED",
+        "display_name": "v21-cost-match-5090a-spot-1",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "cells": 384,
+        "n_per_cell": 500000,
+        "result": "cost_matched_gpu/5090a/result.json"
+      },
+      {
+        "replica": "5090b",
+        "job_id": "om-hkd7uz7t",
+        "state": "SUCCEEDED",
+        "display_name": "v21-cost-match-5090b-spot-1",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "cells": 384,
+        "n_per_cell": 500000,
+        "result": "cost_matched_gpu/5090b/result.json"
+      },
+      {
+        "replica": "h100_share",
+        "job_id": "om-bdekxc0e",
+        "state": "SUCCEEDED",
+        "display_name": "v21-cost-match-h100-share-spot-1",
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "cells": 384,
+        "n_per_cell": 500000,
+        "result": "cost_matched_gpu/h100_share/result.json"
+      }
+    ]
+  },
+  "cost_matched_aggregate": "COST_MATCHED_ADAPTIVE_AGGREGATE.json"
+}

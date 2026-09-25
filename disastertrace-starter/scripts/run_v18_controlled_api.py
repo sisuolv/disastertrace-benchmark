@@ -23,6 +23,54 @@ from disastertrace.monitoring_v1.agent_view_v18 import public_checkpoint, public
 
 ENDPOINT = "https://api.siliconflow.cn/v1/chat/completions"
 DEFAULT_MODEL = "deepseek-ai/DeepSeek-V4-Flash"
+CLOSED_RUN_IDS_REGISTRY = Path(__file__).resolve().parent.parent / "configs" / "closed_run_ids.json"
+
+
+def _load_closed_run_ids(registry_path: Path = CLOSED_RUN_IDS_REGISTRY) -> frozenset[str]:
+    """Git-tracked closed-run-id list (Track E, v20 plan).
+
+    The prior filesystem-presence check (does --out already exist) offers
+    zero protection on a fresh clone, since no v18 closed-run artifact is
+    itself tracked in git -- this registry is, so the protection survives a
+    clean checkout. Missing or malformed registry fails closed (raises)
+    rather than silently offering no protection.
+    """
+
+    data = json.loads(registry_path.read_text(encoding="utf-8"))
+    ids = data["closed_run_ids"]
+    if not isinstance(ids, list) or not all(isinstance(i, str) and i for i in ids):
+        raise ValueError(f"Malformed closed_run_ids registry at {registry_path}")
+    # An empty list would fail OPEN (nothing to match against) rather than
+    # fail closed -- a genuinely-updated registry can only grow, never have
+    # fewer than the three known closed runs, so treat empty/too-small as
+    # malformed too (independent review finding).
+    if len(ids) < 3:
+        raise ValueError(
+            f"closed_run_ids registry at {registry_path} has only {len(ids)} entries; "
+            "the 3 known closed runs must always be present -- this looks corrupted, not updated"
+        )
+    return frozenset(ids)
+
+
+_RUN_ID_CHARSET = frozenset("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.")
+
+
+def _reject_if_run_id_could_evade_the_closed_registry(run_id: str) -> None:
+    """A run-id with leading/trailing whitespace, unexpected case-folding
+    tricks, or a zero-width/control character appended can differ from a
+    registered closed id as a Python string while looking identical to a
+    human -- and so silently bypass the exact-match check below (independent
+    review finding, reproduced with whitespace/zero-width variants of a
+    real closed id). Reject anything outside a plain, visible charset
+    up front, before the registry comparison ever runs.
+    """
+
+    if not run_id or run_id != run_id.strip() or any(ch not in _RUN_ID_CHARSET for ch in run_id):
+        raise SystemExit(
+            "--run-id must be nonempty, have no leading/trailing whitespace, and use only "
+            "letters, digits, '-', '_' or '.' -- this exists so a closed run-id cannot be "
+            "evaded with an invisible or lookalike variant"
+        )
 # Keep the historical name available to callers that import this script, while
 # making the requested model an explicit run-level value below.
 MODEL = DEFAULT_MODEL
@@ -328,6 +376,19 @@ def main() -> int:
     default_run_id = "v18-controlled-yfree-deepseek-v4-flash-20260922"
     if args.model != DEFAULT_MODEL and args.run_id == default_run_id:
         raise SystemExit("A non-default model requires a new explicit --run-id")
+    # Checked before touching --out, sidecars, or stdin: a closed run-id must
+    # never be reusable regardless of output path (Track E, v20 plan). Note
+    # the script's own DEFAULT_MODEL default_run_id is itself one of the
+    # three closed IDs -- this check refuses it too, which is correct.
+    _reject_if_run_id_could_evade_the_closed_registry(args.run_id)
+    # Case-insensitive: the charset check above only rules out whitespace and
+    # non-plain characters, not a same-letters-different-case lookalike
+    # (independent review reproduced this bypassing a plain `in` check).
+    if args.run_id.casefold() in {i.casefold() for i in _load_closed_run_ids()}:
+        raise SystemExit(
+            f"Refusing to dispatch: --run-id {args.run_id!r} is permanently closed "
+            f"(see {CLOSED_RUN_IDS_REGISTRY}); choose a new run-id"
+        )
     # Refuse reuse/overwrite before consuming credentials or dispatching any
     # request.  A prior CLOSED artifact is immutable evidence, not a cache.
     if args.out.exists():
@@ -434,6 +495,8 @@ def main() -> int:
                     parsed, parse_status = None, "response_not_object"
                 elif provider_model != args.model:
                     parsed, parse_status = None, "model_mismatch" if provider_model else "model_missing"
+                elif not isinstance(provider_request_id, str) or not provider_request_id.strip():
+                    parsed, parse_status = None, "provider_request_id_missing"
                 else:
                     parsed, parse_status = parse_output(content)
                 if parsed is not None:

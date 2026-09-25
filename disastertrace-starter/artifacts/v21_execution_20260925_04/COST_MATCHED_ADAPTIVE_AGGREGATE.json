@@ -1,0 +1,235 @@
+{
+  "schema": "disastertrace.v21.synthetic_cost_matched_adaptive_surface.aggregate.v1",
+  "source_schema": "disastertrace.v21.synthetic_cost_matched_adaptive_surface.v1",
+  "evidence_role": "SYNTHETIC_COST_MATCHED_ADAPTIVE_SELECTION_DIAGNOSTIC",
+  "synthetic": true,
+  "empirical": false,
+  "replicas": [
+    {
+      "replica": "5090a",
+      "job_id": "om-2i6w8d3y",
+      "state": "SUCCEEDED",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "n_per_cell": 500000,
+      "cells": 384,
+      "seed": 350925
+    },
+    {
+      "replica": "5090b",
+      "job_id": "om-hkd7uz7t",
+      "state": "SUCCEEDED",
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "n_per_cell": 500000,
+      "cells": 384,
+      "seed": 360925
+    },
+    {
+      "replica": "h100_share",
+      "job_id": "om-bdekxc0e",
+      "state": "SUCCEEDED",
+      "gpu": "NVIDIA H100 80GB HBM3",
+      "n_per_cell": 500000,
+      "cells": 384,
+      "seed": 370925
+    }
+  ],
+  "total_rows": 1152,
+  "methods": [
+    "fixed",
+    "no_extra",
+    "source_rr",
+    "source_hash",
+    "active"
+  ],
+  "aggregate": {
+    "all": {
+      "cells": 1152,
+      "mean_active_minus_best_nonactive": -0.011311323556583375,
+      "median": -0.009334944188594818,
+      "active_wins": 816,
+      "ties": 0,
+      "active_losses": 336
+    },
+    "rho_initial": {
+      "0.6": {
+        "cells": 288,
+        "mean_active_minus_best_nonactive": -0.028626826126128435,
+        "median": -0.019612789154052734,
+        "active_wins": 288,
+        "ties": 0,
+        "active_losses": 0
+      },
+      "0.7": {
+        "cells": 288,
+        "mean_active_minus_best_nonactive": -0.023683028218025964,
+        "median": -0.016839616000652313,
+        "active_wins": 240,
+        "ties": 0,
+        "active_losses": 48
+      },
+      "0.8": {
+        "cells": 288,
+        "mean_active_minus_best_nonactive": -0.007010671025555994,
+        "median": -0.007502712309360504,
+        "active_wins": 192,
+        "ties": 0,
+        "active_losses": 96
+      },
+      "0.9": {
+        "cells": 288,
+        "mean_active_minus_best_nonactive": 0.014075231143376894,
+        "median": 0.0075259730219841,
+        "active_wins": 96,
+        "ties": 0,
+        "active_losses": 192
+      }
+    },
+    "followup_high": {
+      "0.7": {
+        "cells": 384,
+        "mean_active_minus_best_nonactive": 0.012779819856708249,
+        "median": 0.002379685640335083,
+        "active_wins": 144,
+        "ties": 0,
+        "active_losses": 240
+      },
+      "0.85": {
+        "cells": 384,
+        "mean_active_minus_best_nonactive": -0.015114651682476202,
+        "median": -0.011221654713153839,
+        "active_wins": 288,
+        "ties": 0,
+        "active_losses": 96
+      },
+      "0.95": {
+        "cells": 384,
+        "mean_active_minus_best_nonactive": -0.03159913884398217,
+        "median": -0.022638753056526184,
+        "active_wins": 384,
+        "ties": 0,
+        "active_losses": 0
+      }
+    },
+    "followup_low": {
+      "0.5": {
+        "cells": 576,
+        "mean_active_minus_best_nonactive": -0.012992455740459263,
+        "median": -0.011159621179103851,
+        "active_wins": 408,
+        "ties": 0,
+        "active_losses": 168
+      },
+      "0.6": {
+        "cells": 576,
+        "mean_active_minus_best_nonactive": -0.009630191372707486,
+        "median": -0.00851760059595108,
+        "active_wins": 408,
+        "ties": 0,
+        "active_losses": 168
+      }
+    },
+    "delay_checkpoints": {
+      "0": {
+        "cells": 288,
+        "mean_active_minus_best_nonactive": -0.018082918832078576,
+        "median": -0.015116073191165924,
+        "active_wins": 205,
+        "ties": 0,
+        "active_losses": 83
+      },
+      "1": {
+        "cells": 288,
+        "mean_active_minus_best_nonactive": -0.013577923903034793,
+        "median": -0.01142844557762146,
+        "active_wins": 202,
+        "ties": 0,
+        "active_losses": 86
+      },
+      "2": {
+        "cells": 288,
+        "mean_active_minus_best_nonactive": -0.009057177851597467,
+        "median": -0.0076422318816185,
+        "active_wins": 204,
+        "ties": 0,
+        "active_losses": 84
+      },
+      "3": {
+        "cells": 288,
+        "mean_active_minus_best_nonactive": -0.004527273639622662,
+        "median": -0.003844708204269409,
+        "active_wins": 205,
+        "ties": 0,
+        "active_losses": 83
+      }
+    },
+    "coverage": {
+      "0.5": {
+        "cells": 576,
+        "mean_active_minus_best_nonactive": -0.0075417418912467026,
+        "median": -0.007405214011669159,
+        "active_wins": 406,
+        "ties": 0,
+        "active_losses": 170
+      },
+      "1.0": {
+        "cells": 576,
+        "mean_active_minus_best_nonactive": -0.015080905221920047,
+        "median": -0.014716491103172302,
+        "active_wins": 410,
+        "ties": 0,
+        "active_losses": 166
+      }
+    },
+    "p_high": {
+      "0.65": {
+        "cells": 576,
+        "mean_active_minus_best_nonactive": -0.007740772303400768,
+        "median": -0.007451854646205902,
+        "active_wins": 406,
+        "ties": 0,
+        "active_losses": 170
+      },
+      "0.8": {
+        "cells": 576,
+        "mean_active_minus_best_nonactive": -0.014881874809765981,
+        "median": -0.013826236128807068,
+        "active_wins": 410,
+        "ties": 0,
+        "active_losses": 166
+      }
+    }
+  },
+  "method_relative_to_fixed": {
+    "fixed": {
+      "mean_minus_fixed_loss": 0.0,
+      "wins_vs_fixed": 0,
+      "cells": 1152
+    },
+    "no_extra": {
+      "mean_minus_fixed_loss": -0.026366898654183995,
+      "wins_vs_fixed": 1008,
+      "cells": 1152
+    },
+    "source_rr": {
+      "mean_minus_fixed_loss": -0.01406470084718118,
+      "wins_vs_fixed": 1008,
+      "cells": 1152
+    },
+    "source_hash": {
+      "mean_minus_fixed_loss": -0.01406139353962822,
+      "wins_vs_fixed": 1008,
+      "cells": 1152
+    },
+    "active": {
+      "mean_minus_fixed_loss": -0.04394203014413102,
+      "wins_vs_fixed": 1152,
+      "cells": 1152
+    }
+  },
+  "interpretation": {
+    "cost_matching": "source_rr, source_hash and active all use two queries; no_extra uses one; fixed uses zero",
+    "active_vs_best_nonactive": "active has a negative mean delta in this constructed content-dependent signal process and wins most cells, while source_rr/hash remain strong controls",
+    "scope": "synthetic mechanism evidence only; no weather, provider, holdout, quarantine",
+    "decision": "This supports testing content-dependent follow-up selection under a genuinely cost-matched contract, but does not establish novelty or real-weather value"
+  }
+}

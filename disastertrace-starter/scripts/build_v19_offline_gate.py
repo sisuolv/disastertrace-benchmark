@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sys
 from pathlib import Path
 
 from disastertrace.monitoring_v1.agent_view_v18 import public_checkpoint
@@ -18,6 +19,13 @@ from disastertrace.monitoring_v1.grid_scoring_v18 import score_complete_grid
 from disastertrace.monitoring_v1.natural_track_v18 import NaturalAction, NaturalKernel, NaturalSource
 from disastertrace.monitoring_v1.run_journal_v18 import RunJournal
 from disastertrace.monitoring_v1.scoring import brier_report
+from disastertrace.revision_v1.y1_adapter_synthetic import (
+    settle_synthetic_outcomes,
+    synthetic_metar,
+    synthetic_provenance,
+    v18_target_to_h15_target,
+)
+from scripts.build_v18_dev_episodes import _qualify_checkpoints
 from scripts.validate_v18_run_spec import validate
 
 
@@ -80,6 +88,40 @@ def build(out: Path) -> dict:
     natural.step(NaturalAction("UPDATE", 0, probability=0.4))
     natural.step(NaturalAction("STOP", 0))
 
+    # Track E (v20 plan): exercise the real T-60/T-40/T-20 checkpoint qualifier
+    # on a synthetic stream (no real archive file), and settle a synthetic
+    # outcome through the real Y1 adapter -- roster construction and outcome
+    # settlement, chained end to end, entirely offline.
+    checkpoint_stream = [_record("c1", 10, 8000), _record("c2", 40, 3000)]
+    checkpoints, excluded_checkpoints = _qualify_checkpoints(
+        checkpoint_stream, target_start=100, target_end=200,
+        offsets={"T-60": 60, "T-40": 40, "T-20": 20},
+    )
+    outcome_target = v18_target_to_h15_target(
+        episode_id="OFFLINE-E1", station="KSFO", target_start_us=100, target_end_us=200, threshold_m=5000.0,
+    )
+    outcome_prov = synthetic_provenance(fixture_label="offline-gate", fetch_timestamp_us=200)
+    outcome_obs = [synthetic_metar(station="KSFO", observation_time_us=150, visibility_m=3000.0)]
+    (outcome_record,) = settle_synthetic_outcomes(
+        targets=[outcome_target], observations=outcome_obs, provenance=outcome_prov,
+        resolution_version="OFFLINE-GATE-Y1-001",
+    )
+    assert outcome_record["availability_basis"] == "synthetic_fixture"
+    assert outcome_record["value"] == 1  # 3000m < 5000m threshold
+
+    # Track E fix (v20 plan): the module's real qualified name is
+    # disastertrace.monitoring_v1.api_capture -- checking the bare string
+    # "api_capture" against sys.modules could never match anything and this
+    # check could never fire (independent review finding). Even with the
+    # right name, this only proves the module wasn't imported by the time
+    # build() returns -- api_capture.py reads its key-file path lazily
+    # inside capture(), not at import time, so this check cannot catch a
+    # call-time reach into it; it can only catch an import creeping into
+    # this gate's own import chain. Disclosed, not solved here: a stronger
+    # guarantee needs running build() in a fresh subprocess or a meta-path
+    # import blocker, neither implemented this round.
+    api_capture_imported = "disastertrace.monitoring_v1.api_capture" in sys.modules
+
     artifact = {
         "schema": "disastertrace.v19.offline_gate.v1",
         "status": "OFFLINE_READY",
@@ -95,7 +137,22 @@ def build(out: Path) -> dict:
         "journal_events": len((journal_path / "events.jsonl").read_text().splitlines()),
         "run_spec": spec_result,
         "natural": natural.public_state(),
+        "checkpoint_grid": {
+            "checkpoint_ids": [c["checkpoint_id"] for c in checkpoints],
+            "excluded_checkpoints": len(excluded_checkpoints),
+        },
+        # A settled SYNTHETIC outcome (Track D adapter) is not the same claim
+        # as "a real outcome was accessed" -- outcomes_accessed above stays
+        # False, correctly, since nothing real was read.
+        "synthetic_outcome_settled": True,
+        "synthetic_outcome_availability_basis": outcome_record["availability_basis"],
+        "api_capture_module_imported": api_capture_imported,
     }
+    assert artifact["api_capture_module_imported"] is False, (
+        "api_capture.py reads a real key-file path by default; the offline "
+        "gate must never import it, not merely rely on a network guard to "
+        "catch it after the fact"
+    )
     out.mkdir(parents=True, exist_ok=True)
     (out / "OFFLINE_GATE.json").write_text(json.dumps(artifact, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return artifact

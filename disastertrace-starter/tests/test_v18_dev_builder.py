@@ -12,16 +12,18 @@ from scripts.build_v18_dev_episodes import (
     CHECKPOINT_OFFSETS_US,
     STATIONS,
     _checkpoint_cutoffs,
+    _classify_relation_status,
     _conditional_window,
     _load_products,
     _normalized_visibility,
+    _periods_content_hash,
     build_roster,
 )
 
 
 def _write_csv(path, rows):
     path.parent.mkdir(parents=True, exist_ok=True)
-    fields = ["product_id", "fx_valid", "fx_valid_end", "raw", "is_tempo"]
+    fields = ["product_id", "fx_valid", "fx_valid_end", "raw", "is_tempo", "is_amendment"]
     with path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
@@ -219,3 +221,159 @@ def test_episode_missing_a_checkpoint_is_recorded_and_not_admitted(monkeypatch, 
         ("T-60", -30 * minute, "cutoff precedes the Unix epoch (negative utc_us)"),
         ("T-40", -10 * minute, "cutoff precedes the Unix epoch (negative utc_us)"),
     ]
+
+
+# ---------------------------------------------------------------------------
+# Track B-0 (v20 plan): _periods_content_hash / _classify_relation_status
+# must ignore administrative metadata, not just weather content
+# ---------------------------------------------------------------------------
+
+def _period(**overrides):
+    period = {
+        "valid_start": 100, "valid_end": 200, "operator": "BASE",
+        "visibility_m": 8000, "is_amendment": False, "ftype": "Forecast",
+        "source_row_is_tempo": False,
+    }
+    period.update(overrides)
+    return period
+
+
+def test_periods_content_hash_ignores_is_amendment_and_ftype():
+    """Two periods with identical weather content but a flipped
+    is_amendment/ftype must hash the same -- the pre-fix hash mixed in
+    those fields and would have made this pair look like a real change."""
+    a = _period(is_amendment=False, ftype="Forecast")
+    b = _period(is_amendment=True, ftype="Correction")
+    assert _periods_content_hash([a]) == _periods_content_hash([b])
+
+
+def test_periods_content_hash_still_detects_a_real_weather_difference():
+    a = _period(visibility_m=8000)
+    b = _period(visibility_m=4000)
+    assert _periods_content_hash([a]) != _periods_content_hash([b])
+
+
+def test_classify_relation_status_duplicate_survives_flipped_is_amendment():
+    """Same weather content, different is_amendment across consecutive
+    products at one station -> still 'duplicate', not misread as a new
+    revision just because the administrative flag changed."""
+    rows_first = [{"is_amendment": "False", "raw": "TAF KSFO ..."}]
+    first_periods = [_period(is_amendment=False)]
+    first_hash = _periods_content_hash(first_periods)
+    status_first = _classify_relation_status(rows=rows_first, periods=first_periods, previous_hash=None)
+    assert status_first == "normal"
+
+    rows_second = [{"is_amendment": "True", "raw": "TAF AMD KSFO ..."}]
+    second_periods = [_period(is_amendment=True)]  # identical weather, different admin flag
+    status_second = _classify_relation_status(rows=rows_second, periods=second_periods, previous_hash=first_hash)
+    assert status_second == "duplicate"
+
+
+def test_classify_relation_status_cancellation_beats_is_amendment():
+    rows = [{"is_amendment": "True", "raw": "TAF AMD KSFO ... CNL"}]
+    status = _classify_relation_status(rows=rows, periods=[_period()], previous_hash=None)
+    assert status == "cancellation"
+
+
+def test_a_periodless_row_with_cancellation_text_is_not_silently_dropped(tmp_path):
+    """Track A item 2 (v20 plan): a row with a product_id but no fx_valid
+    carries no forecast period, but its raw text must still reach the
+    cancellation check -- previously it was dropped by the same filter that
+    (correctly) excludes it from `periods`, so a real CNL row sharing a
+    product_id with an ordinary period row would never be classified.
+    A step-0 characterization of the whole real dev readset (4 stations x 2
+    months, 12,072 rows) found 0 rows missing fx_valid and 0 CNL/CNCL/CANCEL
+    hits at all, so this is unexercised by real data so far -- the fix
+    closes a real gap in the code, not a real gap in the observed archive."""
+    body = tmp_path / "taf" / "synthetic-run" / "KSFO_202501.body"
+    rows = [
+        {"product_id": "202501010000-SYNTHETIC", "fx_valid": "2025-01-01 00:00", "raw": "05008KT P6SM FEW060"},
+        {"product_id": "202501010000-SYNTHETIC", "raw": "TAF AMD KSFO 010000Z CNL"},  # no fx_valid: periodless
+    ]
+    _write_csv(body, rows)
+    products = _load_products(tmp_path, "KSFO", "202501", "synthetic-run")
+    assert len(products) == 1
+    assert len(products[0]["content"]["periods"]) == 1  # the periodless row contributes no period
+    assert products[0]["relation_status"] == "cancellation"
+
+
+def test_a_periodless_rows_is_amendment_flag_does_not_leak_into_the_revision_check(tmp_path):
+    """Track A item 2 correction (v20 plan): a periodless row's raw text must
+    reach ONLY the cancellation check, not the is_amendment/revision check --
+    the first version of this fix merged periodless rows into `rows` for
+    BOTH checks, so a periodless row with is_amendment=True could flip a
+    product to 'revision' even though the product's own (only) period-
+    bearing row says is_amendment=False. Real data never triggers this
+    (every product keeps is_amendment consistent across its own rows), but
+    independent review found it was a real, undisclosed side effect."""
+    body = tmp_path / "taf" / "synthetic-run" / "KSFO_202501.body"
+    rows = [
+        {"product_id": "202501010000-SYNTHETIC", "fx_valid": "2025-01-01 00:00",
+         "raw": "05008KT P6SM FEW060", "is_amendment": "False"},
+        # Periodless: no fx_valid. Carries is_amendment=True but NO
+        # cancellation text -- must not flip this product to "revision".
+        {"product_id": "202501010000-SYNTHETIC", "raw": "TAF AMD KSFO 010000Z", "is_amendment": "True"},
+    ]
+    _write_csv(body, rows)
+    products = _load_products(tmp_path, "KSFO", "202501", "synthetic-run")
+    assert len(products) == 1
+    assert products[0]["relation_status"] == "normal"  # not "revision", and not "cancellation"
+
+
+def test_group_operator_preserves_tempo_qualifier_on_a_compound_prob_group():
+    """Track A item 4 (v20 plan): 'PROB30 TEMPO ...' is a compound
+    construct -- a probability qualifying a temporary condition -- and must
+    not collapse to plain 'PROB30', losing the TEMPO qualifier."""
+    assert builder._group_operator({"raw": "PROB30 1200/1206 3000 SHRA"}) == ("PROB30", 0.30)
+    assert builder._group_operator({"raw": "PROB30 TEMPO 1200/1206 1600 SHRA"}) == ("PROB30_TEMPO", 0.30)
+    assert builder._group_operator({"raw": "PROB40 TEMPO 1200/1206 1600 SHRA"}) == ("PROB40_TEMPO", 0.40)
+    # Both plain and compound forms must still be treated as conditional
+    # (non-prevailing) by the boundary-search logic that consumes this set.
+    assert "PROB30_TEMPO" in builder._CONDITIONAL_OPERATORS
+    assert "PROB40_TEMPO" in builder._CONDITIONAL_OPERATORS
+
+
+def test_8_source_cap_keeps_the_chronologically_earliest_not_earliest_by_source_id(monkeypatch, tmp_path):
+    """Track A item 3 (v20 plan): the cap must apply after sorting by time,
+    not before. Construct 9 covering products where issued_at order is the
+    exact reverse of source_id alphabetical order -- under the pre-fix code
+    (cap-then-sort), the chronologically FIRST product (source_id 's8',
+    issued at t=0) sorted alphabetically last and was silently dropped by
+    [:8] before the sort ever ran; the chronologically LAST one (source_id
+    's0') should be the one dropped instead."""
+    minute = 60_000_000
+    hour = 60 * minute
+    valid_start = 4 * hour  # comfortably after epoch so T-60's cutoff stays non-negative
+
+    def product(source_id, issued):
+        return {
+            "station": "KSFO", "source_id": source_id, "source_revision": source_id, "kind": "taf",
+            "issued_at": issued, "available_at": issued + 2 * minute,
+            "valid_start": valid_start, "valid_end": valid_start + 180 * minute,
+            "content": {"periods": [{"valid_start": valid_start, "valid_end": valid_start + 180 * minute, "operator": "BASE", "visibility_m": 8000}]},
+        }
+
+    products = [product(f"s{8 - i}", i * minute) for i in range(9)]
+    monkeypatch.setattr(
+        builder, "_load_products",
+        lambda root, station, month, run: copy.deepcopy(products) if (station, month) == ("KSFO", "202501") else [],
+    )
+    roster = build_roster(tmp_path, limit=24, run_id=RUN_ID)
+    (episode,) = roster["episodes"]
+    assert episode["source_count"] == 8
+    assert episode["sources_truncated_at_cap"] == 1
+    assert "s8" in episode["source_ids"], "chronologically earliest must survive the cap"
+    assert "s0" not in episode["source_ids"], "chronologically latest is the correct one to drop"
+
+
+def test_classify_relation_status_revision_when_content_actually_differs():
+    rows_first = [{"is_amendment": "False", "raw": "TAF KSFO ..."}]
+    first_periods = [_period(visibility_m=8000)]
+    first_hash = _periods_content_hash(first_periods)
+    status_first = _classify_relation_status(rows=rows_first, periods=first_periods, previous_hash=None)
+    assert status_first == "normal"
+
+    rows_second = [{"is_amendment": "True", "raw": "TAF AMD KSFO ..."}]
+    second_periods = [_period(visibility_m=4000)]  # genuine weather change + is_amendment
+    status_second = _classify_relation_status(rows=rows_second, periods=second_periods, previous_hash=first_hash)
+    assert status_second == "revision"

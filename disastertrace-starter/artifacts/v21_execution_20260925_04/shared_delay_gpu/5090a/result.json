@@ -1,0 +1,3789 @@
+{
+  "schema": "disastertrace.v21.synthetic_shared_delay_surface.v1",
+  "evidence_role": "SYNTHETIC_MULTI_TARGET_SHARED_EVIDENCE_DIAGNOSTIC",
+  "synthetic": true,
+  "empirical": false,
+  "hypothesis": "active value depends jointly on evidence reliability, availability delay, coverage, and confidence; all methods share target/checkpoint denominator",
+  "contract": {
+    "target_outcome": "binary y sampled per target",
+    "shared_evidence": "one noisy source signal per target reused after availability",
+    "delay": "number of initial checkpoints without evidence",
+    "coverage": "target-level probability that evidence ever becomes available",
+    "methods": [
+      "fixed",
+      "no_extra",
+      "source_rr",
+      "source_hash",
+      "active"
+    ],
+    "checkpoints": 4,
+    "brier_denominator": "n_targets * checkpoints for every method",
+    "no_extra_definition": "single retrieval only when delay is zero, then carry-forward",
+    "source_rr_definition": "independent noisy retrieval at every available checkpoint",
+    "source_hash_definition": "shared signal with p=.65/.35 confidence",
+    "active_definition": "shared signal with configured p_high/(1-p_high) confidence"
+  },
+  "config": {
+    "n_per_cell": 1000000,
+    "seed": 310925,
+    "shard": 0,
+    "shards": 1,
+    "device_requested": "cuda",
+    "cell_count_total": 144,
+    "cell_count_this_shard": 144
+  },
+  "runtime": {
+    "device": "cuda",
+    "torch": "2.8.0a0+5228986c39.nv25.06",
+    "cuda_available": true,
+    "cuda_device": "NVIDIA GeForce RTX 5090",
+    "python": "3.12.3",
+    "elapsed_seconds": 0.45946383476257324
+  },
+  "rows": [
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 310925,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.26132914423942566,
+        "source_rr": 0.26126405596733093,
+        "source_hash": 0.26132914423942566,
+        "active": 0.26132914423942566
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": -0.01132914423942566,
+        "source_rr": -0.011264055967330933,
+        "source_hash": -0.01132914423942566,
+        "active": -0.01132914423942566
+      },
+      "shared_evidence": true,
+      "available_cells": 1999484,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 311934,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.24617372453212738,
+        "source_rr": 0.24621443450450897,
+        "source_hash": 0.24617372453212738,
+        "active": 0.24617372453212738
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0038262754678726196,
+        "source_rr": 0.003785565495491028,
+        "source_hash": 0.0038262754678726196,
+        "active": 0.0038262754678726196
+      },
+      "shared_evidence": true,
+      "available_cells": 1999400,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 312943,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.2314496487379074,
+        "source_rr": 0.23134487867355347,
+        "source_hash": 0.2314496487379074,
+        "active": 0.2314496487379074
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.01855035126209259,
+        "source_rr": 0.018655121326446533,
+        "source_hash": 0.01855035126209259,
+        "active": 0.01855035126209259
+      },
+      "shared_evidence": true,
+      "available_cells": 1999364,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 313952,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.21613726019859314,
+        "source_rr": 0.21629543602466583,
+        "source_hash": 0.21613726019859314,
+        "active": 0.21613726019859314
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.03386273980140686,
+        "source_rr": 0.03370456397533417,
+        "source_hash": 0.03386273980140686,
+        "active": 0.03386273980140686
+      },
+      "shared_evidence": true,
+      "available_cells": 2001372,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 314961,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.20119668543338776,
+        "source_rr": 0.2012200802564621,
+        "source_hash": 0.20119668543338776,
+        "active": 0.20119668543338776
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.048803314566612244,
+        "source_rr": 0.0487799197435379,
+        "source_hash": 0.048803314566612244,
+        "active": 0.048803314566612244
+      },
+      "shared_evidence": true,
+      "available_cells": 2001748,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 315970,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.1862596869468689,
+        "source_rr": 0.1862596869468689,
+        "source_hash": 0.1862596869468689,
+        "active": 0.1862596869468689
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0637403130531311,
+        "source_rr": 0.0637403130531311,
+        "source_hash": 0.0637403130531311,
+        "active": 0.0637403130531311
+      },
+      "shared_evidence": true,
+      "available_cells": 1999696,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 316979,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2584270238876343,
+        "source_hash": 0.2585865557193756,
+        "active": 0.2585865557193756
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.008427023887634277,
+        "source_hash": -0.00858655571937561,
+        "active": -0.00858655571937561
+      },
+      "shared_evidence": true,
+      "available_cells": 1499220,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 317988,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2471781224012375,
+        "source_hash": 0.24704059958457947,
+        "active": 0.24704059958457947
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.002821877598762512,
+        "source_hash": 0.0029594004154205322,
+        "active": 0.0029594004154205322
+      },
+      "shared_evidence": true,
+      "available_cells": 1500783,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 318997,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23590706288814545,
+        "source_hash": 0.23610955476760864,
+        "active": 0.23610955476760864
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.014092937111854553,
+        "source_hash": 0.013890445232391357,
+        "active": 0.013890445232391357
+      },
+      "shared_evidence": true,
+      "available_cells": 1501689,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 320006,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22471678256988525,
+        "source_hash": 0.22481989860534668,
+        "active": 0.22481989860534668
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.025283217430114746,
+        "source_hash": 0.02518010139465332,
+        "active": 0.02518010139465332
+      },
+      "shared_evidence": true,
+      "available_cells": 1498437,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 321015,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.21349836885929108,
+        "source_hash": 0.21345914900302887,
+        "active": 0.21345914900302887
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.03650163114070892,
+        "source_hash": 0.03654085099697113,
+        "active": 0.03654085099697113
+      },
+      "shared_evidence": true,
+      "available_cells": 1498770,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 322024,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.20216034352779388,
+        "source_hash": 0.20216034352779388,
+        "active": 0.20216034352779388
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.047839656472206116,
+        "source_hash": 0.047839656472206116,
+        "active": 0.047839656472206116
+      },
+      "shared_evidence": true,
+      "available_cells": 1500852,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 323033,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2555825710296631,
+        "source_hash": 0.2556641697883606,
+        "active": 0.2556641697883606
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.005582571029663086,
+        "source_hash": -0.005664169788360596,
+        "active": -0.005664169788360596
+      },
+      "shared_evidence": true,
+      "available_cells": 1000178,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 324042,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24814757704734802,
+        "source_hash": 0.24814459681510925,
+        "active": 0.24814459681510925
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0018524229526519775,
+        "source_hash": 0.001855403184890747,
+        "active": 0.001855403184890747
+      },
+      "shared_evidence": true,
+      "available_cells": 1000722,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 325051,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24064406752586365,
+        "source_hash": 0.24068103730678558,
+        "active": 0.24068103730678558
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.009355932474136353,
+        "source_hash": 0.009318962693214417,
+        "active": 0.009318962693214417
+      },
+      "shared_evidence": true,
+      "available_cells": 1001268,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 326060,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23307445645332336,
+        "source_hash": 0.23304390907287598,
+        "active": 0.23304390907287598
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.016925543546676636,
+        "source_hash": 0.016956090927124023,
+        "active": 0.016956090927124023
+      },
+      "shared_evidence": true,
+      "available_cells": 1000266,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 327069,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2255742847919464,
+        "source_hash": 0.22559122741222382,
+        "active": 0.22559122741222382
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.02442571520805359,
+        "source_hash": 0.024408772587776184,
+        "active": 0.024408772587776184
+      },
+      "shared_evidence": true,
+      "available_cells": 1001318,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 328078,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2180672287940979,
+        "source_hash": 0.2180672287940979,
+        "active": 0.2180672287940979
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0319327712059021,
+        "source_hash": 0.0319327712059021,
+        "active": 0.0319327712059021
+      },
+      "shared_evidence": true,
+      "available_cells": 1001812,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 329087,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2528388202190399,
+        "source_hash": 0.2527725398540497,
+        "active": 0.2527725398540497
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.002838820219039917,
+        "source_hash": -0.0027725398540496826,
+        "active": -0.0027725398540496826
+      },
+      "shared_evidence": true,
+      "available_cells": 500616,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 330096,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24912546575069427,
+        "source_hash": 0.24909614026546478,
+        "active": 0.24909614026546478
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0008745342493057251,
+        "source_hash": 0.0009038597345352173,
+        "active": 0.0009038597345352173
+      },
+      "shared_evidence": true,
+      "available_cells": 499427,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 331105,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24532006680965424,
+        "source_hash": 0.24533280730247498,
+        "active": 0.24533280730247498
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.004679933190345764,
+        "source_hash": 0.004667192697525024,
+        "active": 0.004667192697525024
+      },
+      "shared_evidence": true,
+      "available_cells": 499657,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 332114,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.241561621427536,
+        "source_hash": 0.24156366288661957,
+        "active": 0.24156366288661957
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.00843837857246399,
+        "source_hash": 0.008436337113380432,
+        "active": 0.008436337113380432
+      },
+      "shared_evidence": true,
+      "available_cells": 500086,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 333123,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2378499060869217,
+        "source_hash": 0.23781518638134003,
+        "active": 0.23781518638134003
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.012150093913078308,
+        "source_hash": 0.012184813618659973,
+        "active": 0.012184813618659973
+      },
+      "shared_evidence": true,
+      "available_cells": 499779,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 334132,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23406581580638885,
+        "source_hash": 0.23406581580638885,
+        "active": 0.23406581580638885
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.015934184193611145,
+        "source_hash": 0.015934184193611145,
+        "active": 0.015934184193611145
+      },
+      "shared_evidence": true,
+      "available_cells": 499896,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 335141,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.2668361961841583,
+        "source_rr": 0.2668308615684509,
+        "source_hash": 0.2668361961841583,
+        "active": 0.2668361961841583
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": -0.016836196184158325,
+        "source_rr": -0.016830861568450928,
+        "source_hash": -0.016836196184158325,
+        "active": -0.016836196184158325
+      },
+      "shared_evidence": true,
+      "available_cells": 2998808,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 336150,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.2441985011100769,
+        "source_rr": 0.2444254606962204,
+        "source_hash": 0.2441985011100769,
+        "active": 0.2441985011100769
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.005801498889923096,
+        "source_rr": 0.005574539303779602,
+        "source_hash": 0.005801498889923096,
+        "active": 0.005801498889923096
+      },
+      "shared_evidence": true,
+      "available_cells": 2997292,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 337159,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.22203868627548218,
+        "source_rr": 0.2219611555337906,
+        "source_hash": 0.22203868627548218,
+        "active": 0.22203868627548218
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.027961313724517822,
+        "source_rr": 0.02803884446620941,
+        "source_hash": 0.027961313724517822,
+        "active": 0.027961313724517822
+      },
+      "shared_evidence": true,
+      "available_cells": 2999156,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 338168,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.19932125508785248,
+        "source_rr": 0.19920118153095245,
+        "source_hash": 0.19932125508785248,
+        "active": 0.19932125508785248
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.05067874491214752,
+        "source_rr": 0.050798818469047546,
+        "source_hash": 0.05067874491214752,
+        "active": 0.05067874491214752
+      },
+      "shared_evidence": true,
+      "available_cells": 3002260,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 339177,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.17688778042793274,
+        "source_rr": 0.17696471512317657,
+        "source_hash": 0.17688778042793274,
+        "active": 0.17688778042793274
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.07311221957206726,
+        "source_rr": 0.07303528487682343,
+        "source_hash": 0.07311221957206726,
+        "active": 0.07311221957206726
+      },
+      "shared_evidence": true,
+      "available_cells": 2997152,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 340186,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.1543886363506317,
+        "source_rr": 0.1543886363506317,
+        "source_hash": 0.1543886363506317,
+        "active": 0.1543886363506317
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.09561136364936829,
+        "source_rr": 0.09561136364936829,
+        "source_hash": 0.09561136364936829,
+        "active": 0.09561136364936829
+      },
+      "shared_evidence": true,
+      "available_cells": 2999572,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 341195,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.26272282004356384,
+        "source_hash": 0.26261186599731445,
+        "active": 0.26261186599731445
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.012722820043563843,
+        "source_hash": -0.012611865997314453,
+        "active": -0.012611865997314453
+      },
+      "shared_evidence": true,
+      "available_cells": 2249451,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 342204,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24571749567985535,
+        "source_hash": 0.2457112818956375,
+        "active": 0.2457112818956375
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.004282504320144653,
+        "source_hash": 0.004288718104362488,
+        "active": 0.004288718104362488
+      },
+      "shared_evidence": true,
+      "available_cells": 2250501,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 343213,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22881175577640533,
+        "source_hash": 0.22888344526290894,
+        "active": 0.22888344526290894
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.021188244223594666,
+        "source_hash": 0.021116554737091064,
+        "active": 0.021116554737091064
+      },
+      "shared_evidence": true,
+      "available_cells": 2251887,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 344222,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2121516615152359,
+        "source_hash": 0.21213486790657043,
+        "active": 0.21213486790657043
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0378483384847641,
+        "source_hash": 0.037865132093429565,
+        "active": 0.037865132093429565
+      },
+      "shared_evidence": true,
+      "available_cells": 2247279,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 345231,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.1951310783624649,
+        "source_hash": 0.19506770372390747,
+        "active": 0.19506770372390747
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.054868921637535095,
+        "source_hash": 0.05493229627609253,
+        "active": 0.05493229627609253
+      },
+      "shared_evidence": true,
+      "available_cells": 2251797,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 346240,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.1782321035861969,
+        "source_hash": 0.1782321035861969,
+        "active": 0.1782321035861969
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0717678964138031,
+        "source_hash": 0.0717678964138031,
+        "active": 0.0717678964138031
+      },
+      "shared_evidence": true,
+      "available_cells": 2251542,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 347249,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2585180103778839,
+        "source_hash": 0.25842180848121643,
+        "active": 0.25842180848121643
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.008518010377883911,
+        "source_hash": -0.00842180848121643,
+        "active": -0.00842180848121643
+      },
+      "shared_evidence": true,
+      "available_cells": 1501142,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 348258,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24718797206878662,
+        "source_hash": 0.24726440012454987,
+        "active": 0.24726440012454987
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.002812027931213379,
+        "source_hash": 0.0027355998754501343,
+        "active": 0.0027355998754501343
+      },
+      "shared_evidence": true,
+      "available_cells": 1501206,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 349267,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23599576950073242,
+        "source_hash": 0.23592902719974518,
+        "active": 0.23592902719974518
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.014004230499267578,
+        "source_hash": 0.014070972800254822,
+        "active": 0.014070972800254822
+      },
+      "shared_evidence": true,
+      "available_cells": 1500680,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 350276,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22469881176948547,
+        "source_hash": 0.22457259893417358,
+        "active": 0.22457259893417358
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.025301188230514526,
+        "source_hash": 0.025427401065826416,
+        "active": 0.025427401065826416
+      },
+      "shared_evidence": true,
+      "available_cells": 1500278,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 351285,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.21343712508678436,
+        "source_hash": 0.21344800293445587,
+        "active": 0.21344800293445587
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.03656287491321564,
+        "source_hash": 0.03655199706554413,
+        "active": 0.03655199706554413
+      },
+      "shared_evidence": true,
+      "available_cells": 1499666,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 352294,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.202190563082695,
+        "source_hash": 0.202190563082695,
+        "active": 0.202190563082695
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.04780943691730499,
+        "source_hash": 0.04780943691730499,
+        "active": 0.04780943691730499
+      },
+      "shared_evidence": true,
+      "available_cells": 1499904,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 353303,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.25423315167427063,
+        "source_hash": 0.2542073428630829,
+        "active": 0.2542073428630829
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.00423315167427063,
+        "source_hash": -0.004207342863082886,
+        "active": -0.004207342863082886
+      },
+      "shared_evidence": true,
+      "available_cells": 750200,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 354312,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24858075380325317,
+        "source_hash": 0.24858331680297852,
+        "active": 0.24858331680297852
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0014192461967468262,
+        "source_hash": 0.0014166831970214844,
+        "active": 0.0014166831970214844
+      },
+      "shared_evidence": true,
+      "available_cells": 749784,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 355321,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24298912286758423,
+        "source_hash": 0.24294981360435486,
+        "active": 0.24294981360435486
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0070108771324157715,
+        "source_hash": 0.007050186395645142,
+        "active": 0.007050186395645142
+      },
+      "shared_evidence": true,
+      "available_cells": 750460,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 356330,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23736713826656342,
+        "source_hash": 0.2373909205198288,
+        "active": 0.2373909205198288
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.012632861733436584,
+        "source_hash": 0.012609079480171204,
+        "active": 0.012609079480171204
+      },
+      "shared_evidence": true,
+      "available_cells": 750153,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 357339,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2317127287387848,
+        "source_hash": 0.23175758123397827,
+        "active": 0.23175758123397827
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.01828727126121521,
+        "source_hash": 0.01824241876602173,
+        "active": 0.01824241876602173
+      },
+      "shared_evidence": true,
+      "available_cells": 749537,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 358348,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22610273957252502,
+        "source_hash": 0.22610273957252502,
+        "active": 0.22610273957252502
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.023897260427474976,
+        "source_hash": 0.023897260427474976,
+        "active": 0.023897260427474976
+      },
+      "shared_evidence": true,
+      "available_cells": 749718,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 359357,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.27225399017333984,
+        "source_rr": 0.2725476324558258,
+        "source_hash": 0.27225399017333984,
+        "active": 0.27225399017333984
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": -0.022253990173339844,
+        "source_rr": -0.022547632455825806,
+        "source_hash": -0.022253990173339844,
+        "active": -0.022253990173339844
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 360366,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.2424909770488739,
+        "source_rr": 0.24238359928131104,
+        "source_hash": 0.2424909770488739,
+        "active": 0.2424909770488739
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.007509022951126099,
+        "source_rr": 0.007616400718688965,
+        "source_hash": 0.007509022951126099,
+        "active": 0.007509022951126099
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 361375,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.21239137649536133,
+        "source_rr": 0.2125355303287506,
+        "source_hash": 0.21239137649536133,
+        "active": 0.21239137649536133
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.03760862350463867,
+        "source_rr": 0.03746446967124939,
+        "source_hash": 0.03760862350463867,
+        "active": 0.03760862350463867
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 362384,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.18237069249153137,
+        "source_rr": 0.18248935043811798,
+        "source_hash": 0.18237069249153137,
+        "active": 0.18237069249153137
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.06762930750846863,
+        "source_rr": 0.06751064956188202,
+        "source_hash": 0.06762930750846863,
+        "active": 0.06762930750846863
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 363393,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.1525048017501831,
+        "source_rr": 0.15254904329776764,
+        "source_hash": 0.1525048017501831,
+        "active": 0.1525048017501831
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0974951982498169,
+        "source_rr": 0.09745095670223236,
+        "source_hash": 0.0974951982498169,
+        "active": 0.0974951982498169
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 364402,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.12250000983476639,
+        "source_rr": 0.12250000983476639,
+        "source_hash": 0.12250000983476639,
+        "active": 0.12250000983476639
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.1274999901652336,
+        "source_rr": 0.1274999901652336,
+        "source_hash": 0.1274999901652336,
+        "active": 0.1274999901652336
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 365411,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2668783664703369,
+        "source_hash": 0.26695528626441956,
+        "active": 0.26695528626441956
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.016878366470336914,
+        "source_hash": -0.016955286264419556,
+        "active": -0.016955286264419556
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 366420,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24440491199493408,
+        "source_hash": 0.24446025490760803,
+        "active": 0.24446025490760803
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.005595088005065918,
+        "source_hash": 0.005539745092391968,
+        "active": 0.005539745092391968
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 367429,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22191008925437927,
+        "source_hash": 0.22173278033733368,
+        "active": 0.22173278033733368
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.028089910745620728,
+        "source_hash": 0.02826721966266632,
+        "active": 0.02826721966266632
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 368438,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.1993943452835083,
+        "source_hash": 0.19938871264457703,
+        "active": 0.19938871264457703
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0506056547164917,
+        "source_hash": 0.050611287355422974,
+        "active": 0.050611287355422974
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 369447,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.17686262726783752,
+        "source_hash": 0.17680884897708893,
+        "active": 0.17680884897708893
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.07313737273216248,
+        "source_hash": 0.07319115102291107,
+        "active": 0.07319115102291107
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 370456,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.15437501668930054,
+        "source_hash": 0.15437501668930054,
+        "active": 0.15437501668930054
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.09562498331069946,
+        "source_hash": 0.09562498331069946,
+        "active": 0.09562498331069946
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 371465,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.26128628849983215,
+        "source_hash": 0.26116374135017395,
+        "active": 0.26116374135017395
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.011286288499832153,
+        "source_hash": -0.01116374135017395,
+        "active": -0.01116374135017395
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 372474,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2462376207113266,
+        "source_hash": 0.24624788761138916,
+        "active": 0.24624788761138916
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.003762379288673401,
+        "source_hash": 0.00375211238861084,
+        "active": 0.00375211238861084
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 373483,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23131005465984344,
+        "source_hash": 0.23118175566196442,
+        "active": 0.23118175566196442
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.018689945340156555,
+        "source_hash": 0.018818244338035583,
+        "active": 0.018818244338035583
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 374492,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.21623454988002777,
+        "source_hash": 0.2161901593208313,
+        "active": 0.2161901593208313
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.03376545011997223,
+        "source_hash": 0.0338098406791687,
+        "active": 0.0338098406791687
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 375501,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2012711614370346,
+        "source_hash": 0.20121924579143524,
+        "active": 0.20121924579143524
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.04872883856296539,
+        "source_hash": 0.04878075420856476,
+        "active": 0.04878075420856476
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 376510,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.1862500011920929,
+        "source_hash": 0.1862500011920929,
+        "active": 0.1862500011920929
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0637499988079071,
+        "source_hash": 0.0637499988079071,
+        "active": 0.0637499988079071
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 377519,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2557172477245331,
+        "source_hash": 0.25562146306037903,
+        "active": 0.25562146306037903
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.005717247724533081,
+        "source_hash": -0.005621463060379028,
+        "active": -0.005621463060379028
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 378528,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24807780981063843,
+        "source_hash": 0.24819347262382507,
+        "active": 0.24819347262382507
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0019221901893615723,
+        "source_hash": 0.0018065273761749268,
+        "active": 0.0018065273761749268
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 379537,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24062371253967285,
+        "source_hash": 0.2406485676765442,
+        "active": 0.2406485676765442
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.009376287460327148,
+        "source_hash": 0.00935143232345581,
+        "active": 0.00935143232345581
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 380546,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23310354351997375,
+        "source_hash": 0.23308230936527252,
+        "active": 0.23308230936527252
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.016896456480026245,
+        "source_hash": 0.016917690634727478,
+        "active": 0.016917690634727478
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 381555,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22561050951480865,
+        "source_hash": 0.2256227433681488,
+        "active": 0.2256227433681488
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.024389490485191345,
+        "source_hash": 0.024377256631851196,
+        "active": 0.024377256631851196
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.65,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 382564,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.21812500059604645,
+        "source_hash": 0.21812500059604645,
+        "active": 0.21812500059604645
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.03187499940395355,
+        "source_hash": 0.03187499940395355,
+        "active": 0.03187499940395355
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 383573,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.2950798571109772,
+        "source_rr": 0.2950972616672516,
+        "source_hash": 0.26127466559410095,
+        "active": 0.2950798571109772
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": -0.04507985711097717,
+        "source_rr": -0.04509726166725159,
+        "source_hash": -0.011274665594100952,
+        "active": -0.04507985711097717
+      },
+      "shared_evidence": true,
+      "available_cells": 2002708,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 384582,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.26516667008399963,
+        "source_rr": 0.2648855745792389,
+        "source_hash": 0.2463221698999405,
+        "active": 0.26516667008399963
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": -0.015166670083999634,
+        "source_rr": -0.014885574579238892,
+        "source_hash": 0.0036778301000595093,
+        "active": -0.015166670083999634
+      },
+      "shared_evidence": true,
+      "available_cells": 2001980,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 385591,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.2351025938987732,
+        "source_rr": 0.23482881486415863,
+        "source_hash": 0.2313043475151062,
+        "active": 0.2351025938987732
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.014897406101226807,
+        "source_rr": 0.01517118513584137,
+        "source_hash": 0.0186956524848938,
+        "active": 0.014897406101226807
+      },
+      "shared_evidence": true,
+      "available_cells": 1999452,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 386600,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.20475687086582184,
+        "source_rr": 0.20503468811511993,
+        "source_hash": 0.2161344736814499,
+        "active": 0.20475687086582184
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.04524312913417816,
+        "source_rr": 0.044965311884880066,
+        "source_hash": 0.03386552631855011,
+        "active": 0.04524312913417816
+      },
+      "shared_evidence": true,
+      "available_cells": 1998928,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 387609,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.17505210638046265,
+        "source_rr": 0.1749325692653656,
+        "source_hash": 0.20128124952316284,
+        "active": 0.17505210638046265
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.07494789361953735,
+        "source_rr": 0.0750674307346344,
+        "source_hash": 0.04871875047683716,
+        "active": 0.07494789361953735
+      },
+      "shared_evidence": true,
+      "available_cells": 1999076,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 0,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 388618,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.1451001763343811,
+        "source_rr": 0.1451001763343811,
+        "source_hash": 0.18631082773208618,
+        "active": 0.1451001763343811
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.1048998236656189,
+        "source_rr": 0.1048998236656189,
+        "source_hash": 0.06368917226791382,
+        "active": 0.1048998236656189
+      },
+      "shared_evidence": true,
+      "available_cells": 1998092,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 389627,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2837293744087219,
+        "source_hash": 0.25852856040000916,
+        "active": 0.28395000100135803
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.033729374408721924,
+        "source_hash": -0.008528560400009155,
+        "active": -0.03395000100135803
+      },
+      "shared_evidence": true,
+      "available_cells": 1501590,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 390636,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.26121941208839417,
+        "source_hash": 0.2470577508211136,
+        "active": 0.2609998285770416
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.011219412088394165,
+        "source_hash": 0.0029422491788864136,
+        "active": -0.010999828577041626
+      },
+      "shared_evidence": true,
+      "available_cells": 1500831,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 391645,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23882265388965607,
+        "source_hash": 0.23592577874660492,
+        "active": 0.23870204389095306
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.011177346110343933,
+        "source_hash": 0.01407422125339508,
+        "active": 0.011297956109046936
+      },
+      "shared_evidence": true,
+      "available_cells": 1497819,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 392654,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.21621006727218628,
+        "source_hash": 0.22469723224639893,
+        "active": 0.21627502143383026
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.03378993272781372,
+        "source_hash": 0.025302767753601074,
+        "active": 0.03372497856616974
+      },
+      "shared_evidence": true,
+      "available_cells": 1500492,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 393663,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.1937715709209442,
+        "source_hash": 0.21342428028583527,
+        "active": 0.19371487200260162
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.056228429079055786,
+        "source_hash": 0.036575719714164734,
+        "active": 0.056285127997398376
+      },
+      "shared_evidence": true,
+      "available_cells": 1499229,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 1,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 394672,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.17130497097969055,
+        "source_hash": 0.2022208720445633,
+        "active": 0.17130497097969055
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.07869502902030945,
+        "source_hash": 0.04777912795543671,
+        "active": 0.07869502902030945
+      },
+      "shared_evidence": true,
+      "available_cells": 1498953,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 395681,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.27242571115493774,
+        "source_hash": 0.2556096911430359,
+        "active": 0.27246007323265076
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.022425711154937744,
+        "source_hash": -0.005609691143035889,
+        "active": -0.022460073232650757
+      },
+      "shared_evidence": true,
+      "available_cells": 999172,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 396690,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.25748008489608765,
+        "source_hash": 0.24819687008857727,
+        "active": 0.25765109062194824
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.0074800848960876465,
+        "source_hash": 0.0018031299114227295,
+        "active": -0.007651090621948242
+      },
+      "shared_evidence": true,
+      "available_cells": 1000648,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 397699,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.24260322749614716,
+        "source_hash": 0.24059046804904938,
+        "active": 0.2424449771642685
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.007396772503852844,
+        "source_hash": 0.009409531950950623,
+        "active": 0.007555022835731506
+      },
+      "shared_evidence": true,
+      "available_cells": 1001248,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 398708,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22756358981132507,
+        "source_hash": 0.23318494856357574,
+        "active": 0.22762088477611542
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.022436410188674927,
+        "source_hash": 0.016815051436424255,
+        "active": 0.022379115223884583
+      },
+      "shared_evidence": true,
+      "available_cells": 1000086,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 399717,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2125166803598404,
+        "source_hash": 0.225599467754364,
+        "active": 0.21246224641799927
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.03748331964015961,
+        "source_hash": 0.024400532245635986,
+        "active": 0.03753775358200073
+      },
+      "shared_evidence": true,
+      "available_cells": 1001182,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 2,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 400726,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.19746312499046326,
+        "source_hash": 0.2181026190519333,
+        "active": 0.19746312499046326
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.05253687500953674,
+        "source_hash": 0.03189738094806671,
+        "active": 0.05253687500953674
+      },
+      "shared_evidence": true,
+      "available_cells": 1000702,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 401735,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.26118871569633484,
+        "source_hash": 0.2528773546218872,
+        "active": 0.26137951016426086
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.011188715696334839,
+        "source_hash": -0.002877354621887207,
+        "active": -0.011379510164260864
+      },
+      "shared_evidence": true,
+      "available_cells": 499982,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 402744,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2537952661514282,
+        "source_hash": 0.2490045130252838,
+        "active": 0.2536335587501526
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.0037952661514282227,
+        "source_hash": 0.0009954869747161865,
+        "active": -0.003633558750152588
+      },
+      "shared_evidence": true,
+      "available_cells": 499958,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 403753,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2463667392730713,
+        "source_hash": 0.2452896237373352,
+        "active": 0.24620114266872406
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.003633260726928711,
+        "source_hash": 0.004710376262664795,
+        "active": 0.00379885733127594
+      },
+      "shared_evidence": true,
+      "available_cells": 499725,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 404762,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2386869341135025,
+        "source_hash": 0.24156662821769714,
+        "active": 0.2387567013502121
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.011313065886497498,
+        "source_hash": 0.008433371782302856,
+        "active": 0.011243298649787903
+      },
+      "shared_evidence": true,
+      "available_cells": 499861,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 405771,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2312982827425003,
+        "source_hash": 0.23780612647533417,
+        "active": 0.23123468458652496
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.018701717257499695,
+        "source_hash": 0.012193873524665833,
+        "active": 0.018765315413475037
+      },
+      "shared_evidence": true,
+      "available_cells": 499769,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 3,
+      "coverage": 0.5,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 406780,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22374959290027618,
+        "source_hash": 0.23406225442886353,
+        "active": 0.22374959290027618
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.026250407099723816,
+        "source_hash": 0.015937745571136475,
+        "active": 0.026250407099723816
+      },
+      "shared_evidence": true,
+      "available_cells": 500008,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 407789,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.31710487604141235,
+        "source_rr": 0.31723642349243164,
+        "source_hash": 0.26666951179504395,
+        "active": 0.31710487604141235
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": -0.06710487604141235,
+        "source_rr": -0.06723642349243164,
+        "source_hash": -0.016669511795043945,
+        "active": -0.06710487604141235
+      },
+      "shared_evidence": true,
+      "available_cells": 3001412,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 408798,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.27243223786354065,
+        "source_rr": 0.272418737411499,
+        "source_hash": 0.24433524906635284,
+        "active": 0.27243223786354065
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": -0.02243223786354065,
+        "source_rr": -0.022418737411499023,
+        "source_hash": 0.005664750933647156,
+        "active": -0.02243223786354065
+      },
+      "shared_evidence": true,
+      "available_cells": 3001040,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 409807,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.22760353982448578,
+        "source_rr": 0.22743627429008484,
+        "source_hash": 0.22193515300750732,
+        "active": 0.22760353982448578
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.02239646017551422,
+        "source_rr": 0.02256372570991516,
+        "source_hash": 0.028064846992492676,
+        "active": 0.02239646017551422
+      },
+      "shared_evidence": true,
+      "available_cells": 2998508,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 410816,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.18239738047122955,
+        "source_rr": 0.1825287789106369,
+        "source_hash": 0.19932003319263458,
+        "active": 0.18239738047122955
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.06760261952877045,
+        "source_rr": 0.0674712210893631,
+        "source_hash": 0.05067996680736542,
+        "active": 0.06760261952877045
+      },
+      "shared_evidence": true,
+      "available_cells": 3000652,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 411825,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.137378990650177,
+        "source_rr": 0.1374569833278656,
+        "source_hash": 0.17681759595870972,
+        "active": 0.137378990650177
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.112621009349823,
+        "source_rr": 0.1125430166721344,
+        "source_hash": 0.07318240404129028,
+        "active": 0.112621009349823
+      },
+      "shared_evidence": true,
+      "available_cells": 2999448,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 0,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 412834,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.09267304092645645,
+        "source_rr": 0.09267304092645645,
+        "source_hash": 0.15448005497455597,
+        "active": 0.09267304092645645
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.15732695907354355,
+        "source_rr": 0.15732695907354355,
+        "source_hash": 0.09551994502544403,
+        "active": 0.15732695907354355
+      },
+      "shared_evidence": true,
+      "available_cells": 2996704,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 413843,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.30059099197387695,
+        "source_hash": 0.2626131474971771,
+        "active": 0.30052515864372253
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.05059099197387695,
+        "source_hash": -0.012613147497177124,
+        "active": -0.050525158643722534
+      },
+      "shared_evidence": true,
+      "available_cells": 2248782,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 414852,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2670143246650696,
+        "source_hash": 0.24591974914073944,
+        "active": 0.26712456345558167
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.01701432466506958,
+        "source_hash": 0.004080250859260559,
+        "active": -0.017124563455581665
+      },
+      "shared_evidence": true,
+      "available_cells": 2247561,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 415861,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23312591016292572,
+        "source_hash": 0.2289671152830124,
+        "active": 0.23325009644031525
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.01687408983707428,
+        "source_hash": 0.02103288471698761,
+        "active": 0.016749903559684753
+      },
+      "shared_evidence": true,
+      "available_cells": 2250300,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 416870,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.19944655895233154,
+        "source_hash": 0.212079718708992,
+        "active": 0.19945572316646576
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.05055344104766846,
+        "source_hash": 0.037920281291007996,
+        "active": 0.05054427683353424
+      },
+      "shared_evidence": true,
+      "available_cells": 2248557,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 417879,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.16564428806304932,
+        "source_hash": 0.19512806832790375,
+        "active": 0.165570929646492
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.08435571193695068,
+        "source_hash": 0.05487193167209625,
+        "active": 0.084429070353508
+      },
+      "shared_evidence": true,
+      "available_cells": 2250207,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 1,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 418888,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.13182491064071655,
+        "source_hash": 0.17825084924697876,
+        "active": 0.13182491064071655
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.11817508935928345,
+        "source_hash": 0.07174915075302124,
+        "active": 0.11817508935928345
+      },
+      "shared_evidence": true,
+      "available_cells": 2250954,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 419897,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.28373661637306213,
+        "source_hash": 0.2584713101387024,
+        "active": 0.2838141918182373
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.033736616373062134,
+        "source_hash": -0.008471310138702393,
+        "active": -0.033814191818237305
+      },
+      "shared_evidence": true,
+      "available_cells": 1499692,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 420906,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.26119816303253174,
+        "source_hash": 0.2471887469291687,
+        "active": 0.2612519860267639
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.011198163032531738,
+        "source_hash": 0.002811253070831299,
+        "active": -0.011251986026763916
+      },
+      "shared_evidence": true,
+      "available_cells": 1499956,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 421915,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23865753412246704,
+        "source_hash": 0.23592934012413025,
+        "active": 0.23874841630458832
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.011342465877532959,
+        "source_hash": 0.014070659875869751,
+        "active": 0.011251583695411682
+      },
+      "shared_evidence": true,
+      "available_cells": 1501310,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 422924,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.21629759669303894,
+        "source_hash": 0.22468301653862,
+        "active": 0.21624599397182465
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.03370240330696106,
+        "source_hash": 0.025316983461380005,
+        "active": 0.033754006028175354
+      },
+      "shared_evidence": true,
+      "available_cells": 1500442,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 423933,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.19368483126163483,
+        "source_hash": 0.21342633664608002,
+        "active": 0.19371919333934784
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.05631516873836517,
+        "source_hash": 0.03657366335391998,
+        "active": 0.05628080666065216
+      },
+      "shared_evidence": true,
+      "available_cells": 1499244,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 2,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 424942,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.17121240496635437,
+        "source_hash": 0.2021646648645401,
+        "active": 0.17121240496635437
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.07878759503364563,
+        "source_hash": 0.0478353351354599,
+        "active": 0.07878759503364563
+      },
+      "shared_evidence": true,
+      "available_cells": 1500716,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 425951,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2668859362602234,
+        "source_hash": 0.25425100326538086,
+        "active": 0.26693931221961975
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.01688593626022339,
+        "source_hash": -0.004251003265380859,
+        "active": -0.01693931221961975
+      },
+      "shared_evidence": true,
+      "available_cells": 749978,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 426960,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2555955946445465,
+        "source_hash": 0.24856260418891907,
+        "active": 0.25556111335754395
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.005595594644546509,
+        "source_hash": 0.0014373958110809326,
+        "active": -0.005561113357543945
+      },
+      "shared_evidence": true,
+      "available_cells": 749857,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 427969,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.244264617562294,
+        "source_hash": 0.24301384389400482,
+        "active": 0.2444513738155365
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.005735382437705994,
+        "source_hash": 0.006986156105995178,
+        "active": 0.005548626184463501
+      },
+      "shared_evidence": true,
+      "available_cells": 748771,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 428978,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2331412136554718,
+        "source_hash": 0.23733755946159363,
+        "active": 0.23311211168766022
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.016858786344528198,
+        "source_hash": 0.012662440538406372,
+        "active": 0.016887888312339783
+      },
+      "shared_evidence": true,
+      "available_cells": 749954,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 429987,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2219136506319046,
+        "source_hash": 0.23174405097961426,
+        "active": 0.22192354500293732
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.028086349368095398,
+        "source_hash": 0.018255949020385742,
+        "active": 0.028076454997062683
+      },
+      "shared_evidence": true,
+      "available_cells": 749818,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 3,
+      "coverage": 0.75,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 430996,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.21059644222259521,
+        "source_hash": 0.2260764092206955,
+        "active": 0.21059644222259521
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.039403557777404785,
+        "source_hash": 0.023923590779304504,
+        "active": 0.039403557777404785
+      },
+      "shared_evidence": true,
+      "available_cells": 750544,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 432005,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.3401002287864685,
+        "source_rr": 0.33964377641677856,
+        "source_hash": 0.2725500762462616,
+        "active": 0.3401002287864685
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": -0.0901002287864685,
+        "source_rr": -0.08964377641677856,
+        "source_hash": -0.022550076246261597,
+        "active": -0.0901002287864685
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 433014,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.2799820005893707,
+        "source_rr": 0.2800717055797577,
+        "source_hash": 0.2424909770488739,
+        "active": 0.2799820005893707
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": -0.029982000589370728,
+        "source_rr": -0.03007170557975769,
+        "source_hash": 0.007509022951126099,
+        "active": -0.029982000589370728
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 434023,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.2198866307735443,
+        "source_rr": 0.22028203308582306,
+        "source_hash": 0.2124432772397995,
+        "active": 0.2198866307735443
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.03011336922645569,
+        "source_rr": 0.02971796691417694,
+        "source_hash": 0.0375567227602005,
+        "active": 0.03011336922645569
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 435032,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.15993641316890717,
+        "source_rr": 0.15972252190113068,
+        "source_hash": 0.1824682056903839,
+        "active": 0.15993641316890717
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.09006358683109283,
+        "source_rr": 0.09027747809886932,
+        "source_hash": 0.06753179430961609,
+        "active": 0.09006358683109283
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 436041,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.09997659921646118,
+        "source_rr": 0.10018045455217361,
+        "source_hash": 0.15248829126358032,
+        "active": 0.09997659921646118
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.15002340078353882,
+        "source_rr": 0.14981954544782639,
+        "source_hash": 0.09751170873641968,
+        "active": 0.15002340078353882
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 0,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 437050,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.03999999910593033,
+        "source_rr": 0.03999999910593033,
+        "source_hash": 0.12250000983476639,
+        "active": 0.03999999910593033
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.21000000089406967,
+        "source_rr": 0.21000000089406967,
+        "source_hash": 0.1274999901652336,
+        "active": 0.21000000089406967
+      },
+      "shared_evidence": true,
+      "available_cells": 4000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 438059,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.31753796339035034,
+        "source_hash": 0.26669228076934814,
+        "active": 0.3171346187591553
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.06753796339035034,
+        "source_hash": -0.016692280769348145,
+        "active": -0.06713461875915527
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 439068,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2722976803779602,
+        "source_hash": 0.24437791109085083,
+        "active": 0.27250587940216064
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.022297680377960205,
+        "source_hash": 0.00562208890914917,
+        "active": -0.022505879402160645
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 440077,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22758521139621735,
+        "source_hash": 0.22183921933174133,
+        "active": 0.22742846608161926
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.022414788603782654,
+        "source_hash": 0.028160780668258667,
+        "active": 0.022571533918380737
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 441086,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.1824626624584198,
+        "source_hash": 0.1993281990289688,
+        "active": 0.18240641057491302
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0675373375415802,
+        "source_hash": 0.05067180097103119,
+        "active": 0.06759358942508698
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 442095,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.13744869828224182,
+        "source_hash": 0.17689797282218933,
+        "active": 0.1375458985567093
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.11255130171775818,
+        "source_hash": 0.07310202717781067,
+        "active": 0.11245410144329071
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 1,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 443104,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.0924999937415123,
+        "source_hash": 0.15437501668930054,
+        "active": 0.0924999937415123
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.1575000062584877,
+        "source_hash": 0.09562498331069946,
+        "active": 0.1575000062584877
+      },
+      "shared_evidence": true,
+      "available_cells": 3000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 444113,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.29506993293762207,
+        "source_hash": 0.2611926794052124,
+        "active": 0.29488539695739746
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.04506993293762207,
+        "source_hash": -0.011192679405212402,
+        "active": -0.04488539695739746
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 445122,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.265007346868515,
+        "source_hash": 0.2461908906698227,
+        "active": 0.26488181948661804
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.015007346868515015,
+        "source_hash": 0.003809109330177307,
+        "active": -0.014881819486618042
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 446131,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.23509810864925385,
+        "source_hash": 0.23125000298023224,
+        "active": 0.23500001430511475
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.014901891350746155,
+        "source_hash": 0.01874999701976776,
+        "active": 0.014999985694885254
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 447140,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2048114538192749,
+        "source_hash": 0.21621295809745789,
+        "active": 0.20492590963840485
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0451885461807251,
+        "source_hash": 0.033787041902542114,
+        "active": 0.045074090361595154
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 448149,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.1749485582113266,
+        "source_hash": 0.2012694925069809,
+        "active": 0.17503900825977325
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.0750514417886734,
+        "source_hash": 0.048730507493019104,
+        "active": 0.07496099174022675
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 2,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 449158,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.14500001072883606,
+        "source_hash": 0.1862500011920929,
+        "active": 0.14500001072883606
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.10499998927116394,
+        "source_hash": 0.0637499988079071,
+        "active": 0.10499998927116394
+      },
+      "shared_evidence": true,
+      "available_cells": 2000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.5,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 450167,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.27248966693878174,
+        "source_hash": 0.2555706202983856,
+        "active": 0.27239125967025757
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.02248966693878174,
+        "source_hash": -0.00557062029838562,
+        "active": -0.02239125967025757
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.6,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 451176,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.25759872794151306,
+        "source_hash": 0.24809950590133667,
+        "active": 0.2574490010738373
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": -0.0075987279415130615,
+        "source_hash": 0.00190049409866333,
+        "active": -0.00744900107383728
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.7,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 452185,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.2424701601266861,
+        "source_hash": 0.24068935215473175,
+        "active": 0.24262872338294983
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.007529839873313904,
+        "source_hash": 0.00931064784526825,
+        "active": 0.007371276617050171
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.8,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 453194,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.22757065296173096,
+        "source_hash": 0.23316355049610138,
+        "active": 0.2275771051645279
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.022429347038269043,
+        "source_hash": 0.01683644950389862,
+        "active": 0.022422894835472107
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 0.9,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 454203,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.21251019835472107,
+        "source_hash": 0.22563421726226807,
+        "active": 0.21251845359802246
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.03748980164527893,
+        "source_hash": 0.024365782737731934,
+        "active": 0.03748154640197754
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    },
+    {
+      "rho": 1.0,
+      "delay_checkpoints": 3,
+      "coverage": 1.0,
+      "p_high": 0.8,
+      "n_targets": 1000000,
+      "checkpoints": 4,
+      "seed": 455212,
+      "method_losses": {
+        "fixed": 0.25,
+        "no_extra": 0.25,
+        "source_rr": 0.19750000536441803,
+        "source_hash": 0.21812500059604645,
+        "active": 0.19750000536441803
+      },
+      "gain_fixed_minus_method": {
+        "fixed": 0.0,
+        "no_extra": 0.0,
+        "source_rr": 0.05249999463558197,
+        "source_hash": 0.03187499940395355,
+        "active": 0.05249999463558197
+      },
+      "shared_evidence": true,
+      "available_cells": 1000000,
+      "scored_cells": 4000000
+    }
+  ]
+}

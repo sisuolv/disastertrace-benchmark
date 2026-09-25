@@ -1,0 +1,216 @@
+{
+  "schema": "disastertrace.v21.synthetic_shared_delay_surface.aggregate.v1",
+  "source_schema": "disastertrace.v21.synthetic_shared_delay_surface.v1",
+  "evidence_role": "SYNTHETIC_MULTI_TARGET_SHARED_EVIDENCE_DIAGNOSTIC",
+  "synthetic": true,
+  "empirical": false,
+  "replicas": [
+    {
+      "replica": "5090a",
+      "device": "NVIDIA GeForce RTX 5090",
+      "torch": "2.8.0a0+5228986c39.nv25.06",
+      "n_per_cell": 1000000,
+      "cells": 144,
+      "seed": 310925
+    },
+    {
+      "replica": "5090b",
+      "device": "NVIDIA GeForce RTX 5090",
+      "torch": "2.8.0a0+5228986c39.nv25.06",
+      "n_per_cell": 1000000,
+      "cells": 144,
+      "seed": 320925
+    },
+    {
+      "replica": "h100_share",
+      "device": "NVIDIA H100 80GB HBM3",
+      "torch": "2.3.0a0+6ddf5cf85e.nv24.04",
+      "n_per_cell": 1000000,
+      "cells": 144,
+      "seed": 330925
+    }
+  ],
+  "total_rows": 432,
+  "methods": [
+    "fixed",
+    "no_extra",
+    "source_rr",
+    "source_hash",
+    "active"
+  ],
+  "aggregate": {
+    "all": {
+      "cells": 432,
+      "mean_active_minus_best_nonactive": 0.006160525294641654,
+      "median_active_minus_best_nonactive": 2.2202730178833008e-05,
+      "wins_active": 31,
+      "ties": 158,
+      "losses_active": 243
+    },
+    "rho": {
+      "0.5": {
+        "cells": 72,
+        "mean_active_minus_best_nonactive": 0.026344415214326646,
+        "median_active_minus_best_nonactive": 0.016942083835601807,
+        "wins_active": 0,
+        "ties": 0,
+        "losses_active": 72
+      },
+      "0.6": {
+        "cells": 72,
+        "mean_active_minus_best_nonactive": 0.008806974937518438,
+        "median_active_minus_best_nonactive": 0.002434737980365753,
+        "wins_active": 0,
+        "ties": 17,
+        "losses_active": 55
+      },
+      "0.7": {
+        "cells": 72,
+        "mean_active_minus_best_nonactive": 0.001787844838367568,
+        "median_active_minus_best_nonactive": 0.0005886554718017578,
+        "wins_active": 0,
+        "ties": 16,
+        "losses_active": 56
+      },
+      "0.8": {
+        "cells": 72,
+        "mean_active_minus_best_nonactive": 1.3026512331432767e-05,
+        "median_active_minus_best_nonactive": 0.0,
+        "wins_active": 16,
+        "ties": 25,
+        "losses_active": 31
+      },
+      "0.9": {
+        "cells": 72,
+        "mean_active_minus_best_nonactive": 1.0890265305836996e-05,
+        "median_active_minus_best_nonactive": 0.0,
+        "wins_active": 15,
+        "ties": 28,
+        "losses_active": 29
+      },
+      "1.0": {
+        "cells": 72,
+        "mean_active_minus_best_nonactive": 0.0,
+        "median_active_minus_best_nonactive": 0.0,
+        "wins_active": 0,
+        "ties": 72,
+        "losses_active": 0
+      }
+    },
+    "delay_checkpoints": {
+      "0": {
+        "cells": 108,
+        "mean_active_minus_best_nonactive": 0.009874365395969815,
+        "median_active_minus_best_nonactive": 9.049475193023682e-05,
+        "wins_active": 0,
+        "ties": 47,
+        "losses_active": 61
+      },
+      "1": {
+        "cells": 108,
+        "mean_active_minus_best_nonactive": 0.007375951304479882,
+        "median_active_minus_best_nonactive": 1.4036893844604492e-05,
+        "wins_active": 13,
+        "ties": 38,
+        "losses_active": 57
+      },
+      "2": {
+        "cells": 108,
+        "mean_active_minus_best_nonactive": 0.004923681142153563,
+        "median_active_minus_best_nonactive": 1.728534698486328e-05,
+        "wins_active": 9,
+        "ties": 38,
+        "losses_active": 61
+      },
+      "3": {
+        "cells": 108,
+        "mean_active_minus_best_nonactive": 0.0024681033359633554,
+        "median_active_minus_best_nonactive": 1.4171004295349121e-05,
+        "wins_active": 9,
+        "ties": 35,
+        "losses_active": 64
+      }
+    },
+    "coverage": {
+      "0.5": {
+        "cells": 144,
+        "mean_active_minus_best_nonactive": 0.004115106641418404,
+        "median_active_minus_best_nonactive": 2.8423964977264404e-05,
+        "wins_active": 11,
+        "ties": 53,
+        "losses_active": 80
+      },
+      "0.75": {
+        "cells": 144,
+        "mean_active_minus_best_nonactive": 0.0061520180768436855,
+        "median_active_minus_best_nonactive": 1.4662742614746094e-05,
+        "wins_active": 12,
+        "ties": 50,
+        "losses_active": 82
+      },
+      "1.0": {
+        "cells": 144,
+        "mean_active_minus_best_nonactive": 0.008214451165662872,
+        "median_active_minus_best_nonactive": 4.242360591888428e-05,
+        "wins_active": 8,
+        "ties": 55,
+        "losses_active": 81
+      }
+    },
+    "p_high": {
+      "0.65": {
+        "cells": 216,
+        "mean_active_minus_best_nonactive": 0.0017756549296555695,
+        "median_active_minus_best_nonactive": 0.0,
+        "wins_active": 0,
+        "ties": 113,
+        "losses_active": 103
+      },
+      "0.8": {
+        "cells": 216,
+        "mean_active_minus_best_nonactive": 0.010545395659627739,
+        "median_active_minus_best_nonactive": 0.0005625486373901367,
+        "wins_active": 31,
+        "ties": 45,
+        "losses_active": 140
+      }
+    }
+  },
+  "method_relative_to_fixed": {
+    "fixed": {
+      "mean_minus_fixed_loss": 0.0,
+      "wins_vs_fixed": 0,
+      "cells": 432
+    },
+    "no_extra": {
+      "mean_minus_fixed_loss": -0.010546298973538258,
+      "wins_vs_fixed": 81,
+      "cells": 432
+    },
+    "source_rr": {
+      "mean_minus_fixed_loss": -0.02637052951656558,
+      "wins_vs_fixed": 324,
+      "cells": 432
+    },
+    "source_hash": {
+      "mean_minus_fixed_loss": -0.02461546042037231,
+      "wins_vs_fixed": 360,
+      "cells": 432
+    },
+    "active": {
+      "mean_minus_fixed_loss": -0.026375247010340292,
+      "wins_vs_fixed": 324,
+      "cells": 432
+    }
+  },
+  "interpretation": {
+    "active_vs_fixed": "active improves over fixed in this synthetic signal model",
+    "active_vs_best_nonactive": "active is generally worse than the best non-active arm, chiefly source_rr; this rejects a generic active-superiority claim",
+    "research_decision": "retain active as a conditional policy hypothesis and require cost-matched/reliability-aware baselines before any novelty claim",
+    "real_weather_claim": false,
+    "provider_calls": 0,
+    "outcomes_accessed": false,
+    "holdout_read": false,
+    "quarantine_read": false
+  }
+}

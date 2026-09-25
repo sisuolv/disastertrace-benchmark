@@ -19,7 +19,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-from disastertrace.monitoring_v1.evidence_qualification_v18 import qualify_stream
+from disastertrace.monitoring_v1.evidence_qualification_v18 import comparison_content_only, qualify_stream
 from disastertrace.monitoring_v1.providers.aviation import day_time, visibility as parse_visibility
 from disastertrace.monitoring_v1.targets import utc_us
 
@@ -103,14 +103,24 @@ def _conditional_window(raw: str, issue: datetime) -> tuple[datetime, datetime] 
     return start, end
 
 
+_CONDITIONAL_OPERATORS = {"TEMPO", "PROB30", "PROB40", "PROB30_TEMPO", "PROB40_TEMPO"}
+
+
 def _group_operator(row: dict[str, Any]) -> tuple[str, float | None]:
-    """Retain prevailing/conditional TAF group semantics from archive rows."""
+    """Retain prevailing/conditional TAF group semantics from archive rows.
+
+    A "PROBnn TEMPO ..." group is a compound construct -- a probability
+    qualifying a temporary condition, not a plain PROBnn -- and must not be
+    collapsed to "PROBnn" alone (Track A item 4, v20 plan): that silently
+    dropped the TEMPO qualifier for every such group.
+    """
 
     raw = row.get("raw", "").strip()
+    is_tempo_row = "TEMPO" in raw or row.get("is_tempo") == "True"
     if raw.startswith("PROB30"):
-        return "PROB30", 0.30
+        return ("PROB30_TEMPO" if is_tempo_row else "PROB30"), 0.30
     if raw.startswith("PROB40"):
-        return "PROB40", 0.40
+        return ("PROB40_TEMPO" if is_tempo_row else "PROB40"), 0.40
     if raw.startswith("TEMPO") or row.get("is_tempo") == "True":
         return "TEMPO", None
     if raw.startswith("BECMG"):
@@ -143,12 +153,24 @@ def _has_cancellation_text(rows: list[dict[str, Any]]) -> bool:
 
 
 def _periods_content_hash(periods: list[dict[str, Any]]) -> str:
-    canonical = json.dumps(periods, sort_keys=True, default=str)
+    """Hash for duplicate-detection comparison only, via the same
+    comparison_content_only() evidence_qualification_v18.qualify_evidence
+    uses (Track B-0, v20 plan) -- this hash previously included the whole
+    raw periods list, so two periods with identical weather content but a
+    flipped is_amendment/ftype went undetected as a duplicate. Comparison-
+    only stripping, not weather_content_only(): this hash is never shown to
+    an agent, so it may be stricter than what an agent actually sees.
+    """
+    canonical = json.dumps(comparison_content_only(periods), sort_keys=True, default=str)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 def _classify_relation_status(
-    *, rows: list[dict[str, Any]], periods: list[dict[str, Any]], previous_hash: str | None
+    *,
+    rows: list[dict[str, Any]],
+    periods: list[dict[str, Any]],
+    previous_hash: str | None,
+    cancellation_only_rows: list[dict[str, Any]] = (),
 ) -> str:
     """Classify one product against the immediately preceding product at the
     same station (within one ``_load_products`` call, i.e. one station-month).
@@ -162,9 +184,20 @@ def _classify_relation_status(
     ``"conflict"`` is deliberately never produced here -- it is a qualify_evidence-
     level signal for cross-source contradictions, not something this per-source
     loader is positioned to detect.
+
+    ``cancellation_only_rows`` (Track A item 2, v20 plan) covers rows that
+    share this product_id but have no ``fx_valid`` and so contribute nothing
+    to ``periods`` -- their raw text still needs to reach the cancellation
+    check (a genuine CNL row may itself have no period), but ONLY that
+    check: they must not also feed the ``is_amendment`` revision check below,
+    since a periodless row's flag describes an event this function has no
+    period to attach it to, and real products keep ``is_amendment``
+    consistent across their own period-bearing rows regardless (independent
+    review, corrected after the first version of this fix merged them into
+    both checks).
     """
 
-    if _has_cancellation_text(rows):
+    if _has_cancellation_text(rows) or _has_cancellation_text(list(cancellation_only_rows)):
         return "cancellation"
     current_hash = _periods_content_hash(periods)
     if previous_hash is not None and current_hash == previous_hash:
@@ -176,10 +209,34 @@ def _classify_relation_status(
 
 def _load_products(data_root: Path, station: str, month: str, run_id: str) -> list[dict[str, Any]]:
     grouped: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
+    # Rows that have a product_id but no fx_valid carry no forecast period,
+    # so they cannot contribute to `periods`. What this closes (Track A item
+    # 2, v20 plan): a product that has SOME period-bearing rows AND a
+    # periodless row -- that periodless row's raw text now still reaches the
+    # cancellation check via cancellation_only_rows below, instead of being
+    # silently dropped. What this does NOT close, disclosed not fixed: a
+    # product whose rows are ALL periodless (a genuine standalone
+    # zero-period cancellation bulletin) never produces any `periods`, so
+    # `if not periods: continue` below still makes it invisible entirely --
+    # closing that needs a zero-period product concept, out of this item's
+    # scope. Step-0 characterization of the real readset found 0/12,072 rows
+    # missing fx_valid and 0 CNL/CNCL/CANCEL hits anywhere -- unexercised by
+    # real data so far, but a real gap in the code, not just a hypothetical
+    # one. (Separately, unrelated to this fix: one row in KJFK_202503.body
+    # has no product_id at all -- the file is truncated mid-row -- and is
+    # silently skipped by the `if not row.get("product_id")` check above;
+    # this is a pre-existing archive completeness issue, not caused by this
+    # change, disclosed here since it was found while characterizing this
+    # exact code path.)
+    periodless: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
     raw, body_identity = _read_verified_body(data_root, station, month, run_id)
     for row in csv.DictReader(io.StringIO(raw.decode("utf-8"))):
-        if row.get("product_id") and row.get("fx_valid"):
+        if not row.get("product_id"):
+            continue
+        if row.get("fx_valid"):
             grouped[row["product_id"]].append(row)
+        else:
+            periodless[row["product_id"]].append(row)
     products = []
     previous_content_hash: str | None = None
     for product_id, rows in sorted(grouped.items(), key=lambda item: _issue_from_product(item[0])):
@@ -208,7 +265,7 @@ def _load_products(data_root: Path, station: str, month: str, run_id: str) -> li
                 )
                 if next_prevailing is not None:
                     end = next_prevailing
-                elif index + 1 < len(rows) and operators[index] in {"TEMPO", "PROB30", "PROB40"}:
+                elif index + 1 < len(rows) and operators[index] in _CONDITIONAL_OPERATORS:
                     # An unusual conditional row without an explicit window
                     # remains bounded by the next row, never by an invented
                     # prevailing fact.
@@ -242,7 +299,8 @@ def _load_products(data_root: Path, station: str, month: str, run_id: str) -> li
         if not periods:
             continue
         relation_status = _classify_relation_status(
-            rows=rows, periods=periods, previous_hash=previous_content_hash
+            rows=rows, periods=periods, previous_hash=previous_content_hash,
+            cancellation_only_rows=periodless.get(product_id, []),
         )
         previous_content_hash = _periods_content_hash(periods)
         products.append(
@@ -366,14 +424,20 @@ def build_roster(data_root: Path, *, limit: int, run_id: str) -> dict[str, Any]:
                 break
         if target_start is None:
             continue
-        stream = [
+        covering = [
             product
             for product in products
             if product["valid_start"] <= target_start and product["valid_end"] >= target_end
-        ][:8]
+        ]
+        # Sort chronologically BEFORE capping: `products` here is ordered by
+        # (source_id, issued_at), not time, so capping first could silently
+        # keep a later-issued product over an earlier one purely because its
+        # source_id sorted lower (Track A item 3, v20 plan).
+        covering.sort(key=lambda item: (item["issued_at"], item["available_at"] or 2**63, item["source_id"]))
+        stream = covering[:8]
+        sources_truncated = max(0, len(covering) - 8)
         if len(stream) < 2:
             continue
-        stream.sort(key=lambda item: (item["issued_at"], item["available_at"] or 2**63, item["source_id"]))
         # One fixed future target is judged at T-60/T-40/T-20, and each
         # checkpoint is qualified against its own cutoff.  There is
         # deliberately no episode-level as_of: one decision time shared by
@@ -405,6 +469,7 @@ def build_roster(data_root: Path, *, limit: int, run_id: str) -> dict[str, Any]:
                 "target_end": target_end,
                 "source_count": len(stream),
                 "source_ids": [item["source_id"] for item in stream],
+                "sources_truncated_at_cap": sources_truncated,
                 "availability_basis": "declared_archive_issue_plus_120s_replay_lag",
                 "outcome_status": "NOT_BOUND_G1_SOURCE_ONLY",
                 "checkpoints": checkpoints,
