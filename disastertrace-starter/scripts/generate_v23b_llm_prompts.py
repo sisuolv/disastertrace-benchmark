@@ -9,7 +9,7 @@ import json
 import re
 from pathlib import Path
 
-YEAR_MONTH = re.compile(r"20\d{2}[-/]?\d{2}")
+YEAR_MONTH = re.compile(r"20\d{2}[-/](?:0[1-9]|1[0-2])(?:\b|$)")
 
 
 def _age_minutes(available_at_us: int, cutoff_us: int) -> float:
