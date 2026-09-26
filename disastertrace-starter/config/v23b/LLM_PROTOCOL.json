@@ -15,9 +15,10 @@
       "resource": "spot_5090"
     },
     "M2": {
-      "coverage": "sha256(target_id) lowest two hex digits == 00",
+      "coverage": "25% target sample under the modulo-4 rule",
       "path": "/mnt/afs/260010168/models/Qwen3.8-27B-ms-20260914",
-      "resource": "reserved_H100"
+      "resource": "reserved_H100",
+      "selection": "int(sha256(target_id),16) % 4 == 0 (two least-significant hash bits are zero; 25% target sample)"
     }
   },
   "offline": true,
