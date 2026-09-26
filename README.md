@@ -1,5 +1,14 @@
 # DisasterTrace：LLM 极端天气证据推理评测审查包
 
+## 最新：v22 计划独立复查（2026-09-26）
+
+v22 计划**尚未执行**，等待研究者审核。给 ChatGPT 的阅读入口见 [审计索引](disastertrace-starter/docs/audits/README.md)，其中包括两份独立复查：
+
+- [Claude Code 独立复查](disastertrace-starter/docs/audits/INDEPENDENT_REVIEW_V22_CLAUDE_20260926_CN.md)
+- [Codex v22 计划复核](disastertrace-starter/docs/audits/INDEPENDENT_REVIEW_V22_PLAN_20260926_CN.md)
+
+当前实现基线是 [v21 release](disastertrace-starter/docs/V21_RELEASE_20260925.md)。下文 V6 及更早内容属于历史阶段。
+
 ## 最新复查：V6 数据选择与多灾种可行性核验（2026-09-11）
 
 请从 **[给 ChatGPT Pro 的 V6 复查任务](publication/v6_review_20260911/REVIEW_FOR_CHATGPT_PRO_CN.md)** 开始，

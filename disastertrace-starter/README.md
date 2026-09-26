@@ -1,5 +1,13 @@
 # DisasterTrace starter scaffold
 
+## Latest independent reviews (2026-09-26)
+
+The v22 plan has not been executed yet; it is waiting for researcher review.
+Start with the [audit index](docs/audits/README.md), which links the
+[Claude Code review](docs/audits/INDEPENDENT_REVIEW_V22_CLAUDE_20260926_CN.md) and the
+[Codex v22-plan review](docs/audits/INDEPENDENT_REVIEW_V22_PLAN_20260926_CN.md).
+The v21 release notes below describe the current implementation baseline.
+
 ## Latest v21 release
 
 The latest organized handoff is [v21 release 2026-09-25](docs/V21_RELEASE_20260925.md).

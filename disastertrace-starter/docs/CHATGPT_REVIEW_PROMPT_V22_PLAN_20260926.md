@@ -9,19 +9,20 @@
 请先读取：
 
 1. `docs/audits/INDEPENDENT_REVIEW_V22_PLAN_20260926_CN.md`
-2. `docs/audits/packages/CHATGPT_PRO_REVIEW_AND_CODEX_PLAN_V22_20260925.zip`（解压后按 README 指定顺序读取）
-3. `docs/audits/INDEPENDENT_REVIEW_V21_20260926_CN.md`（仅作为 v21 implementation evidence 的历史复查）
-4. `docs/V21_RELEASE_20260925.md`
-5. `artifacts/v21_execution_20260925_04/PROTOCOL_GATE_V4.json`
-6. `artifacts/v21_execution_20260925_04/CLAIM_EVIDENCE_TABLE_V4.md`
-7. `artifacts/v21_execution_20260925_04/HANDOFF_REPORT_V4.md`
-8. `src/disastertrace/monitoring_v1/natural_track_v18.py`
-9. `src/disastertrace/monitoring_v1/natural_selector_policy_v21.py`
-10. `src/disastertrace/monitoring_v1/active_policy_v21.py`
-11. `src/disastertrace/monitoring_v1/interventions_v18.py`
-12. `scripts/run_v21_real_dev_source_bridge.py`
-13. `scripts/run_v21_real_dev_deterministic_score.py`
-14. `scripts/run_v21_cost_matched_adaptive_surface.py`
+2. `docs/audits/INDEPENDENT_REVIEW_V22_CLAUDE_20260926_CN.md`（第二份独立复查；与第 1 项不一致处需逐条裁决）
+3. `docs/audits/packages/CHATGPT_PRO_REVIEW_AND_CODEX_PLAN_V22_20260925.zip`（解压后按 README 指定顺序读取）
+4. `docs/audits/INDEPENDENT_REVIEW_V21_20260926_CN.md`（仅作为 v21 implementation evidence 的历史复查）
+5. `docs/V21_RELEASE_20260925.md`
+6. `artifacts/v21_execution_20260925_04/PROTOCOL_GATE_V4.json`
+7. `artifacts/v21_execution_20260925_04/CLAIM_EVIDENCE_TABLE_V4.md`
+8. `artifacts/v21_execution_20260925_04/HANDOFF_REPORT_V4.md`
+9. `src/disastertrace/monitoring_v1/natural_track_v18.py`
+10. `src/disastertrace/monitoring_v1/natural_selector_policy_v21.py`
+11. `src/disastertrace/monitoring_v1/active_policy_v21.py`
+12. `src/disastertrace/monitoring_v1/interventions_v18.py`
+13. `scripts/run_v21_real_dev_source_bridge.py`
+14. `scripts/run_v21_real_dev_deterministic_score.py`
+15. `scripts/run_v21_cost_matched_adaptive_surface.py`
 
 请独立回答：
 
@@ -34,6 +35,12 @@
 - synthetic GPU advantage 是否由 generator 直接构造；
 - artifact HEAD、GitHub HEAD、worktree 和 reproduction 文档是否一致；
 - 当前是否有资格启动 provider、holdout 或 novelty claim。
+- 真实开发集每个检查点的可见合法来源数是多少，earliest/hash/active 打平是否为构造必然；
+- 目标窗口起点是否被锚定在 TAF 签发时刻（IEM CSV 基础组的 fx_valid）；
+- TAF 规则（0.8/0.2 映射）相对气候态和常数 0 的 Brier；
+- shared-delay 曲面中的 "active" 是否真的自适应，以及 SHARED_DELAY_FINDINGS 的归因是否正确；
+
+对 Claude 与 Codex 两份复查报告的分歧，逐条给出裁决和证据。
 
 每条 finding 要给出：严重性、精确 `file:line`、`STATIC_CONFIRMED` 或 `PLAUSIBLE_UNVERIFIED`、复现方式、修复建议和停止条件。必须区分工程正确性、程序执行成功、方法有效性和研究 novelty/value。
 
