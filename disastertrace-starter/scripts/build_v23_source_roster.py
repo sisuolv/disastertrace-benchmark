@@ -47,6 +47,7 @@ from disastertrace.revision_v1.v23_source_features import (
     taf_content_features,
     taf_event_flag,
     validate_source_only_row,
+    history_incomplete,
 )
 
 DATA_ROOT = Path("/mnt/afs/260010168/extreme_weather_benchmark/data_real_v16").resolve()
@@ -248,6 +249,7 @@ def build_roster(output: Path) -> dict:
             latest = latest_visible_metar(observations, cutoff, available_at=metar_available_at)
             metar_flag = metar_event_flag(_interval_dict(latest.visibility) if latest is not None else None)
             month_end = source_gap_month_end(month, _day_from_us(target["physical_start_us"]))
+            target_history_incomplete = history_incomplete(target["physical_start_us"], month)
             age_hours = metar_age_hours(
                 observation_us=latest.observation_time if latest is not None else None,
                 cutoff_us=cutoff,
@@ -274,7 +276,7 @@ def build_roster(output: Path) -> dict:
             layer_counts["current_authority"] += int(selected_record is not None and current.get("status") == "active")
             layer_counts["product_family"] += len({p.get("product_series", "default") for p in products if p["issued_at"] + 120_000_000 <= cutoff})
             for label, exclude in (
-                ("exclude_history_incomplete", target["history_incomplete"]),
+                ("exclude_history_incomplete", target_history_incomplete),
                 ("exclude_month_end_stale", month_end_stale),
             ):
                 if not exclude:
@@ -285,7 +287,7 @@ def build_roster(output: Path) -> dict:
             row = {
                 **target,
                 **checkpoint,
-                "history_incomplete": target["physical_start_us"] < _us(f"{month}-01T00:00:00Z") + 36 * 3_600_000_000,
+                "history_incomplete": target_history_incomplete,
                 "source_gap_month_end": month_end,
                 "metar_stale_hours": age_hours,
                 "metar_month_end_stale": month_end_stale,

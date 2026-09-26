@@ -11,6 +11,7 @@ import calendar
 import os
 import subprocess
 from collections.abc import Mapping, Sequence
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -159,6 +160,12 @@ def validate_source_only_row(row: Mapping[str, Any]) -> None:
 def source_gap_month_end(month: str, day: int) -> bool:
     year, month_number = (int(part) for part in month.split("-"))
     return day == calendar.monthrange(year, month_number)[1]
+
+
+def history_incomplete(target_start_us: int, month: str, *, grace_hours: int = 36) -> bool:
+    year, month_number = (int(part) for part in month.split("-"))
+    month_start_us = int(datetime(year, month_number, 1, tzinfo=timezone.utc).timestamp() * 1_000_000)
+    return target_start_us < month_start_us + grace_hours * 3_600_000_000
 
 
 def metar_age_hours(*, observation_us: int | None, cutoff_us: int) -> float | None:

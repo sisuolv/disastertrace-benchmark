@@ -58,6 +58,7 @@ def test_month_end_gap_and_staleness_are_explicit():
     assert roster.source_gap_month_end("2025-01", 30) is False
     assert roster.source_gap_month_end("2025-03", 31) is True
     assert roster.metar_age_hours(observation_us=0, cutoff_us=7_200_000_000) == 2.0
+    assert roster.history_incomplete(0, "2025-01") is True
 
 
 def test_read_contract_and_grid_contract_fail_closed():
