@@ -269,7 +269,7 @@ def build_roster(output: Path) -> dict:
                 gaps["month_end_stale"] += 1
             if month_end:
                 gaps["month_end_rows"] += 1
-            if target["history_incomplete"]:
+            if target_history_incomplete:
                 gaps["history_incomplete"] += 1
             layer_counts["archive_candidate"] += len(products)
             layer_counts["legal_history_visible"] += len(visible_ledger)
