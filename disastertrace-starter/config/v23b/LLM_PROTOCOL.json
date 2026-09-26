@@ -1,0 +1,44 @@
+{
+  "calibration": "raw_and_training_fold_Platt",
+  "decoding": {
+    "greedy": true,
+    "max_new_tokens": 48,
+    "temperature": 0.0
+  },
+  "freeze_before_Y": true,
+  "invalid_output": "training_fold_base_rate_fallback_and_count",
+  "leakage_assertion": "every included source available_at <= cutoff and no target-window observation",
+  "models": {
+    "M1": {
+      "coverage": "all_23808",
+      "path": "/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1",
+      "resource": "spot_5090"
+    },
+    "M2": {
+      "coverage": "sha256(target_id) lowest two hex digits == 00",
+      "path": "/mnt/afs/260010168/models/Qwen3.8-27B-ms-20260914",
+      "resource": "reserved_H100"
+    }
+  },
+  "offline": true,
+  "output_schema": {
+    "p": "number in [0,1]"
+  },
+  "prompt_fields": [
+    "station_icao",
+    "lead_minutes",
+    "relative_target_window",
+    "event_definition",
+    "current_taf_raw",
+    "up_to_three_visible_metar_or_speci_raw_with_age"
+  ],
+  "prompt_forbidden": [
+    "year",
+    "month",
+    "outcome",
+    "future_observation",
+    "target_label"
+  ],
+  "thinking": false,
+  "version": "v23b-llm-1"
+}

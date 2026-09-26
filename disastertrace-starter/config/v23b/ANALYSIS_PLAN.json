@@ -1,0 +1,29 @@
+{
+  "bootstrap": {
+    "refit_each_replicate": true,
+    "replicates": 1000,
+    "sensitivity_block_hours": 48
+  },
+  "cluster": "four-station-shared-UTC-day",
+  "confirmation_status": "not_confirmation; January/March exposed development data only",
+  "decision_rules": {
+    "G_adapt_GO": "L95(G_adapt)>0 and point_estimate>=delta",
+    "G_adapt_STOP": "U95(G_adapt)<delta",
+    "H_role": "STOP_ONLY",
+    "otherwise": "INCONCLUSIVE"
+  },
+  "delta": 0.005,
+  "development_status": "exploratory",
+  "harm_boundary_h": 0.005,
+  "llm_comparison": "D_llm = Q(F_stat, full_information) - Q(LLM), raw and calibrated; paired cluster CI",
+  "quantities": {
+    "G_adapt": "best_fixed_schedule - best_feasible_preregistered_adaptive_policy",
+    "H": "best_fixed_schedule - Y_oracle",
+    "V_fusion": "best_single_source_fixed_schedule - best_fixed_schedule"
+  },
+  "synthetic_controls": {
+    "positive_value": "rev1_section_4_5_G_0.125",
+    "zero_value": "review_support_20260926/j2gate_sim.py"
+  },
+  "version": "v23b-analysis-1"
+}
