@@ -45,6 +45,7 @@ def materialize_grid(
     submissions: Iterable[Mapping[str, Any]],
     *,
     carry_forward: bool = True,
+    expected_methods: Iterable[str] | None = None,
 ) -> list[dict[str, Any]]:
     """Materialize every registered cell and preserve invalid/missing status.
 
@@ -59,6 +60,13 @@ def materialize_grid(
         raise ValueError("A registered grid is required")
     by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
     by_target_method: defaultdict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    expected_method_set = None if expected_methods is None else {
+        str(method) for method in expected_methods
+    }
+    if expected_method_set is not None and not expected_method_set:
+        raise ValueError("expected_methods must not be empty")
+    fallback_by_checkpoint: dict[tuple[str, str, int], float] = {}
+    contract_hash_by_target: dict[str, str] = {}
     for row in regs:
         key = _key(row)
         if key in by_key:
@@ -80,6 +88,18 @@ def materialize_grid(
             raise ValueError("Outcome must be None, 0 or 1")
         row["registered"] = True
         row.setdefault("opportunity_id", "|".join(key))
+        if "event_contract_hash" in row:
+            contract_hash = row["event_contract_hash"]
+            if not isinstance(contract_hash, str) or len(contract_hash) != 64:
+                raise ValueError("event contract hash must be a 64-character string")
+            target_id = str(row["target_id"])
+            previous_hash = contract_hash_by_target.setdefault(target_id, contract_hash)
+            if previous_hash != contract_hash:
+                raise ValueError("event contract hash differs within one target")
+        fallback_key = (str(row["target_id"]), str(row["checkpoint_id"]), int(row["checkpoint_index"]))
+        prior_fallback = fallback_by_checkpoint.setdefault(fallback_key, row["fallback"])
+        if prior_fallback != row["fallback"]:
+            raise ValueError("frozen fallback must be identical across arms")
         by_key[key] = row
         by_target_method[(key[0], key[1])].append(row)
     for rows in by_target_method.values():
@@ -108,6 +128,13 @@ def materialize_grid(
                 row["probability"] = _prob(row["probability"])
             except (KeyError, TypeError, ValueError):
                 status = "invalid"
+                row.pop("probability", None)
+        # A valid payload that was only available after this checkpoint is a
+        # late update.  It must never backfill an earlier cutoff.
+        registration = by_key[key]
+        if status == "valid" and row.get("available_at") is not None and registration.get("cutoff") is not None:
+            if row["available_at"] > registration["cutoff"]:
+                status = "late"
                 row.pop("probability", None)
         row["status"] = status
         current[key] = row
@@ -155,10 +182,16 @@ def score_complete_grid(
     submissions: Iterable[Mapping[str, Any]],
     *,
     carry_forward: bool = True,
+    expected_methods: Iterable[str] | None = None,
 ) -> dict[str, Any]:
     """Score the complete registered grid and report process failures separately."""
 
-    rows = materialize_grid(registrations, submissions, carry_forward=carry_forward)
+    rows = materialize_grid(
+        registrations,
+        submissions,
+        carry_forward=carry_forward,
+        expected_methods=expected_methods,
+    )
     score_rows = []
     for row in rows:
         score = dict(row)
@@ -181,6 +214,19 @@ def score_complete_grid(
         target_methods[target][method].add((int(row["checkpoint_index"]), str(row["checkpoint_id"])))
         target_weights[target].setdefault(method, {})[int(row["checkpoint_index"])] = float(row["score_weight"])
     comparison_eligible = True
+    comparison_exclusion_reason = None
+    expected_method_set = None if expected_methods is None else {
+        str(method) for method in expected_methods
+    }
+    if expected_method_set is not None:
+        observed_methods = {str(row["method"]) for row in rows}
+        if not expected_method_set.issubset(observed_methods):
+            comparison_eligible = False
+            comparison_exclusion_reason = "missing_expected_arm"
+        for target, methods in target_methods.items():
+            if set(methods) != expected_method_set:
+                comparison_eligible = False
+                comparison_exclusion_reason = comparison_exclusion_reason or "missing_expected_arm"
     for methods in target_methods.values():
         rosters = list(methods.values())
         if rosters and any(roster != rosters[0] for roster in rosters[1:]):
@@ -202,6 +248,7 @@ def score_complete_grid(
         "carry_forward": sum(row["prediction_source"] == "carry_forward" for row in rows),
         "fallback": sum(row["prediction_source"] == "fallback" for row in rows),
         "comparison_eligible": comparison_eligible,
+        "comparison_exclusion_reason": comparison_exclusion_reason,
         "report": report,
         "rows": rows,
     }
