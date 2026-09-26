@@ -636,8 +636,9 @@ def compile_afos_taf_stream(
     station: str,
     reference_month: str,
     product_series: str = "default",
+    return_parsed: bool = False,
     **passthrough,
-) -> tuple[list[dict], list[dict]]:
+) -> tuple[list[dict], list[dict]] | tuple[list[dict], list[dict], list[dict]]:
     """Compile an AFOS multi-bulletin TAF stream into ledger-ready evidence packages.
 
     Args:
@@ -696,6 +697,7 @@ def compile_afos_taf_stream(
           reimplement TAF parsing logic.
     """
     evidence_packages: list[dict] = []
+    parsed_records: list[dict] = []
     skipped: list[dict] = []
 
     frames = split_afos_stream(stream_text)
@@ -837,6 +839,14 @@ def compile_afos_taf_stream(
             package["receipt_stream"] = f"{station}:{reference_month}"
 
             evidence_packages.append(package)
+            if return_parsed:
+                parsed_records.append({
+                    "source_id": package["source_id"],
+                    "product": parse_taf(raw_taf_text, station=station, archive_issue=issued_at_iso),
+                    "raw": raw_taf_text,
+                    "frame_index": frame_index,
+                    "package_ref": package,
+                })
 
         except Exception as e:
             skipped.append({
@@ -890,4 +900,12 @@ def compile_afos_taf_stream(
             f"{len(set(all_sids))} unique"
         )
 
+    if return_parsed:
+        # Keep the parsed sidecar aligned with the final package source_id after
+        # receipt-order collision suffixing.  The default two-tuple API and all
+        # native semantic hashes remain unchanged.
+        for record in parsed_records:
+            record["source_id"] = record["package_ref"]["source_id"]
+            record.pop("package_ref", None)
+        return evidence_packages, skipped, parsed_records
     return evidence_packages, skipped
