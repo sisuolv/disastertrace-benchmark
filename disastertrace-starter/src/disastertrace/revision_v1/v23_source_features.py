@@ -194,4 +194,5 @@ def preflight_git_contract(config_path: str | os.PathLike[str] | None, *, repo_r
 def require_v23_grid_contract(*, expected_methods, cutoff, available_at) -> dict[str, Any]:
     if not expected_methods or cutoff is None or available_at is None:
         raise ValueError("v23 grid calls must explicitly provide expected_methods, cutoff, and available_at")
-    return {"expected_methods": sorted(str(item) for item in expected_methods), "cutoff": cutoff, "available_at": available_at}
+    available_name = getattr(available_at, "__name__", available_at)
+    return {"expected_methods": sorted(str(item) for item in expected_methods), "cutoff": cutoff, "available_at": available_name}
