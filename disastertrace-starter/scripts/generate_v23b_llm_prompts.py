@@ -112,6 +112,8 @@ def _leakage_violations(prompt: str) -> list[str]:
     # not calendar years.  Mask the complete group before the year scan.
     masked = re.sub(r"(?i)/\d{4}V\d{4}FT\b", " ", masked)
     masked = re.sub(r"(?i)(?<![A-Za-z])[RV]\d{4}(?:V\d{4})?FT\b", " ", masked)
+    # Peak-wind groups use direction/speed followed by HHMM (e.g. 36029/2026).
+    masked = re.sub(r"\b\d{3,5}/\d{4}\b", " ", masked)
     masked = re.sub(r"(?i)\b\d{4}FT\b", " ", masked)
     violations = []
     if YEAR_MONTH.search(masked):
