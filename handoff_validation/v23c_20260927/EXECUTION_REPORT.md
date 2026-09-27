@@ -89,6 +89,8 @@ C3 的 J2a 结果标记为 `development_status=exploratory`，因为 Jan/Mar 开
 - C5/K6：尚未运行；只有在 C4 明确 GO 时才应启动。
 - C6：尚未运行。
 
+执行目录中的 `C2/STATUS.json`、`C3/STATUS.json`、`C4/STATUS.json` 和根目录 `STOP_STATUS.json` 是首次本地 GPU 阻塞时生成的历史记录；续跑后的真实 ACP 证据以 `C2/ACP_VALIDATION.json`、`C2/LLM_PREDICTION_SEAL.json`、`C3/Y1_PRE_READ_GATE.json`、`C3/Y1_BINDING_SUMMARY.json` 和 `C3/J2A_LLM_SCORE.json` 为准。它们没有被覆盖，以保留完整审计轨迹。
+
 当前最稳妥的下一步是先独立复核 C2 seal、Y1 读取日志和 J2a 计算，再执行 C4 的 `G_adapt` 判决。若 C4 维持 STOP，应封存 STOP 结果并停止 K6/provider 扩展；若要获得确认性天气结论，必须另行批准未暴露确认保留集和相应授权。
 
 外部 artifact 的逐文件 SHA-256、大小和路径见 [ARTIFACT_MANIFEST.json](ARTIFACT_MANIFEST.json)。
