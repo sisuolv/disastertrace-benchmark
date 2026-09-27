@@ -1,0 +1,55 @@
+{
+  "calibration": {
+    "C_grid": [
+      0.01,
+      0.1,
+      1,
+      10
+    ],
+    "method": "Platt",
+    "selection": "inner_daily_block_cv",
+    "training_fold_only": true
+  },
+  "carry_age_units": "seconds",
+  "development_status": "exploratory",
+  "features": [
+    "taf_prevailing_lower_min",
+    "taf_prevailing_upper_max",
+    "taf_conditional_lower_min",
+    "taf_event_flag",
+    "taf_coverage_status",
+    "metar_recent_1_visibility",
+    "metar_recent_2_visibility",
+    "metar_recent_1_age_s",
+    "metar_recent_2_age_s",
+    "metar_event_flag",
+    "taf_missing",
+    "metar_missing",
+    "taf_carry_age_s",
+    "metar_carry_age_s",
+    "taf_issuance_age_s",
+    "lead_hours",
+    "station_one_hot"
+  ],
+  "information_subsets": [
+    "none",
+    "taf",
+    "metar",
+    "both"
+  ],
+  "model": "L2_logistic",
+  "outer_cross_fit": [
+    "train_2025-01_test_2025-03",
+    "train_2025-03_test_2025-01"
+  ],
+  "state_space": {
+    "all_checkpoint_purchase_combinations": true,
+    "equal_weight_per_target_checkpoint": true,
+    "missing_indicators_explicit": true,
+    "purchase_time_index_j_le_k": true
+  },
+  "test_y_isolation": "hashes_and_predictions_must_not_change_when_outer_test_y_is_modified",
+  "training_coverage": "all_legal_information_subsets_and_stale_prefixes",
+  "version": "v23c-F-stat-2",
+  "weighting": "equal_weight_per_target_checkpoint"
+}

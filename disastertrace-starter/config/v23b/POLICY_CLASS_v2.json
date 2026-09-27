@@ -1,0 +1,149 @@
+{
+  "action_costs": {
+    "both": 2,
+    "metar": 1,
+    "none": 0,
+    "taf": 1
+  },
+  "budget_acquisitions": 4,
+  "count": 15,
+  "decision_inputs": [
+    "posterior_p",
+    "uncertainty_u",
+    "already_purchased_content",
+    "taf_age_hours",
+    "metar_age_hours",
+    "taf_event_flag",
+    "metar_event_flag",
+    "lead_hours",
+    "remaining_budget",
+    "station"
+  ],
+  "fallback_policy": "S_fixed_from_training_fold",
+  "lead_action_rule": {
+    "between": "taf",
+    "lead_hours_ge_3": "taf",
+    "lead_hours_le_1": "metar"
+  },
+  "max_groups": 50,
+  "outcome_hidden_at_decision": true,
+  "policies": [
+    {
+      "action_rule": "single_by_lead_then_both_above_tau2",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "uncertainty",
+      "id": "A1",
+      "tau": 0.2,
+      "tau2": 0.5
+    },
+    {
+      "action_rule": "single_by_lead_then_both_above_tau2",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "uncertainty",
+      "id": "A2",
+      "tau": 0.2,
+      "tau2": 0.65
+    },
+    {
+      "action_rule": "single_by_lead_then_both_above_tau2",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "uncertainty",
+      "id": "A3",
+      "tau": 0.35,
+      "tau2": 0.65
+    },
+    {
+      "action_rule": "single_by_lead_then_both_above_tau2",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "uncertainty",
+      "id": "A4",
+      "tau": 0.35,
+      "tau2": 0.8
+    },
+    {
+      "action_rule": "single_by_lead_then_both_above_tau2",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "uncertainty",
+      "id": "A5",
+      "tau": 0.5,
+      "tau2": 0.8
+    },
+    {
+      "action_rule": "refresh_stale_product",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "age",
+      "id": "B1",
+      "metar_age_hours": 0.5,
+      "taf_age_hours": 1.0
+    },
+    {
+      "action_rule": "refresh_stale_product",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "age",
+      "id": "B2",
+      "metar_age_hours": 1.0,
+      "taf_age_hours": 2.0
+    },
+    {
+      "action_rule": "refresh_stale_product",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "age",
+      "id": "B3",
+      "metar_age_hours": 2.0,
+      "taf_age_hours": 4.0
+    },
+    {
+      "action_rule": "refresh_stale_product",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "age",
+      "id": "B4",
+      "metar_age_hours": 4.0,
+      "taf_age_hours": 6.0
+    },
+    {
+      "action_rule": "refresh_stale_product",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "age",
+      "id": "B5",
+      "metar_age_hours": 1.0,
+      "taf_age_hours": 4.0
+    },
+    {
+      "action_rule": "cross_source_trigger",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "disagreement",
+      "id": "C1",
+      "mode": "other_on_disagreement"
+    },
+    {
+      "action_rule": "cross_source_trigger",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "disagreement",
+      "id": "C2",
+      "mode": "other_on_unknown"
+    },
+    {
+      "action_rule": "cross_source_trigger",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "disagreement",
+      "id": "C3",
+      "mode": "both_on_disagreement"
+    },
+    {
+      "action_rule": "cross_source_trigger",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "disagreement",
+      "id": "C4",
+      "mode": "both_on_unknown"
+    },
+    {
+      "action_rule": "cross_source_trigger",
+      "fallback": "S_fixed_from_training_fold",
+      "family": "disagreement",
+      "id": "C5",
+      "mode": "both_on_any_uncertain"
+    }
+  ],
+  "repeat_or_failed_acquisition_is_charged": true,
+  "version": "v23c-pi-2"
+}

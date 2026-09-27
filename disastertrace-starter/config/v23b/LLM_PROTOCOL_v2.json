@@ -1,0 +1,46 @@
+{
+  "decoding": {
+    "greedy": true,
+    "max_new_tokens": 48,
+    "temperature": 0.0,
+    "thinking": false
+  },
+  "freeze_before_Y": true,
+  "k6_invalid_action": "S_fixed_at_checkpoint",
+  "k6_output_schema": {
+    "action": "none|taf|metar|both"
+  },
+  "leakage_assertion": "year/yearmonth/ISO/month-name scans plus aviation DDHH/DDHHMMZ/FM whitelist",
+  "models": {
+    "M1": {
+      "coverage": "all_23808",
+      "path": "/mnt/afs/260010168/models/Qwen3-8B-modelscope-pinned-v1"
+    },
+    "M2": {
+      "coverage": "25% target sample",
+      "path": "/mnt/afs/260010168/models/Qwen3.8-27B-ms-20260914",
+      "selection": "int(sha256(target_id),16) % 4 == 0"
+    }
+  },
+  "offline": true,
+  "output_schema": {
+    "p": "number in [0,1]"
+  },
+  "prompt_fields": [
+    "station_icao",
+    "lead_minutes",
+    "current_time_utc_DDHHMMZ",
+    "target_window_utc_DDHHMMZ_to_DDHHMMZ",
+    "event_definition",
+    "current_taf_raw",
+    "up_to_three_visible_metar_or_speci_raw_with_age"
+  ],
+  "prompt_forbidden": [
+    "year",
+    "month",
+    "outcome",
+    "future_observation",
+    "target_label"
+  ],
+  "version": "v23c-llm-2"
+}

@@ -186,8 +186,27 @@ def preflight_git_contract(config_path: str | os.PathLike[str] | None, *, repo_r
         raise RuntimeError("index has staged changes")
     if script_path is not None:
         path = Path(script_path)
+        try:
+            relative = path.resolve().relative_to(root)
+        except ValueError as exc:
+            raise PermissionError("executing script must be inside the repository") from exc
+        # An untracked replacement must never be allowed to run against a
+        # sealed source roster.  Keep the explicit ls-files check separate
+        # from the tracked-diff check so a caller can audit both conditions.
+        # The equivalent shell command is: git ls-files --error-unmatch PATH
+        if subprocess.call(["git", "ls-files", "--error-unmatch", str(relative)], cwd=root) != 0:
+            raise RuntimeError(f"executing script is not tracked: {relative}")
         if subprocess.call(["git", "diff", "--quiet", "HEAD", "--", str(path)], cwd=root) != 0:
             raise RuntimeError("the executing script is not committed")
+    # Ignore pre-existing untracked research artifacts, but fail on any
+    # tracked/index change.  The command is intentionally present in the
+    # preflight evidence so reviewers can distinguish both states.
+    # The equivalent shell command is: git status --porcelain --untracked-files=no
+    status = subprocess.check_output(
+        ["git", "status", "--porcelain", "--untracked-files=no"], cwd=root, text=True
+    )
+    if status.strip():
+        raise RuntimeError("tracked git status is not clean")
     return commit
 
 

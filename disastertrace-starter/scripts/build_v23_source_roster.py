@@ -381,11 +381,41 @@ def build_roster(output: Path) -> dict:
     return distinguish
 
 
+def build_synthetic_fixture(fixture: Path, output: Path) -> dict:
+    """Run the roster output contract on a tiny non-weather fixture.
+
+    This mode never touches ``data_real_v16``.  It exists solely for the
+    v23-C end-to-end builder test, so changes to output wiring can be tested
+    without re-reading the approved D1 source files.
+    """
+    payload = json.loads(fixture.read_text(encoding="utf-8"))
+    targets = payload.get("targets")
+    checkpoints = payload.get("checkpoints")
+    if not isinstance(targets, list) or not isinstance(checkpoints, list):
+        raise ValueError("synthetic fixture needs targets and checkpoints lists")
+    if any(not isinstance(item, dict) or not item.get("target_id") for item in targets):
+        raise ValueError("synthetic targets need target_id")
+    if any(not isinstance(item, dict) or not item.get("checkpoint_id") for item in checkpoints):
+        raise ValueError("synthetic checkpoints need checkpoint_id")
+    output.mkdir(parents=True, exist_ok=True)
+    result = {
+        "schema": "disastertrace.v23.synthetic_roster_contract.v1",
+        "targets": len(targets),
+        "checkpoints": len(checkpoints),
+        "rows": len(targets) * len(checkpoints),
+        "real_data_read": False,
+        "outcome_bound": False,
+    }
+    (output / "SYNTHETIC_RESULT.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--synthetic-fixture", type=Path, default=None)
     args = parser.parse_args()
-    result = build_roster(args.output)
+    result = build_synthetic_fixture(args.synthetic_fixture, args.output) if args.synthetic_fixture else build_roster(args.output)
     print(json.dumps(result, sort_keys=True))
     return 0
 

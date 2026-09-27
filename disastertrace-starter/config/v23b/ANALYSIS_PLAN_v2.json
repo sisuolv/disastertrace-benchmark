@@ -1,0 +1,43 @@
+{
+  "bootstrap": {
+    "cluster": "shared UTC day",
+    "minimum_if_time_limited": 400,
+    "refit_each_replicate": true,
+    "replicates": 1000,
+    "sensitivity_block_hours": 48
+  },
+  "cluster": "four-station-shared-UTC-day",
+  "confirmation_status": "not_confirmation; Jan/Mar exposed development data only",
+  "decision_rules": {
+    "D_llm": "same_as_G_adapt_with_raw_and_training_fold_Platt",
+    "G_adapt_GO": "L95(G_adapt)>0 and point_estimate>=delta and no_harm_by_stratum",
+    "G_adapt_HARM": "every lead/station stratum gain lower bound >= -harm_boundary_h (h=0.005)",
+    "G_adapt_STOP": "U95(G_adapt)<delta",
+    "H_role": "STOP_ONLY",
+    "K6": "Q(S_fixed)-Q(LLM_policy), same GO/STOP/HARM rule",
+    "otherwise": "INCONCLUSIVE"
+  },
+  "delta": 0.005,
+  "development_status": "exploratory",
+  "harm_boundary_h": 0.005,
+  "llm_comparison": {
+    "M1": "all 23808",
+    "M2": "same modulo-4 target subset only",
+    "invalid_output": "training_fold_base_rate_fallback_and_count"
+  },
+  "quantities": {
+    "D_llm": "Q(F_full) - Q(LLM)",
+    "G_adapt": "best_fixed_schedule - best_feasible_preregistered_adaptive_policy",
+    "H": "best_fixed_schedule - Y_oracle",
+    "V_fusion": "best_single_source_fixed_schedule - best_fixed_schedule"
+  },
+  "synthetic_controls": {
+    "N_zero": 20000,
+    "delta_test": 0.005,
+    "positive_exact_G": 0.125,
+    "positive_value": "rev1_section_4_5_G_0.125",
+    "seed": 20260927,
+    "zero_value": "review_support_20260926/j2gate_sim.py"
+  },
+  "version": "v23c-analysis-2"
+}
