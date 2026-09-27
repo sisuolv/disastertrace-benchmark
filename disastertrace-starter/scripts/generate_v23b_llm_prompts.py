@@ -114,6 +114,9 @@ def _leakage_violations(prompt: str) -> list[str]:
     masked = re.sub(r"(?i)(?<![A-Za-z])[RV]\d{4}(?:V\d{4})?FT\b", " ", masked)
     # Peak-wind groups use direction/speed followed by HHMM (e.g. 36029/2026).
     masked = re.sub(r"\b\d{3,5}/\d{4}\b", " ", masked)
+    # METAR remark mnemonics may put a standalone HHMM after a word (WSHFT
+    # 2056, RAE2059, DZE2052); those are report times, not years.
+    masked = re.sub(r"(?i)\b(?:WSHFT|RAE|RAB|DZE|TSE|TSB|SHFT)\s*\d{4}\b", " ", masked)
     masked = re.sub(r"(?i)\b\d{4}FT\b", " ", masked)
     violations = []
     if YEAR_MONTH.search(masked):
