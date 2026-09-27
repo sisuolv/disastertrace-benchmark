@@ -12,7 +12,7 @@ from pathlib import Path
 
 YEAR_MONTH = re.compile(r"20\d{2}[-/](?:0[1-9]|1[0-2])(?:\b|$)")
 ISO_DATE = re.compile(r"\b(?:19|20)\d{2}-\d{2}-\d{2}\b")
-YEAR_TOKEN = re.compile(r"(?<![0-9])(?:19|20)\d{2}(?![0-9])")
+YEAR_TOKEN = re.compile(r"(?<![0-9A-Za-z])(?:19|20)\d{2}(?![0-9A-Za-z])")
 MONTH_NAME = re.compile(
     r"\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\b",
     re.IGNORECASE,
