@@ -50,7 +50,7 @@ def test_analysis_plan_v2_defines_llm_and_k6_decisions():
     assert data["bootstrap"]["replicates"] >= 400
 
 
-def test_prompt_v2_contains_absolute_day_time_and_k6_template(tmp_path):
+def test_prompt_v2_contains_absolute_day_time_and_excludes_k6_template(tmp_path):
     roster = tmp_path / "roster.jsonl"
     row = {
         "target_id": "KDEN_20250101_00_5000m",
@@ -80,7 +80,9 @@ def test_prompt_v2_contains_absolute_day_time_and_k6_template(tmp_path):
     prompt = json.loads((out / "m1_prompts.jsonl").read_text().splitlines()[0])["prompt"]
     assert "Current time (UTC):" in prompt
     assert "Target window (UTC):" in prompt
-    assert '"action": "none|taf|metar|both"' in prompt
+    assert "For a later acquisition decision" not in prompt
+    assert "K6 output template" not in prompt
+    assert '"action"' not in prompt
 
 
 def test_preflight_checks_tracked_and_untracked_contracts():

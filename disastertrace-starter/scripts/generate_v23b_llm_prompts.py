@@ -81,10 +81,6 @@ def _v2_prompt(row: dict) -> str:
         for item in metars[:3]:
             age = _age_minutes(item["available_at_us"], cutoff)
             lines.append(f"age_minutes={age:.3f} report_type={item['report_type']} raw={item['raw']}")
-    lines.extend([
-        "For a later acquisition decision, the only legal actions are none, taf, metar, both.",
-        'K6 output template: {"action": "none|taf|metar|both"}.',
-    ])
     return "\n".join(lines)
 
 
