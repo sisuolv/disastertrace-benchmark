@@ -110,7 +110,7 @@ def _leakage_violations(prompt: str) -> list[str]:
     masked = re.sub(r"\b\d{4}/\d{4}\b", " ", masked)
     # Runway/visibility groups such as V2000FT are meteorological distances,
     # not calendar years.  Mask the complete group before the year scan.
-    masked = re.sub(r"(?i)\b[RV]\d{4}(?:V\d{4})?FT\b", " ", masked)
+    masked = re.sub(r"(?i)(?<![A-Za-z])[RV]\d{4}(?:V\d{4})?FT\b", " ", masked)
     masked = re.sub(r"(?i)\b\d{4}FT\b", " ", masked)
     violations = []
     if YEAR_MONTH.search(masked):
