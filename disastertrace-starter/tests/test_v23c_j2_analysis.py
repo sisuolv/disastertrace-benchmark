@@ -32,3 +32,11 @@ def test_synthetic_cli_writes_auditable_result(tmp_path):
     assert data["seed"] == 20260927
     assert data["zero_n"] == 20000
     assert data["acceptance"] is True
+
+
+def test_workers_have_spawn_safe_main_guards_and_offline_mode():
+    for name in ("run_v23c_m1_vllm.py", "run_v23c_m2_hf.py"):
+        text = (Path("disastertrace-starter/scripts") / name).read_text()
+        assert 'if __name__ == "__main__":' in text
+        assert "HF_HUB_OFFLINE" in text
+        assert "TRANSFORMERS_OFFLINE" in text
